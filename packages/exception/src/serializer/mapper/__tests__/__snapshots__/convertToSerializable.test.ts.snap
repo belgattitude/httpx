@@ -1,0 +1,107 @@
+// Vitest Snapshot v1
+
+exports[`convertToSerializable > when a non error is given > switch to build-in Error with custom message 1`] = `
+{
+  "__type": "NonNativeError",
+  "message": "Can't serialize error at runtime. Received 'object'",
+  "name": "Error",
+}
+`;
+
+exports[`convertToSerializable > when an http exception is given > works with HttpBadRequest 1`] = `
+{
+  "__type": "HttpException",
+  "message": "msg",
+  "name": "HttpBadRequest",
+  "statusCode": 400,
+  "url": "http://",
+}
+`;
+
+exports[`convertToSerializable > when an http exception is given > works with simple 1`] = `
+{
+  "__type": "HttpException",
+  "message": "Http exception",
+  "name": "HttpException",
+  "statusCode": 500,
+}
+`;
+
+exports[`convertToSerializable > when an http exception is given > works with withCause 1`] = `
+{
+  "__type": "HttpException",
+  "message": "Http exception",
+  "name": "HttpException",
+  "statusCode": 500,
+}
+`;
+
+exports[`convertToSerializable > when an http exception is given > works with withFullParams 1`] = `
+{
+  "__type": "HttpException",
+  "code": "NETWORK_UNAVAILABLE",
+  "errorId": "nanoid()",
+  "message": "msg",
+  "method": "PUT",
+  "name": "HttpException",
+  "statusCode": 500,
+  "url": "http://localhost",
+}
+`;
+
+exports[`convertToSerializable > when an http exception is given > works with withMsg 1`] = `
+{
+  "__type": "HttpException",
+  "message": "msg",
+  "name": "HttpException",
+  "statusCode": 500,
+}
+`;
+
+exports[`convertToSerializable > when native error is given > works with ErrorMsg 1`] = `
+{
+  "__type": "NativeError",
+  "message": "msg",
+  "name": "Error",
+}
+`;
+
+exports[`convertToSerializable > when native error is given > works with ErrorMsg 2`] = `
+{
+  "__type": "NativeError",
+  "message": "msg",
+  "name": "Error",
+}
+`;
+
+exports[`convertToSerializable > when native error is given > works with ErrorSimple 1`] = `
+{
+  "__type": "NativeError",
+  "message": "",
+  "name": "Error",
+}
+`;
+
+exports[`convertToSerializable > when native error is given > works with ErrorSimpleEval 1`] = `
+{
+  "__type": "NativeError",
+  "message": "",
+  "name": "EvalError",
+}
+`;
+
+exports[`convertToSerializable > when native error is given > works with ErrorSimpleRange 1`] = `
+{
+  "__type": "NativeError",
+  "message": "",
+  "name": "RangeError",
+}
+`;
+
+exports[`convertToSerializable > when non native error is given > set the type to NonNativeError 1`] = `
+{
+  "__type": "NonNativeError",
+  "message": "msg",
+  "name": "NonNativeError",
+}
+`;

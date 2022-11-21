@@ -1,0 +1,1 @@
+export { supportsErrorCause } from './supportsErrorCause';

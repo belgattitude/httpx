@@ -1,0 +1,65 @@
+name: CI-examples
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    # Only consider those paths to trigger the action
+    paths:
+      - 'examples/**'
+      - 'packages/**'
+      - '.yarnrc.yml'
+      - 'tsconfig.base.json'
+      - '.github/**'
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    # Only consider those paths to trigger the action
+    paths:
+      - 'examples/**'
+      - 'packages/**'
+      - '.yarnrc.yml'
+      - 'tsconfig.base.json'
+      - '.github/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+
+      - name: Build packages
+        run: |
+          yarn workspaces foreach -v --from '@belgattitude/*' run build
+
+      - name: Typecheck
+        run: |
+          yarn workspaces foreach -v --from '@examples/*' run typecheck
+
+      - name: Lint
+        run: |
+          yarn workspaces foreach -v --from '@examples/*' run lint
+
+      - name: Build example apps
+        run: |
+          yarn workspaces foreach -v --from '@examples/*' run build
+        env:
+          NEXTJS_IGNORE_ESLINT: true
+          NEXTJS_IGNORE_TYPECHECK: true
+          NEXT_DISABLE_SOURCEMAPS: true
+          NEXT_TELEMETRY_DISABLED: true

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "@httpx/exception",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": false,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "paths": {},
+    "types": ["vitest/globals"]
+  },
+  "exclude": ["**/node_modules", "**/.*/", "./dist", "./coverage"],
+  "include": ["**/*.ts", "**/*.js", "**/.cjs", "**/*.mjs", "**/*.json"]
+}

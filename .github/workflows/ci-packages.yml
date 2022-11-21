@@ -1,0 +1,101 @@
+name: CI-packages
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    paths:
+      - 'packages/**'
+      - 'yarn.lock'
+      - '.yarnrc.yml'
+      - '.prettier*.*'
+      - '*.base.json'
+      - '*.base.js'
+      - '.prettier*.*'
+      - '.github/**'
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - 'packages/**'
+      - 'yarn.lock'
+      - '.yarnrc.yml'
+      - '*.base.json'
+      - '*.base.js'
+      - '.prettier*.*'
+      - '.github/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # Fetch all git history so that yarn workspaces --since can compare with the correct commits
+          # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+
+      - name: Restore packages cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/.cache
+            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
+
+          key: ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'packages/**.json') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
+
+      - name: Typecheck
+        run: |
+          yarn workspaces foreach -tv --from '@belgattitude/*' --no-private --since=origin/main run typecheck
+
+      - name: ESLint checks
+        run: |
+          yarn workspaces foreach -tv --from '@belgattitude/*' --no-private --since=origin/main run lint
+
+      - name: Unit tests
+        run: |
+          yarn workspaces foreach -tv --include '@belgattitude/*' --no-private run test-unit --coverage
+
+      - name: Build packages
+        run: |
+          yarn workspaces foreach -tv --include '@belgattitude/*' --no-private --since=origin/main run build
+
+      - name: Check build for size-limits
+        run: |
+          yarn workspaces foreach -tv --include '@belgattitude/*' --no-private --since=origin/main run check-size
+
+      - name: Check build for ecmascript compliance
+        run: |
+          yarn workspaces foreach -tv --include '@belgattitude/*' --no-private --since=origin/main run check-dist
+
+      - name: Codecov upload
+        if: matrix.node-version == '16.x'
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./packages/http-exception/coverage
+          #files: ./packages/http-exception/coverage/clover.xml
+          flags: http-exception-unittests
+          fail_ci_if_error: false
+          verbose: false
+          working-directory: ${{ github.workspace }}
+
+      - name: Check doc can be built
+        run: |
+          yarn workspaces foreach -tv --include '@belgattitude/*' --no-private --since=origin/main run build-doc

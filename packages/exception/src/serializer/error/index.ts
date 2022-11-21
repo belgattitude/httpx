@@ -1,0 +1,1 @@
+export { SerializerError } from './SerializerError';
