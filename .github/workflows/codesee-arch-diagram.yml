@@ -1,4 +1,5 @@
 # This workflow was added by CodeSee. Learn more at https://codesee.io/
+# This is v2.0 of this workflow file
 on:
   push:
     branches:
@@ -7,6 +8,8 @@ on:
     types: [opened, synchronize, reopened]
 
 name: CodeSee Map
+
+permissions: read-all
 
 jobs:
   test_map_action:
@@ -36,17 +39,17 @@ jobs:
 
       # CodeSee Maps Go support uses a static binary so there's no setup step required.
 
-      - name: Configure Node.js 14
+      - name: Configure Node.js 16
         uses: actions/setup-node@v3
         if: ${{ fromJSON(steps.detect-languages.outputs.languages).javascript }}
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Configure Python 3.x
         uses: actions/setup-python@v4
         if: ${{ fromJSON(steps.detect-languages.outputs.languages).python }}
         with:
-          python-version: '3.10'
+          python-version: '3.x'
           architecture: 'x64'
 
       - name: Configure Ruby '3.x'
