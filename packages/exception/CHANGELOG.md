@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 1.6.0
+
+### Minor Changes
+
+- [#10](https://github.com/belgattitude/httpx/pull/10) [`6f94a9f`](https://github.com/belgattitude/httpx/commit/6f94a9f7c40490127f6b5166318a7882869b19d8) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix release
+
 ## 1.5.0
 
 ### Minor Changes
