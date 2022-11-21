@@ -1,15 +1,15 @@
 Delightful http exceptions. Crafted with node, browsers, ssr frameworks and error logging in mind.
 
-[![npm](https://img.shields.io/npm/v/@belgattitude/http-exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@belgattitude/http-exception)
-[![size](https://img.shields.io/bundlephobia/minzip/@belgattitude/http-exception@latest?label=MinGZIP&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@belgattitude/http-exception@latest)
+[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/exception)
+[![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=MinGZIP&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
 [![node](https://img.shields.io/static/v1?label=Node&message=14%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZA%3D%3D)
 [![browserslist](https://img.shields.io/static/v1?label=Browser&message=>0.25%&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZA%3D%3D)
-[![dist](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/http-exception/blob/main/packages/http-exception/.size-limit.cjs)
-[![ci](https://img.shields.io/github/checks-status/belgattitude/http-exception/main?label=CI&logo=github&style=for-the-badge&labelColor=444)](https://github.com/belgattitude/http-exception/actions?query=branch%3Amain)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/http-exception?logo=codecov&style=for-the-badge&labelColor=444)](https://codecov.io/gh/belgattitude/http-exception)
-[![techdebt](https://img.shields.io/codeclimate/tech-debt/belgattitude/http-exception?label=TechDebt&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/http-exception)
-[![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/http-exception?label=Maintainability&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/http-exception)
-[![license](https://img.shields.io/npm/l/@belgattitude/http-exception?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/http-exception/blob/main/LICENSE)
+[![dist](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
+[![ci](https://img.shields.io/github/checks-status/belgattitude/httpx/main?label=CI&logo=github&style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/actions?query=branch%3Amain)
+[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&style=for-the-badge&labelColor=444)](https://codecov.io/gh/belgattitude/httpx)
+[![techdebt](https://img.shields.io/codeclimate/tech-debt/belgattitude/httpx?label=TechDebt&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
+[![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Maintainability&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
+[![license](https://img.shields.io/npm/l/@httpx/exception?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
 ## Highlights
 
@@ -18,16 +18,16 @@ Delightful http exceptions. Crafted with node, browsers, ssr frameworks and erro
 - 🎥&nbsp; Logger friendly with [contextual](#about-context) info. Less guessing games.
 - 🐎&nbsp; [Serializable](#serializer) to cover Server-Side-Rendering use-cases (nextjs, superjson,...).
 - 🎯&nbsp; Up to standards. [extends](#uml-class-diagram) Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) and [Error.cause](#about-errorcause) support.
-- 🍃&nbsp; [Lightweight](https://bundlephobia.com/package/@belgattitude/http-exception@latest) - [treeshakable](https://github.com/belgattitude/http-exception/blob/main/packages/http-exception/.size-limit.cjs) - wide [browser coverage](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZA%3D%3D) (trade-off).
+- 🍃&nbsp; [Lightweight](https://bundlephobia.com/package/@httpx/exception@latest) - [treeshakable](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs) - wide [browser coverage](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZA%3D%3D) (trade-off).
 - ✨‍&nbsp; Default statusText as [error message](#about-default-message). Less chars, divergence...
 - 🧙‍&nbsp; IDE friendly. Typescript - typedoc with links to mdn and description.
-- 🥃&nbsp; [Docs](https://belgattitude.github.io/http-exception) & [changelogs](https://github.com/belgattitude/http-exception/releases) - Well tested and maintained - [Contributors](https://github.com/belgattitude/http-exception/blob/main/CONTRIBUTING.md) welcome.
+- 🥃&nbsp; [Docs](https://belgattitude.github.io/httpx) & [changelogs](https://github.com/belgattitude/httpx/releases) - Well tested and maintained - [Contributors](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) welcome.
 
 ## Install
 
 ```bash
-npm install @belgattitude/http-exception  # via npm
-yarn add @belgattitude/http-exception     # via yarn
+npm install @httpx/exception  # via npm
+yarn add @httpx/exception     # via yarn
 ```
 
 ## Usage
@@ -42,7 +42,7 @@ by `Http` prefix to ease ide experience (suggestions) and to avoid naming collis
 import {
   HttpNotFound,
   HttpServiceUnavailable,
-} from "@belgattitude/http-exception";
+} from "@httpx/exception";
 ```
 
 #### HttpException parameters
@@ -67,7 +67,7 @@ import {
   HttpGatewayTimeout,
   HttpInternalServerError,
   HttpNotFound,
-} from "@belgattitude/http-exception";
+} from "@httpx/exception";
 
 // Simple
 throw new HttpNotFound(); // message = 'Not found'
@@ -107,7 +107,7 @@ The `createHttpException` function allows to create an exception from an
 arbitrary status code.
 
 ```typescript
-import { createHttpException } from "@belgattitude/http-exception";
+import { createHttpException } from "@httpx/exception";
 
 const e404 = createHttpException(404); // e404 instanceof HttpClientException
 const e500 = createHttpException(500); // e500 instanceof HttpServerException
@@ -139,7 +139,7 @@ import {
   isHttpClientException,
   isHttpServerException,
   isHttpErrorStatusCode,
-} from "@belgattitude/http-exception";
+} from "@httpx/exception";
 
 // True
 isHttpErrorStatusCode(404);
@@ -187,7 +187,7 @@ Additionally, you can pass any native errors (`Error`, `EvalError`, `RangeError`
 ### JSON
 
 ```typescript
-import { fromJson, toJson } from "@belgattitude/http-exception/serializer";
+import { fromJson, toJson } from "@httpx/exception/serializer";
 
 const e = new HttpForbidden();
 
@@ -208,7 +208,7 @@ Same as JSON but before json.parse/stringify. Allows to use a different encoder.
 import {
   convertToSerializable,
   createFromSerializable,
-} from "@belgattitude/http-exception/serializer";
+} from "@httpx/exception/serializer";
 
 const e = new HttpForbidden({
   cause: new Error("Token was revoked"),
@@ -229,7 +229,7 @@ While their usage is not recommended, some status codes might be found in the wi
 import {
   createHttpException,
   HttpServerException,
-} from "@belgattitude/http-exception";
+} from "@httpx/exception";
 
 const nonOfficialStatusCodes = [
   [509, "Might refer to bandwidth limit"],
@@ -260,7 +260,7 @@ to an english status text (inferred from the exception name).
 import {
   createHttpException,
   HttpMethodNotAllowed,
-} from "@belgattitude/http-exception";
+} from "@httpx/exception";
 
 const e1 = new HttpMethodNotAllowed();
 const e2 = new HttpMethodNotAllowed("Method not allowed");
@@ -321,7 +321,7 @@ Examples are given "as is" and does not represent a real-world usage.
 
 ```typescript
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { toJson } from "@belgattitude/http-exception/serializer";
+import { toJson } from "@httpx/exception/serializer";
 import {
   HttpForbidden,
   HttpImATeapot,
@@ -329,7 +329,7 @@ import {
   HttpNotFound,
   HttpUpgradeRequired,
   isHttpServerException,
-} from "@belgattitude/http-exception";
+} from "@httpx/exception";
 
 // Imaginary logger
 const ignoredCodes = [HttpNotFound.STATUS, HttpImATeapot.STATUS];
@@ -472,11 +472,11 @@ Server http status error code
 
 ## Support
 
-Don't hesitate and open [an issue](https://github.com/belgattitude/http-exception/issues).
+Don't hesitate and open [an issue](https://github.com/belgattitude/httpx/issues).
 
 ## Contributors
 
-Contributors are warmly welcomed. Have a look to the [CONTRIBUTING](https://github.com/belgattitude/http-exception/blob/main/CONTRIBUTING.md) document.
+Contributors are warmly welcomed. Have a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) document.
 
 ## Sponsors ♥
 
@@ -486,7 +486,7 @@ If you are enjoying some of my OSS guides or libs for your company, I'd really a
 
 MIT License
 
-Copyright (c) 2022-current [Sébastien Vanvelthem](https://github.com/belgattitude) and [contributors](https://github.com/belgattitude/http-exception/graphs/contributors).
+Copyright (c) 2022-current [Sébastien Vanvelthem](https://github.com/belgattitude) and [contributors](https://github.com/belgattitude/httpx/graphs/contributors).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
