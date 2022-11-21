@@ -1,6 +1,12 @@
 # @httpx/exception
 
+## 1.5.0
 
+### Minor Changes
+
+- [#5](https://github.com/belgattitude/httpx/pull/5) [`b51c863`](https://github.com/belgattitude/httpx/commit/b51c8634021b4226792e417433c50359283aed9e) Thanks [@belgattitude](https://github.com/belgattitude)! - Rename package to @httpx/exception
+
+  The `@belgattitude/http-exception` package have been renamed to `@httpx/exception`.
 
 ## 1.4.0
 
