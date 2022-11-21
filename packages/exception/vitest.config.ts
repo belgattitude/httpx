@@ -16,7 +16,7 @@ export default defineConfig({
     passWithNoTests: false,
     setupFiles: './test/_setup/setupVitest.ts',
     cache: {
-      dir: '../../.cache/vitest/http-exception',
+      dir: '../../.cache/vitest/httpx-exception',
     },
     coverage: {
       provider: 'istanbul',
