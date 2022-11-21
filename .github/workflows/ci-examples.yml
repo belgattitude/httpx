@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
 
@@ -45,7 +45,7 @@ jobs:
 
       - name: Build packages
         run: |
-          yarn workspaces foreach -v --from '@belgattitude/*' run build
+          yarn workspaces foreach -v --from '@httpx/*' run build
 
       - name: Typecheck
         run: |
