@@ -1,5 +1,12 @@
 # @examples/nextjs-app
 
+## 0.1.21
+
+### Patch Changes
+
+- Updated dependencies [[`b51c863`](https://github.com/belgattitude/httpx/commit/b51c8634021b4226792e417433c50359283aed9e)]:
+  - @httpx/exception@1.5.0
+
 ## 0.1.20
 
 ### Patch Changes
