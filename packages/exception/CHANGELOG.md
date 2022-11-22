@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 1.6.1
+
+### Patch Changes
+
+- [#14](https://github.com/belgattitude/httpx/pull/14) [`be9dd3f`](https://github.com/belgattitude/httpx/commit/be9dd3f7fdc19f2c60616d3313b9a6c1084d5a5a) Thanks [@belgattitude](https://github.com/belgattitude)! - Missing npm description field
+
 ## 1.6.0
 
 ### Minor Changes
