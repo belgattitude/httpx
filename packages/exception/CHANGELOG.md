@@ -68,9 +68,9 @@
 
   ```typescript
   const err = new HttpRequestTimeout({
-    url: 'https://api.dev/user/belgattitude',
-    method: 'GET',
-    code: 'NETWORK_FAILURE',
+    url: "https://api.dev/user/belgattitude",
+    method: "GET",
+    code: "NETWORK_FAILURE",
     errorId: nanoid(), // can be shared by frontend/backend
   });
   console.log(err.url, err.method, err.code, err.errorId);
@@ -90,7 +90,7 @@
   import {
     convertToSerializable,
     createFromSerializable,
-  } from '@httpx/exception/serializer';
+  } from "@httpx/exception/serializer";
 
   const serializableObject = convertToSerializable(new HttpForbidden());
   const exception = createFromSerializable(serializableObject);
@@ -127,11 +127,11 @@
   import {
     HttpForbidden,
     HttpUnavailableForLegalReasons,
-  } from '@httpx/exception';
-  import { fromJson, toJson } from '@httpx/exception/serializer';
+  } from "@httpx/exception";
+  import { fromJson, toJson } from "@httpx/exception/serializer";
 
   const e = new HttpForbidden({
-    url: 'https://www.cool.me',
+    url: "https://www.cool.me",
     /*
       cause: new HttpUnavailableForLegalReasons({
           cause: new Error('example with cause')

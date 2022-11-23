@@ -20,15 +20,15 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type      |
+| :------ | :-------- |
 | `error` | `unknown` |
 
 #### Returns
 
 error is HttpClientException
 
-___
+---
 
 ### isHttpErrorStatusCode
 
@@ -38,21 +38,21 @@ Check if the provided value is a valid http status code
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `number` = `number` |
+| Name | Type                        |
+| :--- | :-------------------------- |
+| `T`  | extends `number` = `number` |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name         | Type      |
+| :----------- | :-------- |
 | `statusCode` | `unknown` |
 
 #### Returns
 
 statusCode is T
 
-___
+---
 
 ### isHttpException
 
@@ -60,15 +60,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type      |
+| :------ | :-------- |
 | `error` | `unknown` |
 
 #### Returns
 
 error is HttpException
 
-___
+---
 
 ### isHttpServerException
 
@@ -76,15 +76,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type      |
+| :------ | :-------- |
 | `error` | `unknown` |
 
 #### Returns
 
 error is HttpServerException
 
-___
+---
 
 ### isHttpStatusCode
 
@@ -94,8 +94,8 @@ Check if the provided value is a valid http status code
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name         | Type      |
+| :----------- | :-------- |
 | `statusCode` | `unknown` |
 
 #### Returns
