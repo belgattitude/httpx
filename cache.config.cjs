@@ -30,7 +30,16 @@ function getEslintCachePath(packageName) {
   return `${globalCachePath}/eslint/${sanitize(packageName)}`;
 }
 
+/**
+ * @param {string} packageName
+ * @returns string
+ */
+function getPrettierCachePath(packageName) {
+  return `${globalCachePath}/prettier/${sanitize(packageName)}`;
+}
+
 module.exports = {
+  getPrettierCachePath,
   getEslintCachePath,
   globalCachePath,
-}
+};
