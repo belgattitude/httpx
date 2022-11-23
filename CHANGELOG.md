@@ -6,6 +6,6 @@ All notable changes to this project are documented on the [github release page](
 
 Alternatively changelogs are generated into each sub-project
 
-| Package                                                    | Latest version                                                                 |
-|------------------------------------------------------------|--------------------------------------------------------------------------------|
+| Package                                               | Latest version                                                            |
+| ----------------------------------------------------- | ------------------------------------------------------------------------- |
 | [@httpx/exception](./packages/exception/CHANGELOG.md) | ![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge) |

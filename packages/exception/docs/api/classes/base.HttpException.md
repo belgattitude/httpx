@@ -48,10 +48,10 @@ Construct a new HttpException class
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `statusCode` | `number` | http status code between 400-599, no checks are done on the validity of the number. |
-| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) | either a message or an object containing HttpExceptionParams |
+| Name           | Type                                                                         | Description                                                                         |
+| :------------- | :--------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
+| `statusCode`   | `number`                                                                     | http status code between 400-599, no checks are done on the validity of the number. |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) | either a message or an object containing HttpExceptionParams                        |
 
 #### Overrides
 
@@ -74,7 +74,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 Error.cause
 
-___
+---
 
 ### code
 
@@ -82,7 +82,7 @@ ___
 
 Custom additional code (ie: 'AbortError', 'CODE-1234'...)
 
-___
+---
 
 ### errorId
 
@@ -90,7 +90,7 @@ ___
 
 Inform about an unique error identifier (ie: nanoid, cuid...)
 
-___
+---
 
 ### message
 
@@ -100,7 +100,7 @@ ___
 
 Error.message
 
-___
+---
 
 ### method
 
@@ -108,7 +108,7 @@ ___
 
 Http method
 
-___
+---
 
 ### name
 
@@ -118,7 +118,7 @@ ___
 
 Error.name
 
-___
+---
 
 ### stack
 
@@ -128,7 +128,7 @@ ___
 
 Error.stack
 
-___
+---
 
 ### statusCode
 
@@ -136,7 +136,7 @@ ___
 
 Http error status code (400-599)
 
-___
+---
 
 ### url
 
@@ -144,7 +144,7 @@ ___
 
 Indicates the original url that caused the error.
 
-___
+---
 
 ### prepareStackTrace
 
@@ -162,9 +162,9 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `err` | `Error` |
+| Name          | Type         |
+| :------------ | :----------- |
+| `err`         | `Error`      |
 | `stackTraces` | `CallSite`[] |
 
 ##### Returns
@@ -175,7 +175,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 Error.prepareStackTrace
 
-___
+---
 
 ### stackTraceLimit
 
@@ -195,9 +195,9 @@ Create .stack property on a target object
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `targetObject` | `object` |
+| Name              | Type       |
+| :---------------- | :--------- |
+| `targetObject`    | `object`   |
 | `constructorOpt?` | `Function` |
 
 #### Returns

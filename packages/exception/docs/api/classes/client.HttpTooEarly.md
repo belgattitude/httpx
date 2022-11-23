@@ -51,8 +51,8 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/425
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name           | Type                                                                         |
+| :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
 
 #### Overrides
@@ -76,7 +76,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 [HttpClientException](base.HttpClientException.md).[cause](base.HttpClientException.md#cause)
 
-___
+---
 
 ### code
 
@@ -88,7 +88,7 @@ Custom additional code (ie: 'AbortError', 'CODE-1234'...)
 
 [HttpClientException](base.HttpClientException.md).[code](base.HttpClientException.md#code)
 
-___
+---
 
 ### errorId
 
@@ -100,7 +100,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 [HttpClientException](base.HttpClientException.md).[errorId](base.HttpClientException.md#errorid)
 
-___
+---
 
 ### message
 
@@ -110,7 +110,7 @@ ___
 
 [HttpClientException](base.HttpClientException.md).[message](base.HttpClientException.md#message)
 
-___
+---
 
 ### method
 
@@ -122,7 +122,7 @@ Http method
 
 [HttpClientException](base.HttpClientException.md).[method](base.HttpClientException.md#method)
 
-___
+---
 
 ### name
 
@@ -132,7 +132,7 @@ ___
 
 [HttpClientException](base.HttpClientException.md).[name](base.HttpClientException.md#name)
 
-___
+---
 
 ### stack
 
@@ -142,7 +142,7 @@ ___
 
 [HttpClientException](base.HttpClientException.md).[stack](base.HttpClientException.md#stack)
 
-___
+---
 
 ### statusCode
 
@@ -154,7 +154,7 @@ Http error status code (400-599)
 
 [HttpClientException](base.HttpClientException.md).[statusCode](base.HttpClientException.md#statuscode)
 
-___
+---
 
 ### url
 
@@ -166,13 +166,13 @@ Indicates the original url that caused the error.
 
 [HttpClientException](base.HttpClientException.md).[url](base.HttpClientException.md#url)
 
-___
+---
 
 ### STATUS
 
-▪ `Static` `Readonly` **STATUS**: ``425``
+▪ `Static` `Readonly` **STATUS**: `425`
 
-___
+---
 
 ### prepareStackTrace
 
@@ -190,9 +190,9 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `err` | `Error` |
+| Name          | Type         |
+| :------------ | :----------- |
+| `err`         | `Error`      |
 | `stackTraces` | `CallSite`[] |
 
 ##### Returns
@@ -203,7 +203,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 [HttpClientException](base.HttpClientException.md).[prepareStackTrace](base.HttpClientException.md#preparestacktrace)
 
-___
+---
 
 ### stackTraceLimit
 
@@ -223,9 +223,9 @@ Create .stack property on a target object
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `targetObject` | `object` |
+| Name              | Type       |
+| :---------------- | :--------- |
+| `targetObject`    | `object`   |
 | `constructorOpt?` | `Function` |
 
 #### Returns

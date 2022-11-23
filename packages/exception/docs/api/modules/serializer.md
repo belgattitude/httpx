@@ -28,23 +28,23 @@
 
 Ƭ **NativeError**: `Error` \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError`
 
-___
+---
 
 ### SerializableError
 
-Ƭ **SerializableError**: `DiscriminateSerializable`<``"NativeError"``\>
+Ƭ **SerializableError**: `DiscriminateSerializable`<`"NativeError"`\>
 
-___
+---
 
 ### SerializableHttpException
 
-Ƭ **SerializableHttpException**: `DiscriminateSerializable`<``"HttpException"``\>
+Ƭ **SerializableHttpException**: `DiscriminateSerializable`<`"HttpException"`\>
 
-___
+---
 
 ### SerializableNonNativeError
 
-Ƭ **SerializableNonNativeError**: `DiscriminateSerializable`<``"NonNativeError"``\>
+Ƭ **SerializableNonNativeError**: `DiscriminateSerializable`<`"NonNativeError"`\>
 
 ## Functions
 
@@ -59,15 +59,15 @@ an object suitable for serialization (a serializable version).
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `e` | [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror) |
+| Name | Type                                                                                              |
+| :--- | :------------------------------------------------------------------------------------------------ |
+| `e`  | [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror) |
 
 #### Returns
 
 `Serializable`
 
-___
+---
 
 ### createFromSerializable
 
@@ -80,15 +80,15 @@ serializable representation
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type           |
+| :-------- | :------------- |
 | `payload` | `Serializable` |
 
 #### Returns
 
 [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror)
 
-___
+---
 
 ### fromJson
 
@@ -96,15 +96,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `json` | `string` |
 
 #### Returns
 
 `Error` \| [`HttpException`](../classes/base.HttpException.md) \| [`SerializerError`](../classes/serializer.SerializerError.md)
 
-___
+---
 
 ### toJson
 
@@ -112,8 +112,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type                                                                                              |
+| :---------- | :------------------------------------------------------------------------------------------------ |
 | `exception` | [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror) |
 
 #### Returns

@@ -74,9 +74,9 @@ either a message or an object containing HttpExceptionParams
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `statusCode` | `number` |
+| Name           | Type                                                                         |
+| :------------- | :--------------------------------------------------------------------------- |
+| `statusCode`   | `number`                                                                     |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
 
 #### Overrides
@@ -100,7 +100,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 [HttpException](base.HttpException.md).[cause](base.HttpException.md#cause)
 
-___
+---
 
 ### code
 
@@ -112,7 +112,7 @@ Custom additional code (ie: 'AbortError', 'CODE-1234'...)
 
 [HttpException](base.HttpException.md).[code](base.HttpException.md#code)
 
-___
+---
 
 ### errorId
 
@@ -124,7 +124,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 [HttpException](base.HttpException.md).[errorId](base.HttpException.md#errorid)
 
-___
+---
 
 ### message
 
@@ -134,7 +134,7 @@ ___
 
 [HttpException](base.HttpException.md).[message](base.HttpException.md#message)
 
-___
+---
 
 ### method
 
@@ -146,7 +146,7 @@ Http method
 
 [HttpException](base.HttpException.md).[method](base.HttpException.md#method)
 
-___
+---
 
 ### name
 
@@ -156,7 +156,7 @@ ___
 
 [HttpException](base.HttpException.md).[name](base.HttpException.md#name)
 
-___
+---
 
 ### stack
 
@@ -166,7 +166,7 @@ ___
 
 [HttpException](base.HttpException.md).[stack](base.HttpException.md#stack)
 
-___
+---
 
 ### statusCode
 
@@ -178,7 +178,7 @@ Http error status code (400-599)
 
 [HttpException](base.HttpException.md).[statusCode](base.HttpException.md#statuscode)
 
-___
+---
 
 ### url
 
@@ -190,7 +190,7 @@ Indicates the original url that caused the error.
 
 [HttpException](base.HttpException.md).[url](base.HttpException.md#url)
 
-___
+---
 
 ### prepareStackTrace
 
@@ -208,9 +208,9 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `err` | `Error` |
+| Name          | Type         |
+| :------------ | :----------- |
+| `err`         | `Error`      |
 | `stackTraces` | `CallSite`[] |
 
 ##### Returns
@@ -221,7 +221,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 [HttpException](base.HttpException.md).[prepareStackTrace](base.HttpException.md#preparestacktrace)
 
-___
+---
 
 ### stackTraceLimit
 
@@ -241,9 +241,9 @@ Create .stack property on a target object
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `targetObject` | `object` |
+| Name              | Type       |
+| :---------------- | :--------- |
+| `targetObject`    | `object`   |
 | `constructorOpt?` | `Function` |
 
 #### Returns

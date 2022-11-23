@@ -11,8 +11,8 @@ in transparent content negotiation itself, and is therefore not a proper end poi
 
 **`See`**
 
- - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/506
- - https://httpstatus.in/506/
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/506
+- https://httpstatus.in/506/
 
 ## Hierarchy
 
@@ -53,8 +53,8 @@ in transparent content negotiation itself, and is therefore not a proper end poi
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name           | Type                                                                         |
+| :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
 
 #### Overrides
@@ -78,7 +78,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 [HttpServerException](base.HttpServerException.md).[cause](base.HttpServerException.md#cause)
 
-___
+---
 
 ### code
 
@@ -90,7 +90,7 @@ Custom additional code (ie: 'AbortError', 'CODE-1234'...)
 
 [HttpServerException](base.HttpServerException.md).[code](base.HttpServerException.md#code)
 
-___
+---
 
 ### errorId
 
@@ -102,7 +102,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 [HttpServerException](base.HttpServerException.md).[errorId](base.HttpServerException.md#errorid)
 
-___
+---
 
 ### message
 
@@ -112,7 +112,7 @@ ___
 
 [HttpServerException](base.HttpServerException.md).[message](base.HttpServerException.md#message)
 
-___
+---
 
 ### method
 
@@ -124,7 +124,7 @@ Http method
 
 [HttpServerException](base.HttpServerException.md).[method](base.HttpServerException.md#method)
 
-___
+---
 
 ### name
 
@@ -134,7 +134,7 @@ ___
 
 [HttpServerException](base.HttpServerException.md).[name](base.HttpServerException.md#name)
 
-___
+---
 
 ### stack
 
@@ -144,7 +144,7 @@ ___
 
 [HttpServerException](base.HttpServerException.md).[stack](base.HttpServerException.md#stack)
 
-___
+---
 
 ### statusCode
 
@@ -156,7 +156,7 @@ Http error status code (400-599)
 
 [HttpServerException](base.HttpServerException.md).[statusCode](base.HttpServerException.md#statuscode)
 
-___
+---
 
 ### url
 
@@ -168,13 +168,13 @@ Indicates the original url that caused the error.
 
 [HttpServerException](base.HttpServerException.md).[url](base.HttpServerException.md#url)
 
-___
+---
 
 ### STATUS
 
-▪ `Static` `Readonly` **STATUS**: ``506``
+▪ `Static` `Readonly` **STATUS**: `506`
 
-___
+---
 
 ### prepareStackTrace
 
@@ -192,9 +192,9 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `err` | `Error` |
+| Name          | Type         |
+| :------------ | :----------- |
+| `err`         | `Error`      |
 | `stackTraces` | `CallSite`[] |
 
 ##### Returns
@@ -205,7 +205,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 [HttpServerException](base.HttpServerException.md).[prepareStackTrace](base.HttpServerException.md#preparestacktrace)
 
-___
+---
 
 ### stackTraceLimit
 
@@ -225,9 +225,9 @@ Create .stack property on a target object
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `targetObject` | `object` |
+| Name              | Type       |
+| :---------------- | :--------- |
+| `targetObject`    | `object`   |
 | `constructorOpt?` | `Function` |
 
 #### Returns
