@@ -2,9 +2,7 @@ name: CI-packages
 
 on:
   push:
-    branches:
-      - dev
-      - main
+    branches: [dev, main]
     paths:
       - 'packages/**'
       - 'yarn.lock'
@@ -16,10 +14,7 @@ on:
       - '.github/**'
 
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+    types: [opened, synchronize, reopened]
     paths:
       - 'packages/**'
       - 'yarn.lock'

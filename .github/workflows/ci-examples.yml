@@ -2,9 +2,7 @@ name: CI-examples
 
 on:
   push:
-    branches:
-      - dev
-      - main
+    branches: [dev, main]
     # Only consider those paths to trigger the action
     paths:
       - 'examples/**'
@@ -14,10 +12,7 @@ on:
       - '.github/**'
 
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+    types: [opened, synchronize, reopened]
     # Only consider those paths to trigger the action
     paths:
       - 'examples/**'
