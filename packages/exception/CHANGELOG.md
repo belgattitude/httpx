@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 1.6.2
+
+### Patch Changes
+
+- [#28](https://github.com/belgattitude/httpx/pull/28) [`3ddb181`](https://github.com/belgattitude/httpx/commit/3ddb181783b6e3822005172070a0e3d1219c141b) Thanks [@belgattitude](https://github.com/belgattitude)! - Increase legacy browsers usage (+ include latest babel upstream fixes)
+
 ## 1.6.1
 
 ### Patch Changes
@@ -68,9 +74,9 @@
 
   ```typescript
   const err = new HttpRequestTimeout({
-    url: "https://api.dev/user/belgattitude",
-    method: "GET",
-    code: "NETWORK_FAILURE",
+    url: 'https://api.dev/user/belgattitude',
+    method: 'GET',
+    code: 'NETWORK_FAILURE',
     errorId: nanoid(), // can be shared by frontend/backend
   });
   console.log(err.url, err.method, err.code, err.errorId);
@@ -90,7 +96,7 @@
   import {
     convertToSerializable,
     createFromSerializable,
-  } from "@httpx/exception/serializer";
+  } from '@httpx/exception/serializer';
 
   const serializableObject = convertToSerializable(new HttpForbidden());
   const exception = createFromSerializable(serializableObject);
@@ -127,11 +133,11 @@
   import {
     HttpForbidden,
     HttpUnavailableForLegalReasons,
-  } from "@httpx/exception";
-  import { fromJson, toJson } from "@httpx/exception/serializer";
+  } from '@httpx/exception';
+  import { fromJson, toJson } from '@httpx/exception/serializer';
 
   const e = new HttpForbidden({
-    url: "https://www.cool.me",
+    url: 'https://www.cool.me',
     /*
       cause: new HttpUnavailableForLegalReasons({
           cause: new Error('example with cause')
