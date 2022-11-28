@@ -3,26 +3,8 @@ name: CI-packages
 on:
   push:
     branches: [dev, main]
-    paths:
-      - 'packages/**'
-      - 'yarn.lock'
-      - '.yarnrc.yml'
-      - '.prettier*.*'
-      - '*.base.json'
-      - '*.base.js'
-      - '.prettier*.*'
-      - '.github/**'
-
   pull_request:
     types: [opened, synchronize, reopened]
-    paths:
-      - 'packages/**'
-      - 'yarn.lock'
-      - '.yarnrc.yml'
-      - '*.base.json'
-      - '*.base.js'
-      - '.prettier*.*'
-      - '.github/**'
 
 jobs:
   test:
