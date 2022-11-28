@@ -2,9 +2,12 @@ name: CI-monorepo-integrity
 
 on:
   push:
-    branches: [dev, main]
+    branches:
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - '**'
 
 jobs:
   test:
