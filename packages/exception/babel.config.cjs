@@ -10,7 +10,7 @@ module.exports = {
     // for class transform
     constantSuper: true, // @link https://babeljs.io/docs/en/assumptions#constantsuper
     noClassCalls: true,
-    setClassMethods: true, // @link beljs.io/docs/en/assumptions#setclassmethods
+    setClassMethods: true, // @link https://babeljs.io/docs/en/assumptions#setclassmethods
     superIsCallableConstructor: true,
     setPublicClassFields: true,
     // for spread
