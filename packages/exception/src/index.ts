@@ -2,6 +2,7 @@ export type {
   HttpExceptionParams,
   HttpStatusCode,
   HttpExceptionParamsWithStatus,
+  ValidationError,
 } from './types';
 export * from './base';
 export * from './client';
