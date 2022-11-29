@@ -1,5 +1,5 @@
 import { HttpClientException } from '../base';
-import type { HttpExceptionParams } from '../types';
+import type { HttpExceptionParams, ValidationError } from '../types';
 import { getSuper } from '../utils';
 
 /**
@@ -13,9 +13,18 @@ import { getSuper } from '../utils';
  */
 export class HttpBadRequest extends HttpClientException {
   static readonly STATUS = 400;
-  constructor(msgOrParams?: HttpExceptionParams | string) {
+  public readonly errors: ValidationError[];
+  constructor(
+    msgOrParams?:
+      | (HttpExceptionParams & { errors?: ValidationError[] })
+      | string
+  ) {
     const name = 'BadRequest';
     super(400, getSuper(name, msgOrParams));
+    this.errors =
+      typeof msgOrParams === 'object' && msgOrParams.errors
+        ? msgOrParams.errors
+        : [];
     Object.setPrototypeOf(this, HttpBadRequest.prototype);
     this.name = `Http${name}`;
   }
