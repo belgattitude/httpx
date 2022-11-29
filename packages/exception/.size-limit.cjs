@@ -1,6 +1,6 @@
 // @ts-check
 
-const fullEsmMaxSize = "3010B";
+const fullEsmMaxSize = "3080B";
 const fullCjsMaxSize = "3265B";
 
 /**
