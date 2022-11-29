@@ -1,6 +1,8 @@
 # @httpx/exception
 
-Delightful http exceptions. Crafted with node, browsers, ssr frameworks and error logging in mind.
+Plain http exceptions for node, deno, edge and browsers. No deps, lightweight, first class typescript
+experience. Offer a built-in serializer in case you'll need it in hybrid context (àlà nextjs) or for logging
+purposes.
 
 [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/exception)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
@@ -14,11 +16,11 @@ Delightful http exceptions. Crafted with node, browsers, ssr frameworks and erro
 
 ## Highlights
 
-- 🚀&nbsp; Dead simple: [explicit named imports](https://belgattitude.github.io/httpx/#/?id=named-exceptions) and/or [status code](https://belgattitude.github.io/httpx/#/?id=factories).
-- 📡&nbsp; Works everywhere: node, browsers, edge... framework agnostic, no deps.
+- 🚀&nbsp; All HTTP error status through [explicit named imports](https://belgattitude.github.io/httpx/#/?id=named-exceptions) and/or [status code](https://belgattitude.github.io/httpx/#/?id=factories).
 - 🎥&nbsp; Logger friendly with [contextual](https://belgattitude.github.io/httpx/#/?id=about-context) info. Less guessing games.
 - 🐎&nbsp; [Serializable](https://belgattitude.github.io/httpx/#/?id=serializer) to cover Server-Side-Rendering use-cases (nextjs, superjson,...).
 - 🎯&nbsp; Up to standards. [extends](https://belgattitude.github.io/httpx/#/?id=uml-class-diagram) Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) and [Error.cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
+- 📡&nbsp; Works everywhere: node, browsers, edge... framework agnostic, no deps.
 - 🍃&nbsp; [Lightweight](https://bundlephobia.com/package/@httpx/exception@latest) - [treeshakable](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs) - wide [browser coverage](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZA%3D%3D) (trade-off).
 - ✨‍&nbsp; Default statusText as [error message](https://belgattitude.github.io/httpx/#/?id=about-default-message). Less chars, divergence...
 - 🧙‍&nbsp; IDE friendly. Typescript - typedoc with links to mdn and description.

@@ -11,7 +11,6 @@ import { getSuper } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
  * @see https://httpstatus.in/402/
  */
-
 export class HttpPaymentRequired extends HttpClientException {
   static readonly STATUS = 402;
   constructor(msgOrParams?: HttpExceptionParams | string) {

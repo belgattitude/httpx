@@ -3,3 +3,4 @@ export type { HttpExceptionParamsWithStatus } from './HttpExceptionParamsWithSta
 export type { HttpStatusCode } from './HttpStatusCode';
 export type { HttpMethod } from './HttpMethod';
 export type { AssignedStatusCodes } from './AssignedStatusCodes';
+export type { ValidationError } from './ValidationError';

@@ -19,12 +19,12 @@ describe(`when Error.cause isn't supported`, () => {
 
   const scenarios: [name: string, cls: HttpException][] = [
     ['HttpException', new HttpException(500, params)],
-    ['HttpClientExeption', new HttpClientException(404, params)],
-    ['HttpServerExeption', new HttpClientException(500, params)],
+    ['HttpClientException', new HttpClientException(404, params)],
+    ['HttpServerException', new HttpClientException(500, params)],
     ['HttpNotFound', new HttpNotFound(params)],
   ];
 
-  vi.mock('../support', () => {
+  vi.mock('../../src/support', () => {
     return {
       supportsErrorCause: () => false,
     };

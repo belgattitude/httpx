@@ -1,7 +1,7 @@
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
-const testFiles = ['./src/**/*.test.{js,ts}'];
+const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
 import 'error-cause-polyfill/auto';
 
