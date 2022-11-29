@@ -1,6 +1,8 @@
 # @httpx/exception
 
-Delightful http exceptions. Crafted with node, browsers, ssr frameworks and error logging in mind.
+Plain http exceptions for node, deno, edge and browsers. No deps, lightweight, first class typescript
+experience. Offer a built-in serializer in case you'll need it in hybrid context (àlà nextjs) or for logging
+purposes.
 
 [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/exception)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)

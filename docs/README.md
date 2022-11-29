@@ -1,4 +1,6 @@
-Delightful http exceptions. Crafted with node, browsers, ssr frameworks and error logging in mind.
+Plain http exceptions for node, deno, edge and browsers. No deps, lightweight, first class typescript
+experience. Offer a built-in serializer in case you'll need it in hybrid context (àlà nextjs) or for logging
+purposes.
 
 [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/exception)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
@@ -84,16 +86,17 @@ throw new HttpInternalServerError({
 
 #### HttpException properties
 
-| HttpException | Type      | Description                                                                                                                        |
-| ------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| statusCode    | `number`  | Http error status code (400-599).                                                                                                  |
-| message       | `string`  | Default or provided message.                                                                                                       |
-| url           | `string?` | Origin url ([about context](#about-context)).                                                                                      |
-| method        | `string?` | Origin http method ([about context](#about-context)).                                                                              |
-| code          | `string?` | Custom code ([about context](#about-context)).                                                                                     |
-| errorId       | `string?` | Unique id ([about context](#about-context)).                                                                                       |
-| stack         | `string?` | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause         | `Error?`  | @see [about error cause](#about-errorcause)                                                                                        |
+| HttpException | Type                | Description                                                                                                                        |
+| ------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| statusCode    | `number`            | Http error status code (400-599).                                                                                                  |
+| message       | `string`            | Default or provided message.                                                                                                       |
+| url           | `string?`           | Origin url ([about context](#about-context)).                                                                                      |
+| method        | `string?`           | Origin http method ([about context](#about-context)).                                                                              |
+| code          | `string?`           | Custom code ([about context](#about-context)).                                                                                     |
+| errorId       | `string?`           | Unique id ([about context](#about-context)).                                                                                       |
+| stack         | `string?`           | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause         | `Error?`            | @see [about error cause](#about-errorcause)                                                                                        |
+| errors?       | `ValidationError[]` | Only supported by HttpBadRequest                                                                                                   |
 
 ### Factories
 
@@ -216,6 +219,29 @@ const deserialized = createFromSerializable(serializableObject);
 ```
 
 ## Advanced
+
+### Validation errors
+
+In some circumstances you might find useful to append the validation errors to
+`HttpBadRequest`. Here's a quick example:
+
+```typescript
+const e400 = new HttpBadRequest({
+  errors: [
+    {
+      message: "Invalid email",
+      path: "email",
+      code: "invalid_email",
+    },
+    {
+      message: "Invalid address",
+      path: ["addresses", 0, "line1"],
+      code: "empty_string",
+    },
+  ],
+});
+console.log(e400.errors);
+```
 
 ### Non-official status codes
 
