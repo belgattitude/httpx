@@ -1,5 +1,32 @@
 # @httpx/exception
 
+## 1.7.0
+
+### Minor Changes
+
+- [#31](https://github.com/belgattitude/httpx/pull/31) [`167c216`](https://github.com/belgattitude/httpx/commit/167c216e7c5d6a209e17b17fa4ddb6db584bacd3) Thanks [@belgattitude](https://github.com/belgattitude)! - Support ValidationError in HttpBadRequest
+
+  In some circumstances you might find useful to append the validation errors to
+  `HttpBadRequest`. Here's a quick example:
+
+  ```typescript
+  const e400 = new HttpBadRequest({
+    errors: [
+      {
+        message: 'Invalid email',
+        path: 'email',
+        code: 'invalid_email',
+      },
+      {
+        message: 'Invalid address',
+        path: ['addresses', 0, 'line1'],
+        code: 'empty_string',
+      },
+    ],
+  });
+  console.log(e400.errors);
+  ```
+
 ## 1.6.2
 
 ### Patch Changes
