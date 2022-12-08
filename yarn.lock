@@ -1868,13 +1868,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cush/relative@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@cush/relative@npm:1.0.0"
-  checksum: 8c91a1c9875c9a4f8b5e7baf93625fc1381c7964508c8df99ea9e731bd46a148ce6df4934d0c69fbb16188a65ddc263a65b97e62a7e58119a1a805fa309e579d
-  languageName: node
-  linkType: hard
-
 "@dabh/diagnostics@npm:^2.0.2":
   version: 2.0.3
   resolution: "@dabh/diagnostics@npm:2.0.3"
@@ -2314,7 +2307,7 @@ __metadata:
     typedoc-plugin-markdown: "npm:3.14.0"
     typescript: "npm:4.9.4"
     vite: "npm:3.2.5"
-    vite-tsconfig-paths: "npm:3.6.0"
+    vite-tsconfig-paths: "npm:4.0.1"
     vitest: "npm:0.25.5"
     webpack: "npm:5.75.0"
   languageName: unknown
@@ -4458,13 +4451,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"any-promise@npm:^1.0.0":
-  version: 1.3.0
-  resolution: "any-promise@npm:1.3.0"
-  checksum: 60f0298ed34c74fef50daab88e8dab786036ed5a7fad02e012ab57e376e0a0b4b29e83b95ea9b5e7d89df762f5f25119b83e00706ecaccb22cfbacee98d74889
-  languageName: node
-  linkType: hard
-
 "anymatch@npm:^3.0.3, anymatch@npm:~3.1.2":
   version: 3.1.2
   resolution: "anymatch@npm:3.1.2"
@@ -5409,13 +5395,6 @@ __metadata:
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
   checksum: 74c781a5248c2402a0a3e966a0a2bba3c054aad144f5c023364be83265e796b20565aa9feff624132ff629aa64e16999fa40a743c10c12f7c61e96a794b99288
-  languageName: node
-  linkType: hard
-
-"commander@npm:^4.0.0":
-  version: 4.1.1
-  resolution: "commander@npm:4.1.1"
-  checksum: 84a76c08fe6cc08c9c93f62ac573d2907d8e79138999312c92d4155bc2325d487d64d13f669b2000c9f8caf70493c1be2dac74fec3c51d5a04f8bc3ae1830bab
   languageName: node
   linkType: hard
 
@@ -7667,31 +7646,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob-regex@npm:^0.3.0":
-  version: 0.3.2
-  resolution: "glob-regex@npm:0.3.2"
-  checksum: 73cbaef56796ab967b516e0db07375c26535274fa259ce06da82b7dd25a138bf318237fd0cd93a6b0490e4d90db9f127193d8184e5c1acc296d2e5b879e66206
-  languageName: node
-  linkType: hard
-
 "glob-to-regexp@npm:^0.4.1":
   version: 0.4.1
   resolution: "glob-to-regexp@npm:0.4.1"
   checksum: 0486925072d7a916f052842772b61c3e86247f0a80cc0deb9b5a3e8a1a9faad5b04fb6f58986a09f34d3e96cd2a22a24b7e9882fb1cf904c31e9a310de96c429
-  languageName: node
-  linkType: hard
-
-"glob@npm:7.1.6":
-  version: 7.1.6
-  resolution: "glob@npm:7.1.6"
-  dependencies:
-    fs.realpath: "npm:^1.0.0"
-    inflight: "npm:^1.0.4"
-    inherits: "npm:2"
-    minimatch: "npm:^3.0.4"
-    once: "npm:^1.3.0"
-    path-is-absolute: "npm:^1.0.0"
-  checksum: 2575cce9306ac534388db751f0aa3e78afedb6af8f3b529ac6b2354f66765545145dba8530abf7bff49fb399a047d3f9b6901c38ee4c9503f592960d9af67763
   languageName: node
   linkType: hard
 
@@ -10212,17 +10170,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mz@npm:^2.7.0":
-  version: 2.7.0
-  resolution: "mz@npm:2.7.0"
-  dependencies:
-    any-promise: "npm:^1.0.0"
-    object-assign: "npm:^4.0.1"
-    thenify-all: "npm:^1.0.0"
-  checksum: 103114e93f87362f0b56ab5b2e7245051ad0276b646e3902c98397d18bb8f4a77f2ea4a2c9d3ad516034ea3a56553b60d3f5f78220001ca4c404bd711bd0af39
-  languageName: node
-  linkType: hard
-
 "nanoid@npm:^3.3.4":
   version: 3.3.4
   resolution: "nanoid@npm:3.3.4"
@@ -10515,7 +10462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-assign@npm:^4.0.1, object-assign@npm:^4.1.1":
+"object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
   checksum: 1f4df9945120325d041ccf7b86f31e8bcc14e73d29171e37a7903050e96b81323784ec59f93f102ec635bcf6fa8034ba3ea0a8c7e69fa202b87ae3b6cec5a414
@@ -11046,7 +10993,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pirates@npm:^4.0.1, pirates@npm:^4.0.4":
+"pirates@npm:^4.0.4":
   version: 4.0.5
   resolution: "pirates@npm:4.0.5"
   checksum: 58b6ff0f137a3d70ff34ac4802fd19819cdc19b53e9c95adecae6c7cfc77719a11f561ad85d46e79e520ef57c31145a564c8bc3bee8cfee75d441fab2928a51d
@@ -11544,19 +11491,6 @@ __metadata:
   version: 0.2.0
   resolution: "real-require@npm:0.2.0"
   checksum: 23eea5623642f0477412ef8b91acd3969015a1501ed34992ada0e3af521d3c865bb2fe4cdbfec5fe4b505f6d1ef6a03e5c3652520837a8c3b53decff7e74b6a0
-  languageName: node
-  linkType: hard
-
-"recrawl-sync@npm:^2.0.3":
-  version: 2.2.3
-  resolution: "recrawl-sync@npm:2.2.3"
-  dependencies:
-    "@cush/relative": "npm:^1.0.0"
-    glob-regex: "npm:^0.3.0"
-    slash: "npm:^3.0.0"
-    sucrase: "npm:^3.20.3"
-    tslib: "npm:^1.9.3"
-  checksum: 3129ce44a97b2d8f2f18c4bc13d9faccd90dda7bff82c498d14c6e3720eb3249d8cb21576ca41c0a236cfe9b81e02a3e84b160256f359669450a8a628bd2df73
   languageName: node
   linkType: hard
 
@@ -12709,23 +12643,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sucrase@npm:^3.20.3":
-  version: 3.29.0
-  resolution: "sucrase@npm:3.29.0"
-  dependencies:
-    commander: "npm:^4.0.0"
-    glob: "npm:7.1.6"
-    lines-and-columns: "npm:^1.1.6"
-    mz: "npm:^2.7.0"
-    pirates: "npm:^4.0.1"
-    ts-interface-checker: "npm:^0.1.9"
-  bin:
-    sucrase: bin/sucrase
-    sucrase-node: bin/sucrase-node
-  checksum: 4932ca76122f1f0cbd19f864265ce7c95652723994cf5a5c73b7b2bdef8d9b9257ba65085f61760e83cb8624d18b2fa309fe901dba77169264f4eb6a2e12719c
-  languageName: node
-  linkType: hard
-
 "superjson@npm:1.11.0":
   version: 1.11.0
   resolution: "superjson@npm:1.11.0"
@@ -12927,24 +12844,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"thenify-all@npm:^1.0.0":
-  version: 1.6.0
-  resolution: "thenify-all@npm:1.6.0"
-  dependencies:
-    thenify: "npm:>= 3.1.0 < 4"
-  checksum: 9b896a22735e8122754fe70f1d65f7ee691c1d70b1f116fda04fea103d0f9b356e3676cb789506e3909ae0486a79a476e4914b0f92472c2e093d206aed4b7d6b
-  languageName: node
-  linkType: hard
-
-"thenify@npm:>= 3.1.0 < 4":
-  version: 3.3.1
-  resolution: "thenify@npm:3.3.1"
-  dependencies:
-    any-promise: "npm:^1.0.0"
-  checksum: f375aeb2b05c100a456a30bc3ed07ef03a39cbdefe02e0403fb714b8c7e57eeaad1a2f5c4ecfb9ce554ce3db9c2b024eba144843cd9e344566d9fcee73b04767
-  languageName: node
-  linkType: hard
-
 "thread-stream@npm:^2.0.0":
   version: 2.2.0
   resolution: "thread-stream@npm:2.2.0"
@@ -13089,13 +12988,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-interface-checker@npm:^0.1.9":
-  version: 0.1.13
-  resolution: "ts-interface-checker@npm:0.1.13"
-  checksum: 232509f1b84192d07b81d1e9b9677088e590ac1303436da1e92b296e9be8e31ea042e3e1fd3d29b1742ad2c959e95afe30f63117b8f1bc3a3850070a5142fea7
-  languageName: node
-  linkType: hard
-
 "ts-jest@npm:29.0.3":
   version: 29.0.3
   resolution: "ts-jest@npm:29.0.3"
@@ -13167,6 +13059,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tsconfck@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "tsconfck@npm:2.0.1"
+  peerDependencies:
+    typescript: ^4.3.5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  bin:
+    tsconfck: bin/tsconfck.js
+  checksum: 6827a6c3e48977ac1761f3bdb50799499ae389075bd4ccc0bce259340be14ce659e66698b442d79a2ea78b76e538ef56d48585057a96ab01daf4588e1aad611a
+  languageName: node
+  linkType: hard
+
 "tsconfig-paths@npm:^3.14.1":
   version: 3.14.1
   resolution: "tsconfig-paths@npm:3.14.1"
@@ -13179,17 +13085,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths@npm:^4.0.0":
-  version: 4.1.0
-  resolution: "tsconfig-paths@npm:4.1.0"
-  dependencies:
-    json5: "npm:^2.2.1"
-    minimist: "npm:^1.2.6"
-    strip-bom: "npm:^3.0.0"
-  checksum: cadfd6a856c1e6cb96336b2802a3f3d064baee31b5d4ecaeb8bb4397cdc1e9fc5f2f085cc753042a8c8552323ad8ff7a3c98686567e1148a77acc3092ab7b328
-  languageName: node
-  linkType: hard
-
 "tslib@npm:2.4.1, tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.4.0, tslib@npm:^2.4.1, tslib@npm:~2.4.0":
   version: 2.4.1
   resolution: "tslib@npm:2.4.1"
@@ -13197,7 +13092,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.8.1, tslib@npm:^1.9.3":
+"tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: 69ae09c49eea644bc5ebe1bca4fa4cc2c82b7b3e02f43b84bd891504edf66dbc6b2ec0eef31a957042de2269139e4acff911e6d186a258fb14069cd7f6febce2
@@ -13593,17 +13488,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-tsconfig-paths@npm:3.6.0":
-  version: 3.6.0
-  resolution: "vite-tsconfig-paths@npm:3.6.0"
+"vite-tsconfig-paths@npm:4.0.1":
+  version: 4.0.1
+  resolution: "vite-tsconfig-paths@npm:4.0.1"
   dependencies:
     debug: "npm:^4.1.1"
     globrex: "npm:^0.1.2"
-    recrawl-sync: "npm:^2.0.3"
-    tsconfig-paths: "npm:^4.0.0"
+    tsconfck: "npm:^2.0.1"
   peerDependencies:
     vite: ">2.0.0-0"
-  checksum: 96dffa52020f09331df6acd66cd67c95eafcd2f24dfdac4e518b6be7e5dba0408d23a543faa7bece3e1c740803c583802db9bcf74a2fde4b563c449e8f9ad67f
+  checksum: cd7d81f9814749282b78dae37eb186c81eca16b9ffc3b19ffddd93357d0fe8388c125352b3945dd19fd45e33a1475f1f6da70a8e32d599806ec884796c607c59
   languageName: node
   linkType: hard
 
