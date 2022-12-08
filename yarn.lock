@@ -2312,7 +2312,7 @@ __metadata:
     tslib: "npm:2.4.1"
     typedoc: "npm:0.23.21"
     typedoc-plugin-markdown: "npm:3.14.0"
-    typescript: "npm:4.9.3"
+    typescript: "npm:4.9.4"
     vite: "npm:3.2.5"
     vite-tsconfig-paths: "npm:3.6.0"
     vitest: "npm:0.25.5"
@@ -8073,7 +8073,7 @@ __metadata:
     prettier: "npm:2.8.0"
     rimraf: "npm:3.0.2"
     shell-quote: "npm:1.7.4"
-    typescript: "npm:4.9.3"
+    typescript: "npm:4.9.4"
   languageName: unknown
   linkType: soft
 
@@ -13333,7 +13333,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.9.3, typescript@npm:^4.6.4":
+"typescript@npm:4.9.3":
   version: 4.9.3
   resolution: "typescript@npm:4.9.3"
   bin:
@@ -13343,13 +13343,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A4.9.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.6.4#optional!builtin<compat/typescript>":
+"typescript@npm:4.9.4, typescript@npm:^4.6.4":
+  version: 4.9.4
+  resolution: "typescript@npm:4.9.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 5008b97a2a3afdbe57ea70e504ebc8ec98f18d888059dfb7932a41f566a1360a28afc8de2a440fd6143b4014cc6d2616079931dc690c7513c2d21fa53957e0ec
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A4.9.3#optional!builtin<compat/typescript>":
   version: 4.9.3
   resolution: "typescript@patch:typescript@npm%3A4.9.3#optional!builtin<compat/typescript>::version=4.9.3&hash=d73830"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 26a1e4c75656e1d8d912d16bf9d2c0fa76b6339d9288681cb999577209e8f73e79c2a91631ed5104c69bbcd565d2451ea0c6beef5119acfe127ed4a88b34cf08
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A4.9.4#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.6.4#optional!builtin<compat/typescript>":
+  version: 4.9.4
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#optional!builtin<compat/typescript>::version=4.9.4&hash=d73830"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: b8cba6ab3ee30218578663352bcd74220ef20c42544fd1cc1382f24dee385002e784702b176c451da9c14c39965c035815902ef43b06eeefd5faae18ee700cea
   languageName: node
   linkType: hard
 
