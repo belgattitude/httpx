@@ -2424,8 +2424,8 @@ __metadata:
     "@types/jest": "npm:29.2.4"
     "@types/node": "npm:18.11.13"
     "@types/statuses": "npm:2.0.0"
-    "@vitest/coverage-istanbul": "npm:0.25.7"
-    "@vitest/ui": "npm:0.25.7"
+    "@vitest/coverage-istanbul": "npm:0.25.8"
+    "@vitest/ui": "npm:0.25.8"
     corejs: "npm:1.0.0"
     cross-env: "npm:7.0.3"
     error-cause-polyfill: "npm:1.3.0"
@@ -2448,7 +2448,7 @@ __metadata:
     typescript: "npm:4.9.4"
     vite: "npm:4.0.1"
     vite-tsconfig-paths: "npm:4.0.2"
-    vitest: "npm:0.25.7"
+    vitest: "npm:0.25.8"
     webpack: "npm:5.75.0"
   languageName: unknown
   linkType: soft
@@ -3672,7 +3672,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai@npm:*, @types/chai@npm:^4.3.3":
+"@types/chai@npm:*, @types/chai@npm:^4.3.4":
   version: 4.3.4
   resolution: "@types/chai@npm:4.3.4"
   checksum: 6e1b44629831f845b760d2f8b44c751c2cab1397c2a810730e6b1786ff0af83dfbc489b9403a3eb772f0573f8ed96e533e7500af20cafe41ef79c695fea9d9ed
@@ -4133,9 +4133,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-istanbul@npm:0.25.7":
-  version: 0.25.7
-  resolution: "@vitest/coverage-istanbul@npm:0.25.7"
+"@vitest/coverage-istanbul@npm:0.25.8":
+  version: 0.25.8
+  resolution: "@vitest/coverage-istanbul@npm:0.25.8"
   dependencies:
     istanbul-lib-coverage: "npm:^3.2.0"
     istanbul-lib-instrument: "npm:^5.2.1"
@@ -4143,17 +4143,17 @@ __metadata:
     istanbul-lib-source-maps: "npm:^4.0.1"
     istanbul-reports: "npm:^3.1.5"
     test-exclude: "npm:^6.0.0"
-    vitest: "npm:0.25.7"
-  checksum: 70674a91faba7f7865a7dcdeda936d237b6bf4f90d3b8e4275145f7c074c768b47bcbee227542aa7dfb4a1bdf63102c7b4a50cff5e8efbc3b68ba4a5279a582d
+    vitest: "npm:0.25.8"
+  checksum: cc045cbb04499e36b40380e058aa59700515626b7c14af04429432d55f9b9c86ba25603ea7123bc00d65b8df5e8ff4bd742544bc3a7912302bed83edb4a02808
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:0.25.7":
-  version: 0.25.7
-  resolution: "@vitest/ui@npm:0.25.7"
+"@vitest/ui@npm:0.25.8":
+  version: 0.25.8
+  resolution: "@vitest/ui@npm:0.25.8"
   dependencies:
     sirv: "npm:^2.0.2"
-  checksum: 4047fcc8970ea0fc1ad7dd09487ec67585e59ac6ef2ca25139fe095b78429b520903a62084513ab4ec74efb40cd34191680d8589c82e0ddf3ad82aef13c6875a
+  checksum: df5787dc6c770ce20064544e2cbce2aec8349ebf79e2c558969d4187cb7a0ced6e89f2366c10f9bd6555dc8f9be5670932f68bf43b2f555cd782de777cfd04cf
   languageName: node
   linkType: hard
 
@@ -5194,7 +5194,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:^4.3.6":
+"chai@npm:^4.3.7":
   version: 4.3.7
   resolution: "chai@npm:4.3.7"
   dependencies:
@@ -13447,16 +13447,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:0.25.7":
-  version: 0.25.7
-  resolution: "vitest@npm:0.25.7"
+"vitest@npm:0.25.8":
+  version: 0.25.8
+  resolution: "vitest@npm:0.25.8"
   dependencies:
-    "@types/chai": "npm:^4.3.3"
+    "@types/chai": "npm:^4.3.4"
     "@types/chai-subset": "npm:^1.3.3"
     "@types/node": "npm:*"
-    acorn: "npm:^8.8.0"
+    acorn: "npm:^8.8.1"
     acorn-walk: "npm:^8.2.0"
-    chai: "npm:^4.3.6"
+    chai: "npm:^4.3.7"
     debug: "npm:^4.3.4"
     local-pkg: "npm:^0.4.2"
     source-map: "npm:^0.6.1"
@@ -13484,7 +13484,7 @@ __metadata:
       optional: true
   bin:
     vitest: vitest.mjs
-  checksum: 5ee7036febcd0e3d6beff9a6229ea88a4477fd8955fd2f6c1583161ba00a81c711ba5a38f7912ec39b993424d94d2a7c4cda0f9e4a08c7b41ba9039c4df8f68f
+  checksum: 72f8ed0eb3641d8ed01de1a5814459cb8a3ebf9ffc46cd3e2b0b875872efad3c7b9a64500bc84052741f9495049996f4913c884c99d9c682ccf91849c2cccc4c
   languageName: node
   linkType: hard
 
