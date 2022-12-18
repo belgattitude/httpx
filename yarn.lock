@@ -2488,7 +2488,7 @@ __metadata:
     superjson: "npm:1.12.0"
     ts-jest: "npm:29.0.3"
     tslib: "npm:2.4.1"
-    typedoc: "npm:0.23.22"
+    typedoc: "npm:0.23.23"
     typedoc-plugin-markdown: "npm:3.14.0"
     typescript: "npm:4.9.4"
     vite: "npm:4.0.1"
@@ -9848,12 +9848,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.0.19":
-  version: 4.2.3
-  resolution: "marked@npm:4.2.3"
+"marked@npm:^4.2.4":
+  version: 4.2.4
+  resolution: "marked@npm:4.2.4"
   bin:
     marked: bin/marked.js
-  checksum: 5926ad8971d2e7be16a0a24e0fea1d2ab6dda2694b54acabfe9a35641e0db7ca5324bf3032f09874f1a92a6dadb6d95719a0c3cdc6c2c6e3a026813144ce8f47
+  checksum: ce34555b993825eae46d4a51cf9d69b5af093e9f539a6db0277d12cabe1440eb4ebef60cf2880ae12934d1d70c3c97cd1df2b06c0882c252b0c55ece1e7539e4
   languageName: node
   linkType: hard
 
@@ -10027,12 +10027,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "minimatch@npm:5.1.0"
+"minimatch@npm:^5.0.1, minimatch@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "minimatch@npm:5.1.1"
   dependencies:
     brace-expansion: "npm:^2.0.1"
-  checksum: 21c4877438068da0728eeb678107ea716fd3c76fcde713c9d11b01d7d15c276071aa2fecfcd353b970a290cffd572c3ed43e0a64804470ab9ae97717ed13fb18
+  checksum: 375a71b6e83b35c4c555c2fc885822bfa140c3d105e536f0e4652fdcf0872d9d70955376a39230475683f4fa7eb7bec37d29dc9ab2a1b8008e48697f52e198b1
   languageName: node
   linkType: hard
 
@@ -13187,19 +13187,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc@npm:0.23.22":
-  version: 0.23.22
-  resolution: "typedoc@npm:0.23.22"
+"typedoc@npm:0.23.23":
+  version: 0.23.23
+  resolution: "typedoc@npm:0.23.23"
   dependencies:
     lunr: "npm:^2.3.9"
-    marked: "npm:^4.0.19"
-    minimatch: "npm:^5.1.0"
+    marked: "npm:^4.2.4"
+    minimatch: "npm:^5.1.1"
     shiki: "npm:^0.11.1"
   peerDependencies:
     typescript: 4.6.x || 4.7.x || 4.8.x || 4.9.x
   bin:
     typedoc: bin/typedoc
-  checksum: d42fb5656fb7ef1473b7807b86f8988c96abf5717d752023f39326ea00b778434aca9e863937a2df08ece736eb2e96cb5fd989a983bb5b0676f67bffde7a341c
+  checksum: 4dad80c0b8895d8e4936a2807c8ddcbecc9c85007cf6537aa4513b18451a69612c9f6db936dbd68100c28cbec1f1c7fc2a28c1d9c8080601a4d7e9b706d58f05
   languageName: node
   linkType: hard
 
