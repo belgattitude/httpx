@@ -1488,14 +1488,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/changelog-github@npm:0.4.7":
-  version: 0.4.7
-  resolution: "@changesets/changelog-github@npm:0.4.7"
+"@changesets/changelog-github@npm:0.4.8":
+  version: 0.4.8
+  resolution: "@changesets/changelog-github@npm:0.4.8"
   dependencies:
-    "@changesets/get-github-info": "npm:^0.5.1"
-    "@changesets/types": "npm:^5.2.0"
+    "@changesets/get-github-info": "npm:^0.5.2"
+    "@changesets/types": "npm:^5.2.1"
     dotenv: "npm:^8.1.0"
-  checksum: 1d37e7369ce66f2e23ad122910511eba7d3d61dbb87cfd7c309491b819458473fcd5697dce5aa0762d7e531e38a44390f98b2afb61983604b563a9e9fc85586c
+  checksum: e8bf1c8f769594be5d79cb2c2d23c9d0d9042e706cd0534da92b3dd96e5fa8c17fd6fb6c1bbfd1dc0432beabeafc83667909b633fcd5652bda5947ddfceabafa
   languageName: node
   linkType: hard
 
@@ -1579,13 +1579,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/get-github-info@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@changesets/get-github-info@npm:0.5.1"
+"@changesets/get-github-info@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "@changesets/get-github-info@npm:0.5.2"
   dependencies:
     dataloader: "npm:^1.4.0"
     node-fetch: "npm:^2.5.0"
-  checksum: f4ad9f091ef214ade45661298b2fc6af7b79f207a32e4e1de60407bdf5342a6c4ab96cea0ec86f9303191e5f5b1567fe197a02c99e0ce6ad04ce1309ca34bbef
+  checksum: 702c001d939be544490db4903c63d60a38404348bf6658632e9a8e204b1a96289a604a27aa00da67322331e4cfe3592e7175dbd88736449c203f4664a7c69824
   languageName: node
   linkType: hard
 
@@ -1680,10 +1680,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/types@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "@changesets/types@npm:5.2.0"
-  checksum: ded70cef0ae61e77d36392e0112f5f3e43f7125c9bcbb5fab7bb9400c82c105c117722f64a542c2727d7f01e1dc3bcced63ba8001d66a1e0df123e91b46a4e3d
+"@changesets/types@npm:^5.2.0, @changesets/types@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "@changesets/types@npm:5.2.1"
+  checksum: 2500a5047e28daa4ffdef44ba4afb8f47a923b2466f976e3611a2afb29373152f64ca79c624a7b84d3b0c1d3e44d72f3a82871c21690b36e28073b8cd2825a28
   languageName: node
   linkType: hard
 
@@ -8012,7 +8012,7 @@ __metadata:
   resolution: "http-exception-monorepo@workspace:."
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:1.13.0"
-    "@changesets/changelog-github": "npm:0.4.7"
+    "@changesets/changelog-github": "npm:0.4.8"
     "@changesets/cli": "npm:2.25.2"
     "@commitlint/cli": "npm:17.3.0"
     "@commitlint/config-conventional": "npm:17.3.0"
