@@ -2483,7 +2483,7 @@ __metadata:
     npm-run-all: "npm:4.1.5"
     rimraf: "npm:3.0.2"
     rollup: "npm:3.9.1"
-    rollup-plugin-dts: "npm:5.1.0"
+    rollup-plugin-dts: "npm:5.1.1"
     rollup-plugin-swc3: "npm:0.8.0"
     size-limit: "npm:8.1.0"
     statuses: "npm:2.0.1"
@@ -2827,7 +2827,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10":
+"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.13":
   version: 1.4.14
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.14"
   checksum: 3fbaff1387c1338b097eeb6ff92890d7838f7de0dde259e4983763b44540bfd5ca6a1f7644dc8ad003a57f7e80670d5b96a8402f1386ba9aee074743ae9bad51
@@ -9761,12 +9761,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.26.7":
-  version: 0.26.7
-  resolution: "magic-string@npm:0.26.7"
+"magic-string@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "magic-string@npm:0.27.0"
   dependencies:
-    sourcemap-codec: "npm:^1.4.8"
-  checksum: 950035b344fe2a8163668980bc4a215a0b225086e6e22100fd947e7647053c6ba6b4f11a04de83a97a276526ccb602ef53b173725dbb1971fb146cff5a5e14f6
+    "@jridgewell/sourcemap-codec": "npm:^1.4.13"
+  checksum: cddacfea14441ca57ae8a307bc3cf90bac69efaa4138dd9a80804cffc2759bf06f32da3a293fb13eaa96334b7d45b7768a34f1d226afae25d2f05b05a3bb37d8
   languageName: node
   linkType: hard
 
@@ -11846,19 +11846,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-dts@npm:5.1.0":
-  version: 5.1.0
-  resolution: "rollup-plugin-dts@npm:5.1.0"
+"rollup-plugin-dts@npm:5.1.1":
+  version: 5.1.1
+  resolution: "rollup-plugin-dts@npm:5.1.1"
   dependencies:
     "@babel/code-frame": "npm:^7.18.6"
-    magic-string: "npm:^0.26.7"
+    magic-string: "npm:^0.27.0"
   peerDependencies:
     rollup: ^3.0.0
     typescript: ^4.1
   dependenciesMeta:
     "@babel/code-frame":
       optional: true
-  checksum: f56a9c10424bbaf1e8bbd7945e052700ed32e3d3bdb0d72bae25b398ae83fdfcb72bcf9ca4a7c100d2847716d8dbae578861b00320d24fbb20f407c5aa927e22
+  checksum: cf8c4e41ae4362f0e78dea4fce4190c4a834c5af5fd64fac7eef3930c050b8d456d03f2207dd5216b7153170c12cf6fcc551e722d9d98b53e91687f8de4a88d2
   languageName: node
   linkType: hard
 
@@ -12319,13 +12319,6 @@ __metadata:
   version: 0.6.1
   resolution: "source-map@npm:0.6.1"
   checksum: ab55398007c5e5532957cb0beee2368529618ac0ab372d789806f5718123cc4367d57de3904b4e6a4170eb5a0b0f41373066d02ca0735a0c4d75c7d328d3e011
-  languageName: node
-  linkType: hard
-
-"sourcemap-codec@npm:^1.4.8":
-  version: 1.4.8
-  resolution: "sourcemap-codec@npm:1.4.8"
-  checksum: f099279fdaae070ff156df7414bbe39aad69cdd615454947ed3e19136bfdfcb4544952685ee73f56e17038f4578091e12b17b283ed8ac013882916594d95b9e6
   languageName: node
   linkType: hard
 
