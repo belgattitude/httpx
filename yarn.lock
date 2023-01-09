@@ -1713,13 +1713,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/cli@npm:17.4.0":
-  version: 17.4.0
-  resolution: "@commitlint/cli@npm:17.4.0"
+"@commitlint/cli@npm:17.4.1":
+  version: 17.4.1
+  resolution: "@commitlint/cli@npm:17.4.1"
   dependencies:
     "@commitlint/format": "npm:^17.4.0"
     "@commitlint/lint": "npm:^17.4.0"
-    "@commitlint/load": "npm:^17.4.0"
+    "@commitlint/load": "npm:^17.4.1"
     "@commitlint/read": "npm:^17.4.0"
     "@commitlint/types": "npm:^17.4.0"
     execa: "npm:^5.0.0"
@@ -1729,7 +1729,7 @@ __metadata:
     yargs: "npm:^17.0.0"
   bin:
     commitlint: cli.js
-  checksum: f578a456204603f839fe95c8b436a7fdbeb9f777c036085ce5fd7cdbd144b26ba28a833b705d2f050b752a1aba29cba4aecd206c97d97d6cba3f0f2ef1af69eb
+  checksum: c8084931f42f1d573d40dc1e4fa46815a9c6d7c2966990b6e210a9c3344c43058afcd48459daeba1a2945755baac1d3f804b69ac28283a246d54ba8eb628b610
   languageName: node
   linkType: hard
 
@@ -1805,14 +1805,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/load@npm:^17.4.0":
-  version: 17.4.0
-  resolution: "@commitlint/load@npm:17.4.0"
+"@commitlint/load@npm:^17.4.1":
+  version: 17.4.1
+  resolution: "@commitlint/load@npm:17.4.1"
   dependencies:
     "@commitlint/config-validator": "npm:^17.4.0"
     "@commitlint/execute-rule": "npm:^17.4.0"
     "@commitlint/resolve-extends": "npm:^17.4.0"
     "@commitlint/types": "npm:^17.4.0"
+    "@types/node": "npm:*"
     chalk: "npm:^4.1.0"
     cosmiconfig: "npm:^8.0.0"
     cosmiconfig-typescript-loader: "npm:^4.0.0"
@@ -1822,7 +1823,7 @@ __metadata:
     resolve-from: "npm:^5.0.0"
     ts-node: "npm:^10.8.1"
     typescript: "npm:^4.6.4"
-  checksum: a0414b9ba7e1741ce7917f368a0efb76ca9380a20b6126c1737d12a6329d349cc26293dc7fce6f4ff219f30df4b1caa77b34269fc06ab4cd7da46491db63f345
+  checksum: 22bff5fc2cb912d72681544c028abe362f547308aee96bb2dfb4e181d4232f4ff81e41c004429eeb23e078957f50aeb286915a8a21f9d692812a2a341d29ddec
   languageName: node
   linkType: hard
 
@@ -8018,7 +8019,7 @@ __metadata:
     "@belgattitude/eslint-config-bases": "npm:1.14.0"
     "@changesets/changelog-github": "npm:0.4.8"
     "@changesets/cli": "npm:2.26.0"
-    "@commitlint/cli": "npm:17.4.0"
+    "@commitlint/cli": "npm:17.4.1"
     "@commitlint/config-conventional": "npm:17.4.0"
     "@types/prettier": "npm:2.7.2"
     "@types/shell-quote": "npm:1.7.1"
