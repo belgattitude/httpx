@@ -33,13 +33,14 @@
     "g:check-size": "yarn workspaces foreach -ptv run check-size",
     "g:check-package-dist": "yarn workspaces foreach -ptv --include '@httpx/*' run check-dist",
     "g:release": "yarn g:build-packages && yarn g:check-package-dist && changeset publish",
-    "clean:lint": "rimraf --no-glob ./.cache/eslint",
-    "clean:global-cache": "rimraf --no-glob ./.cache",
+    "clean:lint": "rimraf ./.cache/eslint",
+    "clean:global-cache": "rimraf ./.cache",
     "deps:check": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml --deep",
     "deps:update": "yarn dlx npm-check-updates@latest --configFileName ncurc.yml -u --deep",
     "docs:serve": "docsify serve ./docs",
     "check:install": "yarn dlx @yarnpkg/doctor@3.1 .",
     "postinstall": "is-ci || yarn husky install",
+    "nuke:node_modules": "rimraf 'node_modules' 'packages/exception/node_modules' 'examples/nextjs-app/node_modules'",
     "format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"./*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
   },
   "devDependencies": {
@@ -59,7 +60,7 @@
     "lint-staged": "13.1.0",
     "npm-run-all": "4.1.5",
     "prettier": "2.8.2",
-    "rimraf": "3.0.2",
+    "rimraf": "4.0.4",
     "shell-quote": "1.7.4",
     "typescript": "4.9.4"
   },
