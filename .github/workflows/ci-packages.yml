@@ -48,11 +48,11 @@ jobs:
 
       - name: Typecheck
         run: |
-          yarn workspaces foreach -tv --from '@httpx/*' --no-private --since=origin/main run typecheck
+          yarn workspaces foreach -tv --from '@httpx/*' --no-private run typecheck
 
       - name: ESLint checks
         run: |
-          yarn workspaces foreach -tv --from '@httpx/*' --no-private --since=origin/main run lint
+          yarn workspaces foreach -tv --from '@httpx/*' --no-private run lint
 
       - name: Unit tests
         run: |
@@ -60,15 +60,15 @@ jobs:
 
       - name: Build packages
         run: |
-          yarn workspaces foreach -tv --include '@httpx/*' --no-private --since=origin/main run build
+          yarn workspaces foreach -tv --include '@httpx/*' --no-private run build
 
       - name: Check build for size-limits
         run: |
-          yarn workspaces foreach -tv --include '@httpx/*' --no-private --since=origin/main run check-size
+          yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-size
 
       - name: Check build for ecmascript compliance
         run: |
-          yarn workspaces foreach -tv --include '@httpx/*' --no-private --since=origin/main run check-dist
+          yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-dist
 
       - name: Codecov upload
         if: matrix.node-version == '16.x'
@@ -83,4 +83,4 @@ jobs:
 
       - name: Check doc can be built
         run: |
-          yarn workspaces foreach -tv --include '@httpx/*' --no-private --since=origin/main run build-doc
+          yarn workspaces foreach -tv --include '@httpx/*' --no-private run build-doc
