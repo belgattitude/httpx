@@ -14,7 +14,7 @@ const defaultLogger = new ConsoleLogger();
 
 /**
  * Basic example of a nextjs api centralized error handler.
- * @see https://github.com/belgattitude/http-exception
+ * @see https://github.com/belgattitude/httpx
  */
 export const withApiErrorHandler = (params?: Params) => {
   const { logger = defaultLogger, defaultStatusCode = 500 } = params ?? {};
