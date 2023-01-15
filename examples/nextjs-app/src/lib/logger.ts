@@ -3,7 +3,7 @@
  *
  * Shows a possible way to conditionally log HttpException specific info (context, status codes...).
  *
- * @see https://github.com/belgattitude/http-exception
+ * @see https://github.com/belgattitude/httpx
  */
 import { isHttpException } from '@httpx/exception';
 
