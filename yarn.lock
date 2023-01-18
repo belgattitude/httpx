@@ -2176,7 +2176,7 @@ __metadata:
     rollup: "npm:3.10.0"
     rollup-plugin-dts: "npm:5.1.1"
     rollup-plugin-swc3: "npm:0.8.0"
-    size-limit: "npm:8.1.1"
+    size-limit: "npm:8.1.2"
     statuses: "npm:2.0.1"
     superjson: "npm:1.12.2"
     ts-jest: "npm:29.0.5"
@@ -4890,13 +4890,6 @@ __metadata:
   version: 3.6.1
   resolution: "ci-info@npm:3.6.1"
   checksum: 7d5147d627590157b340a795e97b23e20b9633ea34ccc943ef4dfae4ab5cc50b9a83b7e6c513b99f864dc5cca60b4d5fdbfc063381a02730b2bf6cd514af3949
-  languageName: node
-  linkType: hard
-
-"ci-job-number@npm:^1.2.2":
-  version: 1.2.2
-  resolution: "ci-job-number@npm:1.2.2"
-  checksum: 8e827de2629c8b1e76a1e3ad89b2a16ce1a8dd7f9c61a9f0d687bdb9a8265f3e2bd1bf83aa98b60a40978334afc87965c9e63cf5b5871e3571ae9a7722f982b8
   languageName: node
   linkType: hard
 
@@ -11528,21 +11521,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"size-limit@npm:8.1.1":
-  version: 8.1.1
-  resolution: "size-limit@npm:8.1.1"
+"size-limit@npm:8.1.2":
+  version: 8.1.2
+  resolution: "size-limit@npm:8.1.2"
   dependencies:
     bytes-iec: "npm:^3.1.1"
     chokidar: "npm:^3.5.3"
-    ci-job-number: "npm:^1.2.2"
     globby: "npm:^11.1.0"
     lilconfig: "npm:^2.0.6"
-    mkdirp: "npm:^1.0.4"
     nanospinner: "npm:^1.1.0"
     picocolors: "npm:^1.0.0"
   bin:
     size-limit: bin.js
-  checksum: a45e11f77de5109251d4bea780ffe8d7dea0edaf44fc70fccc12623bf2015ce43ffb1973c58643bc5414c9c25ca8ad0b4434d953d0cb38dcb46112db5bd300de
+  checksum: c33fc635aa1b2ae54f5757f00b944daaf86bc7f8aa907aa2424e89225a5d89d23b3a4726bf42095e83c518ed6154ffeecee3bca211aabc5b5b7559e2303229b5
   languageName: node
   linkType: hard
 
