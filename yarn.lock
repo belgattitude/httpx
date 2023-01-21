@@ -2115,8 +2115,8 @@ __metadata:
     "@types/jest": "npm:29.2.6"
     "@types/node": "npm:18.11.18"
     "@types/statuses": "npm:2.0.1"
-    "@vitest/coverage-istanbul": "npm:0.27.2"
-    "@vitest/ui": "npm:0.27.2"
+    "@vitest/coverage-istanbul": "npm:0.27.3"
+    "@vitest/ui": "npm:0.27.3"
     corejs: "npm:1.0.0"
     cross-env: "npm:7.0.3"
     error-cause-polyfill: "npm:1.3.0"
@@ -2139,7 +2139,7 @@ __metadata:
     typescript: "npm:4.9.4"
     vite: "npm:4.0.4"
     vite-tsconfig-paths: "npm:4.0.5"
-    vitest: "npm:0.27.2"
+    vitest: "npm:0.27.3"
     webpack: "npm:5.75.0"
   languageName: unknown
   linkType: soft
@@ -3702,9 +3702,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-istanbul@npm:0.27.2":
-  version: 0.27.2
-  resolution: "@vitest/coverage-istanbul@npm:0.27.2"
+"@vitest/coverage-istanbul@npm:0.27.3":
+  version: 0.27.3
+  resolution: "@vitest/coverage-istanbul@npm:0.27.3"
   dependencies:
     istanbul-lib-coverage: "npm:^3.2.0"
     istanbul-lib-instrument: "npm:^5.2.1"
@@ -3712,19 +3712,19 @@ __metadata:
     istanbul-lib-source-maps: "npm:^4.0.1"
     istanbul-reports: "npm:^3.1.5"
     test-exclude: "npm:^6.0.0"
-    vitest: "npm:0.27.2"
-  checksum: 1fbed17e07cfa671fc48ce7cb8dfe1a09a4f825f28630179659b35963a06f462b2c800716dd8e8e6540d67a0e30162790a483ce8daa0caa56510094d04c3782f
+    vitest: "npm:0.27.3"
+  checksum: 40320c3f2a4f67e4f860d589c93ba7d369fd5d591cb49ca60121d3b9e949c72c7e9d49a84872c3496a95232586e07109e3460a86ace3af0a990866e00e53c572
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:0.27.2":
-  version: 0.27.2
-  resolution: "@vitest/ui@npm:0.27.2"
+"@vitest/ui@npm:0.27.3":
+  version: 0.27.3
+  resolution: "@vitest/ui@npm:0.27.3"
   dependencies:
     fast-glob: "npm:^3.2.12"
     flatted: "npm:^3.2.7"
     sirv: "npm:^2.0.2"
-  checksum: 90e60656a9baf069ed6e46c2ae597fcccfd4294db7a95943c52c9039bd0a7af328a2a9cf5f1dd7ec71c790e7c4d23008976a0ff371db0d613fe7735d3f9e30a2
+  checksum: a4c847ea68864cc19d7eaa9c5a29eaa95fb59175bf9216eaad470738e11f0ffe0db6d6573d40d6b5bfff6a8f254881ceb436828886a04f5349583079e1dc20f2
   languageName: node
   linkType: hard
 
@@ -11727,6 +11727,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"std-env@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "std-env@npm:3.3.1"
+  checksum: 19cc0084ba66c13b6024ce8e11ceed6c771fb96da1b2afd57acad7252f5299a5dabf4a003b67ef89a50065a0e80bad7a622fc735a87a799872f32c4e63bc79c2
+  languageName: node
+  linkType: hard
+
 "stream-transform@npm:^2.1.3":
   version: 2.1.3
   resolution: "stream-transform@npm:2.1.3"
@@ -12734,9 +12741,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-node@npm:0.27.2":
-  version: 0.27.2
-  resolution: "vite-node@npm:0.27.2"
+"vite-node@npm:0.27.3":
+  version: 0.27.3
+  resolution: "vite-node@npm:0.27.3"
   dependencies:
     cac: "npm:^6.7.14"
     debug: "npm:^4.3.4"
@@ -12748,7 +12755,7 @@ __metadata:
     vite: "npm:^3.0.0 || ^4.0.0"
   bin:
     vite-node: vite-node.mjs
-  checksum: 723a86052b4441dde9e1a17cb31545dc2a088719098ed88eeca20d6faff8c0e356d57f531508f3f3aced1da6a8cc604131025642a0def0a69a8a9a0b6d96010a
+  checksum: d6880d0499a606f764732bacef7f50da83a071ffaa00f7040db9d0b326680909d6c15ef825f234d9d8ba27cb2a30ed093d1d805bf34c4ab76b8ee7a2464ca360
   languageName: node
   linkType: hard
 
@@ -12801,9 +12808,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:0.27.2":
-  version: 0.27.2
-  resolution: "vitest@npm:0.27.2"
+"vitest@npm:0.27.3":
+  version: 0.27.3
+  resolution: "vitest@npm:0.27.3"
   dependencies:
     "@types/chai": "npm:^4.3.4"
     "@types/chai-subset": "npm:^1.3.3"
@@ -12816,12 +12823,13 @@ __metadata:
     local-pkg: "npm:^0.4.2"
     picocolors: "npm:^1.0.0"
     source-map: "npm:^0.6.1"
+    std-env: "npm:^3.3.1"
     strip-literal: "npm:^1.0.0"
     tinybench: "npm:^2.3.1"
     tinypool: "npm:^0.3.0"
     tinyspy: "npm:^1.0.2"
     vite: "npm:^3.0.0 || ^4.0.0"
-    vite-node: "npm:0.27.2"
+    vite-node: "npm:0.27.3"
     why-is-node-running: "npm:^2.2.2"
   peerDependencies:
     "@edge-runtime/vm": "*"
@@ -12842,7 +12850,7 @@ __metadata:
       optional: true
   bin:
     vitest: vitest.mjs
-  checksum: 7ca58ebac40fd324476eaa1e11bf558f30455fe0d32ecf6d05f2c0de6360e194859585f690d5dcd1eddf2ab89e13409874ea52bd317ccc57e6b7407b1e2a2ee9
+  checksum: 90a6ee91cc013d1ef501b4a983b491a42934b7bcd0df2c0c1744f29538ff3c796542b486a5fba44f43a1a85c6c7575f21fc0e8f4f092838ac6fc92a546a79fe0
   languageName: node
   linkType: hard
 
