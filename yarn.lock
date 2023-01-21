@@ -106,9 +106,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helper-create-class-features-plugin@npm:^7.18.6, @babel/helper-create-class-features-plugin@npm:^7.20.7":
-  version: 7.20.7
-  resolution: "@babel/helper-create-class-features-plugin@npm:7.20.7"
+"@babel/helper-create-class-features-plugin@npm:^7.18.6, @babel/helper-create-class-features-plugin@npm:^7.20.12":
+  version: 7.20.12
+  resolution: "@babel/helper-create-class-features-plugin@npm:7.20.12"
   dependencies:
     "@babel/helper-annotate-as-pure": "npm:^7.18.6"
     "@babel/helper-environment-visitor": "npm:^7.18.9"
@@ -116,10 +116,11 @@ __metadata:
     "@babel/helper-member-expression-to-functions": "npm:^7.20.7"
     "@babel/helper-optimise-call-expression": "npm:^7.18.6"
     "@babel/helper-replace-supers": "npm:^7.20.7"
+    "@babel/helper-skip-transparent-expression-wrappers": "npm:^7.20.0"
     "@babel/helper-split-export-declaration": "npm:^7.18.6"
   peerDependencies:
     "@babel/core": ^7.0.0
-  checksum: 04e66060a577f5ca188c1551dd3ab0283de0ad9ae78c00f6aac88c8db55b27d771e72773eb1fc3dcb43800201e1e9bb49e8560b12f01ccaaefb1984e773e0653
+  checksum: e17a6e3afa92c5b286093f754efa692a76a5893fe39e66c7b246e3c37db5be43012973975ed1548f1ee6c2713dd88cdb369672460e29be2c072c3cdf930879ef
   languageName: node
   linkType: hard
 
@@ -1132,16 +1133,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-typescript@npm:7.20.7, @babel/plugin-transform-typescript@npm:^7.18.6":
-  version: 7.20.7
-  resolution: "@babel/plugin-transform-typescript@npm:7.20.7"
+"@babel/plugin-transform-typescript@npm:7.20.13, @babel/plugin-transform-typescript@npm:^7.18.6":
+  version: 7.20.13
+  resolution: "@babel/plugin-transform-typescript@npm:7.20.13"
   dependencies:
-    "@babel/helper-create-class-features-plugin": "npm:^7.20.7"
+    "@babel/helper-create-class-features-plugin": "npm:^7.20.12"
     "@babel/helper-plugin-utils": "npm:^7.20.2"
     "@babel/plugin-syntax-typescript": "npm:^7.20.0"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 751c5f60ed38d6eeb10c3bae6e5215d58eda4405ec2da4c8b6be1126a41dee985e4119543faedb4e3b5c06785664f0eaef3f69b2e2db84449b6cecde8a97f822
+  checksum: 3c298015e12472a07097cf1d9050cc0662f3054f0809afca25b9cbddc25a75d2fb75b080ab169de6d0c03b08a0b55d047ce9840ccbcdc51cdcfdb21f696bcf53
   languageName: node
   linkType: hard
 
@@ -2100,7 +2101,7 @@ __metadata:
     "@babel/plugin-proposal-class-properties": "npm:7.18.6"
     "@babel/plugin-transform-classes": "npm:7.20.7"
     "@babel/plugin-transform-spread": "npm:7.20.7"
-    "@babel/plugin-transform-typescript": "npm:7.20.7"
+    "@babel/plugin-transform-typescript": "npm:7.20.13"
     "@babel/preset-env": "npm:7.20.2"
     "@babel/preset-typescript": "npm:7.18.6"
     "@belgattitude/eslint-config-bases": "npm:1.17.0"
