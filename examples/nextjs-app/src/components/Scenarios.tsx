@@ -1,7 +1,7 @@
 import { HttpBadGateway, HttpForbidden } from '@httpx/exception';
 import { toJson, fromJson } from '@httpx/exception/serializer';
 import type { FC } from 'react';
-import superjson from 'superjson';
+import { parse, stringify } from 'superjson';
 
 const SimpleSerialize: FC = () => {
   const cause = new HttpForbidden();
@@ -24,8 +24,8 @@ export const SuperJsonSerialize: FC = () => {
     url: 'http://localhost:3000',
     cause,
   });
-  const stringified = superjson.stringify(err);
-  const converted = superjson.parse(stringified);
+  const stringified = stringify(err);
+  const converted = parse(stringified);
 
   return (
     <div className={'rounded-xl p-8 border-2'}>
