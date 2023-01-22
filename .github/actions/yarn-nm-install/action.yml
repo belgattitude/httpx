@@ -12,10 +12,16 @@
 name: 'Monorepo install (yarn)'
 description: 'Run yarn install with node_modules linker and cache enabled'
 inputs:
-  skip-prisma-postinstall-generate:
-    description: 'Avoid prisma to automatically generate schema on postinstall'
+  cacheInstallState:
+    description: 'Cache yarn install state (invalidated on lock changes)'
     required: false
     default: 'true'
+
+  cacheNodeModules:
+    description: 'Cache node_modules (invalidated on lock changes)'
+    required: false
+    default: 'true'
+
 
 runs:
   using: 'composite'
@@ -44,12 +50,24 @@ runs:
 
     # Invalidated on yarn.lock changes
     - name: Restore yarn install state
+      if: inputs.cacheInstallState == 'true'
       id: yarn-install-state-cache
       uses: actions/cache@v3
       with:
-        path: |
-          .yarn/ci-cache/
+        path: .yarn/ci-install-state
         key: ${{ runner.os }}-yarn-install-state-cache-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
+
+
+    # Invalidated on yarn.lock changes
+    - name: Restore yarn node_modules
+      if: inputs.cacheNodeModules == 'true'
+      id: yarn-install-nm
+      uses: actions/cache@v3
+      with:
+        path: |
+          **/node_modules
+        key: ${{ runner.os }}-yarn-install-nm-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
+
 
     - name: Install dependencies
       shell: bash
@@ -58,7 +76,6 @@ runs:
         # CI optimizations. Overrides yarnrc.yml options (or their defaults) in the CI action.
         YARN_ENABLE_GLOBAL_CACHE: 'false' # Use local cache folder to keep downloaded archives
         YARN_NM_MODE: 'hardlinks-local' # Hardlinks-(local|global) reduces io / node_modules size
-        YARN_INSTALL_STATE_PATH: .yarn/ci-cache/install-state.gz # Very small speedup when lock does not change
+        YARN_INSTALL_STATE_PATH: .yarn/ci-install-state/install-state.gz # Very small speedup when lock does not change
         # Other environment variables
         HUSKY: '0' # By default do not run HUSKY install
-        PRISMA_SKIP_POSTINSTALL_GENERATE: ${{ inputs.skip-prisma-postinstall-generate }}
