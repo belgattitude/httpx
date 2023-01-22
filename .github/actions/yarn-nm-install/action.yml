@@ -83,6 +83,7 @@ runs:
         ls -la node_modules/.yarn-state.yml            
         ls -laR packages/exception
         ls -a node_modules
+        cat node_modules/.yarn-state.yml
 
     - name: Install dependencies
       shell: bash
