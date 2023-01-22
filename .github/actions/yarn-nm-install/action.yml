@@ -81,7 +81,7 @@ runs:
         ls -laR .yarn/ci-install-state
         ls -a .yarn
         ls -la node_modules/.yarn-state.yml            
-        ls -laR packages/exception/node_modules
+        ls -laR packages/exception
         ls -a node_modules
 
     - name: Install dependencies
