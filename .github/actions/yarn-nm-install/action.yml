@@ -35,7 +35,7 @@ runs:
       id: yarn-config
       shell: bash
       env:
-        YARN_ENABLE_GLOBAL_CACHE: true
+        YARN_ENABLE_GLOBAL_CACHE: "true"
         YARN_NM_MODE: hardlinks-global
         YARN_INSTALL_STATE_PATH: .yarn/ci-install-state/install-state.gz
       run: |
@@ -80,28 +80,10 @@ runs:
           **/node_modules
         key: ${{ runner.os }}-${{ inputs.node-version }}-yarn-install-nm-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
 
-
-    - name: Debug
-      shell: bash
-      run: |
-        ls -laR .yarn/ci-install-state || echo "not cached"
-        ls -a .yarn
-        ls -la node_modules/.yarn-state.yml || echo "not cached"           
-        ls -laR packages/exception        
-        cat node_modules/.yarn-state.yml || echo "not cached"      
-
     - name: Install dependencies
       shell: bash
       run: yarn install --immutable --inline-builds
       env:
-        YARN_ENABLE_GLOBAL_CACHE: true
-        YARN_NM_MODE: hardlinks-global
-        YARN_INSTALL_STATE_PATH: .yarn/ci-install-state/install-state.gz
-
-    - name: Install dependencies
-      shell: bash
-      run: yarn install --immutable --inline-builds
-      env:
-        YARN_ENABLE_GLOBAL_CACHE: true
+        YARN_ENABLE_GLOBAL_CACHE: "true"
         YARN_NM_MODE: hardlinks-global
         YARN_INSTALL_STATE_PATH: .yarn/ci-install-state/install-state.gz
