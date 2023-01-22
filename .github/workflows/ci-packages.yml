@@ -35,7 +35,7 @@ jobs:
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
         with:
-          cacheInstallState: true
+          cacheExtraKey: ${{ matrix.node-version }}
           cacheNodeModules: true
 
       - name: Restore packages cache
