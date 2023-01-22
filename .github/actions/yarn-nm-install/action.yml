@@ -59,24 +59,26 @@ runs:
 
     # Invalidated on yarn.lock changes
     - name: Restore yarn install state
-      if: inputs.cacheInstallState == 'true'
+      if: inputs.cache-install-state == 'true'
       id: yarn-install-state-cache
       uses: actions/cache@v3
       with:
         path: |
           .yarn/ci-install-state
-        key: ${{ runner.os }}-yarn-install-state-cache-${{ inputs.cacheExtraKey }}-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
+        key: ${{ runner.os }}-${{ inputs.node-version }}-yarn-install-state-cache-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
 
 
     # Invalidated on yarn.lock changes
     - name: Restore yarn node_modules
-      if: inputs.cacheNodeModules == 'true'
+      if: inputs.cache-node-modules == 'true'
       id: yarn-install-nm
       uses: actions/cache@v3
       with:
         path: |
+          .yarn/__virtual__
+          .yarn/unplugged
           **/node_modules
-        key: ${{ runner.os }}-yarn-install-nm-${{ inputs.cacheExtraKey }}-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
+        key: ${{ runner.os }}-${{ inputs.node-version }}-yarn-install-nm-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
 
 
     - name: Debug
