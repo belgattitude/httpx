@@ -33,7 +33,7 @@ runs:
   env:
     YARN_ENABLE_GLOBAL_CACHE: "true"
     YARN_NM_MODE: "hardlinks-global"
-    YARN_INSTALL_STATE_PATH: "".yarn/ci-install-state/install-state.gz"
+    YARN_INSTALL_STATE_PATH: ".yarn/ci-install-state/install-state.gz"
 
   steps:
     - name: Expose yarn config as "$GITHUB_OUTPUT"
