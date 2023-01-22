@@ -27,6 +27,8 @@ jobs:
 
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
+        with:
+          cacheExtraKey: ${{ matrix.node-version }}
 
       - name: Build packages
         run: |
