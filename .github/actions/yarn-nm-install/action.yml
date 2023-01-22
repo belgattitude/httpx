@@ -77,7 +77,10 @@ runs:
 
     - name: Debug
       shell: bash
-      run: ls -laR
+      run: |
+        ls -laR .yarn/ci-install-state
+        ls -la node_modules
+        ls -laR packages/httpx/node_modules
 
     - name: Install dependencies
       shell: bash
