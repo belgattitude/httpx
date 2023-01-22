@@ -12,6 +12,11 @@
 name: 'Monorepo install (yarn)'
 description: 'Run yarn install with node_modules linker and cache enabled'
 inputs:
+  cacheExtraKey:
+    description: 'Extra key to add to the cache (ie: multiple node versions)'
+    required: false
+    default: 'default'
+
   cacheInstallState:
     description: 'Cache yarn install state (invalidated on lock changes)'
     required: false
@@ -55,7 +60,7 @@ runs:
       uses: actions/cache@v3
       with:
         path: .yarn/ci-install-state
-        key: ${{ runner.os }}-yarn-install-state-cache-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
+        key: ${{ runner.os }}-yarn-install-state-cache-${{ inputs.cacheExtraKey }}-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
 
 
     # Invalidated on yarn.lock changes
@@ -66,7 +71,7 @@ runs:
       with:
         path: |
           **/node_modules
-        key: ${{ runner.os }}-yarn-install-nm-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
+        key: ${{ runner.os }}-yarn-install-nm-${{ inputs.cacheExtraKey }}-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
 
 
     - name: Install dependencies
