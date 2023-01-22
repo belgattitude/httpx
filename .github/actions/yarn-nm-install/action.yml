@@ -87,9 +87,8 @@ runs:
         ls -laR .yarn/ci-install-state || echo "not cached"
         ls -a .yarn
         ls -la node_modules/.yarn-state.yml || echo "not cached"           
-        ls -laR packages/exception
-        ls -a node_modules || echo "not cached"
-        cat node_modules/.yarn-state.yml || echo "not cached"
+        ls -laR packages/exception        
+        cat node_modules/.yarn-state.yml || echo "not cached"      
 
     - name: Install dependencies
       shell: bash
