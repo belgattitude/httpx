@@ -12,35 +12,35 @@
 name: 'Monorepo install (yarn)'
 description: 'Run yarn install with node_modules linker and cache enabled'
 inputs:
-  cacheExtraKey:
+  node-version:
     description: 'Extra key to add to the cache (ie: multiple node versions)'
     required: false
-    default: 'default'
+    default: ''
 
-  cacheInstallState:
+  cache-install-state:
     description: 'Cache yarn install state (invalidated on lock changes)'
     required: false
     default: 'true'
 
-  cacheNodeModules:
+  cache-node-modules:
     description: 'Cache node_modules (invalidated on lock changes)'
     required: false
     default: 'true'
 
-
 runs:
   using: 'composite'
-  env:
-    YARN_ENABLE_GLOBAL_CACHE: "true"
-    YARN_NM_MODE: "hardlinks-global"
-    YARN_INSTALL_STATE_PATH: ".yarn/ci-install-state/install-state.gz"
 
   steps:
     - name: Expose yarn config as "$GITHUB_OUTPUT"
       id: yarn-config
       shell: bash
+      env:
+        YARN_ENABLE_GLOBAL_CACHE: true
+        YARN_NM_MODE: hardlinks-global
+        YARN_INSTALL_STATE_PATH: .yarn/ci-install-state/install-state.gz
       run: |
         echo "CACHE_FOLDER=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+        echo "CURRENT_NODE_VERSION="node-$(node --version | cut -d . -f 1  | sed 's/[^0-9]*//g')".x" >> $GITHUB_OUTPUT
 
     #- name: Debug cache-dir
     #  shell: bash
@@ -92,7 +92,15 @@ runs:
     - name: Install dependencies
       shell: bash
       run: yarn install --immutable --inline-builds
+      env:
+        YARN_ENABLE_GLOBAL_CACHE: true
+        YARN_NM_MODE: hardlinks-global
+        YARN_INSTALL_STATE_PATH: .yarn/ci-install-state/install-state.gz
 
     - name: Install dependencies
       shell: bash
       run: yarn install --immutable --inline-builds
+      env:
+        YARN_ENABLE_GLOBAL_CACHE: true
+        YARN_NM_MODE: hardlinks-global
+        YARN_INSTALL_STATE_PATH: .yarn/ci-install-state/install-state.gz
