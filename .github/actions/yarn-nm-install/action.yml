@@ -44,7 +44,7 @@ runs:
 
     # Yarn rotates the downloaded cache archives.
     # @see https://github.com/actions/setup-node/issues/325
-    - name: Restore yarn cache
+    - name: Restore yarn download cache
       uses: actions/cache@v3
       id: yarn-download-cache
       with:
@@ -59,7 +59,8 @@ runs:
       id: yarn-install-state-cache
       uses: actions/cache@v3
       with:
-        path: .yarn/ci-install-state
+        path: |
+          .yarn/ci-install-state
         key: ${{ runner.os }}-yarn-install-state-cache-${{ inputs.cacheExtraKey }}-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
 
 
@@ -73,6 +74,10 @@ runs:
           **/node_modules
         key: ${{ runner.os }}-yarn-install-nm-${{ inputs.cacheExtraKey }}-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
 
+
+    - name: Debug
+      shell: bash
+      run: ls -laR
 
     - name: Install dependencies
       shell: bash
