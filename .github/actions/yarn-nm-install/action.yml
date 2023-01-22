@@ -79,8 +79,10 @@ runs:
       shell: bash
       run: |
         ls -laR .yarn/ci-install-state
-        ls -la node_modules
-        ls -laR packages/httpx/node_modules
+        ls -a .yarn
+        ls -la node_modules/.yarn-state.yml            
+        ls -laR packages/exception/node_modules
+        ls -a node_modules
 
     - name: Install dependencies
       shell: bash
