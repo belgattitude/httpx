@@ -52,6 +52,7 @@ runs:
       uses: actions/cache@v3
       id: yarn-download-cache
       with:
+        enableCrossOsArchive: true
         path: ${{ steps.yarn-config.outputs.CACHE_FOLDER }}
         key: yarn-download-cache-${{ hashFiles('yarn.lock') }}
         restore-keys: |
