@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 1.7.1
+
+### Patch Changes
+
+- [#143](https://github.com/belgattitude/httpx/pull/143) [`7ccae63`](https://github.com/belgattitude/httpx/commit/7ccae636ebabd1ca16b519a3965e8e61d9faa16a) Thanks [@belgattitude](https://github.com/belgattitude)! - No changes, just the build with latest rollup/babel
+
 ## 1.7.0
 
 ### Minor Changes
