@@ -75,8 +75,7 @@ Example for the global catcher.
 ```typescript
 import type { HttpException } from "@httpx/exception";
 import { isHttpException } from "@httpx/exception";
-import { toJson } from "@httpx/exception";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { toJson } from "@httpx/exception/serializer";
 
 type Params = {
   logger?: LoggerInterface;
@@ -91,22 +90,20 @@ export const withApiErrorHandler = (params?: Params) => {
       try {
         await handler(req, res);
       } catch (e) {
-        logger.log("[api-error]", toJson(e)); // or via convertToSerializable
-        const payload = isHttpException(e)
-          ? {
-              statusCode: e.statusCode,
-              message: e.message,
-              url: req.url,
-            }
-          : {
-              statusCode: defaultStatusCode,
-              message: e instanceof Error ? e.message : "Unknown error",
-            };
+        const statusCode = isHttpException(e)
+          ? e.statusCode
+          : defaultStatusCode;
+        logger.log(`${statusCode} - ${req.url}`, toJson(e)); // or via convertToSerializable
         res.setHeader("content-type", "application/json");
-        res.status(payload.statusCode).json({
-          success: false,
-          error: payload,
-        });
+        res.status(payload.statusCode).end(
+          JSON.stringify({
+            success: false,
+            error: {
+              statusCode,
+              message: e.message,
+            },
+          })
+        );
       }
     };
 };
