@@ -12,6 +12,12 @@ purposes.
 [![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Maintainability&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
 [![license](https://img.shields.io/npm/l/@httpx/exception?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
+## Why ?
+
+Coding outside a framework à la nest, tsed... ? Started coding api / server side routes in nextjs, nuxt, astro, fastify, express...
+Having code like `res.status(405).end('Method not allowed')`, `res.status(404).end('Not Found')`... a bit everywhere ?
+Using http exceptions can help to improve some areas (central catcher / hof / middlewares, loggers, ...).
+
 ## Highlights
 
 - 🚀&nbsp; Simple use: [explicit named imports](https://belgattitude.github.io/httpx/#/?id=named-exceptions) and/or [status code](https://belgattitude.github.io/httpx/#/?id=factories).
