@@ -393,7 +393,7 @@ const fetchData = async () => {
   });
 };
 
-// The route handler: could be nextjs, express, fastly...
+// The route handler: could be nextjs, express, fastify...
 const apiRouteHandler = async (req: IncomingMessage, res: ServerResponse) => {
   if (!req.headers["authorization"]) {
     throw new HttpForbidden("Missing authorization header");

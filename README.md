@@ -33,10 +33,6 @@ Using http exceptions can help to improve some areas (central catcher / hof / mi
 - 🧙‍&nbsp; IDE friendly. Typescript - typedoc with links to mdn and description.
 - 🥃&nbsp; [Docs](https://belgattitude.github.io/httpx) & [changelogs](https://github.com/belgattitude/httpx/releases) - Well tested and maintained - [Contributors](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) welcome.
 
-## Documentation
-
-**👉 See full documentation on [https://belgattitude.github.io/httpx](https://belgattitude.github.io/httpx). 👈**
-
 ## Install
 
 ```bash
@@ -45,7 +41,80 @@ yarn add @httpx/exception     # via yarn
 pnpm add @httpx/exception     # via pnpm
 ```
 
-## Quick start
+## Documentation
+
+**👉 See full documentation on [https://belgattitude.github.io/httpx](https://belgattitude.github.io/httpx). 👈**
+
+## A quick taste
+
+illustrative example (based on nextjs api route)
+
+```typescript
+import { HttpNotFound, HttpForbidden } from "@httpx/exception";
+
+const getProductHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { slug } = req.query;
+  if (!req.headers["authorization"]) {
+    throw new HttpForbidden();
+  }
+  const product = await prisma.product.findUnique({ where: { slug } });
+  if (!product) {
+    throw new HttpNotFound(`Product '${slug}' can't be found`);
+  }
+  res.json({ success: true, product });
+};
+
+// Possible example of a global error handler with a higher order function
+export default withApiErrorHandler({
+  logger: new ConsoleLogger(),
+})(getProductHandler);
+```
+
+Example for the global catcher.
+
+```typescript
+import type { HttpException } from "@httpx/exception";
+import { isHttpException } from "@httpx/exception";
+import { toJson } from "@httpx/exception";
+import type { NextApiRequest, NextApiResponse } from "next";
+
+type Params = {
+  logger?: LoggerInterface;
+  defaultStatusCode?: number;
+};
+
+export const withApiErrorHandler = (params?: Params) => {
+  const { logger = new ConsoleLogger(), defaultStatusCode = 500 } =
+    params ?? {};
+  return (handler: (req: NextApiRequest, res: NextApiResponse) => void) =>
+    async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+      try {
+        await handler(req, res);
+      } catch (e) {
+        logger.log("[api-error]", toJson(e)); // or via convertToSerializable
+        const payload = isHttpException(e)
+          ? {
+              statusCode: e.statusCode,
+              message: e.message,
+              url: req.url,
+            }
+          : {
+              statusCode: defaultStatusCode,
+              message: e instanceof Error ? e.message : "Unknown error",
+            };
+        res.setHeader("content-type", "application/json");
+        res.status(payload.statusCode).json({
+          success: false,
+          error: payload,
+        });
+      }
+    };
+};
+```
+
+Tip: @httpx/exception is small scoped by nature. The above example isn't to be taken "as is".
+
+## Quick overview
 
 Simple named exceptions:
 
