@@ -2146,7 +2146,7 @@ __metadata:
     jest: "npm:29.4.1"
     npm-run-all: "npm:4.1.5"
     rimraf: "npm:4.1.2"
-    rollup: "npm:3.12.0"
+    rollup: "npm:3.13.0"
     rollup-plugin-dts: "npm:5.1.1"
     rollup-plugin-swc3: "npm:0.8.0"
     size-limit: "npm:8.1.2"
@@ -11142,9 +11142,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:3.12.0":
-  version: 3.12.0
-  resolution: "rollup@npm:3.12.0"
+"rollup@npm:3.13.0, rollup@npm:^3.10.0":
+  version: 3.13.0
+  resolution: "rollup@npm:3.13.0"
   dependencies:
     fsevents: "npm:~2.3.2"
   dependenciesMeta:
@@ -11152,21 +11152,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 41dfcd8fd28232ba3d6fa58e5694ec3eb47edb94073dab37dacd33c76adf1e53a6008c184e03b7f98a432805aef2487711261e42b8b88e56ebfe1b3bf8f89cd1
-  languageName: node
-  linkType: hard
-
-"rollup@npm:^3.10.0":
-  version: 3.12.1
-  resolution: "rollup@npm:3.12.1"
-  dependencies:
-    fsevents: "npm:~2.3.2"
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    rollup: dist/bin/rollup
-  checksum: 9bf000f17910c383cbc3121dcb9e4c3814ea97939cfe817ef41dd19265a1214df2d77a0d612069ca6ad81d1df131c4910417dc892863bc6e3ff2b82ad15f37f9
+  checksum: 33e7adeb64c306a90f350ec29124831d797b37734cebabfc110b0e96b75f68463a142e37330230783918480681f8ca9b7e7774884567fd08a51afe8e3621a140
   languageName: node
   linkType: hard
 
