@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: ⚙️ Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -30,14 +30,11 @@ jobs:
         with:
           cacheExtraKey: ${{ matrix.node-version }}
 
-      - name: 🔎 Check for duplicates
-        run: |
-          yarn dedupe --check
+      - name: 👬🏽 Check for duplicates
+        run: yarn dedupe --check
 
       - name: 🦺 Check for yarn constraints.pro
-        run: |
-          yarn constraints
+        run: yarn constraints
 
       - name: 🛟 Check monorepo dependency graph
-        run: |
-          yarn check:install
+        run: yarn check:install

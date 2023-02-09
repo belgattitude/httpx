@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: ⚙️ Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -31,21 +31,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache-node-modules: true
 
-      - name: Build packages
-        run: |
-          yarn workspaces foreach -v --from '@httpx/*' run build
+      - name: 🏗 Build packages
+        run: yarn workspaces foreach -v --from '@httpx/*' run build
 
-      - name: Typecheck
-        run: |
-          yarn workspaces foreach -v --from '@examples/*' run typecheck
+      - name: 🕵️ Typecheck
+        run: yarn workspaces foreach -v --from '@examples/*' run typecheck
 
-      - name: Lint
-        run: |
-          yarn workspaces foreach -v --from '@examples/*' run lint
+      - name: 🔬 Lint
+        run: yarn workspaces foreach -v --from '@examples/*' run lint
 
-      - name: Build example apps
-        run: |
-          yarn workspaces foreach -v --from '@examples/*' run build
+      - name: 🏗 Build example apps
+        run: yarn workspaces foreach -v --from '@examples/*' run build
         env:
           NEXTJS_IGNORE_ESLINT: true
           NEXTJS_IGNORE_TYPECHECK: true
