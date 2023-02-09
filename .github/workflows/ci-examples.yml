@@ -34,8 +34,8 @@ jobs:
       - name: 🏗 Build packages
         run: yarn workspaces foreach -v --from '@httpx/*' run build
 
-      - name: Typecheck
-        run: 🕵️ yarn workspaces foreach -v --from '@examples/*' run typecheck
+      - name: 🕵️ Typecheck
+        run: yarn workspaces foreach -v --from '@examples/*' run typecheck
 
       - name: 🔬 Lint
         run: yarn workspaces foreach -v --from '@examples/*' run lint
