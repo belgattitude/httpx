@@ -2167,7 +2167,7 @@ __metadata:
     "@rollup/plugin-typescript": "npm:11.0.0"
     "@size-limit/file": "npm:8.1.2"
     "@size-limit/webpack": "npm:8.1.2"
-    "@size-limit/webpack-why": "npm:8.1.2"
+    "@size-limit/webpack-why": "npm:8.2.4"
     "@swc/core": "npm:1.3.35"
     "@types/jest": "npm:29.4.0"
     "@types/node": "npm:18.13.0"
@@ -2882,14 +2882,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@size-limit/webpack-why@npm:8.1.2":
-  version: 8.1.2
-  resolution: "@size-limit/webpack-why@npm:8.1.2"
+"@size-limit/webpack-why@npm:8.2.4":
+  version: 8.2.4
+  resolution: "@size-limit/webpack-why@npm:8.2.4"
   dependencies:
     "@statoscope/webpack-plugin": "npm:^5.24.0"
   peerDependencies:
-    size-limit: 8.1.2
-  checksum: 5511e003743cb2cc69ea3f86bd4a1214ec0e3f872bb041cc51844d333858968a5a57c55a13dba09bb9d9d4f5db1a9b4c9d641b30977775159ee58ba824d0ebdf
+    size-limit: 8.2.4
+    webpack: ^4.0.0 || ^5.0.0
+  checksum: cc03e029b5f04a5af2ebe6cfc443c538e6fe712b01c8d01adc13ac9525f8b1ed36376480e7db3ddf795fd3ebdee4e40c173490d790967e2fa760aedd86db61d7
   languageName: node
   linkType: hard
 
