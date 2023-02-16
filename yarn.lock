@@ -1331,60 +1331,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@belgattitude/eslint-config-bases@npm:1.18.0":
-  version: 1.18.0
-  resolution: "@belgattitude/eslint-config-bases@npm:1.18.0"
-  dependencies:
-    "@rushstack/eslint-patch": "npm:^1.2.0"
-    "@tanstack/eslint-plugin-query": "npm:4.24.0"
-    "@typescript-eslint/eslint-plugin": "npm:^5.49.0"
-    "@typescript-eslint/parser": "npm:^5.49.0"
-    eslint-config-prettier: "npm:^8.6.0"
-    eslint-import-resolver-typescript: "npm:^3.5.3"
-    eslint-plugin-import: "npm:^2.27.5"
-    eslint-plugin-jest: "npm:^27.2.1"
-    eslint-plugin-jest-formatting: "npm:^3.1.0"
-    eslint-plugin-jsx-a11y: "npm:^6.7.1"
-    eslint-plugin-playwright: "npm:^0.12.0"
-    eslint-plugin-prettier: "npm:4.2.1"
-    eslint-plugin-react: "npm:^7.32.2"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    eslint-plugin-regexp: "npm:^1.12.0"
-    eslint-plugin-sonarjs: "npm:^0.18.0"
-    eslint-plugin-storybook: "npm:^0.6.10"
-    eslint-plugin-tailwindcss: "npm:^3.8.2"
-    eslint-plugin-testing-library: "npm:^5.10.0"
-  peerDependencies:
-    "@angular-eslint/template-parser": ^15.2.0
-    "@graphql-eslint/eslint-plugin": ^3.14.3
-    eslint: ^8.29.0
-    graphql: ^16.6.0
-    prettier: ^2.7.0 || >= 3.0.0-alpha.4
-    react: ^18.0.2
-    react-dom: ^18.0.2
-    tailwindcss: ^3.2.2
-    typescript: ^4.9.4
-  peerDependenciesMeta:
-    "@angular-eslint/template-parser":
-      optional: true
-    "@graphql-eslint/eslint-plugin":
-      optional: true
-    graphql:
-      optional: true
-    prettier:
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    tailwindcss:
-      optional: true
-    typescript:
-      optional: true
-  checksum: d2a0cf42d51b2bc0cc8fdfc3011bc7745ff0512669b77e584791974b79021f7216e6d89727d7286dae3dd6443f76ab668e94cd6fcfdafd5de8a4617f6b677124
-  languageName: node
-  linkType: hard
-
 "@belgattitude/eslint-config-bases@npm:1.20.2":
   version: 1.20.2
   resolution: "@belgattitude/eslint-config-bases@npm:1.20.2"
@@ -2112,27 +2058,27 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@examples/nextjs-app@workspace:examples/nextjs-app"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:1.18.0"
+    "@belgattitude/eslint-config-bases": "npm:1.20.2"
     "@httpx/exception": "workspace:^"
     "@types/node": "npm:18.13.0"
-    "@types/react": "npm:18.0.27"
-    "@types/react-dom": "npm:18.0.10"
-    axios: "npm:1.3.2"
+    "@types/react": "npm:18.0.28"
+    "@types/react-dom": "npm:18.0.11"
+    axios: "npm:1.3.3"
     cross-env: "npm:7.0.3"
-    eslint: "npm:8.33.0"
+    eslint: "npm:8.34.0"
     eslint-config-next: "npm:13.1.6"
     ky: "npm:0.33.2"
     next: "npm:13.1.6"
-    pino: "npm:8.9.0"
+    pino: "npm:8.10.0"
     postcss: "npm:8.4.21"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     rimraf: "npm:4.1.2"
     superjson: "npm:1.12.2"
-    tailwindcss: "npm:3.2.4"
+    tailwindcss: "npm:3.2.6"
     typescript: "npm:4.9.5"
     webpack: "npm:5.75.0"
-    zod: "npm:3.20.2"
+    zod: "npm:3.20.6"
   languageName: unknown
   linkType: soft
 
@@ -2165,9 +2111,9 @@ __metadata:
     "@rollup/plugin-babel": "npm:6.0.3"
     "@rollup/plugin-node-resolve": "npm:15.0.1"
     "@rollup/plugin-typescript": "npm:11.0.0"
-    "@size-limit/file": "npm:8.1.2"
-    "@size-limit/webpack": "npm:8.1.2"
-    "@size-limit/webpack-why": "npm:8.1.2"
+    "@size-limit/file": "npm:8.2.4"
+    "@size-limit/webpack": "npm:8.2.4"
+    "@size-limit/webpack-why": "npm:8.2.4"
     "@swc/core": "npm:1.3.35"
     "@types/jest": "npm:29.4.0"
     "@types/node": "npm:18.13.0"
@@ -2186,7 +2132,7 @@ __metadata:
     rollup: "npm:3.15.0"
     rollup-plugin-dts: "npm:5.2.0"
     rollup-plugin-swc3: "npm:0.8.0"
-    size-limit: "npm:8.1.2"
+    size-limit: "npm:8.2.4"
     statuses: "npm:2.0.1"
     superjson: "npm:1.12.2"
     ts-jest: "npm:29.0.5"
@@ -2871,37 +2817,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@size-limit/file@npm:8.1.2":
-  version: 8.1.2
-  resolution: "@size-limit/file@npm:8.1.2"
+"@size-limit/file@npm:8.2.4":
+  version: 8.2.4
+  resolution: "@size-limit/file@npm:8.2.4"
   dependencies:
     semver: "npm:7.3.8"
   peerDependencies:
-    size-limit: 8.1.2
-  checksum: 865038cce124be155fdf7633ebd9a72a913e7f23d15cad359d0eea04d56ce488b2895cce209d57845371acf3e8404784d20732f7f539858bf4148eec2ed4ff65
+    size-limit: 8.2.4
+  checksum: 74792b18a7fcd432cee25c28cd31dc587bacaf52d33ff8ca1501ca6fdc21c5efc3014db73c4130262765078141c06fbaae430473bdd8198fc81f103d7765f225
   languageName: node
   linkType: hard
 
-"@size-limit/webpack-why@npm:8.1.2":
-  version: 8.1.2
-  resolution: "@size-limit/webpack-why@npm:8.1.2"
+"@size-limit/webpack-why@npm:8.2.4":
+  version: 8.2.4
+  resolution: "@size-limit/webpack-why@npm:8.2.4"
   dependencies:
     "@statoscope/webpack-plugin": "npm:^5.24.0"
   peerDependencies:
-    size-limit: 8.1.2
-  checksum: 5511e003743cb2cc69ea3f86bd4a1214ec0e3f872bb041cc51844d333858968a5a57c55a13dba09bb9d9d4f5db1a9b4c9d641b30977775159ee58ba824d0ebdf
+    size-limit: 8.2.4
+    webpack: ^4.0.0 || ^5.0.0
+  checksum: cc03e029b5f04a5af2ebe6cfc443c538e6fe712b01c8d01adc13ac9525f8b1ed36376480e7db3ddf795fd3ebdee4e40c173490d790967e2fa760aedd86db61d7
   languageName: node
   linkType: hard
 
-"@size-limit/webpack@npm:8.1.2":
-  version: 8.1.2
-  resolution: "@size-limit/webpack@npm:8.1.2"
+"@size-limit/webpack@npm:8.2.4":
+  version: 8.2.4
+  resolution: "@size-limit/webpack@npm:8.2.4"
   dependencies:
     nanoid: "npm:^3.3.4"
     webpack: "npm:^5.75.0"
   peerDependencies:
-    size-limit: 8.1.2
-  checksum: cc65a06018100964a92aa366a2c74b4a681a34ee24a984541c7585784a58ad1a6da5f1d3bdac69fa66a84c1b59e05be776b343e9987ff838395dab06fcf87323
+    size-limit: 8.2.4
+  checksum: 8a65730e39acd38420fdaf81846501d3bb831586c47b985ff8d0178559166108c3e0f6642964ea86234914cf4b51243fd237bb46b035094484735b983db23e36
   languageName: node
   linkType: hard
 
@@ -3202,13 +3149,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/eslint-plugin-query@npm:4.24.0":
-  version: 4.24.0
-  resolution: "@tanstack/eslint-plugin-query@npm:4.24.0"
-  checksum: 1e9358726e182635a521715b8eb86c333e43d32c0607871073ef69eff5a3710a7a079ea34158f2daf570f2bc4a73117411a6cd19a4ba5052a8d337a71fca0306
-  languageName: node
-  linkType: hard
-
 "@tanstack/eslint-plugin-query@npm:4.24.5":
   version: 4.24.5
   resolution: "@tanstack/eslint-plugin-query@npm:4.24.5"
@@ -3467,23 +3407,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.0.10":
-  version: 18.0.10
-  resolution: "@types/react-dom@npm:18.0.10"
+"@types/react-dom@npm:18.0.11":
+  version: 18.0.11
+  resolution: "@types/react-dom@npm:18.0.11"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 2c191e8dbe394e0690f8e5caacdb5ef710491478a95ceefc97cc8697e6e7e02c6a2fc3562b37791f92a4c08a6a82dd9dc57d42e8f98bce5f7e7110965845c068
+  checksum: 429119548045bb8ca6f34522c2698973fb92a0ebb1f1b2afa061e41ae9d091d10d0cc9bbbfd52b3cfe948486898cfaaf29d3721650a6d52dc0d3ab81c0245b82
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.0.27":
-  version: 18.0.27
-  resolution: "@types/react@npm:18.0.27"
+"@types/react@npm:*, @types/react@npm:18.0.28":
+  version: 18.0.28
+  resolution: "@types/react@npm:18.0.28"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 75c0b64773dc36bd094b3cc7fff5fb4cc385f60d7696bec2e0243806de69f2a2e35bec25d31f51bbbd6681639d8682a2d6eb94379759c70afc2f3ef5f87927b5
+  checksum: 5a43d1f81da064da91d0be3a676fbd2380d3bdff7491e0dae49e9ccdecf8fdf07e1bf7054d5fdd79266bf90a813384bd6898c678aca44e041a9e19df5fa690b3
   languageName: node
   linkType: hard
 
@@ -3561,7 +3501,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.49.0, @typescript-eslint/eslint-plugin@npm:^5.51.0":
+"@typescript-eslint/eslint-plugin@npm:^5.51.0":
   version: 5.51.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.51.0"
   dependencies:
@@ -3585,7 +3525,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.42.0, @typescript-eslint/parser@npm:^5.49.0, @typescript-eslint/parser@npm:^5.51.0":
+"@typescript-eslint/parser@npm:^5.42.0, @typescript-eslint/parser@npm:^5.51.0":
   version: 5.51.0
   resolution: "@typescript-eslint/parser@npm:5.51.0"
   dependencies:
@@ -4363,14 +4303,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.3.2":
-  version: 1.3.2
-  resolution: "axios@npm:1.3.2"
+"axios@npm:1.3.3":
+  version: 1.3.3
+  resolution: "axios@npm:1.3.3"
   dependencies:
     follow-redirects: "npm:^1.15.0"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: d70325ae823919b0d1c5b3a41392780f12dfafa666cf688c1948e72fc5ad4fe6ffdd7bfc1aa63fcbda54bba500dfadf680ad675632af72de18269626e9e18b67
+  checksum: 221eaa999e37eb7fe490d729abb6a2a9f016e80c9576c90a8149eb2bc179605d8c0b12afa85918a89dd6bc625f7ab6e3ceed167ea0016335c0329a7a1adc6818
   languageName: node
   linkType: hard
 
@@ -6368,7 +6308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-tailwindcss@npm:^3.8.2, eslint-plugin-tailwindcss@npm:^3.8.3":
+"eslint-plugin-tailwindcss@npm:^3.8.3":
   version: 3.8.3
   resolution: "eslint-plugin-tailwindcss@npm:3.8.3"
   dependencies:
@@ -6380,7 +6320,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-testing-library@npm:^5.10.0, eslint-plugin-testing-library@npm:^5.10.1":
+"eslint-plugin-testing-library@npm:^5.10.1":
   version: 5.10.1
   resolution: "eslint-plugin-testing-library@npm:5.10.1"
   dependencies:
@@ -6433,55 +6373,6 @@ __metadata:
   version: 3.3.0
   resolution: "eslint-visitor-keys@npm:3.3.0"
   checksum: 37b1372b3481e978856692724f065da7e3ded80c1a57fd347ad9c63692b6310756d0eb432badb5afaa125f0d4fcbc7692ba93ae85b17bd8e628bd8c8bcd03c1d
-  languageName: node
-  linkType: hard
-
-"eslint@npm:8.33.0":
-  version: 8.33.0
-  resolution: "eslint@npm:8.33.0"
-  dependencies:
-    "@eslint/eslintrc": "npm:^1.4.1"
-    "@humanwhocodes/config-array": "npm:^0.11.8"
-    "@humanwhocodes/module-importer": "npm:^1.0.1"
-    "@nodelib/fs.walk": "npm:^1.2.8"
-    ajv: "npm:^6.10.0"
-    chalk: "npm:^4.0.0"
-    cross-spawn: "npm:^7.0.2"
-    debug: "npm:^4.3.2"
-    doctrine: "npm:^3.0.0"
-    escape-string-regexp: "npm:^4.0.0"
-    eslint-scope: "npm:^7.1.1"
-    eslint-utils: "npm:^3.0.0"
-    eslint-visitor-keys: "npm:^3.3.0"
-    espree: "npm:^9.4.0"
-    esquery: "npm:^1.4.0"
-    esutils: "npm:^2.0.2"
-    fast-deep-equal: "npm:^3.1.3"
-    file-entry-cache: "npm:^6.0.1"
-    find-up: "npm:^5.0.0"
-    glob-parent: "npm:^6.0.2"
-    globals: "npm:^13.19.0"
-    grapheme-splitter: "npm:^1.0.4"
-    ignore: "npm:^5.2.0"
-    import-fresh: "npm:^3.0.0"
-    imurmurhash: "npm:^0.1.4"
-    is-glob: "npm:^4.0.0"
-    is-path-inside: "npm:^3.0.3"
-    js-sdsl: "npm:^4.1.4"
-    js-yaml: "npm:^4.1.0"
-    json-stable-stringify-without-jsonify: "npm:^1.0.1"
-    levn: "npm:^0.4.1"
-    lodash.merge: "npm:^4.6.2"
-    minimatch: "npm:^3.1.2"
-    natural-compare: "npm:^1.4.0"
-    optionator: "npm:^0.9.1"
-    regexpp: "npm:^3.2.0"
-    strip-ansi: "npm:^6.0.1"
-    strip-json-comments: "npm:^3.1.0"
-    text-table: "npm:^0.2.0"
-  bin:
-    eslint: bin/eslint.js
-  checksum: 616877cf98325f619070e6c85b1bb4734fe99202871f5f43cbb9c56b13d7cacf8caa499c61c0a112541067be3b6143cd0497d1319950a4a1d355adeff8504596
   languageName: node
   linkType: hard
 
@@ -10387,9 +10278,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino@npm:8.9.0":
-  version: 8.9.0
-  resolution: "pino@npm:8.9.0"
+"pino@npm:8.10.0":
+  version: 8.10.0
+  resolution: "pino@npm:8.10.0"
   dependencies:
     atomic-sleep: "npm:^1.0.0"
     fast-redact: "npm:^3.1.1"
@@ -10404,7 +10295,7 @@ __metadata:
     thread-stream: "npm:^2.0.0"
   bin:
     pino: bin.js
-  checksum: 7f46fb452bf0531d8cc93868d142e92dca33c5ac60f22c2478718dac39aaeea2bf72fbdf81c6666dd15a7405a3cefdb114e9a3418c9727164fac8761be97272a
+  checksum: 932af14f8464ec3ec3e60eb18ff492b7a98355d93592de32e716550784d90e55bcddea3dfe7a2f4e4d395809c9da3f63d7f603a1762275b7ad456b48ceeff516
   languageName: node
   linkType: hard
 
@@ -10488,7 +10379,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-selector-parser@npm:^6.0.10":
+"postcss-selector-parser@npm:^6.0.10, postcss-selector-parser@npm:^6.0.11":
   version: 6.0.11
   resolution: "postcss-selector-parser@npm:6.0.11"
   dependencies:
@@ -10516,7 +10407,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.21, postcss@npm:^8.4.18, postcss@npm:^8.4.21, postcss@npm:^8.4.4":
+"postcss@npm:8.4.21, postcss@npm:^8.0.9, postcss@npm:^8.4.21, postcss@npm:^8.4.4":
   version: 8.4.21
   resolution: "postcss@npm:8.4.21"
   dependencies:
@@ -11540,9 +11431,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"size-limit@npm:8.1.2":
-  version: 8.1.2
-  resolution: "size-limit@npm:8.1.2"
+"size-limit@npm:8.2.4":
+  version: 8.2.4
+  resolution: "size-limit@npm:8.2.4"
   dependencies:
     bytes-iec: "npm:^3.1.1"
     chokidar: "npm:^3.5.3"
@@ -11552,7 +11443,7 @@ __metadata:
     picocolors: "npm:^1.0.0"
   bin:
     size-limit: bin.js
-  checksum: 97c845a7ca82d5e3d11f500e653176454ef12fe9da6789a38a1e4f5be5e292d300a62968fdffffc27ec8725415aa169e2be9f877c7b40938ea05336f5ea4765f
+  checksum: dbac7b4d1e982dd9733fba88a45f7a7c5bc3e08d1f595230334775f462b09c53b27b05bc1554412cbbb91f75f26b7ab33334370cc34b2bc25c82e2a2f8a30705
   languageName: node
   linkType: hard
 
@@ -12078,9 +11969,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:3.2.4":
-  version: 3.2.4
-  resolution: "tailwindcss@npm:3.2.4"
+"tailwindcss@npm:3.2.6":
+  version: 3.2.6
+  resolution: "tailwindcss@npm:3.2.6"
   dependencies:
     arg: "npm:^5.0.2"
     chokidar: "npm:^3.5.3"
@@ -12096,12 +11987,12 @@ __metadata:
     normalize-path: "npm:^3.0.0"
     object-hash: "npm:^3.0.0"
     picocolors: "npm:^1.0.0"
-    postcss: "npm:^8.4.18"
+    postcss: "npm:^8.0.9"
     postcss-import: "npm:^14.1.0"
     postcss-js: "npm:^4.0.0"
     postcss-load-config: "npm:^3.1.4"
     postcss-nested: "npm:6.0.0"
-    postcss-selector-parser: "npm:^6.0.10"
+    postcss-selector-parser: "npm:^6.0.11"
     postcss-value-parser: "npm:^4.2.0"
     quick-lru: "npm:^5.1.1"
     resolve: "npm:^1.22.1"
@@ -12110,7 +12001,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 8d162a31947deb0972e4a70e04f4169c75251d7573da6df750c263d96a3d0924f955dc8dfb85f25d368dbe57612ddcff2af4af3ba88535bae41c55a5c6aa999f
+  checksum: 80f8d7ed9839bb5c88f3ea7dafca900e1e26e5d99e664a362b737cd8e07d0c000776bbd60942016c8187467c55cefb79655e6895bf5b4f98a6ba16ad381dd227
   languageName: node
   linkType: hard
 
@@ -13408,9 +13299,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:3.20.2":
-  version: 3.20.2
-  resolution: "zod@npm:3.20.2"
-  checksum: 4afdc2d9962456e1f4dfd6e44791d3017280e0f2f365fd45f85336ea5a850d009ff2f6d671638db47f8b237dd153fe73c0417f9cc300fcf201afb4fff9051c8d
+"zod@npm:3.20.6":
+  version: 3.20.6
+  resolution: "zod@npm:3.20.6"
+  checksum: 27120c04343f4843cd1a5fe18b9505aaf4618d3583e23a30ee80bcba77cb75f8c0fd71565d783d3a79e199722a0f7a30372f6b622256f1e2a3ab403ebfb60164
   languageName: node
   linkType: hard
