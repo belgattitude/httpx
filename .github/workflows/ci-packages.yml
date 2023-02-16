@@ -67,7 +67,7 @@ jobs:
       - name: 🛟 Check build for ecmascript compliance
         run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-dist
 
-      - name: 📤 Codecov upload
+      - name: ☂️ Codecov upload
         if: matrix.node-version == '16.x'
         uses: codecov/codecov-action@v3
         with:
