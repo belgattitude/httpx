@@ -2210,7 +2210,7 @@ __metadata:
     get-tsconfig: "npm:4.4.0"
     jest: "npm:29.4.3"
     npm-run-all: "npm:4.1.5"
-    rimraf: "npm:4.1.3"
+    rimraf: "npm:4.3.0"
     rollup: "npm:3.18.0"
     rollup-plugin-dts: "npm:5.2.0"
     rollup-plugin-swc3: "npm:0.8.0"
@@ -7208,6 +7208,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@npm:^9.2.0":
+  version: 9.2.1
+  resolution: "glob@npm:9.2.1"
+  dependencies:
+    fs.realpath: "npm:^1.0.0"
+    minimatch: "npm:^7.4.1"
+    minipass: "npm:^4.2.4"
+    path-scurry: "npm:^1.6.1"
+  checksum: b5a39cddb3ecde2d4b0b964b0904b8138aa3cd762ffbfb9341b0a62ce128a94b7a67ff7cb2dc3d7db6ee04d2a771bbacb3ec91d073b157a671c05bfe7525bb33
+  languageName: node
+  linkType: hard
+
 "global-dirs@npm:^0.1.1":
   version: 0.1.1
   resolution: "global-dirs@npm:0.1.1"
@@ -7500,7 +7512,7 @@ __metadata:
     lint-staged: "npm:13.1.2"
     npm-run-all: "npm:4.1.5"
     prettier: "npm:2.8.4"
-    rimraf: "npm:4.1.3"
+    rimraf: "npm:4.3.0"
     shell-quote: "npm:1.8.0"
     typescript: "npm:4.9.5"
   languageName: unknown
@@ -9201,10 +9213,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^7.7.1":
-  version: 7.14.1
-  resolution: "lru-cache@npm:7.14.1"
-  checksum: e4c8c073d9632585dde73bb2c857c22866f61f3ee75fea6e1dcc5412b59eca4107bc511c4b4ae4e038c7f59a15488b67448b24a3a1154def46c8ab1d07935d85
+"lru-cache@npm:^7.14.1, lru-cache@npm:^7.7.1":
+  version: 7.18.1
+  resolution: "lru-cache@npm:7.18.1"
+  checksum: 257128a56c1b0a0b3bd86d2e3ab9f8a0b66f13bf3c4ebcdc77b15e178cb88e35d39db7d47e55c3c17cd5d7b89beb6318d67b3678456bcd5bfeeb803ea88b44b3
   languageName: node
   linkType: hard
 
@@ -9463,12 +9475,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^7.1.3":
-  version: 7.2.0
-  resolution: "minimatch@npm:7.2.0"
+"minimatch@npm:^7.1.3, minimatch@npm:^7.4.1":
+  version: 7.4.2
+  resolution: "minimatch@npm:7.4.2"
   dependencies:
     brace-expansion: "npm:^2.0.1"
-  checksum: ee6ed8ff4c169ccea29cab9b2a2daa4b6d366d2675023f0c50770aebb9b791704801b1c297dea6e3b31fc6753c1378c2d7a59147d500be2d2491acf6f4d4268a
+  checksum: 999e3c3f4b4ba953a18130bc395036103e0bbf02cba8d7d3db207965c9befdf09e6daf3f810fda35fff3d7687d5425662fdedca681813ef36537d62cdcde3da1
   languageName: node
   linkType: hard
 
@@ -9547,6 +9559,13 @@ __metadata:
   dependencies:
     yallist: "npm:^4.0.0"
   checksum: 54b7be3d5d111832afcb7cc2bcb9e1bd21c3701731d1cd6dd91d673b7658f0c01bd52887764cf08f5dafe9a94abd7ce8fc800a2afe2bc19207bd83daac5ee052
+  languageName: node
+  linkType: hard
+
+"minipass@npm:^4.0.2, minipass@npm:^4.2.4":
+  version: 4.2.4
+  resolution: "minipass@npm:4.2.4"
+  checksum: 39b2e353044a8b4c7d160ccffae9486312137df28a9e2a8d093a528a9d3602b4dce2b2204a17ca11762d352bd9750fd6506229766a0fb7a6199092aa3f9490e5
   languageName: node
   linkType: hard
 
@@ -10315,6 +10334,16 @@ __metadata:
   version: 1.0.7
   resolution: "path-parse@npm:1.0.7"
   checksum: ca291d7bced407e20480b686d7ef4f9dd112ef00d6f109faa50bbefe8ff9dd51e164781fa0670c7b5d67a88610008e83e594f8294ec809c1b7203c6577ca3777
+  languageName: node
+  linkType: hard
+
+"path-scurry@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "path-scurry@npm:1.6.1"
+  dependencies:
+    lru-cache: "npm:^7.14.1"
+    minipass: "npm:^4.0.2"
+  checksum: a58f1b86ca95c39e339a0ef1e93c3a907ad474102e3ceba8c8d9c60a5cdb08ceae270d86f28d8881d492cf4607a1cade128783ae88f46b5d407b187639e7cb38
   languageName: node
   linkType: hard
 
@@ -11238,12 +11267,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:4.1.3":
-  version: 4.1.3
-  resolution: "rimraf@npm:4.1.3"
+"rimraf@npm:4.3.0":
+  version: 4.3.0
+  resolution: "rimraf@npm:4.3.0"
+  dependencies:
+    glob: "npm:^9.2.0"
   bin:
     rimraf: dist/cjs/src/bin.js
-  checksum: 9e4d5e591c422ce387daae0e36c501461ec73376e1dd0f02789aae27c0be82ca9b5f639fe9d8761093f389754a3ec17210be1723814c6d7da9a3555906b68b56
+  checksum: f30ab6fdf11e6ee95f987a9db73d0b985619c5d31047ecb644e4ecf64e9405f2f0efae24c48a1dda05bb6bac00c0ccb181e8c617a74a3ef0edacf912045584e6
   languageName: node
   linkType: hard
 
