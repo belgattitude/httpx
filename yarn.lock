@@ -2241,7 +2241,7 @@ __metadata:
     typedoc-plugin-markdown: "npm:3.14.0"
     typescript: "npm:4.9.5"
     vite: "npm:4.1.4"
-    vite-tsconfig-paths: "npm:4.0.5"
+    vite-tsconfig-paths: "npm:4.0.7"
     vitest: "npm:0.29.2"
     webpack: "npm:5.76.1"
   languageName: unknown
@@ -12928,14 +12928,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-tsconfig-paths@npm:4.0.5":
-  version: 4.0.5
-  resolution: "vite-tsconfig-paths@npm:4.0.5"
+"vite-tsconfig-paths@npm:4.0.7":
+  version: 4.0.7
+  resolution: "vite-tsconfig-paths@npm:4.0.7"
   dependencies:
     debug: "npm:^4.1.1"
     globrex: "npm:^0.1.2"
     tsconfck: "npm:^2.0.1"
-  checksum: 0fb5f393650503dccf67cedcd6b0f88468aabcf6b6c29111ed11b076cea3b9f6f3ef942fa235ea51cc868b1dbf73a7ad35a7cf07702549912e15627e061cce25
+  peerDependencies:
+    vite: "*"
+  peerDependenciesMeta:
+    vite:
+      optional: true
+  checksum: 2c1b93bdc170a8f618a80f888253af51bbca243ad5c95f5e16a82198565788b76ffe21e4b224bedd15637507b473bde747cbb4f19bb97b1993327f1dc37c19cc
   languageName: node
   linkType: hard
 
