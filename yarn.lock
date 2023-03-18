@@ -1390,9 +1390,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@belgattitude/eslint-config-bases@npm:1.24.0":
-  version: 1.24.0
-  resolution: "@belgattitude/eslint-config-bases@npm:1.24.0"
+"@belgattitude/eslint-config-bases@npm:1.25.0":
+  version: 1.25.0
+  resolution: "@belgattitude/eslint-config-bases@npm:1.25.0"
   dependencies:
     "@rushstack/eslint-patch": "npm:^1.2.0"
     "@tanstack/eslint-plugin-query": "npm:^4.26.2"
@@ -1419,11 +1419,11 @@ __metadata:
     eslint: ^8.29.0
     eslint-plugin-mdx: 2.0.5
     graphql: ^16.6.0
-    prettier: ^2.7.0 || >= 3.0.0-alpha.4
-    react: ^18.0.2
-    react-dom: ^18.0.2
+    prettier: ^2.8.0 || >= 3.0.0-alpha.6
+    react: ^18.2.0
+    react-dom: ^18.2.0
     tailwindcss: ^3.2.2
-    typescript: ^4.9.4
+    typescript: ^4.9.4 || ^5.0.2
   peerDependenciesMeta:
     "@angular-eslint/template-parser":
       optional: true
@@ -1443,7 +1443,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: e993acd5daa1c4ca5596164806910d4e710a151d082f75b6dc1bb7616c1c0ec364c8fcb3249cffc77a478355b7b81668197b3b29dc5d81de4bad62d3ee634475
+  checksum: 6c6857336980544a2aa6e72dce9255c538b474162a582710ba09a045484c11f8fb97afb5981b0e52d1b50959518a298165ef5907f885c8136f33b856a4d0f4ca
   languageName: node
   linkType: hard
 
@@ -2208,7 +2208,7 @@ __metadata:
     "@babel/plugin-transform-typescript": "npm:7.21.3"
     "@babel/preset-env": "npm:7.20.2"
     "@babel/preset-typescript": "npm:7.21.0"
-    "@belgattitude/eslint-config-bases": "npm:1.24.0"
+    "@belgattitude/eslint-config-bases": "npm:1.25.0"
     "@rollup/plugin-babel": "npm:6.0.3"
     "@rollup/plugin-node-resolve": "npm:15.0.1"
     "@rollup/plugin-typescript": "npm:11.0.0"
@@ -7514,7 +7514,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "http-exception-monorepo@workspace:."
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:1.24.0"
+    "@belgattitude/eslint-config-bases": "npm:1.25.0"
     "@changesets/changelog-github": "npm:0.4.8"
     "@changesets/cli": "npm:2.26.0"
     "@commitlint/cli": "npm:17.4.4"
