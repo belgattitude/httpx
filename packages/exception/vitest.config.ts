@@ -20,8 +20,15 @@ export default defineConfig({
     },
     coverage: {
       provider: 'istanbul',
-      reporter: ['json', 'clover'],
-      extension: ['js', 'jsx', 'ts', 'tsx'],
+      reporter: ['text', 'json', 'clover'],
+      all: true,
+      include: ['src/**/*.{js,jsx,ts,tsx}'],
+    },
+    deps: {
+      /*
+      experimentalOptimizer: {
+        enabled: false,
+      }, */
     },
     include: testFiles,
     // To mimic Jest behaviour regarding mocks.
