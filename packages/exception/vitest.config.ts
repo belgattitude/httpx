@@ -3,6 +3,7 @@ import { defineConfig } from 'vitest/config';
 
 const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
+// eslint-disable-next-line import/no-unassigned-import
 import 'error-cause-polyfill/auto';
 
 export default defineConfig({
