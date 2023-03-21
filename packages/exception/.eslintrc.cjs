@@ -27,7 +27,7 @@ module.exports = {
   ],
   rules: {
     // optional overrides per project
-    'import/no-cycle': 1,
+    'import/no-cycle': [2, { maxDepth: 3 }],
   },
   overrides: [
     // optional overrides per project file match
