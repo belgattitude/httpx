@@ -15,12 +15,6 @@ purposes.
 [![npm](https://img.shields.io/npm/dt/@httpx/exception?style=for-the-badge)](https://www.npmjs.com/package/@httpx/exception)
 [![license](https://img.shields.io/npm/l/@httpx/exception?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
-## Why ?
-
-Coding outside a framework à la nest, tsed... ? Started coding api / server side routes in nextjs, nuxt, astro, fastify, express...
-Having code like `res.status(405).end('Method not allowed')`, `res.status(404).end('Not Found')`... a bit everywhere ?
-Using http exceptions can help to improve some areas (central catcher / hof / middlewares, loggers, ...).
-
 ## Highlights
 
 - 🚀&nbsp; Simple use: [explicit named imports](https://belgattitude.github.io/httpx/#/?id=named-exceptions) and/or [status code](https://belgattitude.github.io/httpx/#/?id=factories).
@@ -44,6 +38,13 @@ pnpm add @httpx/exception     # via pnpm
 ## Documentation
 
 **👉 See full documentation on [https://belgattitude.github.io/httpx](https://belgattitude.github.io/httpx). 👈**
+
+## Why ?
+
+Coding outside a framework à la nest, tsed... ? Started coding api / server side routes in nextjs, nuxt, astro, fastify, express...
+Having code like `res.status(405).end('Method not allowed')`, `res.status(404).end('Not Found')`... a bit everywhere ?
+Using http exceptions can help to improve some areas (central catcher / hof / middlewares, loggers, ...).
+
 
 ## A quick taste
 
@@ -70,7 +71,7 @@ export default withApiErrorHandler({
 })(getProductHandler);
 ```
 
-Example for the global catcher.
+Example for a global catcher.
 
 ```typescript
 import type { HttpException } from "@httpx/exception";
