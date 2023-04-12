@@ -2244,7 +2244,7 @@ __metadata:
     vite: "npm:4.2.1"
     vite-tsconfig-paths: "npm:4.1.0"
     vitest: "npm:0.30.1"
-    webpack: "npm:5.78.0"
+    webpack: "npm:5.79.0"
   languageName: unknown
   linkType: soft
 
@@ -2585,7 +2585,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/trace-mapping@npm:^0.3.12, @jridgewell/trace-mapping@npm:^0.3.14, @jridgewell/trace-mapping@npm:^0.3.15, @jridgewell/trace-mapping@npm:^0.3.17, @jridgewell/trace-mapping@npm:^0.3.9":
+"@jridgewell/trace-mapping@npm:^0.3.12, @jridgewell/trace-mapping@npm:^0.3.15, @jridgewell/trace-mapping@npm:^0.3.17, @jridgewell/trace-mapping@npm:^0.3.9":
   version: 0.3.17
   resolution: "@jridgewell/trace-mapping@npm:0.3.17"
   dependencies:
@@ -6055,6 +6055,13 @@ __metadata:
   version: 0.9.3
   resolution: "es-module-lexer@npm:0.9.3"
   checksum: b62592d654c86254adfcf3cc84ac23a5044c4d55ff32981d6871eb91102455daf241f936ebf09caa6573b1a4f16d7d49ee01df163c2da1e1415bbec3564a4e3d
+  languageName: node
+  linkType: hard
+
+"es-module-lexer@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "es-module-lexer@npm:1.2.1"
+  checksum: 0bb3e8ba051facae5aef487097f3cc656f1e2d2f561ce602522319001d323b673b9ab1f43ddbe8c78bf3018417605702b2627d46cb880702769917f202190045
   languageName: node
   linkType: hard
 
@@ -11576,12 +11583,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"serialize-javascript@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "serialize-javascript@npm:6.0.0"
+"serialize-javascript@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "serialize-javascript@npm:6.0.1"
   dependencies:
     randombytes: "npm:^2.1.0"
-  checksum: c54759aaf8581cc1509e838a9a1eb340b0addaf8103f1d7795af0cd2319475e43cc31793fbe2db72aa8059a93218dc22b79ae8277b0e69de474a4f79800cf54f
+  checksum: 918ab48d613d8d7ae3bd0a12da50961f7710dd5f7ec7ffea12c03017c11b02c3d8355b672d6aabef67c2c539ebd1d6665b10748760221df3fc299eb43705412e
   languageName: node
   linkType: hard
 
@@ -12316,15 +12323,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser-webpack-plugin@npm:^5.1.3":
-  version: 5.3.6
-  resolution: "terser-webpack-plugin@npm:5.3.6"
+"terser-webpack-plugin@npm:^5.1.3, terser-webpack-plugin@npm:^5.3.7":
+  version: 5.3.7
+  resolution: "terser-webpack-plugin@npm:5.3.7"
   dependencies:
-    "@jridgewell/trace-mapping": "npm:^0.3.14"
+    "@jridgewell/trace-mapping": "npm:^0.3.17"
     jest-worker: "npm:^27.4.5"
     schema-utils: "npm:^3.1.1"
-    serialize-javascript: "npm:^6.0.0"
-    terser: "npm:^5.14.1"
+    serialize-javascript: "npm:^6.0.1"
+    terser: "npm:^5.16.5"
   peerDependencies:
     webpack: ^5.1.0
   peerDependenciesMeta:
@@ -12334,13 +12341,13 @@ __metadata:
       optional: true
     uglify-js:
       optional: true
-  checksum: 4594d51d1d5dc6be17e4fc126fd3067328d2ba2596df0993a19e0d94d07ed17fec377c3fbbf8879d082ca20dfb9a66aa7fb42aef5ac61282c0b4e6f69c6729af
+  checksum: d9a53e18366f053fabe191d3a32808ce0a52df2d4bc001786ae20da4c41215a8b75fb0ab5a1222690e32bf4611a870afe6ee4d9a79145f33e242b7a9e9760dca
   languageName: node
   linkType: hard
 
-"terser@npm:^5.14.1":
-  version: 5.15.1
-  resolution: "terser@npm:5.15.1"
+"terser@npm:^5.16.5":
+  version: 5.16.9
+  resolution: "terser@npm:5.16.9"
   dependencies:
     "@jridgewell/source-map": "npm:^0.3.2"
     acorn: "npm:^8.5.0"
@@ -12348,7 +12355,7 @@ __metadata:
     source-map-support: "npm:~0.5.20"
   bin:
     terser: bin/terser
-  checksum: 4d0c2a858eb2857fd8b58b2e2382865e3ecad30a8573b20d325cb6789d670f4057f3f84ac6e7437556033ec0c6fff9e913e5bbc05b67cdeac1a35b3da173c295
+  checksum: a78dacf259b7ab3be400aa9b32e0333928d7b3b693b21d92b12848ec9faf9705edbdffcbff214d543e1301646dc816e358eb14841917ded31c8e965ef4ab0558
   languageName: node
   linkType: hard
 
@@ -13242,12 +13249,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5.78.0, webpack@npm:^5.75.0":
-  version: 5.78.0
-  resolution: "webpack@npm:5.78.0"
+"webpack@npm:5.79.0, webpack@npm:^5.75.0":
+  version: 5.79.0
+  resolution: "webpack@npm:5.79.0"
   dependencies:
     "@types/eslint-scope": "npm:^3.7.3"
-    "@types/estree": "npm:^0.0.51"
+    "@types/estree": "npm:^1.0.0"
     "@webassemblyjs/ast": "npm:1.11.1"
     "@webassemblyjs/wasm-edit": "npm:1.11.1"
     "@webassemblyjs/wasm-parser": "npm:1.11.1"
@@ -13256,7 +13263,7 @@ __metadata:
     browserslist: "npm:^4.14.5"
     chrome-trace-event: "npm:^1.0.2"
     enhanced-resolve: "npm:^5.10.0"
-    es-module-lexer: "npm:^0.9.0"
+    es-module-lexer: "npm:^1.2.1"
     eslint-scope: "npm:5.1.1"
     events: "npm:^3.2.0"
     glob-to-regexp: "npm:^0.4.1"
@@ -13267,7 +13274,7 @@ __metadata:
     neo-async: "npm:^2.6.2"
     schema-utils: "npm:^3.1.0"
     tapable: "npm:^2.1.1"
-    terser-webpack-plugin: "npm:^5.1.3"
+    terser-webpack-plugin: "npm:^5.3.7"
     watchpack: "npm:^2.4.0"
     webpack-sources: "npm:^3.2.3"
   peerDependenciesMeta:
@@ -13275,7 +13282,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 02d65095b80df6f162bab46776dad4f322531d0b349ba7237f309462c3c31a1514d70a34e536d3ab818e65fc0ab666a4ff40e9c55f7582b8cb59b806e7b04a3b
+  checksum: 2810388315ef1c9bc02f5abd9c2c05c2aa047ba0949d4dc95c152183217b7e54441eaba9c397adb210486f8a731e199a948bcfb4009f544af929363a54dbade0
   languageName: node
   linkType: hard
 
