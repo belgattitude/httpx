@@ -2239,7 +2239,7 @@ __metadata:
     ts-jest: "npm:29.1.0"
     tslib: "npm:2.5.0"
     typedoc: "npm:0.24.6"
-    typedoc-plugin-markdown: "npm:3.15.1"
+    typedoc-plugin-markdown: "npm:3.15.2"
     typescript: "npm:5.0.4"
     vite: "npm:4.2.1"
     vite-tsconfig-paths: "npm:4.2.0"
@@ -12755,14 +12755,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@npm:3.15.1":
-  version: 3.15.1
-  resolution: "typedoc-plugin-markdown@npm:3.15.1"
+"typedoc-plugin-markdown@npm:3.15.2":
+  version: 3.15.2
+  resolution: "typedoc-plugin-markdown@npm:3.15.2"
   dependencies:
     handlebars: "npm:^4.7.7"
+    typedoc-plugin-mdn-links: "npm:^3.0.3"
   peerDependencies:
     typedoc: ">=0.24.0"
-  checksum: 0af61a091ef634e09320d8912b73ff4dab27b253a70d58104ae690f16125759a5374e27373cbe2cf9ba0f53e6b55bb65ccc05d2ae9bc601cc00ac21284f59766
+  checksum: 492894b50640e42e5268b0b943462baae855a537f324d65e64c76b0cc45eebc23f2200e62b3e8880f2895c2f9a218efb35e42f0204013655b954c75ac336dab3
+  languageName: node
+  linkType: hard
+
+"typedoc-plugin-mdn-links@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "typedoc-plugin-mdn-links@npm:3.0.3"
+  peerDependencies:
+    typedoc: ">= 0.23.14 || 0.24.x"
+  checksum: 236431c45eb79fb2022c70a2df8caeff88dda97ada854b368db74cf95433bb42bd3d581f1fb1ccf418e1cce84ebd0e8148aa1047c75fb9cd1a1a1f4434117e8d
   languageName: node
   linkType: hard
 
