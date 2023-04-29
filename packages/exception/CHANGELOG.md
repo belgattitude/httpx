@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 1.7.2
+
+### Patch Changes
+
+- [#309](https://github.com/belgattitude/httpx/pull/309) [`67321bc`](https://github.com/belgattitude/httpx/commit/67321bc51e1937f5159daee99567ee9c530eabb2) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix missing serializer export for commonjs (esm worked)
+
 ## 1.7.1
 
 ### Patch Changes
@@ -19,14 +25,14 @@
   const e400 = new HttpBadRequest({
     errors: [
       {
-        message: "Invalid email",
-        path: "email",
-        code: "invalid_email",
+        message: 'Invalid email',
+        path: 'email',
+        code: 'invalid_email',
       },
       {
-        message: "Invalid address",
-        path: ["addresses", 0, "line1"],
-        code: "empty_string",
+        message: 'Invalid address',
+        path: ['addresses', 0, 'line1'],
+        code: 'empty_string',
       },
     ],
   });
@@ -107,9 +113,9 @@
 
   ```typescript
   const err = new HttpRequestTimeout({
-    url: "https://api.dev/user/belgattitude",
-    method: "GET",
-    code: "NETWORK_FAILURE",
+    url: 'https://api.dev/user/belgattitude',
+    method: 'GET',
+    code: 'NETWORK_FAILURE',
     errorId: nanoid(), // can be shared by frontend/backend
   });
   console.log(err.url, err.method, err.code, err.errorId);
@@ -129,7 +135,7 @@
   import {
     convertToSerializable,
     createFromSerializable,
-  } from "@httpx/exception/serializer";
+  } from '@httpx/exception/serializer';
 
   const serializableObject = convertToSerializable(new HttpForbidden());
   const exception = createFromSerializable(serializableObject);
@@ -166,11 +172,11 @@
   import {
     HttpForbidden,
     HttpUnavailableForLegalReasons,
-  } from "@httpx/exception";
-  import { fromJson, toJson } from "@httpx/exception/serializer";
+  } from '@httpx/exception';
+  import { fromJson, toJson } from '@httpx/exception/serializer';
 
   const e = new HttpForbidden({
-    url: "https://www.cool.me",
+    url: 'https://www.cool.me',
     /*
       cause: new HttpUnavailableForLegalReasons({
           cause: new Error('example with cause')
