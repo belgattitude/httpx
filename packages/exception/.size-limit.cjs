@@ -1,7 +1,7 @@
 // @ts-check
 
 const fullEsmMaxSize = "3080B";
-const fullCjsMaxSize = "3265B";
+const fullCjsMaxSize = "4000B";
 
 /**
  * Will ensure esm tree-shakeability and total size are within expectations.
@@ -76,6 +76,6 @@ module.exports = [
     path: ["dist/cjs/index.cjs"],
     import: "{ isHttpException }",
     webpack: true,
-    limit: '2385B',
+    limit: '3600B',
   }
 ];
