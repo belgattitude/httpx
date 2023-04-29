@@ -117,7 +117,7 @@ export default () => [
     external: config.external,
     plugins: [...getDefaultRollupPlugins('compat', 'cjs', config.minify)],
     output: {
-      preserveModules: false, // as esm is the future don't create too much files for cjs.
+      preserveModules: true,
       format: 'cjs',
       dir: `${config.distDir}/cjs`,
       entryFileNames: '[name].cjs',
