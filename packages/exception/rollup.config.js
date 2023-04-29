@@ -113,11 +113,11 @@ export default () => [
   }, */
   // CJS compat
   {
-    input: ['./src/index.ts'],
-    preserveModules: false,
+    input: ['./src/index.ts', './src/serializer/index.ts'],
     external: config.external,
     plugins: [...getDefaultRollupPlugins('compat', 'cjs', config.minify)],
     output: {
+      preserveModules: false, // as esm is the future don't create too much files for cjs.
       format: 'cjs',
       dir: `${config.distDir}/cjs`,
       entryFileNames: '[name].cjs',
