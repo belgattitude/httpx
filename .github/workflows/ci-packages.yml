@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [14.x, 16.x, 18.x, 20.x]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -67,8 +67,11 @@ jobs:
       - name: 🛟 Check build for ecmascript compliance
         run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-dist
 
+      - name: 🛟 Check publishable dist  (publint)
+        run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-pub
+
       - name: ☂️ Codecov upload
-        if: matrix.node-version == '16.x'
+        if: matrix.node-version == '18.x'
         uses: codecov/codecov-action@v3
         with:
           directory: ./packages/exception/coverage
