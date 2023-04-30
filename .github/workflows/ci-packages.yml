@@ -53,6 +53,7 @@ jobs:
         run: yarn workspaces foreach -tv --from '@httpx/*' --no-private run typecheck
 
       - name: 🔬 ESLint checks
+        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --from '@httpx/*' --no-private run lint
 
       - name: 🧪 Unit tests
@@ -62,12 +63,15 @@ jobs:
         run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run build
 
       - name: 📐 Check build for size-limits
+        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-size
 
       - name: 🛟 Check build for ecmascript compliance
+        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-dist
 
       - name: 🛟 Check publishable dist  (publint)
+        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-pub
 
       - name: ☂️ Codecov upload
@@ -79,7 +83,7 @@ jobs:
           flags: httpx-exception-unit
           fail_ci_if_error: false
           verbose: false
-          working-directory: ${{ github.workspace }}
 
       - name: 📄 Check doc can be built
+        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run build-doc
