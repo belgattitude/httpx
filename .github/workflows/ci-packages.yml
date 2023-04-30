@@ -79,7 +79,6 @@ jobs:
           flags: httpx-exception-unit
           fail_ci_if_error: false
           verbose: false
-          working-directory: ${{ github.workspace }}
 
       - name: 📄 Check doc can be built
         run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run build-doc
