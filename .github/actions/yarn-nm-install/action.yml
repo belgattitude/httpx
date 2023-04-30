@@ -25,7 +25,7 @@ inputs:
   cache-node-modules:
     description: 'Cache node_modules (invalidated on lock changes)'
     required: false
-    default: 'true'
+    default: 'false'
 
 runs:
   using: 'composite'
