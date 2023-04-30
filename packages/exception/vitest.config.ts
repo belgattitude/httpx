@@ -21,7 +21,7 @@ export default defineConfig({
     },
     coverage: {
       provider: 'istanbul',
-      reporter: ['text', 'json', 'clover'],
+      reporter: ['text', 'clover'],
       all: true,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
     },
