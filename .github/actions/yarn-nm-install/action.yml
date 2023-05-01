@@ -1,90 +1,78 @@
 ########################################################################################
-# "yarn install" composite action for yarn 2/3/4+ and "nodeLinker: node-modules"       #
+# "yarn install" composite action for yarn 3/4+ and "nodeLinker: node-modules"         #
 #--------------------------------------------------------------------------------------#
-# Cache:                                                                               #
-#   - Downloaded zip archive (multi-arch, preserved across yarn.lock changes)          #
-#   - Yarn install state (discarded in yarn.lock changes)                              #
+# Requirement @setup/node should be run before                                         #
 # References:                                                                          #
+#   - latest: https://gist.github.com/belgattitude/042f9caf10d029badbde6cf9d43e400a    #
 #   - bench: https://gist.github.com/belgattitude/0ecd26155b47e7be1be6163ecfbb0f0b     #
-#   - vs @setup/node: https://github.com/actions/setup-node/issues/325                 #
 ########################################################################################
 
 name: 'Monorepo install (yarn)'
 description: 'Run yarn install with node_modules linker and cache enabled'
 inputs:
-  node-version:
-    description: 'Extra key to add to the cache (ie: multiple node versions)'
+  enable-corepack:
+    description: 'Enable corepack'
     required: false
-    default: ''
-
+    default: 'false'
   cache-install-state:
     description: 'Cache yarn install state (invalidated on lock changes)'
     required: false
     default: 'true'
-
   cache-node-modules:
     description: 'Cache node_modules (invalidated on lock changes)'
     required: false
-    default: 'false'
+    default: 'true'
 
 runs:
   using: 'composite'
 
   steps:
-    - name: Expose yarn config as "$GITHUB_OUTPUT"
+    - name: ⚙️ Enable Corepack
+      if: ${{ inputs.enable-corepack }} == 'true'
+      shell: bash
+      run: corepack enable
+
+    - name: ⚙️ Expose yarn config as "$GITHUB_OUTPUT"
       id: yarn-config
       shell: bash
       env:
-        YARN_ENABLE_GLOBAL_CACHE: "true"
-        YARN_NM_MODE: hardlinks-global
-        YARN_INSTALL_STATE_PATH: .yarn/ci-install-state/install-state.gz
+        YARN_ENABLE_GLOBAL_CACHE: "false"
       run: |
         echo "CACHE_FOLDER=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
         echo "CURRENT_NODE_VERSION="node-$(node --version | cut -d . -f 1  | sed 's/[^0-9]*//g')".x" >> $GITHUB_OUTPUT
 
-    #- name: Debug cache-dir
-    #  shell: bash
-    #  run: echo "CACHE_FOLDER = ${{ steps.yarn-config.outputs.CACHE_FOLDER }}"
-
-    # Yarn rotates the downloaded cache archives.
-    # @see https://github.com/actions/setup-node/issues/325
-    - name: Restore yarn download cache
+    - name: ♻️ Restore yarn cache
       uses: actions/cache@v3
       id: yarn-download-cache
       with:
-        enableCrossOsArchive: true
         path: ${{ steps.yarn-config.outputs.CACHE_FOLDER }}
-        key: yarn-download-cache-${{ hashFiles('yarn.lock') }}
+        key: yarn-download-cache-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
         restore-keys: |
           yarn-download-cache-
 
-    # Invalidated on yarn.lock changes
-    - name: Restore yarn install state
+    - name: ♻️ Restore yarn install state
       if: inputs.cache-install-state == 'true'
       id: yarn-install-state-cache
       uses: actions/cache@v3
       with:
-        path: |
-          .yarn/ci-install-state
-        key: ${{ runner.os }}-${{ inputs.node-version }}-yarn-install-state-cache-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
+        path: .yarn/ci-cache/
+        key: yarn-install-state-cache-${{ runner.os }}-${{ steps.yarn-config.outputs.CURRENT_NODE_VERSION }}-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
 
-
-    # Invalidated on yarn.lock changes
-    - name: Restore yarn node_modules
+    - name: ♻️ Restore node_modules
       if: inputs.cache-node-modules == 'true'
-      id: yarn-install-nm
+      id: yarn-nm-cache
       uses: actions/cache@v3
       with:
-        path: |
-          .yarn/__virtual__
-          .yarn/unplugged
-          **/node_modules
-        key: ${{ runner.os }}-${{ inputs.node-version }}-yarn-install-nm-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
+        path: '**/node_modules'
+        key: yarn-nm-cache-${{ runner.os }}-${{ steps.yarn-config.outputs.CURRENT_NODE_VERSION }}-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
 
-    - name: Install dependencies
+    - name: 📥 Install dependencies
       shell: bash
       run: yarn install --immutable --inline-builds
       env:
-        YARN_ENABLE_GLOBAL_CACHE: "true"
-        YARN_NM_MODE: hardlinks-global
-        YARN_INSTALL_STATE_PATH: .yarn/ci-install-state/install-state.gz
+        # Overrides/align yarnrc.yml options (v3, v4) for a CI context
+        YARN_ENABLE_GLOBAL_CACHE: "false" # Use local cache folder to keep downloaded archives
+        YARN_NM_MODE: "hardlinks-local"   # Hardlinks-(local|global) reduces io / node_modules size
+        YARN_INSTALL_STATE_PATH: .yarn/ci-cache/install-state.gz # Very small speedup when lock does not change
+        # Other environment variables
+        HUSKY: '0' # By default do not run HUSKY install
