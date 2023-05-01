@@ -34,8 +34,6 @@ jobs:
 
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: ♻️ Restore packages cache
         uses: actions/cache@v3
