@@ -3,6 +3,7 @@
 #--------------------------------------------------------------------------------------#
 # Requirement @setup/node should be run before                                         #
 # References:                                                                          #
+#   - latest: https://gist.github.com/belgattitude/042f9caf10d029badbde6cf9d43e400a    #
 #   - bench: https://gist.github.com/belgattitude/0ecd26155b47e7be1be6163ecfbb0f0b     #
 ########################################################################################
 
@@ -36,8 +37,6 @@ runs:
       shell: bash
       env:
         YARN_ENABLE_GLOBAL_CACHE: "false"
-        YARN_NM_MODE: "hardlinks-local"
-        YARN_INSTALL_STATE_PATH: .yarn/ci-cache/install-state.gz
       run: |
         echo "CACHE_FOLDER=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
         echo "CURRENT_NODE_VERSION="node-$(node --version | cut -d . -f 1  | sed 's/[^0-9]*//g')".x" >> $GITHUB_OUTPUT
