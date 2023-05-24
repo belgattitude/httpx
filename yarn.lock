@@ -2246,7 +2246,7 @@ __metadata:
     vite: "npm:4.3.8"
     vite-tsconfig-paths: "npm:4.2.0"
     vitest: "npm:0.31.1"
-    webpack: "npm:5.83.1"
+    webpack: "npm:5.84.0"
   languageName: unknown
   linkType: soft
 
@@ -3996,12 +3996,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn-import-assertions@npm:^1.7.6":
-  version: 1.8.0
-  resolution: "acorn-import-assertions@npm:1.8.0"
+"acorn-import-assertions@npm:^1.7.6, acorn-import-assertions@npm:^1.9.0":
+  version: 1.9.0
+  resolution: "acorn-import-assertions@npm:1.9.0"
   peerDependencies:
     acorn: ^8
-  checksum: 7963bf636b8ee03e93507beea867317bcbb09c53050aaebc86b49022478dda7ea3110ea0ffab1957db016d83f57e92c307c54adef113812bb19445a4e4a1aa98
+  checksum: acfc1289383f81d7dfd4dbb184c00cfedc388af1e7669f23c3cbccf6062547536d8d41a6dd5ecacc55f26922f5606e079fae19e37433f0d83e95a990c6e5703f
   languageName: node
   linkType: hard
 
@@ -5905,13 +5905,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.12.0, enhanced-resolve@npm:^5.14.0":
-  version: 5.14.0
-  resolution: "enhanced-resolve@npm:5.14.0"
+"enhanced-resolve@npm:^5.12.0, enhanced-resolve@npm:^5.14.0, enhanced-resolve@npm:^5.14.1":
+  version: 5.14.1
+  resolution: "enhanced-resolve@npm:5.14.1"
   dependencies:
     graceful-fs: "npm:^4.2.4"
     tapable: "npm:^2.2.0"
-  checksum: 802065e152816ed9ab48de778b14f08eff74287e00903c9e451010445ca4b92c0de24db3a063ea0914df5c796e8703e4c44117ffe1e64bb2c15979d361cbafd8
+  checksum: d0dca4a78a824fddeacd5853ad7bd18d33469bc8556d3bca2eafbb4a2325ec462f830d58eeefbd9efb9708e9a65a2f52073a757b4c2ad928daab56a0aa394514
   languageName: node
   linkType: hard
 
@@ -13217,7 +13217,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5.83.1, webpack@npm:^5.75.0":
+"webpack@npm:5.83.1":
   version: 5.83.1
   resolution: "webpack@npm:5.83.1"
   dependencies:
@@ -13251,6 +13251,43 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: a0c77c65f90a294b153726db6e51b0d16203346a8532815cf453f708008086fba8d3c546af4d53e29aa1764edd45a0cc8535945ce40d5d1b0e16821dc349da2f
+  languageName: node
+  linkType: hard
+
+"webpack@npm:5.84.0, webpack@npm:^5.75.0":
+  version: 5.84.0
+  resolution: "webpack@npm:5.84.0"
+  dependencies:
+    "@types/eslint-scope": "npm:^3.7.3"
+    "@types/estree": "npm:^1.0.0"
+    "@webassemblyjs/ast": "npm:^1.11.5"
+    "@webassemblyjs/wasm-edit": "npm:^1.11.5"
+    "@webassemblyjs/wasm-parser": "npm:^1.11.5"
+    acorn: "npm:^8.7.1"
+    acorn-import-assertions: "npm:^1.9.0"
+    browserslist: "npm:^4.14.5"
+    chrome-trace-event: "npm:^1.0.2"
+    enhanced-resolve: "npm:^5.14.1"
+    es-module-lexer: "npm:^1.2.1"
+    eslint-scope: "npm:5.1.1"
+    events: "npm:^3.2.0"
+    glob-to-regexp: "npm:^0.4.1"
+    graceful-fs: "npm:^4.2.9"
+    json-parse-even-better-errors: "npm:^2.3.1"
+    loader-runner: "npm:^4.2.0"
+    mime-types: "npm:^2.1.27"
+    neo-async: "npm:^2.6.2"
+    schema-utils: "npm:^3.1.2"
+    tapable: "npm:^2.1.1"
+    terser-webpack-plugin: "npm:^5.3.7"
+    watchpack: "npm:^2.4.0"
+    webpack-sources: "npm:^3.2.3"
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: 8147f5319dfa1f842692d32d94699396febdb0fef510cba9523d894441d06cef2814c59fe7526f3bd838692949c8b06ae11a1f3e8a051b6d1ded8bb8fb5683a8
   languageName: node
   linkType: hard
 
