@@ -13,7 +13,7 @@ const pkg = require('./package.json');
 
 const config = {
   distDir: './dist',
-  ecmascriptLevel: '2021',
+  ecmascriptLevel: '2020',
   sourceMap: false, // process.env.NODE_ENV === 'production',
   cache: false,
   extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -88,7 +88,7 @@ export default () => [
   {
     input: ['./src/index.ts', './src/serializer/index.ts'],
     external: config.external,
-    plugins: [...getDefaultRollupPlugins('modern', 'esm', config.minify)],
+    plugins: [...getDefaultRollupPlugins('compat', 'esm', config.minify)],
     output: {
       format: 'esm',
       preserveModules: true, // Will allow maximum tree-shakeability by bundlers such as webpack
@@ -115,7 +115,7 @@ export default () => [
   {
     input: ['./src/index.ts', './src/serializer/index.ts'],
     external: config.external,
-    plugins: [...getDefaultRollupPlugins('modern', 'cjs', config.minify)],
+    plugins: [...getDefaultRollupPlugins('compat', 'cjs', config.minify)],
     output: {
       preserveModules: true,
       format: 'cjs',
