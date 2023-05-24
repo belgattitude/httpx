@@ -66,7 +66,7 @@
     "CHANGELOG.md"
   ],
   "browserslist": [
-    ">1%",
+    ">2%",
     "not dead"
   ],
   "scripts": {
@@ -80,8 +80,8 @@
     "lint-timing": "cross-env TIMING=1 run lint",
     "typecheck": "tsc --project ./tsconfig.json --noEmit",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/cjs/*.map.js' -v es2015 './dist/cjs/**/*'",
-    "check-dist-esm": "es-check --not './dist/esm/*.map.js' -v es2015 --module './dist/esm/**/*'",
+    "check-dist-cjs": "es-check --not './dist/cjs/*.map.js' -v es2021 './dist/cjs/**/*'",
+    "check-dist-esm": "es-check --not './dist/esm/*.map.js' -v es2021 --module './dist/esm/**/*'",
     "check-size": "size-limit",
     "check-pub": "publint --strict",
     "test": "vitest run",
@@ -138,6 +138,6 @@
     "webpack": "5.87.0"
   },
   "engines": {
-    "node": ">=14.17"
+    "node": ">=16.16.0"
   }
 }
