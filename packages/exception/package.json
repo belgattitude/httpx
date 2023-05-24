@@ -65,9 +65,9 @@
     "LICENSE",
     "CHANGELOG.md"
   ],
-  "browserslist": [
-    ">2%",
-    "not dead"
+  "browserslist2": [
+    "defaults",
+    "maintained node versions"
   ],
   "scripts": {
     "build": "rimraf ./dist && cross-env NODE_ENV=production rollup -c rollup.config.js",
@@ -92,6 +92,7 @@
   "devDependencies": {
     "@babel/core": "7.21.8",
     "@babel/plugin-proposal-class-properties": "7.18.6",
+    "@babel/plugin-proposal-class-static-block": "7.21.0",
     "@babel/plugin-transform-classes": "7.21.0",
     "@babel/plugin-transform-spread": "7.20.7",
     "@babel/plugin-transform-typescript": "7.21.3",

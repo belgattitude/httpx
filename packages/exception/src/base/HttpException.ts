@@ -1,4 +1,4 @@
-import { supportsErrorCause } from '../support';
+import { supportsErrorCause } from '../support/supportsErrorCause';
 import type { HttpExceptionParams, HttpMethod } from '../types';
 import { getSuper } from '../utils';
 
