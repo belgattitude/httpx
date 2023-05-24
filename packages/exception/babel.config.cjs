@@ -11,7 +11,7 @@ module.exports = (api) => {
         '@babel/preset-env',
         {
           // https://babeljs.io/docs/en/babel-preset-env.html#bugfixes
-          bugfixes: true,
+          bugfixes: false,
           exclude: [
             // '@babel/plugin-transform-regenerator',
             // '@babel/plugin-transform-parameters',
@@ -21,6 +21,7 @@ module.exports = (api) => {
       '@babel/preset-typescript',
     ],
     plugins: [
+      // '@babel/plugin-proposal-class-static-block',
       // '@babel/plugin-transform-spread',
       // '@babel/plugin-proposal-class-properties',
       // '@babel/plugin-transform-classes',

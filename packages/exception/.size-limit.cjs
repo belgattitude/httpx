@@ -1,6 +1,6 @@
 // @ts-check
 
-const fullEsmMaxSize = "2150B";
+const fullEsmMaxSize = "2200B";
 const fullCjsMaxSize = "3350B";
 
 /**
@@ -47,7 +47,7 @@ module.exports = [
     name: "ESM (only createHttpException)",
     path: ["dist/esm/index.js"],
     import: "{ createHttpException }",
-    limit: "1650B", // Will import all server/client exceptions
+    limit: "1700B", // Will import all server/client exceptions
   },
   {
     name: "ESM ({ toJson })",
@@ -59,7 +59,7 @@ module.exports = [
     name: "ESM ({ fromJson })",
     path: ["dist/esm/serializer/index.js"],
     import: "{ fromJson }",
-    limit: "2100B",
+    limit: "2200B",
   },
   // ###################################################
   // Commonjs full bundle
@@ -76,6 +76,6 @@ module.exports = [
     path: ["dist/cjs/index.cjs"],
     import: "{ isHttpException }",
     webpack: true,
-    limit: '3000B',
+    limit: '2900B',
   }
 ];
