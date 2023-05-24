@@ -13,7 +13,7 @@ const pkg = require('./package.json');
 
 const config = {
   distDir: './dist',
-  ecmascriptLevel: '2020',
+  ecmascriptLevel: '2021',
   sourceMap: false, // process.env.NODE_ENV === 'production',
   cache: false,
   extensions: ['.js', '.jsx', '.ts', '.tsx'],
