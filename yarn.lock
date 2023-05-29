@@ -2306,7 +2306,7 @@ __metadata:
     error-cause-polyfill: "npm:2.0.0"
     es-check: "npm:7.1.1"
     eslint: "npm:8.41.0"
-    get-tsconfig: "npm:4.5.0"
+    get-tsconfig: "npm:4.6.0"
     jest: "npm:29.5.0"
     npm-run-all: "npm:4.1.5"
     publint: "npm:0.1.12"
@@ -7169,10 +7169,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-tsconfig@npm:4.5.0, get-tsconfig@npm:^4.2.0, get-tsconfig@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "get-tsconfig@npm:4.5.0"
-  checksum: 55326d2fdfcf0f07096e948928ada42560d0bfc6b215232393da09738301ea19200c0e94f0214d223a3264f0ec72fbbb38a3769502076f2c34edd01f006ed6d9
+"get-tsconfig@npm:4.6.0, get-tsconfig@npm:^4.2.0, get-tsconfig@npm:^4.5.0":
+  version: 4.6.0
+  resolution: "get-tsconfig@npm:4.6.0"
+  dependencies:
+    resolve-pkg-maps: "npm:^1.0.0"
+  checksum: f7e7d4e5853f9949a12b84ef5e4af64e2bd5dd0bf48670413300ea8bf818a1424c7af6fc8e218ed4bd1f1f1e9c78c282f3607825bdfc490ee8439792bbef24ce
   languageName: node
   linkType: hard
 
@@ -11306,6 +11308,13 @@ __metadata:
   version: 3.0.0
   resolution: "resolve-pathname@npm:3.0.0"
   checksum: ed7214dbc089a55942cb411ccba419a58a98e9e274e74ae59df7d1881a6e6a318357801629f9673256316575685a92ec21280fce647f69f1a4b1dc6aec6246a3
+  languageName: node
+  linkType: hard
+
+"resolve-pkg-maps@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "resolve-pkg-maps@npm:1.0.0"
+  checksum: 6d91a6387c12ba1d67e09d35205df09cf6871debe8618d695b828ee2609e382463bbbab42b860f63c000bae39e464772d0ea6b7753802fb42ac3cbe33bd8154e
   languageName: node
   linkType: hard
 
