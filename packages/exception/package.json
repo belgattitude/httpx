@@ -65,9 +65,9 @@
     "LICENSE",
     "CHANGELOG.md"
   ],
-  "browserslist2": [
-    "defaults",
-    "maintained node versions"
+  "browserslist": [
+    ">0.01%",
+    "not dead"
   ],
   "scripts": {
     "build": "rimraf ./dist && cross-env NODE_ENV=production rollup -c rollup.config.js",
@@ -79,8 +79,8 @@
     "lint": "cross-env TIMING=1 eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/exception.eslintcache",
     "typecheck": "tsc --project ./tsconfig.json --noEmit",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/cjs/*.map.js' -v es2021 './dist/cjs/**/*'",
-    "check-dist-esm": "es-check --not './dist/esm/*.map.js' -v es2021 --module './dist/esm/**/*'",
+    "check-dist-cjs": "es-check --not './dist/cjs/*.map.js' -v es2015 './dist/cjs/**/*'",
+    "check-dist-esm": "es-check --not './dist/esm/*.map.js' -v es2015 --module './dist/esm/**/*'",
     "check-size": "size-limit",
     "check-pub": "publint --strict",
     "test": "vitest run",
@@ -90,14 +90,13 @@
     "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix"
   },
   "devDependencies": {
-    "@babel/core": "7.22.1",
+    "@babel/core": "7.22.5",
     "@babel/plugin-proposal-class-properties": "7.18.6",
-    "@babel/plugin-proposal-class-static-block": "7.21.0",
-    "@babel/plugin-transform-classes": "7.21.0",
-    "@babel/plugin-transform-spread": "7.20.7",
-    "@babel/plugin-transform-typescript": "7.22.3",
-    "@babel/preset-env": "7.22.4",
-    "@babel/preset-typescript": "7.21.5",
+    "@babel/plugin-transform-classes": "7.22.5",
+    "@babel/plugin-transform-spread": "7.22.5",
+    "@babel/plugin-transform-typescript": "7.22.5",
+    "@babel/preset-env": "7.22.5",
+    "@babel/preset-typescript": "7.22.5",
     "@belgattitude/eslint-config-bases": "1.33.0",
     "@rollup/plugin-babel": "6.0.3",
     "@rollup/plugin-node-resolve": "15.1.0",
@@ -138,6 +137,6 @@
     "webpack": "5.86.0"
   },
   "engines": {
-    "node": ">=16.16.0"
+    "node": ">=14.16"
   }
 }
