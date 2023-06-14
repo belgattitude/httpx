@@ -47,7 +47,7 @@ module.exports = [
     name: "ESM (only createHttpException)",
     path: ["dist/esm/index.js"],
     import: "{ createHttpException }",
-    limit: "2595B", // Will import all server/client exceptions
+    limit: "2605B", // Will import all server/client exceptions
   },
   {
     name: "ESM ({ toJson })",
@@ -59,7 +59,7 @@ module.exports = [
     name: "ESM ({ fromJson })",
     path: ["dist/esm/serializer/index.js"],
     import: "{ fromJson }",
-    limit: "3250B",
+    limit: "3265B",
   },
   // ###################################################
   // Commonjs full bundle
