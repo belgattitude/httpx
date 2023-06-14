@@ -1,5 +1,38 @@
 # @httpx/exception
 
+## 1.8.0
+
+### Minor Changes
+
+- [#402](https://github.com/belgattitude/httpx/pull/402) [`6b945d3`](https://github.com/belgattitude/httpx/commit/6b945d3c32198199bb0fdc3adae097e3d056c5cc) Thanks [@belgattitude](https://github.com/belgattitude)! - Add field error validation support for 422 HttpUnprocessableEntity
+
+  Example:
+
+  ```typescript
+  import { HttpUnprocessableEntity } from '@httpx/exception';
+
+  const e422 = new HttpUnprocessableEntity({
+    errors: [
+      {
+        message: 'Invalid email',
+        path: 'email',
+        code: 'invalid_email',
+      },
+      {
+        message: 'Invalid address',
+        path: ['addresses', 0, 'line1'],
+        code: 'empty_string',
+      },
+    ],
+  });
+
+  console.log(e422.errors);
+  ```
+
+### Patch Changes
+
+- [#404](https://github.com/belgattitude/httpx/pull/404) [`f4c2780`](https://github.com/belgattitude/httpx/commit/f4c2780b694aaca96dee7730df47e9e70e39cd6b) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix cyclic type import and use latest rollup to build
+
 ## 1.7.2
 
 ### Patch Changes
