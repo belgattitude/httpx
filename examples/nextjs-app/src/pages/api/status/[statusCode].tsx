@@ -1,5 +1,5 @@
 import { createHttpException, isHttpErrorStatusCode } from '@httpx/exception';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiHandler } from 'next';
 import { z } from 'zod';
 import { parseRequestWithZod, withApiErrorHandler } from '@/backend';
 import { zodStringToInt, ConsoleLogger } from '@/lib';
@@ -12,7 +12,7 @@ const reqSchema = z.object({
   }),
 });
 
-const statusHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const statusHandler: NextApiHandler = async (req, res) => {
   // Throw HttpBadRequest if didn't pass schema requirements
   const parsed = parseRequestWithZod(req, reqSchema);
 

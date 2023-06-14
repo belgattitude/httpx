@@ -41,19 +41,22 @@ pnpm add @httpx/exception     # via pnpm
 
 ## Why ?
 
-Coding outside a framework à la nest, tsed... ? Started coding api / server side routes in nextjs, nuxt, astro, fastify, express...
-Having code like `res.status(405).end('Method not allowed')`, `res.status(404).end('Not Found')`... a bit everywhere ?
-Using http exceptions can help to improve some areas (central catcher / hof / middlewares, loggers, ...).
-
+At infra / http level using http exceptions (thrown or not) might help to build central error handling, improve logging
+abilities (backtraces, error cause...) or simply help to build a serializer (ie: json-api). Http exceptions are
+generally offered in frameworks (ie: nestjs, tsed...), `@httpx/exception` is a standalone / no-deps implementation
+with a small footprint.
 
 ## A quick taste
 
-illustrative example (based on nextjs api route)
+Illustrative example (based on nextjs api route)
 
 ```typescript
+// ie: ./pages/api/v1/product/[slug].ts
+import type { NextApiHandler } from "next";
+import { withApiErrorHandler } from "@/backend/hof/withApiErrorHandler";
 import { HttpNotFound, HttpForbidden } from "@httpx/exception";
 
-const getProductHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const getProductHandler: NextApiHandler = async (req, res) => {
   const { slug } = req.query;
   if (!req.headers["authorization"]) {
     throw new HttpForbidden();
@@ -74,10 +77,11 @@ export default withApiErrorHandler({
 Example for a global catcher.
 
 ```typescript
+// ie: ./backend/hof/withApiErrorHandler.ts
 import type { HttpException } from "@httpx/exception";
 import { isHttpException } from "@httpx/exception";
 import { toJson } from "@httpx/exception/serializer";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 type Params = {
   logger?: LoggerInterface;
@@ -87,7 +91,7 @@ type Params = {
 export const withApiErrorHandler = (params?: Params) => {
   const { logger = new ConsoleLogger(), defaultStatusCode = 500 } =
     params ?? {};
-  return (handler: (req: NextApiRequest, res: NextApiResponse) => void) =>
+  return (handler: NextApiHandler) =>
     async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
       try {
         await handler(req, res);
@@ -111,7 +115,7 @@ export const withApiErrorHandler = (params?: Params) => {
 };
 ```
 
-Tip: @httpx/exception is small scoped by nature. The above example isn't to be taken "as is".
+> Tip: @httpx/exception is small scoped by nature. The above example isn't to be taken "as is".
 
 ## Quick overview
 
