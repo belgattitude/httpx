@@ -24,7 +24,7 @@ describe(`when Error.cause isn't supported`, () => {
     ['HttpNotFound', new HttpNotFound(params)],
   ];
 
-  vi.mock('../../src/support', () => {
+  vi.mock('../../src/support/supportsErrorCause', () => {
     return {
       supportsErrorCause: () => false,
     };
