@@ -3,7 +3,7 @@
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#error_types
  * @see https://262.ecma-international.org/12.0/#sec-well-known-intrinsic-objects
  */
-import type { HttpMethod } from '../../types';
+import type { HttpMethod } from '../../types/HttpMethod';
 
 export type NativeError =
   | Error

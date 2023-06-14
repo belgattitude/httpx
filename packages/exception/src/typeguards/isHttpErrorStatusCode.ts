@@ -1,4 +1,4 @@
-import type { HttpStatusCode } from '../types';
+import type { HttpStatusCode } from '../types/HttpStatusCode';
 
 /**
  * Check if the provided value is a valid http status code

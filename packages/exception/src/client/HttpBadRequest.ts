@@ -1,5 +1,6 @@
 import { HttpClientException } from '../base';
-import type { HttpExceptionParams, ValidationError } from '../types';
+import type { HttpExceptionParams } from '../types/HttpExceptionParams';
+import type { ValidationError } from '../types/ValidationError';
 import { getSuper } from '../utils';
 
 /**
