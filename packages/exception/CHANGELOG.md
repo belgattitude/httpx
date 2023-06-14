@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 1.8.1
+
+### Patch Changes
+
+- [`42cdf63`](https://github.com/belgattitude/httpx/commit/42cdf637c3d95b85f29e003016f33ac5c554667a) Thanks [@belgattitude](https://github.com/belgattitude)! - Minor perf by extracting regexp into an hoisted var
+
 ## 1.8.0
 
 ### Minor Changes
