@@ -1,6 +1,6 @@
 import { HttpUnprocessableEntity } from '../../src/client';
 import { HttpBadRequest } from '../../src/client';
-import type { ValidationError } from '../../src/types';
+import type { ValidationError } from '../../src/types/ValidationError';
 
 describe('HttpUnprocessableEntity (422) with field validation errors', () => {
   const errors: ValidationError[] = [

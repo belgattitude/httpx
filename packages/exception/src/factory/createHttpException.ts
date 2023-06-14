@@ -5,7 +5,8 @@ import {
 } from '../base';
 import { statusMap } from '../status';
 import { isHttpErrorStatusCode } from '../typeguards';
-import type { AssignedStatusCodes, HttpExceptionParams } from '../types';
+import type { AssignedStatusCodes } from '../types/AssignedStatusCodes';
+import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 
 /**
  * Create a concrete http exception object from a given http status code.

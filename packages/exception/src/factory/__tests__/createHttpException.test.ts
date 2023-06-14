@@ -4,7 +4,7 @@ import {
   HttpServerException,
 } from '../../base';
 import { statusMap } from '../../status';
-import type { HttpExceptionParams } from '../../types';
+import type { HttpExceptionParams } from '../../types/HttpExceptionParams';
 import { createHttpException } from '../createHttpException';
 
 describe('createHttpException tests', () => {

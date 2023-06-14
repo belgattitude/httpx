@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, expect, vi } from 'vitest';
 import { HttpClientException, HttpException } from '../../src/base';
 import { HttpNotFound } from '../../src/client';
-import { supportsErrorCause } from '../../src/support';
+import { supportsErrorCause } from '../../src/support/supportsErrorCause';
 
 describe(`when Error.cause isn't supported`, () => {
   beforeEach(() => {

@@ -1,5 +1,6 @@
-import { supportsErrorCause } from '../support';
-import type { HttpExceptionParams, HttpMethod } from '../types';
+import { supportsErrorCause } from '../support/supportsErrorCause';
+import type { HttpExceptionParams } from '../types/HttpExceptionParams';
+import type { HttpMethod } from '../types/HttpMethod';
 import { getSuper } from '../utils';
 
 export class HttpException extends Error {
