@@ -1,4 +1,4 @@
-import type { HttpExceptionParams } from '../../types';
+import type { HttpExceptionParams } from '../../types/HttpExceptionParams';
 import { HttpException } from '../HttpException';
 
 describe('HttpException', () => {
