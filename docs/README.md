@@ -103,7 +103,7 @@ throw new HttpInternalServerError({
 | errorId       | `string?`           | Unique id ([about context](#about-context)).                                                                                       |
 | stack         | `string?`           | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
 | cause         | `Error?`            | @see [about error cause](#about-errorcause)                                                                                        |
-| errors?       | `ValidationError[]` | Only supported by HttpBadRequest                                                                                                   |
+| errors?       | `ValidationError[]` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
 
 ### Factories
 
@@ -229,11 +229,16 @@ const deserialized = createFromSerializable(serializableObject);
 
 ### Validation errors
 
-In some circumstances you might find useful to append the validation errors to
-`HttpBadRequest`. Here's a quick example:
+Although field validation errors aren't part of the specs, they are often used by frameworks or apis in
+combination with the 422 status code (HttpUnprocessableEntity). For convenience, it's possible to directly
+attach them to the exception. That allows to easily access them in an error handler
+(ie: [json-api errors](https://jsonapi.org/examples/#error-objects)...). Be aware that for simple request validation
+the 400 status code is more appropriate (one message).
 
 ```typescript
-const e400 = new HttpBadRequest({
+import { HttpUnprocessableEntity } from "@httpx/exception";
+
+const e422 = new HttpUnprocessableEntity({
   errors: [
     {
       message: "Invalid email",
@@ -247,8 +252,12 @@ const e400 = new HttpBadRequest({
     },
   ],
 });
-console.log(e400.errors);
+
+console.log(e422.errors);
 ```
+
+> For reference, see [github api](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors), rails or
+> api-plaform.
 
 ### Non-official status codes
 
