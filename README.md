@@ -42,9 +42,10 @@ pnpm add @httpx/exception     # via pnpm
 ## Why ?
 
 At infra / http level using http exceptions (thrown or not) might help to build central error handling, improve logging
-abilities (backtraces, error cause...) or simply help to build a serializer (ie: json-api). Http exceptions are
-generally offered in frameworks (ie: nestjs, tsed...), `@httpx/exception` is a standalone / no-deps implementation
-with a small footprint.
+abilities (backtraces, error cause...) or simply help to build a serializer (ie: [json-api](https://jsonapi.org/examples/#error-objects-basics)).
+Http exceptions are generally built-in in frameworks (ie: nestjs, tsed...), `@httpx/exception` is a standalone implementation
+with a small footprint. It can be used / mapped (but not confused) with domain errors (NoSuchUser,...) or other
+infra errors (ie: [prisma](https://www.prisma.io/blog/nestjs-prisma-error-handling-7D056s1kOop2)...)
 
 ## A quick taste
 
