@@ -14,9 +14,10 @@ purposes.
 
 ## Why ?
 
-Coding outside a framework à la nest, tsed... ? Started coding api / server side routes in nextjs, nuxt, astro, fastify, express...
-Having code like `res.status(405).end('Method not allowed')`, `res.status(404).end('Not Found')`... a bit everywhere ?
-Using http exceptions can help to improve some areas (central catcher / hof / middlewares, loggers, ...).
+At infra / http level using http exceptions (thrown or not) might help to build central error handling, improve logging
+abilities (backtraces, error cause...) or simply help to build a serializer (ie: json-api). Http exceptions are
+generally offered in frameworks (ie: nestjs, tsed...), `@httpx/exception` is a standalone / no-deps implementation
+with a small footprint.
 
 ## Highlights
 

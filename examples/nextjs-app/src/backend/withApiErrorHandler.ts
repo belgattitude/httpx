@@ -1,7 +1,7 @@
 import type { HttpException } from '@httpx/exception';
 import { isHttpException } from '@httpx/exception';
 import { convertToSerializable } from '@httpx/exception/serializer';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import type { LoggerInterface } from '@/lib';
 import { ConsoleLogger } from '@/lib';
 
@@ -18,7 +18,7 @@ const defaultLogger = new ConsoleLogger();
  */
 export const withApiErrorHandler = (params?: Params) => {
   const { logger = defaultLogger, defaultStatusCode = 500 } = params ?? {};
-  return (handler: (req: NextApiRequest, res: NextApiResponse) => void) =>
+  return (handler: NextApiHandler) =>
     async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
       try {
         await handler(req, res);
