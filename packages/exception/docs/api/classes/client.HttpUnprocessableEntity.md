@@ -4,7 +4,14 @@
 
 [client](../modules/client.md).HttpUnprocessableEntity
 
-422 Unprocessable entity (client / webdav specific)
+422 Unprocessable entity (client / webdav specific per RFC / used for validation errors in most apis)
+
+Be aware that a lot of apis/frameworks will use 422 Unprocessable Entity to indicate (form field) validation errors
+when posting data (rails, github, api-platform...). See also 400 for simple request errors.
+
+**`See`**
+
+- https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors
 
 The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code
 is inappropriate), and the syntax of the request entity is correct (thus a 400 Bad Request status code is
@@ -12,8 +19,6 @@ inappropriate) but was unable to process the contained instructions.
 
 For example, this error condition may occur if an XML request body contains well-formed
 (i.e., syntactically correct), but semantically erroneous, XML instructions.
-
-**`See`**
 
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
 - https://httpstatus.in/422/
@@ -35,6 +40,7 @@ For example, this error condition may occur if an XML request body contains well
 - [cause](client.HttpUnprocessableEntity.md#cause)
 - [code](client.HttpUnprocessableEntity.md#code)
 - [errorId](client.HttpUnprocessableEntity.md#errorid)
+- [errors](client.HttpUnprocessableEntity.md#errors)
 - [message](client.HttpUnprocessableEntity.md#message)
 - [method](client.HttpUnprocessableEntity.md#method)
 - [name](client.HttpUnprocessableEntity.md#name)
@@ -57,9 +63,9 @@ For example, this error condition may occur if an XML request body contains well
 
 #### Parameters
 
-| Name           | Type                                                                         |
-| :------------- | :--------------------------------------------------------------------------- |
-| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+| Name           | Type                                                                                                                                                     |
+| :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) & { `errors?`: [`ValidationError`](../modules/types.md#validationerror)[] } |
 
 #### Overrides
 
@@ -105,6 +111,12 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 #### Inherited from
 
 [HttpClientException](base.HttpClientException.md).[errorId](base.HttpClientException.md#errorid)
+
+---
+
+### errors
+
+• `Readonly` **errors**: [`ValidationError`](../modules/types.md#validationerror)[]
 
 ---
 

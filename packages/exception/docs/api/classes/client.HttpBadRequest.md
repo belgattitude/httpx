@@ -6,10 +6,15 @@
 
 400 Bad Request (client)
 
-The server cannot or will not process the request due to something that is perceived to be a client error
-(e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+Be aware that a lot of apis/frameworks will use 422 Unprocessable Entity to indicate (form field) validation errors
+when posting data (rails, github, api-platform...).
 
 **`See`**
+
+- https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors
+
+The server cannot or will not process the request due to something that is perceived to be a client error
+(e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
 
 - https://httpstatus.in/400/
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
