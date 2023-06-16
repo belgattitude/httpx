@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  generate-docs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
