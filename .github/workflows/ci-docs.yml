@@ -9,6 +9,7 @@ on:
     branches:
       - '**'
     paths:
+      - '*.lock'
       - 'docs/**'
 
 permissions:
@@ -30,21 +31,9 @@ jobs:
 
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
-        with:
-          cache-prefix: 'docs'
-          enable-corepack: true
 
-      - name: 🏗 Build packages
-        run: yarn workspaces foreach -v --from '@httpx/*' run build
-
-      - name: 🕵️ Typecheck
-        run: yarn workspaces foreach -v --from '@examples/*' run typecheck
-
-      - name: 🔬 Lint
-        run: yarn workspaces foreach -v --from '@examples/*' run lint
-
-      - name: 🏗 Build example apps
-        run: yarn workspaces foreach -v --from '@examples/*' run build
+      - name: 🏗 Build docs
+        run: yarn workspace httpx-docs run build
         env:
           NEXTJS_IGNORE_ESLINT: true
           NEXTJS_IGNORE_TYPECHECK: true
