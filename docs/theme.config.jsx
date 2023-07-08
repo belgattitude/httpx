@@ -3,5 +3,8 @@ export default {
   project: {
     link: 'https://github.com/belgattitude/httpx',
   },
-  // ...
+  docsRepositoryBase: 'https://github.com/belgattitude/httpx/tree/main/docs',
+  editLink: {
+    text: 'Edit this page on GitHub',
+  },
 };
