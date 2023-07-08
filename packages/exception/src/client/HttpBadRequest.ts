@@ -6,13 +6,11 @@ import { getSuper } from '../utils';
 /**
  * 400 Bad Request (client)
  *
- * Be aware that a lot of apis/frameworks will use 422 Unprocessable Entity to indicate (form field) validation errors
- * when posting data (rails, github, api-platform...).
- *
- * @see https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors
- *
  * The server cannot or will not process the request due to something that is perceived to be a client error
  * (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+ *
+ * Note that a lot of apis/frameworks uses 422 Unprocessable Entity to indicate (form field) validation errors
+ * rather the 400 Bad Request status code.
  *
  * @see https://httpstatus.in/400/
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400

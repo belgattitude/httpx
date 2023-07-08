@@ -24,12 +24,13 @@ export type HttpExceptionParams = {
     | 'PATCH';
 
   /**
-   * Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+   * Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'CODE-1234'...)
+   * Do not use this to indicate http status code, use `statusCode` instead.
    */
   code?: string;
 
   /**
-   * Inform about an unique error identifier (ie: nanoid, cuid...)
+   * Inform about an unique error identifier (ie: nanoid, cuid, sentry...)
    */
   errorId?: string;
 

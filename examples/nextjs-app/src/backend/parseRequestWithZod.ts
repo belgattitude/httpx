@@ -16,7 +16,7 @@ type Params<T> = {
  */
 export const parseRequestWithZod = <
   T extends ZodSchema,
-  TReq extends IncomingMessage = NextApiRequest
+  TReq extends IncomingMessage = NextApiRequest,
 >(
   req: TReq,
   schema: T,

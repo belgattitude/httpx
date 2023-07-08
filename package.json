@@ -22,7 +22,8 @@
     "g:build": "yarn workspaces foreach -ptv run build",
     "g:build-packages": "yarn workspaces foreach -ptv --include '@httpx/*' run build",
     "g:build-examples": "yarn workspaces foreach -ptv --include '@examples/*' run build",
-    "g:build-doc": "yarn workspaces foreach -ptv run build-doc",
+    "g:build-doc": "yarn workspace httpx-docs run build",
+    "g:build-api-doc": "yarn workspaces foreach -ptv run build-api-doc",
     "g:test": "yarn workspaces foreach -pv run test",
     "g:test-unit": "yarn workspaces foreach -pv run test-unit",
     "g:lint": "yarn workspaces foreach -v run lint",
@@ -38,15 +39,13 @@
     "clean:global-cache": "rimraf ./.cache",
     "deps:check": "npx npm-check-updates@latest --configFileName ncurc.yml --deep",
     "deps:update": "npx npm-check-updates@latest --configFileName ncurc.yml -u --deep",
-    "docs:dev": "yarn workspace httpx-docs dev",
-    "docs:export": "yarn workspace httpx-docs export",
     "check:install": "yarn dlx @yarnpkg/doctor@3.1 .",
     "postinstall": "is-ci || yarn husky install",
     "nuke:node_modules": "rimraf --glob '**/node_modules'",
     "format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"./*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
   },
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "1.35.1",
+    "@belgattitude/eslint-config-bases": "1.36.0",
     "@changesets/changelog-github": "0.4.8",
     "@changesets/cli": "2.26.2",
     "@commitlint/cli": "17.6.6",
@@ -54,8 +53,6 @@
     "@types/prettier": "2.7.3",
     "@types/shell-quote": "1.7.1",
     "cross-env": "7.0.3",
-    "docsify": "4.13.1",
-    "docsify-cli": "4.4.4",
     "eslint": "8.44.0",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
@@ -67,6 +64,12 @@
     "typescript": "5.1.6"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=18.12.0"
+  },
+  "resolutions?": {
+    "eslint-plugin-react-hooks": "https://github.com/vercel/next.js/issues/52365"
+  },
+  "resolutions": {
+    "eslint-plugin-react-hooks": "4.6.0"
   }
 }

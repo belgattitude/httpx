@@ -1,24 +1,17 @@
-Plain http exceptions for node, deno, edge and browsers. No deps, lightweight, first class typescript
-experience. Offer a built-in serializer in case you'll need it in hybrid context (àlà nextjs) or for logging
-purposes.
+import { Tabs, Tab } from 'nextra/components';
+
+Plain HTTP exceptions for Node.js, Deno, Edge, and browsers. Zero dependencies, TypeScript-ready.
+Includes an optional serializer for hybrid contexts (àlà nextjs) and/or logging purposes.
 
 [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/exception)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
 [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=>99%&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=PiAwLjAxJSwgbm90IGRlYWQ%3D)
+[![browserslist](https://img.shields.io/static/v1?label=Browser&message=>99%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=PiAwLjAxJSwgbm90IGRlYWQ%3D)
 [![node](https://img.shields.io/static/v1?label=Node&message=14%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZA%3D%3D)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&style=for-the-badge&labelColor=444)](https://codecov.io/gh/belgattitude/httpx)
 [![techdebt](https://img.shields.io/codeclimate/tech-debt/belgattitude/httpx?label=TechDebt&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
 [![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Maintainability&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
 [![license](https://img.shields.io/npm/l/@httpx/exception?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
-
-## Why ?
-
-At infra / http level using http exceptions (thrown or not) might help to build central error handling, improve logging
-abilities (backtraces, error cause...) or simply help to build a serializer (ie: [json-api](https://jsonapi.org/examples/#error-objects-basics)).
-Http exceptions are generally built-in in frameworks (ie: nestjs, tsed...), `@httpx/exception` is a standalone implementation
-with a small footprint. It can be used / mapped (but not confused) with domain errors (NoSuchUser,...) or other
-infra errors (ie: [prisma](https://www.prisma.io/blog/nestjs-prisma-error-handling-7D056s1kOop2)...)
 
 ## Highlights
 
@@ -34,11 +27,11 @@ infra errors (ie: [prisma](https://www.prisma.io/blog/nestjs-prisma-error-handli
 
 ## Install
 
-```bash
-npm install @httpx/exception  # via npm
-yarn add @httpx/exception     # via yarn
-pnpm add @httpx/exception     # via pnpm
-```
+<Tabs items={['yarn', 'pnpm', 'npm']} defaultIndex={1}>
+  <Tab>```bash yarn add @httpx/exception ```</Tab>
+  <Tab>```bash pnpm add @httpx/exception ```</Tab>
+  <Tab>```bash npm install @httpx/exception ```</Tab>
+</Tabs>
 
 ## Usage
 
@@ -49,7 +42,7 @@ by `Http` prefix to ease ide experience (suggestions) and to avoid naming collis
 (ie: domain exceptions such as NotFound...). You'll find the current supported list in [this section](#list-of-named-exceptions).
 
 ```typescript
-import { HttpNotFound, HttpServiceUnavailable } from "@httpx/exception";
+import { HttpNotFound, HttpServiceUnavailable } from '@httpx/exception';
 ```
 
 #### HttpException parameters
@@ -74,23 +67,24 @@ import {
   HttpGatewayTimeout,
   HttpInternalServerError,
   HttpNotFound,
-} from "@httpx/exception";
+} from '@httpx/exception';
 
 // Simple
 throw new HttpNotFound(); // message = 'Not found'
 
 // Custom message
-throw new HttpNotFound("User not found");
+throw new HttpNotFound('User not found');
 
-// With all properties
-throw new HttpInternalServerError({
-  message: "Oups, this is on our side.",
-  url: "https://api.dev/gateway",
-  cause: new HttpGatewayTimeout({
-    code: "This Serverless Function has timed out",
-    errorId: "cdg1::h99k2-1664884491087-b41a2832f559",
-  }),
-});
+// Another way
+const fetchData = async <T,>(url: string): Promise<T | Error> => {
+  return new HttpInternalServerError({
+    url,
+    cause: new HttpGatewayTimeout({
+      code: 'This Serverless Function has timed out',
+      errorId: 'cdg1::h99k2-1664884491087-b41a2832f559',
+    }),
+  });
+};
 ```
 
 #### HttpException properties
@@ -115,7 +109,7 @@ The `createHttpException` function allows to create an exception from an
 arbitrary status code.
 
 ```typescript
-import { createHttpException } from "@httpx/exception";
+import { createHttpException } from '@httpx/exception';
 
 const e404 = createHttpException(404); // e404 instanceof HttpClientException
 const e500 = createHttpException(500); // e500 instanceof HttpServerException
@@ -124,11 +118,11 @@ const e500 = createHttpException(500); // e500 instanceof HttpServerException
 Additional [parameters](#httpexception-parameters) can be provided as a second argument.
 
 ```typescript
-throw createHttpException(404, "The graal is yet to find !");
+throw createHttpException(404, 'The graal is yet to find !');
 
 throw createHttpException(500, {
-  message: "Something really wrong happened.",
-  url: "https://api.dev/gateway",
+  message: 'Something really wrong happened.',
+  url: 'https://api.dev/gateway',
   cause: new HttpNotImplemented(), // or any Error...
 });
 ```
@@ -147,7 +141,7 @@ import {
   isHttpClientException,
   isHttpServerException,
   isHttpErrorStatusCode,
-} from "@httpx/exception";
+} from '@httpx/exception';
 
 // True
 isHttpErrorStatusCode(404);
@@ -195,7 +189,7 @@ Additionally, you can pass any native errors (`Error`, `EvalError`, `RangeError`
 ### JSON
 
 ```typescript
-import { fromJson, toJson } from "@httpx/exception/serializer";
+import { fromJson, toJson } from '@httpx/exception/serializer';
 
 const e = new HttpForbidden();
 
@@ -216,74 +210,15 @@ Same as JSON but before json.parse/stringify. Allows to use a different encoder.
 import {
   convertToSerializable,
   createFromSerializable,
-} from "@httpx/exception/serializer";
+} from '@httpx/exception/serializer';
 
 const e = new HttpForbidden({
-  cause: new Error("Token was revoked"),
+  cause: new Error('Token was revoked'),
 });
 
 const serializableObject = convertToSerializable(e);
 const deserialized = createFromSerializable(serializableObject);
 // e === deserialized
-```
-
-## Advanced
-
-### Validation errors
-
-Although field validation errors aren't part of the specs, they are often used by frameworks or apis in
-combination with the 422 status code (HttpUnprocessableEntity). For convenience, it's possible to directly
-attach them to the exception. That allows to easily access them in an error handler
-(ie: [json-api errors](https://jsonapi.org/examples/#error-objects)...). Be aware that for simple request validation
-the 400 status code is more appropriate (one message).
-
-```typescript
-import { HttpUnprocessableEntity } from "@httpx/exception";
-
-const e422 = new HttpUnprocessableEntity({
-  errors: [
-    {
-      message: "Invalid email",
-      path: "email",
-      code: "invalid_email",
-    },
-    {
-      message: "Invalid address",
-      path: ["addresses", 0, "line1"],
-      code: "empty_string",
-    },
-  ],
-});
-
-console.log(e422.errors);
-```
-
-> For reference, see [github api](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors), rails or
-> api-plaform.
-
-### Non-official status codes
-
-While their usage is not recommended, some status codes might be found in the wild (generally server status codes).
-
-```typescript
-import { createHttpException, HttpServerException } from "@httpx/exception";
-
-const nonOfficialStatusCodes = [
-  [509, "Might refer to bandwidth limit"],
-  [525, "Might refer to SSL Handshake Failed (ie: cloudflare)"],
-  [526, "Might refer to Invalid SSL Certificate (ie: cloudflare)"],
-  ["...", "..."],
-];
-
-const e = createHttpException(509, {
-  // optional HttpExceptionParams
-}); // `e2 instanceof HttpServerException
-
-// alternatively
-const alternate = new HttpServerException({
-  statusCode: 509,
-  // ...(optional HttpExceptionParams)
-});
 ```
 
 ## Notes
@@ -294,15 +229,15 @@ The `message` parameter can be omitted for [known exceptions](#list-of-named-exc
 to an english status text (inferred from the exception name).
 
 ```typescript
-import { createHttpException, HttpMethodNotAllowed } from "@httpx/exception";
+import { createHttpException, HttpMethodNotAllowed } from '@httpx/exception';
 
 const e1 = new HttpMethodNotAllowed();
-const e2 = new HttpMethodNotAllowed("Method not allowed");
+const e2 = new HttpMethodNotAllowed('Method not allowed');
 const e3 = new HttpMethodNotAllowed({
-  message: "Method not allowed",
+  message: 'Method not allowed',
 });
 const e4 = createHttpException(HttpMethodNotAllowed.STATUS, {
-  message: "Method not allowed",
+  message: 'Method not allowed',
 });
 // e1.message === e2.message === e3.message === e4.message
 ```
@@ -320,9 +255,9 @@ It's possible to attach a context to the exception (for logging, reporting...). 
 
 ```typescript
 const err = new HttpRequestTimeout({
-  url: "https://api.dev/user/belgattitude",
-  method: "GET",
-  code: "NETWORK_FAILURE",
+  url: 'https://api.dev/user/belgattitude',
+  method: 'GET',
+  code: 'NETWORK_FAILURE',
   errorId: nanoid(),
 });
 console.log(err.url, err.method, err.code, err.errorId);
@@ -354,8 +289,8 @@ Examples are given "as is" and does not represent a real-world usage.
 ### Backend
 
 ```typescript
-import type { IncomingMessage, ServerResponse } from "node:http";
-import { toJson } from "@httpx/exception/serializer";
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import { toJson } from '@httpx/exception/serializer';
 import {
   HttpForbidden,
   HttpImATeapot,
@@ -363,15 +298,15 @@ import {
   HttpNotFound,
   HttpUpgradeRequired,
   isHttpServerException,
-} from "@httpx/exception";
+} from '@httpx/exception';
 
 // Imaginary logger
 const ignoredCodes = [HttpNotFound.STATUS, HttpImATeapot.STATUS];
 const logHttpException = (e: HttpException, req: IncomingMessage): void => {
   if (ignoredCodes.includes(e.statusCode)) return;
-  const level = isHttpServerException(e) ? "critical" : "error";
+  const level = isHttpServerException(e) ? 'critical' : 'error';
   // Could be sentry, pino logger, winston...
-  console.log(level, req.headers["host"], toJson(e));
+  console.log(level, req.headers['host'], toJson(e));
 };
 
 // A global error handler / middleware / higher order function...
@@ -398,16 +333,16 @@ const withErrorHandler =
 // An imaginary situation
 const fetchData = async () => {
   throw new HttpInternalServerError({
-    message: "Something really wrong happened today.",
-    url: "https://microservice.example.org/api-gateway",
-    cause: new HttpUpgradeRequired("Received from the api gateway"),
+    message: 'Something really wrong happened today.',
+    url: 'https://microservice.example.org/api-gateway',
+    cause: new HttpUpgradeRequired('Received from the api gateway'),
   });
 };
 
 // The route handler: could be nextjs, express, fastify...
 const apiRouteHandler = async (req: IncomingMessage, res: ServerResponse) => {
-  if (!req.headers["authorization"]) {
-    throw new HttpForbidden("Missing authorization header");
+  if (!req.headers['authorization']) {
+    throw new HttpForbidden('Missing authorization header');
   }
   const data = await fetchData();
   res.json({ success: true, data });

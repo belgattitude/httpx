@@ -1,0 +1,58 @@
+## Advanced
+
+### Validation errors
+
+Although field validation errors aren't part of the specs, they are often used by frameworks or apis in
+combination with the 422 status code (HttpUnprocessableEntity). For convenience, it's possible to directly
+attach them to the exception. That allows to easily access them in an error handler
+(ie: [json-api errors](https://jsonapi.org/examples/#error-objects)...). Be aware that for simple request validation
+the 400 status code is more appropriate (one message).
+
+```typescript
+import { HttpUnprocessableEntity } from '@httpx/exception';
+
+const e422 = new HttpUnprocessableEntity({
+  errors: [
+    {
+      message: 'Invalid email',
+      path: 'email',
+      code: 'invalid_email',
+    },
+    {
+      message: 'Invalid address',
+      path: ['addresses', 0, 'line1'],
+      code: 'empty_string',
+    },
+  ],
+});
+
+console.log(e422.errors);
+```
+
+> For reference, see [github api](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors), rails or
+> api-plaform.
+
+### Non-official status codes
+
+While their usage is not recommended, some status codes might be found in the wild (generally server status codes).
+
+```typescript
+import { createHttpException, HttpServerException } from '@httpx/exception';
+
+const nonOfficialStatusCodes = [
+  [509, 'Might refer to bandwidth limit'],
+  [525, 'Might refer to SSL Handshake Failed (ie: cloudflare)'],
+  [526, 'Might refer to Invalid SSL Certificate (ie: cloudflare)'],
+  ['...', '...'],
+];
+
+const e = createHttpException(509, {
+  // optional HttpExceptionParams
+}); // `e2 instanceof HttpServerException
+
+// alternatively
+const alternate = new HttpServerException({
+  statusCode: 509,
+  // ...(optional HttpExceptionParams)
+});
+```

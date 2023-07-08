@@ -5,7 +5,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next build && next export"
+    "export": "next export",
+    "prettier-check": "run --top-level prettier --check --cache --cache-location=\"../../.cache/prettier/docs.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
+    "prettier-fix": "run --top-level prettier --write --cache --cache-location=\"../../.cache/prettier/docs.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/docs.eslintcache",
+    "lint-timing": "cross-env TIMING=1 run lint",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit",
+    "clean": "rimraf ./.next ./out /coverage ./tsconfig.tsbuildinfo"
   },
   "dependencies": {
     "next": "13.4.9",
@@ -15,6 +21,11 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@belgattitude/eslint-config-bases": "1.36.0",
+    "eslint": "8.44.0",
+    "eslint-config-next": "13.4.9",
+    "prettier": "3.0.0",
+    "rimraf": "5.0.1",
     "typescript": "5.1.6"
   }
 }

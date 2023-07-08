@@ -21,6 +21,12 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
+    env:
+      NEXTJS_IGNORE_ESLINT: true
+      NEXTJS_IGNORE_TYPECHECK: true
+      NEXT_DISABLE_SOURCEMAPS: true
+      NEXT_TELEMETRY_DISABLED: true
+
     steps:
       - uses: actions/checkout@v3
 
@@ -34,8 +40,6 @@ jobs:
 
       - name: 🏗 Build docs
         run: yarn workspace httpx-docs run build
-        env:
-          NEXTJS_IGNORE_ESLINT: true
-          NEXTJS_IGNORE_TYPECHECK: true
-          NEXT_DISABLE_SOURCEMAPS: true
-          NEXT_TELEMETRY_DISABLED: true
+
+      - name: 🏗 Export docs
+        run: yarn workspace httpx-docs run export
