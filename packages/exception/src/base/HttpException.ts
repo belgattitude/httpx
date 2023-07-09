@@ -19,7 +19,7 @@ export class HttpException extends Error {
   public readonly method: HttpMethod | undefined;
 
   /**
-   * Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+   * Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
    */
   public readonly code: string | undefined;
 

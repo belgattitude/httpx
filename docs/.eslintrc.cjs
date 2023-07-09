@@ -33,6 +33,15 @@ module.exports = {
     // optional overrides per project
   },
   overrides: [
-    // optional overrides per project file match
+    {
+      files: ['*.config.{mjs,js,jsx}'],
+      rules: {
+        'react-hooks/rules-of-hooks': 'off',
+        '@typescript-eslint/naming-convention': 'off',
+        'import/export': 'off',
+        'import/order': 'off',
+        'import/default': 'off',
+      },
+    },
   ],
 };

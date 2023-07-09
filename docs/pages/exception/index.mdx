@@ -1,4 +1,4 @@
-import { Tabs, Tab } from 'nextra/components';
+import { Tabs, Tab, Callout } from 'nextra/components';
 
 Plain HTTP exceptions for Node.js, Deno, Edge, and browsers. Zero dependencies, TypeScript-ready.
 Includes an optional serializer for hybrid contexts (àlà nextjs) and/or logging purposes.
@@ -32,6 +32,15 @@ Includes an optional serializer for hybrid contexts (àlà nextjs) and/or loggin
   <Tab>```bash pnpm add @httpx/exception ```</Tab>
   <Tab>```bash npm install @httpx/exception ```</Tab>
 </Tabs>
+
+<Callout type="info" emoji="ℹ️">
+  You might want to install a polyfill for <code>Error.prototype.cause</code> if
+  you need to [support older
+  browsers](https://caniuse.com/mdn-javascript_builtins_error_error_options_cause_parameter).
+  (recommended:
+  ([error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill). Node
+  supports it since 16.9.0.
+</Callout>
 
 ## Usage
 
@@ -278,7 +287,7 @@ console.log(err.cause); // undefined if not supported by runtime
 
 > **Warning**
 > Error.prototype.cause is supported on node >= 16.9.0 and. Caniuse.com indicates a support for
-> [89% of browsers](https://caniuse.com/mdn-javascript_builtins_error_error_options_cause_parameter).
+> [>90% of browsers](https://caniuse.com/mdn-javascript_builtins_error_error_options_cause_parameter).
 > as of September 2022. There's few polyfills that can be used if needed ([error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill),
 > [error-cause](https://github.com/es-shims/error-cause)...)
 

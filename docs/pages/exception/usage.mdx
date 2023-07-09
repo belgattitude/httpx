@@ -1,4 +1,4 @@
-import { Tabs, Tab } from 'nextra/components';
+import { Tabs, Tab, Callout } from 'nextra/components';
 
 ## Named imports
 
@@ -9,7 +9,7 @@ parameters are supported such as `url`, `method`, `code`, `errorId`, `errors` an
 <Tabs items={['Simple', 'Extended parameters', 'With validation errors']} defaultIndex={1}>
     <Tab>
         ```typescript
-        import { HttpNotFound } from '@httpx/exception';
+        import { HttpNotFound, HttpBadRequest } from '@httpx/exception';
 
         const e1 = new HttpNotFound();
         e1.message;    // 'Not found'
@@ -19,6 +19,8 @@ parameters are supported such as `url`, `method`, `code`, `errorId`, `errors` an
 
         e2.message;    // 'Page not found'
         e2.statusCode; // 404
+
+        const e400 = new HttpBadRequest('Problems parsing JSON');
         ```
     </Tab>
     <Tab>
@@ -65,6 +67,15 @@ parameters are supported such as `url`, `method`, `code`, `errorId`, `errors` an
           ]
         });
         ```
+
+        <Callout type="info" emoji="ℹ️">
+            According to MDN, the 422-HttpUnprocessableEntity status code is reserved for WebDAV, but it is widely used in REST APIs
+            (ie: [github](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors]), rails...).
+
+            The choice to add validation errors to the 422 exception might be controversial and is optional. However, it offers
+            some benefits as a global error handler can leverage them to generate error responses
+            (ie: [json-api error responses](https://jsonapi.org/examples/#error-objects-basics)).
+        </Callout>
     </Tab>
 
 </Tabs>
