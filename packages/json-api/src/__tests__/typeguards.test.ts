@@ -1,4 +1,4 @@
-import { isPlainObject } from '../';
+import { isPlainObject } from '../typeguards';
 
 describe('Typeguards tests', () => {
   describe('isPlainObject', () => {
