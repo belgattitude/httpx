@@ -64,6 +64,9 @@
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-json-api-unit --dir ./coverage"
   },
+  "dependencies": {
+    "@httpx/exception": "workspace:^"
+  },
   "devDependencies": {
     "@belgattitude/eslint-config-bases": "1.36.0",
     "@size-limit/file": "8.2.6",

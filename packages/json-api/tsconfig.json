@@ -3,6 +3,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "noEmit": true,
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
+    "paths": {
+      "@httpx/exception": ["../../packages/exception/src/index"]
+    }
   }
 }
