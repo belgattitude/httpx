@@ -46,11 +46,12 @@
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
     "build": "yarn clean && yarn tsup",
-    "build-api-doc": "typedoc --githubPages false --plugin typedoc-plugin-markdown",
     "build-release": "yarn build",
+    "build-doc": "run-s build-typedoc",
+    "build-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2017 './dist/**/*.js'",
-    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2017 --module './dist/**/*.mjs'",
+    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2020 './dist/**/*.js'",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2020 --module './dist/**/*.mjs'",
     "check-pub": "publint --strict",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
@@ -86,5 +87,8 @@
     "vite": "4.4.4",
     "vite-tsconfig-paths": "4.2.0",
     "vitest": "0.33.0"
+  },
+  "engines": {
+    "node": "^14.13.1 || >=16"
   }
 }
