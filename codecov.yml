@@ -1,0 +1,42 @@
+coverage:
+  range: 60..100
+  round: down
+  precision: 2
+
+flag_management:
+  default_rules:
+    carryforward: false
+  individual_flags:
+    - name: httpx-exception-unit
+      paths:
+        - packages/exception
+      statuses:
+        - type: project
+          target: 95%
+          threshold: 1%
+
+    - name: httpx-dsn-parser-unit
+      paths:
+        - packages/dsn-parser
+      statuses:
+        - type: project
+          target: 95%
+          threshold: 1%
+
+ignore:
+  - '.yarn/**/*'
+  - '.husky/**/*'
+  - 'docs/**/*'
+  - 'examples/**/*'
+  - '**/dist/**/*'
+
+github_checks: true
+
+comment:
+  layout: 'reach, diff, flags, files'
+  behavior: default
+  require_changes: false
+  require_base: yes
+  require_head: yes
+  branches: null
+  show_carryforward_flags: true

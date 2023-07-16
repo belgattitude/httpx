@@ -47,40 +47,38 @@ jobs:
             ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
 
       - name: 🕵️ Typecheck
-        run: yarn workspaces foreach -tv --from '@httpx/*' --no-private run typecheck
+        run: yarn workspaces foreach -tv --from 'packages/*' --no-private run typecheck
 
       - name: 🔬 ESLint checks
         if: matrix.node-version == '18.x'
-        run: yarn workspaces foreach -tv --from '@httpx/*' --no-private run lint
+        run: yarn workspaces foreach -tv --from 'packages/*' --no-private run lint
 
       - name: 🧪 Unit tests
-        run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run test-unit --coverage
+        run: yarn workspaces foreach -tv --from 'packages/*' --no-private run test-unit --coverage
 
       - name: 🏗 Build packages
-        run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run build
+        run: yarn workspaces foreach -tv --from 'packages/*' --no-private run build
 
       - name: 📐 Check build for size-limits
         if: matrix.node-version == '18.x'
-        run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-size
+        run: yarn workspaces foreach -tv --from 'packages/*' --no-private run check-size
 
       - name: 🛟 Check build for ecmascript compliance
         if: matrix.node-version == '18.x'
-        run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-dist
+        run: yarn workspaces foreach -tv --from 'packages/*' --no-private run check-dist
 
       - name: 🛟 Check publishable dist  (publint)
         if: matrix.node-version == '18.x'
-        run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run check-pub
+        run: yarn workspaces foreach -tv --from 'packages/*' --no-private run check-pub
 
       - name: ☂️ Codecov upload
+        working-directory: ${{ github.workspace }}
         if: matrix.node-version == '18.x'
-        uses: codecov/codecov-action@v3
-        with:
-          directory: ./packages/exception/coverage
-          #files: ./packages/http-exception/coverage/clover.xml
-          flags: httpx-exception-unit
-          fail_ci_if_error: false
-          verbose: false
+        run: |
+          bash .github/scripts/install-codecov.sh
+          yarn g:ci-coverage-upload
+        shell: bash
 
       - name: 📄 Check doc can be built
         if: matrix.node-version == '18.x'
-        run: yarn workspaces foreach -tv --include '@httpx/*' --no-private run build-doc
+        run: yarn workspaces foreach -tv --from 'packages/*' --no-private run build-doc

@@ -32,6 +32,7 @@
     "g:check-pub": "yarn workspaces foreach -ptv run check-pub",
     "g:check-package-dist": "yarn workspaces foreach -ptv --include '@httpx/*' run check-dist",
     "g:release": "yarn g:build-packages && yarn g:check-package-dist && yarn exec changeset publish",
+    "g:ci-coverage-upload": "yarn workspaces foreach -tv run ci-coverage-upload",
     "clean:lint": "rimraf ./.cache/eslint",
     "clean:global-cache": "rimraf ./.cache",
     "deps:check": "npx npm-check-updates@latest --configFileName ncurc.yml --deep",
@@ -43,7 +44,7 @@
     "syncpack:check": "syncpack lint-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "syncpack:list": "syncpack list-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "nuke:node_modules": "rimraf --glob '**/node_modules'",
-    "format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"./*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
+    "prettier:format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"**/*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
   },
   "workspaces": [
     "examples/*",
