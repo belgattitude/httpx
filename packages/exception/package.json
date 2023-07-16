@@ -87,7 +87,8 @@
     "test-unit": "vitest run",
     "test-unit-watch": "vitest --ui",
     "test-unit-jest": "jest",
-    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix"
+    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage"
   },
   "devDependencies": {
     "@babel/core": "7.22.9",
