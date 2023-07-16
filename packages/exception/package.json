@@ -1,17 +1,17 @@
 {
   "name": "@httpx/exception",
+  "description": "Plain http exception in typescript.",
   "version": "1.8.1",
   "license": "MIT",
-  "description": "Delightful http exceptions. Works everywhere. Serialization, logging and more.",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
   "homepage": "https://github.com/belgattitude/httpx",
   "repository": {
     "type": "git",
     "url": "https://github.com/belgattitude/httpx",
     "directory": "packages/exception"
-  },
-  "author": {
-    "name": "Vanvelthem Sébastien",
-    "url": "https://github.com/belgattitude"
   },
   "keywords": [
     "http-error",
@@ -23,6 +23,10 @@
     "typescript"
   ],
   "sideEffects": false,
+  "browserslist": [
+    ">0.01%",
+    "not dead"
+  ],
   "type": "module",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.js",
@@ -46,8 +50,7 @@
     },
     "./package.json": "./package.json"
   },
-  "typesVersionsHelp1": "Credits to @andrewbranch, link https://github.com/andrewbranch/example-subpath-exports-ts-compat",
-  "typesVersionsHelp2": "https://github.com/microsoft/TypeScript/issues/50794#issuecomment-1251278131",
+  "typesVersions?": "Credits to @andrewbranch, link https://github.com/andrewbranch/example-subpath-exports-ts-compat - https://github.com/microsoft/TypeScript/issues/50794#issuecomment-1251278131",
   "typesVersions": {
     "*": {
       "serializer": [
@@ -64,10 +67,6 @@
     "package.json",
     "LICENSE",
     "CHANGELOG.md"
-  ],
-  "browserslist": [
-    ">0.01%",
-    "not dead"
   ],
   "scripts": {
     "build": "rimraf ./dist && cross-env NODE_ENV=production rollup -c rollup.config.js",

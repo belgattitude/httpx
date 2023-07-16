@@ -1,21 +1,19 @@
 {
   "name": "http-exception-monorepo",
-  "license": "MIT",
   "private": true,
-  "packageManager": "yarn@4.0.0-rc.46",
-  "homepage": "https://github.com/belgattitude/httpx",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/belgattitude/httpx"
-  },
+  "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "workspaces": [
-    "examples/*",
-    "packages/*"
-  ],
+  "homepage": "https://github.com/belgattitude/httpx",
+  "repository": "belgattitude/httpx",
+  "resolutions?": {
+    "eslint-plugin-react-hooks": "https://github.com/vercel/next.js/issues/52365"
+  },
+  "resolutions": {
+    "eslint-plugin-react-hooks": "4.6.0"
+  },
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn workspaces foreach -pv run clean",
     "g:build": "yarn workspaces foreach -ptv run build",
@@ -31,6 +29,7 @@
     "g:changeset": "changeset",
     "g:check-dist": "yarn workspaces foreach -ptv run check-dist",
     "g:check-size": "yarn workspaces foreach -ptv run check-size",
+    "g:check-pub": "yarn workspaces foreach -ptv run check-pub",
     "g:check-package-dist": "yarn workspaces foreach -ptv --include '@httpx/*' run check-dist",
     "g:release": "yarn g:build-packages && yarn g:check-package-dist && yarn exec changeset publish",
     "clean:lint": "rimraf ./.cache/eslint",
@@ -40,9 +39,17 @@
     "docs:serve": "docsify serve ./docs",
     "check:install": "yarn dlx @yarnpkg/doctor@3.1 .",
     "postinstall": "is-ci || yarn husky install",
+    "syncpack:format": "syncpack format",
+    "syncpack:check": "syncpack lint-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
+    "syncpack:list": "syncpack list-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "nuke:node_modules": "rimraf --glob '**/node_modules'",
     "format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"./*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
   },
+  "workspaces": [
+    "examples/*",
+    "packages/*"
+  ],
+  "packageManager": "yarn@4.0.0-rc.46",
   "devDependencies": {
     "@belgattitude/eslint-config-bases": "1.36.0",
     "@changesets/changelog-github": "0.4.8",
@@ -62,13 +69,8 @@
     "prettier": "3.0.0",
     "rimraf": "5.0.1",
     "shell-quote": "1.8.1",
+    "syncpack": "10.7.3",
     "typescript": "5.1.6"
-  },
-  "resolutions?": {
-    "eslint-plugin-react-hooks": "https://github.com/vercel/next.js/issues/52365"
-  },
-  "resolutions": {
-    "eslint-plugin-react-hooks": "4.6.0"
   },
   "engines": {
     "node": "18.x"
