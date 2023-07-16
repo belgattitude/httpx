@@ -17,6 +17,7 @@
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn workspaces foreach -pv run clean",
     "g:build": "yarn workspaces foreach -ptv run build",
+    "g:build-release": "yarn workspaces foreach -ptv --from 'packages/*' run build-release",
     "g:build-packages": "yarn workspaces foreach -ptv --include '@httpx/*' run build",
     "g:build-examples": "yarn workspaces foreach -ptv --include '@examples/*' run build",
     "g:build-doc": "yarn workspaces foreach -ptv run build-doc",
@@ -31,7 +32,7 @@
     "g:check-size": "yarn workspaces foreach -ptv run check-size",
     "g:check-pub": "yarn workspaces foreach -ptv run check-pub",
     "g:check-package-dist": "yarn workspaces foreach -ptv --include '@httpx/*' run check-dist",
-    "g:release": "yarn g:build-packages && yarn g:check-package-dist && yarn exec changeset publish",
+    "g:release": "yarn g:build-release && yarn g:check-package-dist && yarn exec changeset publish",
     "g:ci-coverage-upload": "yarn workspaces foreach -tv run ci-coverage-upload",
     "clean:lint": "rimraf ./.cache/eslint",
     "clean:global-cache": "rimraf ./.cache",
