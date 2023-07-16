@@ -69,6 +69,8 @@
     "CHANGELOG.md"
   ],
   "scripts": {
+    "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
+    "build-release": "yarn build",
     "build": "rimraf ./dist && cross-env NODE_ENV=production rollup -c rollup.config.js",
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
     "build-doc": "run-s build-typedoc",
