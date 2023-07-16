@@ -45,7 +45,7 @@
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
     "build": "yarn clean && yarn tsup",
-    "build-release": "yarn build",
+    "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
     "build-doc": "run-s build-typedoc",
     "build-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
@@ -92,5 +92,8 @@
   },
   "engines": {
     "node": ">=16.12"
+  },
+  "publishConfig": {
+    "directory": "_release/package"
   }
 }
