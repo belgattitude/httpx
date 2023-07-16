@@ -13,6 +13,10 @@
     "incremental": true,
     "resolveJsonModule": true,
     "paths": {},
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+
+    "paths": {
+      "@httpx/exception": ["../../../packages/exception/src/index"]
+    }
   }
 }
