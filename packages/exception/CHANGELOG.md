@@ -1,5 +1,13 @@
 # @httpx/exception
 
+## 1.8.2
+
+### Patch Changes
+
+- [#467](https://github.com/belgattitude/httpx/pull/467) [`99d6881`](https://github.com/belgattitude/httpx/commit/99d68810d753cb1b724251e7c4dd35f0cd11ce93) Thanks [@belgattitude](https://github.com/belgattitude)! - Add syncpack to align package.json fields
+
+- [#465](https://github.com/belgattitude/httpx/pull/465) [`245ed6b`](https://github.com/belgattitude/httpx/commit/245ed6b7bea0ce6d1f0a711614a4ef8480679ecb) Thanks [@belgattitude](https://github.com/belgattitude)! - Dev dependencies updated to latest
+
 ## 1.8.1
 
 ### Patch Changes
