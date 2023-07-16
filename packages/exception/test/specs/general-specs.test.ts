@@ -10,7 +10,7 @@ describe('Common specs', () => {
       className: string,
       status: number,
       npmStatusMsg: string,
-      exception: HttpException
+      exception: HttpException,
     ][] = Object.entries(statusMap).map(([code]) => {
       const exception = createHttpException(Number.parseInt(code, 10));
       const status = Number.parseInt(code, 10);
