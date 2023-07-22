@@ -4,7 +4,6 @@
  */
 
 // Workaround for https://github.com/eslint/eslint/issues/3458
-// eslint-disable-next-line import/no-unassigned-import
 require('@belgattitude/eslint-config-bases/patch/modern-module-resolution');
 
 const {
@@ -35,25 +34,7 @@ module.exports = {
     '@belgattitude/eslint-config-bases/prettier-plugin',
   ],
   rules: {
-    'import/no-self-import': 'error',
-    'import/no-unassigned-import': 'error',
+    'sonarjs/cognitive-complexity': ['error', 17],
   },
-  overrides: [
-    {
-      files: ['src/**/*.ts'],
-      rules: {
-        'import/no-cycle': [1, { maxDepth: 100 }],
-        'import/no-self-import': 'error',
-        'import/no-nodejs-modules': 'error',
-        'import/no-extraneous-dependencies': [
-          'error',
-          {
-            devDependencies: false,
-            optionalDependencies: false,
-            peerDependencies: false,
-          },
-        ],
-      },
-    },
-  ],
+  overrides: [],
 };

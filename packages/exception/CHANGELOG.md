@@ -1,5 +1,13 @@
 # @httpx/exception
 
+## 1.8.2
+
+### Patch Changes
+
+- [#467](https://github.com/belgattitude/httpx/pull/467) [`99d6881`](https://github.com/belgattitude/httpx/commit/99d68810d753cb1b724251e7c4dd35f0cd11ce93) Thanks [@belgattitude](https://github.com/belgattitude)! - Add syncpack to align package.json fields
+
+- [#465](https://github.com/belgattitude/httpx/pull/465) [`245ed6b`](https://github.com/belgattitude/httpx/commit/245ed6b7bea0ce6d1f0a711614a4ef8480679ecb) Thanks [@belgattitude](https://github.com/belgattitude)! - Dev dependencies updated to latest
+
 ## 1.8.1
 
 ### Patch Changes
@@ -15,19 +23,19 @@
   Example:
 
   ```typescript
-  import { HttpUnprocessableEntity } from '@httpx/exception';
+  import { HttpUnprocessableEntity } from "@httpx/exception";
 
   const e422 = new HttpUnprocessableEntity({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -64,14 +72,14 @@
   const e400 = new HttpBadRequest({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -152,9 +160,9 @@
 
   ```typescript
   const err = new HttpRequestTimeout({
-    url: 'https://api.dev/user/belgattitude',
-    method: 'GET',
-    code: 'NETWORK_FAILURE',
+    url: "https://api.dev/user/belgattitude",
+    method: "GET",
+    code: "NETWORK_FAILURE",
     errorId: nanoid(), // can be shared by frontend/backend
   });
   console.log(err.url, err.method, err.code, err.errorId);
@@ -174,7 +182,7 @@
   import {
     convertToSerializable,
     createFromSerializable,
-  } from '@httpx/exception/serializer';
+  } from "@httpx/exception/serializer";
 
   const serializableObject = convertToSerializable(new HttpForbidden());
   const exception = createFromSerializable(serializableObject);
@@ -211,11 +219,11 @@
   import {
     HttpForbidden,
     HttpUnavailableForLegalReasons,
-  } from '@httpx/exception';
-  import { fromJson, toJson } from '@httpx/exception/serializer';
+  } from "@httpx/exception";
+  import { fromJson, toJson } from "@httpx/exception/serializer";
 
   const e = new HttpForbidden({
-    url: 'https://www.cool.me',
+    url: "https://www.cool.me",
     /*
       cause: new HttpUnavailableForLegalReasons({
           cause: new Error('example with cause')

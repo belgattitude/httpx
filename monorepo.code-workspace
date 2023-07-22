@@ -5,12 +5,16 @@
         "path": "."
     },
     {
-      "name": "🍂 httpx docs",
+      "name": "🍂 example nextjs-app",
       "path": "examples/nextjs-app"
     },
     {
-      "name": "🍂 httpx example nextjs-app",
-      "path": "examples/nextjs-app"
+      "name": "📦 @httpx/dsn-parser",
+      "path": "packages/dsn-parser"
+    },
+    {
+      "name": "📦 @httpx/json-api",
+      "path": "packages/dsn-parser"
     },
     {
       "name": "📦 @httpx/exception",
@@ -42,8 +46,9 @@
     // https://github.com/Microsoft/vscode-eslint#mono-repository-setup
     "eslint.workingDirectories": [
       "./examples/nextjs-app",
+      "./packages/dsn-parser",
       "./packages/exception",
-      "./docs"
+      "./packages/json-api"
     ]
   }
 }

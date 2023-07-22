@@ -30,8 +30,6 @@ jobs:
 
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
-        with:
-          cacheExtraKey: ${{ matrix.node-version }}
 
       - name: 👬🏽 Check for duplicates
         run: yarn dedupe --check
@@ -41,3 +39,6 @@ jobs:
 
       - name: 🛟 Check monorepo dependency graph
         run: yarn check:install
+
+      - name: 🦺 Syncpack - packages - lint-semver-ranges
+        run: yarn syncpack:check || yarn syncpack:list

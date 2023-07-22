@@ -1,29 +1,26 @@
 {
   "name": "http-exception-monorepo",
-  "license": "MIT",
   "private": true,
-  "packageManager": "yarn@4.0.0-rc.45",
-  "homepage": "https://github.com/belgattitude/httpx",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/belgattitude/httpx"
-  },
+  "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "workspaces": [
-    "docs",
-    "examples/*",
-    "packages/*"
-  ],
+  "homepage": "https://github.com/belgattitude/httpx",
+  "repository": "belgattitude/httpx",
+  "resolutions?": {
+    "eslint-plugin-react-hooks": "https://github.com/vercel/next.js/issues/52365"
+  },
+  "resolutions": {
+    "eslint-plugin-react-hooks": "4.6.0"
+  },
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn workspaces foreach -pv run clean",
     "g:build": "yarn workspaces foreach -ptv run build",
+    "g:build-release": "yarn workspaces foreach -ptv --from 'packages/*' run build-release",
     "g:build-packages": "yarn workspaces foreach -ptv --include '@httpx/*' run build",
     "g:build-examples": "yarn workspaces foreach -ptv --include '@examples/*' run build",
-    "g:build-doc": "yarn workspace httpx-docs run build",
-    "g:build-api-doc": "yarn workspaces foreach -ptv run build-api-doc",
+    "g:build-doc": "yarn workspaces foreach -ptv run build-doc",
     "g:test": "yarn workspaces foreach -pv run test",
     "g:test-unit": "yarn workspaces foreach -pv run test-unit",
     "g:lint": "yarn workspaces foreach -v run lint",
@@ -33,23 +30,34 @@
     "g:changeset": "changeset",
     "g:check-dist": "yarn workspaces foreach -ptv run check-dist",
     "g:check-size": "yarn workspaces foreach -ptv run check-size",
+    "g:check-pub": "yarn workspaces foreach -ptv run check-pub",
     "g:check-package-dist": "yarn workspaces foreach -ptv --include '@httpx/*' run check-dist",
-    "g:release": "yarn g:build-packages && yarn g:check-package-dist && yarn exec changeset publish",
+    "g:release": "yarn g:build-release && yarn g:check-package-dist && yarn exec changeset publish",
+    "g:ci-coverage-upload": "yarn workspaces foreach -tv run ci-coverage-upload",
     "clean:lint": "rimraf ./.cache/eslint",
     "clean:global-cache": "rimraf ./.cache",
     "deps:check": "npx npm-check-updates@latest --configFileName ncurc.yml --deep",
     "deps:update": "npx npm-check-updates@latest --configFileName ncurc.yml -u --deep",
     "check:install": "yarn dlx @yarnpkg/doctor@3.1 .",
     "postinstall": "is-ci || yarn husky install",
+    "syncpack:format": "syncpack format",
+    "syncpack:check": "syncpack lint-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
+    "syncpack:list": "syncpack list-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "nuke:node_modules": "rimraf --glob '**/node_modules'",
-    "format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"./*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
+    "prettier:format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"**/*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
   },
+  "workspaces": [
+    "examples/*",
+    "docs",
+    "packages/*"
+  ],
+  "packageManager": "yarn@4.0.0-rc.46",
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "1.36.0",
+    "@belgattitude/eslint-config-bases": "1.37.0",
     "@changesets/changelog-github": "0.4.8",
     "@changesets/cli": "2.26.2",
-    "@commitlint/cli": "17.6.6",
-    "@commitlint/config-conventional": "17.6.6",
+    "@commitlint/cli": "17.6.7",
+    "@commitlint/config-conventional": "17.6.7",
     "@types/prettier": "2.7.3",
     "@types/shell-quote": "1.7.1",
     "cross-env": "7.0.3",
@@ -61,15 +69,10 @@
     "prettier": "3.0.0",
     "rimraf": "5.0.1",
     "shell-quote": "1.8.1",
+    "syncpack": "10.7.3",
     "typescript": "5.1.6"
   },
   "engines": {
-    "node": ">=18.12.0"
-  },
-  "resolutions?": {
-    "eslint-plugin-react-hooks": "https://github.com/vercel/next.js/issues/52365"
-  },
-  "resolutions": {
-    "eslint-plugin-react-hooks": "4.6.0"
+    "node": "18.x"
   }
 }
