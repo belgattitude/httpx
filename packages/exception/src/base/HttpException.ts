@@ -33,7 +33,7 @@ export class HttpException extends Error {
    * you can get back the error cause
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
    */
-  public readonly cause?: Error | HttpException;
+  public override readonly cause?: Error | HttpException;
 
   /**
    * Construct a new HttpException class

@@ -23,7 +23,10 @@ export const parseQueryParams = (
   const defaultValue = setTrueForUndefinedValues ? true : null;
   const parts = queryParams.split('&').filter((v) => v.trim().length > 0);
   return parts.reduce((acc, keyValuePair) => {
-    const [key, value = null] = keyValuePair.split('=');
+    const [key, value = null] = keyValuePair.split('=') as [
+      string,
+      string | undefined,
+    ];
     let val;
     if (typeof value === 'string') {
       if (parseNumbers && isParsableNumber(value)) {
