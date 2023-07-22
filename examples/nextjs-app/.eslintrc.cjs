@@ -13,7 +13,8 @@ const {
 module.exports = {
   root: true,
   parserOptions: {
-    project: __dirname + '/tsconfig.json',
+    tsconfigRootDir: __dirname,
+    project: 'tsconfig.json',
   },
   ignorePatterns: [...getDefaultIgnorePatterns()],
   extends: [

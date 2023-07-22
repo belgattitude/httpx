@@ -1,27 +1,22 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "baseUrl": "./src",
     "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": ".",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "strictNullChecks": true,
     "incremental": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "preserve",
     "paths": {
-      "@/backend": ["./src/backend/index"],
-      "@/lib": ["./src/lib/index"],
-      "@httpx/exception": ["../../packages/exception/src/index"],
+      "@/backend": ["./backend/index"],
+      "@/lib": ["./lib/index"],
+      "@httpx/exception": ["../../../packages/exception/src/index"],
       "@httpx/exception/serializer": [
-        "../../packages/exception/src/serializer/index"
+        "../../../packages/exception/src/serializer/index"
       ]
     }
   },
