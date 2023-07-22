@@ -1476,6 +1476,61 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@belgattitude/eslint-config-bases@npm:1.37.0":
+  version: 1.37.0
+  resolution: "@belgattitude/eslint-config-bases@npm:1.37.0"
+  dependencies:
+    "@rushstack/eslint-patch": "npm:^1.3.2"
+    "@tanstack/eslint-plugin-query": "npm:^4.29.25"
+    "@typescript-eslint/eslint-plugin": "npm:^5.61.0"
+    "@typescript-eslint/parser": "npm:^5.61.0"
+    eslint-config-prettier: "npm:^8.8.0"
+    eslint-import-resolver-typescript: "npm:^3.5.5"
+    eslint-plugin-import: "npm:^2.27.5"
+    eslint-plugin-jest: "npm:^27.2.3"
+    eslint-plugin-jest-formatting: "npm:^3.1.0"
+    eslint-plugin-jsx-a11y: "npm:^6.7.1"
+    eslint-plugin-playwright: "npm:^0.15.3"
+    eslint-plugin-prettier: "npm:^5.0.0"
+    eslint-plugin-react: "npm:^7.33.0"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    eslint-plugin-regexp: "npm:^1.15.0"
+    eslint-plugin-sonarjs: "npm:^0.19.0"
+    eslint-plugin-storybook: "npm:^0.6.13"
+    eslint-plugin-testing-library: "npm:^5.11.0"
+  peerDependencies:
+    "@graphql-eslint/eslint-plugin": ^3.14.3
+    eslint: ^8.30.0
+    eslint-plugin-mdx: ^2.0.5
+    eslint-plugin-tailwindcss: ^3.13.0
+    graphql: ^16.6.0
+    prettier: ^2.8.0 || ^3.0.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.9.4 || ^5.0.2
+  peerDependenciesMeta:
+    "@graphql-eslint/eslint-plugin":
+      optional: true
+    eslint-plugin-mdx:
+      optional: true
+    eslint-plugin-tailwindcss:
+      optional: true
+    graphql:
+      optional: true
+    prettier:
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    tailwindcss:
+      optional: true
+    typescript:
+      optional: true
+  checksum: 55c5f8e14be043811d79098bb1c219803863a2fd55fab79be2091749d1b46cfe40acbff7684ac570503b65f0fc247d96c29255ff91d0b9ac460d3069b6085e24
+  languageName: node
+  linkType: hard
+
 "@changesets/apply-release-plan@npm:^6.1.4":
   version: 6.1.4
   resolution: "@changesets/apply-release-plan@npm:6.1.4"
@@ -2286,7 +2341,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:1.36.0"
+    "@belgattitude/eslint-config-bases": "npm:1.37.0"
     "@size-limit/file": "npm:8.2.6"
     "@types/jest": "npm:29.5.3"
     "@vitest/coverage-istanbul": "npm:0.33.0"
@@ -2321,7 +2376,7 @@ __metadata:
     "@babel/plugin-transform-typescript": "npm:7.22.9"
     "@babel/preset-env": "npm:7.22.9"
     "@babel/preset-typescript": "npm:7.22.5"
-    "@belgattitude/eslint-config-bases": "npm:1.36.0"
+    "@belgattitude/eslint-config-bases": "npm:1.37.0"
     "@rollup/plugin-babel": "npm:6.0.3"
     "@rollup/plugin-node-resolve": "npm:15.1.0"
     "@rollup/plugin-typescript": "npm:11.1.2"
@@ -2366,7 +2421,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:1.36.0"
+    "@belgattitude/eslint-config-bases": "npm:1.37.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:8.2.6"
     "@types/jest": "npm:29.5.3"
@@ -3548,10 +3603,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/eslint-plugin-query@npm:^4.29.9":
-  version: 4.29.9
-  resolution: "@tanstack/eslint-plugin-query@npm:4.29.9"
-  checksum: 188e3b0b396f8e0fc0aaec51399951392b7d1be4c0a1a3b76c080a7d2908ab68a0594392d74c8644a9fb2ca747a0cbaf2dbd4e75bac05c06476e2aff5e3a3c70
+"@tanstack/eslint-plugin-query@npm:^4.29.25, @tanstack/eslint-plugin-query@npm:^4.29.9":
+  version: 4.29.25
+  resolution: "@tanstack/eslint-plugin-query@npm:4.29.25"
+  checksum: 677f58c996f82ea5c93f64fc4b9557d1d1223cd44efc0dabd4a01c9078d035458f74d90de46d1e5370aa23201f1319e6e19322a819aae54640db7f4da0a6fbd5
   languageName: node
   linkType: hard
 
@@ -6593,13 +6648,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:^27.2.2":
-  version: 27.2.2
-  resolution: "eslint-plugin-jest@npm:27.2.2"
+"eslint-plugin-jest@npm:^27.2.2, eslint-plugin-jest@npm:^27.2.3":
+  version: 27.2.3
+  resolution: "eslint-plugin-jest@npm:27.2.3"
   dependencies:
     "@typescript-eslint/utils": "npm:^5.10.0"
   peerDependencies:
-    "@typescript-eslint/eslint-plugin": ^5.0.0
+    "@typescript-eslint/eslint-plugin": ^5.0.0 || ^6.0.0
     eslint: ^7.0.0 || ^8.0.0
     jest: "*"
   peerDependenciesMeta:
@@ -6607,7 +6662,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: 4d4f326ad1f301bf1ff6a906945217ee0c13ca81f6a1eb8420fcd8c53e16c24da6976a334d655c27b391247baf53f25b4c1d37577407523dd566937a5b7ecee5
+  checksum: 1fdbced06d2683fb8c769b00f9cc905305ead6e086644c2e94736c5904da3ad321747b124e2afecdef55c366938c0586b70900123bcb2d7d9ee1a299a18cfa86
   languageName: node
   linkType: hard
 
@@ -6650,7 +6705,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^5.0.0-alpha.2":
+"eslint-plugin-prettier@npm:^5.0.0, eslint-plugin-prettier@npm:^5.0.0-alpha.2":
   version: 5.0.0
   resolution: "eslint-plugin-prettier@npm:5.0.0"
   dependencies:
@@ -6678,9 +6733,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.31.7, eslint-plugin-react@npm:^7.32.2":
-  version: 7.32.2
-  resolution: "eslint-plugin-react@npm:7.32.2"
+"eslint-plugin-react@npm:^7.31.7, eslint-plugin-react@npm:^7.32.2, eslint-plugin-react@npm:^7.33.0":
+  version: 7.33.0
+  resolution: "eslint-plugin-react@npm:7.33.0"
   dependencies:
     array-includes: "npm:^3.1.6"
     array.prototype.flatmap: "npm:^1.3.1"
@@ -6695,11 +6750,11 @@ __metadata:
     object.values: "npm:^1.1.6"
     prop-types: "npm:^15.8.1"
     resolve: "npm:^2.0.0-next.4"
-    semver: "npm:^6.3.0"
+    semver: "npm:^6.3.1"
     string.prototype.matchall: "npm:^4.0.8"
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
-  checksum: 5ca7959c85fa557bcd25c4b9b3f81fbfae974e8fb16172e31a275712cc71da8ecbb9436da2d3130a8b24dd7a4bbe69d37d4392944aecc4821618717ba156caf4
+  checksum: 5fadbe11a5da4fe38697f0270facfb05811f85ba51203ad51843feacb81eac93a9315ae8f121127492650de4812191ad4dc96c05002338edcc7e29e9778c4c15
   languageName: node
   linkType: hard
 
@@ -6730,9 +6785,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-storybook@npm:^0.6.12":
-  version: 0.6.12
-  resolution: "eslint-plugin-storybook@npm:0.6.12"
+"eslint-plugin-storybook@npm:^0.6.12, eslint-plugin-storybook@npm:^0.6.13":
+  version: 0.6.13
+  resolution: "eslint-plugin-storybook@npm:0.6.13"
   dependencies:
     "@storybook/csf": "npm:^0.0.1"
     "@typescript-eslint/utils": "npm:^5.45.0"
@@ -6740,7 +6795,7 @@ __metadata:
     ts-dedent: "npm:^2.2.0"
   peerDependencies:
     eslint: ">=6"
-  checksum: 12fc268a2834bec5f512608d90c84a86fd664bdcb8a6a2e085b6808370093c83fdaf09112776d395e739c526c5c8d82ab6bf1159180406723ad5ed905f4b43d1
+  checksum: dfb4c79c1eff563a03162614707f1f68fc267fa861ed4cf40a202dcd19229d6111d2766e28c0cb03705fcbc09a4e3df7459e50fb70488d0dff9cf9728aec9b6f
   languageName: node
   linkType: hard
 
@@ -7825,7 +7880,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "http-exception-monorepo@workspace:."
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:1.36.0"
+    "@belgattitude/eslint-config-bases": "npm:1.37.0"
     "@changesets/changelog-github": "npm:0.4.8"
     "@changesets/cli": "npm:2.26.2"
     "@commitlint/cli": "npm:17.6.7"
