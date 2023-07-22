@@ -18,7 +18,13 @@
       "@httpx/exception/serializer": [
         "../../../packages/exception/src/serializer/index"
       ]
-    }
+    },
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "include": [
     "next-env.d.ts",
