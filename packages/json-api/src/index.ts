@@ -1,4 +1,5 @@
 export { JsonApiResponseFactory } from './json-api-response.factory';
+export { JsonApiErrorFactory } from './json-api-error.factory';
 export type {
   JsonApiResponse,
   JsonApiErrorResponse,
