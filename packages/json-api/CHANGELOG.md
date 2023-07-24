@@ -1,5 +1,11 @@
 # @httpx/json-api
 
+## 0.2.4
+
+### Patch Changes
+
+- [#487](https://github.com/belgattitude/httpx/pull/487) [`b5c1845`](https://github.com/belgattitude/httpx/commit/b5c1845fbb8d025592f47a463310f5aa2b1ad83e) Thanks [@belgattitude](https://github.com/belgattitude)! - Add missing JsonApiErrorFactory export
+
 ## 0.2.3
 
 ### Patch Changes
