@@ -48,10 +48,10 @@ Construct a new HttpException class
 
 #### Parameters
 
-| Name           | Type                                                                         | Description                                                                         |
-| :------------- | :--------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
-| `statusCode`   | `number`                                                                     | http status code between 400-599, no checks are done on the validity of the number. |
-| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) | either a message or an object containing HttpExceptionParams                        |
+| Name           | Type                              | Description                                                                         |
+| :------------- | :-------------------------------- | :---------------------------------------------------------------------------------- |
+| `statusCode`   | `number`                          | http status code between 400-599, no checks are done on the validity of the number. |
+| `msgOrParams?` | `string` \| `HttpExceptionParams` | either a message or an object containing HttpExceptionParams                        |
 
 #### Overrides
 
@@ -104,7 +104,7 @@ Error.message
 
 ### method
 
-• `Readonly` **method**: `undefined` \| [`HttpMethod`](../modules/types.md#httpmethod)
+• `Readonly` **method**: `undefined` \| `HttpMethod`
 
 Http method
 
@@ -156,10 +156,6 @@ Indicates the original url that caused the error.
 
 Optional override for formatting stack traces
 
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -170,6 +166,10 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 ##### Returns
 
 `any`
+
+**`See`**
+
+https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

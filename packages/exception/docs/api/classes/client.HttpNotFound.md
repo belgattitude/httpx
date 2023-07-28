@@ -55,9 +55,9 @@ unauthorized client.
 
 #### Parameters
 
-| Name           | Type                                                                         |
-| :------------- | :--------------------------------------------------------------------------- |
-| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+| Name           | Type                              |
+| :------------- | :-------------------------------- |
+| `msgOrParams?` | `string` \| `HttpExceptionParams` |
 
 #### Overrides
 
@@ -118,7 +118,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ### method
 
-• `Readonly` **method**: `undefined` \| [`HttpMethod`](../modules/types.md#httpmethod)
+• `Readonly` **method**: `undefined` \| `HttpMethod`
 
 Http method
 
@@ -188,10 +188,6 @@ Indicates the original url that caused the error.
 
 Optional override for formatting stack traces
 
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -202,6 +198,10 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 ##### Returns
 
 `any`
+
+**`See`**
+
+https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 
