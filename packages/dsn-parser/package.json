@@ -56,7 +56,7 @@
     "build-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2019 './dist/**/*.cjs'",
-    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2020 --module './dist/**/*.mjs'",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2019 --module './dist/**/*.mjs'",
     "check-pub": "run-p check-pub-publint check-pub-attw",
     "check-pub-publint": "publint --strict",
     "check-pub-attw": "attw --pack",

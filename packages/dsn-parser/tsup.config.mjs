@@ -14,7 +14,7 @@ export default defineConfig((options) => {
       };
     },
     platform: 'browser',
-    target: ['es2020', ...browserslistToEsbuild()],
+    target: ['es2019', ...browserslistToEsbuild()],
     tsconfig: './tsconfig.build.json',
     sourcemap: !options.watch,
     minify: !options.watch,
