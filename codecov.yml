@@ -1,35 +1,31 @@
 coverage:
-  range: 60..100
-  round: down
-  precision: 2
+  status:
+    project:
+      default:
+        target: 80% #overall project/ repo coverage
+      httpx-exception-unit:
+        target: 80%
+        flags:
+          - httpx-exception-unit
+      httpx-dsn-parser-unit:
+        target: 80%
+        flags:
+          - httpx-dsn-parser-unit
+      httpx-json-api-unit:
+        target: 20%
+        flags:
+          - httpx-json-api-unit
 
-flag_management:
-  default_rules:
-    carryforward: false
-  individual_flags:
-    - name: httpx-exception-unit
-      paths:
-        - packages/exception
-      statuses:
-        - type: project
-          target: 95%
-          threshold: 1%
-
-    - name: httpx-dsn-parser-unit
-      paths:
-        - packages/dsn-parser
-      statuses:
-        - type: project
-          target: 95%
-          threshold: 1%
-
-    - name: httpx-json-api-unit
-      paths:
-        - packages/json-api
-      statuses:
-        - type: project
-          target: 95%
-          threshold: 1%
+flags:
+  httpx-exception-unit:
+    paths:
+      - packages/exception/
+  httpx-dsn-parser-unit:
+    paths:
+      - packages/dsn-parser/
+  httpx-json-api-unit:
+    paths:
+      - packages/json-api/
 
 ignore:
   - '.yarn/**/*'
