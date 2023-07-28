@@ -1,3 +1,4 @@
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { defineConfig } from 'tsup';
 
 export default defineConfig((options) => {
@@ -13,7 +14,7 @@ export default defineConfig((options) => {
       };
     },
     platform: 'browser',
-    target: ['es2019', 'chrome90', 'firefox90', 'node16'],
+    target: browserslistToEsbuild(),
     tsconfig: './tsconfig.build.json',
     sourcemap: !options.watch,
     minify: !options.watch,
