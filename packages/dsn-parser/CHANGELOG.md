@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.0.1
+
+### Patch Changes
+
+- [#505](https://github.com/belgattitude/httpx/pull/505) [`6dbbf43`](https://github.com/belgattitude/httpx/commit/6dbbf4302de24157cdc73a6179b64e1611c1db55) Thanks [@belgattitude](https://github.com/belgattitude)! - Transpile from es2020 to es2019 to widen browser support
+
 ## 1.0.0
 
 ### Major Changes
