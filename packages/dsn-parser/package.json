@@ -26,17 +26,23 @@
     "not op_mini all",
     "node 14.17"
   ],
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "module": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "browser": "./dist/index.mjs",
-      "default": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
     },
     "./package.json": "./package.json"
   },
@@ -45,14 +51,16 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "yarn clean && yarn tsup",
-    "build-release": "yarn build",
+    "build": "run clean && yarn run tsup",
+    "build-release": "run build",
     "build-doc": "run-s build-typedoc",
     "build-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2020 './dist/**/*.js'",
-    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2020 --module './dist/**/*.mjs'",
-    "check-pub": "publint --strict",
+    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2019 './dist/**/*.cjs'",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2019 --module './dist/**/*.mjs'",
+    "check-pub": "run-p check-pub-publint check-pub-attw",
+    "check-pub-publint": "publint --strict",
+    "check-pub-attw": "attw --pack",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
@@ -66,6 +74,7 @@
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-dsn-parser-unit --dir ./coverage"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.7.0",
     "@belgattitude/eslint-config-bases": "1.39.0",
     "@size-limit/file": "8.2.6",
     "@types/jest": "29.5.3",
@@ -79,16 +88,16 @@
     "publint": "0.1.16",
     "rimraf": "5.0.1",
     "size-limit": "8.2.6",
-    "tslib": "2.6.1",
+    "tslib": "2.6.0",
     "tsup": "7.1.0",
     "typedoc": "0.24.8",
-    "typedoc-plugin-markdown": "3.15.4",
+    "typedoc-plugin-markdown": "3.15.3",
     "typescript": "5.1.6",
     "vite": "4.4.7",
     "vite-tsconfig-paths": "4.2.0",
     "vitest": "0.33.0"
   },
   "engines": {
-    "node": "^14.13.1 || >=16"
+    "node": ">=16"
   }
 }
