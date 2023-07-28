@@ -259,11 +259,17 @@ openssl rand 60 | openssl base64 -A
 # YFUXIG9INIK7dFyE9aXtxLmjmnYL0zv6YluBJJbC6alKIBema/MwEGy3VUpx0oLAvWHUFGFMagAdLxrB
 ```
 
-## Sponsors ❤️
+## Contributors
 
-If you are enjoying some of my OSS guides or libs for your company, I'd really appreciate a [sponsorship](https://github.com/sponsors/belgattitude), a [coffee](https://ko-fi.com/belgattitude) or a dropped star. That gives me a tasty morning boost and help me to make some of my ideas come true 🙏
+Contributions are warmly appreciated. Have a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) document.
 
-### Special thanks
+## Sponsors
+
+If my OSS work brightens your day, let's take it to new heights together!
+[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
+or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+
+### Special thanks to
 
 <table>
   <tr>
@@ -287,3 +293,7 @@ If you are enjoying some of my OSS guides or libs for your company, I'd really a
     </td>
    </tr>
 </table>
+
+## License
+
+MIT © [belgattitude](https://github.com/belgattitude) and contributors.
