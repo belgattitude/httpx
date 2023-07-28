@@ -1,5 +1,11 @@
 # @httpx/json-api
 
+## 0.3.0
+
+### Minor Changes
+
+- [#501](https://github.com/belgattitude/httpx/pull/501) [`eb2c363`](https://github.com/belgattitude/httpx/commit/eb2c363fc4eef1bf66df9843bddf779fc95d26f8) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix type exports
+
 ## 0.2.4
 
 ### Patch Changes
