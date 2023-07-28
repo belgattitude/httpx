@@ -19,23 +19,28 @@
   ],
   "sideEffects": false,
   "browserslist": [
-    ">0.5%",
-    "not IE 11",
+    "defaults and supports es6-module",
     "not dead",
     "not op_mini all",
-    "node 16.12"
+    "node 16"
   ],
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "module": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "browser": "./dist/index.mjs",
-      "default": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
     },
     "./package.json": "./package.json"
   },
@@ -49,9 +54,11 @@
     "build-doc": "run-s build-typedoc",
     "build-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2020 './dist/**/*.js'",
+    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2020 './dist/**/*.cjs'",
     "check-dist-esm": "es-check --not './dist/*.map.js' -v es2020 --module './dist/**/*.mjs'",
-    "check-pub": "publint --strict",
+    "check-pub": "run-p check-pub-publint check-pub-attw",
+    "check-pub-publint": "publint --strict",
+    "check-pub-attw": "attw --pack",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
@@ -68,17 +75,19 @@
     "@httpx/exception": "workspace:^"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.7.0",
     "@belgattitude/eslint-config-bases": "1.39.0",
     "@size-limit/file": "8.2.6",
     "@types/jest": "29.5.3",
     "@vitest/coverage-istanbul": "0.33.0",
     "@vitest/ui": "0.33.0",
+    "browserslist-to-esbuild": "1.2.0",
     "cross-env": "7.0.3",
     "es-check": "7.1.1",
     "eslint": "8.45.0",
     "get-tsconfig": "4.6.2",
     "npm-run-all": "4.1.5",
-    "publint": "0.1.16",
+    "publint": "0.2.0",
     "rimraf": "5.0.1",
     "size-limit": "8.2.6",
     "tslib": "2.6.1",
@@ -91,7 +100,7 @@
     "vitest": "0.33.0"
   },
   "engines": {
-    "node": ">=16.12"
+    "node": ">=16"
   },
   "publishConfig": {
     "directory": "_release/package"
