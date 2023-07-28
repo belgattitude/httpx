@@ -1,5 +1,26 @@
 # @httpx/dsn-parser
 
+## 1.0.0
+
+### Major Changes
+
+- [#496](https://github.com/belgattitude/httpx/pull/496) [`746390b`](https://github.com/belgattitude/httpx/commit/746390bcbb2edc9ccdafd2ed53bf412fdbb8bbd6) Thanks [@belgattitude](https://github.com/belgattitude)! - Minimum requirement bumped to node16 / es2019 / chrome90
+
+  The dsn-parser package can be transpiled if you need support in older
+  browsers. See your framework documentation for how to do this (ie [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)).
+
+- [#496](https://github.com/belgattitude/httpx/pull/496) [`746390b`](https://github.com/belgattitude/httpx/commit/746390bcbb2edc9ccdafd2ed53bf412fdbb8bbd6) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix esm/cjs exported types thanks to arethetypeswrong and publint
+
+### Minor Changes
+
+- [#500](https://github.com/belgattitude/httpx/pull/500) [`c966acb`](https://github.com/belgattitude/httpx/commit/c966acb0b07329b3bf8a30fa1f84b39f175872c5) Thanks [@belgattitude](https://github.com/belgattitude)! - Ensure modern browser support.
+
+### Patch Changes
+
+- [#496](https://github.com/belgattitude/httpx/pull/496) [`746390b`](https://github.com/belgattitude/httpx/commit/746390bcbb2edc9ccdafd2ed53bf412fdbb8bbd6) Thanks [@belgattitude](https://github.com/belgattitude)! - Reduce total bundle size from 1.30kb to 1.13kb mingzip
+
+  dsn-parser tree-shakes well, 1.13kb is the size of the full import.
+
 ## 0.10.1
 
 ### Patch Changes
