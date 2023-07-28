@@ -56,6 +56,14 @@ jobs:
       - name: 🧪 Unit tests
         run: yarn workspaces foreach -tv --from 'packages/*' --no-private run test-unit --coverage
 
+      - name: ☂️ Codecov upload
+        working-directory: ${{ github.workspace }}
+        if: matrix.node-version == '18.x'
+        run: |
+          bash .github/scripts/install-codecov.sh
+          yarn g:ci-coverage-upload
+        shell: bash
+
       - name: 🏗 Build packages
         run: yarn workspaces foreach -tv --from 'packages/*' --no-private run build
 
@@ -70,14 +78,6 @@ jobs:
       - name: 🛟 Check publishable dist  (publint)
         if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --from 'packages/*' --no-private run check-pub
-
-      - name: ☂️ Codecov upload
-        working-directory: ${{ github.workspace }}
-        if: matrix.node-version == '18.x'
-        run: |
-          bash .github/scripts/install-codecov.sh
-          yarn g:ci-coverage-upload
-        shell: bash
 
       - name: 📄 Check doc can be built
         if: matrix.node-version == '18.x'
