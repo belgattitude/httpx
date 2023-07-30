@@ -24,42 +24,43 @@
   ],
   "sideEffects": false,
   "browserslist": [
-    ">0.01%",
+    ">1%",
     "not dead"
   ],
   "type": "module",
-  "main": "dist/cjs/index.cjs",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "module": "./dist/esm/index.js",
-      "import": "./dist/esm/index.js",
-      "browser": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.cjs",
-      "default": "./dist/esm/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
     },
     "./serializer": {
-      "types": "./dist/types/serializer/index.d.ts",
-      "module": "./dist/esm/serializer/index.js",
-      "import": "./dist/esm/serializer/index.js",
-      "browser": "./dist/esm/serializer/index.js",
-      "require": "./dist/cjs/serializer/index.cjs",
-      "default": "./dist/esm/serializer/index.js"
+      "import": {
+        "types": "./dist/serializer/index.d.ts",
+        "default": "./dist/serializer/index.mjs"
+      },
+      "require": {
+        "types": "./dist/serializer/index.d.cts",
+        "default": "./dist/serializer/index.cjs"
+      },
+      "default": {
+        "types": "./dist/serializer/index.d.ts",
+        "default": "./dist/serializer/index.mjs"
+      }
     },
     "./package.json": "./package.json"
-  },
-  "typesVersions?": "Credits to @andrewbranch, link https://github.com/andrewbranch/example-subpath-exports-ts-compat - https://github.com/microsoft/TypeScript/issues/50794#issuecomment-1251278131",
-  "typesVersions": {
-    "*": {
-      "serializer": [
-        "./dist/types/serializer/index.d.ts"
-      ],
-      "*": [
-        "./dist/types/index.d.ts"
-      ]
-    }
   },
   "files": [
     "dist",
@@ -71,7 +72,8 @@
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
     "build-release": "yarn build",
-    "build": "rimraf ./dist && cross-env NODE_ENV=production rollup -c rollup.config.js",
+    "build": "run clean && yarn run tsup",
+    "build-rollup": "rimraf ./dist && cross-env NODE_ENV=production rollup -c rollup.config.js",
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
     "build-doc": "run-s build-typedoc",
     "build-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
@@ -113,6 +115,7 @@
     "@types/statuses": "2.0.1",
     "@vitest/coverage-istanbul": "0.33.0",
     "@vitest/ui": "0.33.0",
+    "browserslist-to-esbuild": "1.2.0",
     "core-js": "3.32.0",
     "cross-env": "7.0.3",
     "error-cause-polyfill": "2.0.0",
@@ -121,7 +124,7 @@
     "get-tsconfig": "4.6.2",
     "jest": "29.6.2",
     "npm-run-all": "4.1.5",
-    "publint": "0.1.16",
+    "publint": "0.2.0",
     "rimraf": "5.0.1",
     "rollup": "3.26.3",
     "rollup-plugin-dts": "5.3.0",
@@ -131,6 +134,7 @@
     "superjson": "1.13.1",
     "ts-jest": "29.1.1",
     "tslib": "2.6.1",
+    "tsup": "7.1.0",
     "typedoc": "0.24.8",
     "typedoc-plugin-markdown": "3.15.4",
     "typescript": "5.1.6",

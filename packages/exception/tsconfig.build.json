@@ -2,10 +2,13 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "declaration": false,
     "rootDir": "./src",
-    "baseUrl": "./src"
+    "baseUrl": ".",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "declarationMap": false,
+    "declarationDir": "./dist",
+    "tsBuildInfoFile": "./tsconfig.build.tsbuildinfo" // for tsup rollup dts tsBuildInfoFile is required when using incremental
   },
-  "exclude": ["dist"]
+  "exclude": ["*.test.ts"]
 }

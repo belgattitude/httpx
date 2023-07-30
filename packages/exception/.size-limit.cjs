@@ -15,49 +15,50 @@ module.exports = [
   // ###################################################
   {
     name: "ESM (import everything *)",
-    path: ["dist/esm/index.js"],
+    path: ["dist/index.mjs"],
     import: "*",
     limit: fullEsmMaxSize,
   },
   {
     name: "ESM (only HttpNotFound exception)",
-    path: ["dist/esm/index.js"],
+    path: ["dist/index.mjs"],
     import: "{ HttpNotFound }",
     limit: "1288B",
   },
   {
     name: "ESM (only HttpInternalServerError)",
-    path: ["dist/esm/index.js"],
+    path: ["dist/index.mjs"],
     import: "{ HttpInternalServerError }",
     limit: "1295B",
   },
   {
     name: "ESM (two exceptions: HttpNotFound + HttpInternalServerError)",
-    path: ["dist/esm/index.js"],
+    path: ["dist/index.mjs"],
     import: "{ HttpNotFound, HttpInternalServerError }",
     limit: "1350B",
   },
   {
     name: "ESM (only isHttpException)",
-    path: ["dist/esm/index.js"],
+    path: ["dist/index.mjs"],
     import: "{ isHttpException }",
     limit: "1050B",
   },
   {
     name: "ESM (only createHttpException)",
-    path: ["dist/esm/index.js"],
+    path: ["dist/index.mjs"],
     import: "{ createHttpException }",
     limit: "2605B", // Will import all server/client exceptions
   },
+
   {
     name: "ESM ({ toJson })",
-    path: ["dist/esm/serializer/index.js"],
+    path: ["dist/serializer/index.mjs"],
     import: "{ toJson }",
     limit: "1890B",
   },
   {
     name: "ESM ({ fromJson })",
-    path: ["dist/esm/serializer/index.js"],
+    path: ["dist/serializer/index.mjs"],
     import: "{ fromJson }",
     limit: "3265B",
   },
@@ -66,14 +67,14 @@ module.exports = [
   // ###################################################
   {
     name: "CJS (require everything *)",
-    path: ["dist/cjs/index.cjs"],
+    path: ["dist/index.cjs"],
     import: "*",
     webpack: true,
     limit: fullCjsMaxSize,
   },
   {
     name: "CJS (only isHttpException)",
-    path: ["dist/cjs/index.cjs"],
+    path: ["dist/index.cjs"],
     import: "{ isHttpException }",
     webpack: true,
     limit: '4350B',
