@@ -86,7 +86,10 @@
     "check-dist-cjs": "es-check --not './dist/cjs/*.map.js' -v es2018 './dist/**/*.cjs'",
     "check-dist-esm": "es-check --not './dist/esm/*.map.js' -v es2018 --module './dist/**/*.mjs'",
     "check-size": "size-limit",
-    "check-pub": "publint --strict",
+    "check-pub": "run-p check-pub-publint check-pub-attw",
+    "check-pub-publint": "publint --strict",
+    "check-pub-attw?": "attw --pack",
+    "check-pub-attw": "echo 'Disabled as it gives a false positive about node 10'",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-watch": "vitest --ui",
@@ -95,6 +98,7 @@
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.7.1",
     "@belgattitude/eslint-config-bases": "1.39.0",
     "@size-limit/file": "8.2.6",
     "@size-limit/webpack": "8.2.6",

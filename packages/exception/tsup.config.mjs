@@ -5,12 +5,14 @@ export default defineConfig((options) => {
   return {
     entry: ['src/index.ts', 'src/serializer/index.ts'],
     splitting: true,
+    treeshake: true,
     clean: true,
     dts: true,
     format: ['esm', 'cjs'],
-    minifySyntax: true,
-    minifyWhitespace: true,
-    minifyIdentifiers: true,
+    minifySyntax: false,
+    minifyWhitespace: false,
+    minifyIdentifiers: false,
+    cjsInterop: true,
     outExtension({ format }) {
       return {
         js: `.${format === 'cjs' ? 'cjs' : 'mjs'}`,
