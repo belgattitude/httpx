@@ -24,42 +24,44 @@
   ],
   "sideEffects": false,
   "browserslist": [
-    ">0.01%",
-    "not dead"
+    ">1%",
+    "not dead",
+    "not op_mini all"
   ],
   "type": "module",
-  "main": "dist/cjs/index.cjs",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "module": "./dist/esm/index.js",
-      "import": "./dist/esm/index.js",
-      "browser": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.cjs",
-      "default": "./dist/esm/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
     },
     "./serializer": {
-      "types": "./dist/types/serializer/index.d.ts",
-      "module": "./dist/esm/serializer/index.js",
-      "import": "./dist/esm/serializer/index.js",
-      "browser": "./dist/esm/serializer/index.js",
-      "require": "./dist/cjs/serializer/index.cjs",
-      "default": "./dist/esm/serializer/index.js"
+      "import": {
+        "types": "./dist/serializer/index.d.ts",
+        "default": "./dist/serializer/index.mjs"
+      },
+      "require": {
+        "types": "./dist/serializer/index.d.cts",
+        "default": "./dist/serializer/index.cjs"
+      },
+      "default": {
+        "types": "./dist/serializer/index.d.ts",
+        "default": "./dist/serializer/index.mjs"
+      }
     },
     "./package.json": "./package.json"
-  },
-  "typesVersions?": "Credits to @andrewbranch, link https://github.com/andrewbranch/example-subpath-exports-ts-compat - https://github.com/microsoft/TypeScript/issues/50794#issuecomment-1251278131",
-  "typesVersions": {
-    "*": {
-      "serializer": [
-        "./dist/types/serializer/index.d.ts"
-      ],
-      "*": [
-        "./dist/types/index.d.ts"
-      ]
-    }
   },
   "files": [
     "dist",
@@ -71,7 +73,7 @@
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
     "build-release": "yarn build",
-    "build": "rimraf ./dist && cross-env NODE_ENV=production rollup -c rollup.config.js",
+    "build": "run clean && yarn run tsup",
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
     "build-doc": "run-s build-typedoc",
     "build-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
@@ -81,10 +83,13 @@
     "lint-timing": "cross-env TIMING=1 run lint",
     "typecheck": "tsc --project ./tsconfig.json --noEmit",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/cjs/*.map.js' -v es2015 './dist/cjs/**/*'",
-    "check-dist-esm": "es-check --not './dist/esm/*.map.js' -v es2015 --module './dist/esm/**/*'",
+    "check-dist-cjs": "es-check --not './dist/cjs/*.map.js' -v es2018 './dist/**/*.cjs'",
+    "check-dist-esm": "es-check --not './dist/esm/*.map.js' -v es2018 --module './dist/**/*.mjs'",
     "check-size": "size-limit",
-    "check-pub": "publint --strict",
+    "check-pub": "run-p check-pub-publint check-pub-attw",
+    "check-pub-publint": "publint --strict",
+    "check-pub-attw?": "attw --pack",
+    "check-pub-attw": "echo 'Disabled as it gives a false positive about node 10'",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-watch": "vitest --ui",
@@ -93,27 +98,18 @@
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage"
   },
   "devDependencies": {
-    "@babel/core": "7.22.9",
-    "@babel/plugin-proposal-class-properties": "7.18.6",
-    "@babel/plugin-transform-classes": "7.22.6",
-    "@babel/plugin-transform-spread": "7.22.5",
-    "@babel/plugin-transform-typescript": "7.22.9",
-    "@babel/preset-env": "7.22.9",
-    "@babel/preset-typescript": "7.22.5",
+    "@arethetypeswrong/cli": "0.7.1",
     "@belgattitude/eslint-config-bases": "1.39.0",
-    "@rollup/plugin-babel": "6.0.3",
-    "@rollup/plugin-node-resolve": "15.1.0",
-    "@rollup/plugin-typescript": "11.1.2",
     "@size-limit/file": "8.2.6",
     "@size-limit/webpack": "8.2.6",
     "@size-limit/webpack-why": "8.2.6",
-    "@swc/core": "1.3.72",
+    "@swc/core": "1.3.73",
     "@types/jest": "29.5.3",
     "@types/node": "20.4.5",
     "@types/statuses": "2.0.1",
-    "@vitest/coverage-istanbul": "0.33.0",
-    "@vitest/ui": "0.33.0",
-    "core-js": "3.32.0",
+    "@vitest/coverage-istanbul": "0.34.1",
+    "@vitest/ui": "0.34.1",
+    "browserslist-to-esbuild": "1.2.0",
     "cross-env": "7.0.3",
     "error-cause-polyfill": "2.0.0",
     "es-check": "7.1.1",
@@ -121,25 +117,23 @@
     "get-tsconfig": "4.6.2",
     "jest": "29.6.2",
     "npm-run-all": "4.1.5",
-    "publint": "0.1.16",
+    "publint": "0.2.0",
     "rimraf": "5.0.1",
-    "rollup": "3.27.0",
-    "rollup-plugin-dts": "5.3.0",
-    "rollup-plugin-swc3": "0.9.0",
     "size-limit": "8.2.6",
     "statuses": "2.0.1",
     "superjson": "1.13.1",
     "ts-jest": "29.1.1",
     "tslib": "2.6.1",
+    "tsup": "7.2.0",
     "typedoc": "0.24.8",
     "typedoc-plugin-markdown": "3.15.4",
     "typescript": "5.1.6",
-    "vite": "4.4.7",
+    "vite": "4.4.8",
     "vite-tsconfig-paths": "4.2.0",
-    "vitest": "0.33.0",
+    "vitest": "0.34.1",
     "webpack": "5.88.2"
   },
   "engines": {
-    "node": ">=14.16"
+    "node": ">=16.12"
   }
 }
