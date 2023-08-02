@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.1.0
+
+### Minor Changes
+
+- [#510](https://github.com/belgattitude/httpx/pull/510) [`a02984c`](https://github.com/belgattitude/httpx/commit/a02984c1d9c4caf45b957a3dd6adee3a5e3a4415) Thanks [@belgattitude](https://github.com/belgattitude)! - Support '+' character in driver
+
 ## 1.0.1
 
 ### Patch Changes

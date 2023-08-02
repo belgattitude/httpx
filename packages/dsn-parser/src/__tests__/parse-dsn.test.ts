@@ -1,6 +1,20 @@
 import { parseDsn } from '../parse-dsn';
 
 describe('parseDsn', () => {
+  describe('when driver is provided with special chars', () => {
+    it.each(['redis', 'Driver55', 'driver-4', '44_driver', 'redis+sentinel'])(
+      `should return %s`,
+      (driver) => {
+        expect(parseDsn(`${driver}://localhost`)).toStrictEqual({
+          success: true,
+          value: {
+            driver,
+            host: 'localhost',
+          },
+        });
+      }
+    );
+  });
   describe('when provided dsn contains all options', () => {
     it('should return the correct parsed params', () => {
       expect(
