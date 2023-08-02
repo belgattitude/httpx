@@ -36,9 +36,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.7.0":
-  version: 0.7.0
-  resolution: "@arethetypeswrong/cli@npm:0.7.0"
+"@arethetypeswrong/cli@npm:0.7.1":
+  version: 0.7.1
+  resolution: "@arethetypeswrong/cli@npm:0.7.1"
   dependencies:
     "@arethetypeswrong/core": "npm:0.7.0"
     chalk: "npm:^4.1.2"
@@ -46,9 +46,10 @@ __metadata:
     commander: "npm:^10.0.1"
     marked: "npm:^5.1.0"
     marked-terminal: "npm:^5.2.0"
+    node-fetch: "npm:^2.6.4"
   bin:
     attw: dist/index.js
-  checksum: 57186606b400d13ec58dac8b89694519d34d15619225d3a1a964228307ac2940612f8e5d7cd8aa5d5b76143b699468f3e7c8d50830130a6ae52b6ad0f367953f
+  checksum: c815ea7577e928c46c659048ff355e4fca09c4c9c1b63b355a9b468832bf5ce97f93c7b2f1a05bb27808d8674ab1c88732fa9cb657bc2fd65a73019ac049c35b
   languageName: node
   linkType: hard
 
@@ -2321,7 +2322,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.7.0"
+    "@arethetypeswrong/cli": "npm:0.7.1"
     "@belgattitude/eslint-config-bases": "npm:1.39.0"
     "@size-limit/file": "npm:8.2.6"
     "@types/jest": "npm:29.5.3"
@@ -2403,7 +2404,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.7.0"
+    "@arethetypeswrong/cli": "npm:0.7.1"
     "@belgattitude/eslint-config-bases": "npm:1.39.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:8.2.6"
@@ -10330,7 +10331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.5.0, node-fetch@npm:^2.6.6, node-fetch@npm:~2.6.1":
+"node-fetch@npm:^2.5.0, node-fetch@npm:^2.6.4, node-fetch@npm:^2.6.6, node-fetch@npm:~2.6.1":
   version: 2.6.12
   resolution: "node-fetch@npm:2.6.12"
   dependencies:
