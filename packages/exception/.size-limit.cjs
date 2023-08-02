@@ -1,7 +1,7 @@
 // @ts-check
 
-const fullEsmMaxSize = "3080B";
-const fullCjsMaxSize = "4700B";
+const fullEsmMaxSize = "2450B";
+const fullCjsMaxSize = "3050B";
 
 /**
  * Will ensure esm tree-shakeability and total size are within expectations.
@@ -23,31 +23,25 @@ module.exports = [
     name: "ESM (only HttpNotFound exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound }",
-    limit: "1288B",
-  },
-  {
-    name: "ESM (only HttpInternalServerError)",
-    path: ["dist/index.mjs"],
-    import: "{ HttpInternalServerError }",
-    limit: "1295B",
+    limit: "1350B",
   },
   {
     name: "ESM (two exceptions: HttpNotFound + HttpInternalServerError)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound, HttpInternalServerError }",
-    limit: "1350B",
+    limit: "1400B",
   },
   {
     name: "ESM (only isHttpException)",
     path: ["dist/index.mjs"],
     import: "{ isHttpException }",
-    limit: "1050B",
+    limit: "1350B",
   },
   {
     name: "ESM (only createHttpException)",
     path: ["dist/index.mjs"],
     import: "{ createHttpException }",
-    limit: "2605B", // Will import all server/client exceptions
+    limit: "2000B", // Will import all server/client exceptions
   },
 
   {
@@ -60,7 +54,7 @@ module.exports = [
     name: "ESM ({ fromJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ fromJson }",
-    limit: "3265B",
+    limit: "2500B",
   },
   // ###################################################
   // Commonjs full bundle
@@ -77,6 +71,6 @@ module.exports = [
     path: ["dist/index.cjs"],
     import: "{ isHttpException }",
     webpack: true,
-    limit: '4350B',
+    limit: '2500B',
   }
 ];
