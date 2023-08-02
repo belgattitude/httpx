@@ -55,8 +55,6 @@
 Convert an Error, NativeError or any HttpException to
 an object suitable for serialization (a serializable version).
 
-**`Link`**
-
 #### Parameters
 
 | Name | Type                                                                                              |
@@ -67,6 +65,8 @@ an object suitable for serialization (a serializable version).
 
 `Serializable`
 
+**`Link`**
+
 ---
 
 ### createFromSerializable
@@ -75,8 +75,6 @@ an object suitable for serialization (a serializable version).
 
 create an Error, NativeError or any HttpException from a
 serializable representation
-
-**`Link`**
 
 #### Parameters
 
@@ -87,6 +85,8 @@ serializable representation
 #### Returns
 
 [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror)
+
+**`Link`**
 
 ---
 

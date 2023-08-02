@@ -16,10 +16,10 @@
   },
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn workspaces foreach -pv run clean",
-    "g:build": "yarn workspaces foreach -ptv run build",
-    "g:build-release": "yarn workspaces foreach -ptv --from 'packages/*' run build-release",
-    "g:build-packages": "yarn workspaces foreach -ptv --include '@httpx/*' run build",
-    "g:build-examples": "yarn workspaces foreach -ptv --include '@examples/*' run build",
+    "g:build": "yarn workspaces foreach -tv run build",
+    "g:build-release": "yarn workspaces foreach -tv --from 'packages/*' run build-release",
+    "g:build-packages": "yarn workspaces foreach -tv --include '@httpx/*' run build",
+    "g:build-examples": "yarn workspaces foreach -tv --include '@examples/*' run build",
     "g:build-doc": "yarn workspaces foreach -ptv run build-doc",
     "g:test": "yarn workspaces foreach -pv run test",
     "g:test-unit": "yarn workspaces foreach -pv run test-unit",
@@ -61,7 +61,7 @@
     "@types/prettier": "2.7.3",
     "@types/shell-quote": "1.7.1",
     "cross-env": "7.0.3",
-    "eslint": "8.45.0",
+    "eslint": "8.46.0",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
     "lint-staged": "13.2.3",
@@ -69,7 +69,7 @@
     "prettier": "3.0.0",
     "rimraf": "5.0.1",
     "shell-quote": "1.8.1",
-    "syncpack": "10.7.3",
+    "syncpack": "10.9.3",
     "typescript": "5.1.6"
   },
   "engines": {

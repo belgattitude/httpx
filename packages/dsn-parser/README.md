@@ -3,10 +3,11 @@
 DSN parser, validation utilities, and query string helper in a light and modern package.
 
 [![npm](https://img.shields.io/npm/v/@httpx/dsn-parser?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/dsn-parser)
+[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?label=unit&logo=codecov&flag=httpx-dsn-parser-unit&style=for-the-badge&labelColor=000000)](https://codecov.io/gh/belgattitude/httpx)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/dsn-parser@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/dsn-parser@latest)
 ![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)
-![node](https://img.shields.io/static/v1?label=Node&message=14%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?label=unit&logo=codecov&flag=dsnParserUnit&style=for-the-badge&labelColor=000000)](https://codecov.io/gh/belgattitude/httpx)
+![node](https://img.shields.io/static/v1?label=Node&message=16%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
+[![browserslist](https://img.shields.io/static/v1?label=Browser&message=modern&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMgYW5kIHN1cHBvcnRzIGVzNi1tb2R1bGUsIG5vdCBkZWFkLCBub3Qgb3BfbWluaSBhbGwsIG5vZGUgMTY%3D)
 ![types](https://img.shields.io/static/v1?label=typings&message=4.5%2B&logo=typescript&style=for-the-badge&labelColor=000000&color=9cf)
 [![npm](https://img.shields.io/npm/dm/@httpx/dsn-parser?style=for-the-badge&labelColor=000000)](https://www.npmjs.com/package/@httpx/dsn-parser)
 [![license](https://img.shields.io/npm/l/@httpx/dsn-parser?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
@@ -258,11 +259,17 @@ openssl rand 60 | openssl base64 -A
 # YFUXIG9INIK7dFyE9aXtxLmjmnYL0zv6YluBJJbC6alKIBema/MwEGy3VUpx0oLAvWHUFGFMagAdLxrB
 ```
 
-## Sponsors ❤️
+## Contributors
 
-If you are enjoying some of my OSS guides or libs for your company, I'd really appreciate a [sponsorship](https://github.com/sponsors/belgattitude), a [coffee](https://ko-fi.com/belgattitude) or a dropped star. That gives me a tasty morning boost and help me to make some of my ideas come true 🙏
+Contributions are warmly appreciated. Have a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) document.
 
-### Special thanks
+## Sponsors
+
+If my OSS work brightens your day, let's take it to new heights together!
+[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
+or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+
+### Special thanks to
 
 <table>
   <tr>
@@ -286,3 +293,7 @@ If you are enjoying some of my OSS guides or libs for your company, I'd really a
     </td>
    </tr>
 </table>
+
+## License
+
+MIT © [belgattitude](https://github.com/belgattitude) and contributors.

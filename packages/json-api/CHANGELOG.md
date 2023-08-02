@@ -1,5 +1,24 @@
 # @httpx/json-api
 
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [[`58ea021`](https://github.com/belgattitude/httpx/commit/58ea021a8126622b1b37d1045c48d1fa45029753), [`58ea021`](https://github.com/belgattitude/httpx/commit/58ea021a8126622b1b37d1045c48d1fa45029753), [`58ea021`](https://github.com/belgattitude/httpx/commit/58ea021a8126622b1b37d1045c48d1fa45029753)]:
+  - @httpx/exception@2.0.0
+
+## 0.3.1
+
+### Patch Changes
+
+- [#505](https://github.com/belgattitude/httpx/pull/505) [`6dbbf43`](https://github.com/belgattitude/httpx/commit/6dbbf4302de24157cdc73a6179b64e1611c1db55) Thanks [@belgattitude](https://github.com/belgattitude)! - Transpile from es2020 to es2019 to widen browser support
+
+## 0.3.0
+
+### Minor Changes
+
+- [#501](https://github.com/belgattitude/httpx/pull/501) [`eb2c363`](https://github.com/belgattitude/httpx/commit/eb2c363fc4eef1bf66df9843bddf779fc95d26f8) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix type exports
+
 ## 0.2.4
 
 ### Patch Changes

@@ -1,5 +1,21 @@
 # @httpx/exception
 
+## 2.0.0
+
+### Major Changes
+
+- [#512](https://github.com/belgattitude/httpx/pull/512) [`58ea021`](https://github.com/belgattitude/httpx/commit/58ea021a8126622b1b37d1045c48d1fa45029753) Thanks [@belgattitude](https://github.com/belgattitude)! - Minimum to node 16.12 / es2018 and modern browsers (>1%)
+
+  Possibly a breaking change for some users relying on older browsers.
+
+### Minor Changes
+
+- [#512](https://github.com/belgattitude/httpx/pull/512) [`58ea021`](https://github.com/belgattitude/httpx/commit/58ea021a8126622b1b37d1045c48d1fa45029753) Thanks [@belgattitude](https://github.com/belgattitude)! - Reduce global file size by transpiling for node 16 and modern browsers.
+
+### Patch Changes
+
+- [#512](https://github.com/belgattitude/httpx/pull/512) [`58ea021`](https://github.com/belgattitude/httpx/commit/58ea021a8126622b1b37d1045c48d1fa45029753) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix type exports in some circumstances (masquerading as esm)
+
 ## 1.8.3
 
 ### Patch Changes

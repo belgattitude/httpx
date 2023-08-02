@@ -63,9 +63,9 @@ For example, this error condition may occur if an XML request body contains well
 
 #### Parameters
 
-| Name           | Type                                                                                                                                                     |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) & { `errors?`: [`ValidationError`](../modules/types.md#validationerror)[] } |
+| Name           | Type                                                                   |
+| :------------- | :--------------------------------------------------------------------- |
+| `msgOrParams?` | `string` \| `HttpExceptionParams` & { `errors?`: `ValidationError`[] } |
 
 #### Overrides
 
@@ -116,7 +116,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ### errors
 
-• `Readonly` **errors**: [`ValidationError`](../modules/types.md#validationerror)[]
+• `Readonly` **errors**: `ValidationError`[]
 
 ---
 
@@ -132,7 +132,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ### method
 
-• `Readonly` **method**: `undefined` \| [`HttpMethod`](../modules/types.md#httpmethod)
+• `Readonly` **method**: `undefined` \| `HttpMethod`
 
 Http method
 
@@ -202,10 +202,6 @@ Indicates the original url that caused the error.
 
 Optional override for formatting stack traces
 
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -216,6 +212,10 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 ##### Returns
 
 `any`
+
+**`See`**
+
+https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 
