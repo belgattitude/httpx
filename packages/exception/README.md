@@ -12,7 +12,7 @@ purposes.
 ![node](https://img.shields.io/static/v1?label=Node&message=16%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)]
 [![techdebt](https://img.shields.io/codeclimate/tech-debt/belgattitude/httpx?label=TechDebt&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
 [![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Maintainability&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
-[![npm](https://img.shields.io/npm/dt/@httpx/exception?style=for-the-badge)](https://www.npmjs.com/package/@httpx/exception)
+[![npm](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge)](https://www.npmjs.com/package/@httpx/exception)
 [![license](https://img.shields.io/npm/l/@httpx/exception?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
 ## Highlights

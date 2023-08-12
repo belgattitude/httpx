@@ -3,6 +3,8 @@ import {Tabs, Tab, Callout} from 'nextra/components';
 Plain HTTP exceptions for Node.js, Deno, Edge, and browsers. Zero dependencies, TypeScript-ready.
 Includes an optional serializer for hybrid contexts (àlà nextjs) and/or logging purposes.
 
+
+
 [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/exception)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
 [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
@@ -25,31 +27,6 @@ Includes an optional serializer for hybrid contexts (àlà nextjs) and/or loggin
 - 🧙‍&nbsp; IDE friendly. Typescript - typedoc with links to mdn and description.
 - 🥃&nbsp; [Docs](https://belgattitude.github.io/httpx) & [changelogs](https://github.com/belgattitude/httpx/releases) - Well tested and maintained - [Contributors](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) welcome.
 
-## Install
-
-<Tabs items={['yarn', 'pnpm', 'npm']} defaultIndex={1}>
-  <Tab>
-      ```bash
-      yarn add @httpx/exception
-      ```
-  </Tab>
-  <Tab>
-      ```bash
-      pnpm add @httpx/exception
-      ```
-  </Tab>
-  <Tab>
-      ```bash
-      npm install @httpx/exception
-      ```
-  </Tab>
-</Tabs>
-
-<Callout type="info" emoji="ℹ️">
-    You might want to install a polyfill for <code>Error.prototype.cause</code> if you need
-    to [support older browsers](https://caniuse.com/mdn-javascript_builtins_error_error_options_cause_parameter).
-    (recommended: ([error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill). Node supports it since 16.9.0.
-</Callout>
 
 
 ## Usage
@@ -61,7 +38,7 @@ by `Http` prefix to ease ide experience (suggestions) and to avoid naming collis
 (ie: domain exceptions such as NotFound...). You'll find the current supported list in [this section](#list-of-named-exceptions).
 
 ```typescript
-import { HttpNotFound, HttpServiceUnavailable } from '@httpx/exception';
+import { HttpNotFound, HttpServiceUnavailable } from '@httpx/exception/dist';
 ```
 
 #### HttpException parameters

@@ -1,12 +1,39 @@
 import { Tabs, Tab, Callout } from 'nextra/components';
 
+## Install
+
+<Tabs items={['yarn', 'pnpm', 'npm']} defaultIndex={0}>
+    <Tab>
+        ```bash
+        yarn add @httpx/exception
+        ```
+    </Tab>
+    <Tab>
+        ```bash
+        pnpm add @httpx/exception
+        ```
+    </Tab>
+    <Tab>
+        ```bash
+        npm install @httpx/exception
+        ```
+    </Tab>
+</Tabs>
+
+<Callout type="info" emoji="ℹ️">
+    You might want to install a polyfill for [Error.cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause)
+    if you need to [support older browsers](https://caniuse.com/mdn-javascript_builtins_error_error_options_cause_parameter).
+    ([error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill)). This is not needed on node >=16.9.0.
+</Callout>
+
+
 ## Named imports
 
 Explicit named imports are available for each IETF status codes. They are prefixed by `Http` to ease
 IDE experience. Message is optional and default to the [default message](#about-default-message). Additional
 parameters are supported such as `url`, `method`, `code`, `errorId`, `errors` and `cause`.
 
-<Tabs items={['Simple', 'Extended parameters', 'With validation errors']} defaultIndex={1}>
+<Tabs items={['Simple', 'Extended parameters', 'With validation errors']} defaultIndex={0}>
     <Tab>
         ```typescript
         import { HttpNotFound, HttpBadRequest } from '@httpx/exception';
@@ -104,9 +131,11 @@ throw createHttpException(500, {
 });
 ```
 
-> **Warning**
-> No checks are done about the validity of the provided status code. See also
-> [about non-official status codes](#non-official-status-codes)
+<Callout type="warning">
+    No checks are done about the validity of the provided status code. See also
+    [about non-official status codes](#non-official-status-codes)
+</Callout>
+
 
 ```typescript
 import { HttpNotFound } from '@httpx/exception';
