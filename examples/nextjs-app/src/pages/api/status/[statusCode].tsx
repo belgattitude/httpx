@@ -2,13 +2,16 @@ import { createHttpException, isHttpErrorStatusCode } from '@httpx/exception';
 import type { NextApiHandler } from 'next';
 import { z } from 'zod';
 import { parseRequestWithZod, withApiErrorHandler } from '@/backend';
-import { zodStringToInt, ConsoleLogger } from '@/lib';
+import { ConsoleLogger } from '@/lib';
 
 /** Example of zod schema */
 const reqSchema = z.object({
   method: z.enum(['GET']),
   query: z.object({
-    statusCode: zodStringToInt(z.number().min(100).max(599)),
+    statusCode: z
+      .string()
+      .transform((s) => parseInt(s, 10))
+      .pipe(z.number().min(100).max(599)),
   }),
 });
 

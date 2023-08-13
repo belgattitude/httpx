@@ -10,6 +10,6 @@ export const assertParsableDsn = (
 ): asserts dsn is ParsableDsn => {
   const parsed = parseDsn(dsn as string);
   if (!parsed.success) {
-    throw new Error(msg || `${parsed.message} (${parsed.reason})`);
+    throw new Error(msg ?? `${parsed.message} (${parsed.reason})`);
   }
 };

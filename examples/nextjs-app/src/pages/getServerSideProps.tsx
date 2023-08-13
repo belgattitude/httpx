@@ -1,5 +1,8 @@
-import type { HttpException } from '@httpx/exception';
-import { HttpNotFound, HttpRequestTimeout } from '@httpx/exception';
+import {
+  HttpNotFound,
+  HttpRequestTimeout,
+  type HttpException,
+} from '@httpx/exception';
 import { fromJson, toJson } from '@httpx/exception/serializer';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { Scenarios } from '../components/Scenarios';
@@ -38,6 +41,7 @@ export default function ssrRoute(
 
 const fetchApiDataAlwaysRequestTimeout = async (): Promise<
   Props['apiData']
+  // eslint-disable-next-line @typescript-eslint/require-await
 > => {
   throw new HttpRequestTimeout({
     message: 'Fake request timeout',

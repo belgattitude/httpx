@@ -13,6 +13,7 @@ import {
 import { parseQueryParams } from './query-param-parser';
 
 const dsnRegexp =
+  // eslint-disable-next-line regexp/no-unused-capturing-group
   /^(?<driver>([\w+-]{1,45})):\/\/((?<user>[^/:]{1,200})?(:(?<pass>.{0,250}))?@)?(?<host>[^/:]{1,400}?)(:(?<port>\d+)?)?(\/(?<db>([.#@$\w-])+))?(\?(?<params>.{1,8196}))?$/;
 
 const defaultOptions = {
@@ -29,10 +30,10 @@ export const parseDsn = (
       typeof dsn !== 'string' ? 'INVALID_ARGUMENT' : 'EMPTY_DSN'
     );
   }
-  const opts = { ...defaultOptions, ...(options || {}) };
+  const opts = { ...defaultOptions, ...(options ?? {}) };
   const { overrides = {}, lowercaseDriver } = opts;
   const matches = dsn.match(dsnRegexp);
-  if (matches === null || !matches.groups) {
+  if (!matches?.groups) {
     return createErrorResult('PARSE_ERROR');
   }
   const parsed: Record<string, unknown> = {};
@@ -40,13 +41,13 @@ export const parseDsn = (
     if (typeof value === 'string') {
       switch (key) {
         case 'driver':
-          parsed['driver'] = lowercaseDriver ? value.toLowerCase() : value;
+          parsed.driver = lowercaseDriver ? value.toLowerCase() : value;
           break;
         case 'port':
-          parsed['port'] = Number.parseInt(value, 10);
+          parsed.port = Number.parseInt(value, 10);
           break;
         case 'params':
-          parsed['params'] = parseQueryParams(value);
+          parsed.params = parseQueryParams(value);
           break;
         default:
           parsed[key] = value;
@@ -57,7 +58,10 @@ export const parseDsn = (
     mergeDsnOverrides(parsed as ParsedDsn, overrides)
   ) as ParsedDsn;
   if (val?.port && !isValidNetworkPort(val.port)) {
-    return createErrorResult('INVALID_PORT', `Invalid port: ${val.port}`);
+    return createErrorResult(
+      'INVALID_PORT',
+      `Invalid port: ${val.port as unknown as number}`
+    );
   }
   return {
     success: true,

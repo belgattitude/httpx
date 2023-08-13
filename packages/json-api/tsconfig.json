@@ -12,5 +12,16 @@
       "@httpx/exception": ["../../../packages/exception/src/index"]
     },
     "types": ["vitest/globals"]
-  }
+  },
+  "exclude": ["**/node_modules", "**/.*/*", "dist", "coverage"],
+  "include": [
+    ".eslintrc.*",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    "**/*.json"
+  ]
 }

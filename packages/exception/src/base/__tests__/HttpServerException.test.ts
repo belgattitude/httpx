@@ -32,7 +32,7 @@ describe('HttpServerException', () => {
       throw errorCause;
     } catch (cause) {
       exception = new HttpServerException(500, {
-        cause: cause as unknown as Error,
+        cause: cause as Error,
       });
     }
     expect(exception.cause).toStrictEqual(errorCause);
