@@ -1,10 +1,10 @@
-import type {
-  ParsedDsn,
-  ParseDsnOptions,
-  ErrorReasons,
-  ParserErrorResult,
+import {
+  errorReasons,
+  type ParsedDsn,
+  type ParseDsnOptions,
+  type ErrorReasons,
+  type ParserErrorResult,
 } from './dsn-parser.type';
-import { errorReasons } from './dsn-parser.type';
 
 export const createErrorResult = (
   reason: ErrorReasons,
@@ -13,7 +13,7 @@ export const createErrorResult = (
   return {
     success: false,
     reason: reason,
-    message: msg || errorReasons[reason],
+    message: msg ?? errorReasons[reason],
   };
 };
 
@@ -28,7 +28,9 @@ export const isParsableNumber = (value: unknown): value is number => {
   return typeof value === 'string' && /^-?\d{1,16}$/.test(value);
 };
 
-export const isValidNetworkPort = (port: number): port is number => {
+type ValidNetworkPort = number;
+
+export const isValidNetworkPort = (port: number): port is ValidNetworkPort => {
   return port < 65536 && port > 0;
 };
 
@@ -51,6 +53,6 @@ export const mergeDsnOverrides = (
     merged[key] =
       key in overrides ? (overrides as Record<string, unknown>)[key] : value;
   });
-  merged['params'] = params;
+  merged.params = params;
   return merged as unknown as ParsedDsn;
 };

@@ -18,7 +18,7 @@ export const parseQueryParams = (
 ): Record<string, string | boolean | number | null> => {
   const { parseBooleans, setTrueForUndefinedValues, parseNumbers } = {
     ...defaultOptions,
-    ...(options || {}),
+    ...(options ?? {}),
   };
   const defaultValue = setTrueForUndefinedValues ? true : null;
   const parts = queryParams.split('&').filter((v) => v.trim().length > 0);
