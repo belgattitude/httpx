@@ -1075,40 +1075,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@effect/data@npm:0.17.1, @effect/data@npm:^0.17.0, @effect/data@npm:^0.17.1":
+"@effect/data@npm:0.17.1":
   version: 0.17.1
   resolution: "@effect/data@npm:0.17.1"
   checksum: b3c9e1285364936e2d8139eab59c5ac547860d75f7f80e41f43843a45d1bc4d25dd9fbe2fea455f900d68286b0a348bdd50d646280a2589970812139ce301449
   languageName: node
   linkType: hard
 
-"@effect/io@npm:0.37.1, @effect/io@npm:^0.37.0":
-  version: 0.37.1
-  resolution: "@effect/io@npm:0.37.1"
-  dependencies:
-    "@effect/data": "npm:^0.17.0"
-  checksum: df90c7ffd199f5b3e7ed8dd88f40ac1b7db9b8855aa53533c7d9270883f76d69cd06d8d53723606dfce6e7b98fa5413ba7efa9d538b089e72ba1533fec0e77b6
+"@effect/io@npm:0.38.0":
+  version: 0.38.0
+  resolution: "@effect/io@npm:0.38.0"
+  peerDependencies:
+    "@effect/data": ^0.17.1
+  checksum: 5be3d70c0bc2edac22fcb2c396dbe551a2f30c20797810bf4040dde1dd1ebed372944e98556fc3a480f7a9a01ad487b2532c0eaaef54d9b030613ac200741482
   languageName: node
   linkType: hard
 
-"@effect/match@npm:0.31.0":
-  version: 0.31.0
-  resolution: "@effect/match@npm:0.31.0"
-  dependencies:
-    "@effect/data": "npm:^0.17.1"
-    "@effect/schema": "npm:^0.32.0"
-  checksum: a81c0664bd414bfc3e79b685fcc9a4b9cdee93522b6324a87f163670701a918207871f5a922a58307bb4d69db76534c56a56520ac63eb7b7de5d37401b913af6
-  languageName: node
-  linkType: hard
-
-"@effect/schema@npm:0.32.0, @effect/schema@npm:^0.32.0":
+"@effect/match@npm:0.32.0":
   version: 0.32.0
-  resolution: "@effect/schema@npm:0.32.0"
+  resolution: "@effect/match@npm:0.32.0"
+  peerDependencies:
+    "@effect/data": ^0.17.1
+    "@effect/schema": ^0.33.0
+  checksum: 5d618ed928a01b22f6ceca0e2da5a5e9185047fa798192dff986e4d0b9e3a5999f9e907520246707d88feb8ebddfe7e4d3e7d7ca52549bab11474b4e9660509f
+  languageName: node
+  linkType: hard
+
+"@effect/schema@npm:0.33.1":
+  version: 0.33.1
+  resolution: "@effect/schema@npm:0.33.1"
   dependencies:
-    "@effect/data": "npm:^0.17.1"
-    "@effect/io": "npm:^0.37.0"
     fast-check: "npm:^3.12.0"
-  checksum: 1da140468f1a092f7cd3aa0f80e5f84eef106c9694f09c6c839f47053ce768b2f98c029c90dcc20765b505d5466070153505aca3dc9a275cfaff4a7f9252535f
+  peerDependencies:
+    "@effect/data": ^0.17.1
+    "@effect/io": ^0.38.0
+  checksum: 8422e9237be3eefc4c23b74ac83ce2a9d19acaf0d7a8925fb5acecd70155ae3902af4c3e78125fc4db398b7f76ac5e59c4c641e1a6602c901123b86a0a080b2f
   languageName: node
   linkType: hard
 
@@ -6212,7 +6213,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:11.1.1, fs-extra@npm:^11.0.0":
+"fs-extra@npm:^11.0.0":
   version: 11.1.1
   resolution: "fs-extra@npm:11.1.1"
   dependencies:
@@ -6836,7 +6837,7 @@ __metadata:
     prettier: "npm:3.0.1"
     rimraf: "npm:5.0.1"
     shell-quote: "npm:1.8.1"
-    syncpack: "npm:10.9.3"
+    syncpack: "npm:11.2.1"
     typescript: "npm:5.1.6"
   languageName: unknown
   linkType: soft
@@ -11639,19 +11640,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"syncpack@npm:10.9.3":
-  version: 10.9.3
-  resolution: "syncpack@npm:10.9.3"
+"syncpack@npm:11.2.1":
+  version: 11.2.1
+  resolution: "syncpack@npm:11.2.1"
   dependencies:
     "@effect/data": "npm:0.17.1"
-    "@effect/io": "npm:0.37.1"
-    "@effect/match": "npm:0.31.0"
-    "@effect/schema": "npm:0.32.0"
+    "@effect/io": "npm:0.38.0"
+    "@effect/match": "npm:0.32.0"
+    "@effect/schema": "npm:0.33.1"
     chalk: "npm:4.1.2"
     commander: "npm:11.0.0"
     cosmiconfig: "npm:8.2.0"
     enquirer: "npm:2.4.1"
-    fs-extra: "npm:11.1.1"
     globby: "npm:11.1.0"
     minimatch: "npm:9.0.3"
     npm-package-arg: "npm:10.1.0"
@@ -11672,7 +11672,7 @@ __metadata:
     syncpack-prompt: dist/bin-prompt/index.js
     syncpack-set-semver-ranges: dist/bin-set-semver-ranges/index.js
     syncpack-update: dist/bin-update/index.js
-  checksum: 2d1006f10fc9d8e051c173bb08e9bdcc446b752f8db58c7ee7d5278a331bfad6007d00b3a41ce481f2cbae1db50a10713662a16aef5cae40a85b5af48080e400
+  checksum: 49296e75689b0a0e5ec2aa3df6cc2fb63abe03f80d7730be6c0ce25628d5d6e1861165f3b8b97073a7c17f8fa820229fcab1b9fb7545e1d23727424e36956995
   languageName: node
   linkType: hard
 
