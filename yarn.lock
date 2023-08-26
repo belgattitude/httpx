@@ -1365,7 +1365,7 @@ __metadata:
     size-limit: "npm:8.2.6"
     tslib: "npm:2.6.2"
     tsup: "npm:7.2.0"
-    typedoc: "npm:0.24.8"
+    typedoc: "npm:0.25.0"
     typedoc-plugin-markdown: "npm:3.16.0"
     typescript: "npm:5.2.2"
     vite: "npm:4.4.9"
@@ -1405,7 +1405,7 @@ __metadata:
     ts-jest: "npm:29.1.1"
     tslib: "npm:2.6.2"
     tsup: "npm:7.2.0"
-    typedoc: "npm:0.24.8"
+    typedoc: "npm:0.25.0"
     typedoc-plugin-markdown: "npm:3.16.0"
     typescript: "npm:5.2.2"
     vite: "npm:4.4.9"
@@ -1437,7 +1437,7 @@ __metadata:
     size-limit: "npm:8.2.6"
     tslib: "npm:2.6.2"
     tsup: "npm:7.2.0"
-    typedoc: "npm:0.24.8"
+    typedoc: "npm:0.25.0"
     typedoc-plugin-markdown: "npm:3.16.0"
     typescript: "npm:5.2.2"
     vite: "npm:4.4.9"
@@ -8959,7 +8959,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:9.0.3, minimatch@npm:^9.0.0":
+"minimatch@npm:9.0.3, minimatch@npm:^9.0.0, minimatch@npm:^9.0.3":
   version: 9.0.3
   resolution: "minimatch@npm:9.0.3"
   dependencies:
@@ -12430,19 +12430,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc@npm:0.24.8":
-  version: 0.24.8
-  resolution: "typedoc@npm:0.24.8"
+"typedoc@npm:0.25.0":
+  version: 0.25.0
+  resolution: "typedoc@npm:0.25.0"
   dependencies:
     lunr: "npm:^2.3.9"
     marked: "npm:^4.3.0"
-    minimatch: "npm:^9.0.0"
+    minimatch: "npm:^9.0.3"
     shiki: "npm:^0.14.1"
   peerDependencies:
-    typescript: 4.6.x || 4.7.x || 4.8.x || 4.9.x || 5.0.x || 5.1.x
+    typescript: 4.6.x || 4.7.x || 4.8.x || 4.9.x || 5.0.x || 5.1.x || 5.2.x
   bin:
     typedoc: bin/typedoc
-  checksum: 4f2f92ddde3f70a1a9666507f6bdf6620023599bd2c2a3ed3f8f909f9c28d92594c30ee6ee68f5a248ff70e09623acf1323bad633cb713b9f2e36bbd4fccf683
+  checksum: 4a3a318c027c353a907d1f76f61d97b6b2490ec866e35b4bd26ad90ca05b63500523a11ce8b16640d2306601d995b77a7b11365fa7b2e0974fb0ea8d3c1b024f
   languageName: node
   linkType: hard
 
