@@ -15,25 +15,25 @@
     "eslint-plugin-react-hooks": "4.6.0"
   },
   "scripts": {
-    "g:clean": "yarn clean:global-cache && yarn workspaces foreach -pv run clean",
-    "g:build": "yarn workspaces foreach -tv run build",
-    "g:build-release": "yarn workspaces foreach -tv --from 'packages/*' run build-release",
-    "g:build-packages": "yarn workspaces foreach -tv --include '@httpx/*' run build",
-    "g:build-examples": "yarn workspaces foreach -tv --include '@examples/*' run build",
-    "g:build-doc": "yarn workspaces foreach -ptv run build-doc",
-    "g:test": "yarn workspaces foreach -pv run test",
-    "g:test-unit": "yarn workspaces foreach -pv run test-unit",
-    "g:lint": "yarn workspaces foreach -v run lint",
-    "g:typecheck": "yarn workspaces foreach -v run typecheck",
+    "g:clean": "yarn clean:global-cache && yarn workspaces foreach --all -pv run clean",
+    "g:build": "yarn workspaces foreach --all -tv run build",
+    "g:build-release": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build-release",
+    "g:build-packages": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build",
+    "g:build-examples": "yarn workspaces foreach -tv --worktree --from 'examples/*' run build",
+    "g:build-doc": "yarn workspaces foreach --all -ptv run build-doc",
+    "g:test": "yarn workspaces foreach --all -pv run test",
+    "g:test-unit": "yarn workspaces foreach --all -pv run test-unit",
+    "g:lint": "yarn workspaces foreach --all -v run lint",
+    "g:typecheck": "yarn workspaces foreach --all -v run typecheck",
     "g:lint-staged-files": "lint-staged --allow-empty",
-    "g:fix-all-files": "yarn workspaces foreach -ptv run fix-all-files",
+    "g:fix-all-files": "yarn workspaces foreach --all -ptv run fix-all-files",
     "g:changeset": "changeset",
-    "g:check-dist": "yarn workspaces foreach -ptv run check-dist",
-    "g:check-size": "yarn workspaces foreach -ptv run check-size",
-    "g:check-pub": "yarn workspaces foreach -ptv run check-pub",
-    "g:check-package-dist": "yarn workspaces foreach -ptv --include '@httpx/*' run check-dist",
+    "g:check-dist": "yarn workspaces foreach --all -ptv run check-dist",
+    "g:check-size": "yarn workspaces foreach --all -ptv run check-size",
+    "g:check-pub": "yarn workspaces foreach --all -ptv run check-pub",
+    "g:check-package-dist": "yarn workspaces foreach --all -ptv --from 'packages/*' run check-dist",
     "g:release": "yarn g:build-release && yarn g:check-package-dist && yarn exec changeset publish",
-    "g:ci-coverage-upload": "yarn workspaces foreach -tv run ci-coverage-upload",
+    "g:ci-coverage-upload": "yarn workspaces foreach --all -tv run ci-coverage-upload",
     "clean:lint": "rimraf ./.cache/eslint",
     "clean:global-cache": "rimraf ./.cache",
     "deps:check": "npx npm-check-updates@latest --configFileName ncurc.yml --deep",
@@ -51,7 +51,7 @@
     "examples/*",
     "packages/*"
   ],
-  "packageManager": "yarn@4.0.0-rc.46",
+  "packageManager": "yarn@4.0.0-rc.50",
   "devDependencies": {
     "@belgattitude/eslint-config-bases": "2.5.0",
     "@changesets/changelog-github": "0.4.8",
@@ -75,6 +75,6 @@
     "typescript": "5.2.2"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=18.14"
   }
 }

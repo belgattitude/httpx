@@ -237,9 +237,10 @@ The `isParsableDsn` can be easily plugged into zod custom validation. Example:
 
 ```typescript
 import { z } from "zod";
+import { isParsableDsn, type ParsableDsn } from "@httpx/dsn-parser";
 
 export const serverEnvSchema = z.object({
-  PRISMA_DATABASE_URL: z.custom(
+  PRISMA_DATABASE_URL: z.custom<ParsableDsn>(
     (dsn) => isParsableDsn(dsn),
     "Invalid DSN format."
   ),

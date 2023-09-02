@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 7
+  version: 8
   cacheKey: 10
 
 "@aashutoshrathi/word-wrap@npm:^1.2.3":
@@ -466,61 +466,6 @@ __metadata:
   version: 0.2.3
   resolution: "@bcoe/v8-coverage@npm:0.2.3"
   checksum: 1a1f0e356a3bb30b5f1ced6f79c413e6ebacf130421f15fac5fcd8be5ddf98aedb4404d7f5624e3285b700e041f9ef938321f3ca4d359d5b716f96afa120d88d
-  languageName: node
-  linkType: hard
-
-"@belgattitude/eslint-config-bases@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@belgattitude/eslint-config-bases@npm:2.4.0"
-  dependencies:
-    "@rushstack/eslint-patch": "npm:^1.3.3"
-    "@tanstack/eslint-plugin-query": "npm:^4.34.1"
-    "@typescript-eslint/eslint-plugin": "npm:^6.5.0"
-    "@typescript-eslint/parser": "npm:^6.5.0"
-    eslint-config-prettier: "npm:^9.0.0"
-    eslint-import-resolver-typescript: "npm:^3.6.0"
-    eslint-plugin-import: "npm:^2.28.1"
-    eslint-plugin-jest: "npm:^27.2.3"
-    eslint-plugin-jest-formatting: "npm:^3.1.0"
-    eslint-plugin-jsx-a11y: "npm:^6.7.1"
-    eslint-plugin-playwright: "npm:^0.16.0"
-    eslint-plugin-prettier: "npm:^5.0.0"
-    eslint-plugin-react: "npm:^7.33.2"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    eslint-plugin-regexp: "npm:^1.15.0"
-    eslint-plugin-sonarjs: "npm:^0.21.0"
-    eslint-plugin-storybook: "npm:^0.6.13"
-    eslint-plugin-testing-library: "npm:^6.0.1"
-  peerDependencies:
-    "@graphql-eslint/eslint-plugin": ^3.14.3
-    eslint: ^8.30.0
-    eslint-plugin-mdx: ^2.0.5
-    eslint-plugin-tailwindcss: ^3.13.0
-    graphql: ^16.6.0
-    prettier: ^2.8.0 || ^3.0.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.9.4 || ^5.0.2
-  peerDependenciesMeta:
-    "@graphql-eslint/eslint-plugin":
-      optional: true
-    eslint-plugin-mdx:
-      optional: true
-    eslint-plugin-tailwindcss:
-      optional: true
-    graphql:
-      optional: true
-    prettier:
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    tailwindcss:
-      optional: true
-    typescript:
-      optional: true
-  checksum: 0efc52558678391c4e4148ebe0dd3e47721f052dec464866ec161bbf9fb174d847a4f76f5da078d9721648d969ec8313b800e755341843355a5bac66ab00df22
   languageName: node
   linkType: hard
 
@@ -1313,16 +1258,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@examples/nextjs-app@workspace:examples/nextjs-app"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:2.4.0"
+    "@belgattitude/eslint-config-bases": "npm:2.5.0"
     "@httpx/exception": "workspace:^"
-    "@types/node": "npm:20.5.7"
+    "@types/node": "npm:20.5.8"
     "@types/react": "npm:18.2.21"
     "@types/react-dom": "npm:18.2.7"
     axios: "npm:1.5.0"
     cross-env: "npm:7.0.3"
     eslint: "npm:8.48.0"
     eslint-config-next: "npm:13.4.19"
-    ky: "npm:0.33.3"
+    ky: "npm:1.0.0"
     next: "npm:13.4.19"
     pino: "npm:8.15.0"
     postcss: "npm:8.4.29"
@@ -1378,7 +1323,7 @@ __metadata:
     "@size-limit/webpack-why": "npm:8.2.6"
     "@swc/core": "npm:1.3.82"
     "@types/jest": "npm:29.5.4"
-    "@types/node": "npm:20.5.7"
+    "@types/node": "npm:20.5.8"
     "@types/statuses": "npm:2.0.1"
     "@vitest/coverage-istanbul": "npm:0.34.3"
     "@vitest/ui": "npm:0.34.3"
@@ -2563,10 +2508,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.5.7":
-  version: 20.5.7
-  resolution: "@types/node@npm:20.5.7"
-  checksum: 4571c455d1528ae3aa0d738de4631bf12781107b18e29e364000fdb8fea6c5d4fe7bf83edeeb93406aeac56cc4af43b30dffa3df475a57a89f32a9b025bf2112
+"@types/node@npm:*, @types/node@npm:20.5.8":
+  version: 20.5.8
+  resolution: "@types/node@npm:20.5.8"
+  checksum: 831540dcdfe7d10ef7385abfaa86cbdb7488d6635d955175e174e8c861eef457ee6c6b1e78847e7f1459fd3b327b97081c4b599bfc33e042c59eb1534e60a74d
   languageName: node
   linkType: hard
 
@@ -8311,10 +8256,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ky@npm:0.33.3":
-  version: 0.33.3
-  resolution: "ky@npm:0.33.3"
-  checksum: 556b2241fe85ac78e98623b0a87b857c457ab8cd459f7c1c50a3cb0886cb95c1e1ce9afb44b75844ebe5b6f2c3c6d50a42a2a4e08b8ca58d2a95a43225ac5e43
+"ky@npm:1.0.0":
+  version: 1.0.0
+  resolution: "ky@npm:1.0.0"
+  checksum: 915ea6c4aea5d466642c019d48b22bf13db24763a89094541aed8d354eeb8904ff73ba1fe8662f54c0b84589fcde54152fa596a1820e856540256576fd936b71
   languageName: node
   linkType: hard
 
@@ -12494,11 +12439,11 @@ __metadata:
 
 "typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.6.4 || ^5.0.0#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
   version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=5da071"
+  resolution: "typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1f0e3f341f0d8b8351b2367470ac58de9c63ea676ea00570fd142ec3b2020413d950d9424ab61c599d3579bb0c43a05d07123ba12a2eec16078d3be4b5226b09
+  checksum: f79cc2ba802c94c2b78dbb00d767a10adb67368ae764709737dc277273ec148aa4558033a03ce901406b35fddf4eac46dabc94a1e1d12d2587e2b9cfe5707b4a
   languageName: node
   linkType: hard
 
