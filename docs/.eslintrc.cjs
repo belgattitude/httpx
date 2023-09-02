@@ -12,35 +12,48 @@ const {
 
 module.exports = {
   root: true,
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: 'tsconfig.json',
   },
-  ignorePatterns: [...getDefaultIgnorePatterns(), 'out'],
+  ignorePatterns: [...getDefaultIgnorePatterns()],
   extends: [
     '@belgattitude/eslint-config-bases/typescript',
     '@belgattitude/eslint-config-bases/sonar',
     '@belgattitude/eslint-config-bases/regexp',
-    // '@belgattitude/eslint-config-bases/jest',
+    '@belgattitude/eslint-config-bases/jest',
     '@belgattitude/eslint-config-bases/react',
-    // '@belgattitude/eslint-config-bases/rtl',
+    '@belgattitude/eslint-config-bases/rtl',
+    '@belgattitude/eslint-config-bases/tailwind',
     // Add specific rules for nextjs
-    // 'next/core-web-vitals',
+    'next/core-web-vitals',
     // Apply prettier and disable incompatible rules
     '@belgattitude/eslint-config-bases/prettier-plugin',
   ],
   rules: {
     // optional overrides per project
+    '@typescript-eslint/require-await': 'off',
   },
   overrides: [
     {
-      files: ['*.config.{mjs,js,jsx}'],
+      files: ['next.config.mjs', 'src/lib/env/*.mjs'],
+      rules: {
+        'import/order': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+      },
+    },
+    {
+      files: ['theme.config.tsx'],
       rules: {
         'react-hooks/rules-of-hooks': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+      },
+    },
+    {
+      files: ['tailwind.config.ts'],
+      rules: {
         '@typescript-eslint/naming-convention': 'off',
-        'import/export': 'off',
-        'import/order': 'off',
-        'import/default': 'off',
       },
     },
   ],

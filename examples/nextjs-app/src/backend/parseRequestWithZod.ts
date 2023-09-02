@@ -1,6 +1,5 @@
 import type { IncomingMessage } from 'node:http';
-import type { HttpException } from '@httpx/exception';
-import { HttpBadRequest } from '@httpx/exception';
+import { HttpBadRequest, type HttpException } from '@httpx/exception';
 import type { NextApiRequest } from 'next';
 import type { z, ZodSchema } from 'zod';
 
@@ -25,11 +24,12 @@ export const parseRequestWithZod = <
   const { onError } = params ?? {};
   const parsed = schema.safeParse(req);
   if (!parsed.success) {
-    const { error } = parsed;
+    const error = parsed.error as unknown as z.ZodError<T>;
     if (onError) {
       throw onError(error);
     }
-    const msg = parsed.error.errors
+    const msg = error.errors
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       .map((err) => `${err.path} - ${err.code}`)
       .join(', ');
 
@@ -38,5 +38,5 @@ export const parseRequestWithZod = <
       url: req.url,
     });
   }
-  return parsed.data;
+  return parsed.data as unknown as T;
 };

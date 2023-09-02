@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import { useConfig } from 'nextra-theme-docs';
+import { useConfig, type DocsThemeConfig } from 'nextra-theme-docs';
 
-export default {
+const themeConfig: DocsThemeConfig = {
   logo: <span>@httpx</span>,
   project: {
     link: 'https://github.com/belgattitude/httpx',
@@ -22,13 +22,14 @@ export default {
         <meta property="og:url" content={url} />
         <meta
           property="og:title"
-          content={frontMatter.title || '@httpx documentation'}
+          content={frontMatter.title ?? '@httpx documentation'}
         />
         <meta
           property="og:description"
-          content={frontMatter.description || '@httpx documentation'}
+          content={frontMatter.description ?? '@httpx documentation'}
         />
       </>
     );
   },
 };
+export default themeConfig;

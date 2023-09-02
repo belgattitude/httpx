@@ -1,9 +1,8 @@
-import nextra from 'nextra';
+import { default as nextra } from 'nextra';
 
 const withNextra = nextra({
   theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.jsx',
-  // To allow static export (github pages...)
+  themeConfig: './theme.config.tsx',
 });
 
 /**

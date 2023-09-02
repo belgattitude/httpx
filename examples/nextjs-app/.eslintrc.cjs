@@ -12,6 +12,7 @@ const {
 
 module.exports = {
   root: true,
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: 'tsconfig.json',
@@ -31,6 +32,7 @@ module.exports = {
   ],
   rules: {
     // optional overrides per project
+    '@typescript-eslint/require-await': 'off',
   },
   overrides: [
     // optional overrides per project file match

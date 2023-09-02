@@ -1,5 +1,4 @@
-import type { HttpException } from '@httpx/exception';
-import { isHttpException } from '@httpx/exception';
+import { isHttpException, type HttpException } from '@httpx/exception';
 import type { JsonApiError } from './json-api-response.types';
 
 export class JsonApiErrorFactory {

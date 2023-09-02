@@ -1,5 +1,4 @@
-import type { ZodTypeAny } from 'zod';
-import { z } from 'zod';
+import { z, type ZodTypeAny } from 'zod';
 
 export const zodStringToInt = (schema: ZodTypeAny) =>
   z.preprocess((v): number | undefined => {

@@ -9,9 +9,9 @@ import { createHttpException } from '../createHttpException';
 
 describe('createHttpException tests', () => {
   describe('when error status has a concrete class', () => {
-    type AnyExceptionClass = {
-      new <T>(params: HttpExceptionParams | string): T;
-    };
+    type AnyExceptionClass = new (
+      params: HttpExceptionParams | string
+    ) => HttpException;
 
     const all = Object.entries(statusMap).map(([code, cls]) => {
       const obj = new cls();
@@ -34,7 +34,7 @@ describe('createHttpException tests', () => {
       (className, status, cls) => {
         const params = 'msg';
         const error = createHttpException(status, params);
-        const expected = new cls(params) as HttpException;
+        const expected = new cls(params);
         expect(error.name).toStrictEqual(expected.name);
         expect(error.statusCode).toStrictEqual(status);
       }

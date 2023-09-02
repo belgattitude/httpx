@@ -17,14 +17,19 @@
     "jsx": "preserve",
     "incremental": true
   },
+  "exclude": ["**/node_modules", "**/.*/*"],
   "include": [
+    ".eslintrc.*",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
     "**/*.cjs",
-    "**/*.mjs"
-  ],
-  "exclude": ["**/node_modules", "**/.*/"]
+    "**/*.mjs",
+    "**/*.json",
+    ".next/types/**/*.ts",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx"
+  ]
 }

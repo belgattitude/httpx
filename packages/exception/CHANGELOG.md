@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 2.1.0
+
+### Minor Changes
+
+- [#532](https://github.com/belgattitude/httpx/pull/532) [`cfe1808`](https://github.com/belgattitude/httpx/commit/cfe180848a01e94ff475c2d27bdf1c9d3c007a2f) Thanks [@belgattitude](https://github.com/belgattitude)! - Lint with typescript/eslint v6 strict
+
 ## 2.0.0
 
 ### Major Changes
