@@ -31,7 +31,7 @@
     "g:check-dist": "yarn workspaces foreach --all -ptv run check-dist",
     "g:check-size": "yarn workspaces foreach --all -ptv run check-size",
     "g:check-pub": "yarn workspaces foreach --all -ptv run check-pub",
-    "g:check-package-dist": "yarn workspaces foreach --all -ptv --from 'packages/*' run check-dist",
+    "g:check-package-dist": "yarn workspaces foreach --worktree -ptv --from 'packages/*' run check-dist",
     "g:release": "yarn g:build-release && yarn g:check-package-dist && yarn exec changeset publish",
     "g:ci-coverage-upload": "yarn workspaces foreach --all -tv run ci-coverage-upload",
     "clean:lint": "rimraf ./.cache/eslint",
