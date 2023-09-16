@@ -2,7 +2,7 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 
 ## Install
 
-<Tabs items={['yarn', 'pnpm', 'npm']} defaultIndex={0}>
+<Tabs items={['yarn', 'pnpm', 'npm', 'bun', 'deno']} defaultIndex={0}>
     <Tab>
         ```bash
         yarn add @httpx/exception
@@ -18,6 +18,17 @@ import { Tabs, Tab, Callout } from 'nextra/components';
         npm install @httpx/exception
         ```
     </Tab>
+    <Tab>
+        ```bash
+        bun add @httpx/exception
+        ```
+    </Tab>
+    <Tab>
+        ```typescript
+        import { HttpNotFound, ... } from "npm:@httpx/exception@^2.1.0";
+        ```
+        > see [deno npm specifiers](https://deno.land/manual/node/npm_specifiers)
+    </Tab>
 </Tabs>
 
 <Callout type="info" emoji="ℹ️">
@@ -29,7 +40,7 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 
 ## Named imports
 
-Explicit named imports are available for each IETF status codes. They are prefixed by `Http` to ease
+Explicit named imports are prefixed by `Http` to ease
 IDE experience. Message is optional and default to the [default message](#about-default-message). Additional
 parameters are supported such as `url`, `method`, `code`, `errorId`, `errors` and `cause`.
 

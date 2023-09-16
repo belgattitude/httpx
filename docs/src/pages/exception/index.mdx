@@ -1,31 +1,136 @@
 import {Tabs, Tab, Callout} from 'nextra/components';
 
-Plain HTTP exceptions for Node.js, Deno, Edge, and browsers. Zero dependencies, TypeScript-ready.
-Includes an optional serializer for hybrid contexts (àlà nextjs) and/or logging purposes.
+## HTTP error status
 
 
 
-[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/exception)
-[![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
-[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=>99%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=PiAwLjAxJSwgbm90IGRlYWQ%3D)
-[![node](https://img.shields.io/static/v1?label=Node&message=14%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZA%3D%3D)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&style=for-the-badge&labelColor=444)](https://codecov.io/gh/belgattitude/httpx)
-[![techdebt](https://img.shields.io/codeclimate/tech-debt/belgattitude/httpx?label=TechDebt&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
-[![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Maintainability&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
-[![license](https://img.shields.io/npm/l/@httpx/exception?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+Typescript made. Includes an optional serializer for hybrid contexts (àlà nextjs) and/or logging purposes.
 
 ## Highlights
 
-- 🚀&nbsp; Simple use: [explicit named imports](https://belgattitude.github.io/httpx/#/?id=named-exceptions) and/or [status code](https://belgattitude.github.io/httpx/#/?id=factories).
-- ✨‍&nbsp; Default statusText as [error message](https://belgattitude.github.io/httpx/#/?id=about-default-message). Less to type, reduce divergence...
-- 🎥&nbsp; Optionally attach some common [contextual](https://belgattitude.github.io/httpx/#/?id=about-context) info (less guessing, loggers...).
+- 🚀&nbsp; Use with [explicit named imports](/exception/usage#named-imports) or [status code](/exception/usage#createhttpexception).
+- ✨‍&nbsp; Default statusText as [error message](/exception/usage#createhttpexception).
+- 🎥&nbsp; Support [contextual](https://belgattitude.github.io/httpx/#/?id=about-context) info (ie: custom error codes...).
 - 🐎&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to cover Server-Side-Rendering use-cases (nextjs, superjson,...).
 - 🎯&nbsp; [Extends](https://belgattitude.github.io/httpx/#/?id=uml-class-diagram) Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) trace and [Error.cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
 - 📡&nbsp; Framework agnostic, no deps. Works everywhere: node, browsers, edge...
 - 🍃&nbsp; [Lightweight](https://bundlephobia.com/package/@httpx/exception@latest) - [treeshakable](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs) - wide [browser coverage](https://browserslist.dev/?q=PiAwLjAxJSwgbm90IGRlYWQ%3D) (trade-off).
 - 🧙‍&nbsp; IDE friendly. Typescript - typedoc with links to mdn and description.
 - 🥃&nbsp; [Docs](https://belgattitude.github.io/httpx) & [changelogs](https://github.com/belgattitude/httpx/releases) - Well tested and maintained - [Contributors](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) welcome.
+
+
+## Install
+
+<Tabs items={['yarn', 'pnpm', 'npm', 'bun', 'deno']} defaultIndex={0}>
+    <Tab>
+        ```bash
+        yarn add @httpx/exception
+        ```
+    </Tab>
+    <Tab>
+        ```bash
+        pnpm add @httpx/exception
+        ```
+    </Tab>
+    <Tab>
+        ```bash
+        npm install @httpx/exception
+        ```
+    </Tab>
+    <Tab>
+        ```bash
+        bun add @httpx/exception
+        ```
+    </Tab>
+    <Tab>
+        ```typescript
+        import { HttpNotFound, ... } from "npm:@httpx/exception@^2.1.0";
+        ```
+        > see [deno npm specifiers](https://deno.land/manual/node/npm_specifiers)
+    </Tab>
+</Tabs>
+
+<div className="shields-ctn">
+    [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/exception)
+    [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
+    [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
+    [![browserslist](https://img.shields.io/static/v1?label=Browser&message=>99%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=PiAwLjAxJSwgbm90IGRlYWQ%3D)
+    [![node](https://img.shields.io/static/v1?label=Node&message=14%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZA%3D%3D)
+    [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&style=for-the-badge&labelColor=444)](https://codecov.io/gh/belgattitude/httpx)
+    [![techdebt](https://img.shields.io/codeclimate/tech-debt/belgattitude/httpx?label=TechDebt&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
+    [![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Maintainability&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
+    [![license](https://img.shields.io/npm/l/@httpx/exception?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+</div>
+
+
+## Use
+
+<Tabs items={['Named imports', 'From status', 'Extended parameters', 'With validation errors']} defaultIndex={0}>
+    <Tab>
+        ```typescript
+        import { HttpNotFound, HttpBadRequest, HttpForbidden } from '@httpx/exception';
+
+        const e404 = new HttpNotFound(); // -> message: 'Not found', statusCode: 404
+        const e403 = new HttpForbidden({ code }); // -> message: 'Are you ?', statusCode: 401
+        ```
+    </Tab>
+    <Tab>
+        ```typescript
+        import { HttpGatewayTimeout, HttpInternalServerError } from '@httpx/exception';
+
+        const e500 = new HttpInternalServerError({
+        url: 'https://api.dev/gateway',
+        method: 'GET',
+        code: 'ERR_UNREACHABLE_SERVICE',
+        errorId: nanoid(),
+        cause: new HttpGatewayTimeout({
+        message: 'This Serverless Function has timed out',
+        errorId: 'cdg1::h99k2-1664884491087-b41a2832f559',
+    }),
+    });
+
+        e500.message;     // 'Internal server error'
+        e500.statusCode;  // 500
+        e500.url;         // 'https://api.dev/gateway'
+        e500.method;      // 'GET'
+        // ...
+        ```
+
+    </Tab>
+    <Tab>
+
+        ```typescript
+        import { HttpUnprocessableEntity } from '@httpx/exception';
+
+        const e422 = new HttpUnprocessableEntity({
+        message: 'Request validation failed',
+        errors: [   // typed as ValidationError[]
+    {
+        message: 'Invalid email',
+        path: 'email',
+        code: 'invalid_email',
+    },
+    {
+        message: 'Invalid address',
+        path: ['addresses', 0, 'line1'],
+        code: 'empty_string',
+    },
+        ]
+    });
+        ```
+
+        <Callout type="info" emoji="ℹ️">
+            According to MDN, the 422-HttpUnprocessableEntity status code is reserved for WebDAV, but it is widely used in REST APIs
+            (ie: [github](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors]), rails...).
+
+            The choice to add validation errors to the 422 exception might be controversial and is optional. However, it offers
+            some benefits as a global error handler can leverage them to generate error responses
+            (ie: [json-api error responses](https://jsonapi.org/examples/#error-objects-basics)).
+        </Callout>
+    </Tab>
+
+</Tabs>
+
 
 
 
