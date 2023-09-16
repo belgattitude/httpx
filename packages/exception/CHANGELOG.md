@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 2.1.1
+
+### Patch Changes
+
+- [#589](https://github.com/belgattitude/httpx/pull/589) [`6eab016`](https://github.com/belgattitude/httpx/commit/6eab0169ccb0049da158fd9e24a645011a84e275) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix serializer type export for older projects
+
 ## 2.1.0
 
 ### Minor Changes
