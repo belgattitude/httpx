@@ -4,5 +4,9 @@
 
 # Add here exclusions on packages if any
 reject: [
-    "rollup-plugin-swc3"
+    "vite",
+    "vitest",
+    "@vitest/coverage-v8",
+    "@vitest/coverage-istanbul",
+    "@vitest/ui",
   ]
