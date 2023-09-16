@@ -32,6 +32,13 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
+  "typesVersions": {
+    "*": {
+      "serializer": [
+        "./dist/serializer"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "import": {
@@ -88,8 +95,7 @@
     "check-size": "size-limit",
     "check-pub": "run-p check-pub-publint check-pub-attw",
     "check-pub-publint": "publint --strict",
-    "check-pub-attw?": "attw --pack",
-    "check-pub-attw": "echo 'Disabled as it gives a false positive about node 10'",
+    "check-pub-attw": "attw --pack",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-watch": "vitest --ui",
