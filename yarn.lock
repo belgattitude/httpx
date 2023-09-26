@@ -1306,7 +1306,7 @@ __metadata:
     get-tsconfig: "npm:4.7.2"
     npm-run-all: "npm:4.1.5"
     publint: "npm:0.2.2"
-    rimraf: "npm:5.0.1"
+    rimraf: "npm:5.0.4"
     size-limit: "npm:9.0.0"
     tslib: "npm:2.6.2"
     tsup: "npm:7.2.0"
@@ -1343,7 +1343,7 @@ __metadata:
     jest: "npm:29.7.0"
     npm-run-all: "npm:4.1.5"
     publint: "npm:0.2.2"
-    rimraf: "npm:5.0.1"
+    rimraf: "npm:5.0.4"
     size-limit: "npm:9.0.0"
     statuses: "npm:2.0.1"
     superjson: "npm:1.13.1"
@@ -1378,7 +1378,7 @@ __metadata:
     get-tsconfig: "npm:4.7.2"
     npm-run-all: "npm:4.1.5"
     publint: "npm:0.2.2"
-    rimraf: "npm:5.0.1"
+    rimraf: "npm:5.0.4"
     size-limit: "npm:9.0.0"
     tslib: "npm:2.6.2"
     tsup: "npm:7.2.0"
@@ -6558,9 +6558,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.2.2, glob@npm:^10.2.5":
-  version: 10.3.3
-  resolution: "glob@npm:10.3.3"
+"glob@npm:^10.2.2, glob@npm:^10.2.5, glob@npm:^10.3.7":
+  version: 10.3.7
+  resolution: "glob@npm:10.3.7"
   dependencies:
     foreground-child: "npm:^3.1.0"
     jackspeak: "npm:^2.0.3"
@@ -6568,8 +6568,8 @@ __metadata:
     minipass: "npm:^5.0.0 || ^6.0.2 || ^7.0.0"
     path-scurry: "npm:^1.10.1"
   bin:
-    glob: dist/cjs/src/bin.js
-  checksum: 0d1a59dff5d5d7085f9c1e3b0c9c3a7e3a199a013ef8f800c0886e3cfe6f8e293f7847081021a97f96616bf778c053c6937382675f369ec8231c8b95d3ba11e2
+    glob: dist/esm/bin.mjs
+  checksum: 4ba2e1ce749402b0698fdfed8192c784b4fe7dc45c3316a360abd6fa0ad414fb6ee288d34251e4d570fcbc9d75a0029e26a85784c6e0fd0b8ae6ffb4050397a4
   languageName: node
   linkType: hard
 
@@ -6904,7 +6904,7 @@ __metadata:
     lint-staged: "npm:14.0.1"
     npm-run-all: "npm:4.1.5"
     prettier: "npm:3.0.3"
-    rimraf: "npm:5.0.1"
+    rimraf: "npm:5.0.4"
     shell-quote: "npm:1.8.1"
     syncpack: "npm:11.2.1"
     typescript: "npm:5.2.2"
@@ -10894,6 +10894,17 @@ __metadata:
   bin:
     rimraf: dist/cjs/src/bin.js
   checksum: 0691e4d7482f2de2af8628976413e146cd6b204f52ab88be91a3bb69cb9c8669ee795ef7c1e964e8ec6bfeaec0212326287d53ec3eef26dac406c8f19c97f0c4
+  languageName: node
+  linkType: hard
+
+"rimraf@npm:5.0.4":
+  version: 5.0.4
+  resolution: "rimraf@npm:5.0.4"
+  dependencies:
+    glob: "npm:^10.3.7"
+  bin:
+    rimraf: dist/esm/bin.mjs
+  checksum: 164a22431ba706cb03734ac49c82b8594348e8e57fea52e3e173bc8becbea984aca85881361f6f7fabc469e1e41a7fb0206746df9cba59668768335e5013d953
   languageName: node
   linkType: hard
 
