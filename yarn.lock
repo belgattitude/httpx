@@ -36,9 +36,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.10.2":
-  version: 0.10.2
-  resolution: "@arethetypeswrong/cli@npm:0.10.2"
+"@arethetypeswrong/cli@npm:0.11.0":
+  version: 0.11.0
+  resolution: "@arethetypeswrong/cli@npm:0.11.0"
   dependencies:
     "@arethetypeswrong/core": "npm:0.10.2"
     chalk: "npm:^4.1.2"
@@ -47,9 +47,10 @@ __metadata:
     marked: "npm:^5.1.0"
     marked-terminal: "npm:^5.2.0"
     node-fetch: "npm:^2.6.4"
+    semver: "npm:^7.5.4"
   bin:
     attw: dist/index.js
-  checksum: 8ae1f334e530cb3494f68d07e5266fe9cf08a8eda3c0261b4055d76a6880317ff9ea56afb41392aafa7e7ca766978322193b7d67c9b5fbc5602d94fe5148cbc9
+  checksum: b4e8658558a188d859eb53708c91f924c0cc7380d45353b48bec70c3c7dcb6e04401930bcec32941539a89d3677cfef4ae5a0bb94cce4dfa760ec5cec1563548
   languageName: node
   linkType: hard
 
@@ -1293,7 +1294,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.10.2"
+    "@arethetypeswrong/cli": "npm:0.11.0"
     "@belgattitude/eslint-config-bases": "npm:2.6.0"
     "@size-limit/file": "npm:9.0.0"
     "@types/jest": "npm:29.5.5"
@@ -1323,7 +1324,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.10.2"
+    "@arethetypeswrong/cli": "npm:0.11.0"
     "@belgattitude/eslint-config-bases": "npm:2.6.0"
     "@size-limit/file": "npm:9.0.0"
     "@size-limit/webpack": "npm:9.0.0"
@@ -1364,7 +1365,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.10.2"
+    "@arethetypeswrong/cli": "npm:0.11.0"
     "@belgattitude/eslint-config-bases": "npm:2.6.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:9.0.0"
