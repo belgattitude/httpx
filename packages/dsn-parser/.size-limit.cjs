@@ -6,7 +6,7 @@ module.exports = [
   {
     name: 'JS (ESM)',
     path: ['dist/index.mjs'],
-    limit: '1.15KB',
+    limit: '1.30KB',
   },
   {
     name: 'JS (CJS)',

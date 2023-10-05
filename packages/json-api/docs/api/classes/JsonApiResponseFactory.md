@@ -1,4 +1,4 @@
-[@httpx/json-api - v0.4.0](../README.md) / JsonApiResponseFactory
+[@httpx/json-api - v0.4.1](../README.md) / JsonApiResponseFactory
 
 # Class: JsonApiResponseFactory
 
