@@ -23,4 +23,14 @@ describe('convertJdbcToDsn', () => {
       },
     });
   });
+  it('should return a dsn string from a minimal jdbc dsn', () => {
+    const jdbc = 'sqlserver://localhost:1433';
+    const dsn = convertJdbcToDsn(jdbc);
+    expect(dsn).toStrictEqual('sqlserver://localhost:1433');
+    expect(parseDsnOrThrow(dsn)).toStrictEqual({
+      driver: 'sqlserver',
+      host: 'localhost',
+      port: 1433,
+    });
+  });
 });
