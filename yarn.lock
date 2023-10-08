@@ -36,11 +36,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.12.0":
-  version: 0.12.0
-  resolution: "@arethetypeswrong/cli@npm:0.12.0"
+"@arethetypeswrong/cli@npm:0.12.1":
+  version: 0.12.1
+  resolution: "@arethetypeswrong/cli@npm:0.12.1"
   dependencies:
-    "@arethetypeswrong/core": "npm:0.12.0"
+    "@arethetypeswrong/core": "npm:0.12.1"
     chalk: "npm:^4.1.2"
     cli-table3: "npm:^0.6.3"
     commander: "npm:^10.0.1"
@@ -50,13 +50,13 @@ __metadata:
     semver: "npm:^7.5.4"
   bin:
     attw: dist/index.js
-  checksum: 0da94a1af2c0f9cdba67a9c6f624d23c10a84fb300694e4f535334721156b84e390f995c1f865e0c5e06c06daca4cc91bd9d82b5909bdd02081d8a3e6e89bb58
+  checksum: aee80d6a50ec7448bd7a20e5b0d29f2c189478699262dbfe3d33dcc475817cd51cbbecfe21beaa25d9bf0916a847c38c27bcf7195ab902417ecb2167491a11e7
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/core@npm:0.12.0":
-  version: 0.12.0
-  resolution: "@arethetypeswrong/core@npm:0.12.0"
+"@arethetypeswrong/core@npm:0.12.1":
+  version: 0.12.1
+  resolution: "@arethetypeswrong/core@npm:0.12.1"
   dependencies:
     "@andrewbranch/untar.js": "npm:^1.0.0"
     fetch-ponyfill: "npm:^7.1.0"
@@ -64,7 +64,7 @@ __metadata:
     semver: "npm:^7.5.4"
     typescript: "npm:^5.2.2"
     validate-npm-package-name: "npm:^5.0.0"
-  checksum: 4b40830586ec1ed2e1976908be108c6376fedb1f949168b1e8bf70d4da1b1876a1f1ad8dcdb24620955bb61ea9c34f8a51ebd6f2cf093854040dab1fd42ba60a
+  checksum: 3e0bf3440bc118b4ae230a4fcb8f1808486021df319ab7ed991c650253df0748a7f47b04138d9c889dcefaca1daa438e7594b33b77dc83fa1bf005e32d1740f1
   languageName: node
   linkType: hard
 
@@ -1294,7 +1294,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.12.0"
+    "@arethetypeswrong/cli": "npm:0.12.1"
     "@belgattitude/eslint-config-bases": "npm:2.7.0"
     "@size-limit/file": "npm:9.0.0"
     "@types/jest": "npm:29.5.5"
@@ -1324,7 +1324,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.12.0"
+    "@arethetypeswrong/cli": "npm:0.12.1"
     "@belgattitude/eslint-config-bases": "npm:2.7.0"
     "@size-limit/file": "npm:9.0.0"
     "@size-limit/webpack": "npm:9.0.0"
@@ -1365,7 +1365,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.12.0"
+    "@arethetypeswrong/cli": "npm:0.12.1"
     "@belgattitude/eslint-config-bases": "npm:2.7.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:9.0.0"
