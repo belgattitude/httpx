@@ -846,13 +846,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/cli@npm:17.7.2":
-  version: 17.7.2
-  resolution: "@commitlint/cli@npm:17.7.2"
+"@commitlint/cli@npm:17.8.0":
+  version: 17.8.0
+  resolution: "@commitlint/cli@npm:17.8.0"
   dependencies:
     "@commitlint/format": "npm:^17.4.4"
-    "@commitlint/lint": "npm:^17.7.0"
-    "@commitlint/load": "npm:^17.7.2"
+    "@commitlint/lint": "npm:^17.8.0"
+    "@commitlint/load": "npm:^17.8.0"
     "@commitlint/read": "npm:^17.5.1"
     "@commitlint/types": "npm:^17.4.4"
     execa: "npm:^5.0.0"
@@ -862,16 +862,16 @@ __metadata:
     yargs: "npm:^17.0.0"
   bin:
     commitlint: cli.js
-  checksum: 894a1ae7af1eab18cf59f63c39d60dcb27a4be6356a1c56ab32da4ea53c86ed3cc29cafd59a521f9facd1a835ce58ede42eb9bfc436ce1f9f348a6e2a1741731
+  checksum: 390f9a052b449b14384f42a0b6b81bd0bf2b1328f4ceda5b7e3fd5c82cf01353a7f2733d41f285d07e880cdfd7e2f72b3dc2099d67e5d0cf28b8b4c2b36c4dc1
   languageName: node
   linkType: hard
 
-"@commitlint/config-conventional@npm:17.7.0":
-  version: 17.7.0
-  resolution: "@commitlint/config-conventional@npm:17.7.0"
+"@commitlint/config-conventional@npm:17.8.0":
+  version: 17.8.0
+  resolution: "@commitlint/config-conventional@npm:17.8.0"
   dependencies:
     conventional-changelog-conventionalcommits: "npm:^6.1.0"
-  checksum: 932cf35c12855e360c750bc19ffedc0925f8658f316aaacdf5441ce775712934386643a9ac418f18e24e5bb1bf71ed721b8ae452a13d04908b0e55cd3d2d988f
+  checksum: 33a6f7867e0ef6b39a34246a615a75ea4eaab76852d00ffee8c28560fe0786cf56a4f20d747d2f56b28a4bddc3637a5bf7948b465744edcd890b9c2337a2c741
   languageName: node
   linkType: hard
 
@@ -916,31 +916,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/is-ignored@npm:^17.7.0":
-  version: 17.7.0
-  resolution: "@commitlint/is-ignored@npm:17.7.0"
+"@commitlint/is-ignored@npm:^17.8.0":
+  version: 17.8.0
+  resolution: "@commitlint/is-ignored@npm:17.8.0"
   dependencies:
     "@commitlint/types": "npm:^17.4.4"
     semver: "npm:7.5.4"
-  checksum: aa0b695d6e7bee5e732f96a2ff383347ff476eb48f9d3b4ed75b098cafa27e56da15563833d3cf4e1268fc26819180cd8b5bdc322b087073a63bc94f699944b2
+  checksum: ae18943cae8370476049fcbf08c18256f44e2063c9be553eb282a81231ec50a8aff1b861e93108dc823fe6331e1aedcdd7c74c777b57e564308eeb7f7b9da33c
   languageName: node
   linkType: hard
 
-"@commitlint/lint@npm:^17.7.0":
-  version: 17.7.0
-  resolution: "@commitlint/lint@npm:17.7.0"
+"@commitlint/lint@npm:^17.8.0":
+  version: 17.8.0
+  resolution: "@commitlint/lint@npm:17.8.0"
   dependencies:
-    "@commitlint/is-ignored": "npm:^17.7.0"
+    "@commitlint/is-ignored": "npm:^17.8.0"
     "@commitlint/parse": "npm:^17.7.0"
     "@commitlint/rules": "npm:^17.7.0"
     "@commitlint/types": "npm:^17.4.4"
-  checksum: 922b644584a0e69e4d8fdde863b4d11d068d42cacaf7121f748041928aba5200154f16986ff512f83bef6f65855b0aff7c8e3e83457898614cc3ac5596e2a487
+  checksum: 9d1fb7a9b8d866bd5cb4ba09d6a44cb0f14b7a384329902f60799992c7c7d291e27e534a71910c7d3800662142570f9d50c31bfbdcc157e502f6d321cb809150
   languageName: node
   linkType: hard
 
-"@commitlint/load@npm:^17.7.2":
-  version: 17.7.2
-  resolution: "@commitlint/load@npm:17.7.2"
+"@commitlint/load@npm:^17.8.0":
+  version: 17.8.0
+  resolution: "@commitlint/load@npm:17.8.0"
   dependencies:
     "@commitlint/config-validator": "npm:^17.6.7"
     "@commitlint/execute-rule": "npm:^17.4.0"
@@ -956,7 +956,7 @@ __metadata:
     resolve-from: "npm:^5.0.0"
     ts-node: "npm:^10.8.1"
     typescript: "npm:^4.6.4 || ^5.0.0"
-  checksum: dda9f7efd6413309266617a5ee026df65cc8c590b86c312f5905285fcbef5ae3ec983694c145007d89402c9f728882465f016167b156f43f6ed414c3b8ca079a
+  checksum: 24287a9dfbf57f7d824ffc7f6a3df2f4771db501ce05219ed93abd00b68dc629a41a70c4d6c142ca05c4f29d38a1cf823353886c2378f5dd77d6e0cf2c540ffc
   languageName: node
   linkType: hard
 
@@ -6974,8 +6974,8 @@ __metadata:
     "@belgattitude/eslint-config-bases": "npm:2.8.0"
     "@changesets/changelog-github": "npm:0.4.8"
     "@changesets/cli": "npm:2.26.2"
-    "@commitlint/cli": "npm:17.7.2"
-    "@commitlint/config-conventional": "npm:17.7.0"
+    "@commitlint/cli": "npm:17.8.0"
+    "@commitlint/config-conventional": "npm:17.8.0"
     "@types/prettier": "npm:2.7.3"
     "@types/shell-quote": "npm:1.7.2"
     cross-env: "npm:7.0.3"
