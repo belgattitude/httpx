@@ -29,18 +29,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@andrewbranch/untar.js@npm:^1.0.0":
-  version: 1.0.2
-  resolution: "@andrewbranch/untar.js@npm:1.0.2"
-  checksum: 9a962528f5ddb3f88947fe85f2667a3f638e260d3f724bc4955f2e20db2806d84294e9091fdb8c2bfc08f6e0cc028218a737d605260b8e0678393ebc136406c4
+"@andrewbranch/untar.js@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@andrewbranch/untar.js@npm:1.0.3"
+  checksum: a32de53839fc61af90a394cf93d4368aacd167c9c80f0b3ba0c268460942a6ce2bfe257b6d3f03986b9dcb7368f10b9dc7f66c2f94254d2662da8278454e7d12
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.12.1":
-  version: 0.12.1
-  resolution: "@arethetypeswrong/cli@npm:0.12.1"
+"@arethetypeswrong/cli@npm:0.12.2":
+  version: 0.12.2
+  resolution: "@arethetypeswrong/cli@npm:0.12.2"
   dependencies:
-    "@arethetypeswrong/core": "npm:0.12.1"
+    "@arethetypeswrong/core": "npm:0.12.2"
     chalk: "npm:^4.1.2"
     cli-table3: "npm:^0.6.3"
     commander: "npm:^10.0.1"
@@ -50,21 +50,21 @@ __metadata:
     semver: "npm:^7.5.4"
   bin:
     attw: dist/index.js
-  checksum: aee80d6a50ec7448bd7a20e5b0d29f2c189478699262dbfe3d33dcc475817cd51cbbecfe21beaa25d9bf0916a847c38c27bcf7195ab902417ecb2167491a11e7
+  checksum: 64932d19dda0a14d25e6d9f44c7f05b7eb1a36ca05289be5078dea1172e3b7e8822f44198ced27dc2caf95688014d8f72314cd89a609beb4bf551ea7c925020c
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/core@npm:0.12.1":
-  version: 0.12.1
-  resolution: "@arethetypeswrong/core@npm:0.12.1"
+"@arethetypeswrong/core@npm:0.12.2":
+  version: 0.12.2
+  resolution: "@arethetypeswrong/core@npm:0.12.2"
   dependencies:
-    "@andrewbranch/untar.js": "npm:^1.0.0"
+    "@andrewbranch/untar.js": "npm:^1.0.3"
     fetch-ponyfill: "npm:^7.1.0"
     fflate: "npm:^0.7.4"
     semver: "npm:^7.5.4"
     typescript: "npm:^5.2.2"
     validate-npm-package-name: "npm:^5.0.0"
-  checksum: 3e0bf3440bc118b4ae230a4fcb8f1808486021df319ab7ed991c650253df0748a7f47b04138d9c889dcefaca1daa438e7594b33b77dc83fa1bf005e32d1740f1
+  checksum: 32c20cc9eda855114afa0ded66f9747cb4937d6d3fb8060219b72584ce19ea4e670124de3a614ffdf9f51981188eb06b9dbf9ba7eaeed584973f3c969da76601
   languageName: node
   linkType: hard
 
@@ -1350,7 +1350,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.12.1"
+    "@arethetypeswrong/cli": "npm:0.12.2"
     "@belgattitude/eslint-config-bases": "npm:2.8.0"
     "@size-limit/file": "npm:9.0.0"
     "@types/jest": "npm:29.5.5"
@@ -1380,7 +1380,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.12.1"
+    "@arethetypeswrong/cli": "npm:0.12.2"
     "@belgattitude/eslint-config-bases": "npm:2.8.0"
     "@size-limit/file": "npm:9.0.0"
     "@size-limit/webpack": "npm:9.0.0"
@@ -1421,7 +1421,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.12.1"
+    "@arethetypeswrong/cli": "npm:0.12.2"
     "@belgattitude/eslint-config-bases": "npm:2.8.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:9.0.0"
