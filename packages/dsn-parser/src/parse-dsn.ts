@@ -13,8 +13,8 @@ import {
 import { parseQueryParams } from './query-param-parser';
 
 const dsnRegexp =
-  // eslint-disable-next-line regexp/no-unused-capturing-group
-  /^(?<driver>([\w+-]{1,45})):\/\/((?<user>[^/:]{1,200})?(:(?<pass>.{0,250}))?@)?(?<host>[^/:]{1,400}?)(:(?<port>\d+)?)?(\/(?<db>([.#@$\w-])+))?(\?(?<params>.{1,8196}))?$/;
+  // eslint-disable-next-line regexp/no-unused-capturing-group,regexp/no-misleading-capturing-group
+  /^(?<driver>([\w+-]{1,40})):\/\/((?<user>[^/:]{1,200})?(:(?<pass>.{0,200}))?@)?(?<host>[^/:]{1,200}?)(:(?<port>\d+)?)?(\/(?<db>([.#@$\w-])+))?(\?(?<params>.{1,1000}))?$/;
 
 const defaultOptions = {
   lowercaseDriver: false,
