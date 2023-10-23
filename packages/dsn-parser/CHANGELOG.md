@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.4.0
+
+### Minor Changes
+
+- [#649](https://github.com/belgattitude/httpx/pull/649) [`339e8a3`](https://github.com/belgattitude/httpx/commit/339e8a3c558e5d199a224b877f77b10734e9a870) Thanks [@belgattitude](https://github.com/belgattitude)! - Reduce dsn regexp character lengths (reduce complexity)
+
 ## 1.3.0
 
 ### Minor Changes
@@ -7,6 +13,7 @@
 - [#619](https://github.com/belgattitude/httpx/pull/619) [`b7587cd`](https://github.com/belgattitude/httpx/commit/b7587cdee67c73fbad470ffc2273f2eeba43a414) Thanks [@belgattitude](https://github.com/belgattitude)! - Add convertJdbcToDsn utility function
   Helps to convert [jdbc](https://learn.microsoft.com/en-us/sql/connect/jdbc/building-the-connection-url?view=sql-server-ver15) dsn.
   Useful for prisma using [sqlserver](https://www.prisma.io/docs/concepts/database-connectors/sql-server#connection-details).
+
   ```typescript
   import { convertJdbcToDsn } from '@httpx/dsn-parser';
 
