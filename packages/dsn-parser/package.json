@@ -23,7 +23,7 @@
     "defaults and supports es6-module",
     "not dead",
     "not op_mini all",
-    "node 16"
+    "node 18"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -55,8 +55,8 @@
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2019 './dist/**/*.cjs'",
-    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2019 --module './dist/**/*.mjs'",
+    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2022 './dist/**/*.cjs'",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
     "check-pub": "run-p check-pub-publint check-pub-attw",
     "check-pub-publint": "publint --strict",
     "check-pub-attw": "attw --pack",
@@ -98,6 +98,6 @@
     "vitest": "0.34.6"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   }
 }
