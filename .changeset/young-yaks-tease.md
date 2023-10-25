@@ -5,6 +5,9 @@
 Reduce drastically bundle size (use es2022)
 
 Importing a single exception starts at 377 bytes, subsequent ones will add less than 50 bytes in average.
+Importing all exceptions (excluding typeguards...) will top at 1400 bytes.
+
+Code should be faster too.
 
 > PS: if you use exceptions outside of nodejs and need to support legacy browsers
 > a lot of frameworks allows to transpile modules (ie nextjs).
