@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.5.0
+
+### Minor Changes
+
+- [#669](https://github.com/belgattitude/httpx/pull/669) [`5d3be6a`](https://github.com/belgattitude/httpx/commit/5d3be6a5f31771f9a25b95096a7f1695942a9644) Thanks [@belgattitude](https://github.com/belgattitude)! - Drop node 16 support, es2022, slight bundle size decrease
+
 ## 1.4.0
 
 ### Minor Changes
