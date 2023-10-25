@@ -9,9 +9,9 @@ export default defineConfig((options) => {
     clean: true,
     dts: true,
     format: ['esm', 'cjs'],
-    minifySyntax: false,
-    minifyWhitespace: false,
-    minifyIdentifiers: false,
+    minifySyntax: true,
+    minifyWhitespace: true,
+    minifyIdentifiers: true,
     cjsInterop: true,
     outExtension({ format }) {
       return {
@@ -19,7 +19,7 @@ export default defineConfig((options) => {
       };
     },
     platform: 'browser',
-    target: ['es2018', ...browserslistToEsbuild()],
+    target: ['es2022', ...browserslistToEsbuild()],
     tsconfig: './tsconfig.build.json',
     sourcemap: !options.watch,
     minify: !options.watch,
