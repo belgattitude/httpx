@@ -14,7 +14,7 @@
   },
   "resolutions": {
     "eslint-plugin-react-hooks": "^4.6.0",
-    "vite": "^4.4.11"
+    "vite": "^4.5.0"
   },
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn workspaces foreach --all -pv run clean",
@@ -22,7 +22,7 @@
     "g:build-release": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build-release",
     "g:build-packages": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build",
     "g:build-examples": "yarn workspaces foreach -tv --worktree --from 'examples/*' run build",
-    "g:build-doc": "yarn workspaces foreach --all -ptv run build-doc",
+    "g:docgen": "yarn workspaces foreach --all -ptv run docgen",
     "g:test": "yarn workspaces foreach --all -pv run test",
     "g:test-unit": "yarn workspaces foreach --all -pv run test-unit",
     "g:lint": "yarn workspaces foreach --all -v run lint",
