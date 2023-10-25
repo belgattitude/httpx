@@ -1,5 +1,38 @@
 # @httpx/exception
 
+## 2.2.0
+
+### Minor Changes
+
+- [`81311de`](https://github.com/belgattitude/httpx/commit/81311de622f84fadc381394f840318cbd542a68e) Thanks [@belgattitude](https://github.com/belgattitude)! - Deprecate ValidationError type in favour of HttpValidationIssue
+
+  ```typescript
+  // @deprecated errors
+  // const errors: ValidationError[] = [
+
+  // becomes
+  const issues: HttpValidationIssue[] = [
+    {
+      message: 'Invalid email',
+      path: 'email',
+      code: 'invalid_email',
+    },
+    {
+      message: 'Invalid address',
+      path: ['addresses', 0, 'line1'],
+      code: 'empty_string',
+    },
+  ];
+
+  const e422 = new HttpUnprocessableEntity({
+    // @deprecated name
+    // errors: errors,
+
+    // becomes issues
+    issues: [],
+  });
+  ```
+
 ## 2.1.1
 
 ### Patch Changes
