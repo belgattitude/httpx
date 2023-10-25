@@ -1,6 +1,6 @@
 // @ts-check
 
-const fullEsmMaxSize = "2450B";
+const fullEsmMaxSize = "2455B";
 const fullCjsMaxSize = "3050B";
 
 /**
@@ -23,19 +23,19 @@ module.exports = [
     name: "ESM (only HttpNotFound exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound }",
-    limit: "1350B",
+    limit: "1415B",
   },
   {
     name: "ESM (two exceptions: HttpNotFound + HttpInternalServerError)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound, HttpInternalServerError }",
-    limit: "1400B",
+    limit: "1440B",
   },
   {
     name: "ESM (only isHttpException)",
     path: ["dist/index.mjs"],
     import: "{ isHttpException }",
-    limit: "1350B",
+    limit: "1410B",
   },
   {
     name: "ESM (only createHttpException)",
