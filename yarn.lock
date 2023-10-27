@@ -526,6 +526,62 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@belgattitude/eslint-config-bases@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@belgattitude/eslint-config-bases@npm:3.0.0"
+  dependencies:
+    "@rushstack/eslint-patch": "npm:^1.5.1"
+    "@tanstack/eslint-plugin-query": "npm:^4.36.1 || ^5.0.5"
+    "@typescript-eslint/eslint-plugin": "npm:^6.9.0"
+    "@typescript-eslint/parser": "npm:^6.9.0"
+    eslint-config-prettier: "npm:^9.0.0"
+    eslint-import-resolver-typescript: "npm:^3.6.1"
+    eslint-plugin-import: "npm:^2.29.0"
+    eslint-plugin-jest: "npm:^27.6.0"
+    eslint-plugin-jest-formatting: "npm:^3.1.0"
+    eslint-plugin-jsx-a11y: "npm:^6.7.1"
+    eslint-plugin-playwright: "npm:^0.18.0"
+    eslint-plugin-prettier: "npm:^5.0.1"
+    eslint-plugin-react: "npm:^7.33.2"
+    eslint-plugin-react-hooks: "npm:^4.6.0 || 5.0.0-canary-7118f5dd7-20230705"
+    eslint-plugin-regexp: "npm:^2.1.1"
+    eslint-plugin-sonarjs: "npm:^0.21.0"
+    eslint-plugin-storybook: "npm:^0.6.15"
+    eslint-plugin-testing-library: "npm:^6.1.0"
+    eslint-plugin-unused-imports: "npm:^3.0.0"
+  peerDependencies:
+    "@graphql-eslint/eslint-plugin": ^3.14.3
+    eslint: ^8.30.0
+    eslint-plugin-mdx: ^2.0.5
+    eslint-plugin-tailwindcss: ^3.13.0
+    graphql: ^16.6.0
+    prettier: ^3.0.3
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^5.0.2
+  peerDependenciesMeta:
+    "@graphql-eslint/eslint-plugin":
+      optional: true
+    eslint-plugin-mdx:
+      optional: true
+    eslint-plugin-tailwindcss:
+      optional: true
+    graphql:
+      optional: true
+    prettier:
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    tailwindcss:
+      optional: true
+    typescript:
+      optional: true
+  checksum: c0396ef847c6a05bcabb4da49293c36f40366f08a8ecd9dd80aac213a183ad2ca3e5ea9dcd5f7561f9e131f6b08e0eee5928fb0a449b3224c2624d3f0ab71b75
+  languageName: node
+  linkType: hard
+
 "@changesets/apply-release-plan@npm:^6.1.4":
   version: 6.1.4
   resolution: "@changesets/apply-release-plan@npm:6.1.4"
@@ -1277,7 +1333,7 @@ __metadata:
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.12.2"
-    "@belgattitude/eslint-config-bases": "npm:2.10.0"
+    "@belgattitude/eslint-config-bases": "npm:3.0.0"
     "@size-limit/file": "npm:10.0.1"
     "@types/jest": "npm:29.5.6"
     "@vitest/coverage-istanbul": "npm:0.34.6"
@@ -1307,7 +1363,7 @@ __metadata:
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.12.2"
-    "@belgattitude/eslint-config-bases": "npm:2.10.0"
+    "@belgattitude/eslint-config-bases": "npm:3.0.0"
     "@size-limit/file": "npm:10.0.1"
     "@size-limit/webpack": "npm:10.0.1"
     "@size-limit/webpack-why": "npm:10.0.1"
@@ -1348,7 +1404,7 @@ __metadata:
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.12.2"
-    "@belgattitude/eslint-config-bases": "npm:2.10.0"
+    "@belgattitude/eslint-config-bases": "npm:3.0.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:10.0.1"
     "@types/jest": "npm:29.5.6"
@@ -2299,6 +2355,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/eslint-plugin-query@npm:^4.36.1 || ^5.0.5":
+  version: 5.0.5
+  resolution: "@tanstack/eslint-plugin-query@npm:5.0.5"
+  dependencies:
+    "@typescript-eslint/utils": "npm:^5.54.0"
+  peerDependencies:
+    eslint: ^8.0.0
+  checksum: 8e2d798f7cb89d1e55933b2d931b0f196ec927df1639e1c8a80267fa792afed6c10c82c21daf99320d525116afb000693d6c5e4f10400fb8a05038fce3bbddf6
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -2792,7 +2859,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:^5.10.0, @typescript-eslint/utils@npm:^5.45.0, @typescript-eslint/utils@npm:^5.58.0":
+"@typescript-eslint/utils@npm:^5.10.0, @typescript-eslint/utils@npm:^5.45.0, @typescript-eslint/utils@npm:^5.54.0, @typescript-eslint/utils@npm:^5.58.0":
   version: 5.62.0
   resolution: "@typescript-eslint/utils@npm:5.62.0"
   dependencies:
@@ -5534,9 +5601,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:^27.4.3":
-  version: 27.4.3
-  resolution: "eslint-plugin-jest@npm:27.4.3"
+"eslint-plugin-jest@npm:^27.4.3, eslint-plugin-jest@npm:^27.6.0":
+  version: 27.6.0
+  resolution: "eslint-plugin-jest@npm:27.6.0"
   dependencies:
     "@typescript-eslint/utils": "npm:^5.10.0"
   peerDependencies:
@@ -5548,7 +5615,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: 180b3154ed7af80a4a3829ea301d6121ad4b03518160678ad80d1638f554c8fcfa26243b84c85cfab9c5da88bbb3c65a3a36e20b99911f0f2949e261ebf8fe03
+  checksum: e01ff002d55fa09624c53a4b984e80175e75da671bc9b48cc2909b134fe6df25c8143798359bb5991e77e4ffb5b7d69c1c2340e8f661d080b7938a9e5e077122
   languageName: node
   linkType: hard
 
@@ -6886,7 +6953,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-monorepo@workspace:."
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:2.10.0"
+    "@belgattitude/eslint-config-bases": "npm:3.0.0"
     "@changesets/changelog-github": "npm:0.4.8"
     "@changesets/cli": "npm:2.26.2"
     "@commitlint/cli": "npm:18.2.0"
