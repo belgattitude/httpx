@@ -15,16 +15,9 @@ const TYPESCRIPT_CONFIG = process.env.TSCONFIG
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  productionBrowserSourceMaps: true,
-  swcMinify: true,
-  typescript: {
-    tsconfigPath: TYPESCRIPT_CONFIG,
-    ignoreBuildErrors: NEXTJS_IGNORE_TYPECHECK,
-  },
   eslint: {
-    ignoreDuringBuilds: NEXTJS_IGNORE_ESLINT,
     dirs: ['src'],
+    ignoreDuringBuilds: NEXTJS_IGNORE_ESLINT,
   },
   experimental: {
     // Prefer loading of ES Modules over CommonJS
@@ -35,6 +28,13 @@ const nextConfig = {
     // @link {https://github.com/vercel/next.js/pull/22867|Original PR}
     // @link {https://github.com/vercel/next.js/discussions/26420|Discussion}
     externalDir: true,
+  },
+  productionBrowserSourceMaps: true,
+  reactStrictMode: true,
+  swcMinify: true,
+  typescript: {
+    ignoreBuildErrors: NEXTJS_IGNORE_TYPECHECK,
+    tsconfigPath: TYPESCRIPT_CONFIG,
   },
 };
 

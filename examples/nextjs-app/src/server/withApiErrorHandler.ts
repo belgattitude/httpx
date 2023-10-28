@@ -1,11 +1,11 @@
-import { isHttpException, type HttpException } from '@httpx/exception';
+import { type HttpException, isHttpException } from '@httpx/exception';
 import { convertToSerializable } from '@httpx/exception/serializer';
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { ConsoleLogger, type LoggerInterface } from '@/lib';
 
 type Params = {
-  logger?: LoggerInterface;
   defaultStatusCode?: number;
+  logger?: LoggerInterface;
 };
 
 const defaultLogger = new ConsoleLogger();
@@ -15,7 +15,7 @@ const defaultLogger = new ConsoleLogger();
  * @see https://github.com/belgattitude/httpx
  */
 export const withApiErrorHandler = (params?: Params) => {
-  const { logger = defaultLogger, defaultStatusCode = 500 } = params ?? {};
+  const { defaultStatusCode = 500, logger = defaultLogger } = params ?? {};
   return (handler: NextApiHandler) =>
     async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
       try {
@@ -27,24 +27,24 @@ export const withApiErrorHandler = (params?: Params) => {
         // Example of specific error info
         const payload = isHttpException(e)
           ? {
-              // add anything that can be useful from HttpException
-              statusCode: e.statusCode,
-              message: e.message,
-              url: req.url,
               // Optionally
               debug: getDebug(e),
+              message: e.message,
+              // add anything that can be useful from HttpException
+              statusCode: e.statusCode,
+              url: req.url,
             }
           : {
-              statusCode: defaultStatusCode,
               message: e instanceof Error ? e.message : 'Unknown error',
+              statusCode: defaultStatusCode,
             };
 
         res.setHeader('content-type', 'application/json');
         res.status(payload.statusCode).send(
           JSON.stringify(
             {
-              success: false,
               error: payload,
+              success: false,
             },
             null,
             2

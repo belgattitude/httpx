@@ -1,8 +1,8 @@
 import { createHttpException, isHttpErrorStatusCode } from '@httpx/exception';
 import type { NextApiHandler } from 'next';
 import { z } from 'zod';
-import { parseRequestWithZod, withApiErrorHandler } from '@/backend';
 import { ConsoleLogger } from '@/lib';
+import { parseRequestWithZod, withApiErrorHandler } from 'server';
 
 /** Example of zod schema */
 const reqSchema = z.object({
@@ -29,11 +29,11 @@ const statusHandler: NextApiHandler = async (req, res) => {
   }
 
   res.status(statusCode).json({
-    success: true,
     data: {
-      statusCode: statusCode,
       message: `${statusCode} is a not and error code, no reason to throw.`,
+      statusCode: statusCode,
     },
+    success: true,
   });
 };
 

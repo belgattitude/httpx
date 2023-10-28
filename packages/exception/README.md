@@ -182,7 +182,7 @@ Illustrative example (based on nextjs api route)
 ```typescript
 // ie: ./pages/api/v1/product/[slug].ts
 import type { NextApiHandler } from "next";
-import { withApiErrorHandler } from "@/backend/hof/withApiErrorHandler";
+import { withApiErrorHandler } from "@/server/hof/withApiErrorHandler";
 import { HttpNotFound, HttpForbidden } from "@httpx/exception";
 
 const getProductHandler: NextApiHandler = async (req, res) => {
@@ -206,7 +206,7 @@ export default withApiErrorHandler({
 Example for a global catcher.
 
 ```typescript
-// ie: ./backend/hof/withApiErrorHandler.ts
+// ie: ./server/hof/withApiErrorHandler.ts
 import type { HttpException } from "@httpx/exception";
 import { isHttpException } from "@httpx/exception";
 import { toJson } from "@httpx/exception/serializer";

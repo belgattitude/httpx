@@ -1,7 +1,7 @@
 import type { IncomingMessage } from 'node:http';
 import { HttpBadRequest, type HttpException } from '@httpx/exception';
 import type { NextApiRequest } from 'next';
-import type { z, ZodSchema } from 'zod';
+import type { ZodSchema, z } from 'zod';
 
 type Params<T> = {
   onError?: (error: z.ZodError<T>) => HttpException;
