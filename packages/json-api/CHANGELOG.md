@@ -1,5 +1,12 @@
 # @httpx/json-api
 
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [[`a6a63e1`](https://github.com/belgattitude/httpx/commit/a6a63e174af87f04eaf105a6e45c2ef56fc64ade), [`a6a63e1`](https://github.com/belgattitude/httpx/commit/a6a63e174af87f04eaf105a6e45c2ef56fc64ade)]:
+  - @httpx/exception@2.5.0
+
 ## 0.4.4
 
 ### Patch Changes
