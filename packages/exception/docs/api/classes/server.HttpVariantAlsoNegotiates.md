@@ -53,9 +53,9 @@ in transparent content negotiation itself, and is therefore not a proper end poi
 
 #### Parameters
 
-| Name           | Type                              |
-| :------------- | :-------------------------------- |
-| `msgOrParams?` | `string` \| `HttpExceptionParams` |
+| Name           | Type                                                                         |
+| :------------- | :--------------------------------------------------------------------------- |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
 
 #### Overrides
 
@@ -84,7 +84,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 • `Readonly` **code**: `undefined` \| `string`
 
-Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
 
 #### Inherited from
 

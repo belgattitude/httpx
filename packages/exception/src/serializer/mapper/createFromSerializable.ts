@@ -15,10 +15,10 @@ import type {
 
 const createCustomError = (
   serializable: Omit<SerializableError | SerializableNonNativeError, '__type'>
-): NativeError | Error => {
-  const { name, message, stack, cause } = serializable;
+): Error | NativeError => {
+  const { cause, message, name, stack } = serializable;
   const cls = nativeErrorMap[name as keyof typeof nativeErrorMap] ?? Error;
-  let e: NativeError | Error;
+  let e: Error | NativeError;
   if (cause) {
     e = new cls(message, {
       cause: createFromSerializable(cause),
@@ -34,15 +34,15 @@ const createCustomError = (
 
 const createHttpExceptionError = (
   serializable: SerializableHttpException
-): HttpException | Error => {
-  const { statusCode, name, cause, stack } = serializable;
+): Error | HttpException => {
+  const { cause, name, stack, statusCode } = serializable;
   const params = {
-    message: serializable.message,
-    url: serializable.url,
-    method: serializable.method,
-    errorId: serializable.errorId,
-    code: serializable.code,
     cause: cause ? createFromSerializable(cause) : undefined,
+    code: serializable.code,
+    errorId: serializable.errorId,
+    message: serializable.message,
+    method: serializable.method,
+    url: serializable.url,
     ...(serializable.issues ? { issues: serializable.issues } : {}),
   };
   let e: HttpException;
@@ -53,7 +53,7 @@ const createHttpExceptionError = (
       e = createHttpException(statusCode, params);
     }
   } catch (e) {
-    return createCustomError({ name, message: params.message, stack, cause });
+    return createCustomError({ cause, message: params.message, name, stack });
   }
   if (stack) {
     e.stack = stack;
@@ -69,8 +69,8 @@ const createHttpExceptionError = (
  */
 export const createFromSerializable = (
   payload: Serializable
-): HttpException | NativeError | Error => {
-  let e: HttpException | NativeError | Error;
+): Error | HttpException | NativeError => {
+  let e: Error | HttpException | NativeError;
   switch (payload.__type) {
     case 'HttpException':
       e = createHttpExceptionError(payload);

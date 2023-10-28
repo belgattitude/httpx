@@ -1,6 +1,6 @@
 @httpx/json-api
 
-# @httpx/json-api - v0.4.1
+# @httpx/json-api - v0.4.6
 
 ## Table of contents
 
@@ -39,7 +39,7 @@ https://jsonapi.org/format/#errors
 | :----------- | :----------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `code?`      | `string`                       | an application-specific error code, expressed as a string value.                                                                                         |
 | `detail?`    | `string`                       | a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized.                                |
-| `id?`        | `string` \| `number`           | a unique identifier for this particular occurrence of the problem.                                                                                       |
+| `id?`        | `number` \| `string`           | a unique identifier for this particular occurrence of the problem.                                                                                       |
 | `meta?`      | `Record`<`string`, `unknown`\> | a meta object containing non-standard meta-information about the error.                                                                                  |
 | `parameter?` | `string`                       | a string indicating which URI query parameter caused the error.                                                                                          |
 | `status?`    | `number`                       | the HTTP status code applicable to this problem, expressed as a string value.                                                                            |
@@ -80,7 +80,7 @@ https://jsonapi.org/format/#errors
 
 | Name    | Type                                                                                                                  |
 | :------ | :-------------------------------------------------------------------------------------------------------------------- |
-| `meta?` | { `cacheHit?`: `boolean` } & `Record`<`string`, `string` \| `number` \| `boolean` \| `Record`<`string`, `unknown`\>\> |
+| `meta?` | { `cacheHit?`: `boolean` } & `Record`<`string`, `Record`<`string`, `unknown`\> \| `boolean` \| `number` \| `string`\> |
 
 ---
 

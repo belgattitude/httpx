@@ -1,11 +1,11 @@
 export { HttpBadGateway } from './HttpBadGateway';
-export { HttpVersionNotSupported } from './HttpVersionNotSupported';
 export { HttpGatewayTimeout } from './HttpGatewayTimeout';
+export { HttpInsufficientStorage } from './HttpInsufficientStorage';
 export { HttpInternalServerError } from './HttpInternalServerError';
+export { HttpLoopDetected } from './HttpLoopDetected';
 export { HttpNetworkAuthenticationRequired } from './HttpNetworkAuthenticationRequired';
 export { HttpNotExtended } from './HttpNotExtended';
 export { HttpNotImplemented } from './HttpNotImplemented';
 export { HttpServiceUnavailable } from './HttpServiceUnavailable';
-export { HttpInsufficientStorage } from './HttpInsufficientStorage';
-export { HttpLoopDetected } from './HttpLoopDetected';
 export { HttpVariantAlsoNegotiates } from './HttpVariantAlsoNegotiates';
+export { HttpVersionNotSupported } from './HttpVersionNotSupported';

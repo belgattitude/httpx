@@ -1,4 +1,4 @@
-export { getSuper } from './getSuper';
 export { getMsgFromCls } from './getMsgFromCls';
-export { initProtoAndName } from './initProtoAndName';
+export { getSuper } from './getSuper';
 export { getSuperArgs } from './getSuperArgs';
+export { initProtoAndName } from './initProtoAndName';

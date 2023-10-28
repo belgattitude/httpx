@@ -1,6 +1,6 @@
 @httpx/dsn-parser
 
-# @httpx/dsn-parser - v1.4.0
+# @httpx/dsn-parser - v1.5.0
 
 ## Table of contents
 
@@ -50,7 +50,7 @@
 | `db?`     | `string`                                               | -            |
 | `driver`  | `string`                                               | -            |
 | `host`    | `string`                                               | -            |
-| `params?` | `Record`<`string`, `number` \| `string` \| `boolean`\> | Query params |
+| `params?` | `Record`<`string`, `boolean` \| `number` \| `string`\> | Query params |
 | `pass?`   | `string`                                               | -            |
 | `port?`   | `number`                                               | -            |
 | `user?`   | `string`                                               | -            |

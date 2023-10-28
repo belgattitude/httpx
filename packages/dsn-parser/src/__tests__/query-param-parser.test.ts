@@ -5,16 +5,16 @@ describe('parseQueryParams', () => {
     const qp = 'kNumeric=1&kTrue=true&kFalse=false&kUndefined&kString=hello';
     expect(
       parseQueryParams(qp, {
-        parseNumbers: true,
         parseBooleans: true,
+        parseNumbers: true,
         setTrueForUndefinedValues: true,
       })
     ).toStrictEqual({
-      kNumeric: 1,
-      kTrue: true,
       kFalse: false,
-      kUndefined: true,
+      kNumeric: 1,
       kString: 'hello',
+      kTrue: true,
+      kUndefined: true,
     });
   });
 
@@ -55,8 +55,8 @@ describe('parseQueryParams', () => {
         parseBooleans: false,
       })
     ).toStrictEqual({
-      kTrue: 'true',
       kFalse: 'false',
+      kTrue: 'true',
     });
   });
 
@@ -64,8 +64,8 @@ describe('parseQueryParams', () => {
     const qp = 'kNumeric=1&kTrue=true&kFalse=false&kUndefined&kString=hello';
     expect(
       parseQueryParams(qp, {
-        parseNumbers: true,
         parseBooleans: true,
+        parseNumbers: true,
         setTrueForUndefinedValues: true,
       })
     ).toStrictEqual(parseQueryParams(qp));

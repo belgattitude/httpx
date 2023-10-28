@@ -21,33 +21,33 @@ type DiscriminateSerializable<T extends Serializable['__type']> = Extract<
 >;
 
 export type NativeErrorFields = {
-  /** Class name, ie: Error, RangeError, HttpException, HttpBadRequest */
-  name: string;
+  cause?: Serializable;
   /** Error message (a string, non-empty with HttpException subclasses) */
   message: string;
+  /** Class name, ie: Error, RangeError, HttpException, HttpBadRequest */
+  name: string;
   stack?: string;
-  cause?: Serializable;
 };
 
 export type HttpExceptionFields = NativeErrorFields & {
+  code?: string;
+  errorId?: string;
+  issues?: HttpValidationIssue[];
+  method?: HttpMethod;
   statusCode: number;
   url?: string;
-  method?: HttpMethod;
-  errorId?: string;
-  code?: string;
-  issues?: HttpValidationIssue[];
 };
 
 export type Serializable =
   | ({
-      __type: 'NonNativeError';
-    } & NativeErrorFields)
+      __type: 'HttpException';
+    } & HttpExceptionFields)
   | ({
       __type: 'NativeError';
     } & NativeErrorFields)
   | ({
-      __type: 'HttpException';
-    } & HttpExceptionFields);
+      __type: 'NonNativeError';
+    } & NativeErrorFields);
 
 export type SerializableHttpException =
   DiscriminateSerializable<'HttpException'>;

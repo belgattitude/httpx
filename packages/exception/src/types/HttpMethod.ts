@@ -1,11 +1,11 @@
 export type HttpMethod =
+  | 'CONNECT'
+  | 'DELETE'
   | 'GET'
   | 'HEAD'
+  | 'OPTIONS'
+  | 'PATCH'
   | 'POST'
   | 'PUT'
-  | 'DELETE'
-  | 'CONNECT'
-  | 'OPTIONS'
-  | 'TRACE'
-  | 'PATCH'
-  | 'QUERY';
+  | 'QUERY'
+  | 'TRACE';

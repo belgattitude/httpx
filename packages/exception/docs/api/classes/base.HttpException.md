@@ -10,9 +10,13 @@
 
   ↳ **`HttpException`**
 
+  ↳↳ [`HttpClientException`](base.HttpClientException.md)
+
   ↳↳ [`HttpServerException`](base.HttpServerException.md)
 
-  ↳↳ [`HttpClientException`](base.HttpClientException.md)
+## Implements
+
+- [`HttpExceptionParams`](../modules/types.md#httpexceptionparams)
 
 ## Table of contents
 
@@ -48,10 +52,10 @@ Construct a new HttpException class
 
 #### Parameters
 
-| Name           | Type                              | Description                                                                         |
-| :------------- | :-------------------------------- | :---------------------------------------------------------------------------------- |
-| `statusCode`   | `number`                          | http status code between 400-599, no checks are done on the validity of the number. |
-| `msgOrParams?` | `string` \| `HttpExceptionParams` | either a message or an object containing HttpExceptionParams                        |
+| Name           | Type                                                                         | Description                                                                         |
+| :------------- | :--------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
+| `statusCode`   | `number`                                                                     | http status code between 400-599, no checks are done on the validity of the number. |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) | either a message or an object containing HttpExceptionParams                        |
 
 #### Overrides
 
@@ -70,6 +74,10 @@ you can get back the error cause
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
 
+#### Implementation of
+
+HttpExceptionParams.cause
+
 #### Overrides
 
 Error.cause
@@ -80,7 +88,11 @@ Error.cause
 
 • `Readonly` **code**: `undefined` \| `string`
 
-Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
+
+#### Implementation of
+
+HttpExceptionParams.code
 
 ---
 
@@ -90,11 +102,19 @@ Custom additional code (ie: 'AbortError', 'CODE-1234'...)
 
 Inform about an unique error identifier (ie: nanoid, cuid...)
 
+#### Implementation of
+
+HttpExceptionParams.errorId
+
 ---
 
 ### message
 
 • **message**: `string`
+
+#### Implementation of
+
+HttpExceptionParams.message
 
 #### Inherited from
 
@@ -107,6 +127,10 @@ Error.message
 • `Readonly` **method**: `undefined` \| `HttpMethod`
 
 Http method
+
+#### Implementation of
+
+HttpExceptionParams.method
 
 ---
 
@@ -143,6 +167,10 @@ Http error status code (400-599)
 • `Readonly` **url**: `undefined` \| `string`
 
 Indicates the original url that caused the error.
+
+#### Implementation of
+
+HttpExceptionParams.url
 
 ---
 

@@ -5,19 +5,11 @@ import { getSuper } from '../utils';
 
 export class HttpException extends Error implements HttpExceptionParams {
   /**
-   * Http error status code (400-599)
+   * If set and the runtime (browser or node) supports it
+   * you can get back the error cause
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
    */
-  public readonly statusCode: number;
-  /**
-   * Indicates the original url that caused the error.
-   */
-  public readonly url: string | undefined;
-
-  /**
-   * Http method
-   */
-  public readonly method: HttpMethod | undefined;
-
+  public override readonly cause?: Error | HttpException;
   /**
    * Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
    */
@@ -29,11 +21,19 @@ export class HttpException extends Error implements HttpExceptionParams {
   public readonly errorId: string | undefined;
 
   /**
-   * If set and the runtime (browser or node) supports it
-   * you can get back the error cause
-   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
+   * Http method
    */
-  public override readonly cause?: Error | HttpException;
+  public readonly method: HttpMethod | undefined;
+
+  /**
+   * Http error status code (400-599)
+   */
+  public readonly statusCode: number;
+
+  /**
+   * Indicates the original url that caused the error.
+   */
+  public readonly url: string | undefined;
 
   /**
    * Construct a new HttpException class
@@ -43,8 +43,8 @@ export class HttpException extends Error implements HttpExceptionParams {
    */
   constructor(statusCode: number, msgOrParams?: HttpExceptionParams | string) {
     const {
-      message: m,
       cause: c,
+      message: m,
 
       ...p
     } = getSuper(HttpException.name, msgOrParams);

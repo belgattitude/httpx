@@ -1,11 +1,11 @@
 import type { TsonType } from 'tupleson';
 import { createTson } from 'tupleson';
 import {
-  createHttpException,
   HttpException,
   HttpUnprocessableEntity,
+  createHttpException,
 } from '../../src';
-import { fromJson, type SerializerError, toJson } from '../../src/serializer';
+import { type SerializerError, fromJson, toJson } from '../../src/serializer';
 
 describe('Ecosystem:tupleson', () => {
   const httpException: TsonType<HttpException | SerializerError, string> = {
@@ -20,16 +20,16 @@ describe('Ecosystem:tupleson', () => {
   });
 
   const obj = {
+    e404: createHttpException(404),
     e422: new HttpUnprocessableEntity({
       issues: [
         {
+          code: 'empty_string',
           message: 'Invalid address',
           path: ['addresses', 0, 'line1'],
-          code: 'empty_string',
         },
       ],
     }),
-    e404: createHttpException(404),
   };
 
   it('should serialize/deserialize', () => {

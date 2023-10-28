@@ -11,11 +11,11 @@ describe('convertToSerializable', () => {
       [
         'withFullParams',
         new HttpException(500, {
+          code: 'NETWORK_UNAVAILABLE',
           errorId: 'nanoid()',
           message: 'msg',
-          code: 'NETWORK_UNAVAILABLE',
-          url: 'http://localhost',
           method: 'PUT',
+          url: 'http://localhost',
         }),
       ],
       [
@@ -27,8 +27,8 @@ describe('convertToSerializable', () => {
       [
         'HttpBadRequest',
         new HttpBadRequest({
-          message: 'msg',
           cause: new EvalError(),
+          message: 'msg',
           url: 'http://',
         }),
       ],
@@ -57,19 +57,19 @@ describe('convertToSerializable', () => {
 
   it('serialize issues of HttpUnprocessableEntity', () => {
     const e422 = new HttpUnprocessableEntity({
-      message: 'Validation failed',
       issues: [
         {
+          code: 'invalid_email',
           message: 'Invalid email',
           path: 'email',
-          code: 'invalid_email',
         },
         {
+          code: 'empty_string',
           message: 'Invalid address',
           path: ['addresses', 0, 'line1'],
-          code: 'empty_string',
         },
       ],
+      message: 'Validation failed',
     });
     const serializable = convertToSerializable(e422);
     expect(
@@ -117,7 +117,11 @@ describe('convertToSerializable', () => {
       const serializable = convertToSerializable(e);
       expect(e.name).toStrictEqual('NonNativeError');
       expect(serializable.__type).toStrictEqual('NonNativeError');
-      const { cause, stack, ...serializableWithoutCause } = serializable;
+      const {
+        cause: _cause,
+        stack: _stack,
+        ...serializableWithoutCause
+      } = serializable;
       expect(serializableWithoutCause).toMatchSnapshot();
     });
   });

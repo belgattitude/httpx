@@ -22,11 +22,13 @@ either a message or an object containing HttpExceptionParams
 
   ↳↳ [`HttpBadGateway`](server.HttpBadGateway.md)
 
-  ↳↳ [`HttpVersionNotSupported`](server.HttpVersionNotSupported.md)
-
   ↳↳ [`HttpGatewayTimeout`](server.HttpGatewayTimeout.md)
 
+  ↳↳ [`HttpInsufficientStorage`](server.HttpInsufficientStorage.md)
+
   ↳↳ [`HttpInternalServerError`](server.HttpInternalServerError.md)
+
+  ↳↳ [`HttpLoopDetected`](server.HttpLoopDetected.md)
 
   ↳↳ [`HttpNetworkAuthenticationRequired`](server.HttpNetworkAuthenticationRequired.md)
 
@@ -36,11 +38,9 @@ either a message or an object containing HttpExceptionParams
 
   ↳↳ [`HttpServiceUnavailable`](server.HttpServiceUnavailable.md)
 
-  ↳↳ [`HttpInsufficientStorage`](server.HttpInsufficientStorage.md)
-
-  ↳↳ [`HttpLoopDetected`](server.HttpLoopDetected.md)
-
   ↳↳ [`HttpVariantAlsoNegotiates`](server.HttpVariantAlsoNegotiates.md)
+
+  ↳↳ [`HttpVersionNotSupported`](server.HttpVersionNotSupported.md)
 
 ## Table of contents
 
@@ -74,10 +74,10 @@ either a message or an object containing HttpExceptionParams
 
 #### Parameters
 
-| Name           | Type                              |
-| :------------- | :-------------------------------- |
-| `statusCode`   | `number`                          |
-| `msgOrParams?` | `string` \| `HttpExceptionParams` |
+| Name           | Type                                                                         |
+| :------------- | :--------------------------------------------------------------------------- |
+| `statusCode`   | `number`                                                                     |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
 
 #### Overrides
 
@@ -106,7 +106,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 • `Readonly` **code**: `undefined` \| `string`
 
-Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
 
 #### Inherited from
 

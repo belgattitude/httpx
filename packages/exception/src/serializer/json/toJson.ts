@@ -4,7 +4,7 @@ import { convertToSerializable } from '../mapper';
 import type { NativeError } from '../types';
 
 export const toJson = (
-  exception: Error | NativeError | HttpException
+  exception: Error | HttpException | NativeError
 ): string => {
   const serializable = convertToSerializable(exception);
   let v: string;

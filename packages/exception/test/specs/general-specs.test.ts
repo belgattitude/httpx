@@ -66,14 +66,14 @@ describe('Common specs', () => {
   describe('createHttpException', () => {
     it('should support HttpUnprocessableEntity with issues', () => {
       const e422Params: HttpExceptionParamsWithIssues = {
-        message: 'Validation failed',
         issues: [
           {
+            code: 'empty_string',
             message: 'Invalid address',
             path: ['addresses', 0, 'line1'],
-            code: 'empty_string',
           },
         ],
+        message: 'Validation failed',
       };
       expect(createHttpException(422, e422Params)).toStrictEqual(
         new HttpUnprocessableEntity(e422Params)

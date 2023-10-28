@@ -1,6 +1,6 @@
 import {
-  HttpException,
   HttpClientException,
+  HttpException,
   HttpServerException,
 } from '../../base';
 import { statusMap } from '../../status';

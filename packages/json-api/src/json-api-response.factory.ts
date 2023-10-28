@@ -7,7 +7,7 @@ import { isPlainObject } from './typeguards';
 
 export class JsonApiResponseFactory {
   static fromError = (
-    errors: string | JsonApiError | JsonApiError[],
+    errors: JsonApiError | JsonApiError[] | string,
     /** fallback http status if not present in JsonApiError */
     httpStatus?: number
   ): JsonApiErrorResponse => {
@@ -20,8 +20,8 @@ export class JsonApiResponseFactory {
       errs = errors;
     }
     return {
-      success: false,
       errors: errs,
+      success: false,
     };
   };
   static fromSuccess = <T>(
@@ -29,8 +29,8 @@ export class JsonApiResponseFactory {
     metadata?: JsonApiSuccessResponse<T>['meta']
   ): JsonApiSuccessResponse<T> => {
     return {
-      success: true,
       data: data,
+      success: true,
       ...(isPlainObject(metadata) ? { meta: metadata } : {}),
     };
   };

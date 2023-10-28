@@ -1,6 +1,6 @@
 import type {
-  ParsedDsn,
   ParseDsnOptions,
+  ParsedDsn,
   ParserResult,
 } from './dsn-parser.type';
 import {
@@ -31,7 +31,7 @@ export const parseDsn = (
     );
   }
   const opts = { ...defaultOptions, ...(options ?? {}) };
-  const { overrides = {}, lowercaseDriver } = opts;
+  const { lowercaseDriver, overrides = {} } = opts;
   const matches = dsn.match(dsnRegexp);
   if (!matches?.groups) {
     return createErrorResult('PARSE_ERROR');
