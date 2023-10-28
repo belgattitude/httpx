@@ -61,6 +61,18 @@ module.exports = [
     import: "{ fromJson }",
     limit: "2000B",
   },
+  {
+    name: "ESM ({ toJson })",
+    path: ["dist/serializer/index.mjs"],
+    import: "{ toJson }",
+    limit: "950B",
+  },
+  {
+    name: "ESM ({ fromJson, toJson })",
+    path: ["dist/serializer/index.mjs"],
+    import: "{ fromJson, toJson }",
+    limit: "2000B",
+  },
   // ###################################################
   // Commonjs full bundle
   // ###################################################
