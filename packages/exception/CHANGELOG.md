@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 2.5.1
+
+### Patch Changes
+
+- [#677](https://github.com/belgattitude/httpx/pull/677) [`92343d2`](https://github.com/belgattitude/httpx/commit/92343d2ef30678cfdb0edd29b8fc2a492b91ec58) Thanks [@belgattitude](https://github.com/belgattitude)! - Add tupleson tests and improve docs
+
 ## 2.5.0
 
 ### Minor Changes
