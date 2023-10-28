@@ -14,7 +14,7 @@ export interface LoggerInterface {
 export class ConsoleLogger implements LoggerInterface {
   log(message: string, payload?: unknown) {
     if (isHttpException(payload)) {
-      const { statusCode, url, name } = payload;
+      const { name, statusCode, url } = payload;
       console.error(message, { name, statusCode, url });
     } else {
       console.log(message);

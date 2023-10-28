@@ -23,11 +23,11 @@ describe('HttpException', () => {
   });
   it('should persist statusCode and params', () => {
     const params: HttpExceptionParams = {
+      code: 'NETWORK_UNAVAILABLE',
       errorId: 'nanoid()',
       message: 'msg',
-      code: 'NETWORK_UNAVAILABLE',
-      url: 'http://localhost',
       method: 'PUT',
+      url: 'http://localhost',
     };
     const exception = new HttpException(500, params);
     expect(exception.url).toStrictEqual(params.url);

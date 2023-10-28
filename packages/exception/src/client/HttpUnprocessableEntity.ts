@@ -22,12 +22,12 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  */
 export class HttpUnprocessableEntity extends HttpClientException {
   static readonly STATUS = 422;
-  public readonly issues: HttpValidationIssue[];
   /**
    * Errors has been renamed to issues as a better name.
    * @deprecated
    */
   public readonly errors: ValidationError[];
+  public readonly issues: HttpValidationIssue[];
   constructor(
     msgOrParams?:
       | (HttpExceptionParams & {

@@ -1,4 +1,4 @@
-export const isPlainObject = <T = unknown, K extends string | number = string>(
+export const isPlainObject = <T = unknown, K extends number | string = string>(
   v: unknown
 ): v is Record<K, T> => {
   return (

@@ -6,15 +6,13 @@
 
 400 Bad Request (client)
 
-Be aware that a lot of apis/frameworks will use 422 Unprocessable Entity to indicate (form field) validation errors
-when posting data (rails, github, api-platform...).
-
-**`See`**
-
-- https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors
-
 The server cannot or will not process the request due to something that is perceived to be a client error
 (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+
+Note that a lot of apis/frameworks uses 422 Unprocessable Entity to indicate (form field) validation errors
+rather the 400 Bad Request status code.
+
+**`See`**
 
 - https://httpstatus.in/400/
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
@@ -59,9 +57,9 @@ The server cannot or will not process the request due to something that is perce
 
 #### Parameters
 
-| Name           | Type                                                                       |
-| :------------- | :------------------------------------------------------------------------- |
-| `msgOrParams?` | `string` \| `HttpExceptionParams` & { `errors?`: `HttpValidationIssue`[] } |
+| Name           | Type                                        |
+| :------------- | :------------------------------------------ |
+| `msgOrParams?` | `string` \| `HttpExceptionParamsWithErrors` |
 
 #### Overrides
 
@@ -90,7 +88,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 • `Readonly` **code**: `undefined` \| `string`
 
-Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
 
 #### Inherited from
 
@@ -112,7 +110,11 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ### errors
 
-• `Readonly` **errors**: `HttpValidationIssue`[]
+• `Readonly` **errors**: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[]
+
+**`Deprecated`**
+
+use issues in 422 HttpUnprocessableEntity instead
 
 ---
 

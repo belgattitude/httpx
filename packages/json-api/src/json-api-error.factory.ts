@@ -1,4 +1,4 @@
-import { isHttpException, type HttpException } from '@httpx/exception';
+import { type HttpException, isHttpException } from '@httpx/exception';
 import type { JsonApiError } from './json-api-response.types';
 
 export class JsonApiErrorFactory {
@@ -14,20 +14,20 @@ export class JsonApiErrorFactory {
   };
 
   static fromHttpException = (
-    exception: HttpException | Error | string,
+    exception: Error | HttpException | string,
     /** fallback http status if it can't be inferred from exception */
     defaultHttpStatus = 500
   ): JsonApiError => {
     if (typeof exception === 'string') {
       return {
-        title: exception,
         status: defaultHttpStatus,
+        title: exception,
       };
     }
     if (isHttpException(exception)) {
       return {
-        title: exception.message,
         status: exception.statusCode,
+        title: exception.message,
       };
     }
     const { message, status, statusCode } = {
@@ -35,8 +35,8 @@ export class JsonApiErrorFactory {
       ...exception,
     };
     return {
-      title: message,
       status: status ?? statusCode ?? defaultHttpStatus,
+      title: message,
     };
   };
 }

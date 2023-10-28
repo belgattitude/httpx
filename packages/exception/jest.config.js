@@ -23,12 +23,22 @@ const getTsConfigBasePaths = (tsConfigFile) => {
 
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 const config = {
+  // false by default, overrides in cli, ie: yarn test:unit --collect-coverage=true
+  collectCoverage: false,
+  collectCoverageFrom: [
+    '<rootDir>/**/*.{ts,tsx,js,jsx}',
+    '!**/*.test.{js,ts}',
+    '!**/__mock__/*',
+  ],
+  coverageDirectory: '<rootDir>/../coverage',
   displayName: `ts-utils:unit`,
-  preset: 'ts-jest/presets/default-esm',
-  testEnvironment: 'node',
   extensionsToTreatAsEsm: ['.ts'],
-  verbose: true,
+  moduleNameMapper: {
+    ...getTsConfigBasePaths(tsConfigFile),
+  },
+  preset: 'ts-jest/presets/default-esm',
   rootDir: './src',
+  testEnvironment: 'node',
   testMatch: ['<rootDir>/**/*.{spec,test}.{js,jsx,ts,tsx}'],
   transform: {
     '^.+\\.m?[tj]sx?$': [
@@ -38,17 +48,7 @@ const config = {
       },
     ],
   },
-  moduleNameMapper: {
-    ...getTsConfigBasePaths(tsConfigFile),
-  },
-  // false by default, overrides in cli, ie: yarn test:unit --collect-coverage=true
-  collectCoverage: false,
-  coverageDirectory: '<rootDir>/../coverage',
-  collectCoverageFrom: [
-    '<rootDir>/**/*.{ts,tsx,js,jsx}',
-    '!**/*.test.{js,ts}',
-    '!**/__mock__/*',
-  ],
+  verbose: true,
 };
 
 export default config;

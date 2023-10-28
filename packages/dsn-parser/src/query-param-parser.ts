@@ -1,22 +1,22 @@
 import { isParsableNumber } from './dsn-parser.util';
 
 type ParseQueryParamsOptions = {
-  setTrueForUndefinedValues?: boolean;
   parseBooleans?: boolean;
   parseNumbers?: boolean;
+  setTrueForUndefinedValues?: boolean;
 };
 
 const defaultOptions = {
-  setTrueForUndefinedValues: true,
   parseBooleans: true,
   parseNumbers: true,
+  setTrueForUndefinedValues: true,
 };
 
 export const parseQueryParams = (
   queryParams: string,
   options?: ParseQueryParamsOptions
-): Record<string, string | boolean | number | null> => {
-  const { parseBooleans, setTrueForUndefinedValues, parseNumbers } = {
+): Record<string, boolean | null | number | string> => {
+  const { parseBooleans, parseNumbers, setTrueForUndefinedValues } = {
     ...defaultOptions,
     ...(options ?? {}),
   };
@@ -33,7 +33,7 @@ export const parseQueryParams = (
         val = Number.parseInt(value, 10);
       } else {
         val =
-          parseBooleans && ['true', 'false'].includes(value)
+          parseBooleans && ['false', 'true'].includes(value)
             ? value === 'true'
             : decodeURIComponent(value);
       }

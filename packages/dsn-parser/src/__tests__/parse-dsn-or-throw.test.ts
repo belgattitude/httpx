@@ -9,12 +9,12 @@ describe('parseDsnOrThrow', () => {
           'redis://username:password@www.example.com:6379/database$-#12_2.1'
         )
       ).toStrictEqual({
-        driver: 'redis',
-        pass: 'password',
-        host: 'www.example.com',
-        user: 'username',
-        port: 6379,
         db: 'database$-#12_2.1',
+        driver: 'redis',
+        host: 'www.example.com',
+        pass: 'password',
+        port: 6379,
+        user: 'username',
       });
     });
   });

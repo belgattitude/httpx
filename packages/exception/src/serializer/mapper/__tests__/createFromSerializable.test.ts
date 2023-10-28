@@ -11,11 +11,11 @@ describe('createFromSerializable', () => {
       [
         'withFullParams',
         new HttpException(500, {
+          code: 'NETWORK_UNAVAILABLE',
           errorId: 'nanoid()',
           message: 'msg',
-          code: 'NETWORK_UNAVAILABLE',
-          url: 'http://localhost',
           method: 'PUT',
+          url: 'http://localhost',
         }),
       ],
       [
@@ -27,8 +27,8 @@ describe('createFromSerializable', () => {
       [
         'HttpBadRequest',
         new HttpBadRequest({
-          message: 'msg',
           cause: new EvalError(),
+          message: 'msg',
           url: 'http://',
         }),
       ],
@@ -51,19 +51,19 @@ describe('createFromSerializable', () => {
 
   it('deserialize issues of HttpUnprocessableEntity', () => {
     const e422 = new HttpUnprocessableEntity({
-      message: 'Validation failed',
       issues: [
         {
+          code: 'invalid_email',
           message: 'Invalid email',
           path: 'email',
-          code: 'invalid_email',
         },
         {
+          code: 'empty_string',
           message: 'Invalid address',
           path: ['addresses', 0, 'line1'],
-          code: 'empty_string',
         },
       ],
+      message: 'Validation failed',
     });
 
     const converted = createFromSerializable(convertToSerializable(e422));
