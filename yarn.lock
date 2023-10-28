@@ -526,6 +526,63 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@belgattitude/eslint-config-bases@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@belgattitude/eslint-config-bases@npm:3.1.0"
+  dependencies:
+    "@rushstack/eslint-patch": "npm:^1.5.1"
+    "@tanstack/eslint-plugin-query": "npm:^4.36.1 || ^5.0.5"
+    "@typescript-eslint/eslint-plugin": "npm:^6.9.0"
+    "@typescript-eslint/parser": "npm:^6.9.0"
+    eslint-config-prettier: "npm:^9.0.0"
+    eslint-import-resolver-typescript: "npm:^3.6.1"
+    eslint-plugin-import: "npm:^2.29.0"
+    eslint-plugin-jest: "npm:^27.6.0"
+    eslint-plugin-jest-formatting: "npm:^3.1.0"
+    eslint-plugin-jsx-a11y: "npm:^6.7.1"
+    eslint-plugin-perfectionist: "npm:2.2.0"
+    eslint-plugin-playwright: "npm:^0.18.0"
+    eslint-plugin-prettier: "npm:^5.0.1"
+    eslint-plugin-react: "npm:^7.33.2"
+    eslint-plugin-react-hooks: "npm:^4.6.0 || 5.0.0-canary-7118f5dd7-20230705"
+    eslint-plugin-regexp: "npm:^2.1.1"
+    eslint-plugin-sonarjs: "npm:^0.21.0"
+    eslint-plugin-storybook: "npm:^0.6.15"
+    eslint-plugin-testing-library: "npm:^6.1.0"
+    eslint-plugin-unused-imports: "npm:^3.0.0"
+  peerDependencies:
+    "@graphql-eslint/eslint-plugin": ^3.14.3
+    eslint: ^8.30.0
+    eslint-plugin-mdx: ^2.0.5
+    eslint-plugin-tailwindcss: ^3.13.0
+    graphql: ^16.6.0
+    prettier: ^3.0.3
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^5.0.2
+  peerDependenciesMeta:
+    "@graphql-eslint/eslint-plugin":
+      optional: true
+    eslint-plugin-mdx:
+      optional: true
+    eslint-plugin-tailwindcss:
+      optional: true
+    graphql:
+      optional: true
+    prettier:
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    tailwindcss:
+      optional: true
+    typescript:
+      optional: true
+  checksum: 801ca45e59d8d9d2ec3ec1882f6d3b83aa266803f81bdb377b9dbf20351414692bb9fb2c96867665d49d72a7eae7ce59c7db12a349143d793838b319d2450ade
+  languageName: node
+  linkType: hard
+
 "@changesets/apply-release-plan@npm:^6.1.4":
   version: 6.1.4
   resolution: "@changesets/apply-release-plan@npm:6.1.4"
@@ -1277,7 +1334,7 @@ __metadata:
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.12.2"
-    "@belgattitude/eslint-config-bases": "npm:3.0.0"
+    "@belgattitude/eslint-config-bases": "npm:3.1.0"
     "@size-limit/file": "npm:10.0.1"
     "@types/jest": "npm:29.5.6"
     "@vitest/coverage-istanbul": "npm:0.34.6"
@@ -1307,7 +1364,7 @@ __metadata:
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.12.2"
-    "@belgattitude/eslint-config-bases": "npm:3.0.0"
+    "@belgattitude/eslint-config-bases": "npm:3.1.0"
     "@size-limit/file": "npm:10.0.1"
     "@size-limit/webpack": "npm:10.0.1"
     "@size-limit/webpack-why": "npm:10.0.1"
@@ -1349,7 +1406,7 @@ __metadata:
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.12.2"
-    "@belgattitude/eslint-config-bases": "npm:3.0.0"
+    "@belgattitude/eslint-config-bases": "npm:3.1.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:10.0.1"
     "@types/jest": "npm:29.5.6"
@@ -2769,7 +2826,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:6.9.0":
+"@typescript-eslint/utils@npm:6.9.0, @typescript-eslint/utils@npm:^6.7.5":
   version: 6.9.0
   resolution: "@typescript-eslint/utils@npm:6.9.0"
   dependencies:
@@ -5572,6 +5629,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-perfectionist@npm:2.2.0":
+  version: 2.2.0
+  resolution: "eslint-plugin-perfectionist@npm:2.2.0"
+  dependencies:
+    "@typescript-eslint/utils": "npm:^6.7.5"
+    minimatch: "npm:^9.0.3"
+    natural-compare-lite: "npm:^1.4.0"
+  peerDependencies:
+    astro-eslint-parser: ^0.16.0
+    eslint: ">=8.0.0"
+    svelte: ">=3.0.0"
+    svelte-eslint-parser: ^0.33.0
+    vue-eslint-parser: ">=9.0.0"
+  peerDependenciesMeta:
+    astro-eslint-parser:
+      optional: true
+    svelte:
+      optional: true
+    svelte-eslint-parser:
+      optional: true
+    vue-eslint-parser:
+      optional: true
+  checksum: 893b3636011b09b7b2cef26bdb75a6bfad9aa37297b4dc4c9554c085cd551bdcbf335c45294950401cd59dfa422f4dbd21eee073c137726de9f473fb8d062f46
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-playwright@npm:^0.18.0":
   version: 0.18.0
   resolution: "eslint-plugin-playwright@npm:0.18.0"
@@ -6880,7 +6963,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-monorepo@workspace:."
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:3.0.0"
+    "@belgattitude/eslint-config-bases": "npm:3.1.0"
     "@changesets/changelog-github": "npm:0.4.8"
     "@changesets/cli": "npm:2.26.2"
     "@commitlint/cli": "npm:18.2.0"
@@ -9206,6 +9289,13 @@ __metadata:
   dependencies:
     picocolors: "npm:^1.0.0"
   checksum: a775e8266df12e6d78e992f4c47c14b50d647f0b636ffaafc32d4005e13b9182327f7cbecca8236134bba592ad46d8b4081686821351f4b3885ff6f48084a40c
+  languageName: node
+  linkType: hard
+
+"natural-compare-lite@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "natural-compare-lite@npm:1.4.0"
+  checksum: 5222ac3986a2b78dd6069ac62cbb52a7bf8ffc90d972ab76dfe7b01892485d229530ed20d0c62e79a6b363a663b273db3bde195a1358ce9e5f779d4453887225
   languageName: node
   linkType: hard
 
