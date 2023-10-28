@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 402 Payment required (client)
@@ -14,9 +14,7 @@ import { getSuper } from '../utils';
 export class HttpPaymentRequired extends HttpClientException {
   static readonly STATUS = 402;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'PaymentRequired';
-    super(402, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpPaymentRequired.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperArgs(HttpPaymentRequired, msgOrParams));
+    initProtoAndName(this, HttpPaymentRequired);
   }
 }

@@ -7,4 +7,5 @@ export type HttpMethod =
   | 'CONNECT'
   | 'OPTIONS'
   | 'TRACE'
-  | 'PATCH';
+  | 'PATCH'
+  | 'QUERY';

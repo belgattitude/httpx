@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 418 I'm a teapot (client)
@@ -13,9 +13,7 @@ import { getSuper } from '../utils';
 export class HttpImATeapot extends HttpClientException {
   static readonly STATUS = 418;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'ImATeapot';
-    super(418, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpImATeapot.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperArgs(HttpImATeapot, msgOrParams));
+    initProtoAndName(this, HttpImATeapot);
   }
 }

@@ -10,9 +10,8 @@ import { HttpException } from './HttpException';
  */
 export class HttpClientException extends HttpException {
   constructor(statusCode: number, msgOrParams?: HttpExceptionParams | string) {
-    const name = 'HttpClientException';
-    super(statusCode, getSuper(name, msgOrParams));
+    super(statusCode, getSuper(HttpClientException.name, msgOrParams));
     Object.setPrototypeOf(this, HttpClientException.prototype);
-    this.name = name;
+    this.name = HttpClientException.name;
   }
 }

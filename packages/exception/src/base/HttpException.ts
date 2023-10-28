@@ -3,7 +3,7 @@ import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import type { HttpMethod } from '../types/HttpMethod';
 import { getSuper } from '../utils';
 
-export class HttpException extends Error {
+export class HttpException extends Error implements HttpExceptionParams {
   /**
    * Http error status code (400-599)
    */
@@ -19,7 +19,7 @@ export class HttpException extends Error {
   public readonly method: HttpMethod | undefined;
 
   /**
-   * Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+   * Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
    */
   public readonly code: string | undefined;
 
@@ -42,22 +42,22 @@ export class HttpException extends Error {
    * @param msgOrParams either a message or an object containing HttpExceptionParams
    */
   constructor(statusCode: number, msgOrParams?: HttpExceptionParams | string) {
-    const name = 'HttpException';
-    const { message, url, cause, errorId, code, method } = getSuper(
-      name,
-      msgOrParams
-    );
-    super(message);
-    if (supportsErrorCause() && cause instanceof Error) {
-      this.cause = cause;
+    const {
+      message: m,
+      cause: c,
+
+      ...p
+    } = getSuper(HttpException.name, msgOrParams);
+    super(m);
+    if (supportsErrorCause() && c instanceof Error) {
+      this.cause = c;
     }
     this.statusCode = statusCode;
-    this.url = url;
-    this.errorId = errorId;
-    this.code = code;
-    this.method = method;
-
+    this.url = p.url;
+    this.errorId = p.errorId;
+    this.code = p.code;
+    this.method = p.method;
     Object.setPrototypeOf(this, HttpException.prototype);
-    this.name = name;
+    this.name = HttpException.name;
   }
 }
