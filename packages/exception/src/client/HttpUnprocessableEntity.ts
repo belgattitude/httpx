@@ -1,5 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
+import type { HttpExceptionParamsWithIssues } from '../types/HttpExceptionParamsWithIssues';
 import type { HttpValidationIssue } from '../types/HttpValidationIssue';
 import type { ValidationError } from '../types/ValidationError';
 import { getSuperArgs, initProtoAndName } from '../utils';
@@ -32,9 +33,7 @@ export class HttpUnprocessableEntity extends HttpClientException {
       | (HttpExceptionParams & {
           /** @deprecated use issues instead */
           errors?: ValidationError[];
-        } & {
-          issues?: HttpValidationIssue[];
-        })
+        } & HttpExceptionParamsWithIssues)
       | string
   ) {
     const {
