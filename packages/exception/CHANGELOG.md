@@ -95,14 +95,14 @@
   // becomes
   const issues: HttpValidationIssue[] = [
     {
-      message: 'Invalid email',
-      path: 'email',
-      code: 'invalid_email',
+      message: "Invalid email",
+      path: "email",
+      code: "invalid_email",
     },
     {
-      message: 'Invalid address',
-      path: ['addresses', 0, 'line1'],
-      code: 'empty_string',
+      message: "Invalid address",
+      path: ["addresses", 0, "line1"],
+      code: "empty_string",
     },
   ];
 
@@ -172,19 +172,19 @@
   Example:
 
   ```typescript
-  import { HttpUnprocessableEntity } from '@httpx/exception';
+  import { HttpUnprocessableEntity } from "@httpx/exception";
 
   const e422 = new HttpUnprocessableEntity({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -221,14 +221,14 @@
   const e400 = new HttpBadRequest({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -309,9 +309,9 @@
 
   ```typescript
   const err = new HttpRequestTimeout({
-    url: 'https://api.dev/user/belgattitude',
-    method: 'GET',
-    code: 'NETWORK_FAILURE',
+    url: "https://api.dev/user/belgattitude",
+    method: "GET",
+    code: "NETWORK_FAILURE",
     errorId: nanoid(), // can be shared by frontend/backend
   });
   console.log(err.url, err.method, err.code, err.errorId);
@@ -331,7 +331,7 @@
   import {
     convertToSerializable,
     createFromSerializable,
-  } from '@httpx/exception/serializer';
+  } from "@httpx/exception/serializer";
 
   const serializableObject = convertToSerializable(new HttpForbidden());
   const exception = createFromSerializable(serializableObject);
@@ -368,11 +368,11 @@
   import {
     HttpForbidden,
     HttpUnavailableForLegalReasons,
-  } from '@httpx/exception';
-  import { fromJson, toJson } from '@httpx/exception/serializer';
+  } from "@httpx/exception";
+  import { fromJson, toJson } from "@httpx/exception/serializer";
 
   const e = new HttpForbidden({
-    url: 'https://www.cool.me',
+    url: "https://www.cool.me",
     /*
       cause: new HttpUnavailableForLegalReasons({
           cause: new Error('example with cause')

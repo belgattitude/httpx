@@ -1,5 +1,5 @@
 import { HttpException } from '../../../base';
-import { HttpBadRequest } from '../../../client';
+import { HttpBadRequest, HttpUnprocessableEntity } from '../../../client';
 import { convertToSerializable } from '../convertToSerializable';
 import { createFromSerializable } from '../createFromSerializable';
 
@@ -46,6 +46,30 @@ describe('createFromSerializable', () => {
         );
         expect((converted as HttpException)?.code).toStrictEqual(err.code);
       }
+    );
+  });
+
+  it('deserialize issues of HttpUnprocessableEntity', () => {
+    const e422 = new HttpUnprocessableEntity({
+      message: 'Validation failed',
+      issues: [
+        {
+          message: 'Invalid email',
+          path: 'email',
+          code: 'invalid_email',
+        },
+        {
+          message: 'Invalid address',
+          path: ['addresses', 0, 'line1'],
+          code: 'empty_string',
+        },
+      ],
+    });
+
+    const converted = createFromSerializable(convertToSerializable(e422));
+    expect(converted).toStrictEqual(e422);
+    expect((converted as HttpUnprocessableEntity)?.issues).toStrictEqual(
+      e422.issues
     );
   });
 

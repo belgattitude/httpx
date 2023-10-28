@@ -1,5 +1,5 @@
 import { HttpException } from '../../../base';
-import { HttpBadRequest } from '../../../client';
+import { HttpBadRequest, HttpUnprocessableEntity } from '../../../client';
 import type { SerializableHttpException } from '../../types';
 import { convertToSerializable } from '../convertToSerializable';
 
@@ -38,6 +38,7 @@ describe('convertToSerializable', () => {
       const serializable = convertToSerializable(
         err
       ) as SerializableHttpException;
+
       expect(serializable.__type).toStrictEqual('HttpException');
       expect(serializable.message).toStrictEqual(err.message);
       expect(serializable.name).toStrictEqual(err.name);
@@ -45,9 +46,35 @@ describe('convertToSerializable', () => {
       expect(serializable?.code).toStrictEqual(err?.code);
       expect(serializable?.errorId).toStrictEqual(err?.errorId);
       expect(serializable?.method).toStrictEqual(err?.method);
-      const { cause, stack, ...serializableWithoutCause } = serializable;
+      const {
+        cause: _cause,
+        stack: _stack,
+        ...serializableWithoutCause
+      } = serializable;
       expect(serializableWithoutCause).toMatchSnapshot();
     });
+  });
+
+  it('serialize issues of HttpUnprocessableEntity', () => {
+    const e422 = new HttpUnprocessableEntity({
+      message: 'Validation failed',
+      issues: [
+        {
+          message: 'Invalid email',
+          path: 'email',
+          code: 'invalid_email',
+        },
+        {
+          message: 'Invalid address',
+          path: ['addresses', 0, 'line1'],
+          code: 'empty_string',
+        },
+      ],
+    });
+    const serializable = convertToSerializable(e422);
+    expect(
+      (serializable as unknown as HttpUnprocessableEntity)?.issues
+    ).toStrictEqual(e422?.issues);
   });
 
   describe('when native error is given', () => {
@@ -68,7 +95,11 @@ describe('convertToSerializable', () => {
       expect(serializable.__type).toStrictEqual('NativeError');
       expect(serializable.message).toStrictEqual(err.message);
       expect(serializable.name).toStrictEqual(err.name);
-      const { cause, stack, ...serializableWithoutCause } = serializable;
+      const {
+        cause: _cause,
+        stack: _stack,
+        ...serializableWithoutCause
+      } = serializable;
       expect(serializableWithoutCause).toMatchSnapshot();
     });
   });
@@ -96,7 +127,11 @@ describe('convertToSerializable', () => {
       const e = new Date() as unknown as Error;
       const serializable = convertToSerializable(e);
       expect(serializable.__type).toStrictEqual('NonNativeError');
-      const { cause, stack, ...serializableWithoutCause } = serializable;
+      const {
+        cause: _cause,
+        stack: _stack,
+        ...serializableWithoutCause
+      } = serializable;
       expect(serializableWithoutCause).toMatchSnapshot();
     });
   });
