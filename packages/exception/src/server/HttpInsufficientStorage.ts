@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 507 Insufficient Storage (client / webdav specific)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpInsufficientStorage extends HttpServerException {
   static readonly STATUS = 507;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpInsufficientStorage, msgOrParams));
-    setProto(this, HttpInsufficientStorage);
+    super(...getSuperArgs(HttpInsufficientStorage, msgOrParams));
+    initProtoAndName(this, HttpInsufficientStorage);
   }
 }

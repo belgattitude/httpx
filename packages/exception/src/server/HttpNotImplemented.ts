@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 501 Not Implemented
@@ -14,7 +14,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpNotImplemented extends HttpServerException {
   static readonly STATUS = 501;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpNotImplemented, msgOrParams));
-    setProto(this, HttpNotImplemented);
+    super(...getSuperArgs(HttpNotImplemented, msgOrParams));
+    initProtoAndName(this, HttpNotImplemented);
   }
 }

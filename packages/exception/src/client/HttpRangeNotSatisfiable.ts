@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 416 Range Not Satisfiable (client)
@@ -14,7 +14,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpRangeNotSatisfiable extends HttpClientException {
   static readonly STATUS = 416;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpRangeNotSatisfiable, msgOrParams));
-    setProto(this, HttpRangeNotSatisfiable);
+    super(...getSuperArgs(HttpRangeNotSatisfiable, msgOrParams));
+    initProtoAndName(this, HttpRangeNotSatisfiable);
   }
 }

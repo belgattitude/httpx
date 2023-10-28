@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * Client status 417
@@ -14,7 +14,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpExpectationFailed extends HttpClientException {
   static readonly STATUS = 417;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpExpectationFailed, msgOrParams));
-    setProto(this, HttpExpectationFailed);
+    super(...getSuperArgs(HttpExpectationFailed, msgOrParams));
+    initProtoAndName(this, HttpExpectationFailed);
   }
 }

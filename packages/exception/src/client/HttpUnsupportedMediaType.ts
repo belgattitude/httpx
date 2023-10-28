@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 415 Unsupported Media Type (client)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpUnsupportedMediaType extends HttpClientException {
   static readonly STATUS = 415;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpUnsupportedMediaType, msgOrParams));
-    setProto(this, HttpUnsupportedMediaType);
+    super(...getSuperArgs(HttpUnsupportedMediaType, msgOrParams));
+    initProtoAndName(this, HttpUnsupportedMediaType);
   }
 }

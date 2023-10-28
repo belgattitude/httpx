@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 426 Upgrade Required (client)
@@ -14,7 +14,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpUpgradeRequired extends HttpClientException {
   static readonly STATUS = 426;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpUpgradeRequired, msgOrParams));
-    setProto(this, HttpUpgradeRequired);
+    super(...getSuperArgs(HttpUpgradeRequired, msgOrParams));
+    initProtoAndName(this, HttpUpgradeRequired);
   }
 }

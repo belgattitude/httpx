@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 503 Service Unavailable
@@ -20,7 +20,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpServiceUnavailable extends HttpServerException {
   static readonly STATUS = 503;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpServiceUnavailable, msgOrParams));
-    setProto(this, HttpServiceUnavailable);
+    super(...getSuperArgs(HttpServiceUnavailable, msgOrParams));
+    initProtoAndName(this, HttpServiceUnavailable);
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 409 Conflict (client)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpConflict extends HttpClientException {
   static readonly STATUS = 409;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpConflict, msgOrParams));
-    setProto(this, HttpConflict);
+    super(...getSuperArgs(HttpConflict, msgOrParams));
+    initProtoAndName(this, HttpConflict);
   }
 }

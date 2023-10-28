@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 406 Not acceptable (client)
@@ -14,7 +14,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpNotAcceptable extends HttpClientException {
   static readonly STATUS = 406;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpNotAcceptable, msgOrParams));
-    setProto(this, HttpNotAcceptable);
+    super(...getSuperArgs(HttpNotAcceptable, msgOrParams));
+    initProtoAndName(this, HttpNotAcceptable);
   }
 }

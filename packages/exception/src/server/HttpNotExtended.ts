@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 510 Not Extended (server)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpNotExtended extends HttpServerException {
   static readonly STATUS = 510;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpNotExtended, msgOrParams));
-    setProto(this, HttpNotExtended);
+    super(...getSuperArgs(HttpNotExtended, msgOrParams));
+    initProtoAndName(this, HttpNotExtended);
   }
 }

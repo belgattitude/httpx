@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 504 Gateway Timeout (server)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpGatewayTimeout extends HttpServerException {
   static readonly STATUS = 504;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpGatewayTimeout, msgOrParams));
-    setProto(this, HttpGatewayTimeout);
+    super(...getSuperArgs(HttpGatewayTimeout, msgOrParams));
+    initProtoAndName(this, HttpGatewayTimeout);
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 414 URI too long (client)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpUriTooLong extends HttpClientException {
   static readonly STATUS = 414;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpUriTooLong, msgOrParams));
-    setProto(this, HttpUriTooLong);
+    super(...getSuperArgs(HttpUriTooLong, msgOrParams));
+    initProtoAndName(this, HttpUriTooLong);
   }
 }

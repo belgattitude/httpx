@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 506 Variant Also Negotiates (server)
@@ -14,7 +14,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpVariantAlsoNegotiates extends HttpServerException {
   static readonly STATUS = 506;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpVariantAlsoNegotiates, msgOrParams));
-    setProto(this, HttpVariantAlsoNegotiates);
+    super(...getSuperArgs(HttpVariantAlsoNegotiates, msgOrParams));
+    initProtoAndName(this, HttpVariantAlsoNegotiates);
   }
 }

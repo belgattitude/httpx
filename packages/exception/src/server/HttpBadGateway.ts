@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 502 Bad Gateway (server)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpBadGateway extends HttpServerException {
   static readonly STATUS = 502;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpBadGateway, msgOrParams));
-    setProto(this, HttpBadGateway);
+    super(...getSuperArgs(HttpBadGateway, msgOrParams));
+    initProtoAndName(this, HttpBadGateway);
   }
 }

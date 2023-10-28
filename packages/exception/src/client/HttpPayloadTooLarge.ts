@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 413 Payload too large (client)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpPayloadTooLarge extends HttpClientException {
   static readonly STATUS = 413;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpPayloadTooLarge, msgOrParams));
-    setProto(this, HttpPayloadTooLarge);
+    super(...getSuperArgs(HttpPayloadTooLarge, msgOrParams));
+    initProtoAndName(this, HttpPayloadTooLarge);
   }
 }

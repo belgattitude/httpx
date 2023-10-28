@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 428 Precondition Required (client)
@@ -15,7 +15,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpPreconditionRequired extends HttpClientException {
   static readonly STATUS = 428;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpPreconditionRequired, msgOrParams));
-    setProto(this, HttpPreconditionRequired);
+    super(...getSuperArgs(HttpPreconditionRequired, msgOrParams));
+    initProtoAndName(this, HttpPreconditionRequired);
   }
 }

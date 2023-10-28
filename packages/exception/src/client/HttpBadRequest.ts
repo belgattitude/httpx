@@ -2,7 +2,7 @@ import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import type { HttpValidationIssue } from '../types/HttpValidationIssue';
 import type { ValidationError } from '../types/ValidationError';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 type HttpExceptionParamsWithErrors = HttpExceptionParams & {
   /** @deprecated use issues in 422 HttpUnprocessableEntity instead */
@@ -28,8 +28,8 @@ export class HttpBadRequest extends HttpClientException {
   constructor(msgOrParams?: HttpExceptionParamsWithErrors | string) {
     const { errors = [], ...p } =
       typeof msgOrParams === 'string' ? {} : msgOrParams ?? {};
-    super(...getSuperData(HttpBadRequest, p));
+    super(...getSuperArgs(HttpBadRequest, p));
     this.errors = errors;
-    setProto(this, HttpBadRequest);
+    initProtoAndName(this, HttpBadRequest);
   }
 }

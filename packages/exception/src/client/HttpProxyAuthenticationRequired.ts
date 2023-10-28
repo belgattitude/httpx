@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 407 Proxy authentication required (client)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpProxyAuthenticationRequired extends HttpClientException {
   static readonly STATUS = 407;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpProxyAuthenticationRequired, msgOrParams));
-    setProto(this, HttpProxyAuthenticationRequired);
+    super(...getSuperArgs(HttpProxyAuthenticationRequired, msgOrParams));
+    initProtoAndName(this, HttpProxyAuthenticationRequired);
   }
 }

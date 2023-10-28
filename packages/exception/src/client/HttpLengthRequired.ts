@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 411 Length required
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpLengthRequired extends HttpClientException {
   static readonly STATUS = 411;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpLengthRequired, msgOrParams));
-    setProto(this, HttpLengthRequired);
+    super(...getSuperArgs(HttpLengthRequired, msgOrParams));
+    initProtoAndName(this, HttpLengthRequired);
   }
 }

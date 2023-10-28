@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 402 Payment required (client)
@@ -14,7 +14,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpPaymentRequired extends HttpClientException {
   static readonly STATUS = 402;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpPaymentRequired, msgOrParams));
-    setProto(this, HttpPaymentRequired);
+    super(...getSuperArgs(HttpPaymentRequired, msgOrParams));
+    initProtoAndName(this, HttpPaymentRequired);
   }
 }

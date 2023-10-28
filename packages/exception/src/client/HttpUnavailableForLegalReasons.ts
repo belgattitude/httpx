@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 451 Unavailable For Legal Reasons (client)
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpUnavailableForLegalReasons extends HttpClientException {
   static readonly STATUS = 451;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpUnavailableForLegalReasons, msgOrParams));
-    setProto(this, HttpUnavailableForLegalReasons);
+    super(...getSuperArgs(HttpUnavailableForLegalReasons, msgOrParams));
+    initProtoAndName(this, HttpUnavailableForLegalReasons);
   }
 }

@@ -1,6 +1,6 @@
 import type { HttpException } from '../base';
 
-export const setProto = (
+export const initProtoAndName = (
   obj: HttpException,
   cls: { prototype: object; name: string }
 ) => {

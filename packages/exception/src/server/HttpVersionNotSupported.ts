@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperData, setProto } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 505 HTTP Version Not Supported
@@ -13,7 +13,7 @@ import { getSuperData, setProto } from '../utils';
 export class HttpVersionNotSupported extends HttpServerException {
   static readonly STATUS = 505;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperData(HttpVersionNotSupported, msgOrParams));
-    setProto(this, HttpVersionNotSupported);
+    super(...getSuperArgs(HttpVersionNotSupported, msgOrParams));
+    initProtoAndName(this, HttpVersionNotSupported);
   }
 }
