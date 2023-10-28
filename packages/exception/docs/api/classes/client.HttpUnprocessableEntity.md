@@ -40,7 +40,7 @@ For example, this error condition may occur if an XML request body contains well
 - [cause](client.HttpUnprocessableEntity.md#cause)
 - [code](client.HttpUnprocessableEntity.md#code)
 - [errorId](client.HttpUnprocessableEntity.md#errorid)
-- [errors](client.HttpUnprocessableEntity.md#errors)
+- [issues](client.HttpUnprocessableEntity.md#issues)
 - [message](client.HttpUnprocessableEntity.md#message)
 - [method](client.HttpUnprocessableEntity.md#method)
 - [name](client.HttpUnprocessableEntity.md#name)
@@ -50,6 +50,10 @@ For example, this error condition may occur if an XML request body contains well
 - [STATUS](client.HttpUnprocessableEntity.md#status)
 - [prepareStackTrace](client.HttpUnprocessableEntity.md#preparestacktrace)
 - [stackTraceLimit](client.HttpUnprocessableEntity.md#stacktracelimit)
+
+### Accessors
+
+- [errors](client.HttpUnprocessableEntity.md#errors)
 
 ### Methods
 
@@ -63,9 +67,9 @@ For example, this error condition may occur if an XML request body contains well
 
 #### Parameters
 
-| Name           | Type                                                                   |
-| :------------- | :--------------------------------------------------------------------- |
-| `msgOrParams?` | `string` \| `HttpExceptionParams` & { `errors?`: `ValidationError`[] } |
+| Name           | Type                                                                                                                |
+| :------------- | :------------------------------------------------------------------------------------------------------------------ |
+| `msgOrParams?` | `string` \| `HttpExceptionParams` & { `errors?`: `HttpValidationIssue`[] } & { `issues?`: `HttpValidationIssue`[] } |
 
 #### Overrides
 
@@ -114,9 +118,9 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ---
 
-### errors
+### issues
 
-• `Readonly` **errors**: `ValidationError`[]
+• `Readonly` **issues**: `HttpValidationIssue`[]
 
 ---
 
@@ -230,6 +234,20 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 #### Inherited from
 
 [HttpClientException](base.HttpClientException.md).[stackTraceLimit](base.HttpClientException.md#stacktracelimit)
+
+## Accessors
+
+### errors
+
+• `get` **errors**(): `HttpValidationIssue`[]
+
+Errors has been renamed to issues as a better name.
+
+#### Returns
+
+`HttpValidationIssue`[]
+
+**`Deprecated`**
 
 ## Methods
 

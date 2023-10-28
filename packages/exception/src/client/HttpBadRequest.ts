@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import type { ValidationError } from '../types/ValidationError';
+import type { HttpValidationIssue } from '../types/HttpValidationIssue';
 import { getSuper } from '../utils';
 
 /**
@@ -17,12 +17,12 @@ import { getSuper } from '../utils';
  */
 export class HttpBadRequest extends HttpClientException {
   static readonly STATUS = 400;
-  public readonly errors: ValidationError[];
+  public readonly errors: HttpValidationIssue[];
   constructor(
     msgOrParams?:
       | (HttpExceptionParams & {
           /** @deprecated use errors 422 HttpUnprocessableEntity instead */
-          errors?: ValidationError[];
+          errors?: HttpValidationIssue[];
         })
       | string
   ) {

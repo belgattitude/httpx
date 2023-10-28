@@ -1,6 +1,6 @@
 {
   "name": "@examples/nextjs-app",
-  "version": "0.1.33",
+  "version": "0.1.36",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,34 +9,34 @@
     "clean": "rimraf ./.next ./coverage ./tsconfig.tsbuildinfo",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-no-paths": "tsc --project tsconfig.no-paths.json --noEmit",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/nextjs-app.eslintcache",
-    "prettier-check": "yarn run --top-level prettier --check --cache --cache-location=\"../../.cache/prettier/next-app.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
-    "prettier-fix": "yarn run --top-level prettier --write --cache --cache-location=\"../../.cache/prettier/next-app.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/nextjs-classic.eslintcache",
+    "prettier-check": "yarn run --top-level prettier --check --cache --cache-location=\"../../.cache/prettier/next-classic.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
+    "prettier-fix": "yarn run --top-level prettier --write --cache --cache-location=\"../../.cache/prettier/next-classic.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
     "fix-staged": "lint-staged --allow-empty"
   },
   "dependencies": {
     "@httpx/exception": "workspace:^",
-    "axios": "1.5.0",
-    "ky": "1.0.1",
-    "next": "13.4.19",
-    "pino": "8.15.1",
+    "axios": "1.6.0",
+    "ky": "1.1.1",
+    "next": "14.0.0",
+    "pino": "8.16.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "superjson": "1.13.1",
-    "zod": "3.22.2"
+    "superjson": "2.2.0",
+    "zod": "3.22.4"
   },
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "2.5.0",
-    "@types/node": "20.6.0",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
+    "@belgattitude/eslint-config-bases": "3.0.0",
+    "@types/node": "20.8.9",
+    "@types/react": "18.2.33",
+    "@types/react-dom": "18.2.14",
     "cross-env": "7.0.3",
-    "eslint": "8.49.0",
-    "eslint-config-next": "13.4.19",
-    "postcss": "8.4.29",
-    "rimraf": "5.0.1",
-    "tailwindcss": "3.3.3",
+    "eslint": "8.52.0",
+    "eslint-config-next": "14.0.0",
+    "postcss": "8.4.31",
+    "rimraf": "5.0.5",
+    "tailwindcss": "3.3.5",
     "typescript": "5.2.2",
-    "webpack": "5.88.2"
+    "webpack": "5.89.0"
   }
 }

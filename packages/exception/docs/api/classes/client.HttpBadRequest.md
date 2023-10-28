@@ -59,9 +59,9 @@ The server cannot or will not process the request due to something that is perce
 
 #### Parameters
 
-| Name           | Type                                                                   |
-| :------------- | :--------------------------------------------------------------------- |
-| `msgOrParams?` | `string` \| `HttpExceptionParams` & { `errors?`: `ValidationError`[] } |
+| Name           | Type                                                                       |
+| :------------- | :------------------------------------------------------------------------- |
+| `msgOrParams?` | `string` \| `HttpExceptionParams` & { `errors?`: `HttpValidationIssue`[] } |
 
 #### Overrides
 
@@ -112,7 +112,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ### errors
 
-• `Readonly` **errors**: `ValidationError`[]
+• `Readonly` **errors**: `HttpValidationIssue`[]
 
 ---
 

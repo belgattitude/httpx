@@ -1,6 +1,6 @@
 @httpx/dsn-parser
 
-# @httpx/dsn-parser - v1.2.0
+# @httpx/dsn-parser - v1.4.0
 
 ## Table of contents
 
@@ -13,6 +13,7 @@
 ### Functions
 
 - [assertParsableDsn](README.md#assertparsabledsn)
+- [convertJdbcToDsn](README.md#convertjdbctodsn)
 - [isParsableDsn](README.md#isparsabledsn)
 - [parseDsn](README.md#parsedsn)
 - [parseDsnOrThrow](README.md#parsedsnorthrow)
@@ -74,6 +75,22 @@ asserts dsn is string
 **`Throws`**
 
 Error when not parsable
+
+---
+
+### convertJdbcToDsn
+
+▸ **convertJdbcToDsn**(`jdbc`): `string`
+
+#### Parameters
+
+| Name   | Type     |
+| :----- | :------- |
+| `jdbc` | `string` |
+
+#### Returns
+
+`string`
 
 ---
 

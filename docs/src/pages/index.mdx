@@ -90,17 +90,17 @@ throw new HttpInternalServerError({
 
 #### HttpException properties
 
-| HttpException | Type                | Description                                                                                                                        |
-| ------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| statusCode    | `number`            | Http error status code (400-599).                                                                                                  |
-| message       | `string`            | Default or provided message.                                                                                                       |
-| url           | `string?`           | Origin url ([about context](#about-context)).                                                                                      |
-| method        | `string?`           | Origin http method ([about context](#about-context)).                                                                              |
-| code          | `string?`           | Custom code ([about context](#about-context)).                                                                                     |
-| errorId       | `string?`           | Unique id ([about context](#about-context)).                                                                                       |
-| stack         | `string?`           | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause         | `Error?`            | @see [about error cause](#about-errorcause)                                                                                        |
-| errors?       | `ValidationError[]` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+| HttpException | Type                    | Description                                                                                                                        |
+| ------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| statusCode    | `number`                | Http error status code (400-599).                                                                                                  |
+| message       | `string`                | Default or provided message.                                                                                                       |
+| url           | `string?`               | Origin url ([about context](#about-context)).                                                                                      |
+| method        | `string?`               | Origin http method ([about context](#about-context)).                                                                              |
+| code          | `string?`               | Custom code ([about context](#about-context)).                                                                                     |
+| errorId       | `string?`               | Unique id ([about context](#about-context)).                                                                                       |
+| stack         | `string?`               | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause         | `Error?`                | @see [about error cause](#about-errorcause)                                                                                        |
+| issues?       | `HttpValidationIssue[]` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
 
 ### Factories
 
@@ -224,7 +224,7 @@ const deserialized = createFromSerializable(serializableObject);
 
 ## Advanced
 
-### Validation errors
+### Validation issues
 
 Although field validation errors aren't part of the specs, they are often used by frameworks or apis in
 combination with the 422 status code (HttpUnprocessableEntity). For convenience, it's possible to directly
@@ -236,7 +236,7 @@ the 400 status code is more appropriate (one message).
 import { HttpUnprocessableEntity } from '@httpx/exception';
 
 const e422 = new HttpUnprocessableEntity({
-  errors: [
+  issues: [
     {
       message: 'Invalid email',
       path: 'email',
@@ -250,7 +250,7 @@ const e422 = new HttpUnprocessableEntity({
   ],
 });
 
-console.log(e422.errors);
+console.log(e422.issues);
 ```
 
 > For reference, see [github api](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors), rails or

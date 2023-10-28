@@ -5,6 +5,7 @@ export default defineConfig((options) => {
   return {
     entry: ['src/index.ts'],
     splitting: true,
+    treeshake: true,
     clean: true,
     dts: true,
     format: ['esm', 'cjs'],
@@ -14,7 +15,10 @@ export default defineConfig((options) => {
       };
     },
     platform: 'browser',
-    target: ['es2019', ...browserslistToEsbuild()],
+    minifySyntax: true,
+    minifyWhitespace: true,
+    minifyIdentifiers: true,
+    target: ['es2022', ...browserslistToEsbuild()],
     tsconfig: './tsconfig.build.json',
     sourcemap: !options.watch,
     minify: !options.watch,
