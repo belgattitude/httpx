@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperData, setProto } from '../utils';
 
 /**
  * 412 Precondition Failed (client)
@@ -13,9 +13,7 @@ import { getSuper } from '../utils';
 export class HttpPreconditionFailed extends HttpClientException {
   static readonly STATUS = 412;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'PreconditionFailed';
-    super(412, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpPreconditionFailed.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperData(HttpPreconditionFailed, msgOrParams));
+    setProto(this, HttpPreconditionFailed);
   }
 }

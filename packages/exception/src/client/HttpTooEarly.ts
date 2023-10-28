@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperData, setProto } from '../utils';
 
 /**
  * 425 Too early (client / experimental)
@@ -12,9 +12,7 @@ import { getSuper } from '../utils';
 export class HttpTooEarly extends HttpClientException {
   static readonly STATUS = 425;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'TooEarly';
-    super(425, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpTooEarly.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperData(HttpTooEarly, msgOrParams));
+    setProto(this, HttpTooEarly);
   }
 }

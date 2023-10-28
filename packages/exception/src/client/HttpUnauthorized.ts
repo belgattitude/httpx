@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperData, setProto } from '../utils';
 
 /**
  * 401 Unauthorized (client)
@@ -14,9 +14,7 @@ import { getSuper } from '../utils';
 export class HttpUnauthorized extends HttpClientException {
   static readonly STATUS = 401;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'Unauthorized';
-    super(401, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpUnauthorized.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperData(HttpUnauthorized, msgOrParams));
+    setProto(this, HttpUnauthorized);
   }
 }

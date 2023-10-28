@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperData, setProto } from '../utils';
 
 /**
  * 405 Method not allowed (client)
@@ -14,9 +14,7 @@ import { getSuper } from '../utils';
 export class HttpMethodNotAllowed extends HttpClientException {
   static readonly STATUS = 405;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'MethodNotAllowed';
-    super(405, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpMethodNotAllowed.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperData(HttpMethodNotAllowed, msgOrParams));
+    setProto(this, HttpMethodNotAllowed);
   }
 }

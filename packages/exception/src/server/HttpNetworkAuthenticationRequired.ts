@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperData, setProto } from '../utils';
 
 /**
  * 511 Network Authentication Required (server)
@@ -13,9 +13,7 @@ import { getSuper } from '../utils';
 export class HttpNetworkAuthenticationRequired extends HttpServerException {
   static readonly STATUS = 511;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'NetworkAuthenticationRequired';
-    super(511, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpNetworkAuthenticationRequired.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperData(HttpNetworkAuthenticationRequired, msgOrParams));
+    setProto(this, HttpNetworkAuthenticationRequired);
   }
 }

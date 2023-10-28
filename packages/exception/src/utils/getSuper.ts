@@ -13,15 +13,13 @@ export const getSuper = (
   name: string,
   msgOrParams?: HttpExceptionParams | string
 ): HttpExceptionParams => {
-  const p =
-    typeof msgOrParams === 'string' ? { message: msgOrParams } : msgOrParams;
-  const {
-    message = getMsgFromCls(name),
-    url,
-    cause,
-    errorId,
-    code,
-    method,
-  } = p ?? {};
-  return { message, url, cause, errorId, code, method };
+  const { message, ...rest } = {
+    ...(typeof msgOrParams === 'string'
+      ? { message: msgOrParams }
+      : msgOrParams ?? {}),
+  };
+  return {
+    ...rest,
+    message: message ?? getMsgFromCls(name),
+  };
 };
