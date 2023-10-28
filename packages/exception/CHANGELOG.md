@@ -1,5 +1,21 @@
 # @httpx/exception
 
+## 2.4.0
+
+### Minor Changes
+
+- [#672](https://github.com/belgattitude/httpx/pull/672) [`9d1d248`](https://github.com/belgattitude/httpx/commit/9d1d2484828906559f192ab337b645032c257518) Thanks [@belgattitude](https://github.com/belgattitude)! - Reduce bundle size by using class names rather than strings
+
+  Importing all exceptions (excluding utilities, typeguards...) now top at 1Kb
+
+  Example based on ESM (min+gzip)
+
+  | Scenario                    | Size   |
+  | --------------------------- | ------ |
+  | one exception               | ~ 450b |
+  | all exceptions              | < 1kb  |
+  | everything (typeguards,...) | 1.7kb  |
+
 ## 2.3.0
 
 ### Minor Changes
