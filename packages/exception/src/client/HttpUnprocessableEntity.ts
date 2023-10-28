@@ -1,5 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
+import type { HttpExceptionParamsWithIssues } from '../types/HttpExceptionParamsWithIssues';
 import type { HttpValidationIssue } from '../types/HttpValidationIssue';
 import { getSuper } from '../utils';
 
@@ -21,7 +22,10 @@ import { getSuper } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
  * @see https://httpstatus.in/422/
  */
-export class HttpUnprocessableEntity extends HttpClientException {
+export class HttpUnprocessableEntity
+  extends HttpClientException
+  implements HttpExceptionParamsWithIssues
+{
   static readonly STATUS = 422;
   public readonly issues: HttpValidationIssue[];
 
@@ -37,9 +41,7 @@ export class HttpUnprocessableEntity extends HttpClientException {
       | (HttpExceptionParams & {
           /** @deprecated use issues instead */
           errors?: HttpValidationIssue[];
-        } & {
-          issues?: HttpValidationIssue[];
-        })
+        } & HttpExceptionParamsWithIssues)
       | string
   ) {
     const name = 'UnprocessableEntity';

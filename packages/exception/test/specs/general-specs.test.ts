@@ -1,8 +1,10 @@
 import statuses from 'statuses';
 import { HttpClientException, HttpException } from '../../src/base';
-import { HttpNotFound } from '../../src/client';
+import { HttpNotFound, HttpUnprocessableEntity } from '../../src/client';
 import { createHttpException } from '../../src/factory';
+
 import { statusMap } from '../../src/status';
+import type { HttpExceptionParamsWithIssues } from '../../src/types/HttpExceptionParamsWithIssues';
 
 describe('Common specs', () => {
   describe('compare with npm:statuses package', () => {
@@ -58,6 +60,24 @@ describe('Common specs', () => {
       expect(err).toBeInstanceOf(HttpNotFound);
       expect(err).toBeInstanceOf(HttpException);
       expect(err).toBeInstanceOf(HttpClientException);
+    });
+  });
+
+  describe('createHttpException', () => {
+    it('should support HttpUnprocessableEntity with issues', () => {
+      const e422Params: HttpExceptionParamsWithIssues = {
+        message: 'Validation failed',
+        issues: [
+          {
+            message: 'Invalid address',
+            path: ['addresses', 0, 'line1'],
+            code: 'empty_string',
+          },
+        ],
+      };
+      expect(createHttpException(422, e422Params)).toStrictEqual(
+        new HttpUnprocessableEntity(e422Params)
+      );
     });
   });
 });

@@ -43,12 +43,11 @@ module.exports = [
     import: "{ createHttpException }",
     limit: "1500B", // Will import all server/client exceptions
   },
-
   {
     name: "ESM ({ toJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ toJson }",
-    limit: "800B",
+    limit: "930B",
   },
   {
     name: "ESM ({ fromJson })",

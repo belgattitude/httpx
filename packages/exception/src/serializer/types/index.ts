@@ -4,6 +4,7 @@
  * @see https://262.ecma-international.org/12.0/#sec-well-known-intrinsic-objects
  */
 import type { HttpMethod } from '../../types/HttpMethod';
+import type { HttpValidationIssue } from '../../types/HttpValidationIssue';
 
 export type NativeError =
   | Error
@@ -34,6 +35,7 @@ export type HttpExceptionFields = NativeErrorFields & {
   method?: HttpMethod;
   errorId?: string;
   code?: string;
+  issues?: HttpValidationIssue[];
 };
 
 export type Serializable =

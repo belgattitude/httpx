@@ -43,6 +43,7 @@ const createHttpExceptionError = (
     errorId: serializable.errorId,
     code: serializable.code,
     cause: cause ? createFromSerializable(cause) : undefined,
+    ...(serializable.issues ? { issues: serializable.issues } : {}),
   };
   let e: HttpException;
   try {

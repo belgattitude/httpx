@@ -6,7 +6,10 @@ import {
 import { statusMap } from '../status';
 import { isHttpErrorStatusCode } from '../typeguards';
 import type { AssignedStatusCodes } from '../types/AssignedStatusCodes';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
+import type {
+  HttpExceptionFromStatus,
+  HttpExceptionParamsFromStatus,
+} from '../types/FromStatusCode';
 
 /**
  * Create a concrete http exception object from a given http status code.
@@ -21,18 +24,23 @@ import type { HttpExceptionParams } from '../types/HttpExceptionParams';
  * @param statusCode http status code between 400-599
  * @param msgOrParams either a message or an object containing HttpExceptionParams
  */
-export const createHttpException = (
-  statusCode: number,
-  msgOrParams?: string | HttpExceptionParams
-): HttpException | HttpServerException | HttpClientException => {
+
+export const createHttpException = <T extends number>(
+  statusCode: T,
+  msgOrParams?: string | HttpExceptionParamsFromStatus<T>
+): HttpExceptionFromStatus<T> => {
   if (isHttpErrorStatusCode<AssignedStatusCodes>(statusCode)) {
     const cls = statusMap?.[statusCode];
     if (cls) {
-      return new cls(msgOrParams);
+      return new cls(msgOrParams) as HttpExceptionFromStatus<T>;
     }
-    return statusCode < 500
-      ? new HttpClientException(statusCode, msgOrParams)
-      : new HttpServerException(statusCode, msgOrParams);
+    return (
+      statusCode < 500
+        ? new HttpClientException(statusCode, msgOrParams)
+        : new HttpServerException(statusCode, msgOrParams)
+    ) as HttpExceptionFromStatus<typeof statusCode>;
   }
-  return new HttpException(statusCode, msgOrParams);
+  return new HttpException(statusCode, msgOrParams) as HttpExceptionFromStatus<
+    typeof statusCode
+  >;
 };

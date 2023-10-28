@@ -1,7 +1,8 @@
 import type { HttpException } from '../../base';
+import { HttpUnprocessableEntity } from '../../client';
 import { isHttpException } from '../../typeguards';
 import { isNativeError } from '../typeguard';
-import type { NativeError, Serializable } from '../types';
+import type { Serializable, NativeError } from '../types';
 
 /**
  * Convert an Error, NativeError or any HttpException to
@@ -45,6 +46,7 @@ export const convertToSerializable = (
       ...(e.code ? { code: e.code } : {}),
       ...(e.method ? { method: e.method } : {}),
       ...(e.errorId ? { errorId: e.errorId } : {}),
+      ...(e instanceof HttpUnprocessableEntity ? { issues: e.issues } : {}),
     };
   }
   return {
