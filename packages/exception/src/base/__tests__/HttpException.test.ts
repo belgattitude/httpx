@@ -4,6 +4,10 @@ import { HttpException } from '../HttpException';
 describe('HttpException', () => {
   it('should be instance of Error', () => {
     const exception = new HttpException(500);
+    expect(exception).toBeInstanceOf(Error);
+  });
+  it('should be instance of HttpException', () => {
+    const exception = new HttpException(500);
     expect(exception).toBeInstanceOf(HttpException);
   });
   it('should default message to "Http exception"', () => {

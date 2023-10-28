@@ -12,7 +12,7 @@ export default defineConfig((options) => {
     minifySyntax: true,
     minifyWhitespace: true,
     minifyIdentifiers: true,
-    cjsInterop: true,
+    cjsInterop: false,
     outExtension({ format }) {
       return {
         js: `.${format === 'cjs' ? 'cjs' : 'mjs'}`,

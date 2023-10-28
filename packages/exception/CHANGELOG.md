@@ -1,5 +1,21 @@
 # @httpx/exception
 
+## 2.4.0
+
+### Minor Changes
+
+- [#672](https://github.com/belgattitude/httpx/pull/672) [`9d1d248`](https://github.com/belgattitude/httpx/commit/9d1d2484828906559f192ab337b645032c257518) Thanks [@belgattitude](https://github.com/belgattitude)! - Reduce bundle size by using class names rather than strings
+
+  Importing all exceptions (excluding utilities, typeguards...) now top at 1Kb
+
+  Example based on ESM (min+gzip)
+
+  | Scenario                    | Size   |
+  | --------------------------- | ------ |
+  | one exception               | ~ 450b |
+  | all exceptions              | < 1kb  |
+  | everything (typeguards,...) | 1.7kb  |
+
 ## 2.3.0
 
 ### Minor Changes
@@ -79,14 +95,14 @@
   // becomes
   const issues: HttpValidationIssue[] = [
     {
-      message: 'Invalid email',
-      path: 'email',
-      code: 'invalid_email',
+      message: "Invalid email",
+      path: "email",
+      code: "invalid_email",
     },
     {
-      message: 'Invalid address',
-      path: ['addresses', 0, 'line1'],
-      code: 'empty_string',
+      message: "Invalid address",
+      path: ["addresses", 0, "line1"],
+      code: "empty_string",
     },
   ];
 
@@ -156,19 +172,19 @@
   Example:
 
   ```typescript
-  import { HttpUnprocessableEntity } from '@httpx/exception';
+  import { HttpUnprocessableEntity } from "@httpx/exception";
 
   const e422 = new HttpUnprocessableEntity({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -205,14 +221,14 @@
   const e400 = new HttpBadRequest({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -293,9 +309,9 @@
 
   ```typescript
   const err = new HttpRequestTimeout({
-    url: 'https://api.dev/user/belgattitude',
-    method: 'GET',
-    code: 'NETWORK_FAILURE',
+    url: "https://api.dev/user/belgattitude",
+    method: "GET",
+    code: "NETWORK_FAILURE",
     errorId: nanoid(), // can be shared by frontend/backend
   });
   console.log(err.url, err.method, err.code, err.errorId);
@@ -315,7 +331,7 @@
   import {
     convertToSerializable,
     createFromSerializable,
-  } from '@httpx/exception/serializer';
+  } from "@httpx/exception/serializer";
 
   const serializableObject = convertToSerializable(new HttpForbidden());
   const exception = createFromSerializable(serializableObject);
@@ -352,11 +368,11 @@
   import {
     HttpForbidden,
     HttpUnavailableForLegalReasons,
-  } from '@httpx/exception';
-  import { fromJson, toJson } from '@httpx/exception/serializer';
+  } from "@httpx/exception";
+  import { fromJson, toJson } from "@httpx/exception/serializer";
 
   const e = new HttpForbidden({
-    url: 'https://www.cool.me',
+    url: "https://www.cool.me",
     /*
       cause: new HttpUnavailableForLegalReasons({
           cause: new Error('example with cause')

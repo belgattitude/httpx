@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 508 Loop Detected (server / webdav specific)
@@ -13,9 +13,7 @@ import { getSuper } from '../utils';
 export class HttpLoopDetected extends HttpServerException {
   static readonly STATUS = 508;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'LoopDetected';
-    super(508, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpLoopDetected.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperArgs(HttpLoopDetected, msgOrParams));
+    initProtoAndName(this, HttpLoopDetected);
   }
 }

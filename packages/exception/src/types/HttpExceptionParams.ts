@@ -1,3 +1,5 @@
+import type { HttpMethod } from './HttpMethod';
+
 export type HttpExceptionParams = {
   /**
    * Exception message, if not provided the default is the exception
@@ -12,24 +14,16 @@ export type HttpExceptionParams = {
   /**
    * Inform about http method
    */
-  method?:
-    | 'GET'
-    | 'HEAD'
-    | 'POST'
-    | 'PUT'
-    | 'DELETE'
-    | 'CONNECT'
-    | 'OPTIONS'
-    | 'TRACE'
-    | 'PATCH';
+  method?: HttpMethod;
 
   /**
-   * Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+   * Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
+   * Do not use this to indicate http status code, the `statusCode` is built-in.
    */
   code?: string;
 
   /**
-   * Inform about an unique error identifier (ie: nanoid, cuid...)
+   * Inform about an unique error identifier (ie: nanoid, cuid, sentry...)
    */
   errorId?: string;
 

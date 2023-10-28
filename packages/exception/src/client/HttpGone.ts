@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 410 Gone (client)
@@ -17,9 +17,7 @@ import { getSuper } from '../utils';
 export class HttpGone extends HttpClientException {
   static readonly STATUS = 410;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'Gone';
-    super(410, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpGone.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperArgs(HttpGone, msgOrParams));
+    initProtoAndName(this, HttpGone);
   }
 }

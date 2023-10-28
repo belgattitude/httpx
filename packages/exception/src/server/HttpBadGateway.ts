@@ -1,6 +1,6 @@
 import { HttpServerException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 502 Bad Gateway (server)
@@ -13,9 +13,7 @@ import { getSuper } from '../utils';
 export class HttpBadGateway extends HttpServerException {
   static readonly STATUS = 502;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'BadGateway';
-    super(502, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpBadGateway.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperArgs(HttpBadGateway, msgOrParams));
+    initProtoAndName(this, HttpBadGateway);
   }
 }
