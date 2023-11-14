@@ -1,6 +1,6 @@
 # @httpx/exception
 
-Plain http exceptions for node, deno, edge and browsers. No deps, lightweight, first class typescript
+Plain http exceptions for node, deno, edge and browsers. Starts at 400b, tops at 1.7Kb, no deps, first class typescript
 experience. Offer a built-in serializer in case you'll need it in hybrid context (àlà nextjs) or for logging
 purposes.
 
