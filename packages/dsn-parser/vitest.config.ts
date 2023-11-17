@@ -4,10 +4,13 @@ import { defineConfig } from 'vitest/config';
 const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
 export default defineConfig({
+  esbuild: {
+    target: ['node18'],
+  },
   plugins: [tsconfigPaths()],
   test: {
     cache: {
-      dir: '../../.cache/vitest/httpx-dsn-parser',
+      dir: '../../.cache/vitest/httpx-exception',
     },
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
@@ -17,7 +20,12 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'json', 'clover'],
     },
-    deps: {},
+    deps: {
+      /*
+      experimentalOptimizer: {
+        enabled: false,
+      }, */
+    },
     environment: 'node',
     exclude: [
       '**/node_modules/**',
@@ -26,8 +34,8 @@ export default defineConfig({
       '**/.{idea,git,cache,output,temp}/**',
     ],
     globals: true,
-    // To mimic Jest behaviour regarding mocks.
     include: testFiles,
+    // To mimic Jest behaviour regarding mocks.
     mockReset: true,
     passWithNoTests: false,
     restoreMocks: true,

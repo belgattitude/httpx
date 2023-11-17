@@ -48,13 +48,17 @@ The server has encountered a situation it does not know how to handle.
 
 ### constructor
 
-• **new HttpInternalServerError**(`msgOrParams?`)
+• **new HttpInternalServerError**(`msgOrParams?`): [`HttpInternalServerError`](server.HttpInternalServerError.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpInternalServerError`](server.HttpInternalServerError.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

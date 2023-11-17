@@ -3,6 +3,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig((options) => {
   return {
+    cjsInterop: false,
     clean: true,
     dts: true,
     entry: ['src/index.ts'],

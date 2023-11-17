@@ -49,13 +49,17 @@ It's possible that the range is outside the size of the target URI's data.
 
 ### constructor
 
-• **new HttpRangeNotSatisfiable**(`msgOrParams?`)
+• **new HttpRangeNotSatisfiable**(`msgOrParams?`): [`HttpRangeNotSatisfiable`](client.HttpRangeNotSatisfiable.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpRangeNotSatisfiable`](client.HttpRangeNotSatisfiable.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

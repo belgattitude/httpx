@@ -70,7 +70,7 @@ either a message or an object containing HttpExceptionParams
 
 ### constructor
 
-• **new HttpServerException**(`statusCode`, `msgOrParams?`)
+• **new HttpServerException**(`statusCode`, `msgOrParams?`): [`HttpServerException`](base.HttpServerException.md)
 
 #### Parameters
 
@@ -78,6 +78,10 @@ either a message or an object containing HttpExceptionParams
 | :------------- | :--------------------------------------------------------------------------- |
 | `statusCode`   | `number`                                                                     |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpServerException`](base.HttpServerException.md)
 
 #### Overrides
 
@@ -235,7 +239,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

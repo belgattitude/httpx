@@ -49,13 +49,17 @@ servers are required to support (and therefore that must not return this code) a
 
 ### constructor
 
-• **new HttpNotImplemented**(`msgOrParams?`)
+• **new HttpNotImplemented**(`msgOrParams?`): [`HttpNotImplemented`](server.HttpNotImplemented.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpNotImplemented`](server.HttpNotImplemented.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

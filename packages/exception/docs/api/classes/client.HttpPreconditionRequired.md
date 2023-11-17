@@ -50,13 +50,17 @@ server, when meanwhile a third party has modified the state on the server, leadi
 
 ### constructor
 
-• **new HttpPreconditionRequired**(`msgOrParams?`)
+• **new HttpPreconditionRequired**(`msgOrParams?`): [`HttpPreconditionRequired`](client.HttpPreconditionRequired.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpPreconditionRequired`](client.HttpPreconditionRequired.md)
 
 #### Overrides
 
@@ -220,7 +224,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

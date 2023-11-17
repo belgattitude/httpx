@@ -49,13 +49,17 @@ https://httpstatus.in/421/
 
 ### constructor
 
-• **new HttpMisdirectedRequest**(`msgOrParams?`)
+• **new HttpMisdirectedRequest**(`msgOrParams?`): [`HttpMisdirectedRequest`](client.HttpMisdirectedRequest.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpMisdirectedRequest`](client.HttpMisdirectedRequest.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

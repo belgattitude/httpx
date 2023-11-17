@@ -48,13 +48,17 @@ This is similar to 401 Unauthorized but authentication is needed to be done by a
 
 ### constructor
 
-• **new HttpProxyAuthenticationRequired**(`msgOrParams?`)
+• **new HttpProxyAuthenticationRequired**(`msgOrParams?`): [`HttpProxyAuthenticationRequired`](client.HttpProxyAuthenticationRequired.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpProxyAuthenticationRequired`](client.HttpProxyAuthenticationRequired.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

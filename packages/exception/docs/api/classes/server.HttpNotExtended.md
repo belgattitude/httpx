@@ -48,13 +48,17 @@ Further extensions to the request are required for the server to fulfill it.
 
 ### constructor
 
-• **new HttpNotExtended**(`msgOrParams?`)
+• **new HttpNotExtended**(`msgOrParams?`): [`HttpNotExtended`](server.HttpNotExtended.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpNotExtended`](server.HttpNotExtended.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

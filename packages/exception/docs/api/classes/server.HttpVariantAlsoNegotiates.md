@@ -49,13 +49,17 @@ in transparent content negotiation itself, and is therefore not a proper end poi
 
 ### constructor
 
-• **new HttpVariantAlsoNegotiates**(`msgOrParams?`)
+• **new HttpVariantAlsoNegotiates**(`msgOrParams?`): [`HttpVariantAlsoNegotiates`](server.HttpVariantAlsoNegotiates.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpVariantAlsoNegotiates`](server.HttpVariantAlsoNegotiates.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

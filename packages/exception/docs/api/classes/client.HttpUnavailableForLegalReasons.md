@@ -48,13 +48,17 @@ The user agent requested a resource that cannot legally be provided, such as a w
 
 ### constructor
 
-• **new HttpUnavailableForLegalReasons**(`msgOrParams?`)
+• **new HttpUnavailableForLegalReasons**(`msgOrParams?`): [`HttpUnavailableForLegalReasons`](client.HttpUnavailableForLegalReasons.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpUnavailableForLegalReasons`](client.HttpUnavailableForLegalReasons.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

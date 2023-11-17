@@ -53,13 +53,17 @@ rather the 400 Bad Request status code.
 
 ### constructor
 
-• **new HttpBadRequest**(`msgOrParams?`)
+• **new HttpBadRequest**(`msgOrParams?`): [`HttpBadRequest`](client.HttpBadRequest.md)
 
 #### Parameters
 
 | Name           | Type                                        |
 | :------------- | :------------------------------------------ |
 | `msgOrParams?` | `string` \| `HttpExceptionParamsWithErrors` |
+
+#### Returns
+
+[`HttpBadRequest`](client.HttpBadRequest.md)
 
 #### Overrides
 
@@ -233,7 +237,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

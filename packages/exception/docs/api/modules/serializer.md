@@ -32,19 +32,19 @@
 
 ### SerializableError
 
-Ƭ **SerializableError**: `DiscriminateSerializable`<`"NativeError"`\>
+Ƭ **SerializableError**: `DiscriminateSerializable`\<`"NativeError"`\>
 
 ---
 
 ### SerializableHttpException
 
-Ƭ **SerializableHttpException**: `DiscriminateSerializable`<`"HttpException"`\>
+Ƭ **SerializableHttpException**: `DiscriminateSerializable`\<`"HttpException"`\>
 
 ---
 
 ### SerializableNonNativeError
 
-Ƭ **SerializableNonNativeError**: `DiscriminateSerializable`<`"NonNativeError"`\>
+Ƭ **SerializableNonNativeError**: `DiscriminateSerializable`\<`"NonNativeError"`\>
 
 ## Functions
 

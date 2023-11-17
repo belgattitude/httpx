@@ -48,13 +48,17 @@ Request entity is larger than limits defined by server. The server might close t
 
 ### constructor
 
-• **new HttpPayloadTooLarge**(`msgOrParams?`)
+• **new HttpPayloadTooLarge**(`msgOrParams?`): [`HttpPayloadTooLarge`](client.HttpPayloadTooLarge.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpPayloadTooLarge`](client.HttpPayloadTooLarge.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

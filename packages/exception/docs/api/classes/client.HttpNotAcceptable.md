@@ -49,13 +49,17 @@ any content that conforms to the criteria given by the user agent.
 
 ### constructor
 
-• **new HttpNotAcceptable**(`msgOrParams?`)
+• **new HttpNotAcceptable**(`msgOrParams?`): [`HttpNotAcceptable`](client.HttpNotAcceptable.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpNotAcceptable`](client.HttpNotAcceptable.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

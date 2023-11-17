@@ -33,7 +33,7 @@
 
 ### HttpExceptionParamsWithStatus
 
-Ƭ **HttpExceptionParamsWithStatus**: [`HttpExceptionParams`](types.md#httpexceptionparams) & { `statusCode`: [`HttpStatusCode`](types.md#httpstatuscode) }
+Ƭ **HttpExceptionParamsWithStatus**: [`HttpExceptionParams`](types.md#httpexceptionparams) & \{ `statusCode`: [`HttpStatusCode`](types.md#httpstatuscode) }
 
 ---
 

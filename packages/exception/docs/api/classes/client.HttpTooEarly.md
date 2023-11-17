@@ -47,13 +47,17 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/425
 
 ### constructor
 
-• **new HttpTooEarly**(`msgOrParams?`)
+• **new HttpTooEarly**(`msgOrParams?`): [`HttpTooEarly`](client.HttpTooEarly.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpTooEarly`](client.HttpTooEarly.md)
 
 #### Overrides
 
@@ -217,7 +221,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

@@ -49,13 +49,17 @@ is refusing to give the requested resource. Unlike 401 Unauthorized, the client'
 
 ### constructor
 
-• **new HttpForbidden**(`msgOrParams?`)
+• **new HttpForbidden**(`msgOrParams?`): [`HttpForbidden`](client.HttpForbidden.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpForbidden`](client.HttpForbidden.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

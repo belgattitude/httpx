@@ -51,13 +51,17 @@ unauthorized client.
 
 ### constructor
 
-• **new HttpNotFound**(`msgOrParams?`)
+• **new HttpNotFound**(`msgOrParams?`): [`HttpNotFound`](client.HttpNotFound.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpNotFound`](client.HttpNotFound.md)
 
 #### Overrides
 
@@ -221,7 +225,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

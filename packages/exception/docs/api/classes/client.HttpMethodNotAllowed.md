@@ -49,13 +49,17 @@ For example, an API may not allow calling DELETE to remove a resource.
 
 ### constructor
 
-• **new HttpMethodNotAllowed**(`msgOrParams?`)
+• **new HttpMethodNotAllowed**(`msgOrParams?`): [`HttpMethodNotAllowed`](client.HttpMethodNotAllowed.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpMethodNotAllowed`](client.HttpMethodNotAllowed.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

@@ -49,13 +49,17 @@ That is, the client must authenticate itself to get the requested response.
 
 ### constructor
 
-• **new HttpUnauthorized**(`msgOrParams?`)
+• **new HttpUnauthorized**(`msgOrParams?`): [`HttpUnauthorized`](client.HttpUnauthorized.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpUnauthorized`](client.HttpUnauthorized.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

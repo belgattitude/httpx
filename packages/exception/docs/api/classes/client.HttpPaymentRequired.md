@@ -49,13 +49,17 @@ payment systems, however this status code is used very rarely and no standard co
 
 ### constructor
 
-• **new HttpPaymentRequired**(`msgOrParams?`)
+• **new HttpPaymentRequired**(`msgOrParams?`): [`HttpPaymentRequired`](client.HttpPaymentRequired.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpPaymentRequired`](client.HttpPaymentRequired.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

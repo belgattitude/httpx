@@ -8,12 +8,6 @@
   },
   "homepage": "https://github.com/belgattitude/httpx",
   "repository": "belgattitude/httpx",
-  "resolutions?": {
-    "vite": "https://github.com/vitest-dev/vitest/issues/4112"
-  },
-  "resolutions": {
-    "vite": "^5.0.0"
-  },
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn workspaces foreach --all -pv run clean",
     "g:build": "yarn workspaces foreach --all -tv run build",

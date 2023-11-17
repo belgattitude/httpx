@@ -48,13 +48,17 @@ The HTTP version used in the request is not supported by the server.
 
 ### constructor
 
-• **new HttpVersionNotSupported**(`msgOrParams?`)
+• **new HttpVersionNotSupported**(`msgOrParams?`): [`HttpVersionNotSupported`](server.HttpVersionNotSupported.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpVersionNotSupported`](server.HttpVersionNotSupported.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

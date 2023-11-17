@@ -48,13 +48,17 @@ The media format of the requested data is not supported by the server, so the se
 
 ### constructor
 
-• **new HttpUnsupportedMediaType**(`msgOrParams?`)
+• **new HttpUnsupportedMediaType**(`msgOrParams?`): [`HttpUnsupportedMediaType`](client.HttpUnsupportedMediaType.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpUnsupportedMediaType`](client.HttpUnsupportedMediaType.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

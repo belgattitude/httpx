@@ -48,13 +48,17 @@ The client has indicated preconditions in its headers which the server does not 
 
 ### constructor
 
-• **new HttpPreconditionFailed**(`msgOrParams?`)
+• **new HttpPreconditionFailed**(`msgOrParams?`): [`HttpPreconditionFailed`](client.HttpPreconditionFailed.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpPreconditionFailed`](client.HttpPreconditionFailed.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

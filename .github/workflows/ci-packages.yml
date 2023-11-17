@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [20.x]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,7 +50,6 @@ jobs:
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run typecheck
 
       - name: 🔬 ESLint checks
-        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run lint
 
       - name: 🧪 Unit tests
@@ -58,7 +57,6 @@ jobs:
 
       - name: ☂️ Codecov upload
         working-directory: ${{ github.workspace }}
-        if: matrix.node-version == '18.x'
         run: |
           bash .github/scripts/install-codecov.sh
           yarn g:ci-coverage-upload
@@ -68,17 +66,13 @@ jobs:
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run build
 
       - name: 📐 Check build for size-limits
-        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run check-size
 
       - name: 🛟 Check build for ecmascript compliance
-        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run check-dist
 
       - name: 🛟 Check publishable dist  (publint)
-        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run check-pub
 
       - name: 📄 Check doc can be built
-        if: matrix.node-version == '18.x'
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run build-doc

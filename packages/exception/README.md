@@ -1,31 +1,32 @@
 # @httpx/exception
 
-Plain http exceptions for node, deno, edge and browsers. Starts at 400b, tops at 1.7Kb, no deps, first class typescript
-experience. Offer a built-in serializer in case you'll need it in hybrid context (àlà nextjs) or for logging
-purposes.
+HTTP response errors with default message, stacktrace, instanceof, error cause support.
+No deps, esm starts at 350b, tops at 1.4kb (esm). Includes convenience typeguards, optional
+error context and a built-in json (de-)serializer to allow usage across browser and
+node environments (SSR, RSC...) or for logging purpose.
 
-[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/exception)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://codecov.io/gh/belgattitude/httpx)
-[![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
-[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=>90%&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHM%3D)
+[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception)
+[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=keep-a-changelog&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md)
+[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception)
+[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
 ![node](https://img.shields.io/static/v1?label=Node&message=18%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
-[![techdebt](https://img.shields.io/codeclimate/tech-debt/belgattitude/httpx?label=TechDebt&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
-[![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Maintainability&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
-[![npm](https://img.shields.io/npm/dt/@httpx/exception?style=for-the-badge)](https://www.npmjs.com/package/@httpx/exception)
-[![license](https://img.shields.io/npm/l/@httpx/exception?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+[![browserslist](https://img.shields.io/static/v1?label=Browser&message=modern&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHM%3D)
+[![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
+[![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Quality&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
+[![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
+[![license](https://img.shields.io/npm/l/@httpx/exception?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
 ## Highlights
 
-- 🚀&nbsp; Simple use: [explicit named imports](https://belgattitude.github.io/httpx/#/?id=named-exceptions) and/or [status code](https://belgattitude.github.io/httpx/#/?id=factories).
-- ✨‍&nbsp; Default statusText as [error message](https://belgattitude.github.io/httpx/#/?id=about-default-message). Less to type, reduce divergence...
-- 🎥&nbsp; Optionally attach some common [contextual](https://belgattitude.github.io/httpx/#/?id=about-context) info (less guessing, loggers...).
-- 🐎&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to cover Server-Side-Rendering use-cases (nextjs, superjson,...).
-- 🎯&nbsp; [Extends](https://belgattitude.github.io/httpx/#/?id=uml-class-diagram) Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) trace and [Error.cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
-- 📡&nbsp; Framework agnostic, no deps. Works everywhere: node, browsers, edge...
-- 🍃&nbsp; [Lightweight](https://bundlephobia.com/package/@httpx/exception@latest) - [treeshakable](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs) - wide [browser coverage](https://browserslist.dev/?q=PiAwLjAxJSwgbm90IGRlYWQ%3D) (trade-off).
+- 🚀&nbsp; Usage by [explicit named imports](https://belgattitude.github.io/httpx/#/?id=named-exceptions) and/or [status code](https://belgattitude.github.io/httpx/#/?id=factories).
+- ✨‍&nbsp; Default [http error message](https://belgattitude.github.io/httpx/#/?id=about-default-message) inferred from exception name.
+- 🎥&nbsp; Support commonly used [contextual](https://belgattitude.github.io/httpx/#/?id=about-context) info (less guessing, loggers...).
+- 🐎&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to allow server-side-rendering (nextjs, superjson,...).
+- 🎯&nbsp; [Extends](https://belgattitude.github.io/httpx/#/?id=uml-class-diagram) native Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) trace and [Error.cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
+- 📡&nbsp; Framework agnostic, no deps. Works everywhere.
+- 🍃&nbsp; [Lightweight](https://bundlephobia.com/package/@httpx/exception@latest) - [treeshakable](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs) - [modern browser](https://browserslist.dev/?q=PiAwLjAxJSwgbm90IGRlYWQ%3D) support.
 - 🧙‍&nbsp; IDE friendly. Typescript - typedoc with links to mdn and description.
-- 🥃&nbsp; [Docs](https://belgattitude.github.io/httpx) & [changelogs](https://github.com/belgattitude/httpx/releases) - Well tested and maintained - [Contributors](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) welcome.
+- 🥃&nbsp; [Docs](https://belgattitude.github.io/httpx) & [changelogs](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md) - [Contributors](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) welcome.
 
 ## Install
 
@@ -38,14 +39,14 @@ pnpm add @httpx/exception     # via pnpm
 ## Bundle size
 
 This library is best consumed in ESM, individual imports are tracked by a
-size-limit action. In most situation the bundle size will be less than 1Kb.
-That includes default messages :)
+size-limit action. In typical usage the bundle size will be less than 900b
+(including default messages)
 
-| Scenario                                         | Size (esm -> min/gzip) |
-| ------------------------------------------------ | ---------------------- |
-| Import only one exception                        | ~ 400b                 |
-| Import all exceptions or use createHttpException | < 1kb                  |
-| All exceptions + typeguards + serializer         | max 1.7kb              |
+| Scenario                                         | Size (esm & min/brotli) |
+| ------------------------------------------------ | ----------------------- |
+| Import only one exception                        | ~ 350b                  |
+| Import all exceptions or use createHttpException | < 900b                  |
+| All exceptions + typeguards + serializer         | ~ 1.5kb                 |
 
 ## Usage
 
@@ -53,21 +54,25 @@ Basic usage below, but don't forget to check the
 👉 full documentation on [https://belgattitude.github.io/httpx](https://belgattitude.github.io/httpx). 👈.
 It includes serialization recipes, http422 with validation issues and more..
 
-### Named
+### By classname
 
 ```typescript
 import { HttpNotFound, HttpInternalServerError } from '@httpx/exception';
 
-// 👉 1. Simple
-const e404 = new HttpNotFound();
+// 👉 1. Simple usage.
+const e = new HttpNotFound();
 
--> 🔥 e.statusCode === 404
--> 🔥 e.message inferred to be === "Not found"!
+-> 🔥 [e.statusCode] => 404
+-> 🔥 [e.message] by default => "Not found"
+-> 🔥 [e.stack] => stacktrace
+-> 🔥 [e instanceof HttpNotFound] => true
+-> 🔥 [e instanceof HttpClientException] => true
+-> 🔥 [e instanceof HttpException] => true
 
-// 👉 2. Alternative custom message !
+// 👉 2. Explicit message
 const e404 = new HttpNotFound("The graal is nowhere to be found");
 
-// 👉 3. Custom params and (optional) context
+// 👉 3. Full context
 const e500 = new HttpInternalServerError({
     message: "Oups, this is on our side.",
     url: "https://api.dev/gateway",
@@ -81,7 +86,7 @@ const e500 = new HttpInternalServerError({
 });
 ```
 
-### Factory
+### By named import
 
 ```typescript
 import { createHttpException } from '@httpx/exception';
@@ -89,7 +94,11 @@ import { createHttpException } from '@httpx/exception';
 // 👉 1. Simple
 const e404 = createHttpException(404);
 -> 🔥 e.statusCode === 404
--> 🔥 e.message inferred to be === "Not found"!
+-> 🔥 e.message inferred to be === "Not found"
+-> 🔥 e instanceof HttpNotFound === true
+-> 🔥 e instanceof HttpClientException === true
+-> 🔥 e instanceof HttpException === true
+
 
 // 👉 2. Custom params and (optional) context
 

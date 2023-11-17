@@ -51,13 +51,17 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418
 
 ### constructor
 
-• **new HttpImATeapot**(`msgOrParams?`)
+• **new HttpImATeapot**(`msgOrParams?`): [`HttpImATeapot`](client.HttpImATeapot.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpImATeapot`](client.HttpImATeapot.md)
 
 #### Overrides
 
@@ -221,7 +225,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

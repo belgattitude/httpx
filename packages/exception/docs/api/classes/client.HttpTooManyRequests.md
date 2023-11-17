@@ -48,13 +48,17 @@ The user has sent too many requests in a given amount of time ("rate limiting").
 
 ### constructor
 
-• **new HttpTooManyRequests**(`msgOrParams?`)
+• **new HttpTooManyRequests**(`msgOrParams?`): [`HttpTooManyRequests`](client.HttpTooManyRequests.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpTooManyRequests`](client.HttpTooManyRequests.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 
