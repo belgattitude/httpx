@@ -3,12 +3,9 @@ import { defineConfig } from 'vitest/config';
 
 const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
-// eslint-disable-next-line import/no-unassigned-import
-import 'error-cause-polyfill/auto';
-
 export default defineConfig({
   esbuild: {
-    target: ['node14'],
+    target: ['node18'],
   },
   plugins: [tsconfigPaths()],
   test: {
@@ -42,6 +39,5 @@ export default defineConfig({
     mockReset: true,
     passWithNoTests: false,
     restoreMocks: true,
-    setupFiles: './test/_setup/setupVitest.ts',
   },
 });

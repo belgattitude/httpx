@@ -1,6 +1,6 @@
 # @httpx/dsn-parser
 
-DSN parser, validation utilities, and query string helper in a light and modern package.
+DSN & JDBC string parser with query params support in a light and modern package.
 
 [![npm](https://img.shields.io/npm/v/@httpx/dsn-parser?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/dsn-parser)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?label=unit&logo=codecov&flag=httpx-dsn-parser-unit&style=for-the-badge&labelColor=000000)](https://codecov.io/gh/belgattitude/httpx)
@@ -8,7 +8,7 @@ DSN parser, validation utilities, and query string helper in a light and modern 
 ![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)
 ![node](https://img.shields.io/static/v1?label=Node&message=16%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
 [![browserslist](https://img.shields.io/static/v1?label=Browser&message=modern&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMgYW5kIHN1cHBvcnRzIGVzNi1tb2R1bGUsIG5vdCBkZWFkLCBub3Qgb3BfbWluaSBhbGwsIG5vZGUgMTY%3D)
-![types](https://img.shields.io/static/v1?label=typings&message=4.5%2B&logo=typescript&style=for-the-badge&labelColor=000000&color=9cf)
+![types](https://img.shields.io/static/v1?label=typings&message=4.7%2B&logo=typescript&style=for-the-badge&labelColor=000000&color=9cf)
 [![npm](https://img.shields.io/npm/dm/@httpx/dsn-parser?style=for-the-badge&labelColor=000000)](https://www.npmjs.com/package/@httpx/dsn-parser)
 [![license](https://img.shields.io/npm/l/@httpx/dsn-parser?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
@@ -23,11 +23,12 @@ $ pnpm add @httpx/dsn-parser
 ## Features
 
 - [x] Parse individual fields (ie: `driver`, `user`, `password`, `host`...)
-- [x] Handle query string with casting of boolean and numeric values.
+- [x] Handle query string parameters and converts to boolean and numeric values.
 - [x] Handle [special characters like](#why--in-password-matters) `/`, `:`... in the password (some libs won't).
 - [x] Error with indicative message / reasons (discriminative union or throwing).
 - [x] Don't leak passwords in the error message.
-- [x] Assertion and typeguard helpers (ie: [easy integrate with zod](#zod-integration-example)).
+- [x] Assertion and typeguard helpers
+- [x] Ecosystem friendly (ie: [easy integrate with zod](#zod-integration-example)).
 
 ## Quick start
 
