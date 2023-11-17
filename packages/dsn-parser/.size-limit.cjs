@@ -4,13 +4,15 @@
  */
 module.exports = [
   {
-    name: 'JS (ESM)',
+    name: 'Everything (ESM)',
     path: ['dist/index.mjs'],
+    import: "*",
     limit: '1.10KB',
   },
   {
-    name: 'JS (CJS)',
+    name: 'Everything (CJS)',
+    import: "*",
     path: ['dist/index.cjs'],
-    limit: '1.10KB',
+    limit: '1.40KB',
   },
 ];
