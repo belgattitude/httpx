@@ -15,7 +15,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  test-examples:
     runs-on: ubuntu-latest
     strategy:
       matrix:
