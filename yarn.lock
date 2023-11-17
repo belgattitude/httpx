@@ -1109,6 +1109,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.13.1"
     "@belgattitude/eslint-config-bases": "npm:3.5.0"
+    "@size-limit/file": "npm:11.0.0"
     "@size-limit/webpack": "npm:11.0.0"
     "@vitest/coverage-istanbul": "npm:1.0.0-beta.4"
     "@vitest/ui": "npm:1.0.0-beta.4"
@@ -1136,6 +1137,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.13.1"
     "@belgattitude/eslint-config-bases": "npm:3.5.0"
+    "@size-limit/file": "npm:11.0.0"
     "@size-limit/webpack": "npm:11.0.0"
     "@size-limit/webpack-why": "npm:11.0.0"
     "@types/node": "npm:20.9.1"
@@ -1173,6 +1175,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.13.1"
     "@belgattitude/eslint-config-bases": "npm:3.5.0"
     "@httpx/exception": "workspace:^"
+    "@size-limit/file": "npm:11.0.0"
     "@size-limit/webpack": "npm:11.0.0"
     "@vitest/coverage-istanbul": "npm:1.0.0-beta.4"
     "@vitest/ui": "npm:1.0.0-beta.4"
@@ -1586,6 +1589,15 @@ __metadata:
   version: 1.0.0
   resolution: "@sindresorhus/merge-streams@npm:1.0.0"
   checksum: 453c2a28164113a5ec4fd23ba636e291a4112f6ee9e91cd5476b9a96e0fc9ee5ff40d405fe81bbf284c9773b7ed718a3a0f31df7895a0efd413b1f9775d154fe
+  languageName: node
+  linkType: hard
+
+"@size-limit/file@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@size-limit/file@npm:11.0.0"
+  peerDependencies:
+    size-limit: 11.0.0
+  checksum: 4a5c3cbd363819745177c5e57a6b853e6dc324c8dcc64498c9c5e7976001042afe258d4517f9fa04db7b1e0cbaf352b418e3fc40b3b2a17d5330875e9b30b111
   languageName: node
   linkType: hard
 
