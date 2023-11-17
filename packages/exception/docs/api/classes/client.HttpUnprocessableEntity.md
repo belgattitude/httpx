@@ -57,13 +57,17 @@ Note that a lot of apis/frameworks uses 422 Unprocessable Entity to indicate (fo
 
 ### constructor
 
-• **new HttpUnprocessableEntity**(`msgOrParams?`)
+• **new HttpUnprocessableEntity**(`msgOrParams?`): [`HttpUnprocessableEntity`](client.HttpUnprocessableEntity.md)
 
 #### Parameters
 
-| Name           | Type                                                                                                                                                                                                                                                 |
-| :------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) & { `errors?`: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[] } & { `issues?`: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[] } |
+| Name           | Type                                                                                                                                                                                                                                                   |
+| :------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) & \{ `errors?`: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[] } & \{ `issues?`: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[] } |
+
+#### Returns
+
+[`HttpUnprocessableEntity`](client.HttpUnprocessableEntity.md)
 
 #### Overrides
 
@@ -243,7 +247,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

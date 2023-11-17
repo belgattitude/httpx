@@ -48,13 +48,17 @@ The server detected an infinite loop while processing the request.
 
 ### constructor
 
-• **new HttpLoopDetected**(`msgOrParams?`)
+• **new HttpLoopDetected**(`msgOrParams?`): [`HttpLoopDetected`](server.HttpLoopDetected.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpLoopDetected`](server.HttpLoopDetected.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

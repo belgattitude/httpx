@@ -49,13 +49,17 @@ The request may be resubmitted after reducing the size of the request header fie
 
 ### constructor
 
-• **new HttpRequestHeaderFieldsTooLarge**(`msgOrParams?`)
+• **new HttpRequestHeaderFieldsTooLarge**(`msgOrParams?`): [`HttpRequestHeaderFieldsTooLarge`](client.HttpRequestHeaderFieldsTooLarge.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpRequestHeaderFieldsTooLarge`](client.HttpRequestHeaderFieldsTooLarge.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

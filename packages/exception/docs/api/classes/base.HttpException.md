@@ -46,7 +46,7 @@
 
 ### constructor
 
-• **new HttpException**(`statusCode`, `msgOrParams?`)
+• **new HttpException**(`statusCode`, `msgOrParams?`): [`HttpException`](base.HttpException.md)
 
 Construct a new HttpException class
 
@@ -56,6 +56,10 @@ Construct a new HttpException class
 | :------------- | :--------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
 | `statusCode`   | `number`                                                                     | http status code between 400-599, no checks are done on the validity of the number. |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) | either a message or an object containing HttpExceptionParams                        |
+
+#### Returns
+
+[`HttpException`](base.HttpException.md)
 
 #### Overrides
 
@@ -217,7 +221,7 @@ Error.stackTraceLimit
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

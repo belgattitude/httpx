@@ -51,13 +51,17 @@ Also note that some servers merely shut down the connection without sending this
 
 ### constructor
 
-• **new HttpRequestTimeout**(`msgOrParams?`)
+• **new HttpRequestTimeout**(`msgOrParams?`): [`HttpRequestTimeout`](client.HttpRequestTimeout.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpRequestTimeout`](client.HttpRequestTimeout.md)
 
 #### Overrides
 
@@ -221,7 +225,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

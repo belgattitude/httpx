@@ -48,13 +48,17 @@ https://httpstatus.in/423/
 
 ### constructor
 
-• **new HttpLocked**(`msgOrParams?`)
+• **new HttpLocked**(`msgOrParams?`): [`HttpLocked`](client.HttpLocked.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpLocked`](client.HttpLocked.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

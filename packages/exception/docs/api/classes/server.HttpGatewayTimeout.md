@@ -48,13 +48,17 @@ This error response is given when the server is acting as a gateway and cannot g
 
 ### constructor
 
-• **new HttpGatewayTimeout**(`msgOrParams?`)
+• **new HttpGatewayTimeout**(`msgOrParams?`): [`HttpGatewayTimeout`](server.HttpGatewayTimeout.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpGatewayTimeout`](server.HttpGatewayTimeout.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

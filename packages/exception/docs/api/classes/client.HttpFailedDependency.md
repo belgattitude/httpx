@@ -51,13 +51,17 @@ https://httpstatus.in/424/
 
 ### constructor
 
-• **new HttpFailedDependency**(`msgOrParams?`)
+• **new HttpFailedDependency**(`msgOrParams?`): [`HttpFailedDependency`](client.HttpFailedDependency.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpFailedDependency`](client.HttpFailedDependency.md)
 
 #### Overrides
 
@@ -221,7 +225,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

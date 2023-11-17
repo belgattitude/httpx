@@ -33,7 +33,7 @@
 
 ### constructor
 
-• **new SerializerError**(`message`, `params?`)
+• **new SerializerError**(`message`, `params?`): [`SerializerError`](serializer.SerializerError.md)
 
 #### Parameters
 
@@ -42,6 +42,10 @@
 | `message`       | `string` |
 | `params?`       | `Object` |
 | `params.cause?` | `Error`  |
+
+#### Returns
+
+[`SerializerError`](serializer.SerializerError.md)
 
 #### Overrides
 
@@ -132,7 +136,7 @@ Error.stackTraceLimit
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

@@ -48,13 +48,17 @@ The URI requested by the client is longer than the server is willing to interpre
 
 ### constructor
 
-• **new HttpUriTooLong**(`msgOrParams?`)
+• **new HttpUriTooLong**(`msgOrParams?`): [`HttpUriTooLong`](client.HttpUriTooLong.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpUriTooLong`](client.HttpUriTooLong.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

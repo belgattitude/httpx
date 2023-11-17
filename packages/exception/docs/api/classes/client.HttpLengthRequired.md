@@ -48,13 +48,17 @@ Server rejected the request because the Content-Length header field is not defin
 
 ### constructor
 
-• **new HttpLengthRequired**(`msgOrParams?`)
+• **new HttpLengthRequired**(`msgOrParams?`): [`HttpLengthRequired`](client.HttpLengthRequired.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpLengthRequired`](client.HttpLengthRequired.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

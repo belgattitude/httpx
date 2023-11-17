@@ -48,13 +48,17 @@ This response is sent when a request conflicts with the current state of the ser
 
 ### constructor
 
-• **new HttpConflict**(`msgOrParams?`)
+• **new HttpConflict**(`msgOrParams?`): [`HttpConflict`](client.HttpConflict.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpConflict`](client.HttpConflict.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

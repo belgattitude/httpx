@@ -106,7 +106,7 @@ either a message or an object containing HttpExceptionParams
 
 ### constructor
 
-• **new HttpClientException**(`statusCode`, `msgOrParams?`)
+• **new HttpClientException**(`statusCode`, `msgOrParams?`): [`HttpClientException`](base.HttpClientException.md)
 
 #### Parameters
 
@@ -114,6 +114,10 @@ either a message or an object containing HttpExceptionParams
 | :------------- | :--------------------------------------------------------------------------- |
 | `statusCode`   | `number`                                                                     |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpClientException`](base.HttpClientException.md)
 
 #### Overrides
 
@@ -271,7 +275,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

@@ -49,13 +49,17 @@ in the request's Expect header could not be met.
 
 ### constructor
 
-• **new HttpExpectationFailed**(`msgOrParams?`)
+• **new HttpExpectationFailed**(`msgOrParams?`): [`HttpExpectationFailed`](client.HttpExpectationFailed.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpExpectationFailed`](client.HttpExpectationFailed.md)
 
 #### Overrides
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

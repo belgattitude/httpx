@@ -55,13 +55,17 @@ should usually not be cached.
 
 ### constructor
 
-• **new HttpServiceUnavailable**(`msgOrParams?`)
+• **new HttpServiceUnavailable**(`msgOrParams?`): [`HttpServiceUnavailable`](server.HttpServiceUnavailable.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpServiceUnavailable`](server.HttpServiceUnavailable.md)
 
 #### Overrides
 
@@ -225,7 +229,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

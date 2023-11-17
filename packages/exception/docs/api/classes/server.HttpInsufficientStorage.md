@@ -48,13 +48,17 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/507
 
 ### constructor
 
-• **new HttpInsufficientStorage**(`msgOrParams?`)
+• **new HttpInsufficientStorage**(`msgOrParams?`): [`HttpInsufficientStorage`](server.HttpInsufficientStorage.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpInsufficientStorage`](server.HttpInsufficientStorage.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

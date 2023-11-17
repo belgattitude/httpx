@@ -32,7 +32,7 @@ error is HttpClientException
 
 ### isHttpErrorStatusCode
 
-▸ **isHttpErrorStatusCode**<`T`\>(`statusCode`): statusCode is T
+▸ **isHttpErrorStatusCode**\<`T`\>(`statusCode`): statusCode is T
 
 Check if the provided value is a valid http status code
 

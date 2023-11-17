@@ -48,13 +48,17 @@ Indicates that the client needs to authenticate to gain network access.
 
 ### constructor
 
-• **new HttpNetworkAuthenticationRequired**(`msgOrParams?`)
+• **new HttpNetworkAuthenticationRequired**(`msgOrParams?`): [`HttpNetworkAuthenticationRequired`](server.HttpNetworkAuthenticationRequired.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpNetworkAuthenticationRequired`](server.HttpNetworkAuthenticationRequired.md)
 
 #### Overrides
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

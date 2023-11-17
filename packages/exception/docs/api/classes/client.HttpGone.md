@@ -52,13 +52,17 @@ APIs should not feel compelled to indicate resources that have been deleted with
 
 ### constructor
 
-• **new HttpGone**(`msgOrParams?`)
+• **new HttpGone**(`msgOrParams?`): [`HttpGone`](client.HttpGone.md)
 
 #### Parameters
 
 | Name           | Type                                                                         |
 | :------------- | :--------------------------------------------------------------------------- |
 | `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpGone`](client.HttpGone.md)
 
 #### Overrides
 
@@ -222,7 +226,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 
