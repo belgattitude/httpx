@@ -1,6 +1,6 @@
 {
   "name": "@httpx/exception",
-  "description": "Plain http exception in typescript.",
+  "description": "HTTP response errors with default message, stacktrace, instanceof, error cause support and more.",
   "version": "2.5.1",
   "license": "MIT",
   "author": {
@@ -14,13 +14,11 @@
     "directory": "packages/exception"
   },
   "keywords": [
-    "http-error",
-    "http-exception",
-    "error",
-    "exception",
-    "node",
-    "browser",
-    "typescript"
+    "http error",
+    "http exception",
+    "http response error",
+    "http status code",
+    "http status"
   ],
   "sideEffects": false,
   "browserslist": [
