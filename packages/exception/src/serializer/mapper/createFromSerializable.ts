@@ -18,14 +18,11 @@ const createCustomError = (
 ): Error | NativeError => {
   const { cause, message, name, stack } = serializable;
   const cls = nativeErrorMap[name as keyof typeof nativeErrorMap] ?? Error;
-  let e: Error | NativeError;
-  if (cause) {
-    e = new cls(message, {
-      cause: createFromSerializable(cause),
-    });
-  } else {
-    e = new cls(message);
-  }
+  const e: Error | NativeError = cause
+    ? new cls(message, {
+        cause: createFromSerializable(cause),
+      })
+    : new cls(message);
   if (stack) {
     e.stack = stack;
   }
@@ -35,24 +32,33 @@ const createCustomError = (
 const createHttpExceptionError = (
   serializable: SerializableHttpException
 ): Error | HttpException => {
-  const { cause, name, stack, statusCode } = serializable;
+  const {
+    cause,
+    name,
+    stack,
+    statusCode,
+    code,
+    errorId,
+    message,
+    method,
+    url,
+    issues,
+  } = serializable;
   const params = {
     cause: cause ? createFromSerializable(cause) : undefined,
-    code: serializable.code,
-    errorId: serializable.errorId,
-    message: serializable.message,
-    method: serializable.method,
-    url: serializable.url,
-    ...(serializable.issues ? { issues: serializable.issues } : {}),
+    code: code,
+    errorId: errorId,
+    message: message,
+    method: method,
+    url: url,
+    ...(issues ? { issues } : {}),
   };
   let e: HttpException;
   try {
-    if (isBaseHttpException(name)) {
-      e = new baseExceptionMap[name](statusCode, params);
-    } else {
-      e = createHttpException(statusCode, params);
-    }
-  } catch (e) {
+    e = isBaseHttpException(name)
+      ? new baseExceptionMap[name](statusCode, params)
+      : createHttpException(statusCode, params);
+  } catch {
     return createCustomError({ cause, message: params.message, name, stack });
   }
   if (stack) {
@@ -72,19 +78,22 @@ export const createFromSerializable = (
 ): Error | HttpException | NativeError => {
   let e: Error | HttpException | NativeError;
   switch (payload.__type) {
-    case 'HttpException':
+    case 'HttpException': {
       e = createHttpExceptionError(payload);
       break;
+    }
     case 'NativeError':
-    case 'NonNativeError':
+    case 'NonNativeError': {
       e = createCustomError(payload);
       break;
-    default:
+    }
+    default: {
       throw new Error(
         `Can't unserialize from unknown error (${
           (payload as Serializable).name
         })`
       );
+    }
   }
   return e;
 };

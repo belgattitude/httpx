@@ -54,7 +54,7 @@ Basic usage below, but don't forget to check the
 👉 full documentation on [https://belgattitude.github.io/httpx](https://belgattitude.github.io/httpx). 👈.
 It includes serialization recipes, http422 with validation issues and more..
 
-### By classname
+### By named import
 
 ```typescript
 import { HttpNotFound, HttpInternalServerError } from '@httpx/exception';
@@ -86,7 +86,7 @@ const e500 = new HttpInternalServerError({
 });
 ```
 
-### By named import
+### By status code
 
 ```typescript
 import { createHttpException } from '@httpx/exception';

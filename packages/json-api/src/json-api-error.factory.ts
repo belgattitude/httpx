@@ -31,7 +31,8 @@ export class JsonApiErrorFactory {
       };
     }
     const { message, status, statusCode } = {
-      ...{ status: null, statusCode: null },
+      status: null,
+      statusCode: null,
       ...exception,
     };
     return {

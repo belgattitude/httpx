@@ -40,7 +40,7 @@ describe('isValidNetworkPort', () => {
   it('should work as expected', () => {
     expect(isValidNetworkPort(3001)).toBeTruthy();
     expect(isValidNetworkPort(0)).toBeFalsy();
-    expect(isValidNetworkPort(65536)).toBeFalsy();
+    expect(isValidNetworkPort(65_536)).toBeFalsy();
     expect(isValidNetworkPort(-1)).toBeFalsy();
   });
 });
