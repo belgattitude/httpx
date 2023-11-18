@@ -4,6 +4,10 @@ import { HttpException } from '../HttpException';
 describe('HttpException', () => {
   it('should be instance of Error', () => {
     const exception = new HttpException(500);
+    expect(exception).toBeInstanceOf(Error);
+  });
+  it('should be instance of HttpException', () => {
+    const exception = new HttpException(500);
     expect(exception).toBeInstanceOf(HttpException);
   });
   it('should default message to "Http exception"', () => {
@@ -19,11 +23,11 @@ describe('HttpException', () => {
   });
   it('should persist statusCode and params', () => {
     const params: HttpExceptionParams = {
+      code: 'NETWORK_UNAVAILABLE',
       errorId: 'nanoid()',
       message: 'msg',
-      code: 'NETWORK_UNAVAILABLE',
-      url: 'http://localhost',
       method: 'PUT',
+      url: 'http://localhost',
     };
     const exception = new HttpException(500, params);
     expect(exception.url).toStrictEqual(params.url);

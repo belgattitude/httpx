@@ -18,11 +18,11 @@ const {
 const rules = {
   '**/*.{js,jsx,ts,tsx}': (filenames) => {
     return getEslintFixCmd({
-      cwd: __dirname,
-      fix: true,
       cache: true,
-      maxWarnings: 25,
+      cwd: __dirname,
       files: filenames,
+      fix: true,
+      maxWarnings: 25,
     });
   },
   '**/*.{json,md,mdx,css,html,yml,yaml,scss}': (filenames) => {

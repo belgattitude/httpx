@@ -4,10 +4,10 @@
  * and zod (path).
  */
 export type HttpValidationIssue = {
-  /** Param name or path, ie: 'email' or ['addresses', 0, 'line1'] */
-  path: string | (string | number)[];
-  /** A short, human-readable summary of the problem */
-  message: string;
   /** An application-specific error code, expressed as a string value. */
   code?: string;
+  /** A short, human-readable summary of the problem */
+  message: string;
+  /** Param name or path, ie: 'email' or ['addresses', 0, 'line1'] */
+  path: (number | string)[] | string;
 };

@@ -1,7 +1,7 @@
 import {
+  type HttpException,
   HttpNotFound,
   HttpRequestTimeout,
-  type HttpException,
 } from '@httpx/exception';
 import { fromJson, toJson } from '@httpx/exception/serializer';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -9,14 +9,14 @@ import { Scenarios } from '../components/Scenarios';
 
 type ApiData =
   | {
-      success: true;
       data: {
         id: string;
       };
+      success: true;
     }
   | {
-      success: false;
       error: string;
+      success: false;
     };
 
 type Props = {
@@ -62,8 +62,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       };
     }
     apiData = {
-      success: false,
       error: toJson(e as HttpException),
+      success: false,
     };
   }
   return {

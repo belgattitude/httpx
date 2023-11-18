@@ -1,5 +1,83 @@
 # @httpx/exception
 
+## 2.5.3
+
+### Patch Changes
+
+- [#724](https://github.com/belgattitude/httpx/pull/724) [`8d02a2a`](https://github.com/belgattitude/httpx/commit/8d02a2a516aaf42ff5e002889938c6282c862b47) Thanks [@belgattitude](https://github.com/belgattitude)! - Optimize code thanks to eslint unicorn plugin
+
+## 2.5.2
+
+### Patch Changes
+
+- [#719](https://github.com/belgattitude/httpx/pull/719) [`bae6ce0`](https://github.com/belgattitude/httpx/commit/bae6ce05a85822b0ec4658b679e82ce4efa9222f) Thanks [@belgattitude](https://github.com/belgattitude)! - Upgrade tsup to 7.3 and build with esbuild 0.19.3
+
+## 2.5.1
+
+### Patch Changes
+
+- [#677](https://github.com/belgattitude/httpx/pull/677) [`92343d2`](https://github.com/belgattitude/httpx/commit/92343d2ef30678cfdb0edd29b8fc2a492b91ec58) Thanks [@belgattitude](https://github.com/belgattitude)! - Add tupleson tests and improve docs
+
+## 2.5.0
+
+### Minor Changes
+
+- [#675](https://github.com/belgattitude/httpx/pull/675) [`a6a63e1`](https://github.com/belgattitude/httpx/commit/a6a63e174af87f04eaf105a6e45c2ef56fc64ade) Thanks [@belgattitude](https://github.com/belgattitude)! - Add support for HttpUnprocessableEntity.issues in serializer.
+
+  ```typescript
+  import { fromJson, toJson } from "@httpx/exception/serializer";
+
+  const e422 = new HttpUnprocessableEntity({
+    message: "Validation failed",
+    issues: [
+      {
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
+      },
+    ],
+  });
+
+  const json = toJson(e422);
+  const js = fromJson(json);
+
+  expect((js as HttpUnprocessableEntity).issues).toStrictEqual(e422.issues);
+  expect(js).toStrictEqual(e422);
+  ```
+
+### Patch Changes
+
+- [#675](https://github.com/belgattitude/httpx/pull/675) [`a6a63e1`](https://github.com/belgattitude/httpx/commit/a6a63e174af87f04eaf105a6e45c2ef56fc64ade) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix createHttpException that wasn't allowing issues on HttpUnprocessableEntity
+
+  ```typescript
+  const e422 = createHttpException(422, {
+    message: "Validation failed",
+    issues: [
+      {
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
+      },
+    ],
+  });
+  ```
+
+## 2.4.0
+
+### Minor Changes
+
+- [#672](https://github.com/belgattitude/httpx/pull/672) [`9d1d248`](https://github.com/belgattitude/httpx/commit/9d1d2484828906559f192ab337b645032c257518) Thanks [@belgattitude](https://github.com/belgattitude)! - Reduce bundle size by using class names rather than strings
+
+  Importing all exceptions (excluding utilities, typeguards...) now top at 1Kb
+
+  Example based on ESM (min+gzip)
+
+  | Scenario                    | Size   |
+  | --------------------------- | ------ |
+  | one exception               | ~ 450b |
+  | all exceptions              | < 1kb  |
+  | everything (typeguards,...) | 1.7kb  |
+
 ## 2.3.0
 
 ### Minor Changes
@@ -296,7 +374,7 @@
     url: "https://api.dev/user/belgattitude",
     method: "GET",
     code: "NETWORK_FAILURE",
-    errorId: nanoid(), // can be shared by frontend/backend
+    errorId: nanoid(), // can be shared by frontend/server
   });
   console.log(err.url, err.method, err.code, err.errorId);
   ```

@@ -1,12 +1,12 @@
 export type ParsedDsn = {
+  db?: string;
   driver: string;
   host: string;
-  user?: string;
+  /** Query params */
+  params?: Record<string, boolean | number | string>;
   pass?: string;
   port?: number;
-  db?: string;
-  /** Query params */
-  params?: Record<string, number | string | boolean>;
+  user?: string;
 };
 
 export type ParseDsnOptions = {
@@ -19,8 +19,8 @@ export type ParseDsnOptions = {
 export const errorReasons = {
   EMPTY_DSN: 'DSN cannot be empty',
   INVALID_ARGUMENT: 'DSN must be a string',
-  PARSE_ERROR: 'Cannot parse DSN',
   INVALID_PORT: 'Invalid port',
+  PARSE_ERROR: 'Cannot parse DSN',
 } as const;
 
 export type ErrorReasons = keyof typeof errorReasons;
@@ -31,11 +31,11 @@ type ParserSuccessResult = {
 };
 
 export type ParserErrorResult = {
-  success: false;
-  reason: ErrorReasons;
   message: string;
+  reason: ErrorReasons;
+  success: false;
 };
 
-export type ParserResult = ParserSuccessResult | ParserErrorResult;
+export type ParserResult = ParserErrorResult | ParserSuccessResult;
 
 export type ParsableDsn = string;

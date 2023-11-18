@@ -1,8 +1,10 @@
 import statuses from 'statuses';
 import { HttpClientException, HttpException } from '../../src/base';
-import { HttpNotFound } from '../../src/client';
+import { HttpNotFound, HttpUnprocessableEntity } from '../../src/client';
 import { createHttpException } from '../../src/factory';
+
 import { statusMap } from '../../src/status';
+import type { HttpExceptionParamsWithIssues } from '../../src/types/HttpExceptionParamsWithIssues';
 
 describe('Common specs', () => {
   describe('compare with npm:statuses package', () => {
@@ -22,7 +24,7 @@ describe('Common specs', () => {
       it.each(all)(
         '%s(%i) match statuses "%s"',
         (className, status, npmStatusMsg) => {
-          const title = npmStatusMsg.replace(/[\W_]+/g, '').toLowerCase();
+          const title = npmStatusMsg.replaceAll(/[\W_]+/g, '').toLowerCase();
           // eslint-disable-next-line jest/no-conditional-in-test
           const expected = title.startsWith('http') ? title : `http${title}`;
           expect(className.toLowerCase()).toStrictEqual(expected);
@@ -34,9 +36,9 @@ describe('Common specs', () => {
       it.each(all)(
         'should match official npm/statuses messages',
         (className, status, npmStatusMsg, exception) => {
-          const expected = npmStatusMsg.replace(/[\W_]+/g, '').toLowerCase();
+          const expected = npmStatusMsg.replaceAll(/[\W_]+/g, '').toLowerCase();
           expect(
-            exception?.message.toLowerCase().replace(/[\W_]+/g, '')
+            exception?.message.toLowerCase().replaceAll(/[\W_]+/g, '')
           ).toStrictEqual(expected);
         }
       );
@@ -58,6 +60,24 @@ describe('Common specs', () => {
       expect(err).toBeInstanceOf(HttpNotFound);
       expect(err).toBeInstanceOf(HttpException);
       expect(err).toBeInstanceOf(HttpClientException);
+    });
+  });
+
+  describe('createHttpException', () => {
+    it('should support HttpUnprocessableEntity with issues', () => {
+      const e422Params: HttpExceptionParamsWithIssues = {
+        issues: [
+          {
+            code: 'empty_string',
+            message: 'Invalid address',
+            path: ['addresses', 0, 'line1'],
+          },
+        ],
+        message: 'Validation failed',
+      };
+      expect(createHttpException(422, e422Params)).toStrictEqual(
+        new HttpUnprocessableEntity(e422Params)
+      );
     });
   });
 });

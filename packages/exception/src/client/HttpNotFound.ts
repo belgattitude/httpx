@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperArgs } from '../utils';
 
 /**
  * 404 - Not found (client)
@@ -13,12 +13,13 @@ import { getSuper } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
  * @see https://httpstatus.in/404/
  */
+
 export class HttpNotFound extends HttpClientException {
   static readonly STATUS = 404;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'NotFound';
-    super(404, getSuper(name, msgOrParams));
+    super(...getSuperArgs(HttpNotFound, msgOrParams));
     Object.setPrototypeOf(this, HttpNotFound.prototype);
-    this.name = `Http${name}`;
+    this.name = HttpNotFound.name;
+    // initProtoAndName(this, HttpNotFound);
   }
 }

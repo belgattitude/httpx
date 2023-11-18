@@ -1,4 +1,4 @@
-[@httpx/json-api - v0.4.1](../README.md) / JsonApiResponseFactory
+[@httpx/json-api - v0.4.6](../README.md) / JsonApiResponseFactory
 
 # Class: JsonApiResponseFactory
 
@@ -17,13 +17,17 @@
 
 ### constructor
 
-• **new JsonApiResponseFactory**()
+• **new JsonApiResponseFactory**(): [`JsonApiResponseFactory`](JsonApiResponseFactory.md)
+
+#### Returns
+
+[`JsonApiResponseFactory`](JsonApiResponseFactory.md)
 
 ## Methods
 
 ### fromError
 
-▸ `Static` **fromError**(`errors`, `httpStatus?`): [`JsonApiErrorResponse`](../README.md#jsonapierrorresponse)
+▸ **fromError**(`errors`, `httpStatus?`): [`JsonApiErrorResponse`](../README.md#jsonapierrorresponse)
 
 #### Parameters
 
@@ -40,7 +44,7 @@
 
 ### fromSuccess
 
-▸ `Static` **fromSuccess**<`T`\>(`data`, `metadata?`): [`JsonApiSuccessResponse`](../README.md#jsonapisuccessresponse)<`T`\>
+▸ **fromSuccess**\<`T`\>(`data`, `metadata?`): [`JsonApiSuccessResponse`](../README.md#jsonapisuccessresponse)\<`T`\>
 
 #### Type parameters
 
@@ -50,11 +54,11 @@
 
 #### Parameters
 
-| Name        | Type                                                                                                                  |
-| :---------- | :-------------------------------------------------------------------------------------------------------------------- |
-| `data`      | `T`                                                                                                                   |
-| `metadata?` | { `cacheHit?`: `boolean` } & `Record`<`string`, `string` \| `number` \| `boolean` \| `Record`<`string`, `unknown`\>\> |
+| Name        | Type                                                                                                                     |
+| :---------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `data`      | `T`                                                                                                                      |
+| `metadata?` | \{ `cacheHit?`: `boolean` } & `Record`\<`string`, `string` \| `number` \| `boolean` \| `Record`\<`string`, `unknown`\>\> |
 
 #### Returns
 
-[`JsonApiSuccessResponse`](../README.md#jsonapisuccessresponse)<`T`\>
+[`JsonApiSuccessResponse`](../README.md#jsonapisuccessresponse)\<`T`\>

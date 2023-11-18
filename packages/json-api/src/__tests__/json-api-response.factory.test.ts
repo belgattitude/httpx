@@ -13,11 +13,11 @@ describe('jsonApiResponseFactory tests', () => {
         total: data.length,
       });
       expect(resp).toStrictEqual({
-        success: true,
         data: data,
         meta: {
           total: data.length,
         },
+        success: true,
       });
     });
   });
@@ -40,9 +40,9 @@ describe('jsonApiResponseFactory tests', () => {
     it('should set create the same payload', () => {
       const err: JsonApiError = {
         code: 'whatever',
-        title: 'Hello',
         id: 'wxncn',
         status: 422,
+        title: 'Hello',
       };
       const resp = JsonApiResponseFactory.fromError(err);
       expect(resp.errors?.[0]).toStrictEqual(err);
@@ -56,8 +56,8 @@ describe('jsonApiResponseFactory tests', () => {
           title: 'Hello',
         },
         {
-          title: 'Hello3',
           status: 422,
+          title: 'Hello3',
         },
       ];
       const resp = JsonApiResponseFactory.fromError(errs);

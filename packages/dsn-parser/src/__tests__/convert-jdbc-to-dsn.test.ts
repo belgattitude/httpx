@@ -12,7 +12,6 @@ describe('convertJdbcToDsn', () => {
     expect(parseDsnOrThrow(dsn)).toStrictEqual({
       driver: 'sqlserver',
       host: 'localhost',
-      port: 1433,
       params: {
         authentication: 'default',
         database: 'my-db',
@@ -21,6 +20,7 @@ describe('convertJdbcToDsn', () => {
         trustServerCertificate: true,
         user: 'sa',
       },
+      port: 1433,
     });
   });
   it('should return a dsn string from a minimal jdbc dsn', () => {

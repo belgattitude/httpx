@@ -1,13 +1,13 @@
 import { HttpBadGateway, HttpForbidden } from '@httpx/exception';
-import { toJson, fromJson } from '@httpx/exception/serializer';
+import { fromJson, toJson } from '@httpx/exception/serializer';
 import type { FC } from 'react';
 import { parse, stringify } from 'superjson';
 
 const SimpleSerialize: FC = () => {
   const cause = new HttpForbidden();
   const err = new HttpBadGateway({
-    url: 'http://localhost:3000',
     cause,
+    url: 'http://localhost:3000',
   });
   const converted = fromJson(toJson(err));
   return (
@@ -21,8 +21,8 @@ const SimpleSerialize: FC = () => {
 export const SuperJsonSerialize: FC = () => {
   const cause = new HttpForbidden();
   const err = new HttpBadGateway({
-    url: 'http://localhost:3000',
     cause,
+    url: 'http://localhost:3000',
   });
   const stringified = stringify(err);
   const converted = parse(stringified);

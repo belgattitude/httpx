@@ -5,14 +5,14 @@ import { HttpBadRequest } from '../../src/client';
 describe('HttpBadRequest (400) with deprecated field validation', () => {
   const errors: ValidationError[] = [
     {
+      code: 'invalid_email',
       message: 'Invalid email',
       path: 'email',
-      code: 'invalid_email',
     },
     {
+      code: 'empty_string',
       message: 'Invalid address',
       path: ['addresses', 0, 'line1'],
-      code: 'empty_string',
     },
   ];
   it('should return unmodified errors', () => {
@@ -27,14 +27,14 @@ describe('HttpBadRequest (400) with deprecated field validation', () => {
 describe('HttpUnprocessableEntity (422) with field validation errors', () => {
   const errors: ValidationError[] = [
     {
+      code: 'invalid_email',
       message: 'Invalid email',
       path: 'email',
-      code: 'invalid_email',
     },
     {
+      code: 'empty_string',
       message: 'Invalid address',
       path: ['addresses', 0, 'line1'],
-      code: 'empty_string',
     },
   ];
   it('should return unmodified errors', () => {

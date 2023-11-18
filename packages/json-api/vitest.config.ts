@@ -4,35 +4,40 @@ import { defineConfig } from 'vitest/config';
 const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
 export default defineConfig({
-  plugins: [tsconfigPaths()],
   esbuild: {
-    target: ['node16'],
+    target: ['node18'],
   },
+  plugins: [tsconfigPaths()],
   test: {
-    globals: true,
-    environment: 'node',
-    passWithNoTests: false,
     cache: {
-      dir: '../../.cache/vitest/httpx-dsn-parser',
+      dir: '../../.cache/vitest/httpx-exception',
     },
-    coverage: {
-      provider: 'istanbul',
-      reporter: ['text', 'json', 'clover'],
-      all: true,
-      include: ['src/**/*.{js,jsx,ts,tsx}'],
-    },
-    deps: {},
-    include: testFiles,
-    // To mimic Jest behaviour regarding mocks.
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
-    mockReset: true,
-    restoreMocks: true,
+    coverage: {
+      all: true,
+      include: ['src/**/*.{js,jsx,ts,tsx}'],
+      provider: 'istanbul',
+      reporter: ['text', 'json', 'clover'],
+    },
+    deps: {
+      /*
+      experimentalOptimizer: {
+        enabled: false,
+      }, */
+    },
+    environment: 'node',
     exclude: [
       '**/node_modules/**',
       'dist/**',
       '**/coverage/**',
       '**/.{idea,git,cache,output,temp}/**',
     ],
+    globals: true,
+    include: testFiles,
+    // To mimic Jest behaviour regarding mocks.
+    mockReset: true,
+    passWithNoTests: false,
+    restoreMocks: true,
   },
 });

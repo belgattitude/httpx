@@ -1,5 +1,5 @@
 import { HttpException } from '../../../base';
-import { HttpBadRequest } from '../../../client';
+import { HttpBadRequest, HttpUnprocessableEntity } from '../../../client';
 import { convertToSerializable } from '../convertToSerializable';
 import { createFromSerializable } from '../createFromSerializable';
 
@@ -11,11 +11,11 @@ describe('createFromSerializable', () => {
       [
         'withFullParams',
         new HttpException(500, {
+          code: 'NETWORK_UNAVAILABLE',
           errorId: 'nanoid()',
           message: 'msg',
-          code: 'NETWORK_UNAVAILABLE',
-          url: 'http://localhost',
           method: 'PUT',
+          url: 'http://localhost',
         }),
       ],
       [
@@ -27,8 +27,8 @@ describe('createFromSerializable', () => {
       [
         'HttpBadRequest',
         new HttpBadRequest({
-          message: 'msg',
           cause: new EvalError(),
+          message: 'msg',
           url: 'http://',
         }),
       ],
@@ -46,6 +46,30 @@ describe('createFromSerializable', () => {
         );
         expect((converted as HttpException)?.code).toStrictEqual(err.code);
       }
+    );
+  });
+
+  it('deserialize issues of HttpUnprocessableEntity', () => {
+    const e422 = new HttpUnprocessableEntity({
+      issues: [
+        {
+          code: 'invalid_email',
+          message: 'Invalid email',
+          path: 'email',
+        },
+        {
+          code: 'empty_string',
+          message: 'Invalid address',
+          path: ['addresses', 0, 'line1'],
+        },
+      ],
+      message: 'Validation failed',
+    });
+
+    const converted = createFromSerializable(convertToSerializable(e422));
+    expect(converted).toStrictEqual(e422);
+    expect((converted as HttpUnprocessableEntity)?.issues).toStrictEqual(
+      e422.issues
     );
   });
 

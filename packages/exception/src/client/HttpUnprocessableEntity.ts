@@ -1,7 +1,9 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
+import type { HttpExceptionParamsWithIssues } from '../types/HttpExceptionParamsWithIssues';
 import type { HttpValidationIssue } from '../types/HttpValidationIssue';
-import { getSuper } from '../utils';
+import type { ValidationError } from '../types/ValidationError';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 422 Unprocessable entity (client / webdav specific per RFC / used for validation errors in most apis)
@@ -20,33 +22,29 @@ import { getSuper } from '../utils';
  */
 export class HttpUnprocessableEntity extends HttpClientException {
   static readonly STATUS = 422;
-  public readonly issues: HttpValidationIssue[];
-
   /**
    * Errors has been renamed to issues as a better name.
    * @deprecated
    */
-  get errors() {
-    return this.issues;
-  }
+  public readonly errors: ValidationError[];
+  public readonly issues: HttpValidationIssue[];
   constructor(
     msgOrParams?:
       | (HttpExceptionParams & {
           /** @deprecated use issues instead */
-          errors?: HttpValidationIssue[];
-        } & {
-          issues?: HttpValidationIssue[];
-        })
+          errors?: ValidationError[];
+        } & HttpExceptionParamsWithIssues)
       | string
   ) {
-    const name = 'UnprocessableEntity';
-    super(422, getSuper(name, msgOrParams));
-    if (typeof msgOrParams === 'string') {
-      this.issues = [];
-    } else {
-      this.issues = msgOrParams?.issues ?? msgOrParams?.errors ?? [];
-    }
-    Object.setPrototypeOf(this, HttpUnprocessableEntity.prototype);
-    this.name = `Http${name}`;
+    const {
+      errors = [],
+      issues = [],
+      ...p
+    } = typeof msgOrParams === 'string' ? {} : msgOrParams ?? {};
+
+    super(...getSuperArgs(HttpUnprocessableEntity, p));
+    this.issues = issues;
+    this.errors = errors;
+    initProtoAndName(this, HttpUnprocessableEntity);
   }
 }

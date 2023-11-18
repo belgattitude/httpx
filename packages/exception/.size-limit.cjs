@@ -1,7 +1,7 @@
 // @ts-check
 
-const fullEsmMaxSize = "2070B";
-const fullCjsMaxSize = "2700B";
+const fullEsmMaxSize = "1500B";
+const fullCjsMaxSize = "2000B";
 
 /**
  * Will ensure esm tree-shakeability and total size are within expectations.
@@ -20,41 +20,58 @@ module.exports = [
     limit: fullEsmMaxSize,
   },
   {
+    name: "ESM (only HttpException exception)",
+    path: ["dist/index.mjs"],
+    import: "{ HttpException }",
+    limit: "340B",
+  },
+  {
     name: "ESM (only HttpNotFound exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound }",
-    limit: "460B",
+    limit: "400B",
   },
   {
-    name: "ESM (two exceptions: HttpNotFound + HttpInternalServerError)",
+    name: "ESM (two client exceptions: HttpNotFound + HttpRequestTimeout)",
     path: ["dist/index.mjs"],
-    import: "{ HttpNotFound, HttpInternalServerError }",
-    limit: "510B",
+    import: "{ HttpNotFound, HttpRequestTimeout }",
+    limit: "435B",
   },
   {
     name: "ESM (only isHttpException)",
     path: ["dist/index.mjs"],
     import: "{ isHttpException }",
-    limit: "400B",
+    limit: "390B",
   },
   {
     name: "ESM (only createHttpException)",
     path: ["dist/index.mjs"],
     import: "{ createHttpException }",
-    limit: "1500B", // Will import all server/client exceptions
+    limit: "800B", // Will import all server/client exceptions
   },
-
   {
     name: "ESM ({ toJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ toJson }",
-    limit: "800B",
+    limit: "960B",
   },
   {
     name: "ESM ({ fromJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ fromJson }",
-    limit: "2000B",
+    limit: "1500B",
+  },
+  {
+    name: "ESM ({ toJson })",
+    path: ["dist/serializer/index.mjs"],
+    import: "{ toJson }",
+    limit: "900B",
+  },
+  {
+    name: "ESM ({ fromJson, toJson })",
+    path: ["dist/serializer/index.mjs"],
+    import: "{ fromJson, toJson }",
+    limit: "1500B",
   },
   // ###################################################
   // Commonjs full bundle
@@ -71,6 +88,6 @@ module.exports = [
     path: ["dist/index.cjs"],
     import: "{ isHttpException }",
     webpack: true,
-    limit: '2500B',
+    limit: '1100B',
   }
 ];

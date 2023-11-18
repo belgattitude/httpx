@@ -6,19 +6,16 @@
 
 422 Unprocessable entity (client / webdav specific per RFC / used for validation errors in most apis)
 
-Be aware that a lot of apis/frameworks will use 422 Unprocessable Entity to indicate (form field) validation errors
-when posting data (rails, github, api-platform...). See also 400 for simple request errors.
-
-**`See`**
-
-- https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors
-
 The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code
 is inappropriate), and the syntax of the request entity is correct (thus a 400 Bad Request status code is
 inappropriate) but was unable to process the contained instructions.
 
 For example, this error condition may occur if an XML request body contains well-formed
 (i.e., syntactically correct), but semantically erroneous, XML instructions.
+
+Note that a lot of apis/frameworks uses 422 Unprocessable Entity to indicate (form field) validation errors
+
+**`See`**
 
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
 - https://httpstatus.in/422/
@@ -40,6 +37,7 @@ For example, this error condition may occur if an XML request body contains well
 - [cause](client.HttpUnprocessableEntity.md#cause)
 - [code](client.HttpUnprocessableEntity.md#code)
 - [errorId](client.HttpUnprocessableEntity.md#errorid)
+- [errors](client.HttpUnprocessableEntity.md#errors)
 - [issues](client.HttpUnprocessableEntity.md#issues)
 - [message](client.HttpUnprocessableEntity.md#message)
 - [method](client.HttpUnprocessableEntity.md#method)
@@ -51,10 +49,6 @@ For example, this error condition may occur if an XML request body contains well
 - [prepareStackTrace](client.HttpUnprocessableEntity.md#preparestacktrace)
 - [stackTraceLimit](client.HttpUnprocessableEntity.md#stacktracelimit)
 
-### Accessors
-
-- [errors](client.HttpUnprocessableEntity.md#errors)
-
 ### Methods
 
 - [captureStackTrace](client.HttpUnprocessableEntity.md#capturestacktrace)
@@ -63,13 +57,17 @@ For example, this error condition may occur if an XML request body contains well
 
 ### constructor
 
-• **new HttpUnprocessableEntity**(`msgOrParams?`)
+• **new HttpUnprocessableEntity**(`msgOrParams?`): [`HttpUnprocessableEntity`](client.HttpUnprocessableEntity.md)
 
 #### Parameters
 
-| Name           | Type                                                                                                                |
-| :------------- | :------------------------------------------------------------------------------------------------------------------ |
-| `msgOrParams?` | `string` \| `HttpExceptionParams` & { `errors?`: `HttpValidationIssue`[] } & { `issues?`: `HttpValidationIssue`[] } |
+| Name           | Type                                                                                                                                                                                                                                                   |
+| :------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) & \{ `errors?`: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[] } & \{ `issues?`: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[] } |
+
+#### Returns
+
+[`HttpUnprocessableEntity`](client.HttpUnprocessableEntity.md)
 
 #### Overrides
 
@@ -98,7 +96,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 • `Readonly` **code**: `undefined` \| `string`
 
-Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
 
 #### Inherited from
 
@@ -118,9 +116,19 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ---
 
+### errors
+
+• `Readonly` **errors**: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[]
+
+Errors has been renamed to issues as a better name.
+
+**`Deprecated`**
+
+---
+
 ### issues
 
-• `Readonly` **issues**: `HttpValidationIssue`[]
+• `Readonly` **issues**: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[]
 
 ---
 
@@ -235,25 +243,11 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 [HttpClientException](base.HttpClientException.md).[stackTraceLimit](base.HttpClientException.md#stacktracelimit)
 
-## Accessors
-
-### errors
-
-• `get` **errors**(): `HttpValidationIssue`[]
-
-Errors has been renamed to issues as a better name.
-
-#### Returns
-
-`HttpValidationIssue`[]
-
-**`Deprecated`**
-
 ## Methods
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

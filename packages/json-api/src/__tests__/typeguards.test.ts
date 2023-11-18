@@ -5,7 +5,7 @@ describe('Typeguards tests', () => {
     it.each([
       [{}, true],
       [{ name: 'seb' }, true],
-      [{ name: 'deep', children: [{ test: 1 }] }, true],
+      [{ children: [{ test: 1 }], name: 'deep' }, true],
       [new Date(), false],
       [false, false],
       [undefined, false],

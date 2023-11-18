@@ -24,12 +24,12 @@ describe('parseDsn', () => {
       ).toStrictEqual({
         success: true,
         value: {
-          driver: 'redis',
-          pass: 'password',
-          host: 'www.example.com',
-          user: 'username',
-          port: 6379,
           db: 'database$-#12_2.1',
+          driver: 'redis',
+          host: 'www.example.com',
+          pass: 'password',
+          port: 6379,
+          user: 'username',
         },
       });
     });
@@ -42,12 +42,12 @@ describe('parseDsn', () => {
       expect(parsed).toMatchObject({
         success: true,
         value: {
+          db: '0',
           driver: 'redis',
           host: 'localhost',
-          db: '0',
           params: {
-            paramInt: 2,
             paramBool: false,
+            paramInt: 2,
             paramStr: 'hello',
           },
         },
@@ -63,15 +63,15 @@ describe('parseDsn', () => {
       ).toStrictEqual({
         success: true,
         value: {
-          driver: 'redis',
-          pass: 'P @-_:?/ssw/rd',
-          host: 'www.example.com',
-          user: 'us_er na-?me',
-          port: 6379,
           db: '0',
+          driver: 'redis',
+          host: 'www.example.com',
           params: {
             cache: true,
           },
+          pass: 'P @-_:?/ssw/rd',
+          port: 6379,
+          user: 'us_er na-?me',
         },
       });
     });
@@ -83,11 +83,11 @@ describe('parseDsn', () => {
       ).toStrictEqual({
         success: true,
         value: {
-          driver: 'redis',
-          pass: 'password',
-          host: 'www.example.com',
-          port: 6379,
           db: '0',
+          driver: 'redis',
+          host: 'www.example.com',
+          pass: 'password',
+          port: 6379,
         },
       });
     });
@@ -97,11 +97,11 @@ describe('parseDsn', () => {
       expect(parseDsn('redis://user@www.example.com:6379/0')).toStrictEqual({
         success: true,
         value: {
+          db: '0',
           driver: 'redis',
-          user: 'user',
           host: 'www.example.com',
           port: 6379,
-          db: '0',
+          user: 'user',
         },
       });
     });
@@ -111,12 +111,12 @@ describe('parseDsn', () => {
       expect(parseDsn('redis://user:@www.example.com:6379/0')).toStrictEqual({
         success: true,
         value: {
-          driver: 'redis',
-          user: 'user',
-          pass: '',
-          host: 'www.example.com',
-          port: 6379,
           db: '0',
+          driver: 'redis',
+          host: 'www.example.com',
+          pass: '',
+          port: 6379,
+          user: 'user',
         },
       });
     });
@@ -125,12 +125,12 @@ describe('parseDsn', () => {
       expect(parseDsn(dsn)).toStrictEqual({
         success: true,
         value: {
-          driver: 'postgresql',
-          user: 'postgres',
-          pass: '',
-          host: 'localhost',
-          port: 5432,
           db: 'prisma-db',
+          driver: 'postgresql',
+          host: 'localhost',
+          pass: '',
+          port: 5432,
+          user: 'postgres',
         },
       });
     });
@@ -141,10 +141,10 @@ describe('parseDsn', () => {
       expect(parseDsn(dsn)).toStrictEqual({
         success: true,
         value: {
+          db: '0',
           driver: 'redis',
           host: 'www.example.com',
           port: 6379,
-          db: '0',
         },
       });
     });
@@ -180,10 +180,10 @@ describe('parseDsn', () => {
       expect(parseDsn(dsn)).toStrictEqual({
         success: true,
         value: {
+          db: '0',
           driver: 'redis',
           host: 'localhost',
           port: 6379,
-          db: '0',
         },
       });
     });
@@ -225,12 +225,12 @@ describe('parseDsn', () => {
     it('should replace parsed values', () => {
       const dsn = 'redis://username:password@www.example.com:6379/0';
       const overrides = {
-        port: 3306,
         db: '2',
+        driver: 'mysql',
         host: 'localhost',
         pass: 'pass',
+        port: 3306,
         user: 'user',
-        driver: 'mysql',
       };
       expect(parseDsn(dsn, { overrides: overrides })).toStrictEqual({
         success: true,
@@ -270,45 +270,45 @@ describe('parseDsn', () => {
   describe('when a dsn lacks hostname', () => {
     it('should return a PARSE_ERROR', () => {
       expect(parseDsn('redis://')).toStrictEqual({
-        success: false,
-        reason: 'PARSE_ERROR',
         message: 'Cannot parse DSN',
+        reason: 'PARSE_ERROR',
+        success: false,
       });
     });
   });
   describe('when a dsn is not parsable', () => {
     it('should return a PARSE_ERROR', () => {
       expect(parseDsn('redis:///0')).toStrictEqual({
-        success: false,
-        reason: 'PARSE_ERROR',
         message: 'Cannot parse DSN',
+        reason: 'PARSE_ERROR',
+        success: false,
       });
     });
   });
   describe('when a dsn is empty', () => {
     it('should return an EMPTY_DSN reason', () => {
       expect(parseDsn('  ')).toStrictEqual({
-        success: false,
-        reason: 'EMPTY_DSN',
         message: 'DSN cannot be empty',
+        reason: 'EMPTY_DSN',
+        success: false,
       });
     });
   });
   describe('when a dsn is not the right type', () => {
     it('should return an EMPTY_DSN reason', () => {
       expect(parseDsn([] as unknown as string)).toStrictEqual({
-        success: false,
-        reason: 'INVALID_ARGUMENT',
         message: 'DSN must be a string',
+        reason: 'INVALID_ARGUMENT',
+        success: false,
       });
     });
   });
   describe('when port is not a valid one', () => {
     it('should return an INVALID_PORT reason', () => {
       expect(parseDsn('pgsql://localhost:12345678')).toStrictEqual({
-        success: false,
-        reason: 'INVALID_PORT',
         message: 'Invalid port: 12345678',
+        reason: 'INVALID_PORT',
+        success: false,
       });
     });
   });

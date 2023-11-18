@@ -48,13 +48,17 @@ The user agent requested a resource that cannot legally be provided, such as a w
 
 ### constructor
 
-• **new HttpUnavailableForLegalReasons**(`msgOrParams?`)
+• **new HttpUnavailableForLegalReasons**(`msgOrParams?`): [`HttpUnavailableForLegalReasons`](client.HttpUnavailableForLegalReasons.md)
 
 #### Parameters
 
-| Name           | Type                              |
-| :------------- | :-------------------------------- |
-| `msgOrParams?` | `string` \| `HttpExceptionParams` |
+| Name           | Type                                                                         |
+| :------------- | :--------------------------------------------------------------------------- |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpUnavailableForLegalReasons`](client.HttpUnavailableForLegalReasons.md)
 
 #### Overrides
 
@@ -83,7 +87,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 • `Readonly` **code**: `undefined` \| `string`
 
-Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
 
 #### Inherited from
 
@@ -218,7 +222,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

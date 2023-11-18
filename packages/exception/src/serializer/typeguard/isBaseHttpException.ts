@@ -5,8 +5,8 @@ import {
 } from '../../base';
 
 export const baseExceptionMap = {
-  HttpException: HttpException,
   HttpClientException: HttpClientException,
+  HttpException: HttpException,
   HttpServerException: HttpServerException,
 };
 

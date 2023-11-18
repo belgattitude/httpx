@@ -49,13 +49,17 @@ For example, an API may not allow calling DELETE to remove a resource.
 
 ### constructor
 
-• **new HttpMethodNotAllowed**(`msgOrParams?`)
+• **new HttpMethodNotAllowed**(`msgOrParams?`): [`HttpMethodNotAllowed`](client.HttpMethodNotAllowed.md)
 
 #### Parameters
 
-| Name           | Type                              |
-| :------------- | :-------------------------------- |
-| `msgOrParams?` | `string` \| `HttpExceptionParams` |
+| Name           | Type                                                                         |
+| :------------- | :--------------------------------------------------------------------------- |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+
+#### Returns
+
+[`HttpMethodNotAllowed`](client.HttpMethodNotAllowed.md)
 
 #### Overrides
 
@@ -84,7 +88,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 • `Readonly` **code**: `undefined` \| `string`
 
-Custom additional code (ie: 'AbortError', 'CODE-1234'...)
+Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
 
 #### Inherited from
 
@@ -219,7 +223,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+▸ **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

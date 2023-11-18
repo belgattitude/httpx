@@ -12,12 +12,16 @@ const {
 } = require('@belgattitude/eslint-config-bases/helpers');
 
 module.exports = {
-  root: true,
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    tsconfigRootDir: __dirname,
-    project: 'tsconfig.json',
-  },
+  extends: [
+    '@belgattitude/eslint-config-bases/typescript',
+    '@belgattitude/eslint-config-bases/sonar',
+    '@belgattitude/eslint-config-bases/regexp',
+    '@belgattitude/eslint-config-bases/jest',
+    '@belgattitude/eslint-config-bases/perfectionist',
+    '@belgattitude/eslint-config-bases/performance',
+    // Apply prettier and disable incompatible rules
+    '@belgattitude/eslint-config-bases/prettier-plugin',
+  ],
   ignorePatterns: [
     ...getDefaultIgnorePatterns(),
     '**/build',
@@ -27,25 +31,11 @@ module.exports = {
     '.cache',
     '**/docs',
   ],
-  extends: [
-    '@belgattitude/eslint-config-bases/typescript',
-    '@belgattitude/eslint-config-bases/sonar',
-    '@belgattitude/eslint-config-bases/regexp',
-    '@belgattitude/eslint-config-bases/jest',
-    // Apply prettier and disable incompatible rules
-    '@belgattitude/eslint-config-bases/prettier-plugin',
-  ],
-  rules: {
-    'import/no-self-import': 'error',
-    'import/no-unassigned-import': 'error',
-  },
   overrides: [
     {
       files: ['src/**/*.ts'],
       rules: {
         'import/no-cycle': [1, { maxDepth: 100 }],
-        'import/no-self-import': 'error',
-        'import/no-nodejs-modules': 'error',
         'import/no-extraneous-dependencies': [
           'error',
           {
@@ -54,7 +44,19 @@ module.exports = {
             peerDependencies: false,
           },
         ],
+        'import/no-nodejs-modules': 'error',
+        'import/no-self-import': 'error',
       },
     },
   ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
+  },
+  root: true,
+  rules: {
+    'import/no-self-import': 'error',
+    'import/no-unassigned-import': 'error',
+  },
 };

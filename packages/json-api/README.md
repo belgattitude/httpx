@@ -1,16 +1,17 @@
 # @httpx/json-api
 
-[![npm](https://img.shields.io/npm/v/@httpx/json-api?style=for-the-badge&labelColor=222)](https://www.npmjs.com/package/@httpx/json-api)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?label=unit&logo=codecov&flag=httpx-json-api-unit&style=for-the-badge&labelColor=000000)](https://codecov.io/gh/belgattitude/httpx)
-[![size](https://img.shields.io/bundlephobia/minzip/@httpx/json-api@latest?label=Max&style=for-the-badge&labelColor=333&color=informational)](https://bundlephobia.com/package/@httpx/json-api@latest)
-![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm|treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)
-![node](https://img.shields.io/static/v1?label=Node&message=16%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=modern&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMgYW5kIHN1cHBvcnRzIGVzNi1tb2R1bGUsIG5vdCBkZWFkLCBub3Qgb3BfbWluaSBhbGwsIG5vZGUgMTY%3D)
-![types](https://img.shields.io/static/v1?label=typings&message=4.5%2B&logo=typescript&style=for-the-badge&labelColor=000000&color=9cf)
-[![npm](https://img.shields.io/npm/dm/@httpx/json-api?style=for-the-badge&labelColor=000000)](https://www.npmjs.com/package/@httpx/json-api)
-[![license](https://img.shields.io/npm/l/@httpx/json-api?style=for-the-badge&labelColor=000000)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/@httpx/json-api?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/json-api)
+[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/json-api/CHANGELOG.md)
+[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-json-api-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fjson-api)
+[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/json-api/.size-limit.cjs)
+![node](https://img.shields.io/static/v1?label=Node&message=18%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
+[![browserslist](https://img.shields.io/static/v1?label=Browser&message=modern&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHM%3D)
+[![size](https://img.shields.io/bundlephobia/minzip/@httpx/json-api@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/json-api@latest)
+[![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Quality&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
+[![downloads](https://img.shields.io/npm/dm/@httpx/json-api?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/json-api)
+[![license](https://img.shields.io/npm/l/@httpx/json-api?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
-**Experimental** (for now)
+> **Warning** Pre-v1 version, use at your own risks
 
 ## Support
 

@@ -1,9 +1,9 @@
 import {
-  errorReasons,
-  type ParsedDsn,
-  type ParseDsnOptions,
   type ErrorReasons,
+  type ParseDsnOptions,
+  type ParsedDsn,
   type ParserErrorResult,
+  errorReasons,
 } from './dsn-parser.type';
 
 export const createErrorResult = (
@@ -11,9 +11,9 @@ export const createErrorResult = (
   msg?: string
 ): ParserErrorResult => {
   return {
-    success: false,
-    reason: reason,
     message: msg ?? errorReasons[reason],
+    reason: reason,
+    success: false,
   };
 };
 
@@ -31,7 +31,7 @@ export const isParsableNumber = (value: unknown): value is number => {
 type ValidNetworkPort = number;
 
 export const isValidNetworkPort = (port: number): port is ValidNetworkPort => {
-  return port < 65536 && port > 0;
+  return port < 65_536 && port > 0;
 };
 
 export const removeUndefined = (
@@ -49,10 +49,10 @@ export const mergeDsnOverrides = (
 ): ParsedDsn => {
   const merged: Record<string, unknown> = {};
   const { params, ...restDsn } = parsedDsn;
-  Object.entries(restDsn).forEach(([key, value]) => {
+  for (const [key, value] of Object.entries(restDsn)) {
     merged[key] =
       key in overrides ? (overrides as Record<string, unknown>)[key] : value;
-  });
+  }
   merged.params = params;
   return merged as unknown as ParsedDsn;
 };

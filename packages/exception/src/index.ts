@@ -1,8 +1,10 @@
-export type { HttpExceptionParams } from './types/HttpExceptionParams';
-export type { HttpStatusCode } from './types/HttpStatusCode';
-export type { HttpExceptionParamsWithStatus } from './types/HttpExceptionParamsWithStatus';
-export type { HttpValidationIssue } from './types/HttpValidationIssue';
-export type { ValidationError } from './types/ValidationError';
+export type {
+  HttpExceptionParams,
+  HttpExceptionParamsWithStatus,
+  HttpStatusCode,
+  HttpValidationIssue,
+  ValidationError,
+} from './types';
 
 export * from './base';
 export * from './client';

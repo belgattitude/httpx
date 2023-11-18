@@ -1,4 +1,4 @@
-[@httpx/json-api - v0.4.1](../README.md) / JsonApiErrorFactory
+[@httpx/json-api - v0.4.6](../README.md) / JsonApiErrorFactory
 
 # Class: JsonApiErrorFactory
 
@@ -17,13 +17,17 @@
 
 ### constructor
 
-• **new JsonApiErrorFactory**()
+• **new JsonApiErrorFactory**(): [`JsonApiErrorFactory`](JsonApiErrorFactory.md)
+
+#### Returns
+
+[`JsonApiErrorFactory`](JsonApiErrorFactory.md)
 
 ## Methods
 
 ### fromCatchVariable
 
-▸ `Static` **fromCatchVariable**(`error`, `defaultHttpStatus?`): [`JsonApiError`](../README.md#jsonapierror)
+▸ **fromCatchVariable**(`error`, `defaultHttpStatus?`): [`JsonApiError`](../README.md#jsonapierror)
 
 #### Parameters
 
@@ -40,7 +44,7 @@
 
 ### fromHttpException
 
-▸ `Static` **fromHttpException**(`exception`, `defaultHttpStatus?`): [`JsonApiError`](../README.md#jsonapierror)
+▸ **fromHttpException**(`exception`, `defaultHttpStatus?`): [`JsonApiError`](../README.md#jsonapierror)
 
 #### Parameters
 

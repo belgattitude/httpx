@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 408 Request timeout (client)
@@ -16,9 +16,7 @@ import { getSuper } from '../utils';
 export class HttpRequestTimeout extends HttpClientException {
   static readonly STATUS = 408;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    const name = 'RequestTimeout';
-    super(408, getSuper(name, msgOrParams));
-    Object.setPrototypeOf(this, HttpRequestTimeout.prototype);
-    this.name = `Http${name}`;
+    super(...getSuperArgs(HttpRequestTimeout, msgOrParams));
+    initProtoAndName(this, HttpRequestTimeout);
   }
 }

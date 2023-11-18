@@ -1,13 +1,13 @@
 {
   "name": "@httpx/dsn-parser",
-  "description": "Utility parser for DSN",
-  "version": "1.5.0",
+  "description": "DSN & JDBC string parser with query params support in a tiny and modern package.",
+  "version": "1.6.1",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://github.com/belgattitude/httpx/tree/main/packages/dsn-parser",
+  "homepage": "https://github.com/belgattitude/httpx/tree/main/packages/dsn-parser#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/belgattitude/httpx.git",
@@ -16,30 +16,30 @@
   "keywords": [
     "dsn",
     "dsn-parser",
-    "parser"
+    "dsn parser",
+    "jdbc-parser",
+    "jdbc parser"
   ],
   "sideEffects": false,
   "browserslist": [
-    "defaults and supports es6-module",
-    "not dead",
-    "not op_mini all",
-    "node 18"
+    "defaults"
   ],
+  "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.mts",
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.mjs"
       },
       "require": {
-        "types": "./dist/index.d.ts",
+        "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       },
       "default": {
-        "types": "./dist/index.d.mts",
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.mjs"
       }
     },
@@ -55,11 +55,9 @@
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2022 './dist/**/*.cjs'",
-    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
-    "check-pub": "run-p check-pub-publint check-pub-attw",
-    "check-pub-publint": "publint --strict",
-    "check-pub-attw": "attw --pack",
+    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2021 './dist/**/*.cjs'",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2021 --module './dist/**/*.mjs'",
+    "check-pub": "attw --pack",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
@@ -73,31 +71,29 @@
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-dsn-parser-unit --dir ./coverage"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.12.2",
-    "@belgattitude/eslint-config-bases": "3.0.0",
-    "@size-limit/file": "10.0.1",
-    "@types/jest": "29.5.6",
-    "@vitest/coverage-istanbul": "0.34.6",
-    "@vitest/ui": "0.34.6",
+    "@arethetypeswrong/cli": "0.13.1",
+    "@belgattitude/eslint-config-bases": "4.0.1",
+    "@size-limit/file": "11.0.0",
+    "@size-limit/webpack": "11.0.0",
+    "@vitest/coverage-istanbul": "1.0.0-beta.5",
+    "@vitest/ui": "1.0.0-beta.5",
     "browserslist-to-esbuild": "1.2.0",
     "cross-env": "7.0.3",
     "es-check": "7.1.1",
-    "eslint": "8.52.0",
-    "get-tsconfig": "4.7.2",
+    "eslint": "8.54.0",
     "npm-run-all": "4.1.5",
-    "publint": "0.2.5",
     "rimraf": "5.0.5",
-    "size-limit": "10.0.1",
-    "tslib": "2.6.2",
-    "tsup": "7.2.0",
-    "typedoc": "0.25.2",
-    "typedoc-plugin-markdown": "3.16.0",
+    "size-limit": "11.0.0",
+    "tsup": "7.3.0",
+    "typedoc": "0.25.3",
+    "typedoc-plugin-markdown": "3.17.1",
     "typescript": "5.2.2",
-    "vite": "4.5.0",
+    "vite": "5.0.0",
     "vite-tsconfig-paths": "4.2.1",
-    "vitest": "0.34.6"
+    "vitest": "1.0.0-beta.5",
+    "webpack": "5.89.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=16"
   }
 }

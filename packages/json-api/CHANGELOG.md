@@ -1,5 +1,48 @@
 # @httpx/json-api
 
+## 0.5.1
+
+### Patch Changes
+
+- [#724](https://github.com/belgattitude/httpx/pull/724) [`8d02a2a`](https://github.com/belgattitude/httpx/commit/8d02a2a516aaf42ff5e002889938c6282c862b47) Thanks [@belgattitude](https://github.com/belgattitude)! - Optimize code thanks to eslint unicorn plugin
+
+- Updated dependencies [[`8d02a2a`](https://github.com/belgattitude/httpx/commit/8d02a2a516aaf42ff5e002889938c6282c862b47)]:
+  - @httpx/exception@2.5.3
+
+## 0.5.0
+
+### Minor Changes
+
+- [#719](https://github.com/belgattitude/httpx/pull/719) [`bae6ce0`](https://github.com/belgattitude/httpx/commit/bae6ce05a85822b0ec4658b679e82ce4efa9222f) Thanks [@belgattitude](https://github.com/belgattitude)! - Move to esm first (dual esm/cjs) is still supported
+
+### Patch Changes
+
+- [#719](https://github.com/belgattitude/httpx/pull/719) [`bae6ce0`](https://github.com/belgattitude/httpx/commit/bae6ce05a85822b0ec4658b679e82ce4efa9222f) Thanks [@belgattitude](https://github.com/belgattitude)! - Upgrade tsup to 7.3 and build with esbuild 0.19.3
+
+- Updated dependencies [[`bae6ce0`](https://github.com/belgattitude/httpx/commit/bae6ce05a85822b0ec4658b679e82ce4efa9222f)]:
+  - @httpx/exception@2.5.2
+
+## 0.4.6
+
+### Patch Changes
+
+- Updated dependencies [[`92343d2`](https://github.com/belgattitude/httpx/commit/92343d2ef30678cfdb0edd29b8fc2a492b91ec58)]:
+  - @httpx/exception@2.5.1
+
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [[`a6a63e1`](https://github.com/belgattitude/httpx/commit/a6a63e174af87f04eaf105a6e45c2ef56fc64ade), [`a6a63e1`](https://github.com/belgattitude/httpx/commit/a6a63e174af87f04eaf105a6e45c2ef56fc64ade)]:
+  - @httpx/exception@2.5.0
+
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [[`9d1d248`](https://github.com/belgattitude/httpx/commit/9d1d2484828906559f192ab337b645032c257518)]:
+  - @httpx/exception@2.4.0
+
 ## 0.4.3
 
 ### Patch Changes
