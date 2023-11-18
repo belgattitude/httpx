@@ -10,7 +10,7 @@ const reqSchema = z.object({
   query: z.object({
     statusCode: z
       .string()
-      .transform((s) => parseInt(s, 10))
+      .transform((s) => Number.parseInt(s, 10))
       .pipe(z.number().min(100).max(599)),
   }),
 });

@@ -24,7 +24,7 @@ describe('Common specs', () => {
       it.each(all)(
         '%s(%i) match statuses "%s"',
         (className, status, npmStatusMsg) => {
-          const title = npmStatusMsg.replace(/[\W_]+/g, '').toLowerCase();
+          const title = npmStatusMsg.replaceAll(/[\W_]+/g, '').toLowerCase();
           // eslint-disable-next-line jest/no-conditional-in-test
           const expected = title.startsWith('http') ? title : `http${title}`;
           expect(className.toLowerCase()).toStrictEqual(expected);
@@ -36,9 +36,9 @@ describe('Common specs', () => {
       it.each(all)(
         'should match official npm/statuses messages',
         (className, status, npmStatusMsg, exception) => {
-          const expected = npmStatusMsg.replace(/[\W_]+/g, '').toLowerCase();
+          const expected = npmStatusMsg.replaceAll(/[\W_]+/g, '').toLowerCase();
           expect(
-            exception?.message.toLowerCase().replace(/[\W_]+/g, '')
+            exception?.message.toLowerCase().replaceAll(/[\W_]+/g, '')
           ).toStrictEqual(expected);
         }
       );
