@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.6.1
+
+### Patch Changes
+
+- [#724](https://github.com/belgattitude/httpx/pull/724) [`8d02a2a`](https://github.com/belgattitude/httpx/commit/8d02a2a516aaf42ff5e002889938c6282c862b47) Thanks [@belgattitude](https://github.com/belgattitude)! - Optimize code thanks to eslint unicorn plugin
+
 ## 1.6.0
 
 ### Minor Changes

@@ -1,5 +1,14 @@
 # @httpx/json-api
 
+## 0.5.1
+
+### Patch Changes
+
+- [#724](https://github.com/belgattitude/httpx/pull/724) [`8d02a2a`](https://github.com/belgattitude/httpx/commit/8d02a2a516aaf42ff5e002889938c6282c862b47) Thanks [@belgattitude](https://github.com/belgattitude)! - Optimize code thanks to eslint unicorn plugin
+
+- Updated dependencies [[`8d02a2a`](https://github.com/belgattitude/httpx/commit/8d02a2a516aaf42ff5e002889938c6282c862b47)]:
+  - @httpx/exception@2.5.3
+
 ## 0.5.0
 
 ### Minor Changes
