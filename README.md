@@ -1,6 +1,4 @@
-# @httpx
-
-Mini collection of "do one thing" typescript libraries.
+# Collection of "do one thing" typescript libraries.
 
 ## [@httpx/exception](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
 
