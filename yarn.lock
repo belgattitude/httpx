@@ -36,11 +36,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.13.1":
-  version: 0.13.1
-  resolution: "@arethetypeswrong/cli@npm:0.13.1"
+"@arethetypeswrong/cli@npm:0.13.2":
+  version: 0.13.2
+  resolution: "@arethetypeswrong/cli@npm:0.13.2"
   dependencies:
-    "@arethetypeswrong/core": "npm:0.13.0"
+    "@arethetypeswrong/core": "npm:0.13.2"
     chalk: "npm:^4.1.2"
     cli-table3: "npm:^0.6.3"
     commander: "npm:^10.0.1"
@@ -49,20 +49,20 @@ __metadata:
     semver: "npm:^7.5.4"
   bin:
     attw: dist/index.js
-  checksum: 7ef308a1659245590e493652f2111ec09ba677cb2439cc846cb2d3867bd9e1c743d7df8dcd680f5893c9095a5f56dfc4805e1786e56b596b466f48380f1c9dce
+  checksum: 1dc85c3fdc0f307b67ad59fb7da71d32cd437033c0d74286b4be52e97aea24a5c843aff77f41bef6115ed2d2f1d69f289acff778a16e495a440e26206e59aec0
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/core@npm:0.13.0":
-  version: 0.13.0
-  resolution: "@arethetypeswrong/core@npm:0.13.0"
+"@arethetypeswrong/core@npm:0.13.2":
+  version: 0.13.2
+  resolution: "@arethetypeswrong/core@npm:0.13.2"
   dependencies:
     "@andrewbranch/untar.js": "npm:^1.0.3"
     fflate: "npm:^0.7.4"
     semver: "npm:^7.5.4"
-    typescript: "npm:^5.2.2"
+    typescript: "npm:5.3.2"
     validate-npm-package-name: "npm:^5.0.0"
-  checksum: aac3e65cd082aacbb0eeb617473170ae4080718ea5852bf587c06b1e0807744c142ec0d89f9ffba004229a5daaa51162db5d4585dd2b5beb2e95727ec4b4ae5a
+  checksum: 27750cd6ad569cf2407baf1fbffad3cefb900078752fef04929ab0e2f49ea4bc4a3fa9b2820d323635ba4ff52fab32d5684e80375613c32f75d523bf364a0297
   languageName: node
   linkType: hard
 
@@ -1108,7 +1108,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.13.1"
+    "@arethetypeswrong/cli": "npm:0.13.2"
     "@belgattitude/eslint-config-bases": "npm:4.0.1"
     "@size-limit/file": "npm:11.0.0"
     "@size-limit/webpack": "npm:11.0.0"
@@ -1136,7 +1136,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.13.1"
+    "@arethetypeswrong/cli": "npm:0.13.2"
     "@belgattitude/eslint-config-bases": "npm:4.0.1"
     "@size-limit/file": "npm:11.0.0"
     "@size-limit/webpack": "npm:11.0.0"
@@ -1173,7 +1173,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.13.1"
+    "@arethetypeswrong/cli": "npm:0.13.2"
     "@belgattitude/eslint-config-bases": "npm:4.0.1"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:11.0.0"
@@ -11269,7 +11269,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.2.2, typescript@npm:^5.2.2":
+"typescript@npm:5.2.2":
   version: 5.2.2
   resolution: "typescript@npm:5.2.2"
   bin:
@@ -11279,13 +11279,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
+"typescript@npm:5.3.2":
+  version: 5.3.2
+  resolution: "typescript@npm:5.3.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 415e5fb6611f5713e460bad48039f00bcfdbde53a2f911727862d5aa9c5d5edd250059a419df382d8f031709e15a169c41eb62b6a401da5eec7ac0f4e359d6ac
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>":
   version: 5.2.2
   resolution: "typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: f79cc2ba802c94c2b78dbb00d767a10adb67368ae764709737dc277273ec148aa4558033a03ce901406b35fddf4eac46dabc94a1e1d12d2587e2b9cfe5707b4a
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>":
+  version: 5.3.2
+  resolution: "typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 1b45cdfb577a78ae7a9a9d0b77a7b772142cb98ba05e4e5aefba7044a028ded885bcecef63166407a5986645cea816fe4986894336aacd5e791796ea79a6a7ed
   languageName: node
   linkType: hard
 
