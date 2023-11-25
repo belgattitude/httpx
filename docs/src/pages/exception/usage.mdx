@@ -35,7 +35,7 @@ Explicit named imports are prefixed by `Http` to ease
 IDE experience. Message is optional and default to the [default message](#about-default-message). Additional
 parameters are supported such as `url`, `method`, `code`, `errorId` and `cause`.
 
-<Tabs items={['Basic', 'Extended params', 'With issues']} defaultIndex={0}>
+<Tabs items={['Basic', 'Extended params', 'With validation issues']} defaultIndex={0}>
     <Tab>
         ```typescript
         import { HttpNotFound, HttpBadRequest } from '@httpx/exception';
@@ -172,7 +172,7 @@ if (data instanceof Error) {
 }
 ```
 
-#### HttpException parameters
+### Parameters
 
 Http exception optionally accepts a parameter of type `string | HttpExceptionParams`. If no parameter
 is provided a [default message](#about-default-message) will be set.
@@ -189,7 +189,7 @@ When a `string` is provided it will be used as the error message, otherwise you 
 
 Example:
 
-#### HttpException properties
+### Properties
 
 | HttpException | Type                 | Description                                                                                                                        |
 | ------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
