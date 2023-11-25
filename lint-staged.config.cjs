@@ -15,7 +15,7 @@ const { concatFilesForPrettier } = require('./lint-staged.common.cjs');
  * @type {Record<string, (filenames: string[]) => string | string[] | Promise<string | string[]>>}
  */
 const rules = {
-  '**/*.{json,md,mdx,css,html,yml,yaml,scss,ts,js,tsx,jsx,mjs}': (
+  '**/*.{json,css,html,yml,yaml,scss,ts,js,tsx,jsx,mjs}': (
     filenames
   ) => {
     return [`prettier --write ${concatFilesForPrettier(filenames)}`];

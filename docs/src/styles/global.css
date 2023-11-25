@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .shields-ctn {
+    @apply mt-5;
+    & > p {
+      @apply flex flex-row flex-wrap gap-1;
+      zoom: 0.9;
+    }
+  }
+}

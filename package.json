@@ -42,6 +42,7 @@
     "prettier:format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"**/*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
   },
   "workspaces": [
+    "docs",
     "examples/*",
     "packages/*"
   ],

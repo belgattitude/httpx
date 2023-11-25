@@ -25,15 +25,15 @@
 - [#675](https://github.com/belgattitude/httpx/pull/675) [`a6a63e1`](https://github.com/belgattitude/httpx/commit/a6a63e174af87f04eaf105a6e45c2ef56fc64ade) Thanks [@belgattitude](https://github.com/belgattitude)! - Add support for HttpUnprocessableEntity.issues in serializer.
 
   ```typescript
-  import { fromJson, toJson } from '@httpx/exception/serializer';
+  import { fromJson, toJson } from "@httpx/exception/serializer";
 
   const e422 = new HttpUnprocessableEntity({
-    message: 'Validation failed',
+    message: "Validation failed",
     issues: [
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -51,12 +51,12 @@
 
   ```typescript
   const e422 = createHttpException(422, {
-    message: 'Validation failed',
+    message: "Validation failed",
     issues: [
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -157,14 +157,14 @@
   // becomes
   const issues: HttpValidationIssue[] = [
     {
-      message: 'Invalid email',
-      path: 'email',
-      code: 'invalid_email',
+      message: "Invalid email",
+      path: "email",
+      code: "invalid_email",
     },
     {
-      message: 'Invalid address',
-      path: ['addresses', 0, 'line1'],
-      code: 'empty_string',
+      message: "Invalid address",
+      path: ["addresses", 0, "line1"],
+      code: "empty_string",
     },
   ];
 
@@ -234,19 +234,19 @@
   Example:
 
   ```typescript
-  import { HttpUnprocessableEntity } from '@httpx/exception';
+  import { HttpUnprocessableEntity } from "@httpx/exception";
 
   const e422 = new HttpUnprocessableEntity({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -283,14 +283,14 @@
   const e400 = new HttpBadRequest({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -371,9 +371,9 @@
 
   ```typescript
   const err = new HttpRequestTimeout({
-    url: 'https://api.dev/user/belgattitude',
-    method: 'GET',
-    code: 'NETWORK_FAILURE',
+    url: "https://api.dev/user/belgattitude",
+    method: "GET",
+    code: "NETWORK_FAILURE",
     errorId: nanoid(), // can be shared by frontend/server
   });
   console.log(err.url, err.method, err.code, err.errorId);
@@ -393,7 +393,7 @@
   import {
     convertToSerializable,
     createFromSerializable,
-  } from '@httpx/exception/serializer';
+  } from "@httpx/exception/serializer";
 
   const serializableObject = convertToSerializable(new HttpForbidden());
   const exception = createFromSerializable(serializableObject);
@@ -430,11 +430,11 @@
   import {
     HttpForbidden,
     HttpUnavailableForLegalReasons,
-  } from '@httpx/exception';
-  import { fromJson, toJson } from '@httpx/exception/serializer';
+  } from "@httpx/exception";
+  import { fromJson, toJson } from "@httpx/exception/serializer";
 
   const e = new HttpForbidden({
-    url: 'https://www.cool.me',
+    url: "https://www.cool.me",
     /*
       cause: new HttpUnavailableForLegalReasons({
           cause: new Error('example with cause')

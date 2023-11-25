@@ -10,12 +10,13 @@ on:
       - '**'
     paths-ignore:
       - 'examples/**'
+      - 'docs/**'
 
 permissions:
   contents: read
 
 jobs:
-  test:
+  test-packages:
     runs-on: ubuntu-latest
     strategy:
       matrix:
