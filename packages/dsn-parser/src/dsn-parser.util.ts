@@ -31,7 +31,7 @@ export const isParsableNumber = (value: unknown): value is number => {
 type ValidNetworkPort = number;
 
 export const isValidNetworkPort = (port: number): port is ValidNetworkPort => {
-  return port < 65_536 && port > 0;
+  return !Number.isNaN(port) && port < 65_536 && port > 0;
 };
 
 export const removeUndefined = (

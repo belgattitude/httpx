@@ -19,7 +19,7 @@ const dsnRegexp =
 const defaultOptions = {
   lowercaseDriver: false,
   overrides: {},
-};
+} as const satisfies ParseDsnOptions;
 
 export const parseDsn = (
   dsn: unknown,
