@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  build-docs-and-deploy:
+  build-and-deploy-docs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
