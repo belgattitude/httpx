@@ -50,7 +50,7 @@ jobs:
         if: ${{ github.repository == 'belgattitude/httpx' && contains('refs/heads/main',github.ref)}}
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          yarn website:deploy -- -u "github-actions-bot <support+actions@github.com>"
+          yarn website:deploy -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
