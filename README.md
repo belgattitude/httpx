@@ -1,11 +1,10 @@
-# Collection of "do one thing" typescript libraries.
+## "do one thing" collection.
 
-## [@httpx/exception](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
+### [@httpx/exception](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
 
-HTTP response errors with default message, stacktrace, instanceof, error cause support.
-No deps, esm starts at 350b, tops at 1.4kb (esm). Includes convenience typeguards, optional
-error context and a built-in json (de-)serializer to allow usage across browser and
-node environments (SSR, RSC...) or for logging purpose.
+HTTP error responses with default message, instanceof, stack and error cause support.
+Lightweight, esm starts at 350b. Includes convenience typeguards, optional
+contextual info and a built-in serializer to cover cross-environments challenges (RSC, SSR...).
 
 [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md)
@@ -14,7 +13,7 @@ node environments (SSR, RSC...) or for logging purpose.
 [![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Quality&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
 [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
 
-## [@httpx/dsn-parser](https://github.com/belgattitude/httpx/tree/main/packages/dsn-parser#readme)
+### [@httpx/dsn-parser](https://github.com/belgattitude/httpx/tree/main/packages/dsn-parser#readme)
 
 DSN & JDBC string parser with query params support in a light and modern package.
 
