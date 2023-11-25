@@ -45,6 +45,11 @@ jobs:
 
       - name: 🏗 Build docs
         run: yarn website:build
+        env:
+          NEXTJS_IGNORE_ESLINT: true
+          NEXTJS_IGNORE_TYPECHECK: true
+          NEXT_DISABLE_SOURCEMAPS: true
+          NEXT_TELEMETRY_DISABLED: true
 
       - name: 🚀 Deploy
         if: ${{ github.repository == 'belgattitude/httpx' && contains('refs/heads/main',github.ref)}}
