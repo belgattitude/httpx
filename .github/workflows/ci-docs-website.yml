@@ -46,9 +46,10 @@ jobs:
       - name: 🏗 Build docs
         run: yarn website:build
         env:
-          NEXTJS_IGNORE_ESLINT: true
-          NEXTJS_IGNORE_TYPECHECK: true
-          NEXT_DISABLE_SOURCEMAPS: true
+          NEXT_BUILD_ENV_BASE_PATH: "/httpx"
+          NEXT_BUILD_ENV_LINT: true
+          NEXT_BUILD_ENV_SOURCEMAPS: false
+          NEXT_BUILD_ENV_TYPECHECK: false
           NEXT_TELEMETRY_DISABLED: true
 
       - name: 🚀 Deploy
