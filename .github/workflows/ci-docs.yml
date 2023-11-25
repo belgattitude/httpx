@@ -40,6 +40,3 @@ jobs:
 
       - name: 🏗 Build docs
         run: yarn workspace httpx-docs run build
-
-      - name: 🏗 Export docs
-        run: yarn workspace httpx-docs run export

@@ -2,7 +2,7 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 
 ## Install
 
-<Tabs items={['yarn', 'pnpm', 'npm', 'bun', 'deno']} defaultIndex={0}>
+<Tabs items={['yarn', 'pnpm', 'npm']} defaultIndex={0}>
     <Tab>
         ```bash
         yarn add @httpx/exception
@@ -18,17 +18,6 @@ import { Tabs, Tab, Callout } from 'nextra/components';
         npm install @httpx/exception
         ```
     </Tab>
-    <Tab>
-        ```bash
-        bun add @httpx/exception
-        ```
-    </Tab>
-    <Tab>
-        ```typescript
-        import { HttpNotFound, ... } from "npm:@httpx/exception@^2.1.0";
-        ```
-        > see [deno npm specifiers](https://deno.land/manual/node/npm_specifiers)
-    </Tab>
 </Tabs>
 
 <Callout type="info" emoji="ℹ️">
@@ -38,13 +27,15 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 </Callout>
 
 
-## Named imports
+## Usage
+
+### By named imports
 
 Explicit named imports are prefixed by `Http` to ease
 IDE experience. Message is optional and default to the [default message](#about-default-message). Additional
-parameters are supported such as `url`, `method`, `code`, `errorId`, `errors` and `cause`.
+parameters are supported such as `url`, `method`, `code`, `errorId` and `cause`.
 
-<Tabs items={['Simple', 'Extended parameters', 'With validation errors']} defaultIndex={0}>
+<Tabs items={['Basic', 'Extended params', 'With issues']} defaultIndex={0}>
     <Tab>
         ```typescript
         import { HttpNotFound, HttpBadRequest } from '@httpx/exception';
@@ -91,7 +82,7 @@ parameters are supported such as `url`, `method`, `code`, `errorId`, `errors` an
 
         const e422 = new HttpUnprocessableEntity({
            message: 'Request validation failed',
-           errors: [   // typed as ValidationError[]
+           issues: [   // typed as ValidationIssues[]
                 {
                     message: 'Invalid email',
                     path: 'email',
@@ -118,7 +109,7 @@ parameters are supported such as `url`, `method`, `code`, `errorId`, `errors` an
 
 </Tabs>
 
-## createHttpException
+### By status code
 
 The `createHttpException` function allows to create an exception from an
 arbitrary status code.
@@ -200,14 +191,14 @@ Example:
 
 #### HttpException properties
 
-| HttpException | Type                | Description                                                                                                                        |
-| ------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| statusCode    | `number`            | Http error status code (400-599).                                                                                                  |
-| message       | `string`            | Default or provided message.                                                                                                       |
-| url           | `string?`           | Origin url ([about context](#about-context)).                                                                                      |
-| method        | `string?`           | Origin http method ([about context](#about-context)).                                                                              |
-| code          | `string?`           | Custom code ([about context](#about-context)).                                                                                     |
-| errorId       | `string?`           | Unique id ([about context](#about-context)).                                                                                       |
-| stack         | `string?`           | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause         | `Error?`            | @see [about error cause](#about-errorcause)                                                                                        |
-| errors?       | `ValidationError[]` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+| HttpException | Type                 | Description                                                                                                                        |
+| ------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| statusCode    | `number`             | Http error status code (400-599).                                                                                                  |
+| message       | `string`             | Default or provided message.                                                                                                       |
+| url           | `string?`            | Origin url ([about context](#about-context)).                                                                                      |
+| method        | `string?`            | Origin http method ([about context](#about-context)).                                                                              |
+| code          | `string?`            | Custom code ([about context](#about-context)).                                                                                     |
+| errorId       | `string?`            | Unique id ([about context](#about-context)).                                                                                       |
+| stack         | `string?`            | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause         | `Error?`             | @see [about error cause](#about-errorcause)                                                                                        |
+| issues?       | `ValidationIssues[]` | Only supported by HttpUnprocessableEntity (422)                                                                                    |

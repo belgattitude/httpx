@@ -10,6 +10,10 @@ const themeConfig: DocsThemeConfig = {
   editLink: {
     text: 'Edit this page on GitHub',
   },
+  sidebar: {
+    autoCollapse: true,
+    defaultMenuCollapseLevel: 1,
+  },
   head: () => {
     const { asPath, defaultLocale, locale } = useRouter();
     const { frontMatter } = useConfig();
