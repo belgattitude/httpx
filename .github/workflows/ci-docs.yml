@@ -16,11 +16,11 @@ permissions:
   contents: read
 
 jobs:
-  generate-docs-website:
+  github_pages_deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
     env:
       NEXTJS_IGNORE_ESLINT: true
       NEXTJS_IGNORE_TYPECHECK: true
@@ -28,6 +28,9 @@ jobs:
       NEXT_TELEMETRY_DISABLED: true
 
     steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
       - uses: actions/checkout@v4
 
       - name: ⚙️ Use Node.js ${{ matrix.node-version }}
@@ -40,3 +43,13 @@ jobs:
 
       - name: 🏗 Build docs
         run: yarn workspace httpx-docs run build
+
+      - name: Deploy
+        if: ${{ github.repository == 'belgattitude/httpx' && contains('refs/heads/main',github.ref)}}
+        permissions:
+          contents: write
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          yarn deploy -- -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
