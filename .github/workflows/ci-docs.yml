@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  github_pages_deploy:
+  build-docs-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -27,11 +27,11 @@ jobs:
       NEXT_TELEMETRY_DISABLED: true
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.12.0
 
       - uses: actions/checkout@v4
 
-      - name: ⚙️ Use Node.js ${{ matrix.node-version }}
+      - name: ⚙️ Setup node 20
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
@@ -42,7 +42,7 @@ jobs:
       - name: 🏗 Build docs
         run: yarn workspace httpx-docs run build
 
-      - name: Deploy
+      - name: 🚀 Deploy
         if: ${{ github.repository == 'belgattitude/httpx' && contains('refs/heads/main',github.ref)}}
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
