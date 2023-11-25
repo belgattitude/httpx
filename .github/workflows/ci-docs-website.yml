@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  build-docs-and-deploy:
+  build-and-deploy-docs-website:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -46,6 +46,6 @@ jobs:
         if: ${{ github.repository == 'belgattitude/httpx' && contains('refs/heads/main',github.ref)}}
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          yarn deploy -- -u "github-actions-bot <support+actions@github.com>"
+          yarn deploy:website -- -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
