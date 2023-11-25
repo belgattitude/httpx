@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.6.2
+
+### Patch Changes
+
+- [#744](https://github.com/belgattitude/httpx/pull/744) [`def4ba2`](https://github.com/belgattitude/httpx/commit/def4ba282426d46e1e3bca963754612d44b4564d) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix the documentation home page
+
 ## 1.6.1
 
 ### Patch Changes
