@@ -1,3 +1,21 @@
-Plain http exceptions for node, deno, edge and browsers. No deps, lightweight, first class typescript
-experience. Offer a built-in serializer in case you'll need it in hybrid context (àlà nextjs) or for logging
-purposes.
+<table className={'border rounded shadow-lg'}>
+    <thead>
+    <tr>
+        <th className={''}>Project</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    {[
+        { name: '@httpx/exception', short: 'HTTP response error statuses', path: './exception' },
+        { name: '@httpx/dsn-parser', short: 'DSN / JDBC parser', path: './dsn-parser' }
+    ].map(project => (
+        <tr key={project.name}>
+            <td className={'left-0'}>
+                <a href={project.path}>{project.name}</a>
+            </td>
+            <td>{project.short}</td>
+        </tr>
+    ))}
+    </tbody>
+</table>
