@@ -50,7 +50,7 @@ jobs:
             ${{ github.workspace }}/docs/.next/cache
             ${{ github.workspace }}/.cache
             ${{ github.workspace }}/docs/tsconfig.tsbuildinfo
-          key: nextjs-app-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          key: website-app-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: 🏗 Build docs
         run: yarn website:build
