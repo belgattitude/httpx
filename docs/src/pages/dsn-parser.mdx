@@ -12,7 +12,7 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 - 🚀&nbsp; Error with indicative message / reasons (discriminated union or throwable).
 - 🛡️&nbsp; Don't leak passwords in the error message.
 - 🙏&nbsp; Assertion and typeguard helpers
-- 🤗&nbsp; Ecosystem friendly (ie: [easy integrate with zod](#zod-integration-example)).
+- 🤗&nbsp; Ecosystem friendly (ie: [zod integration](#zod-integration-example)).
 
 ## Install
 
@@ -112,12 +112,15 @@ if (parsed.success) {
 }
 ```
 
-### Parameters
+### Options
 
 ```typescript
+import { parseDsn, type ParseDsnOptions } from "@httpx/dsn-parser";
+
 const dsn = "mySql://localhost:6379/db";
 const parsed = parseDsn(dsn, {
   lowercaseDriver: true,
+  // Overrides, allows to force some values (ParseDsnOptions)
   overrides: {
     db: "db3",
     port: undefined,
@@ -133,8 +136,8 @@ assert.deepEqual(parsed.value, {
 
 | Params            | Type                   | Description                               |
 | ----------------- | ---------------------- | ----------------------------------------- |
-| `lowercaseDriver` | `<boolean>`            | Driver name in lowercase, default `false` |
-| `overrides`       | `DSN must be a string` |                                           |
+| `lowercaseDriver` | `boolean`              | Driver name in lowercase, default `false` |
+| `overrides`       | `ParseDsnOptions`      | Overrides allows to force specific values |
 
 ## Utilities
 

@@ -23,15 +23,19 @@ $ pnpm add @httpx/dsn-parser
 
 ## Features
 
-- 🚀&nbsp; Parse individual fields (ie: `driver`, `user`, `password`, `host`...)
-- ✨‍&nbsp; Handle query string parameters and converts to boolean and numeric values.
+- 👉&nbsp; Parse individual fields (ie: `driver`, `user`, `password`, `host`...)
+- 🖖&nbsp; Handle query string parameters and converts to boolean and numeric values.
 - 🦄&nbsp; Handle [special characters like](#why--in-password-matters) `/`, `:`... in the password (some libs won't).
-- 🧐&nbsp; Error with indicative message / reasons (discriminated union or throwable).
+- 🚀&nbsp; Error with indicative message / reasons (discriminated union or throwable).
 - 🛡️&nbsp; Don't leak passwords in the error message.
-- ⚒️&nbsp; Assertion and typeguard helpers
-- 🤗&nbsp; Ecosystem friendly (ie: [easy integrate with zod](#zod-integration-example)).
+- 🙏&nbsp; Assertion and typeguard helpers
+- 🤗&nbsp; Ecosystem friendly (ie: [zod integration](#zod-integration-example)).
 
-## Quick start
+## Documentation
+
+👉 [Official website](https://belgattitude.github.io/httpx/dsn-parser) or [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/dsn-parser#readme)
+
+## Usage
 
 ### parseDsnOrThrow
 
@@ -94,12 +98,15 @@ if (parsed.success) {
 }
 ```
 
-## Options
+### Options
 
 ```typescript
+import { parseDsn, type ParseDsnOptions } from "@httpx/dsn-parser";
+
 const dsn = "mySql://localhost:6379/db";
 const parsed = parseDsn(dsn, {
   lowercaseDriver: true,
+  // Overrides, allows to force some values (ParseDsnOptions)
   overrides: {
     db: "db3",
     port: undefined,
@@ -115,8 +122,23 @@ assert.deepEqual(parsed.value, {
 
 | Params            | Type                   | Description                               |
 | ----------------- | ---------------------- | ----------------------------------------- |
-| `lowercaseDriver` | `<boolean>`            | Driver name in lowercase, default `false` |
-| `overrides`       | `DSN must be a string` |                                           |
+| `lowercaseDriver` | `boolean`              | Driver name in lowercase, default `false` |
+| `overrides`       | `ParseDsnOptions`      | Overrides allows to force specific values |
+
+## Utilities
+
+### Typeguard
+
+```typescript
+import { isParsableDsn, type ParsableDsn } from "@httpx/dsn-parser";
+
+const dsn = "postgresql://localhost:6379/db";
+
+if (isParsableDsn(dsn)) {
+  // known to be ParsableDSN
+}
+```
+
 
 ### Assertion
 
@@ -132,17 +154,22 @@ try {
 }
 ```
 
-### Typeguard
+### convertJdbcToDsn
+
+Utility to convert [jdbc](https://learn.microsoft.com/en-us/sql/connect/jdbc/building-the-connection-url?view=sql-server-ver15) dsn.
+Useful for prisma using [sqlserver](https://www.prisma.io/docs/concepts/database-connectors/sql-server#connection-details).
 
 ```typescript
-import { isParsableDsn, type ParsableDsn } from "@httpx/dsn-parser";
+import { convertJdbcToDsn } from "@httpx/dsn-parser";
 
-const dsn = "postgresql://localhost:6379/db";
+const jdbcDsn =
+  "sqlserver://localhost:1433;database=my-db;authentication=default;user=sa;password=pass03$;encrypt=true;trustServerCertificate=true";
 
-if (isParsableDsn(dsn)) {
-  // known to be ParsableDSN
-}
+const dsn = convertJdbcToDsn(jdbc);
+
+// -> 'sqlserver://localhost:1433?database=my-db&authentication=default&user=sa&password=pass03$&encrypt=true&trustServerCertificate=true'
 ```
+
 
 ## DSN parsing
 
@@ -231,25 +258,7 @@ if (!parsed.success) {
 | `'EMPTY_DSN'`        | `DSN cannot be empty`   |                 |
 | `'INVALID_PORT'`     | `Invalid port: ${port}` | [1-65535]       |
 
-## Utilities
-
-### convertJdbcToDsn
-
-Utility to convert [jdbc](https://learn.microsoft.com/en-us/sql/connect/jdbc/building-the-connection-url?view=sql-server-ver15) dsn.
-Useful for prisma using [sqlserver](https://www.prisma.io/docs/concepts/database-connectors/sql-server#connection-details).
-
-```typescript
-import { convertJdbcToDsn } from "@httpx/dsn-parser";
-
-const jdbcDsn =
-  "sqlserver://localhost:1433;database=my-db;authentication=default;user=sa;password=pass03$;encrypt=true;trustServerCertificate=true";
-
-const dsn = convertJdbcToDsn(jdbc);
-
-// -> 'sqlserver://localhost:1433?database=my-db&authentication=default&user=sa&password=pass03$&encrypt=true&trustServerCertificate=true'
-```
-
-## Faq
+## Ecosystem
 
 ### Zod integration example
 
@@ -268,6 +277,8 @@ export const serverEnvSchema = z.object({
 
 serverEnvSchema.parse(process.env);
 ```
+
+## Faq
 
 ### Why '/' in password matters
 
