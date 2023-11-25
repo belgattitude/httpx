@@ -35,13 +35,22 @@ jobs:
         with:
           persist-credentials: true
 
-      - name: ⚙️ Setup node 20
+      - name: ⚙️ Setup node 20.x
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
 
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
+
+      - name: ♻️ Restore website docs build caches
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/docs/.next/cache
+            ${{ github.workspace }}/.cache
+            ${{ github.workspace }}/docs/tsconfig.tsbuildinfo
+          key: nextjs-app-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: 🏗 Build docs
         run: yarn website:build
