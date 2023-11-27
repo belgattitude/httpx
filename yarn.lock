@@ -359,15 +359,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@belgattitude/eslint-config-bases@npm:4.1.1":
-  version: 4.1.1
-  resolution: "@belgattitude/eslint-config-bases@npm:4.1.1"
+"@belgattitude/eslint-config-bases@npm:4.3.0":
+  version: 4.3.0
+  resolution: "@belgattitude/eslint-config-bases@npm:4.3.0"
   dependencies:
     "@rushstack/eslint-patch": "npm:^1.6.0"
     "@tanstack/eslint-plugin-query": "npm:^4.36.1 || ^5.8.4"
     "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
     "@typescript-eslint/parser": "npm:^6.12.0"
     "@typescript-eslint/typescript-estree": "npm:^6.12.0"
+    "@typescript-eslint/utils": "npm:^6.12.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-import-resolver-typescript: "npm:^3.6.1"
     eslint-plugin-import: "npm:^2.29.0"
@@ -414,7 +415,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: debd221037a21e1974a78ae0353e771ca09ca0bd012f5e24955cd0582322a3ae247879520f03fc501d5124161abd1a4a77edfa96f00ad48f72a59473f189f183
+  checksum: 329e79704dc8855f5df284d5a362e580134380e5a3f184cb968c30160fe42eba2d4d8c4880e8d482a9b8413b4fe66c4379b5d7ffc0b7dab3bd2705fbfefe99a8
   languageName: node
   linkType: hard
 
@@ -1204,7 +1205,7 @@ __metadata:
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.13.2"
-    "@belgattitude/eslint-config-bases": "npm:4.1.1"
+    "@belgattitude/eslint-config-bases": "npm:4.3.0"
     "@size-limit/file": "npm:11.0.0"
     "@size-limit/webpack": "npm:11.0.0"
     "@vitest/coverage-istanbul": "npm:1.0.0-beta.5"
@@ -1232,7 +1233,7 @@ __metadata:
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.13.2"
-    "@belgattitude/eslint-config-bases": "npm:4.1.1"
+    "@belgattitude/eslint-config-bases": "npm:4.3.0"
     "@size-limit/file": "npm:11.0.0"
     "@size-limit/webpack": "npm:11.0.0"
     "@size-limit/webpack-why": "npm:11.0.0"
@@ -1269,7 +1270,7 @@ __metadata:
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.13.2"
-    "@belgattitude/eslint-config-bases": "npm:4.1.1"
+    "@belgattitude/eslint-config-bases": "npm:4.3.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:11.0.0"
     "@size-limit/webpack": "npm:11.0.0"
@@ -7160,7 +7161,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-docs@workspace:docs"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:4.1.1"
+    "@belgattitude/eslint-config-bases": "npm:4.3.0"
     eslint: "npm:8.54.0"
     eslint-config-next: "npm:14.0.3"
     eslint-plugin-tailwindcss: "npm:3.13.0"
@@ -7184,7 +7185,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-monorepo@workspace:."
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:4.1.1"
+    "@belgattitude/eslint-config-bases": "npm:4.3.0"
     "@changesets/changelog-github": "npm:0.4.8"
     "@changesets/cli": "npm:2.26.2"
     "@commitlint/cli": "npm:18.4.3"
