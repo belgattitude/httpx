@@ -1,6 +1,6 @@
 @httpx/dsn-parser
 
-# @httpx/dsn-parser - v1.5.0
+# @httpx/dsn-parser - v1.6.2
 
 ## Table of contents
 
@@ -24,7 +24,7 @@
 
 Ƭ **ParsableDsn**: `string`
 
----
+___
 
 ### ParseDsnOptions
 
@@ -32,12 +32,12 @@
 
 #### Type declaration
 
-| Name               | Type                                                                  | Description                                                |
-| :----------------- | :-------------------------------------------------------------------- | :--------------------------------------------------------- |
-| `lowercaseDriver?` | `boolean`                                                             | Whether to lowercase parsed driver name, default: false    |
-| `overrides?`       | `Omit`\<`Partial`\<[`ParsedDsn`](README.md#parseddsn)\>, `"params"`\> | Overrides parsed values by those one (except query params) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `lowercaseDriver?` | `boolean` | Whether to lowercase parsed driver name, default: false |
+| `overrides?` | `Omit`\<`Partial`\<[`ParsedDsn`](README.md#parseddsn)\>, ``"params"``\> | Overrides parsed values by those one (except query params) |
 
----
+___
 
 ### ParsedDsn
 
@@ -45,15 +45,15 @@
 
 #### Type declaration
 
-| Name      | Type                                                    | Description  |
-| :-------- | :------------------------------------------------------ | :----------- |
-| `db?`     | `string`                                                | -            |
-| `driver`  | `string`                                                | -            |
-| `host`    | `string`                                                | -            |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `db?` | `string` | - |
+| `driver` | `string` | - |
+| `host` | `string` | - |
 | `params?` | `Record`\<`string`, `boolean` \| `number` \| `string`\> | Query params |
-| `pass?`   | `string`                                                | -            |
-| `port?`   | `number`                                                | -            |
-| `user?`   | `string`                                                | -            |
+| `pass?` | `string` | - |
+| `port?` | `number` | - |
+| `user?` | `string` | - |
 
 ## Functions
 
@@ -63,10 +63,10 @@
 
 #### Parameters
 
-| Name   | Type      |
-| :----- | :-------- |
-| `dsn`  | `unknown` |
-| `msg?` | `string`  |
+| Name | Type |
+| :------ | :------ |
+| `dsn` | `unknown` |
+| `msg?` | `string` |
 
 #### Returns
 
@@ -76,7 +76,7 @@ asserts dsn is string
 
 Error when not parsable
 
----
+___
 
 ### convertJdbcToDsn
 
@@ -84,15 +84,15 @@ Error when not parsable
 
 #### Parameters
 
-| Name   | Type     |
-| :----- | :------- |
+| Name | Type |
+| :------ | :------ |
 | `jdbc` | `string` |
 
 #### Returns
 
 `string`
 
----
+___
 
 ### isParsableDsn
 
@@ -100,15 +100,15 @@ Error when not parsable
 
 #### Parameters
 
-| Name  | Type      |
-| :---- | :-------- |
+| Name | Type |
+| :------ | :------ |
 | `dsn` | `unknown` |
 
 #### Returns
 
 dsn is string
 
----
+___
 
 ### parseDsn
 
@@ -116,16 +116,16 @@ dsn is string
 
 #### Parameters
 
-| Name       | Type                                           |
-| :--------- | :--------------------------------------------- |
-| `dsn`      | `unknown`                                      |
+| Name | Type |
+| :------ | :------ |
+| `dsn` | `unknown` |
 | `options?` | [`ParseDsnOptions`](README.md#parsedsnoptions) |
 
 #### Returns
 
 `ParserResult`
 
----
+___
 
 ### parseDsnOrThrow
 
@@ -133,10 +133,10 @@ dsn is string
 
 #### Parameters
 
-| Name       | Type                                                                              |
-| :--------- | :-------------------------------------------------------------------------------- |
-| `dsn`      | `unknown`                                                                         |
-| `options?` | [`ParseDsnOptions`](README.md#parsedsnoptions) & \{ `errorMsgPrefix?`: `string` } |
+| Name | Type |
+| :------ | :------ |
+| `dsn` | `unknown` |
+| `options?` | [`ParseDsnOptions`](README.md#parsedsnoptions) & \{ `errorMsgPrefix?`: `string`  } |
 
 #### Returns
 

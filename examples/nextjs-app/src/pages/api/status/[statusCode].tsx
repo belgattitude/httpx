@@ -1,6 +1,7 @@
 import { createHttpException, isHttpErrorStatusCode } from '@httpx/exception';
 import type { NextApiHandler } from 'next';
 import { z } from 'zod';
+
 import { ConsoleLogger } from '@/lib';
 import { parseRequestWithZod, withApiErrorHandler } from '@/server';
 

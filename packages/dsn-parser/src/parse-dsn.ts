@@ -1,6 +1,6 @@
 import type {
-  ParseDsnOptions,
   ParsedDsn,
+  ParseDsnOptions,
   ParserResult,
 } from './dsn-parser.type';
 import {

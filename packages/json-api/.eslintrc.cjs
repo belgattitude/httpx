@@ -13,10 +13,10 @@ const {
 module.exports = {
   extends: [
     '@belgattitude/eslint-config-bases/typescript',
+    '@belgattitude/eslint-config-bases/simple-import-sort',
     '@belgattitude/eslint-config-bases/sonar',
     '@belgattitude/eslint-config-bases/regexp',
     '@belgattitude/eslint-config-bases/jest',
-    '@belgattitude/eslint-config-bases/perfectionist',
     '@belgattitude/eslint-config-bases/performance',
 
     // Apply prettier and disable incompatible rules

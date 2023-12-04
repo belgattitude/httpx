@@ -1,4 +1,4 @@
-import type { ParseDsnOptions, ParsedDsn } from './dsn-parser.type';
+import type { ParsedDsn, ParseDsnOptions } from './dsn-parser.type';
 import { parseDsn } from './parse-dsn';
 
 export const parseDsnOrThrow = (

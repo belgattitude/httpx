@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useConfig, type DocsThemeConfig } from 'nextra-theme-docs';
+import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs';
 
 const themeConfig: DocsThemeConfig = {
   logo: <span>@httpx</span>,

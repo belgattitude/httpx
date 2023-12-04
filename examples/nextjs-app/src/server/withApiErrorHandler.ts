@@ -1,6 +1,7 @@
 import { type HttpException, isHttpException } from '@httpx/exception';
 import { convertToSerializable } from '@httpx/exception/serializer';
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+
 import { ConsoleLogger, type LoggerInterface } from '@/lib';
 
 type Params = {

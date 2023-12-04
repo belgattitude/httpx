@@ -5,6 +5,7 @@ import {
 } from '@httpx/exception';
 import { fromJson, toJson } from '@httpx/exception/serializer';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+
 import { Scenarios } from '../components/Scenarios';
 
 type ApiData =
