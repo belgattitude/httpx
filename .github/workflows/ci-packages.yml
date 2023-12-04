@@ -72,7 +72,7 @@ jobs:
       - name: 🛟 Check build for ecmascript compliance
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run check-dist
 
-      - name: 🛟 Check publishable dist  (publint)
+      - name: 🛟 Check publishable dist (arethetypeswrong)
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run check-pub
 
       - name: 📄 Check doc can be built
