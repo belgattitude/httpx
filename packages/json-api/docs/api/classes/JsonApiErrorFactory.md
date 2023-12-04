@@ -1,4 +1,4 @@
-[@httpx/json-api - v0.4.6](../README.md) / JsonApiErrorFactory
+[@httpx/json-api - v0.5.1](../README.md) / JsonApiErrorFactory
 
 # Class: JsonApiErrorFactory
 
@@ -31,16 +31,16 @@
 
 #### Parameters
 
-| Name                | Type      | Default value |
-| :------------------ | :-------- | :------------ |
-| `error`             | `unknown` | `undefined`   |
-| `defaultHttpStatus` | `number`  | `500`         |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `error` | `unknown` | `undefined` |
+| `defaultHttpStatus` | `number` | `500` |
 
 #### Returns
 
 [`JsonApiError`](../README.md#jsonapierror)
 
----
+___
 
 ### fromHttpException
 
@@ -48,10 +48,10 @@
 
 #### Parameters
 
-| Name                | Type                                   | Default value | Description                                                 |
-| :------------------ | :------------------------------------- | :------------ | :---------------------------------------------------------- |
-| `exception`         | `string` \| `Error` \| `HttpException` | `undefined`   | -                                                           |
-| `defaultHttpStatus` | `number`                               | `500`         | fallback http status if it can't be inferred from exception |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `exception` | `string` \| `Error` \| `HttpException` | `undefined` | - |
+| `defaultHttpStatus` | `number` | `500` | fallback http status if it can't be inferred from exception |
 
 #### Returns
 

@@ -1,4 +1,4 @@
-[@httpx/json-api - v0.4.6](../README.md) / JsonApiResponseFactory
+[@httpx/json-api - v0.5.1](../README.md) / JsonApiResponseFactory
 
 # Class: JsonApiResponseFactory
 
@@ -31,16 +31,16 @@
 
 #### Parameters
 
-| Name          | Type                                                                                                     | Description                                         |
-| :------------ | :------------------------------------------------------------------------------------------------------- | :-------------------------------------------------- |
-| `errors`      | `string` \| [`JsonApiError`](../README.md#jsonapierror) \| [`JsonApiError`](../README.md#jsonapierror)[] | -                                                   |
-| `httpStatus?` | `number`                                                                                                 | fallback http status if not present in JsonApiError |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `errors` | `string` \| [`JsonApiError`](../README.md#jsonapierror) \| [`JsonApiError`](../README.md#jsonapierror)[] | - |
+| `httpStatus?` | `number` | fallback http status if not present in JsonApiError |
 
 #### Returns
 
 [`JsonApiErrorResponse`](../README.md#jsonapierrorresponse)
 
----
+___
 
 ### fromSuccess
 
@@ -49,15 +49,15 @@
 #### Type parameters
 
 | Name |
-| :--- |
-| `T`  |
+| :------ |
+| `T` |
 
 #### Parameters
 
-| Name        | Type                                                                                                                     |
-| :---------- | :----------------------------------------------------------------------------------------------------------------------- |
-| `data`      | `T`                                                                                                                      |
-| `metadata?` | \{ `cacheHit?`: `boolean` } & `Record`\<`string`, `string` \| `number` \| `boolean` \| `Record`\<`string`, `unknown`\>\> |
+| Name | Type |
+| :------ | :------ |
+| `data` | `T` |
+| `metadata?` | \{ `cacheHit?`: `boolean`  } & `Record`\<`string`, `string` \| `number` \| `boolean` \| `Record`\<`string`, `unknown`\>\> |
 
 #### Returns
 
