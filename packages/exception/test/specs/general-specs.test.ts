@@ -1,8 +1,8 @@
 import statuses from 'statuses';
+
 import { HttpClientException, HttpException } from '../../src/base';
 import { HttpNotFound, HttpUnprocessableEntity } from '../../src/client';
 import { createHttpException } from '../../src/factory';
-
 import { statusMap } from '../../src/status';
 import type { HttpExceptionParamsWithIssues } from '../../src/types/HttpExceptionParamsWithIssues';
 

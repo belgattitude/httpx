@@ -1,6 +1,5 @@
 import type { ValidationError } from '../../src';
-import { HttpUnprocessableEntity } from '../../src/client';
-import { HttpBadRequest } from '../../src/client';
+import { HttpBadRequest, HttpUnprocessableEntity } from '../../src/client';
 
 describe('HttpBadRequest (400) with deprecated field validation', () => {
   const errors: ValidationError[] = [

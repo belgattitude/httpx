@@ -1,9 +1,9 @@
 import {
   type ErrorReasons,
-  type ParseDsnOptions,
-  type ParsedDsn,
-  type ParserErrorResult,
   errorReasons,
+  type ParsedDsn,
+  type ParseDsnOptions,
+  type ParserErrorResult,
 } from './dsn-parser.type';
 
 export const createErrorResult = (

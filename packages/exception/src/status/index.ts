@@ -43,6 +43,7 @@ import {
   HttpVariantAlsoNegotiates,
   HttpVersionNotSupported,
 } from '../server';
+
 export const statusMap = {
   400: HttpBadRequest,
   401: HttpUnauthorized,
