@@ -17,7 +17,7 @@
     "g:docgen": "yarn workspaces foreach --all -ptv run docgen",
     "g:test": "yarn workspaces foreach --all -pv run test",
     "g:test-unit": "yarn workspaces foreach --all -pv run test-unit",
-    "g:lint": "yarn workspaces foreach --all -v run lint",
+    "g:lint": "yarn workspaces foreach --all -pv run lint",
     "g:typecheck": "yarn workspaces foreach --all -v run typecheck",
     "g:lint-staged-files": "lint-staged --allow-empty",
     "g:fix-all-files": "yarn workspaces foreach --all -ptv run fix-all-files",
