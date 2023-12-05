@@ -1102,7 +1102,7 @@ __metadata:
     "@belgattitude/eslint-config-bases": "npm:4.6.0"
     "@httpx/exception": "workspace:^"
     "@types/node": "npm:20.10.3"
-    "@types/react": "npm:18.2.41"
+    "@types/react": "npm:18.2.42"
     "@types/react-dom": "npm:18.2.17"
     axios: "npm:1.6.2"
     cross-env: "npm:7.0.3"
@@ -1116,7 +1116,7 @@ __metadata:
     react-dom: "npm:18.2.0"
     rimraf: "npm:5.0.5"
     superjson: "npm:2.2.1"
-    tailwindcss: "npm:3.3.5"
+    tailwindcss: "npm:3.3.6"
     typescript: "npm:5.3.2"
     webpack: "npm:5.89.0"
     zod: "npm:3.22.4"
@@ -2316,14 +2316,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.2.41, @types/react@npm:>=16":
-  version: 18.2.41
-  resolution: "@types/react@npm:18.2.41"
+"@types/react@npm:*, @types/react@npm:18.2.42, @types/react@npm:>=16":
+  version: 18.2.42
+  resolution: "@types/react@npm:18.2.42"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 31a498a56ad3e825ae13799355fe49042c0cdbbe6f40003f39b6b9cf847ba1669393c22ba60e97b1072cf1c002b15432082cdd17e47c948430bdc1f0864829b9
+  checksum: b6ee1873ba551ca7bf87cefff00a615aa4322cd68d425858a2e09be260d8037d7fc68865739d2b05cc88cefa7acd009afdaea43e9856fc6302b322cc8c19464e
   languageName: node
   linkType: hard
 
@@ -12561,39 +12561,6 @@ __metadata:
     syncpack-set-semver-ranges: dist/bin-set-semver-ranges/index.js
     syncpack-update: dist/bin-update/index.js
   checksum: 49296e75689b0a0e5ec2aa3df6cc2fb63abe03f80d7730be6c0ce25628d5d6e1861165f3b8b97073a7c17f8fa820229fcab1b9fb7545e1d23727424e36956995
-  languageName: node
-  linkType: hard
-
-"tailwindcss@npm:3.3.5":
-  version: 3.3.5
-  resolution: "tailwindcss@npm:3.3.5"
-  dependencies:
-    "@alloc/quick-lru": "npm:^5.2.0"
-    arg: "npm:^5.0.2"
-    chokidar: "npm:^3.5.3"
-    didyoumean: "npm:^1.2.2"
-    dlv: "npm:^1.1.3"
-    fast-glob: "npm:^3.3.0"
-    glob-parent: "npm:^6.0.2"
-    is-glob: "npm:^4.0.3"
-    jiti: "npm:^1.19.1"
-    lilconfig: "npm:^2.1.0"
-    micromatch: "npm:^4.0.5"
-    normalize-path: "npm:^3.0.0"
-    object-hash: "npm:^3.0.0"
-    picocolors: "npm:^1.0.0"
-    postcss: "npm:^8.4.23"
-    postcss-import: "npm:^15.1.0"
-    postcss-js: "npm:^4.0.1"
-    postcss-load-config: "npm:^4.0.1"
-    postcss-nested: "npm:^6.0.1"
-    postcss-selector-parser: "npm:^6.0.11"
-    resolve: "npm:^1.22.2"
-    sucrase: "npm:^3.32.0"
-  bin:
-    tailwind: lib/cli.js
-    tailwindcss: lib/cli.js
-  checksum: a29c764e43fcb06b2ea34d981d2c20831a8bf4cf2a3738d08bbd887199457f686c327360e3b54652106cb2a919ca4f84bc6155853caf7e0078c8ab73b43c3eae
   languageName: node
   linkType: hard
 
