@@ -4,13 +4,10 @@ import { getMsgFromCls } from './getMsgFromCls';
 /**
  * Return params applicable to parent HttpException class when calling super();
  *
- * @param name - class name without Http prefix
- * @param msgOrParams - message or params
- *
  * @internal
  */
 export const getSuper = (
-  name: string,
+  cls: { name: string },
   msgOrParams?: HttpExceptionParams | string
 ): HttpExceptionParams => {
   const { message, ...rest } = {
@@ -20,6 +17,6 @@ export const getSuper = (
   };
   return {
     ...rest,
-    message: message ?? getMsgFromCls(name),
+    message: message ?? getMsgFromCls(cls.name),
   };
 };

@@ -3,7 +3,6 @@ const splitCapsRegexp = /[A-Z]/g;
  * Return default message based on http exception className
  * @internal
  */
-
 export const getMsgFromCls = (className: string) => {
   const preserveName =
     className.endsWith('Exception') || className === 'HttpVersionNotSupported';

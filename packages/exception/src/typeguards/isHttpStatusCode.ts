@@ -6,8 +6,5 @@ import type { HttpStatusCode } from '../types/HttpStatusCode';
 export const isHttpStatusCode = (
   statusCode: unknown
 ): statusCode is HttpStatusCode => {
-  if (typeof statusCode !== 'number') {
-    return false;
-  }
-  return statusCode > 99 && statusCode < 600;
+  return typeof statusCode === 'number' && statusCode > 99 && statusCode < 600;
 };

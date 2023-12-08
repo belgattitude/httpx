@@ -1,7 +1,7 @@
 // @ts-check
 
-const fullEsmMaxSize = "1500B";
-const fullCjsMaxSize = "2000B";
+const fullEsmMaxSize = "1460B";
+const fullCjsMaxSize = "1900B";
 
 /**
  * Will ensure esm tree-shakeability and total size are within expectations.
@@ -23,13 +23,13 @@ module.exports = [
     name: "ESM (only HttpException exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpException }",
-    limit: "340B",
+    limit: "348B",
   },
   {
     name: "ESM (only HttpNotFound exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound }",
-    limit: "400B",
+    limit: "405B",
   },
   {
     name: "ESM (two client exceptions: HttpNotFound + HttpRequestTimeout)",
@@ -47,31 +47,25 @@ module.exports = [
     name: "ESM (only createHttpException)",
     path: ["dist/index.mjs"],
     import: "{ createHttpException }",
-    limit: "800B", // Will import all server/client exceptions
+    limit: "690B", // Will import all server/client exceptions
   },
   {
     name: "ESM ({ toJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ toJson }",
-    limit: "960B",
+    limit: "840B",
   },
   {
     name: "ESM ({ fromJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ fromJson }",
-    limit: "1500B",
-  },
-  {
-    name: "ESM ({ toJson })",
-    path: ["dist/serializer/index.mjs"],
-    import: "{ toJson }",
-    limit: "900B",
+    limit: "1120B",
   },
   {
     name: "ESM ({ fromJson, toJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ fromJson, toJson }",
-    limit: "1500B",
+    limit: "1390B",
   },
   // ###################################################
   // Commonjs full bundle

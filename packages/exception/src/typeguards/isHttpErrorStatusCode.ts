@@ -8,8 +8,7 @@ export const isHttpErrorStatusCode = <
 >(
   statusCode: unknown
 ): statusCode is T => {
-  if (typeof statusCode !== 'number') {
-    return false;
-  }
-  return statusCode >= 400 && statusCode < 600;
+  return (
+    typeof statusCode === 'number' && statusCode >= 400 && statusCode < 600
+  );
 };

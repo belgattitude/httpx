@@ -1,3 +1,5 @@
+import { initProtoAndName } from '../../utils';
+
 export class SerializerError extends Error {
   constructor(
     message: string,
@@ -11,7 +13,6 @@ export class SerializerError extends Error {
     } else {
       super(message);
     }
-    Object.setPrototypeOf(this, SerializerError.prototype);
-    this.name = 'SerializerError';
+    initProtoAndName(this, SerializerError);
   }
 }
