@@ -41,12 +41,12 @@ This library is best consumed in ESM, individual imports are tracked by a
 size-limit action. In typical usage the bundle size will be less than 700b
 (including default messages)
 
-| Scenario                                    | Size (esm & min/brotli) |
-| ------------------------------------------- | ----------------------- |
-| Import only one exception (HttpNotFound)    | ~ 400b                  |
-| Import only two exceptions                  | ~ 415b                  |
-| Import createHttpException (all exceptions) | < 690b                  |
-| All exceptions + typeguards + serializer    | ~ 1.5kb                 |
+| Scenario                                      | Size (esm & min/brotli) |
+| --------------------------------------------- | ----------------------- |
+| Import only one exception (`HttpNotFound`)    | ~ 400b                  |
+| Import only two exceptions                    | ~ 415b                  |
+| Import `createHttpException` (all exceptions) | < 690b                  |
+| All exceptions + typeguards + serializer      | ~ 1.5kb                 |
 
 ## Usage
 
