@@ -38,15 +38,16 @@ pnpm add @httpx/exception     # via pnpm
 ## Bundle size
 
 This library is best consumed in ESM, individual imports are tracked by a
-[size-limit](./.size-limit.cjs) action. In typical usage the bundle size will be less than 700b
-(that includes default messages, context support and build-in status codes)
+[size-limit](./.size-limit.cjs) action. In typical usage the bundle size
+will be less than 700b (that includes all 43 exceptions, their default messages,
+context support and build-in status codes)
 
-| Scenario                                      | Size (compressed) |
-| --------------------------------------------- | ----------------: |
-| Import only one exception (`HttpNotFound`)    |            ~ 400b |
-| Import only two exceptions                    |            ~ 415b |
-| Import `createHttpException` (all exceptions) |            < 690b |
-| All exceptions + typeguards + serializer      |           ~ 1.5kb |
+| Scenario                                         | Size (compressed) |
+| ------------------------------------------------ | ----------------: |
+| Import only one exception (`HttpNotFound`)       |            ~ 400b |
+| Import only two exceptions                       |            ~ 415b |
+| Import `createHttpException` (all 43 exceptions) |            < 690b |
+| All exceptions + typeguards + serializer         |           ~ 1.5kb |
 
 ## Usage
 
