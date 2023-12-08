@@ -2,4 +2,4 @@
 '@httpx/exception': patch
 ---
 
-Reduce bundle size of createException (-100b)
+Reduce bundle size of createException (-20b)
