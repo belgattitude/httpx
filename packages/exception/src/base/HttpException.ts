@@ -1,7 +1,7 @@
 import { supportsErrorCause } from '../support/supportsErrorCause';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import type { HttpMethod } from '../types/HttpMethod';
-import { getSuper } from '../utils';
+import { getSuper, initProtoAndName } from '../utils';
 
 export class HttpException extends Error implements HttpExceptionParams {
   /**
@@ -42,12 +42,7 @@ export class HttpException extends Error implements HttpExceptionParams {
    * @param msgOrParams either a message or an object containing HttpExceptionParams
    */
   constructor(statusCode: number, msgOrParams?: HttpExceptionParams | string) {
-    const {
-      cause: c,
-      message: m,
-
-      ...p
-    } = getSuper(HttpException.name, msgOrParams);
+    const { cause: c, message: m, ...p } = getSuper(HttpException, msgOrParams);
     super(m);
     if (supportsErrorCause() && c instanceof Error) {
       this.cause = c;
@@ -57,7 +52,6 @@ export class HttpException extends Error implements HttpExceptionParams {
     this.errorId = p.errorId;
     this.code = p.code;
     this.method = p.method;
-    Object.setPrototypeOf(this, HttpException.prototype);
-    this.name = HttpException.name;
+    initProtoAndName(this, HttpException);
   }
 }

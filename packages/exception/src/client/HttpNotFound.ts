@@ -1,6 +1,6 @@
 import { HttpClientException } from '../base';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs } from '../utils';
+import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
  * 404 - Not found (client)
@@ -18,8 +18,6 @@ export class HttpNotFound extends HttpClientException {
   static readonly STATUS = 404;
   constructor(msgOrParams?: HttpExceptionParams | string) {
     super(...getSuperArgs(HttpNotFound, msgOrParams));
-    Object.setPrototypeOf(this, HttpNotFound.prototype);
-    this.name = HttpNotFound.name;
-    // initProtoAndName(this, HttpNotFound);
+    initProtoAndName(this, HttpNotFound);
   }
 }

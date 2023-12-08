@@ -10,7 +10,7 @@ import { HttpException } from './HttpException';
  */
 export class HttpServerException extends HttpException {
   constructor(statusCode: number, msgOrParams?: HttpExceptionParams | string) {
-    super(statusCode, getSuper(HttpServerException.name, msgOrParams));
+    super(statusCode, getSuper(HttpServerException, msgOrParams));
     initProtoAndName(this, HttpServerException);
   }
 }

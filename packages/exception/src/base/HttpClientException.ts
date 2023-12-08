@@ -1,5 +1,5 @@
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper } from '../utils';
+import { getSuper, initProtoAndName } from '../utils';
 import { HttpException } from './HttpException';
 
 /**
@@ -10,8 +10,7 @@ import { HttpException } from './HttpException';
  */
 export class HttpClientException extends HttpException {
   constructor(statusCode: number, msgOrParams?: HttpExceptionParams | string) {
-    super(statusCode, getSuper(HttpClientException.name, msgOrParams));
-    Object.setPrototypeOf(this, HttpClientException.prototype);
-    this.name = HttpClientException.name;
+    super(statusCode, getSuper(HttpClientException, msgOrParams));
+    initProtoAndName(this, HttpClientException);
   }
 }

@@ -2,10 +2,13 @@ import { getSuper } from '../getSuper';
 
 describe('getSuper', () => {
   it('should return an object from string mesg', () => {
-    expect(getSuper('HttpNotFound')).toStrictEqual({ message: 'Not found' });
-    expect(getSuper('HttpNotFound', 'msg')).toStrictEqual({ message: 'msg' });
+    const cls = { name: 'HttpNotFound' };
+    expect(getSuper(cls)).toStrictEqual({
+      message: 'Not found',
+    });
+    expect(getSuper(cls, 'msg')).toStrictEqual({ message: 'msg' });
     expect(
-      getSuper('HttpNotFound', {
+      getSuper(cls, {
         message: 'msg',
       })
     ).toStrictEqual({ message: 'msg' });
