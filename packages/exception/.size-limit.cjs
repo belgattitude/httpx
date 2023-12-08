@@ -35,7 +35,7 @@ module.exports = [
     name: "ESM (two client exceptions: HttpNotFound + HttpRequestTimeout)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound, HttpRequestTimeout }",
-    limit: "435B",
+    limit: "416B",
   },
   {
     name: "ESM (only isHttpException)",
