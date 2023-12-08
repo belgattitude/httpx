@@ -38,7 +38,7 @@ pnpm add @httpx/exception     # via pnpm
 ## Bundle size
 
 This library is best consumed in ESM, individual imports are tracked by a
-size-limit action. In typical usage the bundle size will be less than 900b
+size-limit action. In typical usage the bundle size will be less than 700b
 (including default messages)
 
 | Scenario                                    | Size (esm & min/brotli) |
