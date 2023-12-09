@@ -1,6 +1,6 @@
 # @httpx/exception
 
-HTTP error responses with default message, instanceof, stack and error cause support.
+HTTP status errors with default message, instanceof, stack and nested error cause support.
 Lightweight, esm starts at 350b. Includes convenience typeguards, optional
 contextual info and a built-in serializer to cover cross-environments challenges (RSC, SSR...).
 
@@ -9,7 +9,7 @@ contextual info and a built-in serializer to cover cross-environments challenges
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception)
 [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
 ![node](https://img.shields.io/static/v1?label=Node&message=18%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=modern&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHM%3D)
+[![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E93%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
 [![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Quality&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
 [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
