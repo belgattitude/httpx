@@ -1,5 +1,21 @@
 ## About bundle
 
+### Compatibility
+
+Node 18+ and es2022 compatibility is ensured on the CI.
+
+Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
+configuration. From the browserslist defaults:
+[Chrome 96+, Firefox 90+, Edge 91+, Safari 15+ and Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID4gOTYsZmlyZWZveCA%2BIDkwLGVkZ2UgPiA5MSxzYWZhcmkgPiAxNSxpb3MgPiAxNSxvcGVyYSA%2BIDc3)
+are set as minimal supported versions.
+
+For *older* browsers:
+
+- Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
+- You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support
+  nested errors (if not present they are simply discarded - no runtime errors).
+
+
 ### Size
 
 Code and bundler have been tuned to target a minimal compressed footprint
@@ -30,19 +46,6 @@ avoid issues with [dual package hazards](https://nodejs.org/api/packages.html#du
 The export fields and the builds are checked on the CI with [are-the-types-wrong](https://arethetypeswrong.github.io/).
 
 > PS: Plans to remove cjs support might land in a next major version.
-
-### Compatibility
-
-Node 18+ and es2022 compatibility is ensured on the CI.
-
-Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
-configuration. From the defaults, Chrome 96+, Firefox 90+, Edge 91+, Safari 15+ and Opera 77+ are set as minimal supported versions.
-
-For *older* browsers:
-
-- Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...) 
-- You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support
-  nested errors (if not present they are simply discarded - no runtime errors).
 
 
 ### Typescript
