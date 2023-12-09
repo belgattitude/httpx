@@ -32,6 +32,10 @@ yarn add @httpx/exception     # via yarn
 pnpm add @httpx/exception     # via pnpm
 ```
 
+## Documentation
+
+👉 [Official website](https://belgattitude.github.io/httpx/exception) or [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
+
 ## Usage
 
 ### By named imports
