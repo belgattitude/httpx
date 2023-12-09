@@ -6,7 +6,7 @@ Node 18+ and es2022 compatibility is ensured on the CI.
 
 Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
 configuration. From the browserslist defaults:
-[Chrome 96+, Firefox 90+, Edge 91+, Safari 15+ and Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID4gOTYsZmlyZWZveCA%2BIDkwLGVkZ2UgPiA5MSxzYWZhcmkgPiAxNSxpb3MgPiAxNSxvcGVyYSA%2BIDc3)
+[Chrome 96+, Firefox 90+, Edge 91+, Safari 15+ and Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
 are set as minimal supported versions.
 
 For *older* browsers:
