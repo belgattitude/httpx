@@ -2,12 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --shiki-color-text: #d1d1d1;
+  --shiki-token-constant: #79b8ff;
+  --shiki-token-string: #ffab70;
+  --shiki-token-comment: #c0d6ec;
+  --shiki-token-keyword: #f97583;
+  --shiki-token-parameter: #ff9800;
+  --shiki-token-function: #b392f0;
+  --shiki-token-string-expression: #4bb74a;
+  --shiki-token-punctuation: #bbb;
+  --shiki-token-link: #ffab70;
+}
+
+.nextra-code-block > pre {
+  background-color: #262626;
+}
 @layer components {
   .shields-ctn {
     @apply mt-5;
     & > p {
       @apply flex flex-row flex-wrap gap-1;
-      zoom: 0.9;
+      zoom: 0.93;
     }
   }
 }

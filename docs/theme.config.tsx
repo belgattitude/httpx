@@ -10,6 +10,14 @@ const themeConfig: DocsThemeConfig = {
   editLink: {
     text: 'Edit this page on GitHub',
   },
+  /*
+  primaryHue: {
+    light: 340,
+    dark: 200,
+  }, */
+  nextThemes: {
+    defaultTheme: 'dark',
+  },
   sidebar: {
     autoCollapse: true,
     defaultMenuCollapseLevel: 1,

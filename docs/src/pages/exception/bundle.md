@@ -25,7 +25,6 @@ for the browser. In typical usage the bundle size will vary between 450b to 750b
 ESM individual imports are tracked by a
 [size-limit configuration](../.size-limit.cjshttps://github.com/belgattitude/httpx/blob/main/packages/dsn-parser/.size-limit.cjs).
 
-
 | Scenario                                         | Size (compressed) |
 |--------------------------------------------------|------------------:|
 | Import generic exception (`HttpClientException`) |            ~ 370b |
@@ -41,7 +40,7 @@ ESM individual imports are tracked by a
 
 ### Packaging
 
-This library offers a dual cjs/esm bundle. The (optionial) serializer code has been tuned to
+This library offers a dual cjs/esm bundle. The (optional) serializer code has been tuned to
 avoid issues with [dual package hazards](https://nodejs.org/api/packages.html#dual-package-hazard). 
 
 The export fields and the builds are checked on the CI with [are-the-types-wrong](https://arethetypeswrong.github.io/).

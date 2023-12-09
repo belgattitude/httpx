@@ -1,30 +1,5 @@
 import { Tabs, Tab, Callout } from 'nextra/components';
 
-## Install
-
-<Tabs items={['yarn', 'pnpm', 'npm']} defaultIndex={0}>
-    <Tab>
-        ```bash
-        yarn add @httpx/exception
-        ```
-    </Tab>
-    <Tab>
-        ```bash
-        pnpm add @httpx/exception
-        ```
-    </Tab>
-    <Tab>
-        ```bash
-        npm install @httpx/exception
-        ```
-    </Tab>
-</Tabs>
-
-<Callout type="info" emoji="ℹ️">
-    You might want to install a polyfill for [Error.cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause)
-    if you need to [support older browsers](https://caniuse.com/mdn-javascript_builtins_error_error_options_cause_parameter).
-    ([error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill)). This is not needed on node >=16.9.0.
-</Callout>
 
 
 ## Usage
@@ -35,21 +10,19 @@ Explicit named imports are prefixed by `Http` to ease
 IDE experience. Message is optional and default to the [default message](#about-default-message). Additional
 parameters are supported such as `url`, `method`, `code`, `errorId` and `cause`.
 
-<Tabs items={['Basic', 'Extended params', 'With validation issues']} defaultIndex={0}>
+<Tabs items={['Minimalist', 'With params', 'With validation issues']} defaultIndex={0}>
     <Tab>
         ```typescript
-        import { HttpNotFound, HttpBadRequest } from '@httpx/exception';
+        import { HttpNotFound, HttpBadRequest, HttpClientException } from '@httpx/exception';
 
-        const e1 = new HttpNotFound();
-        e1.message;    // 'Not found'
-        e2.statusCode; // 404
-
-        const e2 = new HttpNotFound('Page not found');
-
-        e2.message;    // 'Page not found'
-        e2.statusCode; // 404
+        const e = new HttpNotFound();
+        // 👉 e.message     -> 'Not found' (default message)
+        // 👉 e.statusCode  -> 404
+        // 👉 -> e instanceof HttpClientException
 
         const e400 = new HttpBadRequest('Problems parsing JSON');
+        // 👉 e.message     -> 'Problems parsing JSON'
+        // ...
         ```
     </Tab>
     <Tab>
@@ -172,7 +145,7 @@ if (data instanceof Error) {
 }
 ```
 
-### Parameters
+## Parameters
 
 Http exception optionally accepts a parameter of type `string | HttpExceptionParams`. If no parameter
 is provided a [default message](#about-default-message) will be set.
@@ -184,12 +157,30 @@ When a `string` is provided it will be used as the error message, otherwise you 
 | url                 | `string?` | Origin url ([about context](#about-context)).                                                                                                                         |
 | method              | `string?` | Origin http method ([about context](#about-context)).                                                                                                                 |
 | code                | `string?` | Custom code ([about context](#about-context)).                                                                                                                        |
-| errorId             | `string?` | Unique id ([about context](#about-context)).                                                                                                                          |
-| cause               | `Error?`  | Error.cause, see also [about error cause](#about-errorcause).                                                                                                         |
+| errorId             | `string?`  | Unique id ([about context](#about-context)).                                                                                                                          |
+| cause               | `Error?`   | Error.cause, see also [about error cause](#about-errorcause).                                                                                                         |
+| issues?             | `ValidationIssues[]` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
 
 Example:
 
-### Properties
+```typescript
+import { HttpGatewayTimeout, HttpInternalServerError } from '@httpx/exception';
+
+const e500 = new HttpInternalServerError({
+     url: 'https://api.dev/gateway',
+     method: 'GET',
+     code: 'ERR_UNREACHABLE_SERVICE',
+     errorId: nanoid(),
+     // 👉 nesting
+     cause: new HttpGatewayTimeout({
+        message: 'This Serverless Function has timed out',
+        errorId: 'cdg1::h99k2-1664884491087-b41a2832f559',
+     }),
+});
+```
+
+
+## Properties
 
 | HttpException | Type                 | Description                                                                                                                        |
 | ------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -202,3 +193,25 @@ Example:
 | stack         | `string?`            | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
 | cause         | `Error?`             | @see [about error cause](#about-errorcause)                                                                                        |
 | issues?       | `ValidationIssues[]` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+
+
+```typescript
+import { HttpUnprocessableEntity } from '@httpx/exception';
+
+const e422 = new HttpUnprocessableEntity({
+   message: 'Request validation failed',
+   url: 'https://acme.org/api/user/create',
+   method: 'POST',
+   issues: [   // typed as ValidationIssues[]
+        {
+            message: 'Invalid address',
+            path: ['addresses', 0, 'line1'],
+            code: 'empty_string',
+        },
+  ]
+});
+
+// 👉 e422.issues
+// 👉 e422.method === 'POST'
+// ...
+ ``
