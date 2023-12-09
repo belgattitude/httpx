@@ -42,13 +42,12 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 
 ### Features
 
-- 👉&nbsp; Usage by [explicit named imports](https://belgattitude.github.io/httpx/exception/usage#by-named-imports) and/or [status code](https://belgattitude.github.io/httpx/exception/usage#by-status-code).
-- 🖖&nbsp; Fallback to default [http error message](https://belgattitude.github.io/httpx/#/?id=about-default-message) (consistency, less typing...).
-- 🚀&nbsp; Supports commonly used [contextual](https://belgattitude.github.io/httpx/#/?id=about-context) info (consistency, sst, logs...).
-- 🦄&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
-- 🌐&nbsp; [Extends](https://belgattitude.github.io/httpx/#/?id=uml-class-diagram) native Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) and [cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
-- 🙏&nbsp; Typescript - IDE friendly - description and links to mdn.
-- ♻️&nbsp; Framework agnostic, no deps, runs everywhere.
+- 👉&nbsp; Usage by [explicit named imports](#by-named-imports) and/or [status code](#by-status-code).
+- 👉&nbsp; If message not provided, defaults to [http error message](https://belgattitude.github.io/httpx/#/?id=about-default-message)
+- 👉&nbsp; Supports pre-defined [contextual](#error-context) information.
+- 👉&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
+- 👉&nbsp; [Extends](https://belgattitude.github.io/httpx/#/?id=uml-class-diagram) native Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) and [cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
+- 👉&nbsp; Framework agnostic, no deps, browser friendly.
 
 
 ## Usage
@@ -178,7 +177,7 @@ const e422 = new HttpUnprocessableEntity({
 
 ## Static members
 
-All exceptions have a static `STATUS`, this can improve readability in some cases.
+All exceptions have a static `STATUS`, this can improve readability and code review.
 
 ```typescript
 import {createHttpException, HttpMethodNotAllowed } from '@httpx/exception';
@@ -191,12 +190,7 @@ switch (statusCode) {
 }
 ```
 
-## Generic exception
+## Instanceof checks
 
-```typescript
-import { HttpClientException, HttpServerException } from "@httpx/exception";
 
-const e404 = new HttpClientException(404, 'optional message or params');
-const e500 = new HttpServerException(500, 'optional message or params');
-```
 

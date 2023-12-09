@@ -1,5 +1,16 @@
 ## Advanced
 
+### Generic exception
+
+Although not recommended it's possible to create exception from base classes.
+
+```typescript
+import { HttpClientException, HttpServerException } from "@httpx/exception";
+
+const e404 = new HttpClientException(404, 'optional message or params');
+const e500 = new HttpServerException(500, 'optional message or params');
+```
+
 
 ### Non-official status codes
 

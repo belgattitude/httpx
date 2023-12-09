@@ -117,54 +117,6 @@ const e500 = createHttpException(500, {
 })
 ```
 
-## Ecosystem
-
-### Tupleson
-
-Example with [tupleson](https://github.com/trpc/tupleson) serializer.
-
-```typescript
-import { createTson } from "tupleson";
-import {
-  createHttpException,
-  HttpException,
-  HttpUnprocessableEntity,
-} from "@httpx/exception";
-import {
-  fromJson,
-  type SerializerError,
-  toJson,
-} from "@httpx/exception/serializer";
-
-const httpException: TsonType<HttpException | SerializerError, string> = {
-  deserialize: (v) => fromJson(v),
-  key: "HttpException",
-  serialize: (v) => toJson(v),
-  test: (v) => v instanceof HttpException,
-};
-
-const tson = createTson({
-  types: [httpException],
-});
-
-const obj = {
-  e422: new HttpUnprocessableEntity({
-    issues: [
-      {
-        message: "Invalid address",
-        path: ["addresses", 0, "line1"],
-        code: "empty_string",
-      },
-    ],
-  }),
-  e404: createHttpException(404),
-};
-
-const serialized = tson.serialize(obj);
-const deserialized = tson.deserialize(serialized);
-expect(deserialized).toStrictEqual(obj);
-```
-
 ## Serializer
 
 Serialization
