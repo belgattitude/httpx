@@ -295,58 +295,56 @@ const deserialized = createFromSerializable(serializableObject);
 ```
 
 
-## Default messages
+Messages are inferred from the Http exception class name. They are
+[compatible](https://github.com/belgattitude/httpx/blob/8623596e7d613ac379395bde8e1e21e6040841da/packages/exception/test/specs/general-specs.test.ts#L10) with the popular [statuses](https://www.npmjs.com/package/statuses) package.
 
-Client http status error codes (400...499). Link to
-
-| Status | Class                           |
-| ------ | ------------------------------- |
-| 400    | HttpBadRequest                  |
-| 401    | HttpUnauthorized                |
-| 402    | HttpPaymentRequired             |
-| 403    | HttpForbidden                   |
-| 404    | HttpNotFound                    |
-| 405    | HttpMethodNotAllowed            |
-| 406    | HttpNotAcceptable               |
-| 407    | HttpProxyAuthenticationRequired |
-| 408    | HttpRequestTimeout              |
-| 409    | HttpConflict                    |
-| 410    | HttpGone                        |
-| 411    | HttpLengthRequired              |
-| 412    | HttpPreConditionFailed          |
-| 413    | HttpPayloadTooLarge             |
-| 414    | HttpUriTooLong                  |
-| 415    | HttpUnsupportedMediaType        |
-| 416    | HttpRangeNotSatisfiable         |
-| 417    | HttpExpectationFailed           |
-| 418    | HttpImATeapot                   |
-| 421    | HttpMisdirectedRequest          |
-| 422    | HttpUnprocessableEntity         |
-| 423    | HttpLocked                      |
-| 424    | HttpFailedDependency            |
-| 425    | HttpTooEarly                    |
-| 426    | HttpUpgradeRequired             |
-| 428    | HttpPreconditionFailed          |
-| 429    | HttpTooManyRequests             |
-| 431    | HttpRequestHeaderFieldsTooLarge |
-| 451    | HttpUnavailableForLegalReasons  |
+| Status | Class                           | Message            |
+| ------ | ------------------------------- |--------------------|
+| 400    | HttpBadRequest                  | Bad request        |
+| 401    | HttpUnauthorized                | Unauthorized       |
+| 402    | HttpPaymentRequired             | Payment required   |
+| 403    | HttpForbidden                   | Forbidden          |
+| 404    | HttpNotFound                    | Not found          |
+| 405    | HttpMethodNotAllowed            | Method not allowed |
+| 406    | HttpNotAcceptable               | Not acceptable     |
+| 407    | HttpProxyAuthenticationRequired | ...                |
+| 408    | HttpRequestTimeout              | ...                |
+| 409    | HttpConflict                    | ...                |
+| 410    | HttpGone                        | ...                |
+| 411    | HttpLengthRequired              | ...                |
+| 412    | HttpPreConditionFailed          | ...                |
+| 413    | HttpPayloadTooLarge             | ...                |
+| 414    | HttpUriTooLong                  | ...                |
+| 415    | HttpUnsupportedMediaType        | ...                |
+| 416    | HttpRangeNotSatisfiable         | ...                |
+| 417    | HttpExpectationFailed           | ...                |
+| 418    | HttpImATeapot                   | ...                |
+| 421    | HttpMisdirectedRequest          | ...                |
+| 422    | HttpUnprocessableEntity         | ...                |
+| 423    | HttpLocked                      | ...                |
+| 424    | HttpFailedDependency            | ...                |
+| 425    | HttpTooEarly                    | ...                |
+| 426    | HttpUpgradeRequired             | ...                |
+| 428    | HttpPreconditionFailed          | ...                |
+| 429    | HttpTooManyRequests             | ...                |
+| 431    | HttpRequestHeaderFieldsTooLarge | ...                |
+| 451    | HttpUnavailableForLegalReasons  | ...                |
 
 Server http status error code
 
-| Status | Class                             |
-| ------ | --------------------------------- |
-| 500    | HttpInternalServerError           |
-| 501    | HttpNotImplemented                |
-| 502    | HttpBadGateway                    |
-| 503    | HttpServiceUnavailable            |
-| 504    | HttpGatewayTimeout                |
-| 505    | HttpVersionNotSupported           |
-| 506    | HttpVariantAlsoNegotiates         |
-| 507    | HttpInsufficientStorage           |
-| 508    | HttpLoopDetected                  |
-| 510    | HttpNotExtended                   |
-| 511    | HttpNetwordAuthenticationRequired |
-
+| Status | Class                             | Message            |
+| ------ | --------------------------------- | -------------------|
+| 500    | HttpInternalServerError           | Internal server error |
+| 501    | HttpNotImplemented                | ...                |
+| 502    | HttpBadGateway                    | ...                |
+| 503    | HttpServiceUnavailable            | ...                |
+| 504    | HttpGatewayTimeout                | ...                |
+| 505    | HttpVersionNotSupported           | ...                |
+| 506    | HttpVariantAlsoNegotiates         | ...                |
+| 507    | HttpInsufficientStorage           | ...                |
+| 508    | HttpLoopDetected                  | ...                |
+| 510    | HttpNotExtended                   | ...                |
+| 511    | HttpNetwordAuthenticationRequired | ...                |
 
 ### Non-official status codes
 
