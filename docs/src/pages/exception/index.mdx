@@ -110,13 +110,13 @@ centralized logging / error reporting.
 
 | HttpExceptionParams | Type      | Description                                                                                                                                                           |
 | ------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| message             | `string` | [Error.message](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message), see [about default message](#about-default-message). |
-| url                 | `string` | Origin url ([about context](#about-context)).                                                                                                                         |
-| method              | `HttpMethod` | Origin http method ([about context](#about-context)).                                                                                                                 |
-| code                | `string` | Custom code ([about context](#about-context)).                                                                                                                        |
-| errorId             | `string`  | Unique id ([about context](#about-context)).                                                                                                                          |
-| cause               | `Error`   | Error.cause, see also [about error cause](#about-errorcause).                                                                                                         |
-| issues             | `ValidationIssues[]` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+| message             | `string?` | [Error.message](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message), see [about default message](#about-default-message). |
+| url                 | `string?` | Origin url.                                                                                                                         |
+| method              | `HttpMethod?` | Origin http method.                                                                                                                 |
+| code                | `string?` | Custom error code (not to be confused with statusCode).                                                                                                                        |
+| errorId             | `string?`  | Unique custom error id.                                                                                                                          |
+| cause               | `Error?`   | Error.cause, see also [about error cause](#about-errorcause).                                                                                                         |
+| issues             | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
 
 Example:
 
@@ -145,13 +145,13 @@ All parameters are exposed as properties.
 | ------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | statusCode    | `number`             | Http error status code (400-599).                                                                                                  |
 | message       | `string`             | Default or provided message.                                                                                                       |
-| url?           | `string \| undefined`            | Origin url ([about context](#about-context)).                                                                                      |
-| method?        | `HttpMethod \| undefined`            | Origin http method ([about context](#about-context)).                                                                              |
-| code?          | `string \| undefined`            | Custom code ([about context](#about-context)).                                                                                     |
-| errorId?       | `string \| undefined`            | Unique id ([about context](#about-context)).                                                                                       |
-| stack?         | `string \| undefined`            | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause?         | `Error \| undefined`             | @see [about error cause](#about-errorcause)                                                                                        |
-| issues?       | `ValidationIssues[] \| undefined` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+| url           | `string?`            | Origin url..                                                                                      |
+| method        | `HttpMethod?`            | Origin http method.                                                                              |
+| code          | `string?`            | Custom error code (not to be confused with statusCode).                                                                                     |
+| errorId       | `string?`            | Unique custom error id.                                                                                       |
+| stack         | `string?`            | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause         | `Error?`             | @see [about error cause](#about-errorcause)                                                                                        |
+| issues       | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
 
 
 ```typescript
@@ -193,4 +193,57 @@ switch (statusCode) {
 ## Instanceof checks
 
 
+Http exceptions extends the native [Error class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+through HttpException and either HttpServerException and HttpClientException.
+
+```typescript
+import { createHttpException } from '@httpx/exception';
+
+const e404 = createHttpException(404);
+// 👉 e instanceof Error === true
+// 👉 e instanceof HttpException === true
+// 👉 e instanceof HttpClientException === true
+// 👉 e instanceof HttpNotFound === true
+// 👉 e instanceof HttpServerException === false
+```
+
+```mermaid
+classDiagram
+    Error <|-- HttpException
+    Error: +string message
+    Error: +string? stack
+    Error: +unknown cause
+    HttpException : +int statusCode
+    HttpException : +String url
+    HttpException : +Error? cause
+    HttpException <|-- HttpClientException
+    HttpException <|-- HttpServerException
+    HttpClientException <|-- HttpNotFound
+    HttpServerException <|-- HttpInternalServerError
+    HttpNotFound : 404 statusCode
+    HttpInternalServerError: 500 statusCode
+```
+
+## Typeguards
+
+```typescript
+import {
+  isHttpException,
+  isHttpClientException,
+  isHttpServerException,
+  isHttpErrorStatusCode,
+} from "@httpx/exception";
+
+// True
+isHttpErrorStatusCode(404);
+isHttpException(new HttpNotFound());
+isHttpClientException(new HttpNotFound());
+isHttpServerException(new HttpInternalServerError());
+
+// False
+isHttpErrorStatusCode(200);
+isHttpClientException(new HttpInternalServerError());
+isHttpServerException(new HttpNotFound());
+isHttpException(new Error());
+```
 
