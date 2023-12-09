@@ -1150,8 +1150,8 @@ __metadata:
     "@belgattitude/eslint-config-bases": "npm:4.6.0"
     "@size-limit/file": "npm:11.0.1"
     "@size-limit/webpack": "npm:11.0.1"
-    "@vitest/coverage-istanbul": "npm:1.0.2"
-    "@vitest/ui": "npm:1.0.2"
+    "@vitest/coverage-istanbul": "npm:1.0.3"
+    "@vitest/ui": "npm:1.0.3"
     browserslist-to-esbuild: "npm:1.2.0"
     cross-env: "npm:7.0.3"
     es-check: "npm:7.1.1"
@@ -1181,8 +1181,8 @@ __metadata:
     "@size-limit/webpack-why": "npm:11.0.1"
     "@types/node": "npm:20.10.4"
     "@types/statuses": "npm:2.0.4"
-    "@vitest/coverage-istanbul": "npm:1.0.2"
-    "@vitest/ui": "npm:1.0.2"
+    "@vitest/coverage-istanbul": "npm:1.0.3"
+    "@vitest/ui": "npm:1.0.3"
     browserslist-to-esbuild: "npm:1.2.0"
     cross-env: "npm:7.0.3"
     es-check: "npm:7.1.1"
@@ -1214,8 +1214,8 @@ __metadata:
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:11.0.1"
     "@size-limit/webpack": "npm:11.0.1"
-    "@vitest/coverage-istanbul": "npm:1.0.2"
-    "@vitest/ui": "npm:1.0.2"
+    "@vitest/coverage-istanbul": "npm:1.0.3"
+    "@vitest/ui": "npm:1.0.3"
     browserslist-to-esbuild: "npm:1.2.0"
     cross-env: "npm:7.0.3"
     es-check: "npm:7.1.1"
@@ -2566,9 +2566,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-istanbul@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@vitest/coverage-istanbul@npm:1.0.2"
+"@vitest/coverage-istanbul@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@vitest/coverage-istanbul@npm:1.0.3"
   dependencies:
     debug: "npm:^4.3.4"
     istanbul-lib-coverage: "npm:^3.2.2"
@@ -2581,7 +2581,7 @@ __metadata:
     test-exclude: "npm:^6.0.0"
   peerDependencies:
     vitest: ^1.0.0
-  checksum: 67c115c1b703eb3e1c08be5362751c8883c052f0fb58f2b1d1f7be1f2ee95392fc9c3492bbdee4f9855e8f80b0815f51d8fe01a387a7c25f7fd7d4921e7f010a
+  checksum: 18192f92fc1a055004b0910ce634307cf554d4ef8a7ae8b4b327e7c05a944dedeea1153b9b5379f3e4c490c8507c66ecc1062e8ddb8d0cb1bfa8153ca0eef0e9
   languageName: node
   linkType: hard
 
@@ -2627,11 +2627,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@vitest/ui@npm:1.0.2"
+"@vitest/ui@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@vitest/ui@npm:1.0.3"
   dependencies:
-    "@vitest/utils": "npm:1.0.2"
+    "@vitest/utils": "npm:1.0.3"
     fast-glob: "npm:^3.3.2"
     fflate: "npm:^0.8.1"
     flatted: "npm:^3.2.9"
@@ -2640,7 +2640,7 @@ __metadata:
     sirv: "npm:^2.0.3"
   peerDependencies:
     vitest: ^1.0.0
-  checksum: eb1cf662acf2029bc092bfba0846f6da2637c0cd5452b4b022b55df54ba438b494bf3c8aa3a8738076abaf6ec7a94ebed35053d782e8c2804545fb07e33455cb
+  checksum: 17c368d8f4972ad98c4d857bb1f3d866b2afb8e61061253f246d85cb424696bb58a803e0bed613c80647cda27c1e48661416af7968deacb41ae7ba4d8a23b512
   languageName: node
   linkType: hard
 
@@ -2652,6 +2652,17 @@ __metadata:
     loupe: "npm:^2.3.7"
     pretty-format: "npm:^29.7.0"
   checksum: 33e17450510c7b84f42230ee8dcf5a3c60ae16509bc3df46609414ba7e07f3143a0dab4f5f6539e369cd8d2b1bd88246b5fd3282b490556082e757dca6a7e886
+  languageName: node
+  linkType: hard
+
+"@vitest/utils@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@vitest/utils@npm:1.0.3"
+  dependencies:
+    diff-sequences: "npm:^29.6.3"
+    loupe: "npm:^2.3.7"
+    pretty-format: "npm:^29.7.0"
+  checksum: f1b3c44a322a635a164c648c0aefbfe99f2317f529825a61ef8029500ca1ba9df8da4ae1218bd1e90b6ab9aa258940942c88e9a80ae34600ab01a6c53fa3029b
   languageName: node
   linkType: hard
 
