@@ -1,0 +1,91 @@
+{
+  "description": "HTTP response errors with default message, stacktrace, instanceof, error cause support and more.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "homepage": "https://github.com/belgattitude/httpx/tree/main/integrations/prisma-exception#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/belgattitude/httpx",
+    "directory": "integrations/prisma-exception"
+  },
+  "keywords": [
+    "prisma",
+    "http exception"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
+    "build-release": "yarn build",
+    "build": "run clean && yarn run tsup",
+    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "prettier-check": "run --top-level prettier --check --cache --cache-location=\"../../.cache/prettier/prisma-exception.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
+    "prettier-fix": "run --top-level prettier --write --cache --cache-location=\"../../.cache/prettier/prisma-exception.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/prisma-exception.eslintcache",
+    "lint-timing": "cross-env TIMING=1 run lint",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit",
+    "check-dist": "es-check --not './dist/esm/*.map.js' -v es2022 --module './dist/**/*.mjs'",
+    "check-size": "size-limit",
+    "check-pub": "attw --pack",
+    "test": "vitest run",
+    "test-unit": "vitest run",
+    "test-unit-watch": "vitest --ui",
+    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.13.3",
+    "@belgattitude/eslint-config-bases": "4.6.0",
+    "@size-limit/file": "11.0.1",
+    "@size-limit/webpack": "11.0.1",
+    "@size-limit/webpack-why": "11.0.1",
+    "@types/node": "20.10.4",
+    "@vitest/coverage-istanbul": "1.0.3",
+    "@vitest/ui": "1.0.3",
+    "cross-env": "7.0.3",
+    "es-check": "7.1.1",
+    "esbuild": "0.19.8",
+    "eslint": "8.55.0",
+    "npm-run-all": "4.1.5",
+    "rimraf": "5.0.5",
+    "size-limit": "11.0.1",
+    "superjson": "2.2.1",
+    "tsup": "8.0.1",
+    "typedoc": "0.25.4",
+    "typedoc-plugin-markdown": "3.17.1",
+    "typescript": "5.3.3",
+    "vite": "5.0.7",
+    "vite-tsconfig-paths": "4.2.2",
+    "vitest": "1.0.3",
+    "webpack": "5.89.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

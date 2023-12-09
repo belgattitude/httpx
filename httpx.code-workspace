@@ -20,6 +20,10 @@
       "name": "📦 @httpx/exception",
       "path": "packages/exception"
     },
+    {
+      "name": "📦 prisma-exception",
+      "path": "integrations/prisma-exception"
+    },
   ],
   "extensions": {
     "recommendations": [
@@ -49,7 +53,8 @@
       "./examples/nextjs-app",
       "./packages/dsn-parser",
       "./packages/exception",
-      "./packages/json-api"
+      "./packages/json-api",
+      "./integrations/prisma-exception"
     ]
   }
 }
