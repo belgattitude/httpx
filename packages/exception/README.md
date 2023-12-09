@@ -36,6 +36,29 @@ pnpm add @httpx/exception     # via pnpm
 
 👉 [Official website](https://belgattitude.github.io/httpx/exception) or [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
 
+- [Usage](#usage)
+  - [By named imports](#by-named-imports)
+  - [By status code](#by-status-code)
+- [Parameters](#parameters)
+  - [Error context](#error-context)
+- [Properties](#properties)
+- [Static members](#static-members)
+- [Instanceof checks](#instanceof-checks)
+- [Typeguards](#typeguards)
+- [Serializer](#serializer)
+  - [JSON](#json)
+  - [Serializable](#serializable)
+- [Default messages](#default-messages)
+  - [Non-official status codes](#non-official-status-codes)
+- [About bundle](#about-bundle)
+  - [Compatibility](#compatibility)
+  - [Bundle size](#bundle-size)
+  - [Packaging](#packaging)
+  - [Typescript](#typescript)
+- [Support](#support)
+- [Contributors](#contributors)
+- [Sponsors](#sponsors)
+
 ## Usage
 
 ### By named imports
