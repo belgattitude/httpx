@@ -26,16 +26,28 @@ module.exports = [
     limit: "348B",
   },
   {
+    name: "ESM (only HttpClientException exception)",
+    path: ["dist/index.mjs"],
+    import: "{ HttpClientException }",
+    limit: "370B",
+  },
+  {
     name: "ESM (only HttpNotFound exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound }",
     limit: "405B",
   },
   {
-    name: "ESM (two client exceptions: HttpNotFound + HttpRequestTimeout)",
+    name: "ESM (2 client exceptions: HttpNotFound + HttpRequestTimeout)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound, HttpRequestTimeout }",
     limit: "416B",
+  },
+  {
+    name: "ESM (6 client exceptions: NotFound + RequestTimeout + HttpConflict...)",
+    path: ["dist/index.mjs"],
+    import: "{ HttpNotFound, HttpRequestTimeout, HttpConflict, HttpGone, HttpMethodNotAllowed, HttpForbidden }",
+    limit: "430B",
   },
   {
     name: "ESM (only isHttpException)",
