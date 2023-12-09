@@ -230,6 +230,53 @@ isHttpServerException(new HttpNotFound());
 isHttpException(new Error());
 ```
 
+## Serializer
+
+Exceptions can be (de-)serialized to json or other formats. Use cases varies from
+ssr-frameworks (ie: nextjs [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props))
+/ loggers (sentry, winston...).
+
+Nested error causes are supported but ignored [if not supported](#about-errorcause) by
+the runtime.
+
+Additionally, you can pass any native errors (`Error`, `EvalError`, `RangeError`, `ReferenceError`,
+`SyntaxError`, `TypeError`, `URIError`) as well as a custom one (the later will be transformed to the base type Error).
+
+### JSON
+
+```typescript
+import { fromJson, toJson } from "@httpx/http-exception/serializer";
+
+const e = new HttpForbidden();
+
+const json = toJson(e); // string
+const deserialized = fromJson(json);
+
+// e === deserialized
+```
+
+> **Note**
+> See also how to integrate with [superjson](https://github.com/blitz-js/superjson#recipes)
+
+### Serializable
+
+Same as JSON but before json.parse/stringify. Allows to use a different encoder.
+
+```typescript
+import {
+  convertToSerializable,
+  createFromSerializable,
+} from "@httpx/http-exception/serializer";
+
+const e = new HttpForbidden({
+  cause: new Error("Token was revoked"),
+});
+
+const serializableObject = convertToSerializable(e);
+const deserialized = createFromSerializable(serializableObject);
+// e === deserialized
+```
+
 ## Default messages
 
 Client http status error codes (400...499). Link to
