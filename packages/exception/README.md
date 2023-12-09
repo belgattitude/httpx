@@ -1,6 +1,6 @@
 # @httpx/exception
 
-HTTP error responses with default message, instanceof, stack and error cause support.
+HTTP status errors with default message, instanceof, stack and nested error cause support.
 Lightweight, esm starts at 350b. Includes convenience typeguards, optional
 contextual info and a built-in serializer to cover cross-environments challenges (RSC, SSR...).
 
