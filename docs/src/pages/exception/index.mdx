@@ -7,6 +7,19 @@ import { Tabs, Tab, Callout } from 'nextra/components';
     to cover cross-environments challenges (RSC, SSR...).
 </div>
 
+<div className="shields-ctn">
+    [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception)
+    [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md)
+    [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception)
+    [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
+    ![node](https://img.shields.io/static/v1?label=Node&message=18%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
+    [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E93%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
+    [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
+    [![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Quality&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
+    [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
+</div>
+
+
 ### Quick start
 
 <Tabs items={['yarn', 'pnpm', 'npm']} defaultIndex={0}>
@@ -27,18 +40,6 @@ import { Tabs, Tab, Callout } from 'nextra/components';
     </Tab>
 </Tabs>
 
-
-```typescript
-import { HttpNotFound } from '@httpx/exception';
-
-const e = new HttpNotFound();
-// 👉 e.message     -> 'Not found' (default message)
-// 👉 e.statusCode  -> 404
-// 👉 e instanceof  -> Error
-//                       HttpException
-//                         HttpClientException
-```
-
 ### Features
 
 - 👉&nbsp; Usage by [explicit named imports](https://belgattitude.github.io/httpx/exception/usage#by-named-imports) and/or [status code](https://belgattitude.github.io/httpx/exception/usage#by-status-code).
@@ -49,15 +50,153 @@ const e = new HttpNotFound();
 - 🙏&nbsp; Typescript - IDE friendly - description and links to mdn.
 - ♻️&nbsp; Framework agnostic, no deps, runs everywhere.
 
-<div className="shields-ctn">
-    [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception)
-    [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md)
-    [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception)
-    [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
-    ![node](https://img.shields.io/static/v1?label=Node&message=18%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
-    [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E93%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
-    [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
-    [![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Quality&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
-    [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
-</div>
+
+## Usage
+
+### By named imports
+
+Explicit named imports are prefixed by `Http` to ease
+IDE experience. Message is optional and default to the [default message](#about-default-message). Additional
+[parameters](#parameters) are supported.
+
+```typescript
+import { HttpNotFound, HttpBadRequest, HttpClientException } from '@httpx/exception';
+
+const e = new HttpNotFound();
+// 👉 e.message     -> 'Not found' (default message)
+// 👉 e.statusCode  -> 404
+// 👉 -> e instanceof HttpClientException
+
+const e400 = new HttpBadRequest('Problems parsing JSON');
+// 👉 e.message     -> 'Problems parsing JSON'
+// ...
+```
+
+### By status code
+
+The `createHttpException` function allows to create an exception from an
+arbitrary status code.
+
+```typescript
+import { createHttpException } from '@httpx/exception';
+
+const e404 = createHttpException(404); // e404 instanceof HttpClientException
+const e500 = createHttpException(500); // e500 instanceof HttpServerException
+```
+
+Additional [parameters](#httpexception-parameters) can be provided as a second argument.
+
+```typescript
+import { createHttpException, HttpNotImplemented } from "@httpx/exception";
+
+throw createHttpException(404, 'The graal is yet to find !');
+
+const e500 = createHttpException(500, {
+  message: 'Something really wrong happened.',
+  url: 'https://api.dev/gateway',
+  cause: new HttpNotImplemented(), // or any Error...
+});
+```
+
+
+## Parameters
+
+Http exceptions and `createHttpException` accept a parameter of type `string | HttpExceptionParams`. If no parameter
+is provided the [default message](#about-default-message) is used.
+
+### Error context
+
+It's possible to attach informational context to an exception. This is particularly useful when used with
+centralized logging / error reporting.
+
+| HttpExceptionParams | Type      | Description                                                                                                                                                           |
+| ------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| message             | `string` | [Error.message](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message), see [about default message](#about-default-message). |
+| url                 | `string` | Origin url ([about context](#about-context)).                                                                                                                         |
+| method              | `HttpMethod` | Origin http method ([about context](#about-context)).                                                                                                                 |
+| code                | `string` | Custom code ([about context](#about-context)).                                                                                                                        |
+| errorId             | `string`  | Unique id ([about context](#about-context)).                                                                                                                          |
+| cause               | `Error`   | Error.cause, see also [about error cause](#about-errorcause).                                                                                                         |
+| issues             | `ValidationIssues[]` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+
+Example:
+
+```typescript
+import { HttpGatewayTimeout, HttpInternalServerError } from '@httpx/exception';
+
+const e500 = new HttpInternalServerError({
+     url: 'https://api.dev/gateway',
+     method: 'GET',
+     code: 'ERR_UNREACHABLE_SERVICE',
+     errorId: nanoid(),
+     // 👉 nesting
+     cause: new HttpGatewayTimeout({
+        message: 'This Serverless Function has timed out',
+        errorId: 'cdg1::h99k2-1664884491087-b41a2832f559',
+     }),
+});
+```
+
+
+## Properties
+
+All parameters are exposed as properties.
+
+| HttpException | Type                 | Description                                                                                                                        |
+| ------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| statusCode    | `number`             | Http error status code (400-599).                                                                                                  |
+| message       | `string`             | Default or provided message.                                                                                                       |
+| url?           | `string \| undefined`            | Origin url ([about context](#about-context)).                                                                                      |
+| method?        | `HttpMethod \| undefined`            | Origin http method ([about context](#about-context)).                                                                              |
+| code?          | `string \| undefined`            | Custom code ([about context](#about-context)).                                                                                     |
+| errorId?       | `string \| undefined`            | Unique id ([about context](#about-context)).                                                                                       |
+| stack?         | `string \| undefined`            | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause?         | `Error \| undefined`             | @see [about error cause](#about-errorcause)                                                                                        |
+| issues?       | `ValidationIssues[] \| undefined` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+
+
+```typescript
+import { HttpUnprocessableEntity } from '@httpx/exception';
+
+const e422 = new HttpUnprocessableEntity({
+   message: 'Request validation failed',
+   url: 'https://acme.org/api/user/create',
+   method: 'POST',
+   issues: [   // typed as ValidationIssues[]
+        {
+            message: 'Invalid address',
+            path: ['addresses', 0, 'line1'],
+            code: 'empty_string',
+        },
+  ]
+});
+
+// 👉 e422.issues
+// 👉 e422.method === 'POST'
+// ...
+```
+
+## Static members
+
+All exceptions have a static `STATUS`, this can improve readability in some cases.
+
+```typescript
+import {createHttpException, HttpMethodNotAllowed } from '@httpx/exception';
+
+const { statusCode } = createHttpException(405);
+switch (statusCode) {
+    case HttpMethodNotAllowed.STATUS:
+       console.log(statusCode); // 👉 405
+       break;
+}
+```
+
+## Generic exception
+
+```typescript
+import { HttpClientException, HttpServerException } from "@httpx/exception";
+
+const e404 = new HttpClientException(404, 'optional message or params');
+const e500 = new HttpServerException(500, 'optional message or params');
+```
 
