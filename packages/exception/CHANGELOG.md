@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 2.5.7
+
+### Patch Changes
+
+- [#788](https://github.com/belgattitude/httpx/pull/788) [`b004243`](https://github.com/belgattitude/httpx/commit/b004243a97cca2df472e97114cfdf1cbd03cb1a6) Thanks [@belgattitude](https://github.com/belgattitude)! - Add toc in readme
+
 ## 2.5.6
 
 ### Patch Changes
