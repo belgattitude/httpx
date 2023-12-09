@@ -2,7 +2,7 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 
 <div className={'shadow-md -ml-2 mt-[30px] mb-[5px] border p-5 rounded '}>
     HTTP status errors with default message, instanceof, stack and nested error cause support.
-    Lightweight, typical usage between [400b and 750b](https://belgattitude.github.io/httpx/exception/bundle#size).
+    Lightweight, typical usage between [400b and 750b](#bundle-size).
     Includes convenience typeguards, optional contextual info and a built-in serializer
     to cover cross-environments challenges (RSC, SSR...).
 </div>
@@ -43,7 +43,7 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 ### Features
 
 - 👉&nbsp; Usage by [explicit named imports](#by-named-imports) and/or [status code](#by-status-code).
-- 👉&nbsp; If message not provided, defaults to [http error message](https://belgattitude.github.io/httpx/#/?id=about-default-message)
+- 👉&nbsp; If message not provided, defaults to [http error message](#default-messages)
 - 👉&nbsp; Supports pre-defined [contextual](#error-context) information.
 - 👉&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
 - 👉&nbsp; [Extends](https://belgattitude.github.io/httpx/#/?id=uml-class-diagram) native Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) and [cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
@@ -55,7 +55,7 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 ### By named imports
 
 Explicit named imports are prefixed by `Http` to ease
-IDE experience. Message is optional and default to the [default message](#about-default-message). Additional
+IDE experience. Message is optional and default to the [default message](#default-messages). Additional
 [parameters](#parameters) are supported.
 
 ```typescript
@@ -101,7 +101,7 @@ const e500 = createHttpException(500, {
 ## Parameters
 
 Http exceptions and `createHttpException` accept a parameter of type `string | HttpExceptionParams`. If no parameter
-is provided the [default message](#about-default-message) is used.
+is provided the [default message](#default-messages) is used.
 
 ### Error context
 
@@ -110,7 +110,7 @@ centralized logging / error reporting.
 
 | HttpExceptionParams | Type      | Description                                                                                                                                                           |
 | ------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| message             | `string?` | [Error.message](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message), see [about default message](#about-default-message). |
+| message             | `string?` | [Error.message](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message), see [about default message](#default-messages). |
 | url                 | `string?` | Origin url.                                                                                                                         |
 | method              | `HttpMethod?` | Origin http method.                                                                                                                 |
 | code                | `string?` | Custom error code (not to be confused with statusCode).                                                                                                                        |
@@ -246,4 +246,139 @@ isHttpClientException(new HttpInternalServerError());
 isHttpServerException(new HttpNotFound());
 isHttpException(new Error());
 ```
+
+
+## Default messages
+
+Client http status error codes (400...499). Link to
+
+| Status | Class                           |
+| ------ | ------------------------------- |
+| 400    | HttpBadRequest                  |
+| 401    | HttpUnauthorized                |
+| 402    | HttpPaymentRequired             |
+| 403    | HttpForbidden                   |
+| 404    | HttpNotFound                    |
+| 405    | HttpMethodNotAllowed            |
+| 406    | HttpNotAcceptable               |
+| 407    | HttpProxyAuthenticationRequired |
+| 408    | HttpRequestTimeout              |
+| 409    | HttpConflict                    |
+| 410    | HttpGone                        |
+| 411    | HttpLengthRequired              |
+| 412    | HttpPreConditionFailed          |
+| 413    | HttpPayloadTooLarge             |
+| 414    | HttpUriTooLong                  |
+| 415    | HttpUnsupportedMediaType        |
+| 416    | HttpRangeNotSatisfiable         |
+| 417    | HttpExpectationFailed           |
+| 418    | HttpImATeapot                   |
+| 421    | HttpMisdirectedRequest          |
+| 422    | HttpUnprocessableEntity         |
+| 423    | HttpLocked                      |
+| 424    | HttpFailedDependency            |
+| 425    | HttpTooEarly                    |
+| 426    | HttpUpgradeRequired             |
+| 428    | HttpPreconditionFailed          |
+| 429    | HttpTooManyRequests             |
+| 431    | HttpRequestHeaderFieldsTooLarge |
+| 451    | HttpUnavailableForLegalReasons  |
+
+Server http status error code
+
+| Status | Class                             |
+| ------ | --------------------------------- |
+| 500    | HttpInternalServerError           |
+| 501    | HttpNotImplemented                |
+| 502    | HttpBadGateway                    |
+| 503    | HttpServiceUnavailable            |
+| 504    | HttpGatewayTimeout                |
+| 505    | HttpVersionNotSupported           |
+| 506    | HttpVariantAlsoNegotiates         |
+| 507    | HttpInsufficientStorage           |
+| 508    | HttpLoopDetected                  |
+| 510    | HttpNotExtended                   |
+| 511    | HttpNetwordAuthenticationRequired |
+
+
+### Non-official status codes
+
+While their usage is not recommended, some status codes might be found in the wild (generally server status codes).
+
+```typescript
+import { createHttpException, HttpServerException } from '@httpx/exception';
+
+const nonOfficialStatusCodes = [
+  [509, 'Might refer to bandwidth limit'],
+  [525, 'Might refer to SSL Handshake Failed (ie: cloudflare)'],
+  [526, 'Might refer to Invalid SSL Certificate (ie: cloudflare)'],
+  ['...', '...'],
+];
+
+const e = createHttpException(509, {
+  // optional HttpExceptionParams
+}); // `e2 instanceof HttpServerException
+
+// alternatively
+const alternate = new HttpServerException({
+  statusCode: 509,
+  // ...(optional HttpExceptionParams)
+});
+```
+
+
+## About bundle
+
+### Compatibility
+
+Node 18+ and es2022 compatibility is ensured on the CI.
+
+Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
+configuration. From the browserslist defaults:
+[Chrome 96+, Firefox 90+, Edge 91+, Safari 15+ and Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
+are set as minimal supported versions.
+
+For *older* browsers:
+
+- Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
+- You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support
+nested errors (if not present they are simply discarded - no runtime errors).
+
+
+### Bundle size
+
+Code and bundler have been tuned to target a minimal compressed footprint
+for the browser. In typical usage the bundle size will vary between 450b to 750b compressed
+(including default messages for the 43 status codes).
+
+ESM individual imports are tracked by a
+[size-limit configuration](../.size-limit.cjshttps://github.com/belgattitude/httpx/blob/main/packages/dsn-parser/.size-limit.cjs).
+
+| Scenario                                         | Size (compressed) |
+|--------------------------------------------------|------------------:|
+| Import generic exception (`HttpClientException`) |            ~ 370b |
+| Import 1 client exception                        |            ~ 400b |
+| Import 2 client exceptions                       |            ~ 415b |
+| Import 6 client exceptions                       |            ~ 430b |
+| Import 1 client + 1 server exceptions            |            ~ 415b |
+| Import `createHttpException` (all 43 exceptions) |            ~ 690b |
+| Import `fromJson` (incl createHttpException)     |           ~ 1100b |
+| All exceptions + typeguards + serializer         |           ~ 1500b |
+
+> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/exception@latest).
+
+### Packaging
+
+This library offers a dual cjs/esm bundle. The (optional) serializer code has been tuned to
+avoid issues with [dual package hazards](https://nodejs.org/api/packages.html#dual-package-hazard).
+
+The export fields and the builds are checked on the CI with [are-the-types-wrong](https://arethetypeswrong.github.io/).
+
+> PS: Plans to remove cjs support might land in a next major version.
+
+
+### Typescript
+
+This library targets typescript 5+ with descriptions (see
+[the generated api docs](https://github.com/belgattitude/httpx/tree/main/packages/exception/docs/api)).
 
