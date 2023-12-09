@@ -50,6 +50,12 @@ module.exports = [
     limit: "430B",
   },
   {
+    name: "ESM (1 client and 1 server exception)",
+    path: ["dist/index.mjs"],
+    import: "{ HttpNotFound, HttpInternalServerError }",
+    limit: "416B",
+  },
+  {
     name: "ESM (only isHttpException)",
     path: ["dist/index.mjs"],
     import: "{ isHttpException }",
