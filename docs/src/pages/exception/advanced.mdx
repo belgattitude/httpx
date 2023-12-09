@@ -11,28 +11,3 @@ const e404 = new HttpClientException(404, 'optional message or params');
 const e500 = new HttpServerException(500, 'optional message or params');
 ```
 
-
-### Non-official status codes
-
-While their usage is not recommended, some status codes might be found in the wild (generally server status codes).
-
-```typescript
-import { createHttpException, HttpServerException } from '@httpx/exception';
-
-const nonOfficialStatusCodes = [
-  [509, 'Might refer to bandwidth limit'],
-  [525, 'Might refer to SSL Handshake Failed (ie: cloudflare)'],
-  [526, 'Might refer to Invalid SSL Certificate (ie: cloudflare)'],
-  ['...', '...'],
-];
-
-const e = createHttpException(509, {
-  // optional HttpExceptionParams
-}); // `e2 instanceof HttpServerException
-
-// alternatively
-const alternate = new HttpServerException({
-  statusCode: 509,
-  // ...(optional HttpExceptionParams)
-});
-```
