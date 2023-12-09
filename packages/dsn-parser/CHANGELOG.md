@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.6.3
+
+### Patch Changes
+
+- [#781](https://github.com/belgattitude/httpx/pull/781) [`4e2b795`](https://github.com/belgattitude/httpx/commit/4e2b795a69914f22d01a5137ce38e9fb39e40ed7) Thanks [@belgattitude](https://github.com/belgattitude)! - Ensure compat for Chrome 96+, Firefox 90+, Edge 19+, Safari 12+, Opera 77+
+
 ## 1.6.2
 
 ### Patch Changes

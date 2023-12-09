@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 2.5.5
+
+### Patch Changes
+
+- [#781](https://github.com/belgattitude/httpx/pull/781) [`4e2b795`](https://github.com/belgattitude/httpx/commit/4e2b795a69914f22d01a5137ce38e9fb39e40ed7) Thanks [@belgattitude](https://github.com/belgattitude)! - Ensure compat for Chrome 96+, Firefox 90+, Edge 91+, Safari 15+ and Opera 77+
+
 ## 2.5.4
 
 ### Patch Changes
