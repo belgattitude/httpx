@@ -12,7 +12,7 @@ the 400 status code is more appropriate (one message).
 import { HttpUnprocessableEntity } from '@httpx/exception';
 
 const e422 = new HttpUnprocessableEntity({
-  errors: [
+  issues: [
     {
       message: 'Invalid email',
       path: 'email',
@@ -26,7 +26,7 @@ const e422 = new HttpUnprocessableEntity({
   ],
 });
 
-console.log(e422.errors);
+console.log(e422.issues);
 ```
 
 > For reference, see [github api](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#client-errors), rails or

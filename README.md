@@ -2,9 +2,10 @@
 
 ### [@httpx/exception](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
 
-HTTP error responses with default message, instanceof, stack and error cause support.
-Lightweight, esm starts at 350b. Includes convenience typeguards, optional
-contextual info and a built-in serializer to cover cross-environments challenges (RSC, SSR...).
+HTTP status errors with default message, instanceof, stack and nested error cause support.
+Lightweight, typical usage between [400b and 750b](https://belgattitude.github.io/httpx/exception/bundle#size).
+Includes convenience typeguards, optional contextual info and a built-in serializer
+to cover cross-environments challenges (RSC, SSR...).
 
 [![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md)
