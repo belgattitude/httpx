@@ -5,7 +5,7 @@ const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
 export default defineConfig({
   esbuild: {
-    // target: ['node18'],
+    target: ['node18'],
   },
   plugins: [tsconfigPaths()],
   test: {
