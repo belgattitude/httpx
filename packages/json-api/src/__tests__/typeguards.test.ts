@@ -7,6 +7,7 @@ describe('Typeguards tests', () => {
       [{ name: 'seb' }, true],
       [{ children: [{ test: 1 }], name: 'deep' }, true],
       [{ constructor: { name: 'Object2' } }, true],
+      [JSON.parse('{}'), true],
       // False
       [() => 'cool', false],
       [new (class Cls {})(), false],
