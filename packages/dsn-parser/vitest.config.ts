@@ -20,11 +20,20 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'json', 'clover'],
     },
-    deps: {
-      /*
-      experimentalOptimizer: {
-        enabled: false,
-      }, */
+    typecheck: {
+      enabled: false,
+    },
+    pool: 'vmThreads',
+    poolOptions: {
+      vmThreads: {
+        // useAtomics: true,
+      },
+      threads: {
+        // minThreads: 1,
+        // maxThreads: 16,
+        useAtomics: true, // perf+
+        isolate: false, // perf+++
+      },
     },
     environment: 'node',
     exclude: [
