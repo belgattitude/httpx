@@ -301,67 +301,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@belgattitude/eslint-config-bases@npm:4.6.0":
-  version: 4.6.0
-  resolution: "@belgattitude/eslint-config-bases@npm:4.6.0"
-  dependencies:
-    "@rushstack/eslint-patch": "npm:^1.6.0"
-    "@tanstack/eslint-plugin-query": "npm:^4.36.1 || ^5.8.4"
-    "@typescript-eslint/eslint-plugin": "npm:^6.13.1"
-    "@typescript-eslint/parser": "npm:^6.13.1"
-    "@typescript-eslint/typescript-estree": "npm:^6.13.1"
-    "@typescript-eslint/utils": "npm:^6.13.1"
-    eslint-config-prettier: "npm:^9.1.0"
-    eslint-import-resolver-typescript: "npm:^3.6.1"
-    eslint-plugin-import: "npm:^2.29.0"
-    eslint-plugin-jest: "npm:^27.6.0"
-    eslint-plugin-jest-formatting: "npm:^3.1.0"
-    eslint-plugin-jsx-a11y: "npm:^6.8.0"
-    eslint-plugin-perfectionist: "npm:2.5.0"
-    eslint-plugin-playwright: "npm:^0.19.0"
-    eslint-plugin-prettier: "npm:^5.0.1"
-    eslint-plugin-react: "npm:^7.33.2"
-    eslint-plugin-react-hooks: "npm:^4.6.0 || 5.0.0-canary-7118f5dd7-20230705"
-    eslint-plugin-regexp: "npm:^2.1.2"
-    eslint-plugin-simple-import-sort: "npm:^10.0.0"
-    eslint-plugin-sonarjs: "npm:^0.23.0"
-    eslint-plugin-storybook: "npm:^0.6.15"
-    eslint-plugin-testing-library: "npm:^6.2.0"
-    eslint-plugin-unicorn: "npm:^49.0.0"
-    eslint-plugin-unused-imports: "npm:^3.0.0"
-  peerDependencies:
-    "@graphql-eslint/eslint-plugin": ^3.14.3
-    eslint: ^8.30.0
-    eslint-plugin-mdx: ^2.0.5
-    eslint-plugin-tailwindcss: ^3.13.0
-    graphql: ^16.6.0
-    prettier: ^3.0.3
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^5.0.2
-  peerDependenciesMeta:
-    "@graphql-eslint/eslint-plugin":
-      optional: true
-    eslint-plugin-mdx:
-      optional: true
-    eslint-plugin-tailwindcss:
-      optional: true
-    graphql:
-      optional: true
-    prettier:
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    tailwindcss:
-      optional: true
-    typescript:
-      optional: true
-  checksum: 6f23a7aaeb98f3d5ad46ecb4a1d916ab45c2c21edac80acdd33311fec2b2b35a6cdcb05ccb53875c0acfd6633551ef9c1d58584523916826437cae827c538ce5
-  languageName: node
-  linkType: hard
-
 "@belgattitude/eslint-config-bases@npm:4.7.0":
   version: 4.7.0
   resolution: "@belgattitude/eslint-config-bases@npm:4.7.0"
@@ -922,6 +861,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@edge-runtime/primitives@npm:4.0.5":
+  version: 4.0.5
+  resolution: "@edge-runtime/primitives@npm:4.0.5"
+  checksum: 05c75ea830b29e8dd67fcc4084e1ad15d73862a60f1092054946543ca84b8c5d9ba683d6ef8d58b57edcaf54164dad287531744548cce8ad1f360377b87a2ad3
+  languageName: node
+  linkType: hard
+
+"@edge-runtime/vm@npm:3.1.7":
+  version: 3.1.7
+  resolution: "@edge-runtime/vm@npm:3.1.7"
+  dependencies:
+    "@edge-runtime/primitives": "npm:4.0.5"
+  checksum: bf1420afcf1a1586f0dec5cad6583e6e88bd0d5aff157f4c027537501ee1ea5bf37275b7e2d463395a4a1ab49afd99bd182f9e67599e674cf7fc2c3321cfc72f
+  languageName: node
+  linkType: hard
+
 "@effect/data@npm:0.17.1":
   version: 0.17.1
   resolution: "@effect/data@npm:0.17.1"
@@ -1160,10 +1115,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@examples/nextjs-app@workspace:examples/nextjs-app"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:4.6.0"
+    "@belgattitude/eslint-config-bases": "npm:4.7.0"
     "@httpx/exception": "workspace:^"
     "@types/node": "npm:20.10.4"
-    "@types/react": "npm:18.2.42"
+    "@types/react": "npm:18.2.43"
     "@types/react-dom": "npm:18.2.17"
     axios: "npm:1.6.2"
     cross-env: "npm:7.0.3"
@@ -1209,6 +1164,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.13.3"
     "@belgattitude/eslint-config-bases": "npm:4.7.0"
+    "@edge-runtime/vm": "npm:3.1.7"
     "@size-limit/file": "npm:11.0.1"
     "@size-limit/webpack": "npm:11.0.1"
     "@vitest/coverage-istanbul": "npm:1.0.4"
@@ -1237,6 +1193,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.13.3"
     "@belgattitude/eslint-config-bases": "npm:4.7.0"
+    "@edge-runtime/vm": "npm:3.1.7"
     "@size-limit/file": "npm:11.0.1"
     "@size-limit/webpack": "npm:11.0.1"
     "@size-limit/webpack-why": "npm:11.0.1"
@@ -1272,6 +1229,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.13.3"
     "@belgattitude/eslint-config-bases": "npm:4.7.0"
+    "@edge-runtime/vm": "npm:3.1.7"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:11.0.1"
     "@size-limit/webpack": "npm:11.0.1"
@@ -2100,7 +2058,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/eslint-plugin-query@npm:^4.36.1 || ^5.12.1, @tanstack/eslint-plugin-query@npm:^4.36.1 || ^5.8.4":
+"@tanstack/eslint-plugin-query@npm:^4.36.1 || ^5.12.1":
   version: 5.12.1
   resolution: "@tanstack/eslint-plugin-query@npm:5.12.1"
   dependencies:
@@ -2371,14 +2329,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.2.42, @types/react@npm:>=16":
-  version: 18.2.42
-  resolution: "@types/react@npm:18.2.42"
+"@types/react@npm:*, @types/react@npm:18.2.43, @types/react@npm:>=16":
+  version: 18.2.43
+  resolution: "@types/react@npm:18.2.43"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: b6ee1873ba551ca7bf87cefff00a615aa4322cd68d425858a2e09be260d8037d7fc68865739d2b05cc88cefa7acd009afdaea43e9856fc6302b322cc8c19464e
+  checksum: a9d90a93380bb67623f27eba83e2d05b548109f7eb6fd591f5c4a3716bc257cc7cb078455db7ea4308d5f2ff6b4fe48d9a4a560145d9384069a2b5121bc93937
   languageName: node
   linkType: hard
 
@@ -2435,7 +2393,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^6.13.1, @typescript-eslint/eslint-plugin@npm:^6.13.2":
+"@typescript-eslint/eslint-plugin@npm:^6.13.2":
   version: 6.13.2
   resolution: "@typescript-eslint/eslint-plugin@npm:6.13.2"
   dependencies:
@@ -2460,7 +2418,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.4.2 || ^6.0.0, @typescript-eslint/parser@npm:^6.13.1, @typescript-eslint/parser@npm:^6.13.2":
+"@typescript-eslint/parser@npm:^5.4.2 || ^6.0.0, @typescript-eslint/parser@npm:^6.13.2":
   version: 6.13.2
   resolution: "@typescript-eslint/parser@npm:6.13.2"
   dependencies:
@@ -2547,7 +2505,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:6.13.2, @typescript-eslint/typescript-estree@npm:^6.13.1, @typescript-eslint/typescript-estree@npm:^6.13.2":
+"@typescript-eslint/typescript-estree@npm:6.13.2, @typescript-eslint/typescript-estree@npm:^6.13.2":
   version: 6.13.2
   resolution: "@typescript-eslint/typescript-estree@npm:6.13.2"
   dependencies:
@@ -2565,7 +2523,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:6.13.2, @typescript-eslint/utils@npm:^6.13.0, @typescript-eslint/utils@npm:^6.13.1, @typescript-eslint/utils@npm:^6.13.2":
+"@typescript-eslint/utils@npm:6.13.2, @typescript-eslint/utils@npm:^6.13.0, @typescript-eslint/utils@npm:^6.13.2":
   version: 6.13.2
   resolution: "@typescript-eslint/utils@npm:6.13.2"
   dependencies:
@@ -5516,7 +5474,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-perfectionist@npm:2.5.0, eslint-plugin-perfectionist@npm:^2.5.0":
+"eslint-plugin-perfectionist@npm:^2.5.0":
   version: 2.5.0
   resolution: "eslint-plugin-perfectionist@npm:2.5.0"
   dependencies:

@@ -89,6 +89,7 @@
     "check-pub": "attw --pack",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-watch": "vitest --ui",
     "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage"
@@ -96,6 +97,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.13.3",
     "@belgattitude/eslint-config-bases": "4.7.0",
+    "@edge-runtime/vm": "3.1.7",
     "@size-limit/file": "11.0.1",
     "@size-limit/webpack": "11.0.1",
     "@size-limit/webpack-why": "11.0.1",

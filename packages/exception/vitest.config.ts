@@ -21,10 +21,29 @@ export default defineConfig({
       reporter: ['text', 'json', 'clover'],
     },
     deps: {
+      optimizer: {
+        web: {
+          enabled: false,
+        },
+        ssr: { enabled: true },
+      },
+    },
+    typecheck: {
+      enabled: false,
+    },
+    pool: 'vmThreads',
+    poolOptions: {
+      vmThreads: {
+        // useAtomics: true,
+      },
       /*
-      experimentalOptimizer: {
-        enabled: false,
-      }, */
+      threads: {
+        // minThreads: 1,
+        // maxThreads: 16,
+        useAtomics: true, // perf+
+        isolate: false, // perf+++
+      },
+      */
     },
     environment: 'node',
     exclude: [
