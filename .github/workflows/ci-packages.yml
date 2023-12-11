@@ -56,6 +56,9 @@ jobs:
       - name: 🧪 Unit tests
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run test-unit --coverage
 
+      - name: 🧪 Unit tests (edge-runtime)
+        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run test-unit-edge
+
       - name: ☂️ Codecov upload
         working-directory: ${{ github.workspace }}
         run: |
