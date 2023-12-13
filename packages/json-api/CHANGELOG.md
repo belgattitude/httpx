@@ -1,5 +1,11 @@
 # @httpx/json-api
 
+## 0.5.6
+
+### Patch Changes
+
+- [#795](https://github.com/belgattitude/httpx/pull/795) [`ca13c91`](https://github.com/belgattitude/httpx/commit/ca13c91f5bae5778debc2fec09aea0b774275f89) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix isPlainObject in edge-runtime
+
 ## 0.5.5
 
 ### Patch Changes
