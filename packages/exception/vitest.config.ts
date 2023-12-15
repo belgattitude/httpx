@@ -39,8 +39,8 @@ export default defineConfig({
       threads: {
         minThreads: 1,
         maxThreads: 16,
-        useAtomics: true, // perf+
-        isolate: true, // perf+++
+        useAtomics: true, // perf+ if true
+        isolate: true, // perf+++ if false
       },
     },
     environment: 'node',
