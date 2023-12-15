@@ -31,7 +31,24 @@ module.exports = {
     '.cache',
     '**/docs',
   ],
-  overrides: [],
+  overrides: [
+    {
+      files: ['src/**/*.ts'],
+      rules: {
+        'import/no-extraneous-dependencies': [
+          'error',
+          {
+            devDependencies: ['**/*.test.ts', '**/*.spec.ts'],
+            optionalDependencies: false,
+            peerDependencies: false,
+          },
+        ],
+        'import/no-cycle': [1, { maxDepth: 100 }],
+        'import/no-nodejs-modules': 'error',
+        'import/no-self-import': 'error',
+      },
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',

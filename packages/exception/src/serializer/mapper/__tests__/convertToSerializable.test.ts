@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { HttpException } from '../../../base';
 import { HttpBadRequest, HttpUnprocessableEntity } from '../../../client';
 import type { SerializableHttpException } from '../../types';

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, expect, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { HttpClientException, HttpException } from '../../src/base';
 import { HttpNotFound } from '../../src/client';

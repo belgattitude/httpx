@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { HttpBadRequest } from '../../client';
 import { HttpInternalServerError } from '../../server';
 import { isHttpServerException } from '../isHttpServerException';

@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { HttpUnprocessableEntity } from '../../src/client';
 import type { HttpValidationIssue } from '../../src/types/HttpValidationIssue';
 

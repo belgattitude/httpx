@@ -35,15 +35,15 @@ module.exports = {
     {
       files: ['src/**/*.ts'],
       rules: {
-        'import/no-cycle': [1, { maxDepth: 100 }],
         'import/no-extraneous-dependencies': [
           'error',
           {
-            devDependencies: false,
+            devDependencies: ['**/*.test.ts', '**/*.spec.ts'],
             optionalDependencies: false,
             peerDependencies: false,
           },
         ],
+        'import/no-cycle': [1, { maxDepth: 100 }],
         'import/no-nodejs-modules': 'error',
         'import/no-self-import': 'error',
       },

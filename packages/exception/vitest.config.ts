@@ -31,19 +31,17 @@ export default defineConfig({
     typecheck: {
       enabled: false,
     },
-    pool: 'vmThreads',
+    pool: 'threads',
     poolOptions: {
       vmThreads: {
         // useAtomics: true,
       },
-      /*
       threads: {
-        // minThreads: 1,
-        // maxThreads: 16,
-        useAtomics: true, // perf+
-        isolate: false, // perf+++
+        minThreads: 1,
+        maxThreads: 16,
+        useAtomics: true, // perf+ if true
+        isolate: true, // perf+++ if false
       },
-      */
     },
     environment: 'node',
     exclude: [
@@ -52,11 +50,12 @@ export default defineConfig({
       '**/coverage/**',
       '**/.{idea,git,cache,output,temp}/**',
     ],
-    globals: true,
+    globals: false,
     include: testFiles,
     // To mimic Jest behaviour regarding mocks.
     mockReset: true,
     passWithNoTests: false,
+    // To mimic Jest behaviour regarding mocks.
     restoreMocks: true,
   },
 });

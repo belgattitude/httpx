@@ -1,5 +1,6 @@
 import type { TsonType } from 'tupleson';
 import { createTson } from 'tupleson';
+import { describe, expect, it } from 'vitest';
 
 import {
   createHttpException,

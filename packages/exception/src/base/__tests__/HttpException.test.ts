@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import type { HttpExceptionParams } from '../../types/HttpExceptionParams';
 import { HttpException } from '../HttpException';
 
