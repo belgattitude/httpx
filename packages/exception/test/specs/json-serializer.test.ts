@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { HttpUnprocessableEntity } from '../../src';
 import { fromJson, toJson } from '../../src/serializer';
 

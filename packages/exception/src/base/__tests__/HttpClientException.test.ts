@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { HttpClientException } from '../HttpClientException';
 import { HttpException } from '../HttpException';
 

@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import type { NativeError } from '../../types';
 import { isNativeError, nativeErrors } from '../isNativeError';
 

@@ -1,4 +1,5 @@
 import statuses from 'statuses';
+import { describe, expect, it } from 'vitest';
 
 import { HttpClientException, HttpException } from '../../src/base';
 import { HttpNotFound, HttpUnprocessableEntity } from '../../src/client';
