@@ -36,7 +36,6 @@ export default defineConfig({
       vmThreads: {
         // useAtomics: true,
       },
-
       threads: {
         minThreads: 1,
         maxThreads: 16,
