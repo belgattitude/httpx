@@ -35,7 +35,7 @@ describe(`when Error.cause isn't supported`, () => {
     };
   });
 
-  it.each(scenarios)('should ignore the cause for %s.', (name, err) => {
+  it.each(scenarios)('should ignore the cause for %s.', (_name, err) => {
     expect(supportsErrorCause()).toStrictEqual(false);
     expect(err.cause).toStrictEqual(undefined);
   });

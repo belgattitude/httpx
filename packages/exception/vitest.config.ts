@@ -46,7 +46,7 @@ export default defineConfig({
         useAtomics: true,
         // isolate to false makes perf++ but comes with limitations
         // @link https://vitest.dev/config/#pooloptions-threads-isolate
-        isolate: false,
+        isolate: true,
       },
     },
     environment: 'node',
