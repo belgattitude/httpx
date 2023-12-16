@@ -6,7 +6,7 @@ describe('assertParsableDsn', () => {
     'mysql://localhost',
     'postgresql://localhost:35045',
   ])('should assert valid dsn', (dsn) => {
-    expect(assertParsableDsn(dsn)).toStrictEqual(undefined);
+    expect(assertParsableDsn(dsn)).toBeUndefined();
   });
   it("should throw when dsn can't be parsed", () => {
     expect(() => assertParsableDsn('redis:/')).toThrow(

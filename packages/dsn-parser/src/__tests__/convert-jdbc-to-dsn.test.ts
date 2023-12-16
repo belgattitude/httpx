@@ -6,7 +6,7 @@ describe('convertJdbcToDsn', () => {
     const jdbc =
       'sqlserver://localhost:1433;database=my-db;authentication=default;user=sa;password=pass03$;encrypt=true;trustServerCertificate=true';
     const dsn = convertJdbcToDsn(jdbc);
-    expect(dsn).toStrictEqual(
+    expect(dsn).toBe(
       'sqlserver://localhost:1433?database=my-db&authentication=default&user=sa&password=pass03$&encrypt=true&trustServerCertificate=true'
     );
     expect(parseDsnOrThrow(dsn)).toStrictEqual({
@@ -26,7 +26,7 @@ describe('convertJdbcToDsn', () => {
   it('should return a dsn string from a minimal jdbc dsn', () => {
     const jdbc = 'sqlserver://localhost:1433';
     const dsn = convertJdbcToDsn(jdbc);
-    expect(dsn).toStrictEqual('sqlserver://localhost:1433');
+    expect(dsn).toBe('sqlserver://localhost:1433');
     expect(parseDsnOrThrow(dsn)).toStrictEqual({
       driver: 'sqlserver',
       host: 'localhost',
