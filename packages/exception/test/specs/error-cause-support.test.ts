@@ -1,6 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { HttpClientException, HttpException } from '../../src/base';
+import {
+  HttpClientException,
+  HttpException,
+  HttpServerException,
+} from '../../src/base';
 import { HttpNotFound } from '../../src/client';
 import { supportsErrorCause } from '../../src/support/supportsErrorCause';
 
@@ -21,7 +25,7 @@ describe(`when Error.cause isn't supported`, () => {
   const scenarios: [name: string, cls: HttpException][] = [
     ['HttpException', new HttpException(500, params)],
     ['HttpClientException', new HttpClientException(404, params)],
-    ['HttpServerException', new HttpClientException(500, params)],
+    ['HttpServerException', new HttpServerException(500, params)],
     ['HttpNotFound', new HttpNotFound(params)],
   ];
 
@@ -31,7 +35,7 @@ describe(`when Error.cause isn't supported`, () => {
     };
   });
 
-  it.each(scenarios)('should ignore the cause for %s.', (name, err) => {
+  it.each(scenarios)('should ignore the cause for %s.', (_name, err) => {
     expect(supportsErrorCause()).toStrictEqual(false);
     expect(err.cause).toStrictEqual(undefined);
   });

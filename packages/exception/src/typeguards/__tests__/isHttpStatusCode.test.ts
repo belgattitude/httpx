@@ -4,7 +4,7 @@ import { isHttpStatusCode } from '../isHttpStatusCode';
 
 describe('isHttpStatusCode', () => {
   it('should return true if status code is valid', () => {
-    expect(isHttpStatusCode(100)).toBeTruthy();
+    expect(isHttpStatusCode(100)).toBe(true);
     expect(isHttpStatusCode(599)).toBeTruthy();
   });
 

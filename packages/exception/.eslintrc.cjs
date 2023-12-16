@@ -33,12 +33,21 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['src/**/*.ts'],
+      files: ['**/*.ts'],
       rules: {
         'import/no-extraneous-dependencies': [
           'error',
           {
-            devDependencies: ['**/*.test.ts', '**/*.spec.ts'],
+            devDependencies: [
+              '**/*.test.ts',
+              '**/*.spec.ts',
+              '**/*.config.js',
+              '**/*.config.mjs',
+              '**/*.config.cjs',
+              '**/*.config.ts',
+              '**/*.d.ts',
+              '.eslint*.*',
+            ],
             optionalDependencies: false,
             peerDependencies: false,
           },
@@ -58,5 +67,18 @@ module.exports = {
   rules: {
     'import/no-self-import': 'error',
     'import/no-unassigned-import': 'error',
+    'jest/no-restricted-matchers': [
+      'error',
+      {
+        toBeFalsy: null,
+        resolves: 'Use `expect(await promise)` instead.',
+        toHaveBeenCalledWith: null,
+        'not.toHaveBeenCalledWith': null,
+        'resolves.toHaveBeenCalledWith': null,
+        'rejects.toHaveBeenCalledWith': null,
+        'resolves.not.toHaveBeenCalledWith': null,
+        'rejects.not.toHaveBeenCalledWith': null,
+      },
+    ],
   },
 };
