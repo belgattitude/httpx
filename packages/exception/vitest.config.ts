@@ -31,16 +31,22 @@ export default defineConfig({
     typecheck: {
       enabled: false,
     },
+    // threads is good, vmThreads is faster (perf++) but comes with limitations
+    // @link https://vitest.dev/config/#vmthreads
     pool: 'threads',
     poolOptions: {
       vmThreads: {
-        // useAtomics: true,
+        // useAtomics -> perf+
+        // @link https://vitest.dev/config/#pooloptions-threads-useatomics
+        useAtomics: true,
       },
       threads: {
-        minThreads: 1,
-        maxThreads: 16,
-        useAtomics: true, // perf+ if true
-        isolate: true, // perf+++ if false
+        // useAtomics -> perf+
+        // @link https://vitest.dev/config/#pooloptions-threads-useatomics
+        useAtomics: true,
+        // isolate to false makes perf++ but comes with limitations
+        // @link https://vitest.dev/config/#pooloptions-threads-isolate
+        isolate: false,
       },
     },
     environment: 'node',
@@ -50,12 +56,14 @@ export default defineConfig({
       '**/coverage/**',
       '**/.{idea,git,cache,output,temp}/**',
     ],
+    // By default, vitest does not provide global APIs for explicitness. If you prefer to use the APIs globally like Jest,
+    // you can pass the --globals option to CLI or add globals: true in the config.
+    // https://vitest.dev/config/#globals
     globals: false,
     include: testFiles,
     // To mimic Jest behaviour regarding mocks.
     mockReset: true,
     passWithNoTests: false,
-    // To mimic Jest behaviour regarding mocks.
     restoreMocks: true,
   },
 });
