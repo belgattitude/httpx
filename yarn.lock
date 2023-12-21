@@ -36,11 +36,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.13.4":
-  version: 0.13.4
-  resolution: "@arethetypeswrong/cli@npm:0.13.4"
+"@arethetypeswrong/cli@npm:0.13.5":
+  version: 0.13.5
+  resolution: "@arethetypeswrong/cli@npm:0.13.5"
   dependencies:
-    "@arethetypeswrong/core": "npm:0.13.4"
+    "@arethetypeswrong/core": "npm:0.13.5"
     chalk: "npm:^4.1.2"
     cli-table3: "npm:^0.6.3"
     commander: "npm:^10.0.1"
@@ -49,20 +49,21 @@ __metadata:
     semver: "npm:^7.5.4"
   bin:
     attw: dist/index.js
-  checksum: 94004704d3d17dae9da4e0d69d834e4f377d895523ce51213c7765f92f792925305a2d4c6f324d77393f1a96eda53f10431d548d0f7a76db6aad0ed3547db1fd
+  checksum: 0d18fbd69324a6e1d4fc7daf2f0ff1e1cd9d2400da48b73c1fe213575e58779f5352541a7a737798b18ae07e0e1c77ab889ab1e77e45127be795d2eafc0fa5e2
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/core@npm:0.13.4":
-  version: 0.13.4
-  resolution: "@arethetypeswrong/core@npm:0.13.4"
+"@arethetypeswrong/core@npm:0.13.5":
+  version: 0.13.5
+  resolution: "@arethetypeswrong/core@npm:0.13.5"
   dependencies:
     "@andrewbranch/untar.js": "npm:^1.0.3"
     fflate: "npm:^0.7.4"
     semver: "npm:^7.5.4"
-    typescript: "npm:5.3.2"
+    ts-expose-internals-conditionally: "npm:1.0.0-empty.0"
+    typescript: "npm:5.3.3"
     validate-npm-package-name: "npm:^5.0.0"
-  checksum: a27477e3bd2d58b7b88cace53c9408bc9da5e7c4d150e645e091f42fe21c27a71f42d62524c24ed97fe16b022ce01a1f06ce4741773eb5adbdd411e9e0d8da99
+  checksum: ded85c7c998b6b790b99f0c1aa771ab036a7b4cf5fb3ca4322b909535e35249d52e27e1d35ce64dd717c3775f5e226b3e4f1c1aee53d0c5560b75f1b851d59f5
   languageName: node
   linkType: hard
 
@@ -1183,7 +1184,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.13.4"
+    "@arethetypeswrong/cli": "npm:0.13.5"
     "@belgattitude/eslint-config-bases": "npm:4.8.0"
     "@edge-runtime/vm": "npm:3.1.7"
     "@size-limit/file": "npm:11.0.1"
@@ -1212,7 +1213,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.13.4"
+    "@arethetypeswrong/cli": "npm:0.13.5"
     "@belgattitude/eslint-config-bases": "npm:4.8.0"
     "@edge-runtime/vm": "npm:3.1.7"
     "@size-limit/file": "npm:11.0.1"
@@ -1248,7 +1249,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.13.4"
+    "@arethetypeswrong/cli": "npm:0.13.5"
     "@belgattitude/eslint-config-bases": "npm:4.8.0"
     "@edge-runtime/vm": "npm:3.1.7"
     "@httpx/exception": "workspace:^"
@@ -11284,7 +11285,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "prisma-exception@workspace:integrations/prisma-exception"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.13.4"
+    "@arethetypeswrong/cli": "npm:0.13.5"
     "@belgattitude/eslint-config-bases": "npm:4.8.0"
     "@size-limit/file": "npm:11.0.1"
     "@size-limit/webpack": "npm:11.0.1"
@@ -13390,6 +13391,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-expose-internals-conditionally@npm:1.0.0-empty.0":
+  version: 1.0.0-empty.0
+  resolution: "ts-expose-internals-conditionally@npm:1.0.0-empty.0"
+  checksum: 6b4f546fc59f04f68d579f1bc0704541ec17521f84d32a15b45bef5dbc7a787143a065e19541cc5b64ff494f16f223bce59f3f5bf10ec538e5739e23c0efb878
+  languageName: node
+  linkType: hard
+
 "ts-interface-checker@npm:^0.1.9":
   version: 0.1.13
   resolution: "ts-interface-checker@npm:0.1.13"
@@ -13657,16 +13665,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.3.2":
-  version: 5.3.2
-  resolution: "typescript@npm:5.3.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 415e5fb6611f5713e460bad48039f00bcfdbde53a2f911727862d5aa9c5d5edd250059a419df382d8f031709e15a169c41eb62b6a401da5eec7ac0f4e359d6ac
-  languageName: node
-  linkType: hard
-
 "typescript@npm:5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
@@ -13674,16 +13672,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 6e4e6a14a50c222b3d14d4ea2f729e79f972fa536ac1522b91202a9a65af3605c2928c4a790a4a50aa13694d461c479ba92cedaeb1e7b190aadaa4e4b96b8e18
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>":
-  version: 5.3.2
-  resolution: "typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 1b45cdfb577a78ae7a9a9d0b77a7b772142cb98ba05e4e5aefba7044a028ded885bcecef63166407a5986645cea816fe4986894336aacd5e791796ea79a6a7ed
   languageName: node
   linkType: hard
 
