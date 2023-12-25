@@ -42,16 +42,16 @@
     },
     "./experimental": {
       "import": {
-        "types": "./dist/helpers/index.d.ts",
-        "default": "./dist/helpers/index.mjs"
+        "types": "./dist/experimental/index.d.ts",
+        "default": "./dist/experimental/index.mjs"
       },
       "require": {
-        "types": "./dist/helpers/index.d.cts",
-        "default": "./dist/helpers/index.cjs"
+        "types": "./dist/experimental/index.d.cts",
+        "default": "./dist/experimental/index.cjs"
       },
       "default": {
-        "types": "./dist/helpers/index.d.ts",
-        "default": "./dist/helpers/index.mjs"
+        "types": "./dist/experimental/index.d.ts",
+        "default": "./dist/experimental/index.mjs"
       }
     },
     "./serializer": {
@@ -74,6 +74,9 @@
     "*": {
       "serializer": [
         "./dist/serializer"
+      ],
+      "experimental": [
+        "./dist/experimental"
       ]
     }
   },
