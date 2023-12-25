@@ -1,0 +1,1 @@
+export { tryOrFail } from './tryOrFail';

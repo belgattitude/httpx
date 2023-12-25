@@ -40,6 +40,20 @@
         "default": "./dist/index.mjs"
       }
     },
+    "./experimental": {
+      "import": {
+        "types": "./dist/helpers/index.d.ts",
+        "default": "./dist/helpers/index.mjs"
+      },
+      "require": {
+        "types": "./dist/helpers/index.d.cts",
+        "default": "./dist/helpers/index.cjs"
+      },
+      "default": {
+        "types": "./dist/helpers/index.d.ts",
+        "default": "./dist/helpers/index.mjs"
+      }
+    },
     "./serializer": {
       "import": {
         "types": "./dist/serializer/index.d.ts",

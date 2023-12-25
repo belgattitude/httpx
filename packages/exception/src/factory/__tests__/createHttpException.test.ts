@@ -21,7 +21,7 @@ describe('createHttpException tests', () => {
     }) as [className: string, status: number, cls: AnyExceptionClass][];
 
     it.each(all)(
-      'should return %p from status %p',
+      'should return %s from status %s',
       (className, status, cls) => {
         const params = 'msg';
         const error = createHttpException(status, params);
@@ -32,8 +32,17 @@ describe('createHttpException tests', () => {
     );
 
     it.each(all)(
-      'should preserve the object name (%p.name) and the status (%p)',
+      'should return instanceof "%s" from status %s',
       (className, status, cls) => {
+        const params = 'msg';
+        const error = createHttpException(status, params);
+        expect(error).toBeInstanceOf(cls);
+      }
+    );
+
+    it.each(all)(
+      'should preserve the object name (%s) and the status (%s)',
+      (_className, status, cls) => {
         const params = 'msg';
         const error = createHttpException(status, params);
         const expected = new cls(params);

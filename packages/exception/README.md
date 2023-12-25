@@ -372,13 +372,17 @@ const nonOfficialStatusCodes = [
 ];
 
 const e = createHttpException(509, {
-  // optional HttpExceptionParams
-}); // `e2 instanceof HttpServerException
+  message: "Bandwidth limit exceeded",
+  // ... others properties
+});
+
+// e instanceof HttpServerException
 
 // alternatively
 const alternate = new HttpServerException({
   statusCode: 509,
-  // ...(optional HttpExceptionParams)
+  message: "Bandwidth limit exceeded",
+  // ... others properties
 });
 ```
 

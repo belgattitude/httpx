@@ -6,7 +6,11 @@ export default defineConfig((options) => {
     cjsInterop: false,
     clean: true,
     dts: true,
-    entry: ['src/index.ts', 'src/serializer/index.ts'],
+    entry: [
+      'src/index.ts',
+      'src/experimental/index.ts',
+      'src/serializer/index.ts',
+    ],
     format: ['esm', 'cjs'],
     minify: !options.watch,
     minifyIdentifiers: true,

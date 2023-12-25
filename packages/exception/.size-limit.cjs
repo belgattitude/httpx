@@ -68,22 +68,28 @@ module.exports = [
     limit: "690B", // Will import all server/client exceptions
   },
   {
-    name: "ESM ({ toJson })",
+    name: "ESM serializer ({ toJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ toJson }",
     limit: "840B",
   },
   {
-    name: "ESM ({ fromJson })",
+    name: "ESM serializer ({ fromJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ fromJson }",
     limit: "1120B",
   },
   {
-    name: "ESM ({ fromJson, toJson })",
+    name: "ESM serializer ({ fromJson, toJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ fromJson, toJson }",
     limit: "1390B",
+  },
+  {
+    name: "ESM experimental ({ tryOrFail })",
+    path: ["dist/experimental/index.mjs"],
+    import: "{ tryOrFail }",
+    limit: "800B",
   },
   // ###################################################
   // Commonjs full bundle
