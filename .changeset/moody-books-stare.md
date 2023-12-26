@@ -2,7 +2,7 @@
 "@httpx/exception": minor
 ---
 
-Deprecate the type HttpStatusCode, use HttpErrorStatusCode instead
+Deprecate the type `HttpStatusCode`, use `HttpErrorStatusCode` instead
 
 HttpErrorStatusCode is less ambiguous ad HttpStatusCode could be understood
 as HttpStatusCode could represent all http statuses. The type is exported 
