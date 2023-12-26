@@ -1,5 +1,58 @@
 # @httpx/exception
 
+## 2.6.0
+
+### Minor Changes
+
+- [#815](https://github.com/belgattitude/httpx/pull/815) [`77cd15b`](https://github.com/belgattitude/httpx/commit/77cd15b89fb3d88f1f60babffdaf76e8fa516bf1) Thanks [@belgattitude](https://github.com/belgattitude)! - Deprecate the type `HttpStatusCode`, use `HttpErrorStatusCode` instead
+
+  HttpErrorStatusCode is less ambiguous ad HttpStatusCode could be understood
+  as HttpStatusCode could represent all http statuses. The type is exported
+  but there's very few chances an regular user would be impacted.
+
+- [#815](https://github.com/belgattitude/httpx/pull/815) [`77cd15b`](https://github.com/belgattitude/httpx/commit/77cd15b89fb3d88f1f60babffdaf76e8fa516bf1) Thanks [@belgattitude](https://github.com/belgattitude)! - Add new types: HttpErrorStatusCode and HttpErrorStatusCodeOrNumber
+
+  Improves the typescript experience by allowing typescript to suggest assigned
+  status codes in `createException` and `HttpException`, `HttpClientException`,
+  `HttpServerException` constructors. Arbitray numbers can still be used.
+
+- [#815](https://github.com/belgattitude/httpx/pull/815) [`77cd15b`](https://github.com/belgattitude/httpx/commit/77cd15b89fb3d88f1f60babffdaf76e8fa516bf1) Thanks [@belgattitude](https://github.com/belgattitude)! - Add new typeguards: isErrorWithErrorStatusCode and isObjectWithErrorStatusCode
+
+  Those typeguards can be used in specific circumstances when an originating
+  error has a statusCode field which indicates by convention the preferred status
+  to send.
+
+  ```typescript
+  import {
+    isErrorWithErrorStatusCode,
+    createHttpException,
+  } from "@httpx/exception";
+
+  try {
+    throw new (class extends Error {
+      statusCode = 400;
+    })();
+  } catch (e) {
+    if (isErrorWithErrorStatusCode(e)) {
+      throw createException(e.statusCode, "Something wrong happened");
+    }
+  }
+  ```
+
+  ```typescript
+  const noSuchUser = {
+    statusCode: 404,
+  } satisfies ObjectWithStatusCode;
+
+  class NoSuchItem extends DomainError implements ObjectWithStatusCode {
+    statusCode: 404;
+  }
+
+  if (isObjectWithErrorStatusCode(noSuchUser)) {
+    throw createException(e.statusCode, "Nothing");
+  }
+  ```
+
 ## 2.5.7
 
 ### Patch Changes
@@ -49,15 +102,15 @@
 - [#675](https://github.com/belgattitude/httpx/pull/675) [`a6a63e1`](https://github.com/belgattitude/httpx/commit/a6a63e174af87f04eaf105a6e45c2ef56fc64ade) Thanks [@belgattitude](https://github.com/belgattitude)! - Add support for HttpUnprocessableEntity.issues in serializer.
 
   ```typescript
-  import { fromJson, toJson } from '@httpx/exception/serializer';
+  import { fromJson, toJson } from "@httpx/exception/serializer";
 
   const e422 = new HttpUnprocessableEntity({
-    message: 'Validation failed',
+    message: "Validation failed",
     issues: [
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -75,12 +128,12 @@
 
   ```typescript
   const e422 = createHttpException(422, {
-    message: 'Validation failed',
+    message: "Validation failed",
     issues: [
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -181,14 +234,14 @@
   // becomes
   const issues: HttpValidationIssue[] = [
     {
-      message: 'Invalid email',
-      path: 'email',
-      code: 'invalid_email',
+      message: "Invalid email",
+      path: "email",
+      code: "invalid_email",
     },
     {
-      message: 'Invalid address',
-      path: ['addresses', 0, 'line1'],
-      code: 'empty_string',
+      message: "Invalid address",
+      path: ["addresses", 0, "line1"],
+      code: "empty_string",
     },
   ];
 
@@ -258,19 +311,19 @@
   Example:
 
   ```typescript
-  import { HttpUnprocessableEntity } from '@httpx/exception';
+  import { HttpUnprocessableEntity } from "@httpx/exception";
 
   const e422 = new HttpUnprocessableEntity({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -307,14 +360,14 @@
   const e400 = new HttpBadRequest({
     errors: [
       {
-        message: 'Invalid email',
-        path: 'email',
-        code: 'invalid_email',
+        message: "Invalid email",
+        path: "email",
+        code: "invalid_email",
       },
       {
-        message: 'Invalid address',
-        path: ['addresses', 0, 'line1'],
-        code: 'empty_string',
+        message: "Invalid address",
+        path: ["addresses", 0, "line1"],
+        code: "empty_string",
       },
     ],
   });
@@ -395,9 +448,9 @@
 
   ```typescript
   const err = new HttpRequestTimeout({
-    url: 'https://api.dev/user/belgattitude',
-    method: 'GET',
-    code: 'NETWORK_FAILURE',
+    url: "https://api.dev/user/belgattitude",
+    method: "GET",
+    code: "NETWORK_FAILURE",
     errorId: nanoid(), // can be shared by frontend/server
   });
   console.log(err.url, err.method, err.code, err.errorId);
@@ -417,7 +470,7 @@
   import {
     convertToSerializable,
     createFromSerializable,
-  } from '@httpx/exception/serializer';
+  } from "@httpx/exception/serializer";
 
   const serializableObject = convertToSerializable(new HttpForbidden());
   const exception = createFromSerializable(serializableObject);
@@ -454,11 +507,11 @@
   import {
     HttpForbidden,
     HttpUnavailableForLegalReasons,
-  } from '@httpx/exception';
-  import { fromJson, toJson } from '@httpx/exception/serializer';
+  } from "@httpx/exception";
+  import { fromJson, toJson } from "@httpx/exception/serializer";
 
   const e = new HttpForbidden({
-    url: 'https://www.cool.me',
+    url: "https://www.cool.me",
     /*
       cause: new HttpUnavailableForLegalReasons({
           cause: new Error('example with cause')
