@@ -12,7 +12,7 @@ describe('json-api typeguards', () => {
         meta: {},
         success: true,
       };
-      expect(isJsonApiResponse(payload)).toBeTruthy();
+      expect(isJsonApiResponse(payload)).toBe(true);
     });
 
     it('should reject invalid json responses', () => {
@@ -20,7 +20,7 @@ describe('json-api typeguards', () => {
         meta: {},
         success: 'biloute',
       };
-      expect(isJsonApiResponse(payload)).toBeFalsy();
+      expect(isJsonApiResponse(payload)).toBe(false);
     });
   });
 
@@ -31,7 +31,7 @@ describe('json-api typeguards', () => {
         meta: {},
         success: true,
       };
-      expect(isJsonApiSuccessResponse(payload)).toBeTruthy();
+      expect(isJsonApiSuccessResponse(payload)).toBe(true);
     });
 
     it('should say no when payload is success', () => {
@@ -40,7 +40,7 @@ describe('json-api typeguards', () => {
         meta: {},
         success: false,
       };
-      expect(isJsonApiSuccessResponse(payload)).toBeFalsy();
+      expect(isJsonApiSuccessResponse(payload)).toBe(false);
     });
   });
 
@@ -51,7 +51,7 @@ describe('json-api typeguards', () => {
         meta: {},
         success: true,
       };
-      expect(isJsonApiErrorResponse(payload)).toBeFalsy();
+      expect(isJsonApiErrorResponse(payload)).toBe(false);
     });
 
     it('should say yes when payload is error', () => {
@@ -59,7 +59,7 @@ describe('json-api typeguards', () => {
         errors: [],
         success: false,
       };
-      expect(isJsonApiErrorResponse(payload)).toBeTruthy();
+      expect(isJsonApiErrorResponse(payload)).toBe(true);
     });
   });
 });

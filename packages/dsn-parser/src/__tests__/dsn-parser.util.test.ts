@@ -38,24 +38,24 @@ describe('mergeDsnOverrides', () => {
 
 describe('isValidNetworkPort', () => {
   it('should work as expected', () => {
-    expect(isValidNetworkPort(3001)).toBeTruthy();
-    expect(isValidNetworkPort(0)).toBeFalsy();
-    expect(isValidNetworkPort(65_536)).toBeFalsy();
-    expect(isValidNetworkPort(-1)).toBeFalsy();
+    expect(isValidNetworkPort(3001)).toBe(true);
+    expect(isValidNetworkPort(0)).toBe(false);
+    expect(isValidNetworkPort(65_536)).toBe(false);
+    expect(isValidNetworkPort(-1)).toBe(false);
   });
 });
 
 describe('isNonEmptyString', () => {
   it('should work as expected in when trim === true', () => {
-    expect(isNonEmptyString('cool')).toBeTruthy();
-    expect(isNonEmptyString(1)).toBeFalsy();
-    expect(isNonEmptyString('  ')).toBeFalsy();
-    expect(isNonEmptyString('')).toBeFalsy();
-    expect(isNonEmptyString(null)).toBeFalsy();
-    expect(isNonEmptyString({})).toBeFalsy();
+    expect(isNonEmptyString('cool')).toBe(true);
+    expect(isNonEmptyString(1)).toBe(false);
+    expect(isNonEmptyString('  ')).toBe(false);
+    expect(isNonEmptyString('')).toBe(false);
+    expect(isNonEmptyString(null)).toBe(false);
+    expect(isNonEmptyString({})).toBe(false);
   });
   it('should work as expected in when trim === false', () => {
-    expect(isNonEmptyString('cool ', false)).toBeTruthy();
-    expect(isNonEmptyString('  ', false)).toBeTruthy();
+    expect(isNonEmptyString('cool ', false)).toBe(true);
+    expect(isNonEmptyString('  ', false)).toBe(true);
   });
 });
