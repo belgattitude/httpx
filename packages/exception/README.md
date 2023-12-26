@@ -1,6 +1,6 @@
 # @httpx/exception
 
-HTTP status errors with default message, instanceof, stack and nested error cause support.
+HTTP status errors with default message, instanceof, stack and nested error support.
 Lightweight, typical usage between [400b and 750b](#bundle-size).
 Includes convenience typeguards, optional contextual info and a built-in serializer
 to cover cross-environments challenges (RSC, SSR...).
@@ -21,8 +21,8 @@ to cover cross-environments challenges (RSC, SSR...).
 - 👉&nbsp; If message not provided, defaults to [http error message](#default-messages)
 - 👉&nbsp; Supports pre-defined [contextual](#error-context) information.
 - 👉&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
-- 👉&nbsp; [Extends](https://belgattitude.github.io/httpx/#/?id=uml-class-diagram) native Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) and [cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
-- 👉&nbsp; Framework agnostic, no deps, browser friendly.
+- 👉&nbsp; [Extends](#class-diagram) native Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) and [cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
+- 👉&nbsp; Framework agnostic, no deps. Node, edge and [browsers compat](#compatibility),
 
 ## Install
 
@@ -34,7 +34,7 @@ pnpm add @httpx/exception     # via pnpm
 
 ## Documentation
 
-👉 [Official website](https://belgattitude.github.io/httpx/exception) or [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
+👉 [Official website](https://belgattitude.github.io/httpx/exception), [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme) or [generated typedoc](https://github.com/belgattitude/httpx/tree/main/packages/exception/docs/api).
 
 - [Usage](#usage)
   - [By named imports](#by-named-imports)
@@ -44,7 +44,12 @@ pnpm add @httpx/exception     # via pnpm
 - [Properties](#properties)
 - [Static members](#static-members)
 - [Instanceof checks](#instanceof-checks)
+  - [Class diagram](#class-diagram)
 - [Typeguards](#typeguards)
+  - [Instanceof alternatives](#instanceof-alternatives)
+  - [isErrorWithErrorStatusCode](#iserrorwitherrorstatuscode)
+  - [isObjectWithErrorStatusCode](#isobjectwitherrorstatuscode)
+  - [isHttpErrorStatusCode](#ishttperrorstatuscode)
 - [Serializer](#serializer)
   - [JSON](#json)
   - [Serializable](#serializable)
@@ -77,7 +82,7 @@ import {
 const e = new HttpNotFound();
 // 👉 e.message     -> 'Not found' (default message)
 // 👉 e.statusCode  -> 404
-// 👉 -> e instanceof HttpClientException
+// 👉 -> e instanceof HttpNotFound (and HttpClientException, HttpException and Error)
 
 const e400 = new HttpBadRequest("Problems parsing JSON");
 // 👉 e.message     -> 'Problems parsing JSON'
@@ -217,6 +222,8 @@ const e404 = createHttpException(404);
 // 👉 e instanceof HttpServerException === false
 ```
 
+### Class diagram
+
 ```mermaid
 classDiagram
     Error <|-- HttpException
@@ -236,25 +243,89 @@ classDiagram
 
 ## Typeguards
 
+### Instanceof alternatives
+
+While the usage of `instanceof` is preferred, the `isHttpException`, `isHttpClientException` and
+`isServerException` can be used in place. They will check for instance and will
+also ensure that the associated `statusCode` is actually valid.
+
 ```typescript
 import {
   isHttpException,
   isHttpClientException,
   isHttpServerException,
-  isHttpErrorStatusCode,
 } from "@httpx/exception";
 
 // True
-isHttpErrorStatusCode(404);
 isHttpException(new HttpNotFound());
 isHttpClientException(new HttpNotFound());
 isHttpServerException(new HttpInternalServerError());
 
 // False
-isHttpErrorStatusCode(200);
 isHttpClientException(new HttpInternalServerError());
 isHttpServerException(new HttpNotFound());
 isHttpException(new Error());
+isHttpServerException(
+  new (class extends HttpServerException {
+    constructor() {
+      super(400); // 400 isn't a server exception
+    }
+  })()
+);
+```
+
+### isErrorWithErrorStatusCode
+
+This typeguard is based on a convention and might help to convert a native error to a specific HttpException.
+
+```typescript
+import { isErrorWithStatusCode, createHttpException } from "@httpx/exception";
+
+try {
+  throw new (class extends Error {
+    statusCode = 400; // <- by convention
+  })();
+} catch (e) {
+  // will check if the value is an Error and that there's a statusCode is >=400 && <600
+  if (isErrorWithStatusCode(e)) {
+    throw createException(e.statusCode, e.message);
+  }
+}
+```
+
+### isObjectWithErrorStatusCode
+
+This typeguard is based on a convention and might help to convert an object to a specific HttpException.
+
+```typescript
+import {
+  isObjectWithErrorStatusCode,
+  createHttpException,
+  type ObjectWithErrorStatusCode,
+} from "@httpx/exception";
+
+const noSuchUser = {
+  statusCode: 404,
+} satisfies ObjectWithErrorStatusCode;
+
+class NoSuchItem extends DomainError implements ObjectWithErrorStatusCode {
+  statusCode = 404;
+}
+
+if (isObjectWithErrorStatusCode(noSuchUser)) {
+  throw createException(e.statusCode, "Nothing");
+}
+```
+
+### isHttpErrorStatusCode
+
+```typescript
+import { isHttpErrorStatusCode } from "@httpx/exception";
+
+// True
+isHttpErrorStatusCode(404);
+// False
+isHttpErrorStatusCode(200);
 ```
 
 ## Serializer
@@ -372,13 +443,17 @@ const nonOfficialStatusCodes = [
 ];
 
 const e = createHttpException(509, {
-  // optional HttpExceptionParams
-}); // `e2 instanceof HttpServerException
+  message: "Bandwidth limit exceeded",
+  // ... others properties
+});
+
+// e instanceof HttpServerException
 
 // alternatively
 const alternate = new HttpServerException({
   statusCode: 509,
-  // ...(optional HttpExceptionParams)
+  message: "Bandwidth limit exceeded",
+  // ... others properties
 });
 ```
 
@@ -386,7 +461,9 @@ const alternate = new HttpServerException({
 
 ### Compatibility
 
-Node 18+ and es2022 compatibility is ensured on the CI.
+Node 18+ / es2022 compatibility is ensured on the CI.
+
+Edge tests are run with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)
 
 Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
 configuration. From the browserslist defaults:

@@ -40,6 +40,20 @@
         "default": "./dist/index.mjs"
       }
     },
+    "./experimental": {
+      "import": {
+        "types": "./dist/experimental/index.d.ts",
+        "default": "./dist/experimental/index.mjs"
+      },
+      "require": {
+        "types": "./dist/experimental/index.d.cts",
+        "default": "./dist/experimental/index.cjs"
+      },
+      "default": {
+        "types": "./dist/experimental/index.d.ts",
+        "default": "./dist/experimental/index.mjs"
+      }
+    },
     "./serializer": {
       "import": {
         "types": "./dist/serializer/index.d.ts",
@@ -60,6 +74,9 @@
     "*": {
       "serializer": [
         "./dist/serializer"
+      ],
+      "experimental": [
+        "./dist/experimental"
       ]
     }
   },

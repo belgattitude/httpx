@@ -110,10 +110,10 @@ either a message or an object containing HttpExceptionParams
 
 #### Parameters
 
-| Name           | Type                                                                         |
-| :------------- | :--------------------------------------------------------------------------- |
-| `statusCode`   | `number`                                                                     |
-| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
+| Name           | Type                                                                             |
+| :------------- | :------------------------------------------------------------------------------- |
+| `statusCode`   | [`HttpErrorStatusCodeOrNumber`](../modules/types.md#httperrorstatuscodeornumber) |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams)     |
 
 #### Returns
 
@@ -210,7 +210,7 @@ Http method
 
 ### statusCode
 
-• `Readonly` **statusCode**: `number`
+• `Readonly` **statusCode**: [`HttpErrorStatusCodeOrNumber`](../modules/types.md#httperrorstatuscodeornumber)
 
 Http error status code (400-599)
 

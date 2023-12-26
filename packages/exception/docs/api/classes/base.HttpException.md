@@ -52,10 +52,10 @@ Construct a new HttpException class
 
 #### Parameters
 
-| Name           | Type                                                                         | Description                                                                         |
-| :------------- | :--------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
-| `statusCode`   | `number`                                                                     | http status code between 400-599, no checks are done on the validity of the number. |
-| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) | either a message or an object containing HttpExceptionParams                        |
+| Name           | Type                                                                             | Description                                                                         |
+| :------------- | :------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
+| `statusCode`   | [`HttpErrorStatusCodeOrNumber`](../modules/types.md#httperrorstatuscodeornumber) | http status code between 400-599, no checks are done on the validity of the number. |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams)     | either a message or an object containing HttpExceptionParams                        |
 
 #### Returns
 
@@ -160,7 +160,7 @@ Error.stack
 
 ### statusCode
 
-• `Readonly` **statusCode**: `number`
+• `Readonly` **statusCode**: [`HttpErrorStatusCodeOrNumber`](../modules/types.md#httperrorstatuscodeornumber)
 
 Http error status code (400-599)
 

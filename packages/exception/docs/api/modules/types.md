@@ -4,8 +4,14 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [ErrorWithErrorStatusCode](../interfaces/types.ErrorWithErrorStatusCode.md)
+
 ### Type Aliases
 
+- [HttpErrorStatusCode](types.md#httperrorstatuscode)
+- [HttpErrorStatusCodeOrNumber](types.md#httperrorstatuscodeornumber)
 - [HttpExceptionParams](types.md#httpexceptionparams)
 - [HttpExceptionParamsWithStatus](types.md#httpexceptionparamswithstatus)
 - [HttpStatusCode](types.md#httpstatuscode)
@@ -13,6 +19,18 @@
 - [ValidationError](types.md#validationerror)
 
 ## Type Aliases
+
+### HttpErrorStatusCode
+
+Ƭ **HttpErrorStatusCode**: keyof typeof `statusMap`
+
+---
+
+### HttpErrorStatusCodeOrNumber
+
+Ƭ **HttpErrorStatusCodeOrNumber**: [`HttpErrorStatusCode`](types.md#httperrorstatuscode) \| `number` & {}
+
+---
 
 ### HttpExceptionParams
 
@@ -33,13 +51,17 @@
 
 ### HttpExceptionParamsWithStatus
 
-Ƭ **HttpExceptionParamsWithStatus**: [`HttpExceptionParams`](types.md#httpexceptionparams) & \{ `statusCode`: [`HttpStatusCode`](types.md#httpstatuscode) }
+Ƭ **HttpExceptionParamsWithStatus**: [`HttpExceptionParams`](types.md#httpexceptionparams) & \{ `statusCode`: [`HttpErrorStatusCode`](types.md#httperrorstatuscode) }
 
 ---
 
 ### HttpStatusCode
 
-Ƭ **HttpStatusCode**: keyof typeof `statusMap`
+Ƭ **HttpStatusCode**: [`HttpErrorStatusCode`](types.md#httperrorstatuscode)
+
+**`Deprecated`**
+
+use HttpErrorStatusCode instead as it gives a better meaning
 
 ---
 

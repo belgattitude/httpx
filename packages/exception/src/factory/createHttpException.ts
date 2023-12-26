@@ -5,7 +5,8 @@ import {
 } from '../base';
 import { statusMap } from '../status';
 import { isHttpErrorStatusCode } from '../typeguards';
-import type { AssignedStatusCodes } from '../types/AssignedStatusCodes';
+import type { HttpErrorStatusCodeOrNumber } from '../types';
+import type { AssignedErrorStatusCodes } from '../types/AssignedErrorStatusCodes';
 import type {
   HttpExceptionFromStatus,
   HttpExceptionParamsFromStatus,
@@ -25,11 +26,11 @@ import type {
  * @param msgOrParams either a message or an object containing HttpExceptionParams
  */
 
-export const createHttpException = <T extends number>(
+export const createHttpException = <T extends HttpErrorStatusCodeOrNumber>(
   statusCode: T,
   msgOrParams?: HttpExceptionParamsFromStatus<T> | string
 ): HttpExceptionFromStatus<T> => {
-  if (isHttpErrorStatusCode<AssignedStatusCodes>(statusCode)) {
+  if (isHttpErrorStatusCode<AssignedErrorStatusCodes>(statusCode)) {
     const cls = statusMap?.[statusCode];
     if (cls) {
       return new cls(msgOrParams) as HttpExceptionFromStatus<T>;

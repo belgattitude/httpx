@@ -3,6 +3,7 @@
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#error_types
  * @see https://262.ecma-international.org/12.0/#sec-well-known-intrinsic-objects
  */
+import type { HttpErrorStatusCodeOrNumber } from '../../types';
 import type { HttpMethod } from '../../types/HttpMethod';
 import type { HttpValidationIssue } from '../../types/HttpValidationIssue';
 
@@ -34,7 +35,7 @@ export type HttpExceptionFields = NativeErrorFields & {
   errorId?: string;
   issues?: HttpValidationIssue[];
   method?: HttpMethod;
-  statusCode: number;
+  statusCode: HttpErrorStatusCodeOrNumber;
   url?: string;
 };
 
