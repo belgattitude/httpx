@@ -59,14 +59,18 @@ IDE experience. Message is optional and default to the [default message](#defaul
 [parameters](#parameters) are supported.
 
 ```typescript
-import { HttpNotFound, HttpBadRequest, HttpClientException } from '@httpx/exception';
+import {
+  HttpNotFound,
+  HttpBadRequest,
+  HttpClientException,
+} from "@httpx/exception";
 
 const e = new HttpNotFound();
 // 👉 e.message     -> 'Not found' (default message)
 // 👉 e.statusCode  -> 404
-// 👉 -> e instanceof HttpClientException
+// 👉 -> e instanceof HttpNotFound (and HttpClientException, HttpException and Error)
 
-const e400 = new HttpBadRequest('Problems parsing JSON');
+const e400 = new HttpBadRequest("Problems parsing JSON");
 // 👉 e.message     -> 'Problems parsing JSON'
 // ...
 ```
@@ -77,7 +81,7 @@ The `createHttpException` function allows to create an exception from an
 arbitrary status code.
 
 ```typescript
-import { createHttpException } from '@httpx/exception';
+import { createHttpException } from "@httpx/exception";
 
 const e404 = createHttpException(404); // e404 instanceof HttpClientException
 const e500 = createHttpException(500); // e500 instanceof HttpServerException
@@ -88,15 +92,14 @@ Additional [parameters](#httpexception-parameters) can be provided as a second a
 ```typescript
 import { createHttpException, HttpNotImplemented } from "@httpx/exception";
 
-throw createHttpException(404, 'The graal is yet to find !');
+throw createHttpException(404, "The graal is yet to find !");
 
 const e500 = createHttpException(500, {
-  message: 'Something really wrong happened.',
-  url: 'https://api.dev/gateway',
+  message: "Something really wrong happened.",
+  url: "https://api.dev/gateway",
   cause: new HttpNotImplemented(), // or any Error...
 });
 ```
-
 
 ## Parameters
 
@@ -108,66 +111,65 @@ is provided the [default message](#default-messages) is used.
 It's possible to attach informational context to an exception. This is particularly useful when used with
 centralized logging / error reporting.
 
-| HttpExceptionParams | Type      | Description                                                                                                                                                           |
-| ------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| message             | `string?` | [Error.message](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message), see [about default message](#default-messages). |
-| url                 | `string?` | Origin url.                                                                                                                         |
-| method              | `HttpMethod?` | Origin http method.                                                                                                                 |
-| code                | `string?` | Custom error code (not to be confused with statusCode).                                                                                                                        |
-| errorId             | `string?`  | Unique custom error id.                                                                                                                          |
-| cause               | `Error?`   | Error.cause, see also [about error cause](#about-errorcause).                                                                                                         |
-| issues             | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+| HttpExceptionParams | Type                  | Description                                                                                                                                                      |
+| ------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| message             | `string?`             | [Error.message](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message), see [about default message](#default-messages). |
+| url                 | `string?`             | Origin url.                                                                                                                                                      |
+| method              | `HttpMethod?`         | Origin http method.                                                                                                                                              |
+| code                | `string?`             | Custom error code (not to be confused with statusCode).                                                                                                          |
+| errorId             | `string?`             | Unique custom error id.                                                                                                                                          |
+| cause               | `Error?`              | Error.cause, see also [about error cause](#about-errorcause).                                                                                                    |
+| issues              | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                                                  |
 
 Example:
 
 ```typescript
-import { HttpGatewayTimeout, HttpInternalServerError } from '@httpx/exception';
+import { HttpGatewayTimeout, HttpInternalServerError } from "@httpx/exception";
 
 const e500 = new HttpInternalServerError({
-     url: 'https://api.dev/gateway',
-     method: 'GET',
-     code: 'ERR_UNREACHABLE_SERVICE',
-     errorId: nanoid(),
-     // 👉 nesting
-     cause: new HttpGatewayTimeout({
-        message: 'This Serverless Function has timed out',
-        errorId: 'cdg1::h99k2-1664884491087-b41a2832f559',
-     }),
+  url: "https://api.dev/gateway",
+  method: "GET",
+  code: "ERR_UNREACHABLE_SERVICE",
+  errorId: nanoid(),
+  // 👉 nesting
+  cause: new HttpGatewayTimeout({
+    message: "This Serverless Function has timed out",
+    errorId: "cdg1::h99k2-1664884491087-b41a2832f559",
+  }),
 });
 ```
-
 
 ## Properties
 
 All parameters are exposed as properties.
 
-| HttpException | Type                 | Description                                                                                                                        |
-| ------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| statusCode    | `number`             | Http error status code (400-599).                                                                                                  |
-| message       | `string`             | Default or provided message.                                                                                                       |
-| url           | `string?`            | Origin url..                                                                                      |
-| method        | `HttpMethod?`            | Origin http method.                                                                              |
-| code          | `string?`            | Custom error code (not to be confused with statusCode).                                                                                     |
-| errorId       | `string?`            | Unique custom error id.                                                                                       |
-| stack         | `string?`            | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause         | `Error?`             | @see [about error cause](#about-errorcause)                                                                                        |
-| issues       | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
-
+| HttpException | Type                  | Description                                                                                                                        |
+| ------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| statusCode    | `number`              | Http error status code (400-599).                                                                                                  |
+| message       | `string`              | Default or provided message.                                                                                                       |
+| url           | `string?`             | Origin url..                                                                                                                       |
+| method        | `HttpMethod?`         | Origin http method.                                                                                                                |
+| code          | `string?`             | Custom error code (not to be confused with statusCode).                                                                            |
+| errorId       | `string?`             | Unique custom error id.                                                                                                            |
+| stack         | `string?`             | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause         | `Error?`              | @see [about error cause](#about-errorcause)                                                                                        |
+| issues        | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
 
 ```typescript
-import { HttpUnprocessableEntity } from '@httpx/exception';
+import { HttpUnprocessableEntity } from "@httpx/exception";
 
 const e422 = new HttpUnprocessableEntity({
-   message: 'Request validation failed',
-   url: 'https://acme.org/api/user/create',
-   method: 'POST',
-   issues: [   // typed as ValidationIssues[]
-        {
-            message: 'Invalid address',
-            path: ['addresses', 0, 'line1'],
-            code: 'empty_string',
-        },
-  ]
+  message: "Request validation failed",
+  url: "https://acme.org/api/user/create",
+  method: "POST",
+  issues: [
+    // typed as ValidationIssues[]
+    {
+      message: "Invalid address",
+      path: ["addresses", 0, "line1"],
+      code: "empty_string",
+    },
+  ],
 });
 
 // 👉 e422.issues
@@ -180,24 +182,23 @@ const e422 = new HttpUnprocessableEntity({
 All exceptions have a static `STATUS`, this can improve readability and code review.
 
 ```typescript
-import {createHttpException, HttpMethodNotAllowed } from '@httpx/exception';
+import { createHttpException, HttpMethodNotAllowed } from "@httpx/exception";
 
 const { statusCode } = createHttpException(405);
 switch (statusCode) {
-    case HttpMethodNotAllowed.STATUS:
-       console.log(statusCode); // 👉 405
-       break;
+  case HttpMethodNotAllowed.STATUS:
+    console.log(statusCode); // 👉 405
+    break;
 }
 ```
 
 ## Instanceof checks
 
-
 Http exceptions extends the native [Error class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
 through HttpException and either HttpServerException and HttpClientException.
 
 ```typescript
-import { createHttpException } from '@httpx/exception';
+import { createHttpException } from "@httpx/exception";
 
 const e404 = createHttpException(404);
 // 👉 e instanceof Error === true
@@ -206,6 +207,8 @@ const e404 = createHttpException(404);
 // 👉 e instanceof HttpNotFound === true
 // 👉 e instanceof HttpServerException === false
 ```
+
+### Class diagram
 
 ```mermaid
 classDiagram
@@ -226,25 +229,89 @@ classDiagram
 
 ## Typeguards
 
+### Instanceof alternatives
+
+While the usage of `instanceof` is preferred, the `isHttpException`, `isHttpClientException` and
+`isServerException` can be used in place. They will check for instance and will
+also ensure that the associated `statusCode` is actually valid.
+
 ```typescript
 import {
   isHttpException,
   isHttpClientException,
   isHttpServerException,
-  isHttpErrorStatusCode,
 } from "@httpx/exception";
 
 // True
-isHttpErrorStatusCode(404);
 isHttpException(new HttpNotFound());
 isHttpClientException(new HttpNotFound());
 isHttpServerException(new HttpInternalServerError());
 
 // False
-isHttpErrorStatusCode(200);
 isHttpClientException(new HttpInternalServerError());
 isHttpServerException(new HttpNotFound());
 isHttpException(new Error());
+isHttpServerException(
+  new (class extends HttpServerException {
+    constructor() {
+      super(400); // 400 isn't a server exception
+    }
+  })()
+);
+```
+
+### isErrorWithErrorStatusCode
+
+This typeguard is based on a convention and might help to convert a native error to a specific HttpException.
+
+```typescript
+import { isErrorWithStatusCode, createHttpException } from "@httpx/exception";
+
+try {
+  throw new (class extends Error {
+    statusCode = 400; // <- by convention
+  })();
+} catch (e) {
+  // will check if the value is an Error and that there's a statusCode is >=400 && <600
+  if (isErrorWithStatusCode(e)) {
+    throw createException(e.statusCode, e.message);
+  }
+}
+```
+
+### isObjectWithErrorStatusCode
+
+This typeguard is based on a convention and might help to convert an object to a specific HttpException.
+
+```typescript
+import {
+  isObjectWithErrorStatusCode,
+  createHttpException,
+  type ObjectWithErrorStatusCode,
+} from "@httpx/exception";
+
+const noSuchUser = {
+  statusCode: 404,
+} satisfies ObjectWithErrorStatusCode;
+
+class NoSuchItem extends DomainError implements ObjectWithErrorStatusCode {
+  statusCode = 404;
+}
+
+if (isObjectWithErrorStatusCode(noSuchUser)) {
+  throw createException(e.statusCode, "Nothing");
+}
+```
+
+### isHttpErrorStatusCode
+
+```typescript
+import { isHttpErrorStatusCode } from "@httpx/exception";
+
+// True
+isHttpErrorStatusCode(404);
+// False
+isHttpErrorStatusCode(200);
 ```
 
 ## Serializer
@@ -294,12 +361,13 @@ const deserialized = createFromSerializable(serializableObject);
 // e === deserialized
 ```
 
+## Default messages
 
 Messages are inferred from the Http exception class name. They are
 [compatible](https://github.com/belgattitude/httpx/blob/main/packages/exception/test/specs/statuses-messages-compatibility.test.ts) with the popular [statuses](https://www.npmjs.com/package/statuses) package.
 
 | Status | Class                           | Message            |
-| ------ | ------------------------------- |--------------------|
+| ------ | ------------------------------- | ------------------ |
 | 400    | HttpBadRequest                  | Bad request        |
 | 401    | HttpUnauthorized                | Unauthorized       |
 | 402    | HttpPaymentRequired             | Payment required   |
@@ -332,63 +400,67 @@ Messages are inferred from the Http exception class name. They are
 
 Server http status error code
 
-| Status | Class                             | Message            |
-| ------ | --------------------------------- | -------------------|
+| Status | Class                             | Message               |
+| ------ | --------------------------------- | --------------------- |
 | 500    | HttpInternalServerError           | Internal server error |
-| 501    | HttpNotImplemented                | ...                |
-| 502    | HttpBadGateway                    | ...                |
-| 503    | HttpServiceUnavailable            | ...                |
-| 504    | HttpGatewayTimeout                | ...                |
-| 505    | HttpVersionNotSupported           | ...                |
-| 506    | HttpVariantAlsoNegotiates         | ...                |
-| 507    | HttpInsufficientStorage           | ...                |
-| 508    | HttpLoopDetected                  | ...                |
-| 510    | HttpNotExtended                   | ...                |
-| 511    | HttpNetwordAuthenticationRequired | ...                |
+| 501    | HttpNotImplemented                | ...                   |
+| 502    | HttpBadGateway                    | ...                   |
+| 503    | HttpServiceUnavailable            | ...                   |
+| 504    | HttpGatewayTimeout                | ...                   |
+| 505    | HttpVersionNotSupported           | ...                   |
+| 506    | HttpVariantAlsoNegotiates         | ...                   |
+| 507    | HttpInsufficientStorage           | ...                   |
+| 508    | HttpLoopDetected                  | ...                   |
+| 510    | HttpNotExtended                   | ...                   |
+| 511    | HttpNetwordAuthenticationRequired | ...                   |
 
 ### Non-official status codes
 
 While their usage is not recommended, some status codes might be found in the wild (generally server status codes).
 
 ```typescript
-import { createHttpException, HttpServerException } from '@httpx/exception';
+import { createHttpException, HttpServerException } from "@httpx/exception";
 
 const nonOfficialStatusCodes = [
-  [509, 'Might refer to bandwidth limit'],
-  [525, 'Might refer to SSL Handshake Failed (ie: cloudflare)'],
-  [526, 'Might refer to Invalid SSL Certificate (ie: cloudflare)'],
-  ['...', '...'],
+  [509, "Might refer to bandwidth limit"],
+  [525, "Might refer to SSL Handshake Failed (ie: cloudflare)"],
+  [526, "Might refer to Invalid SSL Certificate (ie: cloudflare)"],
+  ["...", "..."],
 ];
 
 const e = createHttpException(509, {
-  // optional HttpExceptionParams
-}); // `e2 instanceof HttpServerException
+  message: "Bandwidth limit exceeded",
+  // ... others properties
+});
+
+// e instanceof HttpServerException
 
 // alternatively
 const alternate = new HttpServerException({
   statusCode: 509,
-  // ...(optional HttpExceptionParams)
+  message: "Bandwidth limit exceeded",
+  // ... others properties
 });
 ```
-
 
 ## About bundle
 
 ### Compatibility
 
-Node 18+ and es2022 compatibility is ensured on the CI.
+Node 18+ / es2022 compatibility is ensured on the CI.
+
+Edge tests are run with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)
 
 Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
 configuration. From the browserslist defaults:
 [Chrome 96+, Firefox 90+, Edge 91+, Safari 15+ and Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
 are set as minimal supported versions.
 
-For *older* browsers:
+For _older_ browsers:
 
 - Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 - You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support
 nested errors (if not present they are simply discarded - no runtime errors).
-
 
 ### Bundle size
 
@@ -400,7 +472,7 @@ ESM individual imports are tracked by a
 [size-limit configuration](../.size-limit.cjshttps://github.com/belgattitude/httpx/blob/main/packages/dsn-parser/.size-limit.cjs).
 
 | Scenario                                         | Size (compressed) |
-|--------------------------------------------------|------------------:|
+| ------------------------------------------------ | ----------------: |
 | Import generic exception (`HttpClientException`) |            ~ 370b |
 | Import 1 client exception                        |            ~ 400b |
 | Import 2 client exceptions                       |            ~ 415b |
@@ -421,9 +493,7 @@ The export fields and the builds are checked on the CI with [are-the-types-wrong
 
 > PS: Plans to remove cjs support might land in a next major version.
 
-
 ### Typescript
 
 This library targets typescript 5+ with descriptions (see
 [the generated api docs](https://github.com/belgattitude/httpx/tree/main/packages/exception/docs/api)).
-
