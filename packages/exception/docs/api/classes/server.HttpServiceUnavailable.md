@@ -158,7 +158,7 @@ Http method
 
 ### statusCode
 
-• `Readonly` **statusCode**: `number`
+• `Readonly` **statusCode**: [`HttpErrorStatusCodeOrNumber`](../modules/types.md#httperrorstatuscodeornumber)
 
 Http error status code (400-599)
 

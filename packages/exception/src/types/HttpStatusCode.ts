@@ -1,3 +1,6 @@
-import type { statusMap } from '../status';
+import type { HttpErrorStatusCode } from './HttpErrorStatusCode';
 
-export type HttpStatusCode = keyof typeof statusMap;
+/**
+ * @deprecated use HttpErrorStatusCode instead as it gives a better meaning
+ */
+export type HttpStatusCode = HttpErrorStatusCode;

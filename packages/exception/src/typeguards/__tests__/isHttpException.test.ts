@@ -22,4 +22,33 @@ describe('isHttpException', () => {
   it('should return false if error is not instance of HttpError', () => {
     expect(isHttpException(new Error())).toBe(false);
   });
+  describe('when statusCode checks are disabled', () => {
+    it('should be true even if the statusCode is not indicating a status error (4xx/5xx)', () => {
+      expect(
+        isHttpException(
+          new (class extends HttpException {
+            constructor() {
+              super(300);
+            }
+          })(),
+          false
+        )
+      ).toBe(true);
+    });
+  });
+
+  describe('when statusCode checks are enabled', () => {
+    it('should be false if the statusCode is not indicating a status error (4xx/5xx)', () => {
+      expect(
+        isHttpException(
+          new (class extends HttpException {
+            constructor() {
+              super(300);
+            }
+          })(),
+          true
+        )
+      ).toBe(false);
+    });
+  });
 });

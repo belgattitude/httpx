@@ -77,7 +77,7 @@ import {
 const e = new HttpNotFound();
 // 👉 e.message     -> 'Not found' (default message)
 // 👉 e.statusCode  -> 404
-// 👉 -> e instanceof HttpClientException
+// 👉 -> e instanceof HttpNotFound (and HttpClientException, HttpException and Error)
 
 const e400 = new HttpBadRequest("Problems parsing JSON");
 // 👉 e.message     -> 'Problems parsing JSON'
@@ -236,25 +236,89 @@ classDiagram
 
 ## Typeguards
 
+### Instanceof alternatives
+
+While the usage of `instanceof` is preferred, the `isHttpException`, `isHttpClientException` and
+`isServerException` can be used in place. They will check for instance and will
+also ensure that the associated `statusCode` is actually valid.
+
 ```typescript
 import {
   isHttpException,
   isHttpClientException,
   isHttpServerException,
-  isHttpErrorStatusCode,
 } from "@httpx/exception";
 
 // True
-isHttpErrorStatusCode(404);
 isHttpException(new HttpNotFound());
 isHttpClientException(new HttpNotFound());
 isHttpServerException(new HttpInternalServerError());
 
 // False
-isHttpErrorStatusCode(200);
 isHttpClientException(new HttpInternalServerError());
 isHttpServerException(new HttpNotFound());
 isHttpException(new Error());
+isHttpServerException(
+  new (class extends HttpServerException {
+    constructor() {
+      super(400); // 400 isn't a server exception
+    }
+  })()
+);
+```
+
+### isErrorWithErrorStatusCode
+
+This typeguard is based on a convention and might help to convert a native error to a specific HttpException.
+
+```typescript
+import { isErrorWithStatusCode, createHttpException } from "@httpx/exception";
+
+try {
+  throw new (class extends Error {
+    statusCode = 400; // <- by convention
+  })();
+} catch (e) {
+  // will check if the value is an Error and that there's a statusCode is >=400 && <600
+  if (isErrorWithStatusCode(e)) {
+    throw createException(e.statusCode, e.message);
+  }
+}
+```
+
+### isObjectWithErrorStatusCode
+
+This typeguard is based on a convention and might help to convert an object to a specific HttpException.
+
+```typescript
+import {
+  isObjectWithErrorStatusCode,
+  createHttpException,
+  type ObjectWithErrorStatusCode,
+} from "@httpx/exception";
+
+const noSuchUser = {
+  statusCode: 404,
+} satisfies ObjectWithErrorStatusCode;
+
+class NoSuchItem extends DomainError implements ObjectWithErrorStatusCode {
+  statusCode = 404;
+}
+
+if (isObjectWithErrorStatusCode(noSuchUser)) {
+  throw createException(e.statusCode, "Nothing");
+}
+```
+
+### isHttpErrorStatusCode
+
+```typescript
+import { isHttpErrorStatusCode } from "@httpx/exception";
+
+// True
+isHttpErrorStatusCode(404);
+// False
+isHttpErrorStatusCode(200);
 ```
 
 ## Serializer

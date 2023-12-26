@@ -1,4 +1,5 @@
 import { supportsErrorCause } from '../support/supportsErrorCause';
+import type { HttpErrorStatusCodeOrNumber } from '../types';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import type { HttpMethod } from '../types/HttpMethod';
 import { getSuper, initProtoAndName } from '../utils';
@@ -28,7 +29,7 @@ export class HttpException extends Error implements HttpExceptionParams {
   /**
    * Http error status code (400-599)
    */
-  public readonly statusCode: number;
+  public readonly statusCode: HttpErrorStatusCodeOrNumber;
 
   /**
    * Indicates the original url that caused the error.
@@ -41,7 +42,10 @@ export class HttpException extends Error implements HttpExceptionParams {
    * @param statusCode http status code between 400-599, no checks are done on the validity of the number.
    * @param msgOrParams either a message or an object containing HttpExceptionParams
    */
-  constructor(statusCode: number, msgOrParams?: HttpExceptionParams | string) {
+  constructor(
+    statusCode: HttpErrorStatusCodeOrNumber,
+    msgOrParams?: HttpExceptionParams | string
+  ) {
     const { cause: c, message: m, ...p } = getSuper(HttpException, msgOrParams);
     super(m);
     if (supportsErrorCause() && c instanceof Error) {

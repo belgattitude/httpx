@@ -1,14 +1,9 @@
-import type { HttpStatusCode } from '../types/HttpStatusCode';
+import type { HttpErrorStatusCodeOrNumber } from '../types';
 
-/**
- * Check if the provided value is a valid http status code
- */
 export const isHttpErrorStatusCode = <
-  T extends HttpStatusCode = HttpStatusCode,
+  T extends HttpErrorStatusCodeOrNumber = HttpErrorStatusCodeOrNumber,
 >(
   statusCode: unknown
 ): statusCode is T => {
-  return (
-    typeof statusCode === 'number' && statusCode >= 400 && statusCode < 600
-  );
+  return typeof statusCode === 'number' && statusCode > 399 && statusCode < 600;
 };

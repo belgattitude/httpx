@@ -1,3 +1,4 @@
+import type { HttpErrorStatusCodeOrNumber } from '../types';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import { getSuper, initProtoAndName } from '../utils';
 import { HttpException } from './HttpException';
@@ -9,7 +10,10 @@ import { HttpException } from './HttpException';
  * @param msgOrParams either a message or an object containing HttpExceptionParams
  */
 export class HttpServerException extends HttpException {
-  constructor(statusCode: number, msgOrParams?: HttpExceptionParams | string) {
+  constructor(
+    statusCode: HttpErrorStatusCodeOrNumber,
+    msgOrParams?: HttpExceptionParams | string
+  ) {
     super(statusCode, getSuper(HttpServerException, msgOrParams));
     initProtoAndName(this, HttpServerException);
   }

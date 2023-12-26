@@ -6,6 +6,7 @@
 
 ### Functions
 
+- [isErrorWithErrorStatusCode](typeguards.md#iserrorwitherrorstatuscode)
 - [isHttpClientException](typeguards.md#ishttpclientexception)
 - [isHttpErrorStatusCode](typeguards.md#ishttperrorstatuscode)
 - [isHttpException](typeguards.md#ishttpexception)
@@ -14,15 +15,39 @@
 
 ## Functions
 
-### isHttpClientException
+### isErrorWithErrorStatusCode
 
-▸ **isHttpClientException**(`error`): error is HttpClientException
+▸ **isErrorWithErrorStatusCode**(`error`): error is ErrorWithErrorStatusCode
+
+Checks if a value is an instanceof Error and has a statusCode field
+indicating an error http status (4xx or 5xx)
 
 #### Parameters
 
 | Name    | Type      |
 | :------ | :-------- |
 | `error` | `unknown` |
+
+#### Returns
+
+error is ErrorWithErrorStatusCode
+
+---
+
+### isHttpClientException
+
+▸ **isHttpClientException**(`error`, `checkStatusCode?`): error is HttpClientException
+
+Test whether a value is an instanceof HttpClientException
+and its statusCode is in the 4xx range when the parameter
+checkStatusCode is true (enabled by default).
+
+#### Parameters
+
+| Name              | Type      | Default value | Description                                                             |
+| :---------------- | :-------- | :------------ | :---------------------------------------------------------------------- |
+| `error`           | `unknown` | `undefined`   | -                                                                       |
+| `checkStatusCode` | `boolean` | `true`        | Ensure statusCode is in the client range [>=400, <500], true by default |
 
 #### Returns
 
@@ -34,13 +59,11 @@ error is HttpClientException
 
 ▸ **isHttpErrorStatusCode**\<`T`\>(`statusCode`): statusCode is T
 
-Check if the provided value is a valid http status code
-
 #### Type parameters
 
-| Name | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| :--- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `T`  | extends `400` \| `409` \| `417` \| `424` \| `403` \| `410` \| `418` \| `411` \| `423` \| `405` \| `421` \| `406` \| `404` \| `413` \| `402` \| `412` \| `428` \| `407` \| `416` \| `431` \| `408` \| `425` \| `429` \| `401` \| `451` \| `422` \| `415` \| `426` \| `414` \| `502` \| `504` \| `507` \| `500` \| `508` \| `511` \| `510` \| `501` \| `503` \| `506` \| `505` = `400` \| `409` \| `417` \| `424` \| `403` \| `410` \| `418` \| `411` \| `423` \| `405` \| `421` \| `406` \| `404` \| `413` \| `402` \| `412` \| `428` \| `407` \| `416` \| `431` \| `408` \| `425` \| `429` \| `401` \| `451` \| `422` \| `415` \| `426` \| `414` \| `502` \| `504` \| `507` \| `500` \| `508` \| `511` \| `510` \| `501` \| `503` \| `506` \| `505` |
+| Name | Type                                                                                                                                                  |
+| :--- | :---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HttpErrorStatusCodeOrNumber`](types.md#httperrorstatuscodeornumber) = [`HttpErrorStatusCodeOrNumber`](types.md#httperrorstatuscodeornumber) |
 
 #### Parameters
 
@@ -56,13 +79,18 @@ statusCode is T
 
 ### isHttpException
 
-▸ **isHttpException**(`error`): error is HttpException
+▸ **isHttpException**(`error`, `checkStatusCode?`): error is HttpException
+
+Test whether a value is an instanceof HttpException
+and its statusCode is in the 4xx and 5xx ranges when the parameter
+checkStatusCode is true (enabled by default).
 
 #### Parameters
 
-| Name    | Type      |
-| :------ | :-------- |
-| `error` | `unknown` |
+| Name              | Type      | Default value |
+| :---------------- | :-------- | :------------ |
+| `error`           | `unknown` | `undefined`   |
+| `checkStatusCode` | `boolean` | `true`        |
 
 #### Returns
 
@@ -72,13 +100,18 @@ error is HttpException
 
 ### isHttpServerException
 
-▸ **isHttpServerException**(`error`): error is HttpServerException
+▸ **isHttpServerException**(`error`, `checkStatusCode?`): error is HttpServerException
+
+Test whether a value is an instanceof HttpServerException
+and its statusCode is in the 5xx range when the parameter
+checkStatusCode is true (enabled by default).
 
 #### Parameters
 
-| Name    | Type      |
-| :------ | :-------- |
-| `error` | `unknown` |
+| Name              | Type      | Default value | Description                                                             |
+| :---------------- | :-------- | :------------ | :---------------------------------------------------------------------- |
+| `error`           | `unknown` | `undefined`   | -                                                                       |
+| `checkStatusCode` | `boolean` | `true`        | Ensure statusCode is in the server range [>=500, <600], true by default |
 
 #### Returns
 
@@ -88,9 +121,9 @@ error is HttpServerException
 
 ### isHttpStatusCode
 
-▸ **isHttpStatusCode**(`statusCode`): statusCode is 400 \| 409 \| 417 \| 424 \| 403 \| 410 \| 418 \| 411 \| 423 \| 405 \| 421 \| 406 \| 404 \| 413 \| 402 \| 412 \| 428 \| 407 \| 416 \| 431 \| 408 \| 425 \| 429 \| 401 \| 451 \| 422 \| 415 \| 426 \| 414 \| 502 \| 504 \| 507 \| 500 \| 508 \| 511 \| 510 \| 501 \| 503 \| 506 \| 505
+▸ **isHttpStatusCode**(`statusCode`): statusCode is number
 
-Check if the provided value is a valid http status code
+Check if the provided value is a valid http status code > 99 and <600
 
 #### Parameters
 
@@ -100,4 +133,8 @@ Check if the provided value is a valid http status code
 
 #### Returns
 
-statusCode is 400 \| 409 \| 417 \| 424 \| 403 \| 410 \| 418 \| 411 \| 423 \| 405 \| 421 \| 406 \| 404 \| 413 \| 402 \| 412 \| 428 \| 407 \| 416 \| 431 \| 408 \| 425 \| 429 \| 401 \| 451 \| 422 \| 415 \| 426 \| 414 \| 502 \| 504 \| 507 \| 500 \| 508 \| 511 \| 510 \| 501 \| 503 \| 506 \| 505
+statusCode is number
+
+**`See`**
+
+isHttpErrorStatusCode to ensure error range [4xx,5xx]
