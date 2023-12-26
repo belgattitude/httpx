@@ -73,11 +73,7 @@ IDE experience. Message is optional and default to the [default message](#defaul
 [parameters](#parameters) are supported.
 
 ```typescript
-import {
-  HttpNotFound,
-  HttpBadRequest,
-  HttpClientException,
-} from "@httpx/exception";
+import { HttpNotFound, HttpBadRequest } from "@httpx/exception";
 
 const e = new HttpNotFound();
 // 👉 e.message     -> 'Not found' (default message)
