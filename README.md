@@ -25,13 +25,22 @@ DSN & JDBC string parser with query params support in a light and modern package
 [![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Quality&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
 [![downloads](https://img.shields.io/npm/dm/@httpx/dsn-parser?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/dsn-parser)
 
-## Support
-
-Don't hesitate and open [an issue](https://github.com/belgattitude/httpx/issues).
 
 ## Contributors
 
-Contributions are welcome. Take a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) docs.
+Contributions are welcome. Take a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) docs or skip and try
+
+```bash
+# make a fork and clone it, then
+yarn install
+yarn g:test-unit
+yarn g:lint
+yarn g:typecheck
+```
+
+## Support
+
+Don't hesitate and open [an issue](https://github.com/belgattitude/httpx/issues).
 
 ## Sponsors
 
