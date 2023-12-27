@@ -34,7 +34,7 @@ Wip
     * [String related](#string-related)
     * [Uuid](#uuid)
     * [Barcode](#barcode)
-    * [Bundle size](#bundle-size)
+- [Bundle size](#bundle-size)
 - [Compatibility](#compatibility)
 - [Contributors](#contributors)
 - [Sponsors](#sponsors)
@@ -98,7 +98,7 @@ assertEan13('1234567890128');
 ```
 
 
-### Bundle size
+## Bundle size
 
 Code and bundler have been tuned to target a minimal compressed footprint
 for the browser. 
