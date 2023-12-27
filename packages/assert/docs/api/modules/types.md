@@ -8,6 +8,7 @@
 
 - [Ean13](types.md#ean13)
 - [PlainObject](types.md#plainobject)
+- [Uuid](types.md#uuid)
 - [UuidV1](types.md#uuidv1)
 - [UuidV3](types.md#uuidv3)
 - [UuidV4](types.md#uuidv4)
@@ -33,6 +34,12 @@ ___
 | :------ | :------ |
 | `T` | `unknown` |
 | `K` | extends `number` \| `string` = `string` |
+
+___
+
+### Uuid
+
+Ƭ **Uuid**: `string`
 
 ___
 

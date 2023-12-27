@@ -59,7 +59,7 @@ ___
 
 ### isUuid
 
-▸ **isUuid**(`v`, `version?`): `boolean`
+▸ **isUuid**(`v`, `version?`): v is string
 
 Check whether a value is string and passes uuid validation with
 optional given version
@@ -73,7 +73,7 @@ optional given version
 
 #### Returns
 
-`boolean`
+v is string
 
 ___
 
