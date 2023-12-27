@@ -1,4 +1,4 @@
-import { getUuidVersion } from '../helpers';
+import { getUuidVersion } from '../helpers/uuid.helpers';
 import type {
   Uuid,
   UuidV1,

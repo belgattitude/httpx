@@ -1,4 +1,10 @@
-import { isUuid, isUuidV1, isUuidV3, isUuidV4, isUuidV5 } from '../guards';
+import {
+  isUuid,
+  isUuidV1,
+  isUuidV3,
+  isUuidV4,
+  isUuidV5,
+} from '../guards/uuid.guards';
 import { errorMessages } from '../messages/errorMessages';
 import type {
   Uuid,

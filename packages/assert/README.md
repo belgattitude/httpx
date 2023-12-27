@@ -98,9 +98,10 @@ ESM individual imports are tracked by a
 
 | Scenario                               | Size (compressed) |
 |----------------------------------------|------------------:|
+| Import `isPlainObject`                 |             ~ 56b |
 | All typeguards, assertions and helpers |            ~ 900b |
 
-> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/exception@latest).
+> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/assert@latest).
 
 
 ## Compatibility
