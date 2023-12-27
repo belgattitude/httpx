@@ -1,10 +1,10 @@
-[@httpx/assert - v0.0.1](../README.md) / types
+[@httpx/assert - v0.1.0](../README.md) / types
 
 # Module: types
 
 ## Table of contents
 
-### Type Aliases
+### References
 
 - [Ean13](types.md#ean13)
 - [PlainObject](types.md#plainobject)
@@ -16,63 +16,56 @@
 - [UuidVersion](types.md#uuidversion)
 - [UuidVersionOrNumber](types.md#uuidversionornumber)
 
-## Type Aliases
+## References
 
 ### Ean13
 
-Ƭ **Ean13**: `string`
+Re-exports [Ean13](types_barcode_types.md#ean13)
 
 ___
 
 ### PlainObject
 
-Ƭ **PlainObject**\<`T`, `K`\>: `Record`\<`K`, `T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-| `K` | extends `number` \| `string` = `string` |
+Re-exports [PlainObject](types_object_types.md#plainobject)
 
 ___
 
 ### Uuid
 
-Ƭ **Uuid**: `string`
+Re-exports [Uuid](types_uuid_types.md#uuid)
 
 ___
 
 ### UuidV1
 
-Ƭ **UuidV1**: `string`
+Re-exports [UuidV1](types_uuid_types.md#uuidv1)
 
 ___
 
 ### UuidV3
 
-Ƭ **UuidV3**: `string`
+Re-exports [UuidV3](types_uuid_types.md#uuidv3)
 
 ___
 
 ### UuidV4
 
-Ƭ **UuidV4**: `string`
+Re-exports [UuidV4](types_uuid_types.md#uuidv4)
 
 ___
 
 ### UuidV5
 
-Ƭ **UuidV5**: `string`
+Re-exports [UuidV5](types_uuid_types.md#uuidv5)
 
 ___
 
 ### UuidVersion
 
-Ƭ **UuidVersion**: ``1`` \| ``3`` \| ``4`` \| ``5``
+Re-exports [UuidVersion](types_uuid_types.md#uuidversion)
 
 ___
 
 ### UuidVersionOrNumber
 
-Ƭ **UuidVersionOrNumber**: [`UuidVersion`](types.md#uuidversion) \| `number` & {}
+Re-exports [UuidVersionOrNumber](types_uuid_types.md#uuidversionornumber)
