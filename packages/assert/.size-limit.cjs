@@ -16,10 +16,22 @@ module.exports = [
     limit: "60B",
   },
   {
+    name: 'Only isUuid (ESM)',
+    path: ['dist/index.mjs'],
+    import: "{ isUuid }",
+    limit: "180B",
+  },
+  {
+    name: 'Only isEan13 (ESM)',
+    path: ['dist/index.mjs'],
+    import: "{ isEan13 }",
+    limit: "120B",
+  },
+  {
     name: 'Only assertPlainObject (ESM)',
     path: ['dist/index.mjs'],
     import: "{ assertPlainObject }",
-    limit: "280B",
+    limit: "270B",
   },
   {
     name: 'Everything (CJS)',
