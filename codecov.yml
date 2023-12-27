@@ -23,6 +23,14 @@ flag_management:
           target: 90%
           threshold: 1%
 
+    - name: httpx-assert
+      paths:
+        - packages/assert
+      statuses:
+        - type: project
+          target: 90%
+          threshold: 1%
+
     - name: httpx-json-api-unit
       paths:
         - packages/json-api

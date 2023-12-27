@@ -1,6 +1,6 @@
 @httpx/dsn-parser
 
-# @httpx/dsn-parser - v1.6.2
+# @httpx/dsn-parser - v1.6.3
 
 ## Table of contents
 
