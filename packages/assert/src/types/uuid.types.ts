@@ -1,3 +1,5 @@
+export type Uuid = string;
+
 export type UuidV1 = string;
 export type UuidV3 = string;
 export type UuidV4 = string;

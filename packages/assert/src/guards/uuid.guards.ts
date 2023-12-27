@@ -1,5 +1,6 @@
 import { getUuidVersion } from '../helpers';
 import type {
+  Uuid,
   UuidV1,
   UuidV3,
   UuidV4,
@@ -21,7 +22,7 @@ export const isUuidVersion = (v: unknown): v is UuidVersion => {
  * @param v
  * @param version
  */
-export const isUuid = (v: unknown, version?: UuidVersion) => {
+export const isUuid = (v: unknown, version?: UuidVersion): v is Uuid => {
   return (
     typeof v === 'string' &&
     uuidRegexp.test(v) &&
