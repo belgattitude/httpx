@@ -1130,6 +1130,8 @@ __metadata:
   resolution: "@examples/nextjs-app@workspace:examples/nextjs-app"
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:4.9.0"
+    "@httpx/assert": "workspace:^"
+    "@httpx/dsn-parser": "workspace:^"
     "@httpx/exception": "workspace:^"
     "@types/node": "npm:20.10.5"
     "@types/react": "npm:18.2.45"
@@ -1180,7 +1182,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@httpx/assert@workspace:packages/assert":
+"@httpx/assert@workspace:^, @httpx/assert@workspace:packages/assert":
   version: 0.0.0-use.local
   resolution: "@httpx/assert@workspace:packages/assert"
   dependencies:
@@ -1209,7 +1211,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@httpx/dsn-parser@workspace:packages/dsn-parser":
+"@httpx/dsn-parser@workspace:^, @httpx/dsn-parser@workspace:packages/dsn-parser":
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:

@@ -19,6 +19,8 @@
     "fix-staged": "lint-staged --allow-empty"
   },
   "dependencies": {
+    "@httpx/assert": "workspace:^",
+    "@httpx/dsn-parser": "workspace:^",
     "@httpx/exception": "workspace:^",
     "axios": "1.6.3",
     "ky": "1.1.3",
