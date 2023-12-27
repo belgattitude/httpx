@@ -11,7 +11,7 @@ import {
 describe('uuid assertions tests', () => {
   it('should not throw when uuid is valid', () => {
     expect(() => assertUuid(uuidsTestData.v1)).not.toThrow();
-    expect(() => assertUuid(uuidsTestData.v1, 1)).not.toThrow();
+    expect(() => assertUuid(uuidsTestData.v1, undefined, 1)).not.toThrow();
     expect(() => assertUuidV1(uuidsTestData.v1)).not.toThrow();
     expect(() => assertUuidV3(uuidsTestData.v3)).not.toThrow();
     expect(() => assertUuidV4(uuidsTestData.v4)).not.toThrow();
@@ -19,7 +19,9 @@ describe('uuid assertions tests', () => {
   });
   it('should throw when uuid is invalid', () => {
     expect(() => assertUuid('123')).toThrow(errorMessages.uuid());
-    expect(() => assertUuid('123', 1)).toThrow(errorMessages.uuid(1));
+    expect(() => assertUuid('123', undefined, 1)).toThrow(
+      errorMessages.uuid(1)
+    );
     expect(() => assertUuidV1('123')).toThrow(errorMessages.uuid(1));
     expect(() => assertUuidV3('123')).toThrow(errorMessages.uuid(3));
     expect(() => assertUuidV4('123')).toThrow(errorMessages.uuid(4));
@@ -27,6 +29,6 @@ describe('uuid assertions tests', () => {
   });
   it('should throw custom error when uuid is invalid', () => {
     const e = new Error('cool');
-    expect(() => assertUuid('123', 1, () => e)).toThrow(e);
+    expect(() => assertUuid('123', () => e, 1)).toThrow(e);
   });
 });

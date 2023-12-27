@@ -13,8 +13,8 @@ import { createAssertException } from '../utils/createAssertException';
 
 export function assertUuid(
   v: unknown,
-  version?: UuidVersion | undefined,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory | undefined,
+  version?: UuidVersion | undefined
 ): asserts v is Uuid {
   if (!isUuid(v, version)) {
     throw createAssertException(msgOrErrorFactory, errorMessages.uuid(version));
@@ -23,7 +23,7 @@ export function assertUuid(
 
 export function assertUuidV1(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory | undefined
 ): asserts v is UuidV1 {
   if (!isUuidV1(v)) {
     throw createAssertException(msgOrErrorFactory, errorMessages.uuid(1));
@@ -32,7 +32,7 @@ export function assertUuidV1(
 
 export function assertUuidV3(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory | undefined
 ): asserts v is UuidV3 {
   if (!isUuidV3(v)) {
     throw createAssertException(msgOrErrorFactory, errorMessages.uuid(3));
@@ -41,7 +41,7 @@ export function assertUuidV3(
 
 export function assertUuidV4(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory | undefined
 ): asserts v is UuidV4 {
   if (!isUuidV4(v)) {
     throw createAssertException(msgOrErrorFactory, errorMessages.uuid(4));
@@ -50,7 +50,7 @@ export function assertUuidV4(
 
 export function assertUuidV5(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory | undefined
 ): asserts v is UuidV5 {
   if (!isUuidV5(v)) {
     throw createAssertException(msgOrErrorFactory, errorMessages.uuid(5));

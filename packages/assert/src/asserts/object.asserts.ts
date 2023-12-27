@@ -1,4 +1,5 @@
 import { isPlainObject } from '../guards';
+import { errorMessages } from '../messages/errorMessages';
 import type { MsgOrErrorFactory } from '../types/internal.types';
 import { createAssertException } from '../utils/createAssertException';
 
@@ -10,6 +11,6 @@ export function assertPlainObject(
   msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is string {
   if (!isPlainObject(v)) {
-    throw createAssertException(msgOrErrorFactory);
+    throw createAssertException(msgOrErrorFactory, errorMessages.plainObject);
   }
 }
