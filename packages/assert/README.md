@@ -27,7 +27,17 @@ Wip
 
 ## Documentation
 
-👉 [Official website](https://belgattitude.github.io/httpx/assert), [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme) or [generated api doc]()
+👉 [Official website](https://belgattitude.github.io/httpx/assert), [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme) or [generated api doc](https://github.com/belgattitude/httpx/blob/main/packages/assert/docs/api/README.md)
+
+- [Usage](#usage)
+    * [Object related](#object-related)
+    * [String related](#string-related)
+    * [Uuid](#uuid)
+    * [Barcode](#barcode)
+    * [Bundle size](#bundle-size)
+- [Compatibility](#compatibility)
+- [Contributors](#contributors)
+- [Sponsors](#sponsors)
 
 ## Usage
 
@@ -108,12 +118,12 @@ ESM individual imports are tracked by a
 
 ## Compatibility
 
-ES2021 / Node 16+ and the following browsers: [Chrome 96+, Firefox 90+, Edge 19+, Safari 12+, Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D).
+ES2021 / Node 16+
 
 Edge tests are run with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)
 
 Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
-configuration. 
+configuration with minimum set to [Chrome 96+, Firefox 90+, Edge 19+, Safari 12+, Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D). 
 
 For _older_ browsers:
 
