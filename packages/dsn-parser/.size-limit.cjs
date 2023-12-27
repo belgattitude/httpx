@@ -10,6 +10,12 @@ module.exports = [
     limit: '1.15KB',
   },
   {
+    name: 'Only parseDsn (ESM)',
+    path: ['dist/index.mjs'],
+    import: "{ parseDsn }",
+    limit: '780B',
+  },
+  {
     name: 'Everything (CJS)',
     import: "*",
     path: ['dist/index.cjs'],
