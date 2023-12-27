@@ -1,6 +1,6 @@
 ## "do one thing" collection.
 
-### [@httpx/assert](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
+### [@httpx/assert](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme)
 
 Assertions and typeguards 
 
