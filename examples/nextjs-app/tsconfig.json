@@ -14,6 +14,8 @@
     "paths": {
       "@/server": ["./server/index"],
       "@/lib": ["./lib/index"],
+      "@httpx/assert": ["../../../packages/assert/src/index"],
+      "@httpx/dsn-parser": ["../../../packages/dsn-parser/src/index"],
       "@httpx/exception": ["../../../packages/exception/src/index"],
       "@httpx/exception/serializer": [
         "../../../packages/exception/src/serializer/index"
