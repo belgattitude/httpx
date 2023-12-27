@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { isStrNotEmpty } from '../';
+import { isStrNotEmpty } from '../string.guards';
 
 describe('Typeguards string tests', () => {
   describe('isStrNotEmpty', () => {

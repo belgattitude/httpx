@@ -1,4 +1,4 @@
-import { isStrNotEmpty } from '../guards';
+import { isStrNotEmpty } from '../guards/string.guards';
 import { errorMessages } from '../messages/errorMessages';
 import type { MsgOrErrorFactory } from '../types/internal.types';
 import { createAssertException } from '../utils/createAssertException';

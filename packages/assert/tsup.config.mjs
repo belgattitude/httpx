@@ -1,4 +1,5 @@
 import browserslistToEsbuild from 'browserslist-to-esbuild';
+import { esbuildPluginFilePathExtensions } from 'esbuild-plugin-file-path-extensions';
 import { defineConfig } from 'tsup';
 
 export default defineConfig((options) => {
@@ -6,8 +7,9 @@ export default defineConfig((options) => {
     cjsInterop: false,
     clean: true,
     dts: true,
-    entry: ['src/index.ts'],
-    format: ['esm', 'cjs'],
+    // bundle: false,
+    entry: ['src/**/*.ts', '!src/**/*.test.ts'],
+    format: ['cjs', 'esm'],
     minify: !options.watch,
     minifyIdentifiers: true,
     minifySyntax: true,
@@ -19,9 +21,10 @@ export default defineConfig((options) => {
     },
     platform: 'browser',
     sourcemap: !options.watch,
-    splitting: true,
+    // splitting: true,
     target: ['es2021', ...browserslistToEsbuild()],
     treeshake: true,
     tsconfig: './tsconfig.build.json',
+    esbuildPlugins: [esbuildPluginFilePathExtensions({ esmExtension: 'mjs' })],
   };
 });

@@ -22,8 +22,9 @@
   "sideEffects": false,
   "type": "module",
   "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
+  "module?": "to keep webpack4 support",
+  "module": "./dist/index.mjs",
   "exports": {
     ".": {
       "import": {
@@ -78,8 +79,10 @@
     "browserslist-to-esbuild": "1.2.0",
     "cross-env": "7.0.3",
     "es-check": "7.1.1",
+    "esbuild-plugin-file-path-extensions": "2.0.0",
     "eslint": "8.56.0",
     "npm-run-all": "4.1.5",
+    "publint": "0.2.7",
     "rimraf": "5.0.5",
     "size-limit": "11.0.1",
     "tsup": "8.0.1",
