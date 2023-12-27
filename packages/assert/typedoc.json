@@ -1,6 +1,11 @@
 {
-  "entryPoints": ["src/index.ts"],
-  "out": "./docs/api/dsn-parser",
+  "entryPoints": [
+    "src/guards/index.ts",
+    "src/asserts/index.ts",
+    "src/types/index.ts",
+    "src/helpers/index.ts"
+  ],
+  "out": "./docs/api/assert",
   "excludePrivate": true,
   "excludeProtected": true,
   "excludeExternals": true,

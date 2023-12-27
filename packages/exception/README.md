@@ -479,7 +479,7 @@ for the browser. In typical usage the bundle size will vary between 450b to 750b
 (including default messages for the 43 status codes).
 
 ESM individual imports are tracked by a
-[size-limit configuration](../.size-limit.cjshttps://github.com/belgattitude/httpx/blob/main/packages/dsn-parser/.size-limit.cjs).
+[size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/dsn-parser/.size-limit.cjs).
 
 | Scenario                                         | Size (compressed) |
 | ------------------------------------------------ | ----------------: |

@@ -9,6 +9,10 @@
       "path": "examples/nextjs-app"
     },
     {
+      "name": "📦 @httpx/assert",
+      "path": "packages/assert"
+    },
+    {
       "name": "📦 @httpx/dsn-parser",
       "path": "packages/dsn-parser"
     },
@@ -51,6 +55,7 @@
     // https://github.com/Microsoft/vscode-eslint#mono-repository-setup
     "eslint.workingDirectories": [
       "./examples/nextjs-app",
+      "./packages/assert",
       "./packages/dsn-parser",
       "./packages/exception",
       "./packages/json-api",
