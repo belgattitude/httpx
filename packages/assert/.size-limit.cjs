@@ -10,6 +10,18 @@ module.exports = [
     limit: '1000B',
   },
   {
+    name: 'Only isPlainObject (ESM)',
+    path: ['dist/index.mjs'],
+    import: "{ isPlainObject }",
+    limit: "150B",
+  },
+  {
+    name: 'Only assertPlainObject (ESM)',
+    path: ['dist/index.mjs'],
+    import: "{ assertPlainObject }",
+    limit: "280B",
+  },
+  {
     name: 'Everything (CJS)',
     import: "*",
     path: ['dist/index.cjs'],
