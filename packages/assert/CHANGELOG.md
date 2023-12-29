@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.4.0
+
+### Minor Changes
+
+- [`18aad8b`](https://github.com/belgattitude/httpx/commit/18aad8b25b657bbbd9838b523121d19fd4da0e26) Thanks [@belgattitude](https://github.com/belgattitude)! - Add assertNever and assertNeverNoThrow
+
 ## 0.3.0
 
 ### Minor Changes
