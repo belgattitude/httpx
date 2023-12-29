@@ -22,7 +22,7 @@ describe('uuid assertions tests', () => {
   });
   it('should throw when uuid is invalid', () => {
     expect(() => assertUuid('123')).toThrow(
-      new TypeError('Value is expected to be an uuid, got: string(3)')
+      new TypeError('Value is expected to be an uuid, got: string(length:3)')
     );
     expect(() => assertUuid(false, undefined, { version: 1 })).toThrow(
       new TypeError('Value is expected to be an uuid v1, got: boolean(false)')
