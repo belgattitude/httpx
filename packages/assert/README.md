@@ -23,22 +23,80 @@ $ pnpm add @httpx/assert
 
 ## Features
 
-Wip
+- 👉&nbsp; Typeguards and assertions with a consistent style.
+- 🦄&nbsp; Assertions with useful [default error message](#assertions-error-messages).
+- 🖖&nbsp; Optimized tree-shakability, starts at [56b](#bundle-size). 
+- 🛡️&nbsp; Don't leak values in the default assertion error messages.
+- 🤗&nbsp; No deps. [Node, browser and edge support](#compatibility).
 
 ## Documentation
 
 👉 [Official website](https://belgattitude.github.io/httpx/assert), [GitHub Readme](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme) or [generated api doc](https://github.com/belgattitude/httpx/blob/main/packages/assert/docs/api/README.md)
 
+---
+
+- [Introduction](#introduction)
+  * [Consistent style](#consistent-style)
+  * [Assertions error messages](#assertions-error-messages)
 - [Usage](#usage)
   * [Type related](#type-related)
   * [Object related](#object-related)
+  * [Number related](#number-related)
+  * [Array related](#array-related)
   * [String related](#string-related)
   * [Uuid](#uuid)
   * [Barcode](#barcode)
 - [Bundle size](#bundle-size)
 - [Compatibility](#compatibility)
+- [Acknowledgments](#acknowledgments)
 - [Contributors](#contributors)
 - [Sponsors](#sponsors)
+
+## Introduction
+
+### Consistent style
+
+Typeguards starts with `isXXX` and have an assertion counterpart named `assertXXX`.
+
+### Assertions error messages
+
+When an assertion fail, a native [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) 
+is thrown by default with a message indicating the requirement and and information about the
+tested value. As an example:
+
+```typescript
+expect(() => assertUuid('123')).toThrow(
+  new TypeError('Value is expected to be an uuid, got: string(length:3)')
+);
+expect(() => assertUuid(false, undefined, { version: 1 })).toThrow(
+  new TypeError('Value is expected to be an uuid v1, got: boolean(false)')
+);
+expect(() => assertUuidV1(Number.NaN)).toThrow(
+  new TypeError('Value is expected to be an uuid v1, got: NaN')
+);
+expect(() => assertUuidV3(new Error())).toThrow(
+  new TypeError('Value is expected to be an uuid v3, got: Error')
+);
+expect(() => assertUuidV4(new Date())).toThrow(
+  new TypeError('Value is expected to be an uuid v4, got: Date')
+);
+expect(() => assertUuidV5(() => {})).toThrow(
+  new TypeError('Value is expected to be an uuid v5, got: function')
+);
+//...
+```
+
+Alternatively it's possible to provide either a message or function returning
+an Error. For example:
+
+```typescript
+import { assertEan13 } from '@httpx/assert';
+import { HttpBadRequest } from '@httpx/exception';
+
+assertEan13('123', 'Not a barcode'); // 👈 Will throw a TypeError('Not a barcode')
+
+assertStrNotEmpty(lang, () => new HttpBadRequest('Missing language'));
+```
 
 ## Usage
 
@@ -124,7 +182,6 @@ isStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}`); // 👉 true
 assertStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}1`); // 👉 throws
 ```
 
-
 ### Uuid
 
 #### isUuid
@@ -195,6 +252,13 @@ ESM individual imports are tracked by a
 | Typescript | ✅  | TS 4.7+ / Dual packaging is ensured with [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) on the CI.                                                                                                                                                                                                                                                                            | 
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
+
+## Acknowledgments
+
+Special thanks for inspiration: 
+
+- [sindresorhus/is](https://github.com/sindresorhus/is)
+- [webmozarts/assert](https://github.com/webmozarts/assert)
 
 ## Contributors
 
