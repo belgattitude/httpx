@@ -118,16 +118,16 @@ ESM individual imports are tracked by a
 
 ## Compatibility
 
-ES2021 / Node 16+
+| Level    | CI | Description                                                                                                                                                                                                                                                                                                                                                                                                         |
+|----------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| ES2021   | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                                        |
+| Node16   | ✅  |                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Node18   | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Node20   | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Edge     | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)                                                                                                                                                                                                                                                                                                                                   | 
+| Browsers | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Minimums to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) | 
 
-Edge tests are run with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)
-
-Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
-configuration with minimum set to [Chrome 96+, Firefox 90+, Edge 19+, Safari 12+, Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D). 
-
-For _older_ browsers:
-
-- Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
+> For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
 ## Contributors
 

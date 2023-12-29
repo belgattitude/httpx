@@ -293,9 +293,18 @@ openssl rand 60 | openssl base64 -A
 
 ## Compatibility
 
-ES2021 / Node 16+ and the following browsers: [Chrome 96+, Firefox 90+, Edge 19+, Safari 12+, Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D).
 
-For *older* browsers, some frontend frameworks can help to transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...).
+
+| Level    | CI | Description                                                                                                                                                                                                                                                                                                                                                                                                         |
+|----------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| ES2021   | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                                        |
+| Node16   | ✅  |                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Node18   | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Node20   | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Edge     | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)                                                                                                                                                                                                                                                                                                                                   | 
+| Browsers | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Minimums to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) | 
+
+> For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
 ## Contributors
 
