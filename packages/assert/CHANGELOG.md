@@ -1,5 +1,15 @@
 # @httpx/assert
 
+## 0.5.0
+
+### Minor Changes
+
+- [#829](https://github.com/belgattitude/httpx/pull/829) [`b3ff1b9`](https://github.com/belgattitude/httpx/commit/b3ff1b901a613ba60d0c9de7fd6663e301d26412) Thanks [@belgattitude](https://github.com/belgattitude)! - Add assertNumberSafeInt, isNumberSafeInt and NumberSafeInt type
+
+- [#829](https://github.com/belgattitude/httpx/pull/829) [`b3ff1b9`](https://github.com/belgattitude/httpx/commit/b3ff1b901a613ba60d0c9de7fd6663e301d26412) Thanks [@belgattitude](https://github.com/belgattitude)! - Add isArrayNotEmpty, assertArrayNotEmpty and ArrayNotEmpty type
+
+- [#829](https://github.com/belgattitude/httpx/pull/829) [`b3ff1b9`](https://github.com/belgattitude/httpx/commit/b3ff1b901a613ba60d0c9de7fd6663e301d26412) Thanks [@belgattitude](https://github.com/belgattitude)! - Add isStrParsableSafeInt, assertStrParsableSafeInt and type StrParsableSafeInt
+
 ## 0.4.0
 
 ### Minor Changes
