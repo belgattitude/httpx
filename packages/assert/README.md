@@ -33,6 +33,8 @@ $ pnpm add @httpx/assert
 
 👉 [Official website](https://belgattitude.github.io/httpx/assert), [GitHub Readme](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme) or [generated api doc](https://github.com/belgattitude/httpx/blob/main/packages/assert/docs/api/README.md)
 
+---
+
 - [Introduction](#introduction)
   * [Consistent style](#consistent-style)
   * [Assertions error messages](#assertions-error-messages)
