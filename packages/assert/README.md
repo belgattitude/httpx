@@ -27,7 +27,7 @@ Wip
 
 ## Documentation
 
-👉 [Official website](https://belgattitude.github.io/httpx/assert), [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme) or [generated api doc](https://github.com/belgattitude/httpx/blob/main/packages/assert/docs/api/README.md)
+👉 [Official website](https://belgattitude.github.io/httpx/assert), [GitHub Readme](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme) or [generated api doc](https://github.com/belgattitude/httpx/blob/main/packages/assert/docs/api/README.md)
 
 - [Usage](#usage)
     * [Object related](#object-related)
@@ -76,8 +76,8 @@ isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d'); // is valid uuid v1, 3, 4 or 5
 assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 
 // With version
-isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d', 5);
-assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d', 5);
+isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d', { version: 5 });
+assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d', undefined, { version: 5 });
 assertUuidV5('90123e1c-7512-523e-bb28-76fab9f2f73d')
 isUuidV4('d9428888-122b-11e1-b85c-61cd3cbb3210'); // or isUuidV1(''), isUuidV3(''), isUuidV5('');
 
