@@ -7,7 +7,7 @@ describe('barcode assertions tests', () => {
   });
   it('should throw when barcode is invalid', () => {
     expect(() => assertEan13('12345')).toThrow(
-      new TypeError('Value is expected to be an ean13, got: string(5)')
+      new TypeError('Value is expected to be an ean13, got: string(length:5)')
     );
   });
   it('should throw custom error when barcode is invalid', () => {

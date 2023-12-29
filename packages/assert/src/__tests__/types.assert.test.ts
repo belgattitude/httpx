@@ -50,7 +50,7 @@ describe('type assertions', () => {
             })
           ).toThrow(
             new TypeError(
-              'A value is not expected (assertNever), got: string(7)'
+              'A value is not expected (assertNever), got: string(length:7)'
             )
           );
         });

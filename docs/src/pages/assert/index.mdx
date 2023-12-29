@@ -81,6 +81,31 @@ isPlainObject(new Promise()); // 👈 false
 assertPlainObject({});
 ```
 
+### Number related
+
+#### isNumberSafeInt
+
+```typescript
+import { assertNumberSafeInt, isNumberSafeInt } from '@httpx/assert';
+
+isNumberSafeInt(10n); // 👉 false
+isNumberSafeInt(BigInt(10)); // 👉 false
+isNumberSafeInt(Number.MAX_SAFE_INTEGER); // 👉 true
+assertNumberSafeInt(Number.MAX_SAFE_INTEGER + 1); // 👉 throws
+```
+
+### Array related
+
+#### isArrayNotEmpty
+
+```typescript
+import { isArrayNotEmpty, assertArrayNotEmpty } from '@httpx/assert';
+
+isArrayNotEmpty([]) // 👉 false
+isArrayNotEmpty([0,1]) // 👉 true
+assertArrayNotEmpty([]) // 👉 throws
+```
+
 ### String related
 
 #### isStrNotEmpty
@@ -91,9 +116,20 @@ import { assertStrNotEmpty, isStrNotEmpty } from '@httpx/assert';
 isStrNotEmpty(''); // 👉 false
 isStrNotEmpty(' '); // 👉 false: trim by default
 isStrNotEmpty(' ', { trim: false }); // 👉 true: disbable trim
-assertStrNotEmpty('');
+assertStrNotEmpty(''); // 👉 throws
 assertStrNotEmpty('', undefined, { trim: false });
 ```
+
+#### isStrParsableSafeInt
+
+```typescript
+import { assertStrParsableSafeInt, isStrParsableSafeInt } from '@httpx/assert';
+
+isStrParsableSafeInt(2); // 👉 false
+isStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}`); // 👉 true
+assertStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}1`); // 👉 throws
+```
+
 
 ### Uuid
 

@@ -22,8 +22,20 @@ export const getType = (v: unknown): string => {
       type = 'undefined';
       break;
     }
+    case typeof v === 'bigint': {
+      type = `bigint(length:${v.toString().length})`;
+      break;
+    }
+    case Array.isArray(v): {
+      type = `array(size:${v.length})`;
+      break;
+    }
     case Number.isNaN(v): {
       type = `NaN`;
+      break;
+    }
+    case typeof v === 'number': {
+      type = `number(length:${v.toString().length})`;
       break;
     }
     case v === false || v === true: {
@@ -31,7 +43,7 @@ export const getType = (v: unknown): string => {
       break;
     }
     case typeof v === 'string': {
-      type = `string(${v.length})`;
+      type = `string(length:${v.length})`;
       break;
     }
 
