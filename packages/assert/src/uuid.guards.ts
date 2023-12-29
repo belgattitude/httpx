@@ -1,4 +1,4 @@
-import { getUuidVersion } from '../helpers/uuid.helpers';
+import { getUuidVersion } from './uuid.helpers';
 import type {
   Uuid,
   UuidV1,
@@ -6,8 +6,8 @@ import type {
   UuidV4,
   UuidV5,
   UuidVersion,
-} from '../types/uuid.types';
-import { uuidRegexp, uuidSupportedVersions } from '../utils/uuid.utils';
+} from './uuid.types';
+import { uuidRegexp, uuidSupportedVersions } from './uuid.utils';
 
 /**
  * Check whether a value is a valid uuid integer supported version

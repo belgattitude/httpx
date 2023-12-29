@@ -1,6 +1,6 @@
-import { eansTestData } from '../../../test/test.data';
-import { errorMessages } from '../../messages/errorMessages';
+import { eansTestData } from '../../test/test.data';
 import { assertEan13 } from '../barcode.asserts';
+import { errorMessages } from '../messages/errorMessages';
 
 describe('barcode assertions tests', () => {
   it('should not throw when barcode is valid', () => {

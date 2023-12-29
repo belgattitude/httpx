@@ -1,5 +1,5 @@
-import type { UuidVersionOrNumber } from '../types/uuid.types';
-import { uuidSupportedVersions } from '../utils/uuid.utils';
+import type { UuidVersionOrNumber } from './uuid.types';
+import { uuidSupportedVersions } from './uuid.utils';
 
 /**
  * Adapted from https://github.com/uuidjs/uuid/blob/main/src/version.js

@@ -1,4 +1,4 @@
-import type { PlainObject } from '../types';
+import type { PlainObject } from './object.types';
 
 export const isPlainObject = <T = unknown, K extends number | string = string>(
   v: unknown

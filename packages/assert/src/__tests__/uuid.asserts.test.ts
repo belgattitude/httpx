@@ -1,5 +1,5 @@
-import { uuidsTestData } from '../../../test/test.data';
-import { errorMessages } from '../../messages/errorMessages';
+import { uuidsTestData } from '../../test/test.data';
+import { errorMessages } from '../messages/errorMessages';
 import {
   assertUuid,
   assertUuidV1,

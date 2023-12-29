@@ -1,7 +1,7 @@
-import { isPlainObject } from '../guards/object.guards';
-import { errorMessages } from '../messages/errorMessages';
-import type { MsgOrErrorFactory } from '../types/internal.types';
-import { createAssertException } from '../utils/createAssertException';
+import { errorMessages } from './messages/errorMessages';
+import { isPlainObject } from './object.guards';
+import type { MsgOrErrorFactory } from './types/internal.types';
+import { createAssertException } from './utils/createAssertException';
 
 /**
  * Assert a value is a plain object

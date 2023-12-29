@@ -1,5 +1,5 @@
-import { uuidsTestData } from '../../../test/test.data';
-import { getUuidVersion } from '../../helpers/uuid.helpers';
+import { uuidsTestData } from '../../test/test.data';
+import { getUuidVersion } from '../uuid.helpers';
 
 describe('uuid utils tests', () => {
   describe('getUuidVersion', () => {

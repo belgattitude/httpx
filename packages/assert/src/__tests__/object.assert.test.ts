@@ -1,4 +1,4 @@
-import { errorMessages } from '../../messages/errorMessages';
+import { errorMessages } from '../messages/errorMessages';
 import { assertPlainObject } from '../object.asserts';
 
 describe('object assertions tests', () => {

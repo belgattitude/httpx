@@ -1,4 +1,4 @@
-import type { UuidVersion } from '../types';
+import type { UuidVersion } from '../uuid.types';
 
 const pfx = 'Not a valid';
 export const errorMessages = {

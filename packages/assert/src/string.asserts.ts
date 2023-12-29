@@ -1,7 +1,7 @@
-import { isStrNotEmpty } from '../guards/string.guards';
-import { errorMessages } from '../messages/errorMessages';
-import type { MsgOrErrorFactory } from '../types/internal.types';
-import { createAssertException } from '../utils/createAssertException';
+import { errorMessages } from './messages/errorMessages';
+import { isStrNotEmpty } from './string.guards';
+import type { MsgOrErrorFactory } from './types/internal.types';
+import { createAssertException } from './utils/createAssertException';
 
 /**
  * Assert string is not empty (trims the string by default)

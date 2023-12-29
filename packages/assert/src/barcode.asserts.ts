@@ -1,7 +1,7 @@
-import { isEan13 } from '../guards/barcode.guards';
-import { errorMessages } from '../messages/errorMessages';
-import type { MsgOrErrorFactory } from '../types/internal.types';
-import { createAssertException } from '../utils/createAssertException';
+import { isEan13 } from './barcode.guards';
+import { errorMessages } from './messages/errorMessages';
+import type { MsgOrErrorFactory } from './types/internal.types';
+import { createAssertException } from './utils/createAssertException';
 
 /**
  * Assert string is not empty (trims the string by default)

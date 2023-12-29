@@ -1,4 +1,4 @@
-import { eansTestData } from '../../../test/test.data';
+import { eansTestData } from '../../test/test.data';
 import { isEan13 } from '../barcode.guards';
 
 describe('Barcode guards tests', () => {

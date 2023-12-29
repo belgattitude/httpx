@@ -1,7 +1,6 @@
 import { describe } from 'vitest';
 
-import { uuidsTestData } from '../../../test/test.data';
-import type { UuidVersion } from '../../types';
+import { uuidsTestData } from '../../test/test.data';
 import {
   isUuid,
   isUuidV1,
@@ -10,6 +9,7 @@ import {
   isUuidV5,
   isUuidVersion,
 } from '../uuid.guards';
+import type { UuidVersion } from '../uuid.types';
 
 describe('Uuid typeguards tests', () => {
   describe('isUuid', () => {

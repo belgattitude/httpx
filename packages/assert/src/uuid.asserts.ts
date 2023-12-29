@@ -1,11 +1,7 @@
-import {
-  isUuid,
-  isUuidV1,
-  isUuidV3,
-  isUuidV4,
-  isUuidV5,
-} from '../guards/uuid.guards';
-import { errorMessages } from '../messages/errorMessages';
+import { errorMessages } from './messages/errorMessages';
+import type { MsgOrErrorFactory } from './types/internal.types';
+import { createAssertException } from './utils/createAssertException';
+import { isUuid, isUuidV1, isUuidV3, isUuidV4, isUuidV5 } from './uuid.guards';
 import type {
   Uuid,
   UuidV1,
@@ -13,9 +9,7 @@ import type {
   UuidV4,
   UuidV5,
   UuidVersion,
-} from '../types';
-import type { MsgOrErrorFactory } from '../types/internal.types';
-import { createAssertException } from '../utils/createAssertException';
+} from './uuid.types';
 
 export function assertUuid(
   v: unknown,

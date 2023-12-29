@@ -1,4 +1,4 @@
-import { errorMessages } from '../../messages/errorMessages';
+import { errorMessages } from '../messages/errorMessages';
 import { assertStrNotEmpty } from '../string.asserts';
 
 describe('string assertions tests', () => {
