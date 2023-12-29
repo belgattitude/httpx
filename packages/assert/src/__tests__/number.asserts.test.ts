@@ -7,7 +7,9 @@ describe('number assertions tests', () => {
   });
   it('should throw when not a safeInt', () => {
     expect(() => assertNumberSafeInt(BigInt(10))).toThrow(
-      new TypeError('Value is expected to be a safe integer, got: bigint(2)')
+      new TypeError(
+        'Value is expected to be a safe integer, got: bigint(length:2)'
+      )
     );
   });
   it('should throw custom error when value is invalid', () => {

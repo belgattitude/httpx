@@ -35,7 +35,7 @@ describe('string assertions tests', () => {
         })
       ).toThrow(
         new TypeError(
-          'Value is expected to be a non-empty string (with trim: true), got: string(3)'
+          'Value is expected to be a non-empty string (with trim: true), got: string(length:3)'
         )
       );
     });
