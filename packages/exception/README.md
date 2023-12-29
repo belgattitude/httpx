@@ -21,8 +21,9 @@ to cover cross-environments challenges (RSC, SSR...).
 - 👉&nbsp; If message not provided, defaults to [http error message](#default-messages)
 - 👉&nbsp; Supports pre-defined [contextual](#error-context) information.
 - 👉&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
-- 👉&nbsp; [Extends](#class-diagram) native Error class with [stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) and [cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
-- 👉&nbsp; Framework agnostic, no deps. Node, edge and [browsers compat](#compatibility),
+- 👉&nbsp; Supports [nested error](#nested-errors) through native [Error.cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
+- 👉&nbsp; [Extends](#class-diagram) native Error class with [stacktrace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) support.
+- 👉&nbsp; No deps. [Node, edge and modern browsers compatibility](#compatibility),
 
 ## Install
 
@@ -162,7 +163,7 @@ All parameters are exposed as properties.
 | code          | `string?`             | Custom error code (not to be confused with statusCode).                                                                            |
 | errorId       | `string?`             | Unique custom error id.                                                                                                            |
 | stack         | `string?`             | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause         | `Error?`              | @see [about error cause](#about-errorcause)                                                                                        |
+| cause         | `Error?`              | @see [about nested errors](#nested-errors)                                                                                         |
 | issues        | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
 
 ```typescript
@@ -324,6 +325,27 @@ isHttpErrorStatusCode(404);
 isHttpErrorStatusCode(200);
 ```
 
+## Nested errors
+
+When creating a http exception, it's possible to attach the original error
+to the native [Error.cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause)
+property.
+
+```typescript
+const e = new HttpBadRequest({
+  // 👉 nesting
+  cause: new TypeError({
+    message: "Param validation failed",
+    // 👉 nesting: multiple levels are supported
+    cause: new NoSuchUser("User id is invalid"),
+  }),
+});
+```
+
+> Error cause is supported by [>93% of browsers](https://caniuse.com/mdn-javascript_builtins_error_cause) as
+> of 12/2023. NodeJs supports it since 16.17. Nested cause will simply be discarded if not supported (no runtime error).
+> In case of there's a real need to support older runtimes, add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill).
+
 ## Serializer
 
 Exceptions can be (de-)serialized to json or other formats. Use cases varies from
@@ -457,20 +479,20 @@ const alternate = new HttpServerException({
 
 ### Compatibility
 
-Node 18+ / es2022 compatibility is ensured on the CI.
+| Level      | CI  | Description                                                                                                                                                                                                                                                                                                                                        |
+| ---------- | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                       |
+| Node18     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                      |
+| Node20     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                      |
+| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)                                                                                                                                                                                                                                                                  |
+| Browsers   | ✅  | [> 93%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Minimums to [Chrome 96+, Firefox 90+, Edge 91+, ios 15+, Safari 15+ and Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
+| Typescript | ✅  | TS 4.7+ / Dual packaging is ensured with [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) on the CI.                                                                                                                                                                                                           |
 
-Edge tests are run with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)
-
-Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
-configuration. From the browserslist defaults:
-[Chrome 96+, Firefox 90+, Edge 91+, Safari 15+ and Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
-are set as minimal supported versions.
-
-For _older_ browsers:
-
-- Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
-- You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support
-  nested errors (if not present they are simply discarded - no runtime errors).
+> For _older_ browsers:
+>
+> - 👉 Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
+> - 👉 You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support
+>   nested errors (if not present they are simply discarded - no runtime errors).
 
 ### Bundle size
 
