@@ -1,3 +1,6 @@
+/**
+ * @throws TypeError
+ */
 export const createAssertException = (
   msgOrErrorFactory?: string | (() => Error),
   fallbackMsg?: string
@@ -6,7 +9,7 @@ export const createAssertException = (
     typeof msgOrErrorFactory === 'string' ||
     msgOrErrorFactory === undefined
   ) {
-    throw new Error(
+    throw new TypeError(
       msgOrErrorFactory ?? fallbackMsg ?? 'Assertion did not pass.'
     );
   }

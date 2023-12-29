@@ -1,18 +1,27 @@
-import { errorMessages } from './messages/errorMessages';
+import { formatErrMsg } from './messages/errorMessages';
 import { isStrNotEmpty } from './string.guards';
 import type { MsgOrErrorFactory } from './types/internal.types';
 import { createAssertException } from './utils/createAssertException';
 
 /**
  * Assert string is not empty (trims the string by default)
+ * @throws TypeError
  */
 export function assertStrNotEmpty(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory,
-  /** auto-trim, default true */
-  trim = true
+  options?: {
+    trim: boolean;
+  }
 ): asserts v is string {
-  if (!isStrNotEmpty(v, trim)) {
-    throw createAssertException(msgOrErrorFactory, errorMessages.strNotEmpty);
+  const { trim = true } = options ?? {};
+  if (!isStrNotEmpty(v, { trim })) {
+    throw createAssertException(
+      msgOrErrorFactory,
+      formatErrMsg(
+        `non-empty string (with trim: ${trim ? 'true' : 'false'})`,
+        v
+      )
+    );
   }
 }

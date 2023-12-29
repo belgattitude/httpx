@@ -7,7 +7,7 @@ module.exports = [
     name: 'Everything (ESM)',
     path: ['dist/index.mjs'],
     import: "*",
-    limit: '1000B',
+    limit: '1200B',
   },
   {
     name: 'Only isPlainObject (ESM)',
@@ -31,7 +31,7 @@ module.exports = [
     name: 'Only assertPlainObject (ESM)',
     path: ['dist/index.mjs'],
     import: "{ assertPlainObject }",
-    limit: "270B",
+    limit: "420B",
   },
   {
     name: 'Everything (CJS)',
