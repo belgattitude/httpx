@@ -30,10 +30,11 @@ Wip
 👉 [Official website](https://belgattitude.github.io/httpx/assert), [GitHub Readme](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme) or [generated api doc](https://github.com/belgattitude/httpx/blob/main/packages/assert/docs/api/README.md)
 
 - [Usage](#usage)
-    * [Object related](#object-related)
-    * [String related](#string-related)
-    * [Uuid](#uuid)
-    * [Barcode](#barcode)
+  * [Type related](#type-related)
+  * [Object related](#object-related)
+  * [String related](#string-related)
+  * [Uuid](#uuid)
+  * [Barcode](#barcode)
 - [Bundle size](#bundle-size)
 - [Compatibility](#compatibility)
 - [Contributors](#contributors)
@@ -41,28 +42,56 @@ Wip
 
 ## Usage
 
+### Type related
+
+#### assertNever
+
+```typescript
+import { assertNever } from '@httpx/assert';
+
+type PromiseState = 'resolved' | 'rejected' | 'running'
+const state: PromiseState = 'rejected';
+switch(state) {
+  case 'resolved': return v;
+  case 'rejected': return new Error();
+  default:
+    assertNever(state); // 👈 TS will complain about missing 'running' state
+    // ☝️ Will throw a TypeError in js.
+}
+```
+
+> PS: you can use the `assertNeverNoThrow` with the same behaviour except that it
+> doesn't throw and return the value instead (no runtime error).
+
 ### Object related
+
+#### isPlainObject
 
 ```typescript
 import { isPainObject, assertPlainObject } from '@httpx/assert';
 
-isPlainObject({cool: true}); // true
-isPlainObject(new Promise()); // false
+isPlainObject({cool: true}); // 👈 true
+isPlainObject(new Promise()); // 👈 false
 assertPlainObject({});
 ```
 
 ### String related
 
+#### isStrNotEmpty
+
 ```typescript
 import { assertStrNotEmpty, isStrNotEmpty } from '@httpx/assert';
 
-isStrNotEmpty(''); // false
-isStrNotEmpty(' '); // false: trim by default
-isStrNotEmpty(' ', false); // true: disbable trim
+isStrNotEmpty(''); // 👉 false
+isStrNotEmpty(' '); // 👉 false: trim by default
+isStrNotEmpty(' ', { trim: false }); // 👉 true: disbable trim
 assertStrNotEmpty('');
+assertStrNotEmpty('', undefined, { trim: false });
 ```
 
 ### Uuid
+
+#### isUuid
 
 Supported uuid versions are: 1, 3, 4 and 5.
 
@@ -72,20 +101,22 @@ import { assertUuid, assertUuidV1, assertUuidV3, assertUuidV4, assertUuidV5 } fr
 import { getUuidVersion } from '@httpx/assert';
 
 // Without version
-isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d'); // is valid uuid v1, 3, 4 or 5
+isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d'); // 👉 valid uuid v1, 3, 4 or 5
 assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 
 // With version
 isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d', { version: 5 });
 assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d', undefined, { version: 5 });
 assertUuidV5('90123e1c-7512-523e-bb28-76fab9f2f73d')
-isUuidV4('d9428888-122b-11e1-b85c-61cd3cbb3210'); // or isUuidV1(''), isUuidV3(''), isUuidV5('');
+isUuidV4('d9428888-122b-11e1-b85c-61cd3cbb3210'); // 👈 or isUuidV1(''), isUuidV3(''), isUuidV5('');
 
 // Utils
 getUuidVersion('90123e1c-7512-523e-bb28-76fab9f2f73d'); // 5
 ```
 
 ### Barcode
+
+#### isEan13
 
 Supported barcodes is currently limited to Ean13
 
@@ -96,7 +127,6 @@ import { assertEan13 } from "@httpx/assert";
 isEan13('1234567890128'); // 👈 will check digit too
 assertEan13('1234567890128');
 ```
-
 
 ## Bundle size
 

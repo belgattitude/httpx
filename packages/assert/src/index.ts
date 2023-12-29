@@ -18,3 +18,6 @@ export type * from './object.types';
 // string
 export * from './string.asserts';
 export * from './string.guards';
+
+// types
+export * from './types.asserts';

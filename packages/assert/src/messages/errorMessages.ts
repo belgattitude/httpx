@@ -49,7 +49,9 @@ export const formatErrMsg = (
   }
 ): string => {
   const { pfx = true } = options ?? {};
-  return `${pfx ? `${errPfx} ` : ''}${
-    vowels.has((msg?.[0] ?? '').toLowerCase()) ? 'an' : 'a'
-  } ${msg}, got: ${getType(v)}`;
+  return `${
+    pfx
+      ? `${errPfx} ${vowels.has((msg?.[0] ?? '').toLowerCase()) ? 'an' : 'a'} `
+      : ''
+  }${msg}, got: ${getType(v)}`;
 };
