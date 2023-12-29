@@ -1,5 +1,13 @@
 # @httpx/exception
 
+## 2.6.1
+
+### Patch Changes
+
+- [#834](https://github.com/belgattitude/httpx/pull/834) [`9d4dd98`](https://github.com/belgattitude/httpx/commit/9d4dd980ea57b99f4697191ac5b2d8d55adcb406) Thanks [@belgattitude](https://github.com/belgattitude)! - Add missing doc for nested errors
+
+- [#832](https://github.com/belgattitude/httpx/pull/832) [`321957a`](https://github.com/belgattitude/httpx/commit/321957a9eced15ff132c2ab18789bc4bcde9ff95) Thanks [@belgattitude](https://github.com/belgattitude)! - esbuild updated to 0.19.11 to fix a potential typeScript-specific class transform edge case
+
 ## 2.6.0
 
 ### Minor Changes
