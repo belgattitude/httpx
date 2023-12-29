@@ -1,6 +1,6 @@
 @httpx/assert
 
-# @httpx/assert - v0.3.0
+# @httpx/assert - v0.5.0
 
 ## Table of contents
 
