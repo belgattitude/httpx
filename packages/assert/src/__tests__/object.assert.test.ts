@@ -1,4 +1,3 @@
-import { errorMessages } from '../../messages/errorMessages';
 import { assertPlainObject } from '../object.asserts';
 
 describe('object assertions tests', () => {
@@ -7,7 +6,7 @@ describe('object assertions tests', () => {
   });
   it('should throw when value is invalid', () => {
     expect(() => assertPlainObject(new Date())).toThrow(
-      errorMessages.plainObject
+      new TypeError('Value is expected to be a plain object, got: Date')
     );
   });
   it('should throw custom error when value is invalid', () => {

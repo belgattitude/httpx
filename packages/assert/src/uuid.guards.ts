@@ -1,4 +1,4 @@
-import { getUuidVersion } from '../helpers/uuid.helpers';
+import { getUuidVersion } from './uuid.helpers';
 import type {
   Uuid,
   UuidV1,
@@ -6,11 +6,11 @@ import type {
   UuidV4,
   UuidV5,
   UuidVersion,
-} from '../types/uuid.types';
-import { uuidRegexp, uuidSupportedVersions } from '../utils/uuid.utils';
+} from './uuid.types';
+import { uuidRegexp, uuidSupportedVersions } from './uuid.utils';
 
 /**
- * Check whether a value is a valid uuid integer supported version
+ * Check if a value is a valid uuid version: 1, 3, 4 or 5
  */
 export const isUuidVersion = (v: unknown): v is UuidVersion => {
   return typeof v === 'number' && uuidSupportedVersions.has(v);
@@ -19,8 +19,6 @@ export const isUuidVersion = (v: unknown): v is UuidVersion => {
 /**
  * Check whether a value is string and passes uuid validation with
  * optional given version
- * @param v
- * @param version
  */
 export const isUuid = (v: unknown, version?: UuidVersion): v is Uuid => {
   return (

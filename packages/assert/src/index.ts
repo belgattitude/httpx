@@ -1,14 +1,20 @@
-// assertions
-export * from './asserts/barcode.asserts';
-export * from './asserts/object.asserts';
-export * from './asserts/string.asserts';
-export * from './asserts/uuid.asserts';
-// typeguards
-export * from './guards/barcode.guards';
-export * from './guards/object.guards';
-export * from './guards/string.guards';
-export * from './guards/uuid.guards';
-// helpers
-export * from './helpers/uuid.helpers';
-// types
-export type * from './types';
+// uuid
+export * from './uuid.asserts';
+export * from './uuid.guards';
+export * from './uuid.helpers';
+export type * from './uuid.types';
+export * from './uuid.utils';
+
+// barcode
+export * from './barcode.asserts';
+export * from './barcode.guards';
+export type * from './barcode.types';
+
+// object
+export * from './object.asserts';
+export * from './object.guards';
+export type * from './object.types';
+
+// string
+export * from './string.asserts';
+export * from './string.guards';

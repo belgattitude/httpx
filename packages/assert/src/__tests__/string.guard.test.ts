@@ -19,7 +19,11 @@ describe('Typeguards string tests', () => {
     });
     describe('when trim === false', () => {
       it('should work as expected', () => {
-        expect(isStrNotEmpty('  ', false)).toBe(true);
+        expect(
+          isStrNotEmpty('  ', {
+            trim: false,
+          })
+        ).toBe(true);
       });
     });
   });

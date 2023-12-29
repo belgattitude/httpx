@@ -1,4 +1,4 @@
-import type { Ean13 } from '../types';
+import type { Ean13 } from './barcode.types';
 
 export const isEan13 = (v: unknown): v is Ean13 => {
   if (typeof v !== 'string' || v.length !== 13) {

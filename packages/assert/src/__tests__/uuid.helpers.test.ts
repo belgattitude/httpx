@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { isUuidVersion } from '../../guards/uuid.guards';
-import type { UuidVersion } from '../../types/uuid.types';
+import { isUuidVersion } from '../uuid.guards';
+import type { UuidVersion } from '../uuid.types';
 
 describe('Uuid typeguards tests', () => {
   describe('isUuidVersion', () => {
