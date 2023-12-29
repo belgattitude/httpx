@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [18.x, 20.x]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -60,6 +60,7 @@ jobs:
         run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run test-unit-edge
 
       - name: ☂️ Codecov upload
+        if: matrix.node-version == '20.x'
         working-directory: ${{ github.workspace }}
         run: |
           bash .github/scripts/install-codecov.sh
