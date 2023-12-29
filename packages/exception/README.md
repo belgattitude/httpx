@@ -35,7 +35,9 @@ pnpm add @httpx/exception     # via pnpm
 
 ## Documentation
 
-👉 [Official website](https://belgattitude.github.io/httpx/exception), [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme) or [generated typedoc](https://github.com/belgattitude/httpx/tree/main/packages/exception/docs/api).
+👉 [Official website](https://belgattitude.github.io/httpx/exception), [GitHub Readme](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme) or [generated typedoc](https://github.com/belgattitude/httpx/tree/main/packages/exception/docs/api).
+
+---
 
 - [Usage](#usage)
   - [By named imports](#by-named-imports)
@@ -51,6 +53,7 @@ pnpm add @httpx/exception     # via pnpm
   - [isErrorWithErrorStatusCode](#iserrorwitherrorstatuscode)
   - [isObjectWithErrorStatusCode](#isobjectwitherrorstatuscode)
   - [isHttpErrorStatusCode](#ishttperrorstatuscode)
+- [Nested errors](#nested-errors)
 - [Serializer](#serializer)
   - [JSON](#json)
   - [Serializable](#serializable)
@@ -64,6 +67,8 @@ pnpm add @httpx/exception     # via pnpm
 - [Support](#support)
 - [Contributors](#contributors)
 - [Sponsors](#sponsors)
+
+---
 
 ## Usage
 
