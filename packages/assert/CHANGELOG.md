@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.5.2
+
+### Patch Changes
+
+- [#835](https://github.com/belgattitude/httpx/pull/835) [`b14449f`](https://github.com/belgattitude/httpx/commit/b14449f52e2fbf68e8c5ccb92fc9e2be9b961386) Thanks [@belgattitude](https://github.com/belgattitude)! - Improve documentation
+
 ## 0.5.1
 
 ### Patch Changes
