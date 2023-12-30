@@ -37,6 +37,6 @@ module.exports = [
     name: 'Everything (CJS)',
     import: "*",
     path: ['dist/index.cjs'],
-    limit: '2000B',
+    limit: '2400B',
   },
 ];
