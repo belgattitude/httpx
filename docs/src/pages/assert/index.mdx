@@ -130,6 +130,21 @@ isStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}`); // 👉 true
 assertStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}1`); // 👉 throws
 ```
 
+#### isStrParsableStrictIsoDateZ
+
+Ensure a string contains a strict iso datetime with microseconds and utc suffix
+(aka: zulu time). Date is checked for validity.
+
+```typescript
+import { isStrParsableStrictIsoDateZ, assertStrParsableStrictIsoDateZ } from '@httpx/assert';
+
+isStrParsableStrictIsoDateZ(new Date().toISOString()); // 👉 true
+isStrParsableStrictIsoDateZ('2023-12-29T23:37:31.653z'); // 👉 true
+isStrParsableStrictIsoDateZ('2023-02-29T23:37:31.653'); // 👉 false, cause no 29th february in 2023
+
+assertStrParsableStrictIsoDateZ('2023-02-29T23:37:31.653z'); // 👉 throws cause no 29th february
+```
+
 
 ### Uuid
 
