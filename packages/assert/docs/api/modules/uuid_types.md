@@ -18,31 +18,31 @@
 
 ### Uuid
 
-Ƭ **Uuid**: `string`
+Ƭ **Uuid**: `string` & `WeakOpaqueContainer`\<``"Uuid"``\>
 
 ___
 
 ### UuidV1
 
-Ƭ **UuidV1**: `string`
+Ƭ **UuidV1**: `string` & `WeakOpaqueContainer`\<``"UuidV1"``\>
 
 ___
 
 ### UuidV3
 
-Ƭ **UuidV3**: `string`
+Ƭ **UuidV3**: `string` & `WeakOpaqueContainer`\<``"UuidV3"``\>
 
 ___
 
 ### UuidV4
 
-Ƭ **UuidV4**: `string`
+Ƭ **UuidV4**: `string` & `WeakOpaqueContainer`\<``"UuidV4"``\>
 
 ___
 
 ### UuidV5
 
-Ƭ **UuidV5**: `string`
+Ƭ **UuidV5**: `string` & `WeakOpaqueContainer`\<``"UuidV5"``\>
 
 ___
 

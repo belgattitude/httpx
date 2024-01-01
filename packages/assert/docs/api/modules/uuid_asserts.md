@@ -16,7 +16,7 @@
 
 ### assertUuid
 
-▸ **assertUuid**(`v`, `msgOrErrorFactory?`, `options?`): asserts v is string
+▸ **assertUuid**(`v`, `msgOrErrorFactory?`, `options?`): asserts v is Uuid
 
 Asserts a value is a valid uuid v1, v3, v4 or v5
 Accept optional version
@@ -32,7 +32,7 @@ Accept optional version
 
 #### Returns
 
-asserts v is string
+asserts v is Uuid
 
 **`Throws`**
 
@@ -42,7 +42,7 @@ ___
 
 ### assertUuidV1
 
-▸ **assertUuidV1**(`v`, `msgOrErrorFactory?`): asserts v is string
+▸ **assertUuidV1**(`v`, `msgOrErrorFactory?`): asserts v is UuidV1
 
 Asserts a value is a valid uuid v1
 
@@ -55,7 +55,7 @@ Asserts a value is a valid uuid v1
 
 #### Returns
 
-asserts v is string
+asserts v is UuidV1
 
 **`Throws`**
 
@@ -65,7 +65,7 @@ ___
 
 ### assertUuidV3
 
-▸ **assertUuidV3**(`v`, `msgOrErrorFactory?`): asserts v is string
+▸ **assertUuidV3**(`v`, `msgOrErrorFactory?`): asserts v is UuidV3
 
 Asserts a value is a valid uuid v3
 
@@ -78,7 +78,7 @@ Asserts a value is a valid uuid v3
 
 #### Returns
 
-asserts v is string
+asserts v is UuidV3
 
 **`Throws`**
 
@@ -88,7 +88,7 @@ ___
 
 ### assertUuidV4
 
-▸ **assertUuidV4**(`v`, `msgOrErrorFactory?`): asserts v is string
+▸ **assertUuidV4**(`v`, `msgOrErrorFactory?`): asserts v is UuidV4
 
 Assert a value is a valid uuid v4
 
@@ -101,7 +101,7 @@ Assert a value is a valid uuid v4
 
 #### Returns
 
-asserts v is string
+asserts v is UuidV4
 
 **`Throws`**
 
@@ -111,7 +111,7 @@ ___
 
 ### assertUuidV5
 
-▸ **assertUuidV5**(`v`, `msgOrErrorFactory?`): asserts v is string
+▸ **assertUuidV5**(`v`, `msgOrErrorFactory?`): asserts v is UuidV5
 
 Assert a value is a valid uuid v5
 
@@ -124,7 +124,7 @@ Assert a value is a valid uuid v5
 
 #### Returns
 
-asserts v is string
+asserts v is UuidV5
 
 **`Throws`**
 

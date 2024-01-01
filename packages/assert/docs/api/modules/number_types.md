@@ -12,4 +12,4 @@
 
 ### NumberSafeInt
 
-Ƭ **NumberSafeInt**: `number`
+Ƭ **NumberSafeInt**: `number` & `WeakOpaqueContainer`\<``"NumberSafeInt"``\>

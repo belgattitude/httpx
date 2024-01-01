@@ -14,7 +14,7 @@
 
 ### assertParsableSafeInt
 
-▸ **assertParsableSafeInt**(`v`, `msgOrErrorFactory?`): asserts v is string
+▸ **assertParsableSafeInt**(`v`, `msgOrErrorFactory?`): asserts v is ParsableSafeInt
 
 #### Parameters
 
@@ -25,13 +25,13 @@
 
 #### Returns
 
-asserts v is string
+asserts v is ParsableSafeInt
 
 ___
 
 ### assertParsableStrictIsoDateZ
 
-▸ **assertParsableStrictIsoDateZ**(`v`, `msgOrErrorFactory?`): asserts v is string
+▸ **assertParsableStrictIsoDateZ**(`v`, `msgOrErrorFactory?`): asserts v is ParsableStrictIsoDateZ
 
 #### Parameters
 
@@ -42,7 +42,7 @@ ___
 
 #### Returns
 
-asserts v is string
+asserts v is ParsableStrictIsoDateZ
 
 **`Throws`**
 

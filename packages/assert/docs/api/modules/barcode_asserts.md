@@ -12,7 +12,7 @@
 
 ### assertEan13
 
-▸ **assertEan13**(`v`, `msgOrErrorFactory?`): asserts v is string
+▸ **assertEan13**(`v`, `msgOrErrorFactory?`): asserts v is Ean13
 
 Assert string is not empty (trims the string by default)
 
@@ -25,7 +25,7 @@ Assert string is not empty (trims the string by default)
 
 #### Returns
 
-asserts v is string
+asserts v is Ean13
 
 **`Throws`**
 

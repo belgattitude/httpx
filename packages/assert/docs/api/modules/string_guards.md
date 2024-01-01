@@ -14,7 +14,7 @@
 
 ### isParsableSafeInt
 
-▸ **isParsableSafeInt**(`v`): v is string
+▸ **isParsableSafeInt**(`v`): v is ParsableSafeInt
 
 #### Parameters
 
@@ -24,13 +24,13 @@
 
 #### Returns
 
-v is string
+v is ParsableSafeInt
 
 ___
 
 ### isParsableStrictIsoDateZ
 
-▸ **isParsableStrictIsoDateZ**(`v`): v is string
+▸ **isParsableStrictIsoDateZ**(`v`): v is ParsableStrictIsoDateZ
 
 Checks if the value is a string containing a valid ISO-8601 date time
 with microseconds that ends with 'z' representing UTC+0 timezone (aka zulu time).
@@ -48,7 +48,7 @@ isStrParsableIsoDateZ('2023-12-29T23:37:31.653z')
 
 #### Returns
 
-v is string
+v is ParsableStrictIsoDateZ
 
 **`Link`**
 
@@ -66,7 +66,7 @@ ___
 
 ### isStringNonEmpty
 
-▸ **isStringNonEmpty**(`v`): v is string
+▸ **isStringNonEmpty**(`v`): v is StringNonEmpty
 
 #### Parameters
 
@@ -76,4 +76,4 @@ ___
 
 #### Returns
 
-v is string
+v is StringNonEmpty

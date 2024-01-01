@@ -6,16 +6,16 @@
 
 ### Type Aliases
 
-- [ArrayNoNEmpty](array_types.md#arraynonempty)
+- [ArrayNonEmpty](array_types.md#arraynonempty)
 
 ## Type Aliases
 
-### ArrayNoNEmpty
+### ArrayNonEmpty
 
-Ƭ **ArrayNoNEmpty**\<`T`\>: [`T`, ...T[]]
+Ƭ **ArrayNonEmpty**\<`T`\>: [`T`, ...T[]]
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |

@@ -14,16 +14,16 @@
 
 ### ParsableSafeInt
 
-Ƭ **ParsableSafeInt**: `string`
+Ƭ **ParsableSafeInt**: `string` & `WeakOpaqueContainer`\<``"ParsableSafeInt"``\>
 
 ___
 
 ### ParsableStrictIsoDateZ
 
-Ƭ **ParsableStrictIsoDateZ**: `string`
+Ƭ **ParsableStrictIsoDateZ**: `string` & `WeakOpaqueContainer`\<``"ParsableStrictIsoDateZ"``\>
 
 ___
 
 ### StringNonEmpty
 
-Ƭ **StringNonEmpty**: `string`
+Ƭ **StringNonEmpty**: `string` & `WeakOpaqueContainer`\<``"ParsableStrictIsoDateZ"``\>
