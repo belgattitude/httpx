@@ -21,6 +21,8 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x]
+    env:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
