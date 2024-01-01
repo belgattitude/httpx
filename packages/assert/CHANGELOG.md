@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.6.2
+
+### Patch Changes
+
+- [`b418b0b`](https://github.com/belgattitude/httpx/commit/b418b0b8dc914abe3dda3a9893bd0cba1db87560) Thanks [@belgattitude](https://github.com/belgattitude)! - Release unreleased patches
+
 ## 0.6.1
 
 ### Patch Changes
