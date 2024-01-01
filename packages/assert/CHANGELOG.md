@@ -1,5 +1,21 @@
 # @httpx/assert
 
+## 0.6.0
+
+### Minor Changes
+
+- [`7d399ec`](https://github.com/belgattitude/httpx/commit/7d399ec319cceb432308ae00a0680ef35f4af853) Thanks [@belgattitude](https://github.com/belgattitude)! - Rename isStrNotEmpty into isStringNonEmpty
+
+- [#847](https://github.com/belgattitude/httpx/pull/847) [`6b3f2d6`](https://github.com/belgattitude/httpx/commit/6b3f2d637c176c52b2ae62f650835695d20f10ff) Thanks [@belgattitude](https://github.com/belgattitude)! - Ass weak opaque type support for primitive types
+
+- [#837](https://github.com/belgattitude/httpx/pull/837) [`ff994ff`](https://github.com/belgattitude/httpx/commit/ff994ff5a450c5e8cb1af40d3c1d88b1fc7acbaf) Thanks [@belgattitude](https://github.com/belgattitude)! - add assertStrParsableStrictIsoDateZ and isStrParsableStrictIsoDateZ
+
+- [`7d399ec`](https://github.com/belgattitude/httpx/commit/7d399ec319cceb432308ae00a0680ef35f4af853) Thanks [@belgattitude](https://github.com/belgattitude)! - Rename isStrParsableSafeInt into isParsableSafeInt
+
+- [`7d399ec`](https://github.com/belgattitude/httpx/commit/7d399ec319cceb432308ae00a0680ef35f4af853) Thanks [@belgattitude](https://github.com/belgattitude)! - Rename isArrayNotEmpty into isArrayNonEmpty
+
+- [#844](https://github.com/belgattitude/httpx/pull/844) [`4ccebfe`](https://github.com/belgattitude/httpx/commit/4ccebfe7d91a795537e2d3b3b9b4287fa9d342e8) Thanks [@belgattitude](https://github.com/belgattitude)! - remove trim parameter from isStrNotEmpty
+
 ## 0.5.2
 
 ### Patch Changes
