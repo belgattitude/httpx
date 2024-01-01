@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.6.1
+
+### Patch Changes
+
+- [#852](https://github.com/belgattitude/httpx/pull/852) [`4dad928`](https://github.com/belgattitude/httpx/commit/4dad92830fe144a9aa1353431b44a58d09967866) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix export of empty chunks for type only exports
+
 ## 0.6.0
 
 ### Minor Changes
