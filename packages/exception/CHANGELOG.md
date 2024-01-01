@@ -1,5 +1,13 @@
 # @httpx/exception
 
+## 2.6.3
+
+### Patch Changes
+
+- [`b418b0b`](https://github.com/belgattitude/httpx/commit/b418b0b8dc914abe3dda3a9893bd0cba1db87560) Thanks [@belgattitude](https://github.com/belgattitude)! - Release unreleased patches
+
+- [#854](https://github.com/belgattitude/httpx/pull/854) [`f01defc`](https://github.com/belgattitude/httpx/commit/f01defc16e0f539cb8bbadd95ef2ab25ea1c1601) Thanks [@belgattitude](https://github.com/belgattitude)! - Add doc for nested errors
+
 ## 2.6.2
 
 ### Patch Changes
