@@ -38,7 +38,7 @@ jobs:
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
 
-      - uses: nrwl/nx-set-shas@v3
+      - uses: nrwl/nx-set-shas@v4
       # This line is needed for nx affected to work when CI is running on a PR
       - run: git branch --track main origin/main
 
