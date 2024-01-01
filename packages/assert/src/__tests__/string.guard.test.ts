@@ -39,30 +39,16 @@ describe('Typeguards string tests', () => {
     });
   });
   describe('isStrNotEmpty', () => {
-    it('should trim by default', () => {
-      expect(isStrNotEmpty('  ')).toStrictEqual(isStrNotEmpty(''));
-    });
-    describe('when trim === true (default)', () => {
-      it.each([
-        [true, 'cool'],
-        [false, 1],
-        [false, '  '],
-        [false, ''],
-        [false, null],
-        [false, undefined],
-        [false, {}],
-      ])('should return %s when %s is given', (expected, v) => {
-        expect(isStrNotEmpty(v)).toBe(expected);
-      });
-    });
-    describe('when trim === false', () => {
-      it('should work as expected', () => {
-        expect(
-          isStrNotEmpty('  ', {
-            trim: false,
-          })
-        ).toBe(true);
-      });
+    it.each([
+      [true, 'cool'],
+      [false, 1],
+      [false, '  '],
+      [false, ''],
+      [false, null],
+      [false, undefined],
+      [false, {}],
+    ])('should return %s when %s is given', (expected, v) => {
+      expect(isStrNotEmpty(v)).toBe(expected);
     });
   });
 });
