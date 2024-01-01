@@ -5,12 +5,8 @@ import type {
 } from './string.types';
 import { isoDateTimeZRegexp } from './string.utils';
 
-export const isStrNotEmpty = (
-  v: unknown,
-  options?: { trim: boolean }
-): v is string => {
-  const { trim = true } = options ?? {};
-  return typeof v === 'string' && (trim ? v.trim() : v).length > 0;
+export const isStrNotEmpty = (v: unknown): v is string => {
+  return typeof v === 'string' && v.trim().length > 0;
 };
 
 const alphaRegexp = /^-?\d+$/;

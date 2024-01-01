@@ -14,19 +14,12 @@ import { createAssertException } from './utils/createAssertException';
  */
 export function assertStrNotEmpty(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory,
-  options?: {
-    trim: boolean;
-  }
+  msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is string {
-  const { trim = true } = options ?? {};
-  if (!isStrNotEmpty(v, { trim })) {
+  if (!isStrNotEmpty(v)) {
     throw createAssertException(
       msgOrErrorFactory,
-      formatErrMsg(
-        `non-empty string (with trim: ${trim ? 'true' : 'false'})`,
-        v
-      )
+      formatErrMsg(`non-empty string`, v)
     );
   }
 }

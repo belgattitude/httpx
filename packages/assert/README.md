@@ -167,9 +167,8 @@ import { assertStrNotEmpty, isStrNotEmpty } from '@httpx/assert';
 
 isStrNotEmpty(''); // 👉 false
 isStrNotEmpty(' '); // 👉 false: trim by default
-isStrNotEmpty(' ', { trim: false }); // 👉 true: disbable trim
 assertStrNotEmpty(''); // 👉 throws
-assertStrNotEmpty('', undefined, { trim: false });
+assertStrNotEmpty('');
 ```
 
 #### isStrParsableSafeInt

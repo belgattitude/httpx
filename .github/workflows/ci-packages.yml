@@ -36,16 +36,20 @@ jobs:
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
 
+      - name: Cache rotation keys
+        id: cache-rotation
+        shell: bash
+        run: |
+          echo "YEAR_MONTH=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+
       - name: ♻️ Restore packages cache
         uses: actions/cache@v3
         with:
           path: |
             ${{ github.workspace }}/.cache
-            ${{ github.workspace }}/**/tsconfig.tsbuildinfo
-
-          key: ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'packages/**.json') }}
+          key: ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'integrations/**.[jt]sx?') }}
           restore-keys: |
-            ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
+            ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('yarn.lock') }}-
 
       - name: 🕵️ Typecheck
         run: yarn nx run-many --target=typecheck --exclude='examples/**' --exclude='docs'

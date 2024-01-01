@@ -52,20 +52,7 @@ describe('string assertions tests', () => {
     });
     it('should throw when value is invalid', () => {
       expect(() => assertStrNotEmpty(new Date())).toThrow(
-        new TypeError(
-          'Value is expected to be a non-empty string (with trim: true), got: Date'
-        )
-      );
-    });
-    it('should throw when value is only empty chars', () => {
-      expect(() =>
-        assertStrNotEmpty('   ', undefined, {
-          trim: true,
-        })
-      ).toThrow(
-        new TypeError(
-          'Value is expected to be a non-empty string (with trim: true), got: string(length:3)'
-        )
+        new TypeError('Value is expected to be a non-empty string, got: Date')
       );
     });
     it('should throw custom error when value is invalid', () => {
