@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 2.6.2
+
+### Patch Changes
+
+- [#850](https://github.com/belgattitude/httpx/pull/850) [`e17f083`](https://github.com/belgattitude/httpx/commit/e17f0836c4759c0fec29b2beb0c5c46b55a045a4) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix potential cyclic imports
+
 ## 2.6.1
 
 ### Patch Changes
