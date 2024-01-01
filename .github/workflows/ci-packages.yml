@@ -48,18 +48,18 @@ jobs:
             ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
 
       - name: 🕵️ Typecheck
-        run: yarn nx affected --target=typecheck --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=typecheck --exclude='examples/**' --exclude='docs'
 
       - name: 🔬 ESLint checks
-        run: yarn nx affected --target=lint --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=lint --exclude='examples/**' --exclude='docs'
 
       - name: 🧪 Unit tests (no-coverage - node !== 20.x)
         if: matrix.node-version != '20.x'
-        run: yarn nx affected --target=test-unit --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=test-unit --exclude='examples/**' --exclude='docs'
 
       - name: 🧪 Unit tests (coverage - only node 20.x)
         if: matrix.node-version == '20.x'
-        run: yarn nx affected --target=test-unit-coverage --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=test-unit-coverage --exclude='examples/**' --exclude='docs'
 
       - name: ☂️ Codecov upload (only node-20)
         if: matrix.node-version == '20.x'
@@ -70,22 +70,22 @@ jobs:
         shell: bash
 
       - name: 🧪 Unit tests (edge-runtime)
-        run: yarn nx affected --target=test-unit-edge --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=test-unit-edge --exclude='examples/**' --exclude='docs'
 
       - name: 🏗 Build packages
-        run: yarn nx affected --target=build --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
 
       - name: 📐 Check build for size-limits
         if: matrix.node-version == '20.x'
-        run: yarn nx affected --target=check-size --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=check-size --exclude='examples/**' --exclude='docs'
 
       - name: 🛟 Check build for ecmascript compliance
         if: matrix.node-version == '20.x'
-        run: yarn nx affected --target=check-dist --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=check-dist --exclude='examples/**' --exclude='docs'
 
       - name: 🛟 Check publishable dist (arethetypeswrong)
         if: matrix.node-version == '20.x'
-        run: yarn nx affected --target=check-pub --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=check-pub --exclude='examples/**' --exclude='docs'
 
       - name: 📄 Check doc can be built
-        run: yarn nx affected --target=docgen --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=docgen --exclude='examples/**' --exclude='docs'
