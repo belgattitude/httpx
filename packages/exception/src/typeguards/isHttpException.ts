@@ -1,4 +1,4 @@
-import { HttpException } from '../base';
+import { HttpException } from '../base/HttpException';
 
 /**
  * Test whether a value is an instanceof HttpException

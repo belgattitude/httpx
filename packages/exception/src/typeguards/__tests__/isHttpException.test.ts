@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { HttpException } from '../../base';
-import { HttpBadRequest } from '../../client';
-import { HttpInternalServerError } from '../../server';
+import { HttpException } from '../../base/HttpException';
+import { HttpBadRequest } from '../../client/HttpBadRequest';
+import { HttpInternalServerError } from '../../server/HttpInternalServerError';
 import { isHttpException } from '../isHttpException';
 
 describe('isHttpException', () => {

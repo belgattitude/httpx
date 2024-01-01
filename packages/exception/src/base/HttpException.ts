@@ -2,7 +2,8 @@ import { supportsErrorCause } from '../support/supportsErrorCause';
 import type { HttpErrorStatusCodeOrNumber } from '../types';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import type { HttpMethod } from '../types/HttpMethod';
-import { getSuper, initProtoAndName } from '../utils';
+import { getSuper } from '../utils/getSuper';
+import { initProtoAndName } from '../utils/initProtoAndName';
 
 export class HttpException extends Error implements HttpExceptionParams {
   /**

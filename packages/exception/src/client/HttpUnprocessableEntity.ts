@@ -1,4 +1,4 @@
-import { HttpClientException } from '../base';
+import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import type { HttpExceptionParamsWithIssues } from '../types/HttpExceptionParamsWithIssues';
 import type { HttpValidationIssue } from '../types/HttpValidationIssue';
