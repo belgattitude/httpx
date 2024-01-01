@@ -1,0 +1,103 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "defaultBase": "main",
+  "pluginsConfig": {
+    "@nrwl/js": {
+      "analyzeSourceFiles": false
+    }
+  },
+  "nxCloudAccessToken": "",
+  "parallel": 3,
+  "namedInputs": {
+    "sharedGlobals": [
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/.prettierignore",
+      "{workspaceRoot}/.prettierrs.js",
+      "{workspaceRoot}/codecov.yml",
+      "{workspaceRoot}/.nvmrc",
+      "{workspaceRoot}/package.json"
+    ],
+    "default": [
+      "sharedGlobals",
+      "{projectRoot}/**/*",
+      "!{projectRoot}/**/*.md"
+    ],
+    "all": ["sharedGlobals", "{projectRoot}/**/*"],
+    "public": [
+      "default",
+      "{projectRoot}/build",
+      "{projectRoot}/dist",
+      "{projectRoot}/.next",
+      "{projectRoot}/.out"
+    ]
+  },
+  "targetDefaults": {
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "inputs": [
+        "default",
+        "^public",
+        { "externalDependencies": ["typescript"] }
+      ],
+      "outputs": ["{projectRoot}/tsconfig.tsbuildinfo"],
+      "cache": true
+    },
+    "lint": {
+      "dependsOn": ["^lint"],
+      "inputs": ["default", "^public"],
+      "cache": true
+    },
+    "check-size": {
+      "dependsOn": ["^build", "^check-size"],
+      "inputs": ["default", "^public"],
+      "cache": true
+    },
+    "check-dist": {
+      "dependsOn": ["^build", "^check-dist"],
+      "inputs": ["default", "^public"],
+      "cache": true
+    },
+    "check-pub": {
+      "dependsOn": ["^build", "^check-pub"],
+      "inputs": ["default", "^public"],
+      "cache": true
+    },
+    "test-unit": {
+      "dependsOn": ["^test-unit"],
+      "inputs": ["default", "^public", { "runtime": "node -v" }],
+      "outputs": ["{projectRoot}/coverage"],
+      "cache": true
+    },
+    "test-unit-coverage": {
+      "dependsOn": ["^test-unit-coverage"],
+      "inputs": ["default", "^public", { "runtime": "node -v" }],
+      "outputs": ["{projectRoot}/coverage"],
+      "cache": true
+    },
+    "test-unit-edge": {
+      "dependsOn": ["^test-unit-edge"],
+      "inputs": [
+        "default",
+        "^public",
+        { "externalDependencies": ["vitest", "@edge-runtime/vm"] }
+      ],
+      "outputs": ["{projectRoot}/coverage"],
+      "cache": true
+    },
+    "docgen": {
+      "dependsOn": ["^docgen"],
+      "inputs": ["all", "^public"],
+      "outputs": ["{projectRoot}/docs/api"],
+      "cache": true
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^public", { "runtime": "node -v" }],
+      "outputs": ["{projectRoot}/build", "{projectRoot}/dist"],
+      "cache": true
+    }
+  }
+}

@@ -128,7 +128,7 @@ Error.message
 
 ### method
 
-• `Readonly` **method**: `undefined` \| `HttpMethod`
+• `Readonly` **method**: `undefined` \| `"CONNECT"` \| `"DELETE"` \| `"GET"` \| `"HEAD"` \| `"OPTIONS"` \| `"PATCH"` \| `"POST"` \| `"PUT"` \| `"QUERY"` \| `"TRACE"`
 
 Http method
 
@@ -181,6 +181,12 @@ HttpExceptionParams.url
 ### prepareStackTrace
 
 ▪ `Static` `Optional` **prepareStackTrace**: (`err`: `Error`, `stackTraces`: `CallSite`[]) => `any`
+
+Optional override for formatting stack traces
+
+**`See`**
+
+https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Type declaration
 

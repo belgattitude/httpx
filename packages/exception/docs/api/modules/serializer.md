@@ -57,9 +57,9 @@ an object suitable for serialization (a serializable version).
 
 #### Parameters
 
-| Name | Type                                                                                              |
-| :--- | :------------------------------------------------------------------------------------------------ |
-| `e`  | [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror) |
+| Name | Type                                                                                                                                                            |
+| :--- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `e`  | `Error` \| [`HttpException`](../classes/base.HttpException.md) \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError` |
 
 #### Returns
 
@@ -71,7 +71,7 @@ an object suitable for serialization (a serializable version).
 
 ### createFromSerializable
 
-▸ **createFromSerializable**(`payload`): [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror)
+▸ **createFromSerializable**(`payload`): `Error` \| [`HttpException`](../classes/base.HttpException.md) \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError`
 
 create an Error, NativeError or any HttpException from a
 serializable representation
@@ -84,7 +84,7 @@ serializable representation
 
 #### Returns
 
-[`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror)
+`Error` \| [`HttpException`](../classes/base.HttpException.md) \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError`
 
 **`Link`**
 
@@ -112,9 +112,9 @@ serializable representation
 
 #### Parameters
 
-| Name        | Type                                                                                              |
-| :---------- | :------------------------------------------------------------------------------------------------ |
-| `exception` | [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror) |
+| Name        | Type                                                                                                                                                            |
+| :---------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `exception` | `Error` \| [`HttpException`](../classes/base.HttpException.md) \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError` |
 
 #### Returns
 

@@ -106,6 +106,7 @@
     "check-pub": "attw --pack",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-watch": "vitest --ui",
     "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix",
