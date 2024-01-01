@@ -1,7 +1,7 @@
-import { HttpException } from '../base';
-import { createHttpException } from '../factory';
-import { HttpInternalServerError } from '../server';
-import { isErrorWithErrorStatusCode } from '../typeguards';
+import { HttpException } from '../base/HttpException';
+import { createHttpException } from '../factory/createHttpException';
+import { HttpInternalServerError } from '../server/HttpInternalServerError';
+import { isErrorWithErrorStatusCode } from '../typeguards/isErrorWithErrorStatusCode';
 import { isObjectWithErrorStatusCode } from '../typeguards/isObjectWithErrorStatusCode';
 
 type AsyncFn<A extends unknown[], O> = (...args: A) => Promise<O>;

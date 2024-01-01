@@ -1,4 +1,4 @@
-import { HttpServerException } from '../base';
+import { HttpServerException } from '../base/HttpServerException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import { getSuperArgs, initProtoAndName } from '../utils';
 

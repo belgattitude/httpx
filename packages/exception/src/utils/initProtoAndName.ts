@@ -1,4 +1,4 @@
-import type { HttpException } from '../base';
+import type { HttpException } from '../base/HttpException';
 
 /**
  * @internal

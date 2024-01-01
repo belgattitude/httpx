@@ -1,6 +1,7 @@
 import type { HttpErrorStatusCodeOrNumber } from '../types';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuper, initProtoAndName } from '../utils';
+import { getSuper } from '../utils/getSuper';
+import { initProtoAndName } from '../utils/initProtoAndName';
 import { HttpException } from './HttpException';
 
 /**

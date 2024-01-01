@@ -1,8 +1,6 @@
-import {
-  HttpClientException,
-  HttpException,
-  HttpServerException,
-} from '../../base';
+import { HttpClientException } from '../../base/HttpClientException';
+import { HttpException } from '../../base/HttpException';
+import { HttpServerException } from '../../base/HttpServerException';
 
 export const baseExceptionMap = {
   HttpClientException: HttpClientException,

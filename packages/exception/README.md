@@ -45,6 +45,7 @@ pnpm add @httpx/exception     # via pnpm
 - [Parameters](#parameters)
   - [Error context](#error-context)
 - [Properties](#properties)
+- [Nested errors](#nested-errors)
 - [Static members](#static-members)
 - [Instanceof checks](#instanceof-checks)
   - [Class diagram](#class-diagram)
@@ -53,7 +54,6 @@ pnpm add @httpx/exception     # via pnpm
   - [isErrorWithErrorStatusCode](#iserrorwitherrorstatuscode)
   - [isObjectWithErrorStatusCode](#isobjectwitherrorstatuscode)
   - [isHttpErrorStatusCode](#ishttperrorstatuscode)
-- [Nested errors](#nested-errors)
 - [Serializer](#serializer)
   - [JSON](#json)
   - [Serializable](#serializable)
@@ -193,6 +193,28 @@ const e422 = new HttpUnprocessableEntity({
 // ...
 ```
 
+## Nested errors
+
+When creating a http exception, it's possible to attach the original error
+to the native [Error.cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause)
+property.
+
+```typescript
+const e = new HttpBadRequest({
+  // 👉 nesting
+  cause: new TypeError({
+    message: "Param validation failed",
+    // 👉 nesting: multiple levels are supported
+    cause: new NoSuchUser("User id is invalid"),
+  }),
+});
+```
+
+> Error cause is supported by [>93% of browsers](https://caniuse.com/mdn-javascript_builtins_error_cause) as
+> of 12/2023. NodeJs supports it since 16.17. Nested cause will simply be discarded if not supported (no runtime error).
+> The [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) can be installed if not provided
+> already by your framework.
+
 ## Static members
 
 All exceptions have a static `STATUS`, this can improve readability and code review.
@@ -329,27 +351,6 @@ isHttpErrorStatusCode(404);
 // False
 isHttpErrorStatusCode(200);
 ```
-
-## Nested errors
-
-When creating a http exception, it's possible to attach the original error
-to the native [Error.cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause)
-property.
-
-```typescript
-const e = new HttpBadRequest({
-  // 👉 nesting
-  cause: new TypeError({
-    message: "Param validation failed",
-    // 👉 nesting: multiple levels are supported
-    cause: new NoSuchUser("User id is invalid"),
-  }),
-});
-```
-
-> Error cause is supported by [>93% of browsers](https://caniuse.com/mdn-javascript_builtins_error_cause) as
-> of 12/2023. NodeJs supports it since 16.17. Nested cause will simply be discarded if not supported (no runtime error).
-> In case of there's a real need to support older runtimes, add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill).
 
 ## Serializer
 
