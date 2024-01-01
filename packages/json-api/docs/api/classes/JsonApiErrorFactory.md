@@ -1,4 +1,4 @@
-[@httpx/json-api - v0.5.7](../README.md) / JsonApiErrorFactory
+[@httpx/json-api - v0.5.8](../README.md) / JsonApiErrorFactory
 
 # Class: JsonApiErrorFactory
 

@@ -142,7 +142,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ### method
 
-• `Readonly` **method**: `undefined` \| `HttpMethod`
+• `Readonly` **method**: `undefined` \| `"CONNECT"` \| `"DELETE"` \| `"GET"` \| `"HEAD"` \| `"OPTIONS"` \| `"PATCH"` \| `"POST"` \| `"PUT"` \| `"QUERY"` \| `"TRACE"`
 
 Http method
 
@@ -199,6 +199,12 @@ Indicates the original url that caused the error.
 ### prepareStackTrace
 
 ▪ `Static` `Optional` **prepareStackTrace**: (`err`: `Error`, `stackTraces`: `CallSite`[]) => `any`
+
+Optional override for formatting stack traces
+
+**`See`**
+
+https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Type declaration
 

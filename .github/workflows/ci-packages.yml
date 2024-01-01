@@ -48,18 +48,20 @@ jobs:
             ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
 
       - name: 🕵️ Typecheck
-        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run typecheck
+        run: yarn nx affected --target=typecheck --exclude='examples/**' --exclude='docs'
 
       - name: 🔬 ESLint checks
-        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run lint
+        run: yarn nx affected --target=lint --exclude='examples/**' --exclude='docs'
 
-      - name: 🧪 Unit tests
-        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run test-unit --coverage
+      - name: 🧪 Unit tests (no-coverage - node !== 20.x)
+        if: matrix.node-version != '20.x'
+        run: yarn nx affected --target=test-unit --exclude='examples/**' --exclude='docs'
 
-      - name: 🧪 Unit tests (edge-runtime)
-        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run test-unit-edge
+      - name: 🧪 Unit tests (coverage - only node 20.x)
+        if: matrix.node-version == '20.x'
+        run: yarn nx affected --target=test-unit-coverage --exclude='examples/**' --exclude='docs'
 
-      - name: ☂️ Codecov upload
+      - name: ☂️ Codecov upload (only node-20)
         if: matrix.node-version == '20.x'
         working-directory: ${{ github.workspace }}
         run: |
@@ -67,17 +69,23 @@ jobs:
           yarn g:ci-coverage-upload
         shell: bash
 
+      - name: 🧪 Unit tests (edge-runtime)
+        run: yarn nx affected --target=test-unit-edge --exclude='examples/**' --exclude='docs'
+
       - name: 🏗 Build packages
-        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run build
+        run: yarn nx affected --target=build --exclude='examples/**' --exclude='docs'
 
       - name: 📐 Check build for size-limits
-        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run check-size
+        if: matrix.node-version == '20.x'
+        run: yarn nx affected --target=check-size --exclude='examples/**' --exclude='docs'
 
       - name: 🛟 Check build for ecmascript compliance
-        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run check-dist
+        if: matrix.node-version == '20.x'
+        run: yarn nx affected --target=check-dist --exclude='examples/**' --exclude='docs'
 
       - name: 🛟 Check publishable dist (arethetypeswrong)
-        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run check-pub
+        if: matrix.node-version == '20.x'
+        run: yarn nx affected --target=check-pub --exclude='examples/**' --exclude='docs'
 
       - name: 📄 Check doc can be built
-        run: yarn workspaces foreach -tv --worktree --from 'packages/*' --no-private run build-doc
+        run: yarn nx affected --target=docgen --exclude='examples/**' --exclude='docs'
