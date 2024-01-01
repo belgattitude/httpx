@@ -119,6 +119,13 @@ switch(state) {
 
 #### isPlainObject
 
+
+| Name              | Type          | Comment          |
+|-------------------|---------------|------------------|
+| isPlainObject     | `PlainObject` |   |
+| assertPlainObject | `PlainObject` |  |
+
+
 ```typescript
 import { isPainObject, assertPlainObject } from '@httpx/assert';
 
@@ -142,31 +149,48 @@ assertNumberSafeInt(Number.MAX_SAFE_INTEGER + 1); // 👉 throws
 
 ### Array related
 
-#### isArrayNotEmpty
+#### ArrayNonEmpty
+
+
+| Name                | Type      | Opaque type     | Comment         |
+|---------------------|-----------|-----------------|-----------------|
+| isArrayNonEmpty     | `string`  | `ArrayNonEmpty` |  |
+| assertArrayNonEmpty | `string`  | `ArrayNonEmpty` |  |
+
 
 ```typescript
-import { isArrayNotEmpty, assertArrayNotEmpty } from '@httpx/assert';
+import { isArrayNonEmpty, assertArrayNonEmpty, type ArrayNonEmpty } from '@httpx/assert';
 
-isArrayNotEmpty([]) // 👉 false
-isArrayNotEmpty([0,1]) // 👉 true
+isArrayNonEmpty([]) // 👉 false
+isArrayNonEmpty([0,1]) // 👉 true
+isArrayNonEmpty([null]) // 👉 true
 assertArrayNotEmpty([]) // 👉 throws
 ```
 
 ### String related
 
-#### isStrNotEmpty
+#### StringNotEmpty
+
+| Name                 | Type      | Opaque type      | Comment         |
+|----------------------|-----------|------------------|-----------------|
+| isStringNonEmpty     | `string`  | `StringNonEmpty` | Trims the value |
+| assertStringNonEmpty | `string`  | `StringNonEmpty` | Trims the value |
 
 ```typescript
-import { assertStrNotEmpty, isStrNotEmpty } from '@httpx/assert';
+import { assertStringNonEmpty, isStringNonEmpty, type StringNonEmpty } from '@httpx/assert';
 
-isStrNotEmpty(''); // 👉 false
-isStrNotEmpty(' '); // 👉 false: trim by default
-isStrNotEmpty(' ', { trim: false }); // 👉 true: disbable trim
-assertStrNotEmpty(''); // 👉 throws
-assertStrNotEmpty('', undefined, { trim: false });
+isStringNonEmpty(''); // 👉 false
+isStringNonEmpty(' '); // 👉 false: trim by default
+assertStringNonEmpty(''); // 👉 throws
 ```
 
-#### isStrParsableSafeInt
+#### ParsableSafeInt
+
+| Name                  | Type      | Opaque type       | Comment         |
+|-----------------------|-----------|-------------------|-----------------|
+| isParsableSafeInt     | `string`  | `ParsableSafeInt` |  |
+| assertParsableSafeInt | `string`  | `ParsableSafeInt` |  |
+
 
 ```typescript
 import { assertStrParsableSafeInt, isStrParsableSafeInt } from '@httpx/assert';
@@ -176,27 +200,44 @@ isStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}`); // 👉 true
 assertStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}1`); // 👉 throws
 ```
 
-#### isStrParsableStrictIsoDateZ
+#### isParsableStrictIsoDateZ
 
 Ensure a string contains a strict iso datetime with microseconds and utc suffix
 (aka: zulu time). Date is checked for validity.
 
+
+| Name                         | Type      | Opaque type              | Comment         |
+|------------------------------|-----------|--------------------------|-----------------|
+| isParsableStrictIsoDateZ     | `string`  | `ParsableStrictIsoDateZ` |  |
+| assertParsableStrictIsoDateZ | `string`  | `ParsableStrictIsoDateZ`        |  |
+
 ```typescript
-import { isStrParsableStrictIsoDateZ, assertStrParsableStrictIsoDateZ } from '@httpx/assert';
+import { isParsableStrictIsoDateZ, assertParsableStrictIsoDateZ, type ParsableStrictIsoDateZ } from '@httpx/assert';
 
-isStrParsableStrictIsoDateZ(new Date().toISOString()); // 👉 true
-isStrParsableStrictIsoDateZ('2023-12-29T23:37:31.653z'); // 👉 true
-isStrParsableStrictIsoDateZ('2023-02-29T23:37:31.653'); // 👉 false, cause no 29th february in 2023
+isParsableStrictIsoDateZ(new Date().toISOString()); // 👉 true
+isParsableStrictIsoDateZ('2023-12-29T23:37:31.653z'); // 👉 true
+isParsableStrictIsoDateZ('2023-02-29T23:37:31.653'); // 👉 false, cause no 29th february in 2023
 
-assertStrParsableStrictIsoDateZ('2023-02-29T23:37:31.653z'); // 👉 throws cause no 29th february
+assertParsableStrictIsoDateZ('2023-02-29T23:37:31.653z'); // 👉 throws cause no 29th february
 ```
-
 
 ### Uuid
 
 #### isUuid
 
-Supported uuid versions are: 1, 3, 4 and 5.
+| Name           | Type                | Opaque type                            | Comment |
+|----------------|---------------------|----------------------------------------|--------|
+| isUuid         | `string`            | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5` |  |
+| isUuidV1       | `string`            | `UuidV1`                               |  |
+| isUuidV3       | `string`            | `UuidV3`                               |  |
+| isUuidV4       | `string`            | `UuidV4`                               |  |
+| isUuidV5       | `string`            | `UuidV5`                               |  |
+| assertUuid     | `string`            | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5` |        |
+| assertUuidV1   | `string`            | `UuidV5`                               |        |
+| assertUuidV3   | `string`            | `UuidV3`                               |        |
+| assertUuidV4   | `string`            | `UuidV4`                               |        |
+| assertUuidV5   | `string`            | `UuidV5`                               |        |
+| getUuidVersion | `1 \| 3 \| 4 \| 5 ` |                                |        |
 
 ```typescript
 import { isUuid, isUuidV1, isUuidV3, isUuidV4, isUuidV5 } from "@httpx/assert";
@@ -208,8 +249,8 @@ isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d'); // 👉 valid uuid v1, 3, 4 or 5
 assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 
 // With version
-isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d', { version: 5 });
-assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d', undefined, { version: 5 });
+isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
+assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 assertUuidV5('90123e1c-7512-523e-bb28-76fab9f2f73d')
 isUuidV4('d9428888-122b-11e1-b85c-61cd3cbb3210'); // 👈 or isUuidV1(''), isUuidV3(''), isUuidV5('');
 
@@ -257,6 +298,7 @@ ESM individual imports are tracked by a
 | Node16     | ✅  |                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | Node18     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                                                                                       |
 | Node20     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Node21     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                      |
 | Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)                                                                                                                                                                                                                                                                                                                                   |
 | Browsers   | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Minimums to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) |
 | Typescript | ✅  | TS 4.7+ / Dual packaging is ensured with [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) on the CI.                                                                                                                                                                                                                                                                            |

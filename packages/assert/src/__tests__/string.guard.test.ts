@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-  isStrNotEmpty,
-  isStrParsableSafeInt,
-  isStrParsableStrictIsoDateZ,
+  isParsableSafeInt,
+  isParsableStrictIsoDateZ,
+  isStringNonEmpty,
 } from '../string.guards';
 
 describe('Typeguards string tests', () => {
-  describe('isStrParsableIsoStrictDateZ', () => {
+  describe('isParsableIsoStrictDateZ', () => {
     it.each([
       [true, new Date().toISOString()],
       [true, '2023-12-29T23:37:31.653Z'],
@@ -22,7 +22,7 @@ describe('Typeguards string tests', () => {
       [false, '2023-12-29T23:37:31?653z'],
       [false, 0],
     ])('should return %s when %s(/%s) is given', (expected, v) => {
-      expect(isStrParsableStrictIsoDateZ(v)).toBe(expected);
+      expect(isParsableStrictIsoDateZ(v)).toBe(expected);
     });
   });
   describe('isStrParsableSafeInt', () => {
@@ -35,10 +35,10 @@ describe('Typeguards string tests', () => {
       [false, 10n],
       [false, `${Number.MIN_SAFE_INTEGER - 1}`],
     ])('should return %s when %s is given', (expected, v) => {
-      expect(isStrParsableSafeInt(v)).toBe(expected);
+      expect(isParsableSafeInt(v)).toBe(expected);
     });
   });
-  describe('isStrNotEmpty', () => {
+  describe('isStringNonEmpty', () => {
     it.each([
       [true, 'cool'],
       [false, 1],
@@ -48,7 +48,7 @@ describe('Typeguards string tests', () => {
       [false, undefined],
       [false, {}],
     ])('should return %s when %s is given', (expected, v) => {
-      expect(isStrNotEmpty(v)).toBe(expected);
+      expect(isStringNonEmpty(v)).toBe(expected);
     });
   });
 });

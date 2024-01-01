@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { isArrayNotEmpty } from '../array.guards';
+import { isArrayNonEmpty } from '../array.guards';
 
 describe('Array typeguards tests', () => {
   describe('isArrayNotEmpty', () => {
@@ -11,7 +11,7 @@ describe('Array typeguards tests', () => {
       [true, Array.from(['cool'])],
       [true, ['cool']],
     ])('should return %s when %s is given', (expected, v) => {
-      expect(isArrayNotEmpty(v)).toBe(expected);
+      expect(isArrayNonEmpty(v)).toBe(expected);
     });
   });
 });

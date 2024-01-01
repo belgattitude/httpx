@@ -1,16 +1,17 @@
 import { isNumberSafeInt } from './number.guards';
 import type {
-  StrParsableSafeInt,
-  StrParsableStrictIsoDateZ,
+  ParsableSafeInt,
+  ParsableStrictIsoDateZ,
+  StringNonEmpty,
 } from './string.types';
 import { isoDateTimeZRegexp } from './string.utils';
 
-export const isStrNotEmpty = (v: unknown): v is string => {
+export const isStringNonEmpty = (v: unknown): v is StringNonEmpty => {
   return typeof v === 'string' && v.trim().length > 0;
 };
 
 const alphaRegexp = /^-?\d+$/;
-export const isStrParsableSafeInt = (v: unknown): v is StrParsableSafeInt => {
+export const isParsableSafeInt = (v: unknown): v is ParsableSafeInt => {
   if (typeof v !== 'string') {
     return false;
   }
@@ -31,11 +32,11 @@ export const isStrParsableSafeInt = (v: unknown): v is StrParsableSafeInt => {
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
  * @link https://en.wikipedia.org/wiki/Coordinated_Universal_Time
  */
-export const isStrParsableStrictIsoDateZ = (
+export const isParsableStrictIsoDateZ = (
   v: unknown
-): v is StrParsableStrictIsoDateZ => {
+): v is ParsableStrictIsoDateZ => {
   if (
-    !isStrNotEmpty(v) ||
+    !isStringNonEmpty(v) ||
     v.length !== 24 ||
     !isoDateTimeZRegexp.test(v.toLocaleUpperCase())
   ) {
@@ -43,7 +44,7 @@ export const isStrParsableStrictIsoDateZ = (
   }
   try {
     const d = new Date(v);
-    return d.toISOString().toLocaleLowerCase() === v.toLocaleLowerCase();
+    return d.toISOString().toLowerCase() === v.toLowerCase();
   } catch {
     return false;
   }

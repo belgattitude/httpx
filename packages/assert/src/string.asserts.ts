@@ -1,9 +1,6 @@
 import { formatErrMsg } from './messages/errorMessages';
-import { isStrNotEmpty, isStrParsableSafeInt } from './string.guards';
-import type {
-  StrParsableSafeInt,
-  StrParsableStrictIsoDateZ,
-} from './string.types';
+import { isParsableSafeInt, isStringNonEmpty } from './string.guards';
+import type { ParsableSafeInt, ParsableStrictIsoDateZ } from './string.types';
 import { isoDateTimeZRegexp } from './string.utils';
 import type { MsgOrErrorFactory } from './types/internal.types';
 import { createAssertException } from './utils/createAssertException';
@@ -16,7 +13,7 @@ export function assertStrNotEmpty(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is string {
-  if (!isStrNotEmpty(v)) {
+  if (!isStringNonEmpty(v)) {
     throw createAssertException(
       msgOrErrorFactory,
       formatErrMsg(`non-empty string`, v)
@@ -24,11 +21,11 @@ export function assertStrNotEmpty(
   }
 }
 
-export function assertStrParsableSafeInt(
+export function assertParsableSafeInt(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
-): asserts v is StrParsableSafeInt {
-  if (!isStrParsableSafeInt(v)) {
+): asserts v is ParsableSafeInt {
+  if (!isParsableSafeInt(v)) {
     throw createAssertException(
       msgOrErrorFactory,
       formatErrMsg(`string containing a safe integer`, v)
@@ -39,10 +36,10 @@ export function assertStrParsableSafeInt(
 /**
  * @throws TypeError
  */
-export function assertStrParsableStrictIsoDateZ(
+export function assertParsableStrictIsoDateZ(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
-): asserts v is StrParsableStrictIsoDateZ {
+): asserts v is ParsableStrictIsoDateZ {
   let check: 'INVALID_FORMAT' | 'INVALID_DATE' | true | null = null;
   if (typeof v !== 'string') {
     check = null;

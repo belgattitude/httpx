@@ -1,7 +1,7 @@
-import type { ArrayNotEmpty } from './array.types';
+import type { ArrayNoNEmpty } from './array.types';
 
-export const isArrayNotEmpty = <T = unknown>(
+export const isArrayNonEmpty = <T = unknown>(
   v: unknown
-): v is ArrayNotEmpty<T> => {
+): v is ArrayNoNEmpty<T> => {
   return Array.isArray(v) && v.length > 0;
 };

@@ -1,14 +1,14 @@
 import {
+  assertParsableSafeInt,
+  assertParsableStrictIsoDateZ,
   assertStrNotEmpty,
-  assertStrParsableSafeInt,
-  assertStrParsableStrictIsoDateZ,
 } from '../string.asserts';
 
 describe('string assertions tests', () => {
   describe('assertStrParsableStrictIsoDateZ', () => {
     it('should not throw when value is valid', () => {
       expect(() =>
-        assertStrParsableStrictIsoDateZ(new Date().toISOString())
+        assertParsableStrictIsoDateZ(new Date().toISOString())
       ).not.toThrow();
     });
     it.each([
@@ -25,17 +25,15 @@ describe('string assertions tests', () => {
         new Date(),
       ],
     ])('should throw with message %s when value is %s', (msg, v) => {
-      expect(() => assertStrParsableStrictIsoDateZ(v)).toThrow(
-        new TypeError(msg)
-      );
+      expect(() => assertParsableStrictIsoDateZ(v)).toThrow(new TypeError(msg));
     });
   });
   describe('assertStrParsableSafeInt', () => {
     it('should not throw when value is valid', () => {
-      expect(() => assertStrParsableSafeInt('10')).not.toThrow();
+      expect(() => assertParsableSafeInt('10')).not.toThrow();
     });
     it('should throw when value is invalid', () => {
-      expect(() => assertStrParsableSafeInt(10)).toThrow(
+      expect(() => assertParsableSafeInt(10)).toThrow(
         new TypeError(
           'Value is expected to be a string containing a safe integer, got: number(length:2)'
         )
@@ -43,7 +41,7 @@ describe('string assertions tests', () => {
     });
     it('should throw custom error when value is invalid', () => {
       const e = new Error('cool');
-      expect(() => assertStrParsableSafeInt('', () => e)).toThrow(e);
+      expect(() => assertParsableSafeInt('', () => e)).toThrow(e);
     });
   });
   describe('assertStrNotEmpty', () => {

@@ -1,10 +1,5 @@
 {
-  "entryPoints": [
-    "src/guards/*.ts",
-    "src/asserts/*.ts",
-    "src/types/*.ts",
-    "src/helpers/*.ts"
-  ],
+  "entryPoints": ["src/*.ts"],
   "out": "./docs/api/assert",
   "excludePrivate": true,
   "excludeProtected": true,
