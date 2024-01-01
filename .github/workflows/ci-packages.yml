@@ -47,9 +47,9 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}/.cache
-        key: ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'packages/**.json') }}
-        restore-keys: |
-          ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/yarn.lock') }}-
+          key: ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'packages/**.json') }}
+          restore-keys: |
+            ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/yarn.lock') }}-
 
       - name: 🕵️ Typecheck
         run: yarn nx run-many --target=typecheck --exclude='examples/**' --exclude='docs'
