@@ -56,9 +56,13 @@
     "check-pub": "attw --pack",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-coverage": "vitest run --coverage",
     "test-unit-watch": "vitest --ui",
     "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage"
+  },
+  "dependencies": {
+    "@httpx/exception": "workspace:^"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.13.5",
@@ -66,9 +70,9 @@
     "@size-limit/file": "11.0.1",
     "@size-limit/webpack": "11.0.1",
     "@size-limit/webpack-why": "11.0.1",
-    "@types/node": "20.10.5",
-    "@vitest/coverage-istanbul": "1.1.0",
-    "@vitest/ui": "1.1.0",
+    "@types/node": "20.10.6",
+    "@vitest/coverage-istanbul": "1.1.1",
+    "@vitest/ui": "1.1.1",
     "cross-env": "7.0.3",
     "es-check": "7.1.1",
     "esbuild": "0.19.11",
@@ -77,12 +81,12 @@
     "rimraf": "5.0.5",
     "size-limit": "11.0.1",
     "tsup": "8.0.1",
-    "typedoc": "0.25.4",
+    "typedoc": "0.25.5",
     "typedoc-plugin-markdown": "3.17.1",
     "typescript": "5.3.3",
     "vite": "5.0.10",
     "vite-tsconfig-paths": "4.2.3",
-    "vitest": "1.1.0",
+    "vitest": "1.1.1",
     "webpack": "5.89.0"
   },
   "engines": {
