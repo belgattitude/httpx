@@ -9,7 +9,7 @@
       "analyzeSourceFiles": false
     }
   },
-  "nxCloudAccessToken": "",
+  "nxCloudAccessToken": "MzkyNTFiZjctYWViZi00NDkzLWIxODAtNmIyN2ViNTA3NmFmfHJlYWQtd3JpdGU=",
   "parallel": 3,
   "namedInputs": {
     "sharedGlobals": [
@@ -40,7 +40,9 @@
       "inputs": [
         "default",
         "^public",
-        { "externalDependencies": ["typescript"] }
+        {
+          "externalDependencies": ["typescript"]
+        }
       ],
       "outputs": ["{projectRoot}/tsconfig.tsbuildinfo"],
       "cache": true
@@ -67,13 +69,25 @@
     },
     "test-unit": {
       "dependsOn": ["^test-unit"],
-      "inputs": ["default", "^public", { "runtime": "node -v" }],
+      "inputs": [
+        "default",
+        "^public",
+        {
+          "runtime": "node -v"
+        }
+      ],
       "outputs": ["{projectRoot}/coverage"],
       "cache": true
     },
     "test-unit-coverage": {
       "dependsOn": ["^test-unit-coverage"],
-      "inputs": ["default", "^public", { "runtime": "node -v" }],
+      "inputs": [
+        "default",
+        "^public",
+        {
+          "runtime": "node -v"
+        }
+      ],
       "outputs": ["{projectRoot}/coverage"],
       "cache": true
     },
@@ -82,7 +96,9 @@
       "inputs": [
         "default",
         "^public",
-        { "externalDependencies": ["vitest", "@edge-runtime/vm"] }
+        {
+          "externalDependencies": ["vitest", "@edge-runtime/vm"]
+        }
       ],
       "outputs": ["{projectRoot}/coverage"],
       "cache": true
@@ -95,7 +111,13 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["default", "^public", { "runtime": "node -v" }],
+      "inputs": [
+        "default",
+        "^public",
+        {
+          "runtime": "node -v"
+        }
+      ],
       "outputs": ["{projectRoot}/build", "{projectRoot}/dist"],
       "cache": true
     }
