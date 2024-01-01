@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     cache: {
-      dir: '../../.cache/vitest/httpx-exception',
+      dir: '../../.cache/vitest/prisma-exception',
     },
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
@@ -20,11 +20,20 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'json', 'clover'],
     },
-    deps: {
-      /*
-      experimentalOptimizer: {
-        enabled: false,
-      }, */
+    typecheck: {
+      enabled: false,
+    },
+    pool: 'vmThreads',
+    poolOptions: {
+      vmThreads: {
+        // useAtomics: true,
+      },
+      threads: {
+        // minThreads: 1,
+        // maxThreads: 16,
+        useAtomics: true, // perf+
+        isolate: false, // perf+++
+      },
     },
     environment: 'node',
     exclude: [
@@ -37,7 +46,7 @@ export default defineConfig({
     include: testFiles,
     // To mimic Jest behaviour regarding mocks.
     mockReset: true,
-    passWithNoTests: false,
+    passWithNoTests: true,
     restoreMocks: true,
   },
 });
