@@ -27,7 +27,7 @@
     "g:check-dist": "yarn nx affected --target=check-dist --exclude='examples/**' --exclude='docs'",
     "g:check-size": "yarn nx affected --target=check-size --exclude='examples/**' --exclude='docs'",
     "g:check-pub": "yarn nx affected --target=check-pub --exclude='examples/**' --exclude='docs'",
-    "g:release": "yarn g:build-release && yarn g:check-package-dist && yarn exec changeset publish",
+    "g:release": "yarn g:build-release && yarn g:check-dist && yarn exec changeset publish",
     "g:ci-coverage-upload": "yarn workspaces foreach --all -tv run ci-coverage-upload",
     "clean:lint": "rimraf ./.cache/eslint",
     "clean:global-cache": "rimraf ./.cache",

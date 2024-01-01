@@ -38,7 +38,7 @@ jobs:
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
 
-      - name: ⚙️ Nx setup -SHAs for base and head for `nx affected` commands
+      - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
         id: nx-set-shas
         uses: nrwl/nx-set-shas@v4
 

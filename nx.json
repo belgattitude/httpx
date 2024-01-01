@@ -111,13 +111,13 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "default",
-        "^public",
-        {
-          "runtime": "node -v"
-        }
-      ],
+      "inputs": ["default", "^public"],
+      "outputs": ["{projectRoot}/build", "{projectRoot}/dist"],
+      "cache": true
+    },
+    "build-release": {
+      "dependsOn": ["^build-release"],
+      "inputs": ["default", "^public"],
       "outputs": ["{projectRoot}/build", "{projectRoot}/dist"],
       "cache": true
     }
