@@ -28,7 +28,7 @@ export type * from './object.types';
 // string
 export * from './string.asserts';
 export * from './string.guards';
-export * from './string.types';
+export type * from './string.types';
 
 // types
 export * from './types.asserts';

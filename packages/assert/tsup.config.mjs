@@ -8,7 +8,7 @@ export default defineConfig((options) => {
     clean: true,
     dts: true,
     // bundle: false,
-    entry: ['src/**/*.ts', '!src/**/*.test.ts'],
+    entry: ['src/**/*.ts', '!src/**/*.test.ts', '!src/**/*.types.ts'],
     format: ['cjs', 'esm'],
     minify: !options.watch,
     minifyIdentifiers: true,
