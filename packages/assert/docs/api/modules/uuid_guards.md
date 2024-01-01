@@ -17,7 +17,7 @@
 
 ### isUuid
 
-▸ **isUuid**(`v`, `version?`): v is string
+▸ **isUuid**(`v`, `version?`): v is Uuid
 
 Check whether a value is string and passes uuid validation with
 optional given version
@@ -31,13 +31,13 @@ optional given version
 
 #### Returns
 
-v is string
+v is Uuid
 
 ___
 
 ### isUuidV1
 
-▸ **isUuidV1**(`v`): v is string
+▸ **isUuidV1**(`v`): v is UuidV1
 
 #### Parameters
 
@@ -47,13 +47,13 @@ ___
 
 #### Returns
 
-v is string
+v is UuidV1
 
 ___
 
 ### isUuidV3
 
-▸ **isUuidV3**(`v`): v is string
+▸ **isUuidV3**(`v`): v is UuidV3
 
 #### Parameters
 
@@ -63,13 +63,13 @@ ___
 
 #### Returns
 
-v is string
+v is UuidV3
 
 ___
 
 ### isUuidV4
 
-▸ **isUuidV4**(`v`): v is string
+▸ **isUuidV4**(`v`): v is UuidV4
 
 #### Parameters
 
@@ -79,13 +79,13 @@ ___
 
 #### Returns
 
-v is string
+v is UuidV4
 
 ___
 
 ### isUuidV5
 
-▸ **isUuidV5**(`v`): v is string
+▸ **isUuidV5**(`v`): v is UuidV5
 
 #### Parameters
 
@@ -95,7 +95,7 @@ ___
 
 #### Returns
 
-v is string
+v is UuidV5
 
 ___
 

@@ -1,5 +1,5 @@
 import { isArrayNonEmpty } from './array.guards';
-import type { ArrayNoNEmpty } from './array.types';
+import type { ArrayNonEmpty } from './array.types';
 import { formatErrMsg } from './messages/errorMessages';
 import type { MsgOrErrorFactory } from './types/internal.types';
 import { createAssertException } from './utils/createAssertException';
@@ -10,7 +10,7 @@ import { createAssertException } from './utils/createAssertException';
 export function assertArrayNonEmpty<T = unknown>(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
-): asserts v is ArrayNoNEmpty<T> {
+): asserts v is ArrayNonEmpty<T> {
   if (!isArrayNonEmpty(v)) {
     throw createAssertException(
       msgOrErrorFactory,

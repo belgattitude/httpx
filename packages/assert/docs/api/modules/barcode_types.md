@@ -12,4 +12,4 @@
 
 ### Ean13
 
-Ƭ **Ean13**: `string`
+Ƭ **Ean13**: `string` & `WeakOpaqueContainer`\<``"Ean13"``\>

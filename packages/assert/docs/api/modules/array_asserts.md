@@ -12,7 +12,7 @@
 
 ### assertArrayNonEmpty
 
-▸ **assertArrayNonEmpty**\<`T`\>(`v`, `msgOrErrorFactory?`): asserts v is ArrayNoNEmpty\<T\>
+▸ **assertArrayNonEmpty**\<`T`\>(`v`, `msgOrErrorFactory?`): asserts v is ArrayNonEmpty\<T\>
 
 Assert string is not empty (trims the string by default)
 
@@ -31,7 +31,7 @@ Assert string is not empty (trims the string by default)
 
 #### Returns
 
-asserts v is ArrayNoNEmpty\<T\>
+asserts v is ArrayNonEmpty\<T\>
 
 **`Throws`**
 

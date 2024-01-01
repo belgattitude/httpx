@@ -12,7 +12,7 @@
 
 ### assertPlainObject
 
-▸ **assertPlainObject**(`v`, `msgOrErrorFactory?`): asserts v is string
+▸ **assertPlainObject**(`v`, `msgOrErrorFactory?`): asserts v is PlainObject
 
 Assert a value is a plain object
 
@@ -25,7 +25,7 @@ Assert a value is a plain object
 
 #### Returns
 
-asserts v is string
+asserts v is PlainObject
 
 **`Throws`**
 

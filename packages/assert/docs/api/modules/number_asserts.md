@@ -12,7 +12,7 @@
 
 ### assertNumberSafeInt
 
-▸ **assertNumberSafeInt**(`v`, `msgOrErrorFactory?`): asserts v is number
+▸ **assertNumberSafeInt**(`v`, `msgOrErrorFactory?`): asserts v is NumberSafeInt
 
 Assert string is not empty (trims the string by default)
 
@@ -25,7 +25,7 @@ Assert string is not empty (trims the string by default)
 
 #### Returns
 
-asserts v is number
+asserts v is NumberSafeInt
 
 **`Throws`**
 

@@ -12,7 +12,7 @@
 
 ### isEan13
 
-▸ **isEan13**(`v`): v is string
+▸ **isEan13**(`v`): v is Ean13
 
 #### Parameters
 
@@ -22,4 +22,4 @@
 
 #### Returns
 
-v is string
+v is Ean13

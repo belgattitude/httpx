@@ -12,7 +12,7 @@
 
 ### isNumberSafeInt
 
-▸ **isNumberSafeInt**\<`T`\>(`v`): v is ArrayNoNEmpty\<T\>
+▸ **isNumberSafeInt**\<`T`\>(`v`): v is ArrayNonEmpty\<T\>
 
 #### Type parameters
 
@@ -28,4 +28,4 @@
 
 #### Returns
 
-v is ArrayNoNEmpty\<T\>
+v is ArrayNonEmpty\<T\>

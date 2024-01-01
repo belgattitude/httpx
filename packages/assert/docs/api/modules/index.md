@@ -6,7 +6,7 @@
 
 ### References
 
-- [ArrayNoNEmpty](index.md#arraynonempty)
+- [ArrayNonEmpty](index.md#arraynonempty)
 - [Ean13](index.md#ean13)
 - [NumberSafeInt](index.md#numbersafeint)
 - [ParsableSafeInt](index.md#parsablesafeint)
@@ -53,9 +53,9 @@
 
 ## References
 
-### ArrayNoNEmpty
+### ArrayNonEmpty
 
-Re-exports [ArrayNoNEmpty](array_types.md#arraynonempty)
+Re-exports [ArrayNonEmpty](array_types.md#arraynonempty)
 
 ___
 

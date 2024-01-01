@@ -1,7 +1,7 @@
-import type { ArrayNoNEmpty } from './array.types';
+import type { ArrayNonEmpty } from './array.types';
 
 export const isNumberSafeInt = <T = unknown>(
   v: unknown
-): v is ArrayNoNEmpty<T> => {
+): v is ArrayNonEmpty<T> => {
   return typeof v === 'number' && Number.isSafeInteger(v);
 };

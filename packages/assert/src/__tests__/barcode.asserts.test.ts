@@ -14,4 +14,11 @@ describe('barcode assertions tests', () => {
     const e = new Error('cool');
     expect(() => assertEan13('12345', () => e)).toThrow(e);
   });
+  describe('Types tests', () => {
+    it('should return a type string', () => {
+      const ean13 = eansTestData.ean13;
+      assertEan13(ean13);
+      expectTypeOf(ean13).toBeString();
+    });
+  });
 });
