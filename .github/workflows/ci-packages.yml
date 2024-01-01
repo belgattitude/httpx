@@ -47,7 +47,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}/.cache
-          key: ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', hashFiles('integrations/**.[jt]sx?') }}
+          key: ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'integrations/**.[jt]sx?') }}
           restore-keys: |
             ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('yarn.lock') }}-
 
