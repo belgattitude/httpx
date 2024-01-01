@@ -119,7 +119,7 @@
       "dependsOn": ["^build-release"],
       "inputs": ["default", "^public", "{workspaceRoot}/.changeset"],
       "outputs": ["{projectRoot}/build", "{projectRoot}/dist"],
-      "cache": true
+      "cache": false
     }
   }
 }
