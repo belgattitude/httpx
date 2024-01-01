@@ -1,4 +1,4 @@
-import type { HttpErrorStatusCodeOrNumber } from '../types';
+import type { HttpErrorStatusCodeOrNumber } from '../types/HttpErrorStatusCodeOrNumber';
 
 export const isHttpErrorStatusCode = <
   T extends HttpErrorStatusCodeOrNumber = HttpErrorStatusCodeOrNumber,

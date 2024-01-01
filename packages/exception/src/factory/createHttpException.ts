@@ -1,16 +1,14 @@
-import {
-  HttpClientException,
-  HttpException,
-  HttpServerException,
-} from '../base';
+import { HttpClientException } from '../base/HttpClientException';
+import { HttpException } from '../base/HttpException';
+import { HttpServerException } from '../base/HttpServerException';
 import { statusMap } from '../status';
-import { isHttpErrorStatusCode } from '../typeguards';
-import type { HttpErrorStatusCodeOrNumber } from '../types';
+import { isHttpErrorStatusCode } from '../typeguards/isHttpErrorStatusCode';
 import type { AssignedErrorStatusCodes } from '../types/AssignedErrorStatusCodes';
 import type {
   HttpExceptionFromStatus,
   HttpExceptionParamsFromStatus,
 } from '../types/FromStatusCode';
+import type { HttpErrorStatusCodeOrNumber } from '../types/HttpErrorStatusCodeOrNumber';
 
 /**
  * Create a concrete http exception object from a given http status code.
