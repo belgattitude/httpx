@@ -9,10 +9,9 @@ to cover cross-environments challenges (RSC, SSR...).
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception)
 [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
-![node](https://img.shields.io/static/v1?label=Node&message=18%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
+[![node](https://img.shields.io/static/v1?label=Node&message=18%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
 [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E93%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
-[![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Quality&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
 [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
 
 ## Highlights
@@ -217,7 +216,7 @@ const e = new HttpBadRequest({
 
 ## Static members
 
-All exceptions have a static `STATUS`, this can improve readability and code review.
+All exceptions have a static `STATUS` readonly property.
 
 ```typescript
 import { createHttpException, HttpMethodNotAllowed } from "@httpx/exception";
@@ -485,15 +484,13 @@ const alternate = new HttpServerException({
 
 ### Compatibility
 
-| Level      | CI  | Description                                                                                                                                                                                                                                                                                                                                        |
-| ---------- | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                       |
-| Node18     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                      |
-| Node20     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                      |
-| Node21     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                      |
-| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)                                                                                                                                                                                                                                                                  |
-| Browsers   | ✅  | [> 93%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Minimums to [Chrome 96+, Firefox 90+, Edge 91+, ios 15+, Safari 15+ and Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
-| Typescript | ✅  | TS 4.7+ / Dual packaging is ensured with [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) on the CI.                                                                                                                                                                                                           |
+| Level      | CI  | Description                                                                                                                                                                                                                                                                                                                            |
+| ---------- | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Node       | ✅  | CI for 18.x, 20.x & 21.x.                                                                                                                                                                                                                                                                                                              |
+| Browsers   | ✅  | [> 93%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. [Chrome 96+, Firefox 90+, Edge 91+, ios 15+, Safari 15+ and Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
+| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                     |
+| Typescript | ✅  | TS 4.7+ / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                           |
+| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                           |
 
 > For _older_ browsers:
 >

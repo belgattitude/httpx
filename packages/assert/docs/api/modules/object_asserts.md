@@ -1,4 +1,4 @@
-[@httpx/assert - v0.5.2](../README.md) / object.asserts
+[@httpx/assert - v0.6.2](../README.md) / object.asserts
 
 # Module: object.asserts
 

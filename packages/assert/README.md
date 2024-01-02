@@ -6,10 +6,9 @@ Assertions and typeguards as primitives
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/CHANGELOG.md)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-assert-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fassert)
 [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/.size-limit.cjs)
-![node](https://img.shields.io/static/v1?label=Node&message=16%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D)
+[![node](https://img.shields.io/static/v1?label=Node&message=16%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
+[![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/assert@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/assert@latest)
-[![maintainability](https://img.shields.io/codeclimate/maintainability/belgattitude/httpx?label=Quality&logo=code-climate&style=for-the-badge&labelColor=444)](https://codeclimate.com/github/belgattitude/httpx)
 [![downloads](https://img.shields.io/npm/dm/@httpx/assert?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/assert)
 [![license](https://img.shields.io/npm/l/@httpx/assert?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
@@ -24,10 +23,11 @@ $ pnpm add @httpx/assert
 ## Features
 
 - 👉&nbsp; Typeguards and assertions with a consistent style.
-- 🦄&nbsp; Assertions with useful [default error message](#assertions-error-messages).
-- 🖖&nbsp; Optimized tree-shakability, starts at [56b](#bundle-size). 
-- 🛡️&nbsp; Don't leak values in the default assertion error messages.
-- 🤗&nbsp; No deps. [Node, browser and edge support](#compatibility).
+- 👉&nbsp; Assertions with useful [default error message](#assertions-error-messages).
+- 👉&nbsp; Return *weak* [opaque types](#weak-opaque-types) for boolean, strings and numbers.
+- 👉&nbsp; Optimized tree-shakability, starts at [56b](#bundle-size).
+- 👉&nbsp; Don't leak values in the default assertion error messages.
+- 👉&nbsp; No deps. [Node, browser and edge support](#compatibility).
 
 ## Documentation
 
@@ -57,6 +57,31 @@ $ pnpm add @httpx/assert
 ### Consistent style
 
 Typeguards starts with `isXXX` and have an assertion counterpart named `assertXXX`.
+
+`isParsableXXX` and `assertParsableXXX` denotes a string.
+
+### Weak opaque types
+
+For `string`, `number` and `boolean` the returned type is tagged with a *weak* opaque type.
+It can optionally be used to enforce that the value was checked.
+
+For example:
+
+```typescript
+import { assertUuidV4, type UuidV4 } from '@httpx/assert';
+import { HttpUnprocessableEntity } from '@httpx/exception';
+
+const persistRecord = async (uuid: UuidV4) => {
+  // uuid is compatible with string.
+  return await db.raw(`insert into tbl(uuid) values (${uuid})`)
+}
+
+const v = 'xxx'; // unknown
+assertUuidV4(v, () => new HttpUnprocessableEntity());
+// 👉 v is known to be `string & WeakOpaqueContainer<'UuidV4'>`
+await persistRecord(v); // will work
+await persistRecord('a_string'); // won't
+```
 
 ### Assertions error messages
 
@@ -295,19 +320,16 @@ ESM individual imports are tracked by a
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/assert@latest).
 
-
 ## Compatibility
 
-| Level      | CI | Description                                                                                                                                                                                                                                                                                                                                                                                                         |
-|------------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| ES2021     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                                        |
-| Node16     | ✅  |                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Node18     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                                                                                       |
-| Node20     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                                                                                       |
-| Node21     | ✅  | Ensured on CI                                                                                                                                                                                                                                                                                                                                      |
-| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)                                                                                                                                                                                                                                                                                                                                   | 
-| Browsers   | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Minimums to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) | 
-| Typescript | ✅  | TS 4.7+ / Dual packaging is ensured with [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) on the CI.                                                                                                                                                                                                                                                                            | 
+| Level      | CI | Description                                                                                                                                                                                                                                                                                                                              |
+|------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| Node       | ✅  | CI for 18.x, 20.x & 21.x.                                                                                                                                                                                                                                                                                                                |
+| Browsers   | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Mins to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/assert/.browserslistrc) |
+| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                       | 
+| Typescript | ✅  | TS 5.0+ / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                              |  
+| ES2021     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                             |
+| Node16     |    | Node 16.x supported, not ensured on CI                                                                                                                                                                                                                                                                                                   |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 

@@ -1,6 +1,6 @@
 @httpx/json-api
 
-# @httpx/json-api - v0.5.9
+# @httpx/json-api - v0.5.10
 
 ## Table of contents
 
