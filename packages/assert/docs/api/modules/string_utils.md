@@ -1,4 +1,4 @@
-[@httpx/assert - v0.5.2](../README.md) / string.utils
+[@httpx/assert - v0.6.2](../README.md) / string.utils
 
 # Module: string.utils
 
