@@ -1,5 +1,11 @@
 # @httpx/json-api
 
+## 0.5.11
+
+### Patch Changes
+
+- [#856](https://github.com/belgattitude/httpx/pull/856) [`ef4e8c7`](https://github.com/belgattitude/httpx/commit/ef4e8c765c7e63efe38b569385b99cc69bc7f05f) Thanks [@belgattitude](https://github.com/belgattitude)! - Build against browserslist
+
 ## 0.5.10
 
 ### Patch Changes
