@@ -30,7 +30,7 @@
     "g:release": "yarn g:build-release && yarn exec changeset publish",
     "g:ci-coverage-upload": "yarn workspaces foreach --all -tv run ci-coverage-upload",
     "clean:lint": "rimraf ./.cache/eslint",
-    "clean:global-cache": "rimraf ./.cache",
+    "clean:global-cache": "rimraf ./.cache ./.nx",
     "website:build": "yarn workspace httpx-docs run build",
     "website:deploy": "gh-pages -d ./docs/out -t true",
     "deps:check": "npx npm-check-updates@latest --configFileName .ncurc.yml --deep",
