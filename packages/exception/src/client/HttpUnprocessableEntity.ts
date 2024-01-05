@@ -1,8 +1,6 @@
 import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import type { HttpExceptionParamsWithIssues } from '../types/HttpExceptionParamsWithIssues';
 import type { HttpValidationIssue } from '../types/HttpValidationIssue';
-import type { ValidationError } from '../types/ValidationError';
 import { getSuperArgs, initProtoAndName } from '../utils';
 
 /**
@@ -22,29 +20,13 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  */
 export class HttpUnprocessableEntity extends HttpClientException {
   static readonly STATUS = 422;
-  /**
-   * Errors has been renamed to issues as a better name.
-   * @deprecated
-   */
-  public readonly errors: ValidationError[];
   public readonly issues: HttpValidationIssue[];
-  constructor(
-    msgOrParams?:
-      | (HttpExceptionParams & {
-          /** @deprecated use issues instead */
-          errors?: ValidationError[];
-        } & HttpExceptionParamsWithIssues)
-      | string
-  ) {
-    const {
-      errors = [],
-      issues = [],
-      ...p
-    } = typeof msgOrParams === 'string' ? {} : msgOrParams ?? {};
+  constructor(msgOrParams?: HttpExceptionParamsWithIssues | string) {
+    const { issues = [], ...p } =
+      typeof msgOrParams === 'string' ? {} : msgOrParams ?? {};
 
     super(...getSuperArgs(HttpUnprocessableEntity, p));
     this.issues = issues;
-    this.errors = errors;
     initProtoAndName(this, HttpUnprocessableEntity);
   }
 }
