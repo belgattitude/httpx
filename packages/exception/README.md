@@ -304,7 +304,10 @@ isHttpServerException(
 This typeguard is based on a convention and might help to convert a native error to a specific HttpException.
 
 ```typescript
-import { isErrorWithStatusCode, createHttpException } from "@httpx/exception";
+import {
+  isErrorWithErrorStatusCode,
+  createHttpException,
+} from "@httpx/exception";
 
 try {
   throw new (class extends Error {
@@ -312,8 +315,8 @@ try {
   })();
 } catch (e) {
   // will check if the value is an Error and that there's a statusCode is >=400 && <600
-  if (isErrorWithStatusCode(e)) {
-    throw createException(e.statusCode, e.message);
+  if (isErrorWithErrorStatusCode(e)) {
+    throw createHttpException(e.statusCode, e.message);
   }
 }
 ```
@@ -326,7 +329,7 @@ This typeguard is based on a convention and might help to convert an object to a
 import {
   isObjectWithErrorStatusCode,
   createHttpException,
-  type ObjectWithErrorStatusCode,
+  type Obj,
 } from "@httpx/exception";
 
 const noSuchUser = {
@@ -338,7 +341,7 @@ class NoSuchItem extends DomainError implements ObjectWithErrorStatusCode {
 }
 
 if (isObjectWithErrorStatusCode(noSuchUser)) {
-  throw createException(e.statusCode, "Nothing");
+  throw createHttpException(e.statusCode, "Nothing");
 }
 ```
 

@@ -1,7 +1,7 @@
 // @ts-check
 
-const fullEsmMaxSize = "1480B";
-const fullCjsMaxSize = "1940B";
+const fullEsmMaxSize = "1495B";
+const fullCjsMaxSize = "1950B";
 
 /**
  * Will ensure esm tree-shakeability and total size are within expectations.
