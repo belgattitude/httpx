@@ -467,20 +467,19 @@ const alternate = new HttpServerException({
 
 ### Compatibility
 
-Node 18+ / es2022 compatibility is ensured on the CI.
+| Level      | CI  | Description                                                                                                                                                                                                                                                                                                                            |
+| ---------- | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Node       | ✅  | CI for 18.x, 20.x & 21.x.                                                                                                                                                                                                                                                                                                              |
+| Browsers   | ✅  | [> 93%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. [Chrome 96+, Firefox 90+, Edge 91+, ios 15+, Safari 15+ and Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
+| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                     |
+| Typescript | ✅  | TS 4.7+ / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                           |
+| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                           |
 
-Edge tests are run with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime)
-
-Browser builds follows the [.browserslistrc](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc)
-configuration. From the browserslist defaults:
-[Chrome 96+, Firefox 90+, Edge 91+, Safari 15+ and Opera 77+](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
-are set as minimal supported versions.
-
-For _older_ browsers:
-
-- Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
-- You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support
-nested errors (if not present they are simply discarded - no runtime errors).
+> For _older_ browsers:
+>
+> - 👉 Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
+> - 👉 You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support
+>   nested errors (if not present they are simply discarded - no runtime errors).
 
 ### Bundle size
 
