@@ -4,3 +4,4 @@ export type { HttpErrorStatusCodeOrNumber } from './HttpErrorStatusCodeOrNumber'
 export type { HttpExceptionParams } from './HttpExceptionParams';
 export type { HttpExceptionParamsWithStatus } from './HttpExceptionParamsWithStatus';
 export type { HttpValidationIssue } from './HttpValidationIssue';
+export type { ObjectWithErrorStatusCode } from './ObjectWithErrorStatusCode';
