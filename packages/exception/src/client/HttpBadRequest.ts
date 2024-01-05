@@ -1,13 +1,6 @@
 import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import type { HttpValidationIssue } from '../types/HttpValidationIssue';
-import type { ValidationError } from '../types/ValidationError';
+import type { HttpExceptionParams } from '../types';
 import { getSuperArgs, initProtoAndName } from '../utils';
-
-type HttpExceptionParamsWithErrors = HttpExceptionParams & {
-  /** @deprecated use issues in 422 HttpUnprocessableEntity instead */
-  errors?: HttpValidationIssue[];
-};
 
 /**
  * 400 Bad Request (client)
@@ -23,13 +16,8 @@ type HttpExceptionParamsWithErrors = HttpExceptionParams & {
  */
 export class HttpBadRequest extends HttpClientException {
   static readonly STATUS = 400;
-  /** @deprecated use issues in 422 HttpUnprocessableEntity instead */
-  public readonly errors: ValidationError[];
-  constructor(msgOrParams?: HttpExceptionParamsWithErrors | string) {
-    const { errors = [], ...p } =
-      typeof msgOrParams === 'string' ? {} : msgOrParams ?? {};
-    super(...getSuperArgs(HttpBadRequest, p));
-    this.errors = errors;
+  constructor(msgOrParams?: HttpExceptionParams | string) {
+    super(...getSuperArgs(HttpBadRequest, msgOrParams));
     initProtoAndName(this, HttpBadRequest);
   }
 }

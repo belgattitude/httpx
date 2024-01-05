@@ -6,7 +6,5 @@ export * from './typeguards';
 export type {
   HttpExceptionParams,
   HttpExceptionParamsWithStatus,
-  HttpStatusCode,
   HttpValidationIssue,
-  ValidationError,
 } from './types';

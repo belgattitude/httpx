@@ -511,10 +511,10 @@ ESM individual imports are tracked by a
 | ------------------------------------------------ | ----------------: |
 | Import generic exception (`HttpClientException`) |            ~ 370b |
 | Import 1 client exception                        |            ~ 400b |
-| Import 2 client exceptions                       |            ~ 415b |
-| Import 6 client exceptions                       |            ~ 430b |
-| Import 1 client + 1 server exceptions            |            ~ 415b |
-| Import `createHttpException` (all 43 exceptions) |            ~ 690b |
+| Import 2 client exceptions                       |            ~ 412b |
+| Import 6 client exceptions                       |            ~ 425b |
+| Import 1 client + 1 server exceptions            |            ~ 416b |
+| Import `createHttpException` (all 43 exceptions) |            ~ 660b |
 | Import `fromJson` (incl createHttpException)     |           ~ 1100b |
 | All exceptions + typeguards + serializer         |           ~ 1500b |
 
