@@ -10,7 +10,6 @@ Lightweight assertions and typeguards starting at [~60b](https://github.com/belg
 [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/.size-limit.cjs)
 [![downloads](https://img.shields.io/npm/dm/@httpx/assert?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/assert)
 
-
 ### [@httpx/exception](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
 
 HTTP status errors with default message, instanceof, stack and nested error cause support.
