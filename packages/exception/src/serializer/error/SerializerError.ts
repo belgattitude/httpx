@@ -1,3 +1,4 @@
+import { supportsErrorCause } from '../../support/supportsErrorCause';
 import { initProtoAndName } from '../../utils';
 
 export class SerializerError extends Error {
@@ -8,10 +9,9 @@ export class SerializerError extends Error {
     }
   ) {
     const { cause } = params ?? {};
-    if (cause) {
-      super(message, { cause });
-    } else {
-      super(message);
+    super(message);
+    if (supportsErrorCause() && cause instanceof Error) {
+      this.cause = cause;
     }
     initProtoAndName(this, SerializerError);
   }
