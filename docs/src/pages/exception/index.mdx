@@ -141,17 +141,17 @@ const e500 = new HttpInternalServerError({
 
 All parameters are exposed as properties.
 
-| HttpException | Type                  | Description                                                                                                                        |
-| ------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| statusCode    | `number`              | Http error status code (400-599).                                                                                                  |
-| message       | `string`              | Default or provided message.                                                                                                       |
-| url           | `string?`             | Origin url..                                                                                                                       |
-| method        | `HttpMethod?`         | Origin http method.                                                                                                                |
-| code          | `string?`             | Custom error code (not to be confused with statusCode).                                                                            |
-| errorId       | `string?`             | Unique custom error id.                                                                                                            |
-| stack         | `string?`             | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause         | `Error?`              | @see [about error cause](#about-errorcause)                                                                                        |
-| issues        | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+| HttpExceptionParams | Type                      | Description                                                                                                                        |
+|---------------------| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| statusCode          | `number`                  | Http error status code (400-599).                                                                                                  |
+| message             | `string`                  | Default or provided message.                                                                                                       |
+| url                 | `string?`                 | Origin url..                                                                                                                       |
+| method              | `HttpMethod?`             | Origin http method.                                                                                                                |
+| code                | `string?`                 | Custom error code (not to be confused with statusCode).                                                                            |
+| errorId             | `string?`                 | Unique custom error id.                                                                                                            |
+| stack               | `string?`                 | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause               | `Error?`                  | @see [about error cause](#about-errorcause)                                                                                        |
+| issues              | `HttpValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
 
 ```typescript
 import { HttpUnprocessableEntity } from "@httpx/exception";
@@ -161,7 +161,7 @@ const e422 = new HttpUnprocessableEntity({
   url: "https://acme.org/api/user/create",
   method: "POST",
   issues: [
-    // typed as ValidationIssues[]
+    // typed as HttpValidationIssues[]
     {
       message: "Invalid address",
       path: ["addresses", 0, "line1"],

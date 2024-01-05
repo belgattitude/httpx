@@ -126,15 +126,17 @@ is provided the [default message](#default-messages) is used.
 It's possible to attach informational context to an exception. This is particularly useful when used with
 centralized logging / error reporting.
 
-| HttpExceptionParams | Type                  | Description                                                                                                                                                      |
-| ------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| message             | `string?`             | [Error.message](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message), see [about default message](#default-messages). |
-| url                 | `string?`             | Origin url.                                                                                                                                                      |
-| method              | `HttpMethod?`         | Origin http method.                                                                                                                                              |
-| code                | `string?`             | Custom error code (not to be confused with statusCode).                                                                                                          |
-| errorId             | `string?`             | Unique custom error id.                                                                                                                                          |
-| cause               | `Error?`              | Error.cause, see also [about error cause](#about-errorcause).                                                                                                    |
-| issues              | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                                                  |
+| HttpExceptionParams | Type                      | Description                                                                                                                        |
+| ------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| statusCode          | `number`                  | Http error status code (400-599).                                                                                                  |
+| message             | `string`                  | Default or provided message.                                                                                                       |
+| url                 | `string?`                 | Origin url..                                                                                                                       |
+| method              | `HttpMethod?`             | Origin http method.                                                                                                                |
+| code                | `string?`                 | Custom error code (not to be confused with statusCode).                                                                            |
+| errorId             | `string?`                 | Unique custom error id.                                                                                                            |
+| stack               | `string?`                 | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause               | `Error?`                  | @see [about error cause](#about-errorcause)                                                                                        |
+| issues              | `HttpValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
 
 Example:
 
