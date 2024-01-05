@@ -14,7 +14,7 @@ Lightweight assertions and typeguards starting at [~60b](https://github.com/belg
 ### [@httpx/exception](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
 
 HTTP status errors with default message, instanceof, stack and nested error cause support.
-Lightweight, typical usage between [400b and 750b](https://belgattitude.github.io/httpx/exception#bundle-size).
+Lightweight, typical usage between [400b and 660b](https://belgattitude.github.io/httpx/exception#bundle-size).
 Includes convenience typeguards, optional contextual info and a built-in serializer
 to cover cross-environments challenges (RSC, SSR...).
 
