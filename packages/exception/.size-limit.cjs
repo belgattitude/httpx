@@ -89,13 +89,13 @@ module.exports = [
     name: "ESM serializer ({ fromJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ fromJson }",
-    limit: "1120B",
+    limit: "1150B",
   },
   {
-    name: "ESM serializer ({ fromJson, toJson })",
+    name: "ESM all serializer ({ fromJson, toJson, convertToSerializable, createFromSerializable })",
     path: ["dist/serializer/index.mjs"],
-    import: "{ fromJson, toJson }",
-    limit: "1420B",
+    import: "{ fromJson, toJson, createFromSerializable, convertToSerializable }",
+    limit: "1425B",
   },
   {
     name: "ESM experimental ({ tryOrFail })",

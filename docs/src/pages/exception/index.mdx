@@ -484,22 +484,23 @@ const alternate = new HttpServerException({
 ### Bundle size
 
 Code and bundler have been tuned to target a minimal compressed footprint
-for the browser. In typical usage the bundle size will vary between 400b to 660b compressed
+for the browser. In ESM, typical usage the bundle size will vary between 400b to 660b compressed
 (including default messages for the 43 status codes).
 
 ESM individual imports are tracked by a
 [size-limit configuration](../.size-limit.cjshttps://github.com/belgattitude/httpx/blob/main/packages/dsn-parser/.size-limit.cjs).
 
-| Scenario                                         | Size (compressed) |
-| ------------------------------------------------ | ----------------: |
-| Import generic exception (`HttpClientException`) |            ~ 370b |
-| Import 1 client exception                        |            ~ 400b |
-| Import 2 client exceptions                       |            ~ 412b |
-| Import 6 client exceptions                       |            ~ 425b |
-| Import 1 client + 1 server exceptions            |            ~ 416b |
-| Import `createHttpException` (all 43 exceptions) |            ~ 660b |
-| Import `fromJson` (incl createHttpException)     |           ~ 1100b |
-| All exceptions + typeguards + serializer         |           ~ 1500b |
+| Scenario                                           | Size (compressed) |
+| -------------------------------------------------- | ----------------: |
+| Import generic exception (`HttpClientException`)   |            ~ 370b |
+| Import 1 client exception                          |            ~ 400b |
+| Import 2 client exceptions                         |            ~ 412b |
+| Import 6 client exceptions                         |            ~ 425b |
+| Import 1 client + 1 server exceptions              |            ~ 416b |
+| Import `createHttpException` (all 43 exceptions)   |            ~ 660b |
+| Import `fromJson` (incl createHttpException)       |           ~ 1140b |
+| All serializer functions + exceptions + typeguards |           ~ 1500b |
+
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/exception@latest).
 
