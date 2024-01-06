@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.6.8
+
+### Patch Changes
+
+- [`28687e1`](https://github.com/belgattitude/httpx/commit/28687e16e42019d3d9f7fb1d5d6180a87a2b3324) Thanks [@belgattitude](https://github.com/belgattitude)! - Release with npm provenance
+
 ## 1.6.7
 
 ### Patch Changes
