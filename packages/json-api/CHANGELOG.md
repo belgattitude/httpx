@@ -1,5 +1,14 @@
 # @httpx/json-api
 
+## 0.5.13
+
+### Patch Changes
+
+- [#875](https://github.com/belgattitude/httpx/pull/875) [`b6e2941`](https://github.com/belgattitude/httpx/commit/b6e2941134fcc3de7cde6666067f202f8b6de408) Thanks [@belgattitude](https://github.com/belgattitude)! - Update to rollup 4.9.4
+
+- Updated dependencies [[`5ea92c1`](https://github.com/belgattitude/httpx/commit/5ea92c121c8eed646c3a75a432baf1c2eee1ce44), [`b6e2941`](https://github.com/belgattitude/httpx/commit/b6e2941134fcc3de7cde6666067f202f8b6de408), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`62332de`](https://github.com/belgattitude/httpx/commit/62332deb1c9d1b66d6a366602d60df23eb62ea69), [`62332de`](https://github.com/belgattitude/httpx/commit/62332deb1c9d1b66d6a366602d60df23eb62ea69), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`62332de`](https://github.com/belgattitude/httpx/commit/62332deb1c9d1b66d6a366602d60df23eb62ea69), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`c65e11a`](https://github.com/belgattitude/httpx/commit/c65e11a310a704d5b22f7df8e6de866efd525d80)]:
+  - @httpx/exception@3.0.0
+
 ## 0.5.12
 
 ### Patch Changes
