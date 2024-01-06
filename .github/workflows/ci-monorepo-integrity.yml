@@ -42,3 +42,8 @@ jobs:
 
       - name: 🦺 Syncpack checks - packages - lint-semver-ranges
         run: yarn syncpack:check
+
+      - name: 🛡️ Snyk security / vulnerabilities tests
+        run: yarn snyk:test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

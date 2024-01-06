@@ -29,6 +29,7 @@
     "g:check-pub": "yarn nx affected --target=check-pub --exclude='examples/**' --exclude='docs'",
     "g:release": "yarn g:build-release && yarn exec changeset publish",
     "g:ci-coverage-upload": "yarn workspaces foreach --all -tv run ci-coverage-upload",
+    "snyk:test": "snyk test --all-projects",
     "clean:lint": "rimraf ./.cache/eslint",
     "clean:global-cache": "rimraf ./.cache ./.nx",
     "website:build": "yarn workspace httpx-docs run build",
@@ -69,8 +70,15 @@
     "rimraf": "5.0.5",
     "rollup": "4.9.4",
     "shell-quote": "1.8.1",
+    "snyk": "1.1267.0",
     "syncpack": "12.3.0",
     "typescript": "5.3.3"
+  },
+  "resolutions?": {
+    "inflight": "https://security.snyk.io/vuln/SNYK-JS-INFLIGHT-6095116"
+  },
+  "resolutions": {
+    "inflight": "^1.0.6"
   },
   "engines": {
     "node": ">=18.17"
