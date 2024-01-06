@@ -1,5 +1,14 @@
 # @examples/nextjs-app
 
+## 0.1.58
+
+### Patch Changes
+
+- Updated dependencies [[`5ea92c1`](https://github.com/belgattitude/httpx/commit/5ea92c121c8eed646c3a75a432baf1c2eee1ce44), [`b6e2941`](https://github.com/belgattitude/httpx/commit/b6e2941134fcc3de7cde6666067f202f8b6de408), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`62332de`](https://github.com/belgattitude/httpx/commit/62332deb1c9d1b66d6a366602d60df23eb62ea69), [`62332de`](https://github.com/belgattitude/httpx/commit/62332deb1c9d1b66d6a366602d60df23eb62ea69), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`62332de`](https://github.com/belgattitude/httpx/commit/62332deb1c9d1b66d6a366602d60df23eb62ea69), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14), [`c65e11a`](https://github.com/belgattitude/httpx/commit/c65e11a310a704d5b22f7df8e6de866efd525d80)]:
+  - @httpx/exception@3.0.0
+  - @httpx/dsn-parser@1.6.6
+  - @httpx/assert@0.6.5
+
 ## 0.1.57
 
 ### Patch Changes

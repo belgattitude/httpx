@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.6.5
+
+### Patch Changes
+
+- [#875](https://github.com/belgattitude/httpx/pull/875) [`b6e2941`](https://github.com/belgattitude/httpx/commit/b6e2941134fcc3de7cde6666067f202f8b6de408) Thanks [@belgattitude](https://github.com/belgattitude)! - Update to rollup 4.9.4
+
 ## 0.6.4
 
 ### Patch Changes

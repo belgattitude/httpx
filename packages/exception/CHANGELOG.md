@@ -1,5 +1,52 @@
 # @httpx/exception
 
+## 3.0.0
+
+### Major Changes
+
+- [#873](https://github.com/belgattitude/httpx/pull/873) [`62332de`](https://github.com/belgattitude/httpx/commit/62332deb1c9d1b66d6a366602d60df23eb62ea69) Thanks [@belgattitude](https://github.com/belgattitude)! - Stack traces won't be serialized anymore by default as they
+  might contain sensitive information in production.
+
+  For development or logging, it's possible to opt-in stack serialization selectively in
+  `convertToSerializable`, `createFromSerializable`, `toJson` and `fromJson` functions thanks
+  to the `SerializerParams.includeStack` param.
+
+  ```typescript
+  import { fromJson, toJson } from "@httpx/exception";
+
+  const json = toJson(new HttpException(500), {
+    includeStack: process.env.NODE_ENV === "development",
+  });
+
+  const e = fromJson(json, {
+    includeStack: process.env.NODE_ENV === "development",
+  });
+  ```
+
+- [#865](https://github.com/belgattitude/httpx/pull/865) [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14) Thanks [@belgattitude](https://github.com/belgattitude)! - Remove deprecated `errors` param from `HttpBadRequest`, use `issues` in `HttpUnprocessableEntity` instead
+
+- [#865](https://github.com/belgattitude/httpx/pull/865) [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14) Thanks [@belgattitude](https://github.com/belgattitude)! - Remove deprecated `errors` params from `HttpUnprocessableEntity`, use `issues` instead
+
+- [#865](https://github.com/belgattitude/httpx/pull/865) [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14) Thanks [@belgattitude](https://github.com/belgattitude)! - Remove deprecated type `HttpStatusCode`, use `HttpErrorStatusCode` instead.
+
+- [#865](https://github.com/belgattitude/httpx/pull/865) [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14) Thanks [@belgattitude](https://github.com/belgattitude)! - Remove deprecated type `ValidationError`, use `HttpValidationIssue` instead.
+
+### Minor Changes
+
+- [#865](https://github.com/belgattitude/httpx/pull/865) [`a1b3c9f`](https://github.com/belgattitude/httpx/commit/a1b3c9f8dff302b1524c51dd7621f7774a807c14) Thanks [@belgattitude](https://github.com/belgattitude)! - Reduce typical usage bundle size to 400b-660b range
+
+- [#873](https://github.com/belgattitude/httpx/pull/873) [`62332de`](https://github.com/belgattitude/httpx/commit/62332deb1c9d1b66d6a366602d60df23eb62ea69) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `SerializerParams.includeStack` to `toJson` and `fromJson` serialization functions.
+
+- [#873](https://github.com/belgattitude/httpx/pull/873) [`62332de`](https://github.com/belgattitude/httpx/commit/62332deb1c9d1b66d6a366602d60df23eb62ea69) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `SerializerParams.includeStack` to `convertToSerializable` and `createFromSerializable` serialization functions.
+
+### Patch Changes
+
+- [#870](https://github.com/belgattitude/httpx/pull/870) [`5ea92c1`](https://github.com/belgattitude/httpx/commit/5ea92c121c8eed646c3a75a432baf1c2eee1ce44) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix cause support in SerializerError on env that doesn't support Error.cause
+
+- [#875](https://github.com/belgattitude/httpx/pull/875) [`b6e2941`](https://github.com/belgattitude/httpx/commit/b6e2941134fcc3de7cde6666067f202f8b6de408) Thanks [@belgattitude](https://github.com/belgattitude)! - Update to rollup 4.9.4
+
+- [#869](https://github.com/belgattitude/httpx/pull/869) [`c65e11a`](https://github.com/belgattitude/httpx/commit/c65e11a310a704d5b22f7df8e6de866efd525d80) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix missing export of isObjectWithErrorStatusCode
+
 ## 2.6.4
 
 ### Patch Changes
