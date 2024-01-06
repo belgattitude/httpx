@@ -368,10 +368,18 @@ the runtime.
 Additionally, you can pass any native errors (`Error`, `EvalError`, `RangeError`, `ReferenceError`,
 `SyntaxError`, `TypeError`, `URIError`) as well as a custom one (the later will be transformed to the base type Error).
 
+⚠️ **Since v3.0.0**:
+
+For security reasons [stack traces](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack)
+won't be serialized anymore by default as they might contain sensitive information in production. To opt-in selectively
+for stack traces serialization (ie: development or logging)
+`convertToSerializable`, `createFromSerializable`, `toJson` and `fromJson` functions
+accepts a `SerializerParams.includeStack` param as second argument.
+
 ### JSON
 
 ```typescript
-import { fromJson, toJson } from "@httpx/http-exception/serializer";
+import { fromJson, toJson } from "@httpx/exception/serializer";
 
 const e = new HttpForbidden();
 
@@ -381,8 +389,26 @@ const deserialized = fromJson(json);
 // e === deserialized
 ```
 
-> **Note**
+> **Tip**
 > See also how to integrate with [superjson](https://github.com/blitz-js/superjson#recipes)
+
+<details>
+<summary>Example for stack traces serialization.</summary>
+
+```typescript
+import { fromJson, toJson } from "@httpx/exception/serializer";
+
+// To include stack traces (not safe in production)
+const jsonWithStack = toJson(new HttpException(500), {
+  includeStack: process.env.NODE_ENV === "development",
+});
+
+const eWithStrack = fromJson(json, {
+  includeStack: process.env.NODE_ENV === "development",
+});
+```
+
+</details>
 
 ### Serializable
 
@@ -392,7 +418,7 @@ Same as JSON but before json.parse/stringify. Allows to use a different encoder.
 import {
   convertToSerializable,
   createFromSerializable,
-} from "@httpx/http-exception/serializer";
+} from "@httpx/exception/serializer";
 
 const e = new HttpForbidden({
   cause: new Error("Token was revoked"),
@@ -402,6 +428,25 @@ const serializableObject = convertToSerializable(e);
 const deserialized = createFromSerializable(serializableObject);
 // e === deserialized
 ```
+
+<details>
+<summary>Example for stack traces serialization.</summary>
+
+```typescript
+import {
+  convertToSerializable,
+  createFromSerializable,
+} from "@httpx/exception/serializer";
+
+const serializableObject = convertToSerializable(e, {
+  includeStack: process.env.NODE_ENV === "development",
+});
+const deserialized = createFromSerializable(serializableObject, {
+  includeStack: process.env.NODE_ENV === "development",
+});
+```
+
+</details>
 
 ## Default messages
 
