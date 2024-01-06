@@ -12,6 +12,7 @@
 - [isHttpException](typeguards.md#ishttpexception)
 - [isHttpServerException](typeguards.md#ishttpserverexception)
 - [isHttpStatusCode](typeguards.md#ishttpstatuscode)
+- [isObjectWithErrorStatusCode](typeguards.md#isobjectwitherrorstatuscode)
 
 ## Functions
 
@@ -138,3 +139,22 @@ statusCode is number
 **`See`**
 
 isHttpErrorStatusCode to ensure error range [4xx,5xx]
+
+---
+
+### isObjectWithErrorStatusCode
+
+▸ **isObjectWithErrorStatusCode**(`objOrPlainObject`): objOrPlainObject is ObjectWithErrorStatusCode
+
+Checks if a value is an object (or a plain object) and has a statusCode field
+indicating an error http status (4xx or 5xx)
+
+#### Parameters
+
+| Name               | Type      |
+| :----------------- | :-------- |
+| `objOrPlainObject` | `unknown` |
+
+#### Returns
+
+objOrPlainObject is ObjectWithErrorStatusCode

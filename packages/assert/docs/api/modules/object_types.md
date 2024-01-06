@@ -1,4 +1,4 @@
-[@httpx/assert - v0.6.2](../README.md) / object.types
+[@httpx/assert - v0.6.7](../README.md) / object.types
 
 # Module: object.types
 

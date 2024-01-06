@@ -7,6 +7,7 @@
 ### Interfaces
 
 - [ErrorWithErrorStatusCode](../interfaces/types.ErrorWithErrorStatusCode.md)
+- [ObjectWithErrorStatusCode](../interfaces/types.ObjectWithErrorStatusCode.md)
 
 ### Type Aliases
 
@@ -14,9 +15,7 @@
 - [HttpErrorStatusCodeOrNumber](types.md#httperrorstatuscodeornumber)
 - [HttpExceptionParams](types.md#httpexceptionparams)
 - [HttpExceptionParamsWithStatus](types.md#httpexceptionparamswithstatus)
-- [HttpStatusCode](types.md#httpstatuscode)
 - [HttpValidationIssue](types.md#httpvalidationissue)
-- [ValidationError](types.md#validationerror)
 
 ## Type Aliases
 
@@ -55,16 +54,6 @@
 
 ---
 
-### HttpStatusCode
-
-Ƭ **HttpStatusCode**: [`HttpErrorStatusCode`](types.md#httperrorstatuscode)
-
-**`Deprecated`**
-
-use HttpErrorStatusCode instead as it gives a better meaning
-
----
-
 ### HttpValidationIssue
 
 Ƭ **HttpValidationIssue**: `Object`
@@ -80,15 +69,3 @@ and zod (path).
 | `code?`   | `string`                             | An application-specific error code, expressed as a string value. |
 | `message` | `string`                             | A short, human-readable summary of the problem                   |
 | `path`    | (`number` \| `string`)[] \| `string` | Param name or path, ie: 'email' or ['addresses', 0, 'line1']     |
-
----
-
-### ValidationError
-
-Ƭ **ValidationError**: [`HttpValidationIssue`](types.md#httpvalidationissue)
-
-Alias to HttpValidationIssue for backward compatibility
-
-**`Deprecated`**
-
-replaced by HttpValidationIssue

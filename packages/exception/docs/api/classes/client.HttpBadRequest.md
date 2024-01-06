@@ -34,7 +34,6 @@ rather the 400 Bad Request status code.
 - [cause](client.HttpBadRequest.md#cause)
 - [code](client.HttpBadRequest.md#code)
 - [errorId](client.HttpBadRequest.md#errorid)
-- [errors](client.HttpBadRequest.md#errors)
 - [message](client.HttpBadRequest.md#message)
 - [method](client.HttpBadRequest.md#method)
 - [name](client.HttpBadRequest.md#name)
@@ -57,9 +56,9 @@ rather the 400 Bad Request status code.
 
 #### Parameters
 
-| Name           | Type                                        |
-| :------------- | :------------------------------------------ |
-| `msgOrParams?` | `string` \| `HttpExceptionParamsWithErrors` |
+| Name           | Type                                                                         |
+| :------------- | :--------------------------------------------------------------------------- |
+| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) |
 
 #### Returns
 
@@ -109,16 +108,6 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 #### Inherited from
 
 [HttpClientException](base.HttpClientException.md).[errorId](base.HttpClientException.md#errorid)
-
----
-
-### errors
-
-• `Readonly` **errors**: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[]
-
-**`Deprecated`**
-
-use issues in 422 HttpUnprocessableEntity instead
 
 ---
 
