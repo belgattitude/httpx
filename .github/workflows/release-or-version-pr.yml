@@ -53,4 +53,5 @@ jobs:
           # trigger the regular CI workflow. This limitation can be circumvented by
           # setting a custom PAT token from a GH account and setting it the secrets.
           GITHUB_TOKEN: ${{ secrets.BELGATTITUDE_HTTPX_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
 
