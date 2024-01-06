@@ -19,7 +19,7 @@ to cover cross-environments challenges (RSC, SSR...).
 - 👉&nbsp; Usage by [explicit named imports](#by-named-imports) and/or [status code](#by-status-code).
 - 👉&nbsp; If message not provided, defaults to [http error message](#default-messages)
 - 👉&nbsp; Supports pre-defined [contextual](#error-context) information.
-- 👉&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
+- 👉&nbsp; Built-in [serializer](#serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
 - 👉&nbsp; Supports [nested error](#nested-errors) through native [Error.cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
 - 👉&nbsp; [Extends](#class-diagram) native Error class with [stacktrace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) support.
 - 👉&nbsp; No deps. [Node, edge and modern browsers compatibility](#compatibility),

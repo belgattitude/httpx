@@ -44,7 +44,7 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 - 👉&nbsp; Usage by [explicit named imports](#by-named-imports) and/or [status code](#by-status-code).
 - 👉&nbsp; If message not provided, defaults to [http error message](#default-messages)
 - 👉&nbsp; Supports pre-defined [contextual](#error-context) information.
-- 👉&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
+- 👉&nbsp; Built-in [serializer](#serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
 - 👉&nbsp; Supports [nested error](#nested-errors) through native [Error.cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
 - 👉&nbsp; [Extends](#class-diagram) native Error class with [stacktrace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) support.
 - 👉&nbsp; No deps. [Node, edge and modern browsers compatibility](#compatibility),
@@ -372,20 +372,20 @@ const deserialized = fromJson(json);
 
 
 <details>
-  <summary>Example for stack traces serialization.</summary>
+<summary>Example for stack traces serialization.</summary>
 
-  ```typescript
-  import { fromJson, toJson } from "@httpx/exception/serializer";
+```typescript
+import { fromJson, toJson } from "@httpx/exception/serializer";
 
-  // To include stack traces (not safe in production)
-  const jsonWithStack = toJson(new HttpException(500), {
+// To include stack traces (not safe in production)
+const jsonWithStack = toJson(new HttpException(500), {
   includeStack: process.env.NODE_ENV === 'development',
 });
 
-  const eWithStrack = fromJson(json, {
+const eWithStrack = fromJson(json, {
   includeStack: process.env.NODE_ENV === 'development',
 });
-  ```
+```
 </details>
 
 ### Serializable
@@ -408,22 +408,21 @@ const deserialized = createFromSerializable(serializableObject);
 ```
 
 <details>
-  <summary>Example for stack traces serialization.</summary>
+<summary>Example for stack traces serialization.</summary>
 
-  ```typescript
-  import {
+```typescript
+import {
   convertToSerializable,
   createFromSerializable,
 } from "@httpx/exception/serializer";
 
-
-  const serializableObject = convertToSerializable(e, {
+const serializableObject = convertToSerializable(e, {
   includeStack: process.env.NODE_ENV === 'development',
 });
-  const deserialized = createFromSerializable(serializableObject, {
+const deserialized = createFromSerializable(serializableObject, {
   includeStack: process.env.NODE_ENV === 'development',
 });
-  ```
+```
 </details>
 
 ## Default messages
