@@ -21,6 +21,13 @@ type DiscriminateSerializable<T extends Serializable['__type']> = Extract<
   { __type: T }
 >;
 
+export type SerializerParams = {
+  /**
+   * Whether to include stack strack trace in serialized data
+   */
+  includeStack?: boolean;
+};
+
 export type NativeErrorFields = {
   cause?: Serializable;
   /** Error message (a string, non-empty with HttpException subclasses) */

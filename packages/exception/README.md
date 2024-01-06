@@ -19,7 +19,7 @@ to cover cross-environments challenges (RSC, SSR...).
 - 👉&nbsp; Usage by [explicit named imports](#by-named-imports) and/or [status code](#by-status-code).
 - 👉&nbsp; If message not provided, defaults to [http error message](#default-messages)
 - 👉&nbsp; Supports pre-defined [contextual](#error-context) information.
-- 👉&nbsp; Built-in [serializer](https://belgattitude.github.io/httpx/#/?id=serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
+- 👉&nbsp; Built-in [serializer](#serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
 - 👉&nbsp; Supports [nested error](#nested-errors) through native [Error.cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
 - 👉&nbsp; [Extends](#class-diagram) native Error class with [stacktrace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) support.
 - 👉&nbsp; No deps. [Node, edge and modern browsers compatibility](#compatibility),
@@ -368,10 +368,18 @@ the runtime.
 Additionally, you can pass any native errors (`Error`, `EvalError`, `RangeError`, `ReferenceError`,
 `SyntaxError`, `TypeError`, `URIError`) as well as a custom one (the later will be transformed to the base type Error).
 
+⚠️ **Since v3.0.0**:
+
+For security reasons [stack traces](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack)
+won't be serialized anymore by default as they might contain sensitive information in production. To opt-in selectively
+for stack traces serialization (ie: development or logging)
+`convertToSerializable`, `createFromSerializable`, `toJson` and `fromJson` functions
+accepts a `SerializerParams.includeStack` param as second argument.
+
 ### JSON
 
 ```typescript
-import { fromJson, toJson } from "@httpx/http-exception/serializer";
+import { fromJson, toJson } from "@httpx/exception/serializer";
 
 const e = new HttpForbidden();
 
@@ -381,8 +389,26 @@ const deserialized = fromJson(json);
 // e === deserialized
 ```
 
-> **Note**
+> **Tip**
 > See also how to integrate with [superjson](https://github.com/blitz-js/superjson#recipes)
+
+<details>
+<summary>Example for stack traces serialization.</summary>
+
+```typescript
+import { fromJson, toJson } from "@httpx/exception/serializer";
+
+// To include stack traces (not safe in production)
+const jsonWithStack = toJson(new HttpException(500), {
+  includeStack: process.env.NODE_ENV === "development",
+});
+
+const eWithStrack = fromJson(json, {
+  includeStack: process.env.NODE_ENV === "development",
+});
+```
+
+</details>
 
 ### Serializable
 
@@ -392,7 +418,7 @@ Same as JSON but before json.parse/stringify. Allows to use a different encoder.
 import {
   convertToSerializable,
   createFromSerializable,
-} from "@httpx/http-exception/serializer";
+} from "@httpx/exception/serializer";
 
 const e = new HttpForbidden({
   cause: new Error("Token was revoked"),
@@ -402,6 +428,25 @@ const serializableObject = convertToSerializable(e);
 const deserialized = createFromSerializable(serializableObject);
 // e === deserialized
 ```
+
+<details>
+<summary>Example for stack traces serialization.</summary>
+
+```typescript
+import {
+  convertToSerializable,
+  createFromSerializable,
+} from "@httpx/exception/serializer";
+
+const serializableObject = convertToSerializable(e, {
+  includeStack: process.env.NODE_ENV === "development",
+});
+const deserialized = createFromSerializable(serializableObject, {
+  includeStack: process.env.NODE_ENV === "development",
+});
+```
+
+</details>
 
 ## Default messages
 
@@ -506,22 +551,22 @@ const alternate = new HttpServerException({
 ### Bundle size
 
 Code and bundler have been tuned to target a minimal compressed footprint
-for the browser. In typical usage the bundle size will vary between 400b to 660b compressed
+for the browser. In ESM, typical usage the bundle size will vary between 400b to 660b compressed
 (including default messages for the 43 status codes).
 
 ESM individual imports are tracked by a
 [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/dsn-parser/.size-limit.cjs).
 
-| Scenario                                         | Size (compressed) |
-| ------------------------------------------------ | ----------------: |
-| Import generic exception (`HttpClientException`) |            ~ 370b |
-| Import 1 client exception                        |            ~ 400b |
-| Import 2 client exceptions                       |            ~ 412b |
-| Import 6 client exceptions                       |            ~ 425b |
-| Import 1 client + 1 server exceptions            |            ~ 416b |
-| Import `createHttpException` (all 43 exceptions) |            ~ 660b |
-| Import `fromJson` (incl createHttpException)     |           ~ 1100b |
-| All exceptions + typeguards + serializer         |           ~ 1500b |
+| Scenario                                           | Size (compressed) |
+| -------------------------------------------------- | ----------------: |
+| Import generic exception (`HttpClientException`)   |            ~ 370b |
+| Import 1 client exception                          |            ~ 400b |
+| Import 2 client exceptions                         |            ~ 412b |
+| Import 6 client exceptions                         |            ~ 425b |
+| Import 1 client + 1 server exceptions              |            ~ 416b |
+| Import `createHttpException` (all 43 exceptions)   |            ~ 660b |
+| Import `fromJson` (incl createHttpException)       |           ~ 1140b |
+| All serializer functions + exceptions + typeguards |           ~ 1500b |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/exception@latest).
 

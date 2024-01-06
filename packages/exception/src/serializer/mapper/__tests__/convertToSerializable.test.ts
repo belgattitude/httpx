@@ -142,4 +142,54 @@ describe('convertToSerializable', () => {
       expect(serializableWithoutCause).toMatchSnapshot();
     });
   });
+
+  describe('when includeStack is set', () => {
+    const eachCases = [
+      [
+        'http-exception-default-include-stack',
+        undefined,
+        false,
+        new HttpException(500),
+      ],
+      [
+        'http-exception-with-include-stack=true',
+        true,
+        true,
+        new HttpException(500),
+      ],
+      [
+        'http-exception-with-include-stack=false',
+        false,
+        false,
+        new HttpException(500),
+      ],
+      [
+        'native-error-default-include-stack',
+        undefined,
+        false,
+        new Error('test'),
+      ],
+      ['native-error-with-include-stack=true', true, true, new Error('test')],
+      [
+        'native-error-with-include-stack=false',
+        false,
+        false,
+        new Error('test'),
+      ],
+    ] as const satisfies [
+      label: string,
+      includeStack: boolean | undefined,
+      hasStack: boolean,
+      error: HttpException | Error,
+    ][];
+
+    it.each(eachCases)(
+      'for "%s" with includeStack="%s", should return stack="%s"',
+      (label, includeStack, hasStack, error) => {
+        const serializable = convertToSerializable(error, { includeStack });
+        const { stack } = serializable;
+        expect(stack === undefined).toBe(!hasStack);
+      }
+    );
+  });
 });

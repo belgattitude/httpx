@@ -1,5 +1,6 @@
 import type { HttpException } from '../../base';
 import { createHttpException } from '../../factory';
+import type { HttpExceptionParamsWithIssues } from '../../types/HttpExceptionParamsWithIssues';
 import {
   baseExceptionMap,
   isBaseHttpException,
@@ -11,27 +12,34 @@ import type {
   SerializableError,
   SerializableHttpException,
   SerializableNonNativeError,
+  SerializerParams,
 } from '../types';
 
 const createCustomError = (
-  serializable: Omit<SerializableError | SerializableNonNativeError, '__type'>
+  serializable: Omit<SerializableError | SerializableNonNativeError, '__type'>,
+  params?: SerializerParams
 ): Error | NativeError => {
+  const { includeStack = false } = params ?? {};
   const { cause, message, name, stack } = serializable;
   const cls = nativeErrorMap[name as keyof typeof nativeErrorMap] ?? Error;
   const e: Error | NativeError = cause
     ? new cls(message, {
-        cause: createFromSerializable(cause),
+        cause: createFromSerializable(cause, params),
       })
     : new cls(message);
-  if (stack) {
+  if (!includeStack) {
+    e.stack = undefined;
+  } else if (stack) {
     e.stack = stack;
   }
   return e;
 };
 
 const createHttpExceptionError = (
-  serializable: SerializableHttpException
+  serializable: SerializableHttpException,
+  params?: SerializerParams
 ): Error | HttpException => {
+  const { includeStack = false } = params ?? {};
   const {
     cause,
     name,
@@ -44,7 +52,7 @@ const createHttpExceptionError = (
     url,
     issues,
   } = serializable;
-  const params = {
+  const exceptionParams = {
     cause: cause ? createFromSerializable(cause) : undefined,
     code: code,
     errorId: errorId,
@@ -52,16 +60,23 @@ const createHttpExceptionError = (
     method: method,
     url: url,
     ...(issues ? { issues } : {}),
-  };
+  } satisfies HttpExceptionParamsWithIssues;
   let e: HttpException;
   try {
     e = isBaseHttpException(name)
-      ? new baseExceptionMap[name](statusCode, params)
-      : createHttpException(statusCode, params);
+      ? new baseExceptionMap[name](statusCode, exceptionParams)
+      : createHttpException(statusCode, exceptionParams);
   } catch {
-    return createCustomError({ cause, message: params.message, name, stack });
+    return createCustomError({
+      cause,
+      message: exceptionParams.message,
+      name,
+      stack,
+    });
   }
-  if (stack) {
+  if (!includeStack) {
+    e.stack = undefined;
+  } else if (stack !== undefined) {
     e.stack = stack;
   }
   return e;
@@ -74,17 +89,18 @@ const createHttpExceptionError = (
  * @link {convertToSerializable}
  */
 export const createFromSerializable = (
-  payload: Serializable
+  payload: Serializable,
+  params?: SerializerParams
 ): Error | HttpException | NativeError => {
   let e: Error | HttpException | NativeError;
   switch (payload.__type) {
     case 'HttpException': {
-      e = createHttpExceptionError(payload);
+      e = createHttpExceptionError(payload, params);
       break;
     }
     case 'NativeError':
     case 'NonNativeError': {
-      e = createCustomError(payload);
+      e = createCustomError(payload, params);
       break;
     }
     default: {

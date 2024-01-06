@@ -1,10 +1,11 @@
 import type { HttpException } from '../../base';
 import { SerializerError } from '../error';
 import { createFromSerializable } from '../mapper';
-import type { SerializableError } from '../types';
+import type { SerializableError, SerializerParams } from '../types';
 
 export const fromJson = (
-  json: string
+  json: string,
+  params?: SerializerParams
 ): Error | HttpException | SerializerError => {
   let v: SerializableError;
   try {
@@ -14,5 +15,5 @@ export const fromJson = (
       ...(e instanceof Error ? { cause: e } : {}),
     });
   }
-  return createFromSerializable(v);
+  return createFromSerializable(v, params);
 };
