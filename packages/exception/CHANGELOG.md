@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 3.0.2
+
+### Patch Changes
+
+- [`28687e1`](https://github.com/belgattitude/httpx/commit/28687e16e42019d3d9f7fb1d5d6180a87a2b3324) Thanks [@belgattitude](https://github.com/belgattitude)! - Release with npm provenance
+
 ## 3.0.1
 
 ### Patch Changes
