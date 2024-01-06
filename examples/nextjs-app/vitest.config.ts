@@ -8,7 +8,6 @@ export default defineConfig({
   plugins: [
     react({
       devTarget: 'es2022',
-      jsxImportSource: '@emotion/react',
     }),
     tsconfigPaths(),
     svgr({
