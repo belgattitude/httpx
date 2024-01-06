@@ -45,3 +45,5 @@ jobs:
 
       - name: 🛡️ Snyk security / vulnerabilities tests
         run: yarn snyk:test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
