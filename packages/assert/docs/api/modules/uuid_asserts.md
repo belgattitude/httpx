@@ -1,4 +1,4 @@
-[@httpx/assert - v0.6.2](../README.md) / uuid.asserts
+[@httpx/assert - v0.6.7](../README.md) / uuid.asserts
 
 # Module: uuid.asserts
 

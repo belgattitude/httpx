@@ -37,7 +37,6 @@ Note that a lot of apis/frameworks uses 422 Unprocessable Entity to indicate (fo
 - [cause](client.HttpUnprocessableEntity.md#cause)
 - [code](client.HttpUnprocessableEntity.md#code)
 - [errorId](client.HttpUnprocessableEntity.md#errorid)
-- [errors](client.HttpUnprocessableEntity.md#errors)
 - [issues](client.HttpUnprocessableEntity.md#issues)
 - [message](client.HttpUnprocessableEntity.md#message)
 - [method](client.HttpUnprocessableEntity.md#method)
@@ -61,9 +60,9 @@ Note that a lot of apis/frameworks uses 422 Unprocessable Entity to indicate (fo
 
 #### Parameters
 
-| Name           | Type                                                                                                                                                                                                                                                   |
-| :------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `msgOrParams?` | `string` \| [`HttpExceptionParams`](../modules/types.md#httpexceptionparams) & \{ `errors?`: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[] } & \{ `issues?`: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[] } |
+| Name           | Type                                        |
+| :------------- | :------------------------------------------ |
+| `msgOrParams?` | `string` \| `HttpExceptionParamsWithIssues` |
 
 #### Returns
 
@@ -113,16 +112,6 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 #### Inherited from
 
 [HttpClientException](base.HttpClientException.md).[errorId](base.HttpClientException.md#errorid)
-
----
-
-### errors
-
-• `Readonly` **errors**: [`HttpValidationIssue`](../modules/types.md#httpvalidationissue)[]
-
-Errors has been renamed to issues as a better name.
-
-**`Deprecated`**
 
 ---
 

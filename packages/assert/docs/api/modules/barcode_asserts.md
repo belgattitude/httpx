@@ -1,4 +1,4 @@
-[@httpx/assert - v0.6.2](../README.md) / barcode.asserts
+[@httpx/assert - v0.6.7](../README.md) / barcode.asserts
 
 # Module: barcode.asserts
 
