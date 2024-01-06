@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.6.6
+
+### Patch Changes
+
+- [#877](https://github.com/belgattitude/httpx/pull/877) [`e329bcd`](https://github.com/belgattitude/httpx/commit/e329bcd54a5daa4eafb8a9e95117eb2bc07cad1a) Thanks [@belgattitude](https://github.com/belgattitude)! - Add npm provenance to releases
+
 ## 0.6.5
 
 ### Patch Changes
