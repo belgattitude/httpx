@@ -119,7 +119,6 @@ describe('createFromSerializable', () => {
       expect(converted).toBeInstanceOf(Error);
       expect(converted.name).toStrictEqual('Error');
       expect(converted.message).toStrictEqual(e.message);
-      expect(converted.stack).toStrictEqual(e.stack);
       expect(converted.cause).toStrictEqual(e.cause);
     });
   });
@@ -133,5 +132,57 @@ describe('createFromSerializable', () => {
         `Can't serialize error at runtime. Received 'object'`
       );
     });
+  });
+
+  describe('when includeStack is set', () => {
+    const eachCases = [
+      [
+        'http-exception-default-include-stack',
+        undefined,
+        false,
+        new HttpException(500),
+      ],
+      [
+        'http-exception-with-include-stack=true',
+        true,
+        true,
+        new HttpException(500),
+      ],
+      [
+        'http-exception-with-include-stack=false',
+        false,
+        false,
+        new HttpException(500),
+      ],
+      [
+        'native-error-default-include-stack',
+        undefined,
+        false,
+        new Error('test'),
+      ],
+      ['native-error-with-include-stack=true', true, true, new Error('test')],
+      [
+        'native-error-with-include-stack=false',
+        false,
+        false,
+        new Error('test'),
+      ],
+    ] as const satisfies [
+      label: string,
+      includeStack: boolean | undefined,
+      hasStack: boolean,
+      error: HttpException | Error,
+    ][];
+
+    it.each(eachCases)(
+      'for "%s" with includeStack="%s", should return stack="%s"',
+      (label, includeStack, hasStack, error) => {
+        const converted = createFromSerializable(convertToSerializable(error), {
+          includeStack,
+        });
+        const { stack } = converted;
+        expect(stack === undefined).toBe(!hasStack);
+      }
+    );
   });
 });

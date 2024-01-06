@@ -2,7 +2,7 @@ import type { HttpException } from '../../base';
 import { HttpUnprocessableEntity } from '../../client';
 import { isHttpException } from '../../typeguards';
 import { isNativeError } from '../typeguard';
-import type { NativeError, Serializable } from '../types';
+import type { NativeError, Serializable, SerializerParams } from '../types';
 
 /**
  * Convert an Error, NativeError or any HttpException to
@@ -11,9 +11,11 @@ import type { NativeError, Serializable } from '../types';
  * @link {createFromSerializable}
  */
 export const convertToSerializable = (
-  e: Error | HttpException | NativeError
+  e: Error | HttpException | NativeError,
+  params?: SerializerParams
   // eslint-disable-next-line sonarjs/cognitive-complexity
 ): Serializable => {
+  const { includeStack = false } = params ?? {};
   const {
     cause: c = null,
     message,
@@ -34,7 +36,7 @@ export const convertToSerializable = (
   const common = {
     message,
     name,
-    ...(stack ? { stack } : {}),
+    ...(includeStack && stack ? { stack } : {}),
     ...(cause ? { cause } : {}),
   };
   if (isHttpException(e)) {
