@@ -1,5 +1,17 @@
 # @httpx/assert
 
+## 0.7.0
+
+### Minor Changes
+
+- [#885](https://github.com/belgattitude/httpx/pull/885) [`bfe4861`](https://github.com/belgattitude/httpx/commit/bfe4861a5f745c8361b671542d15dfb77c435455) Thanks [@belgattitude](https://github.com/belgattitude)! - Return weak opaque type StringNonEmpty from assertStringNonEmpty
+
+- [#885](https://github.com/belgattitude/httpx/pull/885) [`bfe4861`](https://github.com/belgattitude/httpx/commit/bfe4861a5f745c8361b671542d15dfb77c435455) Thanks [@belgattitude](https://github.com/belgattitude)! - BC: rename assertStrNotEmpty to assertStringNonEmpty
+
+### Patch Changes
+
+- [#885](https://github.com/belgattitude/httpx/pull/885) [`bfe4861`](https://github.com/belgattitude/httpx/commit/bfe4861a5f745c8361b671542d15dfb77c435455) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix weak opaque type signature for StringNonEmpty
+
 ## 0.6.7
 
 ### Patch Changes
