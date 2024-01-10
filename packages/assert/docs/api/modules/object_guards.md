@@ -1,4 +1,4 @@
-[@httpx/assert - v0.6.7](../README.md) / object.guards
+[@httpx/assert - v0.7.0](../README.md) / object.guards
 
 # Module: object.guards
 

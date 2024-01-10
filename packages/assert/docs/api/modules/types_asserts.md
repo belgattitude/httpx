@@ -1,4 +1,4 @@
-[@httpx/assert - v0.6.7](../README.md) / types.asserts
+[@httpx/assert - v0.7.0](../README.md) / types.asserts
 
 # Module: types.asserts
 
