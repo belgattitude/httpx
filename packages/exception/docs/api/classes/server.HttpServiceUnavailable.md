@@ -126,7 +126,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ### method
 
-• `Readonly` **method**: `undefined` \| `"CONNECT"` \| `"DELETE"` \| `"GET"` \| `"HEAD"` \| `"OPTIONS"` \| `"PATCH"` \| `"POST"` \| `"PUT"` \| `"QUERY"` \| `"TRACE"`
+• `Readonly` **method**: `undefined` \| `HttpMethod`
 
 Http method
 

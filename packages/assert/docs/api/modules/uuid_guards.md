@@ -27,7 +27,7 @@ optional given version
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `version?` | ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `version?` | [`UuidVersion`](uuid_types.md#uuidversion) |
 
 #### Returns
 

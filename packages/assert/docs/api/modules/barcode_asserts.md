@@ -21,7 +21,7 @@ Assert string is not empty (trims the string by default)
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 

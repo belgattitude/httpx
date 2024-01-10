@@ -20,7 +20,7 @@
 | Name | Type |
 | :------ | :------ |
 | `v` | `never` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 

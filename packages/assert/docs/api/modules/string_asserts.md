@@ -8,7 +8,7 @@
 
 - [assertParsableSafeInt](string_asserts.md#assertparsablesafeint)
 - [assertParsableStrictIsoDateZ](string_asserts.md#assertparsablestrictisodatez)
-- [assertStrNotEmpty](string_asserts.md#assertstrnotempty)
+- [assertStringNonEmpty](string_asserts.md#assertstringnonempty)
 
 ## Functions
 
@@ -21,7 +21,7 @@
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 
@@ -38,7 +38,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 
@@ -50,9 +50,9 @@ TypeError
 
 ___
 
-### assertStrNotEmpty
+### assertStringNonEmpty
 
-▸ **assertStrNotEmpty**(`v`, `msgOrErrorFactory?`): asserts v is string
+▸ **assertStringNonEmpty**(`v`, `msgOrErrorFactory?`): asserts v is StringNonEmpty
 
 Assert string is not empty (trims the string by default)
 
@@ -61,11 +61,11 @@ Assert string is not empty (trims the string by default)
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 
-asserts v is string
+asserts v is StringNonEmpty
 
 **`Throws`**
 

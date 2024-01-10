@@ -28,7 +28,7 @@
 - [assertParsableSafeInt](index.md#assertparsablesafeint)
 - [assertParsableStrictIsoDateZ](index.md#assertparsablestrictisodatez)
 - [assertPlainObject](index.md#assertplainobject)
-- [assertStrNotEmpty](index.md#assertstrnotempty)
+- [assertStringNonEmpty](index.md#assertstringnonempty)
 - [assertUuid](index.md#assertuuid)
 - [assertUuidV1](index.md#assertuuidv1)
 - [assertUuidV3](index.md#assertuuidv3)
@@ -185,9 +185,9 @@ Re-exports [assertPlainObject](object_asserts.md#assertplainobject)
 
 ___
 
-### assertStrNotEmpty
+### assertStringNonEmpty
 
-Re-exports [assertStrNotEmpty](string_asserts.md#assertstrnotempty)
+Re-exports [assertStringNonEmpty](string_asserts.md#assertstringnonempty)
 
 ___
 

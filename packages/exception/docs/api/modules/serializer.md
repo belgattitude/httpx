@@ -57,10 +57,10 @@ an object suitable for serialization (a serializable version).
 
 #### Parameters
 
-| Name      | Type                                                                                                                                                            |
-| :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `e`       | `Error` \| [`HttpException`](../classes/base.HttpException.md) \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError` |
-| `params?` | `SerializerParams`                                                                                                                                              |
+| Name      | Type                                                                                              |
+| :-------- | :------------------------------------------------------------------------------------------------ |
+| `e`       | [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror) |
+| `params?` | `SerializerParams`                                                                                |
 
 #### Returns
 
@@ -72,7 +72,7 @@ an object suitable for serialization (a serializable version).
 
 ### createFromSerializable
 
-▸ **createFromSerializable**(`payload`, `params?`): `Error` \| [`HttpException`](../classes/base.HttpException.md) \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError`
+▸ **createFromSerializable**(`payload`, `params?`): [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror)
 
 create an Error, NativeError or any HttpException from a
 serializable representation
@@ -86,7 +86,7 @@ serializable representation
 
 #### Returns
 
-`Error` \| [`HttpException`](../classes/base.HttpException.md) \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError`
+[`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror)
 
 **`Link`**
 
@@ -115,10 +115,10 @@ serializable representation
 
 #### Parameters
 
-| Name        | Type                                                                                                                                                            |
-| :---------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `exception` | `Error` \| [`HttpException`](../classes/base.HttpException.md) \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError` |
-| `params?`   | `SerializerParams`                                                                                                                                              |
+| Name        | Type                                                                                              |
+| :---------- | :------------------------------------------------------------------------------------------------ |
+| `exception` | [`HttpException`](../classes/base.HttpException.md) \| [`NativeError`](serializer.md#nativeerror) |
+| `params?`   | `SerializerParams`                                                                                |
 
 #### Returns
 

@@ -26,4 +26,4 @@ ___
 
 ### StringNonEmpty
 
-Ƭ **StringNonEmpty**: `string` & `WeakOpaqueContainer`\<``"ParsableStrictIsoDateZ"``\>
+Ƭ **StringNonEmpty**: `string` & `WeakOpaqueContainer`\<``"StringNonEmpty"``\>

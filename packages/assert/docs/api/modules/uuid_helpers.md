@@ -12,7 +12,7 @@
 
 ### getUuidVersion
 
-▸ **getUuidVersion**(`uuid`): ``false`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` \| `number` & {}
+▸ **getUuidVersion**(`uuid`): ``false`` \| [`UuidVersionOrNumber`](uuid_types.md#uuidversionornumber)
 
 Adapted from https://github.com/uuidjs/uuid/blob/main/src/version.js
 
@@ -24,4 +24,4 @@ Adapted from https://github.com/uuidjs/uuid/blob/main/src/version.js
 
 #### Returns
 
-``false`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` \| `number` & {}
+``false`` \| [`UuidVersionOrNumber`](uuid_types.md#uuidversionornumber)

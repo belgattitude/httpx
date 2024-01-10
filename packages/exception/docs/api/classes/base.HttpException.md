@@ -128,7 +128,7 @@ Error.message
 
 ### method
 
-• `Readonly` **method**: `undefined` \| `"CONNECT"` \| `"DELETE"` \| `"GET"` \| `"HEAD"` \| `"OPTIONS"` \| `"PATCH"` \| `"POST"` \| `"PUT"` \| `"QUERY"` \| `"TRACE"`
+• `Readonly` **method**: `undefined` \| `HttpMethod`
 
 Http method
 

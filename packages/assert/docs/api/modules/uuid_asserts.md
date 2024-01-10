@@ -26,9 +26,9 @@ Accept optional version
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 | `options?` | `Object` |
-| `options.version?` | ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.version?` | [`UuidVersion`](uuid_types.md#uuidversion) |
 
 #### Returns
 
@@ -51,7 +51,7 @@ Asserts a value is a valid uuid v1
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 
@@ -74,7 +74,7 @@ Asserts a value is a valid uuid v3
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 
@@ -97,7 +97,7 @@ Assert a value is a valid uuid v4
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 
@@ -120,7 +120,7 @@ Assert a value is a valid uuid v5
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 

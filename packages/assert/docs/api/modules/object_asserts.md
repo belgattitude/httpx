@@ -21,7 +21,7 @@ Assert a value is a plain object
 | Name | Type |
 | :------ | :------ |
 | `v` | `unknown` |
-| `msgOrErrorFactory?` | `string` \| () => `Error` |
+| `msgOrErrorFactory?` | `MsgOrErrorFactory` |
 
 #### Returns
 

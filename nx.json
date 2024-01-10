@@ -107,7 +107,7 @@
       "dependsOn": ["^docgen"],
       "inputs": ["all", "^public"],
       "outputs": ["{projectRoot}/docs/api"],
-      "cache": true
+      "cache": false
     },
     "build": {
       "dependsOn": ["^build"],
