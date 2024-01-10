@@ -1,7 +1,7 @@
 import {
   assertParsableSafeInt,
   assertParsableStrictIsoDateZ,
-  assertStrNotEmpty,
+  assertStringNonEmpty,
 } from '../string.asserts';
 
 describe('string assertions tests', () => {
@@ -46,16 +46,16 @@ describe('string assertions tests', () => {
   });
   describe('assertStrNotEmpty', () => {
     it('should not throw when value is valid', () => {
-      expect(() => assertStrNotEmpty('sdf')).not.toThrow();
+      expect(() => assertStringNonEmpty('sdf')).not.toThrow();
     });
     it('should throw when value is invalid', () => {
-      expect(() => assertStrNotEmpty(new Date())).toThrow(
+      expect(() => assertStringNonEmpty(new Date())).toThrow(
         new TypeError('Value is expected to be a non-empty string, got: Date')
       );
     });
     it('should throw custom error when value is invalid', () => {
       const e = new Error('cool');
-      expect(() => assertStrNotEmpty('', () => e)).toThrow(e);
+      expect(() => assertStringNonEmpty('', () => e)).toThrow(e);
     });
   });
 });

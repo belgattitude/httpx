@@ -9,7 +9,7 @@ import { createAssertException } from './utils/createAssertException';
  * Assert string is not empty (trims the string by default)
  * @throws TypeError
  */
-export function assertStrNotEmpty(
+export function assertStringNonEmpty(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is string {

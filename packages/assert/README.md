@@ -115,12 +115,12 @@ Alternatively it's possible to provide either a message or function returning
 an Error. For example:
 
 ```typescript
-import { assertEan13 } from '@httpx/assert';
+import { assertEan13, assertStringNonEmpty } from '@httpx/assert';
 import { HttpBadRequest } from '@httpx/exception';
 
 assertEan13('123', 'Not a barcode'); // 👈 Will throw a TypeError('Not a barcode')
 
-assertStrNotEmpty(lang, () => new HttpBadRequest('Missing language'));
+assertStringNonEmpty(lang, () => new HttpBadRequest('Missing language'));
 ```
 
 ## Usage
@@ -195,12 +195,12 @@ import { isArrayNonEmpty, assertArrayNonEmpty, type ArrayNonEmpty } from '@httpx
 isArrayNonEmpty([]) // 👉 false
 isArrayNonEmpty([0,1]) // 👉 true
 isArrayNonEmpty([null]) // 👉 true
-assertArrayNotEmpty([]) // 👉 throws
+assertArrayNonEmpty([]) // 👉 throws
 ```
 
 ### String related
 
-#### StringNotEmpty
+#### StringNonEmpty
 
 | Name                 | Type      | Opaque type      | Comment         |
 |----------------------|-----------|------------------|-----------------|
