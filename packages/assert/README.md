@@ -12,6 +12,8 @@ Assertions and typeguards as primitives
 [![downloads](https://img.shields.io/npm/dm/@httpx/assert?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/assert)
 [![license](https://img.shields.io/npm/l/@httpx/assert?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
+> **warning**: pre-v1, use at your own risks
+
 ## Install
 
 ```bash
@@ -183,10 +185,10 @@ assertNumberSafeInt(Number.MAX_SAFE_INTEGER + 1); // 👉 throws
 #### ArrayNonEmpty
 
 
-| Name                | Type      | Opaque type     | Comment         |
-|---------------------|-----------|-----------------|-----------------|
-| isArrayNonEmpty     | `string`  | `ArrayNonEmpty` |  |
-| assertArrayNonEmpty | `string`  | `ArrayNonEmpty` |  |
+| Name                | Type        | Opaque type     | Comment         |
+|---------------------|-------------|-----------------|-----------------|
+| isArrayNonEmpty     | `unknown[]` | `ArrayNonEmpty` |  |
+| assertArrayNonEmpty | `unknown[]` | `ArrayNonEmpty` |  |
 
 
 ```typescript
