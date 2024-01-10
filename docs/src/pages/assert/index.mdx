@@ -112,12 +112,12 @@ Alternatively it's possible to provide either a message or function returning
 an Error. For example:
 
 ```typescript
-import { assertEan13 } from '@httpx/assert';
+import { assertEan13, assertStringNonEmpty } from '@httpx/assert';
 import { HttpBadRequest } from '@httpx/exception';
 
 assertEan13('123', 'Not a barcode'); // 👈 Will throw a TypeError('Not a barcode')
 
-assertStrNotEmpty(lang, () => new HttpBadRequest('Missing language'));
+assertStringNonEmpty(lang, () => new HttpBadRequest('Missing language'));
 ```
 
 ## Usage
@@ -180,10 +180,10 @@ assertNumberSafeInt(Number.MAX_SAFE_INTEGER + 1); // 👉 throws
 #### ArrayNonEmpty
 
 
-| Name                | Type      | Opaque type     | Comment         |
-|---------------------|-----------|-----------------|-----------------|
-| isArrayNonEmpty     | `string`  | `ArrayNonEmpty` |  |
-| assertArrayNonEmpty | `string`  | `ArrayNonEmpty` |  |
+| Name                | Type        | Opaque type     | Comment         |
+|---------------------|-------------|-----------------|-----------------|
+| isArrayNonEmpty     | `unknown[]` | `ArrayNonEmpty` |  |
+| assertArrayNonEmpty | `unknown[]` | `ArrayNonEmpty` |  |
 
 
 ```typescript
@@ -192,12 +192,12 @@ import { isArrayNonEmpty, assertArrayNonEmpty, type ArrayNonEmpty } from '@httpx
 isArrayNonEmpty([]) // 👉 false
 isArrayNonEmpty([0,1]) // 👉 true
 isArrayNonEmpty([null]) // 👉 true
-assertArrayNotEmpty([]) // 👉 throws
+assertArrayNonEmpty([]) // 👉 throws
 ```
 
 ### String related
 
-#### StringNotEmpty
+#### StringNonEmpty
 
 | Name                 | Type      | Opaque type      | Comment         |
 |----------------------|-----------|------------------|-----------------|
@@ -300,9 +300,7 @@ isEan13('1234567890128'); // 👈 will check digit too
 assertEan13('1234567890128');
 ```
 
-## About bundle
-
-### Bundle size
+## Bundle size
 
 Code and bundler have been tuned to target a minimal compressed footprint
 for the browser.
@@ -318,9 +316,6 @@ ESM individual imports are tracked by a
 | All typeguards, assertions and helpers |            ~ 900b |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/assert@latest).
-
-
-### Compatibility
 
 ## Compatibility
 
@@ -341,42 +336,3 @@ Special thanks for inspiration:
 
 - [sindresorhus/is](https://github.com/sindresorhus/is)
 - [webmozarts/assert](https://github.com/webmozarts/assert)
-
-## Contributors
-
-Contributions are warmly appreciated. Have a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) document.
-
-## Sponsors
-
-If my OSS work brightens your day, let's take it to new heights together!
-[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
-or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
-
-### Special thanks to
-
-<table>
-  <tr>
-    <td>
-      <a href="https://www.jetbrains.com/?ref=belgattitude" target="_blank">
-        <img width="65" src="https://asset.brandfetch.io/idarKiKkI-/id53SttZhi.jpeg" alt="Jetbrains logo" />
-      </a>
-    </td>
-    <td>
-      <a href="https://www.embie.be/?ref=belgattitude" target="_blank">
-        <img width="65" src="https://avatars.githubusercontent.com/u/98402122?s=200&v=4" alt="Jetbrains logo" />
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://www.jetbrains.com/?ref=belgattitude" target="_blank">JetBrains</a>
-    </td>
-    <td align="center">
-      <a href="https://www.embie.be/?ref=belgattitude" target="_blank">Embie.be</a>
-    </td>
-  </tr>
-</table>
-
-## License
-
-MIT © [belgattitude](https://github.com/belgattitude) and contributors.

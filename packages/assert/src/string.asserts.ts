@@ -1,6 +1,10 @@
 import { formatErrMsg } from './messages/errorMessages';
 import { isParsableSafeInt, isStringNonEmpty } from './string.guards';
-import type { ParsableSafeInt, ParsableStrictIsoDateZ } from './string.types';
+import type {
+  ParsableSafeInt,
+  ParsableStrictIsoDateZ,
+  StringNonEmpty,
+} from './string.types';
 import { isoDateTimeZRegexp } from './string.utils';
 import type { MsgOrErrorFactory } from './types/internal.types';
 import { createAssertException } from './utils/createAssertException';
@@ -9,10 +13,10 @@ import { createAssertException } from './utils/createAssertException';
  * Assert string is not empty (trims the string by default)
  * @throws TypeError
  */
-export function assertStrNotEmpty(
+export function assertStringNonEmpty(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
-): asserts v is string {
+): asserts v is StringNonEmpty {
   if (!isStringNonEmpty(v)) {
     throw createAssertException(
       msgOrErrorFactory,

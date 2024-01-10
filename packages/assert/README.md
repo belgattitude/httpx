@@ -12,6 +12,8 @@ Assertions and typeguards as primitives
 [![downloads](https://img.shields.io/npm/dm/@httpx/assert?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/assert)
 [![license](https://img.shields.io/npm/l/@httpx/assert?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
+> **warning**: pre-v1, use at your own risks
+
 ## Install
 
 ```bash
@@ -115,12 +117,12 @@ Alternatively it's possible to provide either a message or function returning
 an Error. For example:
 
 ```typescript
-import { assertEan13 } from '@httpx/assert';
+import { assertEan13, assertStringNonEmpty } from '@httpx/assert';
 import { HttpBadRequest } from '@httpx/exception';
 
 assertEan13('123', 'Not a barcode'); // 👈 Will throw a TypeError('Not a barcode')
 
-assertStrNotEmpty(lang, () => new HttpBadRequest('Missing language'));
+assertStringNonEmpty(lang, () => new HttpBadRequest('Missing language'));
 ```
 
 ## Usage
@@ -183,10 +185,10 @@ assertNumberSafeInt(Number.MAX_SAFE_INTEGER + 1); // 👉 throws
 #### ArrayNonEmpty
 
 
-| Name                | Type      | Opaque type     | Comment         |
-|---------------------|-----------|-----------------|-----------------|
-| isArrayNonEmpty     | `string`  | `ArrayNonEmpty` |  |
-| assertArrayNonEmpty | `string`  | `ArrayNonEmpty` |  |
+| Name                | Type        | Opaque type     | Comment         |
+|---------------------|-------------|-----------------|-----------------|
+| isArrayNonEmpty     | `unknown[]` | `ArrayNonEmpty` |  |
+| assertArrayNonEmpty | `unknown[]` | `ArrayNonEmpty` |  |
 
 
 ```typescript
@@ -195,12 +197,12 @@ import { isArrayNonEmpty, assertArrayNonEmpty, type ArrayNonEmpty } from '@httpx
 isArrayNonEmpty([]) // 👉 false
 isArrayNonEmpty([0,1]) // 👉 true
 isArrayNonEmpty([null]) // 👉 true
-assertArrayNotEmpty([]) // 👉 throws
+assertArrayNonEmpty([]) // 👉 throws
 ```
 
 ### String related
 
-#### StringNotEmpty
+#### StringNonEmpty
 
 | Name                 | Type      | Opaque type      | Comment         |
 |----------------------|-----------|------------------|-----------------|
