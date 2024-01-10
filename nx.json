@@ -50,6 +50,7 @@
     "lint": {
       "dependsOn": ["^lint"],
       "inputs": ["default", "^public"],
+      "outputs": ["{workspaceRoot}/.cache/eslint/*.eslintcache"],
       "cache": true
     },
     "check-size": {
@@ -76,7 +77,6 @@
           "runtime": "node -v"
         }
       ],
-      "outputs": ["{projectRoot}/coverage"],
       "cache": true
     },
     "test-unit-coverage": {
@@ -88,7 +88,7 @@
           "runtime": "node -v"
         }
       ],
-      "outputs": ["{projectRoot}/coverage"],
+      "outputs": ["{projectRoot}/coverage/**/*"],
       "cache": true
     },
     "test-unit-edge": {
@@ -100,24 +100,27 @@
           "externalDependencies": ["vitest", "@edge-runtime/vm"]
         }
       ],
-      "outputs": ["{projectRoot}/coverage"],
       "cache": true
     },
     "docgen": {
       "dependsOn": ["^docgen"],
       "inputs": ["all", "^public"],
-      "outputs": ["{projectRoot}/docs/api"],
-      "cache": false
+      "outputs": ["{projectRoot}/docs/api/**/*"],
+      "cache": true
     },
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["default", "^public"],
-      "outputs": ["{projectRoot}/build", "{projectRoot}/dist"],
+      "outputs": [
+        "{projectRoot}/build/**/*",
+        "{projectRoot}/_release/**/*",
+        "{projectRoot}/dist/**/*"
+      ],
       "cache": true
     },
     "build-release": {
       "dependsOn": ["^build-release"],
-      "inputs": ["default", "^public", "{workspaceRoot}/.changeset"],
+      "inputs": ["default", "^public", "{workspaceRoot}/.changeset/*"],
       "outputs": ["{projectRoot}/build", "{projectRoot}/dist"],
       "cache": false
     }
