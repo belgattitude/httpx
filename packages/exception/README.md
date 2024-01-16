@@ -329,7 +329,7 @@ This typeguard is based on a convention and might help to convert an object to a
 import {
   isObjectWithErrorStatusCode,
   createHttpException,
-  type Obj,
+  type ObjectWithErrorStatusCode,
 } from "@httpx/exception";
 
 const noSuchUser = {
