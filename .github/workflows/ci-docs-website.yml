@@ -44,7 +44,7 @@ jobs:
         uses: ./.github/actions/yarn-nm-install
 
       - name: ♻️ Restore website docs build caches
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ${{ github.workspace }}/docs/.next/cache
