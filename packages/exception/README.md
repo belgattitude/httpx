@@ -50,22 +50,22 @@ pnpm add @httpx/exception     # via pnpm
   - [Class diagram](#class-diagram)
 - [Typeguards](#typeguards)
   - [Instanceof alternatives](#instanceof-alternatives)
-  - [isErrorWithErrorStatusCode](#iserrorwitherrorstatuscode)
-  - [isObjectWithErrorStatusCode](#isobjectwitherrorstatuscode)
   - [isHttpErrorStatusCode](#ishttperrorstatuscode)
 - [Serializer](#serializer)
   - [JSON](#json)
   - [Serializable](#serializable)
 - [Default messages](#default-messages)
   - [Non-official status codes](#non-official-status-codes)
+- [Helpers](#helpers)
+  - [isErrorWithErrorStatusCode](#iserrorwitherrorstatuscode)
+  - [isObjectWithErrorStatusCode](#isobjectwitherrorstatuscode)
 - [About bundle](#about-bundle)
   - [Compatibility](#compatibility)
   - [Bundle size](#bundle-size)
   - [Packaging](#packaging)
   - [Typescript](#typescript)
+- [Upgrade](#upgrade)
 - [Support](#support)
-- [Contributors](#contributors)
-- [Sponsors](#sponsors)
 
 ---
 
@@ -299,52 +299,6 @@ isHttpServerException(
 );
 ```
 
-### isErrorWithErrorStatusCode
-
-This typeguard is based on a convention and might help to convert a native error to a specific HttpException.
-
-```typescript
-import {
-  isErrorWithErrorStatusCode,
-  createHttpException,
-} from "@httpx/exception";
-
-try {
-  throw new (class extends Error {
-    statusCode = 400; // <- by convention
-  })();
-} catch (e) {
-  // will check if the value is an Error and that there's a statusCode is >=400 && <600
-  if (isErrorWithErrorStatusCode(e)) {
-    throw createHttpException(e.statusCode, e.message);
-  }
-}
-```
-
-### isObjectWithErrorStatusCode
-
-This typeguard is based on a convention and might help to convert an object to a specific HttpException.
-
-```typescript
-import {
-  isObjectWithErrorStatusCode,
-  createHttpException,
-  type Obj,
-} from "@httpx/exception";
-
-const noSuchUser = {
-  statusCode: 404,
-} satisfies ObjectWithErrorStatusCode;
-
-class NoSuchItem extends DomainError implements ObjectWithErrorStatusCode {
-  statusCode = 404;
-}
-
-if (isObjectWithErrorStatusCode(noSuchUser)) {
-  throw createHttpException(e.statusCode, "Nothing");
-}
-```
-
 ### isHttpErrorStatusCode
 
 ```typescript
@@ -528,6 +482,55 @@ const alternate = new HttpServerException({
   message: "Bandwidth limit exceeded",
   // ... others properties
 });
+```
+
+## Helpers
+
+### isErrorWithErrorStatusCode
+
+This typeguard is based on a convention and might help to convert a native error to a specific HttpException.
+
+```typescript
+import {
+  isErrorWithErrorStatusCode,
+  createHttpException,
+  type isErrorWithErrorStatusCode,
+} from "@httpx/exception";
+
+try {
+  throw new (class extends Error {
+    statusCode = 400; // <- by convention
+  })();
+} catch (e) {
+  // will check if the value is an Error and that there's a statusCode is >=400 && <600
+  if (isErrorWithErrorStatusCode(e)) {
+    throw createHttpException(e.statusCode, e.message);
+  }
+}
+```
+
+### isObjectWithErrorStatusCode
+
+This typeguard is based on a convention and might help to convert an object to a specific HttpException.
+
+```typescript
+import {
+  isObjectWithErrorStatusCode,
+  createHttpException,
+  type ObjectWithErrorStatusCode,
+} from "@httpx/exception";
+
+const noSuchUser = {
+  statusCode: 404,
+} satisfies ObjectWithErrorStatusCode;
+
+class NoSuchItem extends DomainError implements ObjectWithErrorStatusCode {
+  statusCode = 404;
+}
+
+if (isObjectWithErrorStatusCode(noSuchUser)) {
+  throw createHttpException(e.statusCode, "Nothing");
+}
 ```
 
 ## About bundle
