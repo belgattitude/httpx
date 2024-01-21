@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 3.0.3
+
+### Patch Changes
+
+- [#916](https://github.com/belgattitude/httpx/pull/916) [`8ab0e1a`](https://github.com/belgattitude/httpx/commit/8ab0e1aa4d3fae9a897c89cd34c5cd386395c9ac) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix README documentation regarding helpers
+
 ## 3.0.2
 
 ### Patch Changes
