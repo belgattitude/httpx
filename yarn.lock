@@ -1930,84 +1930,84 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/tao@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nrwl/tao@npm:17.3.1"
+"@nrwl/tao@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nrwl/tao@npm:18.0.0"
   dependencies:
-    nx: "npm:17.3.1"
+    nx: "npm:18.0.0"
     tslib: "npm:^2.3.0"
   bin:
     tao: index.js
-  checksum: 10/c0a28b82031c832cf4b127cf2a9a1215622c86b8b4daf116b30d7a82932fcfa9a14407b5b6e87fc310870dd7986cd3ba04b8f60d29a7d872ba54c15017cbb52b
+  checksum: 10/37a94d9d228c5b24e01716186aacd4ca587e8a9b7595a55acdfea84362433a9b5f7d28a2ebdae50c4785c1acd184266d841d592c32b73f05c9404fdb55fb05af
   languageName: node
   linkType: hard
 
-"@nx/nx-darwin-arm64@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-darwin-arm64@npm:17.3.1"
+"@nx/nx-darwin-arm64@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-darwin-arm64@npm:18.0.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@nx/nx-darwin-x64@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-darwin-x64@npm:17.3.1"
+"@nx/nx-darwin-x64@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-darwin-x64@npm:18.0.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@nx/nx-freebsd-x64@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-freebsd-x64@npm:17.3.1"
+"@nx/nx-freebsd-x64@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-freebsd-x64@npm:18.0.0"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-arm-gnueabihf@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-linux-arm-gnueabihf@npm:17.3.1"
+"@nx/nx-linux-arm-gnueabihf@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-linux-arm-gnueabihf@npm:18.0.0"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-arm64-gnu@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-linux-arm64-gnu@npm:17.3.1"
+"@nx/nx-linux-arm64-gnu@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-linux-arm64-gnu@npm:18.0.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-arm64-musl@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-linux-arm64-musl@npm:17.3.1"
+"@nx/nx-linux-arm64-musl@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-linux-arm64-musl@npm:18.0.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-x64-gnu@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-linux-x64-gnu@npm:17.3.1"
+"@nx/nx-linux-x64-gnu@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-linux-x64-gnu@npm:18.0.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-x64-musl@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-linux-x64-musl@npm:17.3.1"
+"@nx/nx-linux-x64-musl@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-linux-x64-musl@npm:18.0.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@nx/nx-win32-arm64-msvc@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-win32-arm64-msvc@npm:17.3.1"
+"@nx/nx-win32-arm64-msvc@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-win32-arm64-msvc@npm:18.0.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@nx/nx-win32-x64-msvc@npm:17.3.1":
-  version: 17.3.1
-  resolution: "@nx/nx-win32-x64-msvc@npm:17.3.1"
+"@nx/nx-win32-x64-msvc@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@nx/nx-win32-x64-msvc@npm:18.0.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -4129,7 +4129,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.5, axios@npm:^1.5.1":
+"axios@npm:1.6.5":
   version: 1.6.5
   resolution: "axios@npm:1.6.5"
   dependencies:
@@ -4137,6 +4137,17 @@ __metadata:
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
   checksum: 10/465489d9bf8f039b9adbc8103b6299d6a5e26de77b27f0e4173d814d39bca8f4b4659d94e09ee40461aedccd8c2452f1e2b3edace1c9f81220060d2974ff9dc7
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.6.0":
+  version: 1.6.7
+  resolution: "axios@npm:1.6.7"
+  dependencies:
+    follow-redirects: "npm:^1.15.4"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/a1932b089ece759cd261f175d9ebf4d41c8994cf0c0767cda86055c7a19bcfdade8ae3464bf4cec4c8b142f4a657dc664fb77a41855e8376cf38b86d7a86518f
   languageName: node
   linkType: hard
 
@@ -8103,7 +8114,7 @@ __metadata:
     is-ci: "npm:3.0.1"
     lint-staged: "npm:15.2.1"
     npm-run-all2: "npm:6.1.2"
-    nx: "npm:17.3.1"
+    nx: "npm:18.0.0"
     prettier: "npm:3.2.4"
     rimraf: "npm:5.0.5"
     rollup: "npm:4.9.6"
@@ -11202,25 +11213,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:17.3.1":
-  version: 17.3.1
-  resolution: "nx@npm:17.3.1"
+"nx@npm:18.0.0":
+  version: 18.0.0
+  resolution: "nx@npm:18.0.0"
   dependencies:
-    "@nrwl/tao": "npm:17.3.1"
-    "@nx/nx-darwin-arm64": "npm:17.3.1"
-    "@nx/nx-darwin-x64": "npm:17.3.1"
-    "@nx/nx-freebsd-x64": "npm:17.3.1"
-    "@nx/nx-linux-arm-gnueabihf": "npm:17.3.1"
-    "@nx/nx-linux-arm64-gnu": "npm:17.3.1"
-    "@nx/nx-linux-arm64-musl": "npm:17.3.1"
-    "@nx/nx-linux-x64-gnu": "npm:17.3.1"
-    "@nx/nx-linux-x64-musl": "npm:17.3.1"
-    "@nx/nx-win32-arm64-msvc": "npm:17.3.1"
-    "@nx/nx-win32-x64-msvc": "npm:17.3.1"
+    "@nrwl/tao": "npm:18.0.0"
+    "@nx/nx-darwin-arm64": "npm:18.0.0"
+    "@nx/nx-darwin-x64": "npm:18.0.0"
+    "@nx/nx-freebsd-x64": "npm:18.0.0"
+    "@nx/nx-linux-arm-gnueabihf": "npm:18.0.0"
+    "@nx/nx-linux-arm64-gnu": "npm:18.0.0"
+    "@nx/nx-linux-arm64-musl": "npm:18.0.0"
+    "@nx/nx-linux-x64-gnu": "npm:18.0.0"
+    "@nx/nx-linux-x64-musl": "npm:18.0.0"
+    "@nx/nx-win32-arm64-msvc": "npm:18.0.0"
+    "@nx/nx-win32-x64-msvc": "npm:18.0.0"
     "@yarnpkg/lockfile": "npm:^1.1.0"
     "@yarnpkg/parsers": "npm:3.0.0-rc.46"
     "@zkochan/js-yaml": "npm:0.0.6"
-    axios: "npm:^1.5.1"
+    axios: "npm:^1.6.0"
     chalk: "npm:^4.1.0"
     cli-cursor: "npm:3.1.0"
     cli-spinners: "npm:2.6.1"
@@ -11241,7 +11252,7 @@ __metadata:
     npm-run-path: "npm:^4.0.1"
     open: "npm:^8.4.0"
     ora: "npm:5.3.0"
-    semver: "npm:7.5.3"
+    semver: "npm:^7.5.3"
     string-width: "npm:^4.2.3"
     strong-log-transformer: "npm:^2.1.0"
     tar-stream: "npm:~2.2.0"
@@ -11282,7 +11293,7 @@ __metadata:
   bin:
     nx: bin/nx.js
     nx-cloud: bin/nx-cloud.js
-  checksum: 10/92bb90f646820de16e9537235c2f00953b2e3f7605abce1b98cb214b13cb6d3c1fe7cec6a5924d3c75b3e2a193eadc337bac0dde8cce7cdd8d56e97f82d0e6fc
+  checksum: 10/38d2355aecba19dfe0dc6de5547e4ed62f751be982249d984e72800121b8c9ce358dc12900e11ee4298748681d15af3ad17d8a68d302982ff9cd87dd62f65926
   languageName: node
   linkType: hard
 
@@ -12943,17 +12954,6 @@ __metadata:
   bin:
     semver: bin/semver
   checksum: 10/fca14418a174d4b4ef1fecb32c5941e3412d52a4d3d85165924ce3a47fbc7073372c26faf7484ceb4bbc2bde25880c6b97e492473dc7e9708fdfb1c6a02d546e
-  languageName: node
-  linkType: hard
-
-"semver@npm:7.5.3":
-  version: 7.5.3
-  resolution: "semver@npm:7.5.3"
-  dependencies:
-    lru-cache: "npm:^6.0.0"
-  bin:
-    semver: bin/semver.js
-  checksum: 10/80b4b3784abff33bacf200727e012dc66768ed5835441e0a802ba9f3f5dd6b10ee366294711f5e7e13d73b82a6127ea55f11f9884d35e76a6a618dc11bc16ccf
   languageName: node
   linkType: hard
 
