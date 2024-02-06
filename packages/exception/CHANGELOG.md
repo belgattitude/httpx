@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 3.0.4
+
+### Patch Changes
+
+- [#971](https://github.com/belgattitude/httpx/pull/971) [`ab3767f`](https://github.com/belgattitude/httpx/commit/ab3767fb70810e6a9d36a6467c6acc2708008796) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix classname mangling
+
 ## 3.0.3
 
 ### Patch Changes
