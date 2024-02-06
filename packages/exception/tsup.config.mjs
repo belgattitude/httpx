@@ -11,17 +11,19 @@ export default defineConfig((options) => {
       'src/experimental/index.ts',
       'src/serializer/index.ts',
     ],
+    bundle: true,
     format: ['esm', 'cjs'],
     minify: !options.watch,
-    minifyIdentifiers: true,
-    minifySyntax: true,
-    minifyWhitespace: true,
+    minifyIdentifiers: !options.watch,
+    minifySyntax: !options.watch,
+    minifyWhitespace: !options.watch,
     outExtension({ format }) {
       return {
         js: `.${format === 'cjs' ? 'cjs' : 'mjs'}`,
       };
     },
-    platform: 'browser',
+    // keepNames: true,
+    platform: 'neutral',
     sourcemap: !options.watch,
     splitting: true,
     target: ['es2022', ...browserslistToEsbuild()],
