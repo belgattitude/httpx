@@ -3,10 +3,11 @@ import type { HttpException } from '../base/HttpException';
 /**
  * @internal
  */
-export const initProtoAndName = (
+export const initProtoAndName2 = (
   obj: HttpException | Error,
-  cls: { name: string; prototype: object }
+  name: string,
+  cls: { prototype: object }
 ) => {
   Object.setPrototypeOf(obj, cls.prototype);
-  obj.name = cls.name;
+  obj.name = `Http${name}`;
 };

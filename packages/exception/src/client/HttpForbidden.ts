@@ -1,6 +1,7 @@
 import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs, initProtoAndName } from '../utils';
+import { getNormalizedParams } from '../utils/getNormalizedParams';
+import { initProtoAndName2 } from '../utils/initProtoAndName2';
 
 /**
  * 403 Forbidden (client)
@@ -11,10 +12,12 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
  * @see https://httpstatus.in/403/
  */
+const status = 403;
+const name = 'Forbidden';
 export class HttpForbidden extends HttpClientException {
-  static readonly STATUS = 403;
+  static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperArgs(HttpForbidden, msgOrParams));
-    initProtoAndName(this, HttpForbidden);
+    super(status, getNormalizedParams(name, msgOrParams));
+    initProtoAndName2(this, name, HttpForbidden);
   }
 }

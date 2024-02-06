@@ -1,5 +1,5 @@
 import type { HttpException } from '../../base';
-import { SerializerError } from '../error';
+import { SerializerError } from '../error/SerializerError';
 import { convertToSerializable } from '../mapper';
 import type { NativeError, SerializerParams } from '../types';
 
