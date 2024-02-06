@@ -1,6 +1,6 @@
 import type { HttpException } from '../../base';
-import { HttpUnprocessableEntity } from '../../client';
-import { isHttpException } from '../../typeguards';
+import { HttpUnprocessableEntity } from '../../client/HttpUnprocessableEntity';
+import { isHttpException } from '../../typeguards/isHttpException';
 import { isNativeError } from '../typeguard';
 import type { NativeError, Serializable, SerializerParams } from '../types';
 

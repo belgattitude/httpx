@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { HttpNotFound } from '../../client';
-import { createHttpException } from '../../factory';
+import { createHttpException } from '../../factory/createHttpException';
 import { HttpInternalServerError } from '../../server';
 import { tryOrFail } from '../tryOrFail';
 

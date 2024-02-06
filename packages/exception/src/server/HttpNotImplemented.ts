@@ -1,6 +1,7 @@
 import { HttpServerException } from '../base/HttpServerException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs, initProtoAndName } from '../utils';
+import { getNormalizedParams } from '../utils/getNormalizedParams';
+import { initProtoAndName2 } from '../utils/initProtoAndName2';
 
 /**
  * 501 Not Implemented
@@ -11,10 +12,13 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/501
  * @see https://httpstatus.in/501/
  */
+
+const status = 501;
+const name = 'NotImplemented';
 export class HttpNotImplemented extends HttpServerException {
-  static readonly STATUS = 501;
+  static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperArgs(HttpNotImplemented, msgOrParams));
-    initProtoAndName(this, HttpNotImplemented);
+    super(status, getNormalizedParams(name, msgOrParams));
+    initProtoAndName2(this, name, HttpNotImplemented);
   }
 }

@@ -1,5 +1,5 @@
 import type { HttpException } from '../../base';
-import { createHttpException } from '../../factory';
+import { createHttpException } from '../../factory/createHttpException';
 import type { HttpExceptionParamsWithIssues } from '../../types/HttpExceptionParamsWithIssues';
 import {
   baseExceptionMap,

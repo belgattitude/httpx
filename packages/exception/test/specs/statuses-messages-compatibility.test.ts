@@ -2,7 +2,7 @@ import statuses from 'statuses';
 import { describe, expect, it } from 'vitest';
 
 import type { HttpException } from '../../src/base';
-import { createHttpException } from '../../src/factory';
+import { createHttpException } from '../../src/factory/createHttpException';
 import { statusMap } from '../../src/status';
 
 describe('statuses messages compatibility', () => {

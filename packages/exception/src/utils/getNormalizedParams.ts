@@ -6,8 +6,8 @@ import { getMsgFromCls } from './getMsgFromCls';
  *
  * @internal
  */
-export const getSuper = (
-  cls: { name: string },
+export const getNormalizedParams = (
+  name: string,
   msgOrParams?: HttpExceptionParams | string
 ): HttpExceptionParams => {
   const { message, ...rest } = {
@@ -17,6 +17,6 @@ export const getSuper = (
   };
   return {
     ...rest,
-    message: message ?? getMsgFromCls(cls.name),
+    message: message ?? getMsgFromCls(`Http${name}`),
   };
 };

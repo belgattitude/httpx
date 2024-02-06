@@ -1,5 +1,4 @@
 import { supportsErrorCause } from '../../support/supportsErrorCause';
-import { initProtoAndName } from '../../utils';
 
 export class SerializerError extends Error {
   constructor(
@@ -13,6 +12,7 @@ export class SerializerError extends Error {
     if (supportsErrorCause() && cause instanceof Error) {
       this.cause = cause;
     }
-    initProtoAndName(this, SerializerError);
+    Object.setPrototypeOf(this, SerializerError.prototype);
+    this.name = 'SerializerError';
   }
 }

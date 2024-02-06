@@ -1,6 +1,7 @@
 import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs, initProtoAndName } from '../utils';
+import { getNormalizedParams } from '../utils/getNormalizedParams';
+import { initProtoAndName2 } from '../utils/initProtoAndName2';
 
 /**
  * 409 Conflict (client)
@@ -10,10 +11,12 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  * @see https://httpstatus.in/409/
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
  */
+const status = 409;
+const name = 'Conflict';
 export class HttpConflict extends HttpClientException {
-  static readonly STATUS = 409;
+  static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperArgs(HttpConflict, msgOrParams));
-    initProtoAndName(this, HttpConflict);
+    super(status, getNormalizedParams(name, msgOrParams));
+    initProtoAndName2(this, name, HttpConflict);
   }
 }

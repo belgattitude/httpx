@@ -1,6 +1,7 @@
 import { HttpServerException } from '../base/HttpServerException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs, initProtoAndName } from '../utils';
+import { getNormalizedParams } from '../utils/getNormalizedParams';
+import { initProtoAndName2 } from '../utils/initProtoAndName2';
 
 /**
  * 511 Network Authentication Required (server)
@@ -10,10 +11,13 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/511
  * @see https://httpstatus.in/511/
  */
+
+const status = 511;
+const name = 'NetworkAuthenticationRequired';
 export class HttpNetworkAuthenticationRequired extends HttpServerException {
-  static readonly STATUS = 511;
+  static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperArgs(HttpNetworkAuthenticationRequired, msgOrParams));
-    initProtoAndName(this, HttpNetworkAuthenticationRequired);
+    super(status, getNormalizedParams(name, msgOrParams));
+    initProtoAndName2(this, name, HttpNetworkAuthenticationRequired);
   }
 }

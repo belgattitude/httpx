@@ -1,8 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { HttpClientException, HttpException } from '../../src/base';
-import { HttpNotFound, HttpUnprocessableEntity } from '../../src/client';
-import { createHttpException } from '../../src/factory';
+import {
+  createHttpException,
+  HttpClientException,
+  HttpException,
+  HttpNotFound,
+  HttpUnprocessableEntity,
+} from '../../src/';
 import type { HttpExceptionParamsWithIssues } from '../../src/types/HttpExceptionParamsWithIssues';
 
 describe('Common specs', () => {

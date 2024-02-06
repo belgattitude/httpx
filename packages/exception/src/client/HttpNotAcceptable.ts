@@ -1,6 +1,7 @@
 import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs, initProtoAndName } from '../utils';
+import { getNormalizedParams } from '../utils/getNormalizedParams';
+import { initProtoAndName2 } from '../utils/initProtoAndName2';
 
 /**
  * 406 Not acceptable (client)
@@ -11,10 +12,12 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/406
  * @see https://httpstatus.in/406/
  */
+const status = 406;
+const name = 'NotAcceptable';
 export class HttpNotAcceptable extends HttpClientException {
-  static readonly STATUS = 406;
+  static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperArgs(HttpNotAcceptable, msgOrParams));
-    initProtoAndName(this, HttpNotAcceptable);
+    super(status, getNormalizedParams(name, msgOrParams));
+    initProtoAndName2(this, name, HttpNotAcceptable);
   }
 }

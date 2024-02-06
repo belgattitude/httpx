@@ -1,6 +1,7 @@
 import { HttpServerException } from '../base/HttpServerException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs, initProtoAndName } from '../utils';
+import { getNormalizedParams } from '../utils/getNormalizedParams';
+import { initProtoAndName2 } from '../utils/initProtoAndName2';
 
 /**
  * 503 Service Unavailable
@@ -17,10 +18,12 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503
  * @see https://httpstatus.in/503/
  */
+const status = 503;
+const name = 'ServiceUnavailable';
 export class HttpServiceUnavailable extends HttpServerException {
-  static readonly STATUS = 503;
+  static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperArgs(HttpServiceUnavailable, msgOrParams));
-    initProtoAndName(this, HttpServiceUnavailable);
+    super(status, getNormalizedParams(name, msgOrParams));
+    initProtoAndName2(this, name, HttpServiceUnavailable);
   }
 }

@@ -1,6 +1,7 @@
 import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs, initProtoAndName } from '../utils';
+import { getNormalizedParams } from '../utils/getNormalizedParams';
+import { initProtoAndName2 } from '../utils/initProtoAndName2';
 
 /**
  * 405 Method not allowed (client)
@@ -11,10 +12,13 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405
  * @see https://httpstatus.in/405/
  */
+const status = 405;
+const name = 'MethodNotAllowed';
 export class HttpMethodNotAllowed extends HttpClientException {
-  static readonly STATUS = 405;
+  static readonly STATUS = status;
+  // static override readonly name = 'HttpNotFound';
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperArgs(HttpMethodNotAllowed, msgOrParams));
-    initProtoAndName(this, HttpMethodNotAllowed);
+    super(status, getNormalizedParams(name, msgOrParams));
+    initProtoAndName2(this, name, HttpMethodNotAllowed);
   }
 }

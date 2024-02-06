@@ -1,6 +1,7 @@
 import { HttpServerException } from '../base/HttpServerException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs, initProtoAndName } from '../utils';
+import { getNormalizedParams } from '../utils/getNormalizedParams';
+import { initProtoAndName2 } from '../utils/initProtoAndName2';
 
 /**
  * 510 Not Extended (server)
@@ -10,10 +11,13 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/510
  * @see https://httpstatus.in/510/
  */
+
+const status = 510;
+const name = 'NotExtended';
 export class HttpNotExtended extends HttpServerException {
-  static readonly STATUS = 510;
+  static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperArgs(HttpNotExtended, msgOrParams));
-    initProtoAndName(this, HttpNotExtended);
+    super(status, getNormalizedParams(name, msgOrParams));
+    initProtoAndName2(this, name, HttpNotExtended);
   }
 }

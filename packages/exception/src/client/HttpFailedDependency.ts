@@ -1,6 +1,7 @@
 import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getSuperArgs, initProtoAndName } from '../utils';
+import { getNormalizedParams } from '../utils/getNormalizedParams';
+import { initProtoAndName2 } from '../utils/initProtoAndName2';
 
 /**
  * 424 Failed dependency (client / webdav specific)
@@ -13,10 +14,13 @@ import { getSuperArgs, initProtoAndName } from '../utils';
  *
  * @see https://httpstatus.in/424/
  */
+
+const status = 424;
+const name = 'FailedDependency';
 export class HttpFailedDependency extends HttpClientException {
-  static readonly STATUS = 424;
+  static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(...getSuperArgs(HttpFailedDependency, msgOrParams));
-    initProtoAndName(this, HttpFailedDependency);
+    super(status, getNormalizedParams(name, msgOrParams));
+    initProtoAndName2(this, name, HttpFailedDependency);
   }
 }
