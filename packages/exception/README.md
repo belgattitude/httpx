@@ -1,7 +1,7 @@
 # @httpx/exception
 
 HTTP status errors with default message, instanceof, stack and nested error support.
-Lightweight, typical usage between [400b and 660b](#bundle-size).
+Lightweight, typical usage between [500b and 1300b](#bundle-size).
 Includes convenience typeguards, optional contextual info and a built-in serializer
 to cover cross-environments challenges (RSC, SSR...).
 
