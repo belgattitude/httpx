@@ -1,7 +1,7 @@
 import type { HttpErrorStatusCodeOrNumber } from '../types';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName2 } from '../utils/initProtoAndName2';
+import { initProtoAndName } from '../utils/initProtoAndName';
 import { HttpException } from './HttpException';
 
 /**
@@ -17,6 +17,6 @@ export class HttpServerException extends HttpException {
   ) {
     const name = 'ServerException';
     super(statusCode, getNormalizedParams(name, msgOrParams));
-    initProtoAndName2(this, name, HttpServerException);
+    initProtoAndName(this, name, HttpServerException);
   }
 }

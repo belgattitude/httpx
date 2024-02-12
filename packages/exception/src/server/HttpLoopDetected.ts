@@ -1,7 +1,7 @@
 import { HttpServerException } from '../base/HttpServerException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName2 } from '../utils/initProtoAndName2';
+import { initProtoAndName } from '../utils/initProtoAndName';
 
 /**
  * 508 Loop Detected (server / webdav specific)
@@ -18,6 +18,6 @@ export class HttpLoopDetected extends HttpServerException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
     super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName2(this, name, HttpLoopDetected);
+    initProtoAndName(this, name, HttpLoopDetected);
   }
 }

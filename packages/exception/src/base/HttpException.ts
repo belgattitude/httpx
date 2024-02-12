@@ -3,7 +3,7 @@ import type { HttpErrorStatusCodeOrNumber } from '../types';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import type { HttpMethod } from '../types/HttpMethod';
 import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName2 } from '../utils/initProtoAndName2';
+import { initProtoAndName } from '../utils/initProtoAndName';
 
 export class HttpException extends Error implements HttpExceptionParams {
   /**
@@ -62,6 +62,6 @@ export class HttpException extends Error implements HttpExceptionParams {
     this.errorId = p.errorId;
     this.code = p.code;
     this.method = p.method;
-    initProtoAndName2(this, name, HttpException);
+    initProtoAndName(this, name, HttpException);
   }
 }

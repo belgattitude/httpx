@@ -1,7 +1,7 @@
 import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName2 } from '../utils/initProtoAndName2';
+import { initProtoAndName } from '../utils/initProtoAndName';
 
 /**
  * 410 Gone (client)
@@ -22,6 +22,6 @@ export class HttpGone extends HttpClientException {
   // static override readonly name = 'HttpNotFound';
   constructor(msgOrParams?: HttpExceptionParams | string) {
     super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName2(this, name, HttpGone);
+    initProtoAndName(this, name, HttpGone);
   }
 }

@@ -1,7 +1,7 @@
 import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName2 } from '../utils/initProtoAndName2';
+import { initProtoAndName } from '../utils/initProtoAndName';
 
 /**
  * 423 Locked (client / webdav specific)
@@ -18,6 +18,6 @@ export class HttpLocked extends HttpClientException {
   // static override readonly name = 'HttpNotFound';
   constructor(msgOrParams?: HttpExceptionParams | string) {
     super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName2(this, name, HttpLocked);
+    initProtoAndName(this, name, HttpLocked);
   }
 }

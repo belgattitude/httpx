@@ -3,7 +3,7 @@ import type { HttpException } from '../base/HttpException';
 /**
  * @internal
  */
-export const initProtoAndName2 = (
+export const initProtoAndName = (
   obj: HttpException | Error,
   name: string,
   cls: { prototype: object }
