@@ -2,7 +2,7 @@ import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParamsWithIssues } from '../types/HttpExceptionParamsWithIssues';
 import type { HttpValidationIssue } from '../types/HttpValidationIssue';
 import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName2 } from '../utils/initProtoAndName2';
+import { initProtoAndName } from '../utils/initProtoAndName';
 
 /**
  * 422 Unprocessable entity (client / webdav specific per RFC / used for validation errors in most apis)
@@ -31,6 +31,6 @@ export class HttpUnprocessableEntity extends HttpClientException {
 
     super(status, getNormalizedParams(name, msgOrParams));
     this.issues = issues;
-    initProtoAndName2(this, name, HttpUnprocessableEntity);
+    initProtoAndName(this, name, HttpUnprocessableEntity);
   }
 }

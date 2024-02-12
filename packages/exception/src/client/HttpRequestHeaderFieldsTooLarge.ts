@@ -1,7 +1,7 @@
 import { HttpClientException } from '../base/HttpClientException';
 import type { HttpExceptionParams } from '../types/HttpExceptionParams';
 import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName2 } from '../utils/initProtoAndName2';
+import { initProtoAndName } from '../utils/initProtoAndName';
 
 /**
  * 431 Request Header Fields Too Large (client)
@@ -18,6 +18,6 @@ export class HttpRequestHeaderFieldsTooLarge extends HttpClientException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {
     super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName2(this, name, HttpRequestHeaderFieldsTooLarge);
+    initProtoAndName(this, name, HttpRequestHeaderFieldsTooLarge);
   }
 }
