@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 3.0.5
+
+### Patch Changes
+
+- [#990](https://github.com/belgattitude/httpx/pull/990) [`a006c93`](https://github.com/belgattitude/httpx/commit/a006c93fe9b34d09c642f68669028353b986b218) Thanks [@belgattitude](https://github.com/belgattitude)! - Minor refactors and readme updates
+
 ## 3.0.4
 
 ### Patch Changes
