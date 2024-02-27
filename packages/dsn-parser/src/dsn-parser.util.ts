@@ -24,8 +24,10 @@ export const isNonEmptyString = (
   return typeof value === 'string' && (trim ? value.trim() : value).length > 0;
 };
 
+const parsableNumberRegexp = /^-?\d{1,16}$/;
+
 export const isParsableNumber = (value: unknown): value is number => {
-  return typeof value === 'string' && /^-?\d{1,16}$/.test(value);
+  return typeof value === 'string' && parsableNumberRegexp.test(value);
 };
 
 type ValidNetworkPort = number;
