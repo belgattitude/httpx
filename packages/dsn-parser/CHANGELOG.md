@@ -1,5 +1,15 @@
 # @httpx/dsn-parser
 
+## 1.7.0
+
+### Minor Changes
+
+- [#1020](https://github.com/belgattitude/httpx/pull/1020) [`60c2162`](https://github.com/belgattitude/httpx/commit/60c21625183e44246f4b974f30ceb48faa6c3a09) Thanks [@belgattitude](https://github.com/belgattitude)! - Add WeakOpaqueType support for ParsableDsn
+
+### Patch Changes
+
+- [#1020](https://github.com/belgattitude/httpx/pull/1020) [`60c2162`](https://github.com/belgattitude/httpx/commit/60c21625183e44246f4b974f30ceb48faa6c3a09) Thanks [@belgattitude](https://github.com/belgattitude)! - Hoist number regexp outside of function
+
 ## 1.6.8
 
 ### Patch Changes
