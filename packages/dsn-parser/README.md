@@ -134,10 +134,9 @@ import { isParsableDsn, type ParsableDsn } from "@httpx/dsn-parser";
 const dsn = "postgresql://localhost:6379/db";
 
 if (isParsableDsn(dsn)) {
-  // known to be ParsableDSN
+  // known to be ParsableDsn
 }
 ```
-
 
 ### Assertion
 
@@ -152,6 +151,41 @@ try {
   assert.equal(e.message, "Cannot parse DSN (PARSE_ERROR)");
 }
 ```
+
+### ParsableDsn
+
+ParsableDsn is a weak opaque type.  
+
+```typescript
+declare const tag: unique symbol;
+export type WeakOpaqueContainer<Token> = {
+  readonly [tag]: Token;
+};
+export type ParsableDsn = string & WeakOpaqueContainer<'ParsableDsn'>;
+```
+
+It can be used to enforce that the `isParsableDsn` or `assertParsableDsn` have been
+used before usage. 
+
+```typescript
+import type { ParsableDsn } from "./dsn-parser.type";
+import { assertParsableDsn } from "./assert-parsable-dsn";
+
+// to opt-in, just change the dsn param type to `ParsableDsn` instead of `string` 
+const fnWithWeakOpaqueType = (dsn: ParsableDsn) => {
+    // by explictly requiring a ParsableDsn, we can rely on typescript
+    // to be sure that a validation has occured before (isParsableDsn or assertParsableDsn)  
+}
+
+fnWithWeakOpaqueType('redis://localhost');  // ❌ typescript will complain
+
+const dsn = 'redis://localhost';
+assertParsableDsn(dsn);
+fnWithWeakOpaqueType(dsn);  // ✅ working cause it was checked before
+
+```
+
+> PS: WeakOpaque usage is totally optional, a nice to have if applicable
 
 ### convertJdbcToDsn
 

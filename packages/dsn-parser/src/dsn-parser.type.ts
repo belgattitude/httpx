@@ -38,4 +38,10 @@ export type ParserErrorResult = {
 
 export type ParserResult = ParserErrorResult | ParserSuccessResult;
 
-export type ParsableDsn = string;
+declare const tag: unique symbol;
+
+export type WeakOpaqueContainer<Token> = {
+  readonly [tag]: Token;
+};
+
+export type ParsableDsn = string & WeakOpaqueContainer<'ParsableDsn'>;
