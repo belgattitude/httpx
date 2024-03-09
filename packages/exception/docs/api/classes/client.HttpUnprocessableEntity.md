@@ -4,21 +4,15 @@
 
 [client](../modules/client.md).HttpUnprocessableEntity
 
-422 Unprocessable entity (client / webdav specific per RFC / used for validation errors in most apis)
+Construct a new HttpClientException class
 
-The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code
-is inappropriate), and the syntax of the request entity is correct (thus a 400 Bad Request status code is
-inappropriate) but was unable to process the contained instructions.
+**`Param`**
 
-For example, this error condition may occur if an XML request body contains well-formed
-(i.e., syntactically correct), but semantically erroneous, XML instructions.
+http status code between 400-499, no checks are done on the validity of the number.
 
-Note that a lot of apis/frameworks uses 422 Unprocessable Entity to indicate (form field) validation errors
+**`Param`**
 
-**`See`**
-
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
-- https://httpstatus.in/422/
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -207,8 +201,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -219,10 +211,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

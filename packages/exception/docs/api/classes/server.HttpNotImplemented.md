@@ -4,15 +4,15 @@
 
 [server](../modules/server.md).HttpNotImplemented
 
-501 Not Implemented
+Construct a new HttpServerException class
 
-The request method is not supported by the server and cannot be handled. The only methods that
-servers are required to support (and therefore that must not return this code) are GET and HEAD.
+**`Param`**
 
-**`See`**
+http status code between 500-599, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/501
-- https://httpstatus.in/501/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -194,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -206,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

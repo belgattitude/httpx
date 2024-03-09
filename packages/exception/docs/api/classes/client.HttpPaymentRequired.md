@@ -4,15 +4,15 @@
 
 [client](../modules/client.md).HttpPaymentRequired
 
-402 Payment required (client)
+Construct a new HttpClientException class
 
-This response code is reserved for future use. The initial aim for creating this code was using it for digital
-payment systems, however this status code is used very rarely and no standard convention exists.
+**`Param`**
 
-**`See`**
+http status code between 400-499, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
-- https://httpstatus.in/402/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -194,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -206,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

@@ -4,14 +4,15 @@
 
 [client](../modules/client.md).HttpLocked
 
-423 Locked (client / webdav specific)
+Construct a new HttpClientException class
 
-The source or destination resource of a method is locked. This response SHOULD contain an
-appropriate precondition or postcondition code, such as ‘lock-token-submitted’ or ‘no-conflicting-lock’.
+**`Param`**
 
-**`See`**
+http status code between 400-499, no checks are done on the validity of the number.
 
-https://httpstatus.in/423/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -193,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -205,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

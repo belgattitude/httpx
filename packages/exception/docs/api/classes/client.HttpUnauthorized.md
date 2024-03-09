@@ -4,15 +4,15 @@
 
 [client](../modules/client.md).HttpUnauthorized
 
-401 Unauthorized (client)
+Construct a new HttpClientException class
 
-Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated".
-That is, the client must authenticate itself to get the requested response.
+**`Param`**
 
-**`See`**
+http status code between 400-499, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
-- https://httpstatus.in/401/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -194,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -206,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

@@ -4,16 +4,15 @@
 
 [client](../modules/client.md).HttpPreconditionRequired
 
-428 Precondition Required (client)
+Construct a new HttpClientException class
 
-The origin server requires the request to be conditional. This response is intended to prevent the
-'lost update' problem, where a client GETs a resource's state, modifies it and PUTs it back to the
-server, when meanwhile a third party has modified the state on the server, leading to a conflict.
+**`Param`**
 
-**`See`**
+http status code between 400-499, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/428
-- https://httpstatus.in/428/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -195,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -207,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

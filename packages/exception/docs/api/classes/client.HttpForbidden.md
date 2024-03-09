@@ -4,15 +4,15 @@
 
 [client](../modules/client.md).HttpForbidden
 
-403 Forbidden (client)
+Construct a new HttpClientException class
 
-The client does not have access rights to the content; that is, it is unauthorized, so the server
-is refusing to give the requested resource. Unlike 401 Unauthorized, the client's identity is known to the server.
+**`Param`**
 
-**`See`**
+http status code between 400-499, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
-- https://httpstatus.in/403/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -194,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -206,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

@@ -4,17 +4,15 @@
 
 [client](../modules/client.md).HttpImATeapot
 
-418 I'm a teapot (client)
+Construct a new HttpClientException class
 
-The server refuses the attempt to brew coffee with a teapot.
+**`Param`**
 
-**`See`**
+http status code between 400-499, no checks are done on the validity of the number.
 
-https://httpstatus.in/418/
+**`Param`**
 
-**`Link`**
-
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -196,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -208,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

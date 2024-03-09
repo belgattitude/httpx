@@ -4,18 +4,15 @@
 
 [client](../modules/client.md).HttpGone
 
-410 Gone (client)
+Construct a new HttpClientException class
 
-This response is sent when the requested content has been permanently deleted from server, with no forwarding address.
-Clients are expected to remove their caches and links to the resource. The HTTP specification intends
-this status code to be used for "limited-time, promotional services".
+**`Param`**
 
-APIs should not feel compelled to indicate resources that have been deleted with this status code.
+http status code between 400-499, no checks are done on the validity of the number.
 
-**`See`**
+**`Param`**
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/410
-- https://httpstatus.in/410/
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -197,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -209,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

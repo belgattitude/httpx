@@ -4,14 +4,15 @@
 
 [server](../modules/server.md).HttpInternalServerError
 
-500 Internal Server Error (server)
+Construct a new HttpServerException class
 
-The server has encountered a situation it does not know how to handle.
+**`Param`**
 
-**`See`**
+http status code between 500-599, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
-- https://httpstatus.in/500/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -193,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -205,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

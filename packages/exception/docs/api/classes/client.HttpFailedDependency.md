@@ -4,17 +4,15 @@
 
 [client](../modules/client.md).HttpFailedDependency
 
-424 Failed dependency (client / webdav specific)
+Construct a new HttpClientException class
 
-The method could not be performed on the resource because the requested action depended on another action
-and that action failed.
+**`Param`**
 
-For example, if a command in a PROPPATCH method fails, then, at minimum, the rest of the commands will
-also fail with 424 Failed Dependency.
+http status code between 400-499, no checks are done on the validity of the number.
 
-**`See`**
+**`Param`**
 
-https://httpstatus.in/424/
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -196,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -208,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 
