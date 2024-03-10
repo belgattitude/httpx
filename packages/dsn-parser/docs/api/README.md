@@ -1,6 +1,6 @@
 @httpx/dsn-parser
 
-# @httpx/dsn-parser - v1.6.8
+# @httpx/dsn-parser - v1.7.0
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ### ParsableDsn
 
-Ƭ **ParsableDsn**: `string`
+Ƭ **ParsableDsn**: `string` & `WeakOpaqueContainer`\<``"ParsableDsn"``\>
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 ### assertParsableDsn
 
-▸ **assertParsableDsn**(`dsn`, `msg?`): asserts dsn is string
+▸ **assertParsableDsn**(`dsn`, `msg?`): asserts dsn is ParsableDsn
 
 #### Parameters
 
@@ -70,7 +70,7 @@ ___
 
 #### Returns
 
-asserts dsn is string
+asserts dsn is ParsableDsn
 
 **`Throws`**
 
@@ -96,7 +96,7 @@ ___
 
 ### isParsableDsn
 
-▸ **isParsableDsn**(`dsn`): dsn is string
+▸ **isParsableDsn**(`dsn`): dsn is ParsableDsn
 
 #### Parameters
 
@@ -106,7 +106,7 @@ ___
 
 #### Returns
 
-dsn is string
+dsn is ParsableDsn
 
 ___
 

@@ -4,14 +4,15 @@
 
 [server](../modules/server.md).HttpBadGateway
 
-502 Bad Gateway (server)
+Construct a new HttpServerException class
 
-This error response means that the server, while working as a gateway to get a response needed to
-handle the request, got an invalid response.
+**`Param`**
 
-**`See`**
+http status code between 500-599, no checks are done on the validity of the number.
 
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -193,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -205,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

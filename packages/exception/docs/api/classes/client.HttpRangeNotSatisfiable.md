@@ -4,15 +4,15 @@
 
 [client](../modules/client.md).HttpRangeNotSatisfiable
 
-416 Range Not Satisfiable (client)
+Construct a new HttpClientException class
 
-The range specified by the Range header field in the request cannot be fulfilled.
-It's possible that the range is outside the size of the target URI's data.
+**`Param`**
 
-**`See`**
+http status code between 400-499, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/416
-- https://httpstatus.in/416/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -194,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -206,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

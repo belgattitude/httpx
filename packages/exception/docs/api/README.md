@@ -11,5 +11,4 @@
 - [experimental](modules/experimental.md)
 - [serializer](modules/serializer.md)
 - [server](modules/server.md)
-- [typeguards](modules/typeguards.md)
 - [types](modules/types.md)

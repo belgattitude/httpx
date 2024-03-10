@@ -4,14 +4,15 @@
 
 [server](../modules/server.md).HttpNotExtended
 
-510 Not Extended (server)
+Construct a new HttpServerException class
 
-Further extensions to the request are required for the server to fulfill it.
+**`Param`**
 
-**`See`**
+http status code between 500-599, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/510
-- https://httpstatus.in/510/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -193,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -205,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

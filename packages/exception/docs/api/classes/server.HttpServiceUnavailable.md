@@ -4,21 +4,15 @@
 
 [server](../modules/server.md).HttpServiceUnavailable
 
-503 Service Unavailable
+Construct a new HttpServerException class
 
-The server is not ready to handle the request. Common causes are a server that is down for maintenance
-or that is overloaded. Note that together with this response, a user-friendly page explaining the problem
-should be sent.
+**`Param`**
 
-This response should be used for temporary conditions and the Retry-After HTTP header should, if possible,
-contain the estimated time before the recovery of the service. The webmaster must also take care about the
-caching-related headers that are sent along with this response, as these temporary condition responses
-should usually not be cached.
+http status code between 500-599, no checks are done on the validity of the number.
 
-**`See`**
+**`Param`**
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503
-- https://httpstatus.in/503/
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -200,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -212,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

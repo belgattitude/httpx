@@ -4,15 +4,15 @@
 
 [client](../modules/client.md).HttpExpectationFailed
 
-Client status 417
+Construct a new HttpClientException class
 
-The HTTP 417 Expectation Failed client error response code indicates that the expectation given
-in the request's Expect header could not be met.
+**`Param`**
 
-**`See`**
+http status code between 400-499, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/417
-- https://httpstatus.in/417/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -194,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -206,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

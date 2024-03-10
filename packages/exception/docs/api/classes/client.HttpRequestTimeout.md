@@ -4,17 +4,15 @@
 
 [client](../modules/client.md).HttpRequestTimeout
 
-408 Request timeout (client)
+Construct a new HttpClientException class
 
-This response is sent on an idle connection by some servers, even without any previous request by the client.
-It means that the server would like to shut down this unused connection. This response is used much more
-since some browsers, like Chrome, Firefox 27+, or IE9, use HTTP pre-connection mechanisms to speed up surfing.
-Also note that some servers merely shut down the connection without sending this message.
+**`Param`**
 
-**`See`**
+http status code between 400-499, no checks are done on the validity of the number.
 
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408
-- https://httpstatus.in/408/
+**`Param`**
+
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -196,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -208,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

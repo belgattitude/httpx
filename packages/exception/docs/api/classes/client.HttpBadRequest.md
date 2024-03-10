@@ -4,18 +4,15 @@
 
 [client](../modules/client.md).HttpBadRequest
 
-400 Bad Request (client)
+Construct a new HttpClientException class
 
-The server cannot or will not process the request due to something that is perceived to be a client error
-(e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+**`Param`**
 
-Note that a lot of apis/frameworks uses 422 Unprocessable Entity to indicate (form field) validation errors
-rather the 400 Bad Request status code.
+http status code between 400-499, no checks are done on the validity of the number.
 
-**`See`**
+**`Param`**
 
-- https://httpstatus.in/400/
-- https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+either a message or an object containing HttpExceptionParams
 
 ## Hierarchy
 
@@ -197,8 +194,6 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ▸ (`err`, `stackTraces`): `any`
 
-Optional override for formatting stack traces
-
 ##### Parameters
 
 | Name          | Type         |
@@ -209,10 +204,6 @@ Optional override for formatting stack traces
 ##### Returns
 
 `any`
-
-**`See`**
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

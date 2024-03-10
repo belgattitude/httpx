@@ -18,7 +18,6 @@ const status = 404;
 const name = 'NotFound';
 export class HttpNotFound extends HttpClientException {
   static readonly STATUS = status;
-  // static override readonly name = 'HttpNotFound';
   constructor(msgOrParams?: HttpExceptionParams | string) {
     super(status, getNormalizedParams(name, msgOrParams));
     initProtoAndName(this, name, HttpNotFound);
