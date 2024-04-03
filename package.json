@@ -19,7 +19,7 @@
     "g:test-unit": "yarn nx affected --target=test-unit --exclude='examples/**' --exclude='docs'",
     "g:test-unit-coverage": "yarn nx affected --target=test-unit-coverage --exclude='examples/**' --exclude='docs'",
     "g:test-unit-edge": "yarn nx affected --target=test-unit-edge --exclude='examples/**' --exclude='docs'",
-    "g:lint": "yarn nx affected --target=lint --exclude='examples/**' --exclude='docs'",
+    "g:lint": "yarn nx affected --target=lint",
     "g:typecheck": "yarn nx affected --target=typecheck --exclude='examples/**' --exclude='docs'",
     "g:lint-staged-files": "lint-staged --allow-empty",
     "g:fix-all-files": "yarn workspaces foreach --all -ptv run fix-all-files",
@@ -75,10 +75,13 @@
     "typescript": "5.4.3"
   },
   "resolutions?": {
-    "inflight": "https://security.snyk.io/vuln/SNYK-JS-INFLIGHT-6095116"
+    "typescript-eslint-v7": "https://github.com/belgattitude/shared-dx/releases/tag/%40belgattitude%2Feslint-config-bases%405.0.0"
   },
   "resolutions": {
-    "inflight": "^1.0.6"
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/parser": "^7.5.0",
+    "@typescript-eslint/typescript-estree": "^7.5.0",
+    "@typescript-eslint/utils": "^7.5.0"
   },
   "engines": {
     "node": ">=18.17"
