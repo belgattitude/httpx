@@ -8,10 +8,8 @@ export default defineConfig({
     target: ['node18'],
   },
   plugins: [tsconfigPaths()],
+  cacheDir: '../../.cache/vite/prisma-exception',
   test: {
-    cache: {
-      dir: '../../.cache/vitest/prisma-exception',
-    },
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
     coverage: {
