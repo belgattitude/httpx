@@ -70,16 +70,16 @@ It can optionally be used to enforce that the value was checked.
 For example:
 
 ```typescript
-import { assertUuidV4, type UuidV4 } from '@httpx/assert';
+import { assertUuidV7, type UuidV7 } from '@httpx/assert';
 import { HttpUnprocessableEntity } from '@httpx/exception';
 
-const persistRecord = async (uuid: UuidV4) => {
+const persistRecord = async (uuid: UuidV7) => {
   // uuid is compatible with string.
   return await db.raw(`insert into tbl(uuid) values (${uuid})`)
 }
 
 const v = 'xxx'; // unknown
-assertUuidV4(v, () => new HttpUnprocessableEntity());
+assertUuidV7(v, () => new HttpUnprocessableEntity());
 // 👉 v is known to be `string & WeakOpaqueContainer<'UuidV4'>`
 await persistRecord(v); // will work
 await persistRecord('a_string'); // won't
@@ -109,6 +109,9 @@ expect(() => assertUuidV4(new Date())).toThrow(
 );
 expect(() => assertUuidV5(() => {})).toThrow(
   new TypeError('Value is expected to be an uuid v5, got: function')
+);
+expect(() => assertUuidV7(() => {})).toThrow(
+  new TypeError('Value is expected to be an uuid v7, got: function')
 );
 //...
 ```
@@ -258,19 +261,20 @@ assertParsableStrictIsoDateZ('2023-02-29T23:37:31.653z'); // 👉 throws cause n
 
 #### isUuid
 
-| Name           | Type                | Opaque type                            | Comment |
-|----------------|---------------------|----------------------------------------|--------|
-| isUuid         | `string`            | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5` |  |
-| isUuidV1       | `string`            | `UuidV1`                               |  |
-| isUuidV3       | `string`            | `UuidV3`                               |  |
-| isUuidV4       | `string`            | `UuidV4`                               |  |
-| isUuidV5       | `string`            | `UuidV5`                               |  |
-| assertUuid     | `string`            | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5` |        |
-| assertUuidV1   | `string`            | `UuidV5`                               |        |
-| assertUuidV3   | `string`            | `UuidV3`                               |        |
-| assertUuidV4   | `string`            | `UuidV4`                               |        |
-| assertUuidV5   | `string`            | `UuidV5`                               |        |
-| getUuidVersion | `1 \| 3 \| 4 \| 5 ` |                                |        |
+| Name           | Type                    | Opaque type                                      | Comment |
+|----------------|-------------------------|--------------------------------------------------|--------|
+| isUuid         | `string`                | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5 \| UuidV7`          |  |
+| isUuidV1       | `string`                | `UuidV1`                                         |  |
+| isUuidV3       | `string`                | `UuidV3`                                         |  |
+| isUuidV4       | `string`                | `UuidV4`                                         |  |
+| isUuidV5       | `string`                | `UuidV5`                                         |  |
+| assertUuid     | `string`                | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5 \| UuidV7` |        |
+| assertUuidV1   | `string`                | `UuidV5`                                         |        |
+| assertUuidV3   | `string`                | `UuidV3`                                         |        |
+| assertUuidV4   | `string`                | `UuidV4`                                         |        |
+| assertUuidV5   | `string`                | `UuidV5`                                         |        |
+| assertUuidV7   | `string`                | `UuidV7`                                         |        |
+| getUuidVersion | `1 \| 3 \| 4 \| 5 \| 7` |                                                  |        |
 
 ```typescript
 import { isUuid, isUuidV1, isUuidV3, isUuidV4, isUuidV5 } from "@httpx/assert";
@@ -285,7 +289,7 @@ assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 assertUuidV5('90123e1c-7512-523e-bb28-76fab9f2f73d')
-isUuidV4('d9428888-122b-11e1-b85c-61cd3cbb3210'); // 👈 or isUuidV1(''), isUuidV3(''), isUuidV5('');
+isUuidV4('d9428888-122b-11e1-b85c-61cd3cbb3210'); // 👈 or isUuidV1(''), isUuidV3(''), isUuidV5('')...;
 
 // Utils
 getUuidVersion('90123e1c-7512-523e-bb28-76fab9f2f73d'); // 5
