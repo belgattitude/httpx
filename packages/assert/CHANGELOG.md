@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.8.0
+
+### Minor Changes
+
+- [#1098](https://github.com/belgattitude/httpx/pull/1098) [`1958776`](https://github.com/belgattitude/httpx/commit/1958776623c71ba2fc8c2a2daa7d985ce67e0715) Thanks [@belgattitude](https://github.com/belgattitude)! - Add UUID v7 support
+
 ## 0.7.0
 
 ### Minor Changes
