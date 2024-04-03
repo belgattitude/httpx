@@ -5,6 +5,7 @@ import type {
   UuidV3,
   UuidV4,
   UuidV5,
+  UuidV7,
   UuidVersion,
 } from './uuid.types';
 import { uuidRegexp, uuidSupportedVersions } from './uuid.utils';
@@ -33,3 +34,4 @@ export const isUuidV1 = (v: unknown): v is UuidV1 => isUuid(v, 1);
 export const isUuidV3 = (v: unknown): v is UuidV3 => isUuid(v, 3);
 export const isUuidV4 = (v: unknown): v is UuidV4 => isUuid(v, 4);
 export const isUuidV5 = (v: unknown): v is UuidV5 => isUuid(v, 5);
+export const isUuidV7 = (v: unknown): v is UuidV7 => isUuid(v, 7);

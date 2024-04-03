@@ -10,6 +10,7 @@ describe('uuid utils tests', () => {
       [3, uuidsTestData.v3],
       [4, uuidsTestData.v4],
       [5, uuidsTestData.v5],
+      [7, uuidsTestData.v7],
     ])("should return %s when '%s' is given", (expected, value) => {
       expect(getUuidVersion(value)).toBe(expected);
     });
