@@ -51,6 +51,45 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 
 ## Introduction
 
+# @httpx/assert
+
+Assertions and typeguards as primitives
+
+[![npm](https://img.shields.io/npm/v/@httpx/assert?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/assert)
+[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/CHANGELOG.md)
+[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-assert-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fassert)
+[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/.size-limit.cjs)
+[![node](https://img.shields.io/static/v1?label=Node&message=16%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
+[![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
+[![size](https://img.shields.io/bundlephobia/minzip/@httpx/assert@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/assert@latest)
+[![downloads](https://img.shields.io/npm/dm/@httpx/assert?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/assert)
+[![license](https://img.shields.io/npm/l/@httpx/assert?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+
+> **warning**: pre-v1, use at your own risks
+
+## Install
+
+```bash
+$ npm install @httpx/assert
+$ yarn add @httpx/assert
+$ pnpm add @httpx/assert
+```
+
+## Features
+
+- 👉&nbsp; Typeguards and assertions with a consistent style.
+- 👉&nbsp; Assertions with useful [default error message](#assertions-error-messages).
+- 👉&nbsp; Return *weak* [opaque types](#weak-opaque-types) for boolean, strings and numbers.
+- 👉&nbsp; Optimized tree-shakability, starts at [56b](#bundle-size).
+- 👉&nbsp; Don't leak values in the default assertion error messages.
+- 👉&nbsp; No deps. [Node, browser and edge support](#compatibility).
+
+## Documentation
+
+👉 [Official website](https://belgattitude.github.io/httpx/assert), [GitHub Readme](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme) or [generated api doc](https://github.com/belgattitude/httpx/blob/main/packages/assert/docs/api/README.md)
+
+## Introduction
+
 ### Consistent style
 
 Typeguards starts with `isXXX` and have an assertion counterpart named `assertXXX`.
@@ -65,16 +104,16 @@ It can optionally be used to enforce that the value was checked.
 For example:
 
 ```typescript
-import { assertUuidV4, type UuidV4 } from '@httpx/assert';
+import { assertUuidV7, type UuidV7 } from '@httpx/assert';
 import { HttpUnprocessableEntity } from '@httpx/exception';
 
-const persistRecord = async (uuid: UuidV4) => {
+const persistRecord = async (uuid: UuidV7) => {
   // uuid is compatible with string.
   return await db.raw(`insert into tbl(uuid) values (${uuid})`)
 }
 
 const v = 'xxx'; // unknown
-assertUuidV4(v, () => new HttpUnprocessableEntity());
+assertUuidV7(v, () => new HttpUnprocessableEntity());
 // 👉 v is known to be `string & WeakOpaqueContainer<'UuidV4'>`
 await persistRecord(v); // will work
 await persistRecord('a_string'); // won't
@@ -104,6 +143,9 @@ expect(() => assertUuidV4(new Date())).toThrow(
 );
 expect(() => assertUuidV5(() => {})).toThrow(
   new TypeError('Value is expected to be an uuid v5, got: function')
+);
+expect(() => assertUuidV7(() => {})).toThrow(
+  new TypeError('Value is expected to be an uuid v7, got: function')
 );
 //...
 ```
@@ -253,19 +295,20 @@ assertParsableStrictIsoDateZ('2023-02-29T23:37:31.653z'); // 👉 throws cause n
 
 #### isUuid
 
-| Name           | Type                | Opaque type                            | Comment |
-|----------------|---------------------|----------------------------------------|--------|
-| isUuid         | `string`            | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5` |  |
-| isUuidV1       | `string`            | `UuidV1`                               |  |
-| isUuidV3       | `string`            | `UuidV3`                               |  |
-| isUuidV4       | `string`            | `UuidV4`                               |  |
-| isUuidV5       | `string`            | `UuidV5`                               |  |
-| assertUuid     | `string`            | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5` |        |
-| assertUuidV1   | `string`            | `UuidV5`                               |        |
-| assertUuidV3   | `string`            | `UuidV3`                               |        |
-| assertUuidV4   | `string`            | `UuidV4`                               |        |
-| assertUuidV5   | `string`            | `UuidV5`                               |        |
-| getUuidVersion | `1 \| 3 \| 4 \| 5 ` |                                |        |
+| Name           | Type                    | Opaque type                                      | Comment |
+|----------------|-------------------------|--------------------------------------------------|--------|
+| isUuid         | `string`                | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5 \| UuidV7`          |  |
+| isUuidV1       | `string`                | `UuidV1`                                         |  |
+| isUuidV3       | `string`                | `UuidV3`                                         |  |
+| isUuidV4       | `string`                | `UuidV4`                                         |  |
+| isUuidV5       | `string`                | `UuidV5`                                         |  |
+| assertUuid     | `string`                | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5 \| UuidV7` |        |
+| assertUuidV1   | `string`                | `UuidV5`                                         |        |
+| assertUuidV3   | `string`                | `UuidV3`                                         |        |
+| assertUuidV4   | `string`                | `UuidV4`                                         |        |
+| assertUuidV5   | `string`                | `UuidV5`                                         |        |
+| assertUuidV7   | `string`                | `UuidV7`                                         |        |
+| getUuidVersion | `1 \| 3 \| 4 \| 5 \| 7` |                                                  |        |
 
 ```typescript
 import { isUuid, isUuidV1, isUuidV3, isUuidV4, isUuidV5 } from "@httpx/assert";
@@ -280,7 +323,7 @@ assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 assertUuidV5('90123e1c-7512-523e-bb28-76fab9f2f73d')
-isUuidV4('d9428888-122b-11e1-b85c-61cd3cbb3210'); // 👈 or isUuidV1(''), isUuidV3(''), isUuidV5('');
+isUuidV4('d9428888-122b-11e1-b85c-61cd3cbb3210'); // 👈 or isUuidV1(''), isUuidV3(''), isUuidV5('')...;
 
 // Utils
 getUuidVersion('90123e1c-7512-523e-bb28-76fab9f2f73d'); // 5
@@ -336,3 +379,42 @@ Special thanks for inspiration:
 
 - [sindresorhus/is](https://github.com/sindresorhus/is)
 - [webmozarts/assert](https://github.com/webmozarts/assert)
+
+## Contributors
+
+Contributions are warmly appreciated. Have a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) document.
+
+## Sponsors
+
+If my OSS work brightens your day, let's take it to new heights together!
+[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
+or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+
+### Special thanks to
+
+<table>
+    <tr>
+        <td>
+            <a href="https://www.jetbrains.com/?ref=belgattitude" target="_blank">
+                <img width="65" src="https://asset.brandfetch.io/idarKiKkI-/id53SttZhi.jpeg" alt="Jetbrains logo" />
+            </a>
+        </td>
+        <td>
+            <a href="https://www.embie.be/?ref=belgattitude" target="_blank">
+                <img width="65" src="https://avatars.githubusercontent.com/u/98402122?s=200&v=4" alt="Jetbrains logo" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://www.jetbrains.com/?ref=belgattitude" target="_blank">JetBrains</a>
+        </td>
+        <td align="center">
+            <a href="https://www.embie.be/?ref=belgattitude" target="_blank">Embie.be</a>
+        </td>
+    </tr>
+</table>
+
+## License
+
+MIT © [belgattitude](https://github.com/belgattitude) and contributors.
