@@ -5,8 +5,8 @@ Assertions and typeguards as primitives
 [![npm](https://img.shields.io/npm/v/@httpx/assert?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/assert)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/CHANGELOG.md)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-assert-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fassert)
-[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/.size-limit.cjs)
-[![node](https://img.shields.io/static/v1?label=Node&message=16%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
+[![bundles](https://img.shields.io/static/v1?label=&message=esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/.size-limit.cjs)
+[![node](https://img.shields.io/static/v1?label=Node&message=18%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
 [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
 [![size](https://img.shields.io/bundlephobia/minzip/@httpx/assert@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/assert@latest)
 [![downloads](https://img.shields.io/npm/dm/@httpx/assert?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/assert)
@@ -27,7 +27,7 @@ $ pnpm add @httpx/assert
 - 👉&nbsp; Typeguards and assertions with a consistent style.
 - 👉&nbsp; Assertions with useful [default error message](#assertions-error-messages).
 - 👉&nbsp; Return *weak* [opaque types](#weak-opaque-types) for boolean, strings and numbers.
-- 👉&nbsp; Optimized tree-shakability, starts at [56b](#bundle-size).
+- 👉&nbsp; Optimized tree-shakability, starts at [<100b](#bundle-size).
 - 👉&nbsp; Don't leak values in the default assertion error messages.
 - 👉&nbsp; No deps. [Node, browser and edge support](#compatibility).
 
@@ -317,14 +317,13 @@ for the browser.
 ESM individual imports are tracked by a
 [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/assert/.size-limit.cjs).
 
-| Scenario                               | Size (compressed) |
-|----------------------------------------|------------------:|
-| Import `isPlainObject`                 |             ~ 56b |
-| Import `isUuid`                        |            ~ 175b |
-| Import `isEan13`                       |            ~ 117b |
-| All typeguards, assertions and helpers |            ~ 900b |
+| Scenario               | Size (compressed) |
+|------------------------|------------------:|
+| Import `isPlainObject` |             ~ 94b |
+| Import `isUuid`        |            ~ 187b |
+| Import `isEan13`       |            ~ 149b |
+| ...                    |                   |
 
-> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/assert@latest).
 
 ## Compatibility
 
@@ -334,8 +333,7 @@ ESM individual imports are tracked by a
 | Browsers   | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Mins to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/assert/.browserslistrc) |
 | Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                       | 
 | Typescript | ✅  | TS 5.0+ / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                              |  
-| ES2021     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                             |
-| Node16     |    | Node 16.x supported, not ensured on CI                                                                                                                                                                                                                                                                                                   |
+| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                             |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 

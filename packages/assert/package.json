@@ -21,24 +21,10 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.cjs",
-  "types": "./dist/index.d.cts",
-  "module?": "to keep webpack4 support",
-  "module": "./dist/index.mjs",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      },
-      "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      }
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
     },
     "./package.json": "./package.json"
   },
@@ -54,7 +40,8 @@
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2021 './dist/**/*.cjs'",
     "check-dist-esm": "es-check --not './dist/*.map.js' -v es2021 --module './dist/**/*.mjs'",
-    "check-pub": "attw --pack",
+    "check-pub-attw": "attw --pack",
+    "check-pub": "publint run --strict",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
@@ -85,6 +72,7 @@
     "esbuild-plugin-file-path-extensions": "2.0.0",
     "eslint": "8.57.0",
     "npm-run-all2": "6.1.2",
+    "publint": "0.2.7",
     "rimraf": "5.0.5",
     "rollup": "4.14.3",
     "size-limit": "11.1.2",

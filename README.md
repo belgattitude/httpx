@@ -2,7 +2,7 @@
 
 ### [@httpx/assert](https://github.com/belgattitude/httpx/tree/main/packages/assert#readme)
 
-Lightweight assertions and typeguards starting at [~60b](https://github.com/belgattitude/httpx/tree/main/packages/assert#bundle-size). 
+Lightweight assertions and typeguards starting at [<100b](https://github.com/belgattitude/httpx/tree/main/packages/assert#bundle-size). 
 
 [![npm](https://img.shields.io/npm/v/@httpx/assert?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/assert)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/CHANGELOG.md)
