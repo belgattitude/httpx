@@ -14,6 +14,7 @@ module.exports = {
   extends: [
     '@belgattitude/eslint-config-bases/typescript',
     '@belgattitude/eslint-config-bases/simple-import-sort',
+    '@belgattitude/eslint-config-bases/import-x',
     '@belgattitude/eslint-config-bases/sonar',
     '@belgattitude/eslint-config-bases/regexp',
     '@belgattitude/eslint-config-bases/jest',
@@ -31,24 +32,7 @@ module.exports = {
     '.cache',
     '**/docs',
   ],
-  overrides: [
-    {
-      files: ['src/**/*.ts'],
-      rules: {
-        'import/no-extraneous-dependencies': [
-          'error',
-          {
-            devDependencies: ['**/*.test.ts', '**/*.spec.ts'],
-            optionalDependencies: false,
-            peerDependencies: false,
-          },
-        ],
-        'import/no-cycle': [1, { maxDepth: 100 }],
-        'import/no-nodejs-modules': 'error',
-        'import/no-self-import': 'error',
-      },
-    },
-  ],
+  // overrides: [ ]
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',

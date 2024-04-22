@@ -3,8 +3,6 @@
  * @link https://github.com/belgattitude/perso/tree/main/packages/eslint-config-bases
  */
 
-// Workaround for https://github.com/eslint/eslint/issues/3458
-// eslint-disable-next-line import/no-unassigned-import
 require('@belgattitude/eslint-config-bases/patch/modern-module-resolution');
 
 const {
@@ -15,6 +13,7 @@ module.exports = {
   extends: [
     '@belgattitude/eslint-config-bases/typescript',
     '@belgattitude/eslint-config-bases/simple-import-sort',
+    '@belgattitude/eslint-config-bases/import-x',
     '@belgattitude/eslint-config-bases/sonar',
     '@belgattitude/eslint-config-bases/regexp',
     '@belgattitude/eslint-config-bases/jest',
@@ -31,33 +30,7 @@ module.exports = {
     '.cache',
     '**/docs',
   ],
-  overrides: [
-    {
-      files: ['**/*.ts'],
-      rules: {
-        'import/no-extraneous-dependencies': [
-          'error',
-          {
-            devDependencies: [
-              '**/*.test.ts',
-              '**/*.spec.ts',
-              '**/*.config.js',
-              '**/*.config.mjs',
-              '**/*.config.cjs',
-              '**/*.config.ts',
-              '**/*.d.ts',
-              '.eslint*.*',
-            ],
-            optionalDependencies: false,
-            peerDependencies: false,
-          },
-        ],
-        'import/no-cycle': [1, { maxDepth: 100 }],
-        'import/no-nodejs-modules': 'error',
-        'import/no-self-import': 'error',
-      },
-    },
-  ],
+  overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
@@ -65,8 +38,6 @@ module.exports = {
   },
   root: true,
   rules: {
-    'import/no-self-import': 'error',
-    'import/no-unassigned-import': 'error',
     'jest/no-restricted-matchers': [
       'error',
       {
