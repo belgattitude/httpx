@@ -14,6 +14,7 @@ module.exports = {
   extends: [
     '@belgattitude/eslint-config-bases/typescript',
     '@belgattitude/eslint-config-bases/simple-import-sort',
+    '@belgattitude/eslint-config-bases/import-x',
     '@belgattitude/eslint-config-bases/sonar',
     '@belgattitude/eslint-config-bases/regexp',
     '@belgattitude/eslint-config-bases/jest',
@@ -35,7 +36,7 @@ module.exports = {
     {
       files: ['src/**/*.ts'],
       rules: {
-        'import/no-extraneous-dependencies': [
+        'import-x/no-extraneous-dependencies': [
           'error',
           {
             devDependencies: ['**/*.test.ts', '**/*.spec.ts'],
@@ -43,9 +44,9 @@ module.exports = {
             peerDependencies: false,
           },
         ],
-        'import/no-cycle': [1, { maxDepth: 100 }],
-        'import/no-nodejs-modules': 'error',
-        'import/no-self-import': 'error',
+        'import-x/no-cycle': [1, { maxDepth: 100 }],
+        'import-x/no-nodejs-modules': 'error',
+        'import-x/no-self-import': 'error',
       },
     },
   ],

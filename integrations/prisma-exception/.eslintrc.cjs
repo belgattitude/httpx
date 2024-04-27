@@ -4,7 +4,6 @@
  */
 
 // Workaround for https://github.com/eslint/eslint/issues/3458
-// eslint-disable-next-line import/no-unassigned-import
 require('@belgattitude/eslint-config-bases/patch/modern-module-resolution');
 
 const {
@@ -15,6 +14,7 @@ module.exports = {
   extends: [
     '@belgattitude/eslint-config-bases/typescript',
     '@belgattitude/eslint-config-bases/simple-import-sort',
+    '@belgattitude/eslint-config-bases/import-x',
     '@belgattitude/eslint-config-bases/sonar',
     '@belgattitude/eslint-config-bases/regexp',
     '@belgattitude/eslint-config-bases/jest',
@@ -35,8 +35,8 @@ module.exports = {
     {
       files: ['src/**/*.ts'],
       rules: {
-        'import/no-cycle': [1, { maxDepth: 100 }],
-        'import/no-extraneous-dependencies': [
+        'import-x/no-cycle': [1, { maxDepth: 100 }],
+        'import-x/no-extraneous-dependencies': [
           'error',
           {
             devDependencies: false,
@@ -44,8 +44,8 @@ module.exports = {
             peerDependencies: false,
           },
         ],
-        'import/no-nodejs-modules': 'error',
-        'import/no-self-import': 'error',
+        'import-x/no-nodejs-modules': 'error',
+        'import-x/no-self-import': 'error',
       },
     },
   ],
@@ -56,7 +56,6 @@ module.exports = {
   },
   root: true,
   rules: {
-    'import/no-self-import': 'error',
-    'import/no-unassigned-import': 'error',
+    'import-x/no-self-import': 'error',
   },
 };
