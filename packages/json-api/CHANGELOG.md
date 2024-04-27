@@ -1,5 +1,14 @@
 # @httpx/json-api
 
+## 0.5.19
+
+### Patch Changes
+
+- [#1154](https://github.com/belgattitude/httpx/pull/1154) [`6a52be7`](https://github.com/belgattitude/httpx/commit/6a52be772efd39c8270f26993d718b180d726539) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild using esbuild 0.20.2
+
+- Updated dependencies [[`6a52be7`](https://github.com/belgattitude/httpx/commit/6a52be772efd39c8270f26993d718b180d726539)]:
+  - @httpx/exception@3.0.6
+
 ## 0.5.18
 
 ### Patch Changes
