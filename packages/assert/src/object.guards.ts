@@ -6,7 +6,7 @@ export const isPlainObject = <T = unknown, K extends number | string = string>(
   return (
     typeof v === 'object' &&
     v !== null &&
-    (Object.getPrototypeOf(v) as typeof Object.prototype).constructor ===
+    (Object.getPrototypeOf(v) as typeof Object.prototype)?.constructor ===
       Object.prototype.constructor
   );
 };

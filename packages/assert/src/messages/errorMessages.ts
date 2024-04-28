@@ -1,7 +1,7 @@
 import { getTypeInfo } from './getTypeInfo';
 
 export const errPfx = 'Value is expected to be';
-const vowels = new Set(['a', 'e', 'i', 'o', 'u', 'y']);
+const vowelsAndH = new Set(['a', 'e', 'i', 'o', 'u', 'y', 'h']);
 export const formatErrMsg = (
   msg: string,
   v: unknown,
@@ -12,7 +12,7 @@ export const formatErrMsg = (
   const { pfx = true } = options ?? {};
   return `${
     pfx
-      ? `${errPfx} ${vowels.has((msg?.[0] ?? '').toLowerCase()) ? 'an' : 'a'} `
+      ? `${errPfx} ${vowelsAndH.has((msg?.[0] ?? '').toLowerCase()) ? 'an' : 'a'} `
       : ''
   }${msg}, got: ${getTypeInfo(v)}`;
 };
