@@ -1,5 +1,17 @@
 # @httpx/assert
 
+## 0.9.0
+
+### Minor Changes
+
+- [#1157](https://github.com/belgattitude/httpx/pull/1157) [`0d3b113`](https://github.com/belgattitude/httpx/commit/0d3b1132debe0fb4c396643ee05882315d632518) Thanks [@belgattitude](https://github.com/belgattitude)! - Add network port and http methods typeguard and assertions
+
+### Patch Changes
+
+- [#1157](https://github.com/belgattitude/httpx/pull/1157) [`0d3b113`](https://github.com/belgattitude/httpx/commit/0d3b1132debe0fb4c396643ee05882315d632518) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix isPlainObject when testing Object.create(null)
+
+- [#1157](https://github.com/belgattitude/httpx/pull/1157) [`0d3b113`](https://github.com/belgattitude/httpx/commit/0d3b1132debe0fb4c396643ee05882315d632518) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix isNumberSafeInt return
+
 ## 0.8.1
 
 ### Patch Changes
