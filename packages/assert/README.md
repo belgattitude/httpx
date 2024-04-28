@@ -286,9 +286,9 @@ isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d'); // 👉 valid uuid v1, 3, 4 or 5
 assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 
 // With version
-isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 assertUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 assertUuidV5('90123e1c-7512-523e-bb28-76fab9f2f73d')
+isUuid('90123e1c-7512-523e-bb28-76fab9f2f73d');
 isUuidV4('d9428888-122b-11e1-b85c-61cd3cbb3210'); // 👈 or isUuidV1(''), isUuidV3(''), isUuidV5('')...;
 
 // Utils
@@ -307,6 +307,53 @@ import { assertEan13 } from "@httpx/assert";
 
 isEan13('1234567890128'); // 👈 will check digit too
 assertEan13('1234567890128');
+```
+
+### Network
+
+#### isNetWorkPort
+
+Check whether the value is a valid tcp/udp network port (>=0 ... <=65535)
+
+```typescript
+import { isNetworkPort } from "@httpx/assert";
+import { assertNetworkPort } from "@httpx/assert";
+import { type NetworkPort } from "@httpx/assert";
+
+isNetworkPort(443); // 👈 weak opaque type is NetworkPort
+assertNetworkPort(443);
+```
+
+### Http
+
+#### isHttpMethod
+
+Check whether the value is a specific http method (case-insensitive).
+
+```typescript
+import { isHttpMethod } from "@httpx/assert";
+import { assertHttpMethod } from "@httpx/assert";
+import { type HttpMethod } from "@httpx/assert";
+
+const value: unknown = 'GET';
+
+isHttpMethod('GET', value); // 👈 weak opaque type is HttpMethod
+assertHttpMethod('GET', value);
+```
+
+#### isValidHttpMethod
+
+Check whether the value is a valid http method (case-insensitive).
+
+```typescript
+import { isHttpValidMethod } from "@httpx/assert";
+import { assertHttpValidMethod } from "@httpx/assert";
+import { type HttpMethod } from "@httpx/assert";
+
+const value: unknown = 'GET';
+
+isHttpValidMethod(value); // 👈 weak opaque type is HttpMethod
+assertHttpValidMethod(value);
 ```
 
 ## Bundle size

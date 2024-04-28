@@ -17,6 +17,7 @@ describe('Object typeguards tests', () => {
       [new Error(), false],
       [new Set(), false],
       [new Request('http://localhost'), false],
+      [Object.create(null), false],
       [/(\d+)/, false],
       [new Promise(() => {}), false],
       ['hello', false],

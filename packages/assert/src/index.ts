@@ -30,5 +30,15 @@ export * from './string.asserts';
 export * from './string.guards';
 export type * from './string.types';
 
+// http
+export * from './http.asserts';
+export * from './http.guards';
+export type * from './http.types';
+
+// network
+export * from './network.asserts';
+export * from './network.guards';
+export type * from './network.types';
+
 // types
 export * from './types.asserts';
