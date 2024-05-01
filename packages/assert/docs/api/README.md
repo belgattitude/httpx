@@ -1,6 +1,6 @@
 @httpx/assert
 
-# @httpx/assert - v0.7.0
+# @httpx/assert - v0.9.0
 
 ## Table of contents
 
@@ -12,7 +12,14 @@
 - [barcode.asserts](modules/barcode_asserts.md)
 - [barcode.guards](modules/barcode_guards.md)
 - [barcode.types](modules/barcode_types.md)
+- [http.asserts](modules/http_asserts.md)
+- [http.consts](modules/http_consts.md)
+- [http.guards](modules/http_guards.md)
+- [http.types](modules/http_types.md)
 - [index](modules/index.md)
+- [network.asserts](modules/network_asserts.md)
+- [network.guards](modules/network_guards.md)
+- [network.types](modules/network_types.md)
 - [number.asserts](modules/number_asserts.md)
 - [number.guards](modules/number_guards.md)
 - [number.types](modules/number_types.md)

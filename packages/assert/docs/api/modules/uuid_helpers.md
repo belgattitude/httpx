@@ -1,4 +1,4 @@
-[@httpx/assert - v0.7.0](../README.md) / uuid.helpers
+[@httpx/assert - v0.9.0](../README.md) / uuid.helpers
 
 # Module: uuid.helpers
 
@@ -12,7 +12,7 @@
 
 ### getUuidVersion
 
-▸ **getUuidVersion**(`uuid`): ``false`` \| [`UuidVersionOrNumber`](uuid_types.md#uuidversionornumber)
+▸ **getUuidVersion**(`uuid`): ``false`` \| [`UuidVersion`](uuid_types.md#uuidversion)
 
 Adapted from https://github.com/uuidjs/uuid/blob/main/src/version.js
 
@@ -24,4 +24,4 @@ Adapted from https://github.com/uuidjs/uuid/blob/main/src/version.js
 
 #### Returns
 
-``false`` \| [`UuidVersionOrNumber`](uuid_types.md#uuidversionornumber)
+``false`` \| [`UuidVersion`](uuid_types.md#uuidversion)

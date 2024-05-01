@@ -1,4 +1,4 @@
-[@httpx/assert - v0.7.0](../README.md) / uuid.types
+[@httpx/assert - v0.9.0](../README.md) / uuid.types
 
 # Module: uuid.types
 
@@ -11,6 +11,7 @@
 - [UuidV3](uuid_types.md#uuidv3)
 - [UuidV4](uuid_types.md#uuidv4)
 - [UuidV5](uuid_types.md#uuidv5)
+- [UuidV7](uuid_types.md#uuidv7)
 - [UuidVersion](uuid_types.md#uuidversion)
 - [UuidVersionOrNumber](uuid_types.md#uuidversionornumber)
 
@@ -46,12 +47,18 @@ ___
 
 ___
 
+### UuidV7
+
+Ƭ **UuidV7**: `string` & `WeakOpaqueContainer`\<``"UuidV7"``\>
+
+___
+
 ### UuidVersion
 
-Ƭ **UuidVersion**: ``1`` \| ``3`` \| ``4`` \| ``5``
+Ƭ **UuidVersion**: ``1`` \| ``3`` \| ``4`` \| ``5`` \| ``7``
 
 ___
 
 ### UuidVersionOrNumber
 
-Ƭ **UuidVersionOrNumber**: [`UuidVersion`](uuid_types.md#uuidversion) \| `number` & {}
+Ƭ **UuidVersionOrNumber**: `number` & `WeakOpaqueContainer`\<``"UuidVersionOrNumber"``\>

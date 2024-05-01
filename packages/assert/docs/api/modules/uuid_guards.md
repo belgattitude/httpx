@@ -1,4 +1,4 @@
-[@httpx/assert - v0.7.0](../README.md) / uuid.guards
+[@httpx/assert - v0.9.0](../README.md) / uuid.guards
 
 # Module: uuid.guards
 
@@ -11,6 +11,7 @@
 - [isUuidV3](uuid_guards.md#isuuidv3)
 - [isUuidV4](uuid_guards.md#isuuidv4)
 - [isUuidV5](uuid_guards.md#isuuidv5)
+- [isUuidV7](uuid_guards.md#isuuidv7)
 - [isUuidVersion](uuid_guards.md#isuuidversion)
 
 ## Functions
@@ -96,6 +97,22 @@ ___
 #### Returns
 
 v is UuidV5
+
+___
+
+### isUuidV7
+
+▸ **isUuidV7**(`v`): v is UuidV7
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `unknown` |
+
+#### Returns
+
+v is UuidV7
 
 ___
 

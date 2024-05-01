@@ -1,4 +1,4 @@
-[@httpx/assert - v0.7.0](../README.md) / index
+[@httpx/assert - v0.9.0](../README.md) / index
 
 # Module: index
 
@@ -8,6 +8,8 @@
 
 - [ArrayNonEmpty](index.md#arraynonempty)
 - [Ean13](index.md#ean13)
+- [HttpMethod](index.md#httpmethod)
+- [NetworkPort](index.md#networkport)
 - [NumberSafeInt](index.md#numbersafeint)
 - [ParsableSafeInt](index.md#parsablesafeint)
 - [ParsableStrictIsoDateZ](index.md#parsablestrictisodatez)
@@ -18,10 +20,14 @@
 - [UuidV3](index.md#uuidv3)
 - [UuidV4](index.md#uuidv4)
 - [UuidV5](index.md#uuidv5)
+- [UuidV7](index.md#uuidv7)
 - [UuidVersion](index.md#uuidversion)
 - [UuidVersionOrNumber](index.md#uuidversionornumber)
 - [assertArrayNonEmpty](index.md#assertarraynonempty)
 - [assertEan13](index.md#assertean13)
+- [assertHttpMethod](index.md#asserthttpmethod)
+- [assertHttpValidMethod](index.md#asserthttpvalidmethod)
+- [assertNetworkPort](index.md#assertnetworkport)
 - [assertNever](index.md#assertnever)
 - [assertNeverNoThrow](index.md#assertnevernothrow)
 - [assertNumberSafeInt](index.md#assertnumbersafeint)
@@ -37,6 +43,9 @@
 - [getUuidVersion](index.md#getuuidversion)
 - [isArrayNonEmpty](index.md#isarraynonempty)
 - [isEan13](index.md#isean13)
+- [isHttpMethod](index.md#ishttpmethod)
+- [isHttpValidMethod](index.md#ishttpvalidmethod)
+- [isNetworkPort](index.md#isnetworkport)
 - [isNumberSafeInt](index.md#isnumbersafeint)
 - [isParsableSafeInt](index.md#isparsablesafeint)
 - [isParsableStrictIsoDateZ](index.md#isparsablestrictisodatez)
@@ -47,6 +56,7 @@
 - [isUuidV3](index.md#isuuidv3)
 - [isUuidV4](index.md#isuuidv4)
 - [isUuidV5](index.md#isuuidv5)
+- [isUuidV7](index.md#isuuidv7)
 - [isUuidVersion](index.md#isuuidversion)
 - [uuidRegexp](index.md#uuidregexp)
 - [uuidSupportedVersions](index.md#uuidsupportedversions)
@@ -62,6 +72,18 @@ ___
 ### Ean13
 
 Re-exports [Ean13](barcode_types.md#ean13)
+
+___
+
+### HttpMethod
+
+Re-exports [HttpMethod](http_types.md#httpmethod)
+
+___
+
+### NetworkPort
+
+Re-exports [NetworkPort](network_types.md#networkport)
 
 ___
 
@@ -125,6 +147,12 @@ Re-exports [UuidV5](uuid_types.md#uuidv5)
 
 ___
 
+### UuidV7
+
+Re-exports [UuidV7](uuid_types.md#uuidv7)
+
+___
+
 ### UuidVersion
 
 Re-exports [UuidVersion](uuid_types.md#uuidversion)
@@ -146,6 +174,24 @@ ___
 ### assertEan13
 
 Re-exports [assertEan13](barcode_asserts.md#assertean13)
+
+___
+
+### assertHttpMethod
+
+Re-exports [assertHttpMethod](http_asserts.md#asserthttpmethod)
+
+___
+
+### assertHttpValidMethod
+
+Re-exports [assertHttpValidMethod](http_asserts.md#asserthttpvalidmethod)
+
+___
+
+### assertNetworkPort
+
+Re-exports [assertNetworkPort](network_asserts.md#assertnetworkport)
 
 ___
 
@@ -239,6 +285,24 @@ Re-exports [isEan13](barcode_guards.md#isean13)
 
 ___
 
+### isHttpMethod
+
+Re-exports [isHttpMethod](http_guards.md#ishttpmethod)
+
+___
+
+### isHttpValidMethod
+
+Re-exports [isHttpValidMethod](http_guards.md#ishttpvalidmethod)
+
+___
+
+### isNetworkPort
+
+Re-exports [isNetworkPort](network_guards.md#isnetworkport)
+
+___
+
 ### isNumberSafeInt
 
 Re-exports [isNumberSafeInt](number_guards.md#isnumbersafeint)
@@ -296,6 +360,12 @@ ___
 ### isUuidV5
 
 Re-exports [isUuidV5](uuid_guards.md#isuuidv5)
+
+___
+
+### isUuidV7
+
+Re-exports [isUuidV7](uuid_guards.md#isuuidv7)
 
 ___
 
