@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.9.1
+
+### Patch Changes
+
+- [#1167](https://github.com/belgattitude/httpx/pull/1167) [`bfd78a3`](https://github.com/belgattitude/httpx/commit/bfd78a3d42b2e52c6667ead29b71b61a1a6ef504) Thanks [@belgattitude](https://github.com/belgattitude)! - Add missing documentation in TOC
+
 ## 0.9.0
 
 ### Minor Changes
