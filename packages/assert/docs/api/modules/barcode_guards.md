@@ -1,4 +1,4 @@
-[@httpx/assert - v0.7.0](../README.md) / barcode.guards
+[@httpx/assert - v0.9.0](../README.md) / barcode.guards
 
 # Module: barcode.guards
 

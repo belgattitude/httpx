@@ -1,4 +1,4 @@
-[@httpx/assert - v0.7.0](../README.md) / number.guards
+[@httpx/assert - v0.9.0](../README.md) / number.guards
 
 # Module: number.guards
 
@@ -12,13 +12,7 @@
 
 ### isNumberSafeInt
 
-▸ **isNumberSafeInt**\<`T`\>(`v`): v is ArrayNonEmpty\<T\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
+▸ **isNumberSafeInt**(`v`): v is NumberSafeInt
 
 #### Parameters
 
@@ -28,4 +22,4 @@
 
 #### Returns
 
-v is ArrayNonEmpty\<T\>
+v is NumberSafeInt

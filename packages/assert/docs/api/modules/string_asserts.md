@@ -1,4 +1,4 @@
-[@httpx/assert - v0.7.0](../README.md) / string.asserts
+[@httpx/assert - v0.9.0](../README.md) / string.asserts
 
 # Module: string.asserts
 
