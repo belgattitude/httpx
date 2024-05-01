@@ -39,20 +39,36 @@ $ pnpm add @httpx/assert
 
 - [Introduction](#introduction)
   * [Consistent style](#consistent-style)
+  * [Weak opaque types](#weak-opaque-types)
   * [Assertions error messages](#assertions-error-messages)
 - [Usage](#usage)
   * [Type related](#type-related)
+    + [assertNever](#assertnever)
   * [Object related](#object-related)
+    + [isPlainObject](#isplainobject)
   * [Number related](#number-related)
+    + [isNumberSafeInt](#isnumbersafeint)
   * [Array related](#array-related)
+    + [ArrayNonEmpty](#arraynonempty)
   * [String related](#string-related)
+    + [StringNonEmpty](#stringnonempty)
+    + [ParsableSafeInt](#parsablesafeint)
+    + [isParsableStrictIsoDateZ](#isparsablestrictisodatez)
   * [Uuid](#uuid)
+    + [isUuid](#isuuid)
   * [Barcode](#barcode)
+    + [isEan13](#isean13)
+  * [Network](#network)
+    + [isNetWorkPort](#isnetworkport)
+  * [Http](#http)
+    + [isHttpMethod](#ishttpmethod)
+    + [isValidHttpMethod](#isvalidhttpmethod)
 - [Bundle size](#bundle-size)
 - [Compatibility](#compatibility)
 - [Acknowledgments](#acknowledgments)
 - [Contributors](#contributors)
 - [Sponsors](#sponsors)
+
 
 ## Introduction
 
@@ -313,7 +329,7 @@ assertEan13('1234567890128');
 
 #### isNetWorkPort
 
-Check whether the value is a valid tcp/udp network port (>=0 ... <=65535)
+Check whether the value is a valid tcp/udp network port (0-65535)
 
 ```typescript
 import { isNetworkPort } from "@httpx/assert";
