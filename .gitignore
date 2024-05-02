@@ -15,6 +15,10 @@ nx-cloud.env
 
 **/.netrc
 
+# tsup caches
+
+.tsup
+
 # dependencies
 **/node_modules
 **/.yarn/*
@@ -36,6 +40,7 @@ nx-cloud.env
 
 # Cache
 **/tsconfig.tsbuildinfo
+**/tsconfig*tsbuildinfo
 **/.eslintcache
 .cache/*
 
