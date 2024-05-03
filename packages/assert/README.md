@@ -171,19 +171,38 @@ switch(state) {
 
 #### isPlainObject
 
-
-| Name              | Type          | Comment          |
-|-------------------|---------------|------------------|
-| isPlainObject     | `PlainObject` |   |
-| assertPlainObject | `PlainObject` |  |
-
+| Name                  | Type                                                                           | Comment |
+|-----------------------|--------------------------------------------------------------------------------|---------|
+| isPlainObject<T?>     | `PlainObject<T extends Record<string, unknown> = Record<string, unknown>` |         |
+| assertPlainObject<T?> | `PlainObject<T extends Record<string, unknown> = Record<string, unknown>` |         |
 
 ```typescript
-import { isPainObject, assertPlainObject } from '@httpx/assert';
 
-isPlainObject({cool: true}); // 👈 true
+import { isPlainObject, assertPlainObject } from '@httpx/assert';
+
+// Simple case: without generic value
+isPlainObject({cwol: true}); // 👈 true
 isPlainObject(new Promise()); // 👈 false
 assertPlainObject({});
+
+// With generic value (unchecked at runtime!)
+type CustomType = {
+  name: string;
+  deep: {
+    yes: boolean | null;
+  };
+};
+const value = {
+  name: 'hello',
+  deep: {
+    yes: true,
+  },
+} as unknown;
+
+if (isPlainObject<CustomType>(value)) {
+  // Notice it's a deep partial to allow autocompletion
+  value?.deep?.yes; // 👈  yes will be unknown to indicate not runtime check was done
+}
 ```
 
 ### Number related

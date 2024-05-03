@@ -1,8 +1,10 @@
 import type { PlainObject } from './object.types';
 
-export const isPlainObject = <T = unknown, K extends number | string = string>(
+export const isPlainObject = <
+  TValue extends Record<string, unknown> = Record<string, unknown>,
+>(
   v: unknown
-): v is PlainObject<T, K> => {
+): v is PlainObject<TValue> => {
   return (
     typeof v === 'object' &&
     v !== null &&

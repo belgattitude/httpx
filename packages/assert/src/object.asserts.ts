@@ -8,11 +8,13 @@ import { createAssertException } from './utils/createAssertException';
  * Assert a value is a plain object
  * @throws TypeError
  */
-export function assertPlainObject(
+export function assertPlainObject<
+  TValue extends Record<string, unknown> = Record<string, unknown>,
+>(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
-): asserts v is PlainObject {
-  if (!isPlainObject(v)) {
+): asserts v is PlainObject<TValue> {
+  if (!isPlainObject<TValue>(v)) {
     throw createAssertException(
       msgOrErrorFactory,
       formatErrMsg('plain object', v)
