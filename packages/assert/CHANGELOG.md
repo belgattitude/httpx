@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.10.2
+
+### Patch Changes
+
+- [`fd1d0c5`](https://github.com/belgattitude/httpx/commit/fd1d0c535cb566f913ee57bad40a5cea783d775b) Thanks [@belgattitude](https://github.com/belgattitude)! - isPlainObject works with partial types
+
 ## 0.10.1
 
 ### Patch Changes
