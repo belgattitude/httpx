@@ -5,7 +5,11 @@ describe('Object typeguards tests', () => {
     it.each([
       [{}, true],
       [{ name: 'seb' }, true],
-      [{ children: [{ test: 1 }], name: 'deep' }, true],
+      [{ children: [{ test: 1 }], name: 'deep-plain' }, true],
+      [
+        { children: [{ test: new Date() }], name: 'deep-with-regular-object' },
+        true,
+      ],
       [{ constructor: { name: 'Object2' } }, true],
       [JSON.parse('{}'), true],
       // False
