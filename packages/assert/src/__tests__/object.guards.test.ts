@@ -4,6 +4,7 @@ describe('Object typeguards tests', () => {
   describe('isPlainObject', () => {
     it.each([
       [{}, true],
+      [{ 1: 'cool' }, true],
       [{ name: 'seb' }, true],
       [{ children: [{ test: 1 }], name: 'deep-plain' }, true],
       [
