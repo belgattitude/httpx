@@ -1,4 +1,7 @@
+type DeepPartialUnknown<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartialUnknown<T[P]> : unknown;
+};
+
 export type PlainObject<
-  T = unknown,
-  K extends number | string = string,
-> = Record<K, T>;
+  TValue extends Record<string, unknown> = Record<string, unknown>,
+> = DeepPartialUnknown<TValue>;
