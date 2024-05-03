@@ -1,6 +1,6 @@
 export type PlainObjectDeepPartialUnknown<T> = {
-  [P in keyof T]?: T[P] extends object
-    ? PlainObjectDeepPartialUnknown<T[P]>
+  [P in keyof T]?: NonNullable<T[P]> extends Record<string, unknown>
+    ? PlainObjectDeepPartialUnknown<NonNullable<T[P]>>
     : unknown;
 };
 

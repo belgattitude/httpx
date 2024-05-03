@@ -2,7 +2,10 @@ import { assertType } from 'vitest';
 
 import { assertPlainObject } from '../object.asserts';
 import { isPlainObject } from '../object.guards';
-import type { PlainObject } from '../object.types';
+import type {
+  PlainObject,
+  PlainObjectDeepPartialUnknown,
+} from '../object.types';
 
 describe('object types tests', () => {
   describe('isPlainObject', () => {
@@ -37,9 +40,14 @@ describe('object types tests', () => {
       assertType<unknown>(po?.deep?.yes);
     });
 
-    it('should return a type PlainObject with shaped values 2', () => {
+    it('should return a type PlainObject with shaped non null | undefined values', () => {
       type DeepCustomType = {
+        id: number;
+        requiredDeep: {
+          id: number;
+        };
         data?: {
+          test: string[];
           attributes?: {
             url?: string | null;
             caption?: string | null;
@@ -47,14 +55,18 @@ describe('object types tests', () => {
           } | null;
         } | null;
       };
-      const po: DeepCustomType = {
+      const po = {
+        id: 1,
+        requiredDeep: {
+          id: 1,
+        },
         data: {
           attributes: {
             url: 'cool',
             caption: 'test',
           },
         },
-      };
+      } as unknown;
       const typed = isPlainObject<DeepCustomType>(po);
       // eslint-disable-next-line jest/no-conditional-in-test
       if (!typed) {
@@ -63,8 +75,12 @@ describe('object types tests', () => {
       assertType<PlainObject>(po);
       assertType<PlainObject<DeepCustomType>>(po);
       assertType<Record<string | number, unknown>>(po);
-      assertType<DeepCustomType>(po);
-      assertType<string | undefined | null>(po.data?.attributes?.url);
+      assertType<PlainObjectDeepPartialUnknown<DeepCustomType>>(po);
+      expectTypeOf(po?.data).not.toBeUnknown();
+      expectTypeOf(po?.data?.attributes).not.toBeUnknown();
+      expectTypeOf(po?.data?.attributes?.url).toBeUnknown();
+      expectTypeOf(po?.id).toBeUnknown();
+      expectTypeOf(po?.requiredDeep?.id).toBeUnknown();
     });
   });
 });

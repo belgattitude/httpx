@@ -37,6 +37,10 @@ jobs:
       - name: 🕵️ Typecheck
         run: yarn workspaces foreach -v --worktree --from '@examples/*' run typecheck
 
+      - name: 🕵️ Typecheck (no typescript path aliases)
+        run: yarn workspaces foreach -v --worktree --from '@examples/*' run typecheck-no-paths
+
+
       - name: 🔬 Lint
         run: yarn workspaces foreach -v --worktree --from '@examples/*' run lint
 
