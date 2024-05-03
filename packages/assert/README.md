@@ -171,10 +171,10 @@ switch(state) {
 
 #### isPlainObject
 
-| Name                  | Type                                                                           | Comment |
-|-----------------------|--------------------------------------------------------------------------------|---------|
-| isPlainObject<T?>     | `PlainObject<T extends Record<string, unknown> = Record<string, unknown>` |         |
-| assertPlainObject<T?> | `PlainObject<T extends Record<string, unknown> = Record<string, unknown>` |         |
+| Name                    | Type             | Comment |
+|-------------------------|------------------|---------|
+| isPlainObject\<T?\>     | `PlainObject` |         |
+| assertPlainObject\<T?\> | `PlainObject` |         |
 
 ```typescript
 
@@ -201,7 +201,7 @@ const value = {
 
 if (isPlainObject<CustomType>(value)) {
   // Notice it's a deep partial to allow autocompletion
-  value?.deep?.yes; // 👈  yes will be unknown to indicate not runtime check was done
+  value?.deep?.yes; // 👈  yes will be unknown to reflect that no runtime check was done
 }
 ```
 
