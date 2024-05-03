@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.10.1
+
+### Patch Changes
+
+- [`943adcd`](https://github.com/belgattitude/httpx/commit/943adcdebc149447ad4b17452fc7cefe7bab19a1) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix type exports for object types
+
 ## 0.10.0
 
 ### Minor Changes
