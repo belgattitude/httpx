@@ -1,4 +1,6 @@
-prisma-exception / [Exports](modules.md)
+**prisma-exception** • [**Docs**](globals.md)
+
+---
 
 # prisma-exception
 

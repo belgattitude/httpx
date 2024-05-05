@@ -1,23 +1,16 @@
-[@httpx/json-api - v0.5.19](../README.md) / JsonApiResponseFactory
+[**@httpx/json-api v0.5.19**](../README.md) • **Docs**
+
+***
+
+[@httpx/json-api v0.5.19](../README.md) / JsonApiResponseFactory
 
 # Class: JsonApiResponseFactory
 
-## Table of contents
-
-### Constructors
-
-- [constructor](JsonApiResponseFactory.md#constructor)
-
-### Methods
-
-- [fromError](JsonApiResponseFactory.md#fromerror)
-- [fromSuccess](JsonApiResponseFactory.md#fromsuccess)
-
 ## Constructors
 
-### constructor
+### new JsonApiResponseFactory()
 
-• **new JsonApiResponseFactory**(): [`JsonApiResponseFactory`](JsonApiResponseFactory.md)
+> **new JsonApiResponseFactory**(): [`JsonApiResponseFactory`](JsonApiResponseFactory.md)
 
 #### Returns
 
@@ -25,40 +18,38 @@
 
 ## Methods
 
-### fromError
+### fromError()
 
-▸ **fromError**(`errors`, `httpStatus?`): [`JsonApiErrorResponse`](../README.md#jsonapierrorresponse)
+> `static` **fromError**(`errors`, `httpStatus`?): [`JsonApiErrorResponse`](../type-aliases/JsonApiErrorResponse.md)
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `errors` | `string` \| [`JsonApiError`](../README.md#jsonapierror) \| [`JsonApiError`](../README.md#jsonapierror)[] | - |
-| `httpStatus?` | `number` | fallback http status if not present in JsonApiError |
+• **errors**: `string` \| [`JsonApiError`](../type-aliases/JsonApiError.md) \| [`JsonApiError`](../type-aliases/JsonApiError.md)[]
+
+• **httpStatus?**: `number`
+
+fallback http status if not present in JsonApiError
 
 #### Returns
 
-[`JsonApiErrorResponse`](../README.md#jsonapierrorresponse)
+[`JsonApiErrorResponse`](../type-aliases/JsonApiErrorResponse.md)
 
-___
+***
 
-### fromSuccess
+### fromSuccess()
 
-▸ **fromSuccess**\<`T`\>(`data`, `metadata?`): [`JsonApiSuccessResponse`](../README.md#jsonapisuccessresponse)\<`T`\>
+> `static` **fromSuccess**\<`T`\>(`data`, `metadata`?): [`JsonApiSuccessResponse`](../type-aliases/JsonApiSuccessResponse.md)\<`T`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+• **T**
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-| `metadata?` | \{ `cacheHit?`: `boolean`  } & `Record`\<`string`, `string` \| `number` \| `boolean` \| `Record`\<`string`, `unknown`\>\> |
+• **data**: `T`
+
+• **metadata?**: `object` & `Record`\<`string`, `string` \| `number` \| `boolean` \| `Record`\<`string`, `unknown`\>\>
 
 #### Returns
 
-[`JsonApiSuccessResponse`](../README.md#jsonapisuccessresponse)\<`T`\>
+[`JsonApiSuccessResponse`](../type-aliases/JsonApiSuccessResponse.md)\<`T`\>

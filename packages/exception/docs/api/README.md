@@ -1,14 +1,14 @@
-@httpx/exception
+**@httpx/exception** • **Docs**
+
+---
 
 # @httpx/exception
 
-## Table of contents
+## Modules
 
-### Modules
-
-- [base](modules/base.md)
-- [client](modules/client.md)
-- [experimental](modules/experimental.md)
-- [serializer](modules/serializer.md)
-- [server](modules/server.md)
-- [types](modules/types.md)
+- [base](base/README.md)
+- [client](client/README.md)
+- [experimental](experimental/README.md)
+- [serializer](serializer/README.md)
+- [server](server/README.md)
+- [types](types/README.md)
