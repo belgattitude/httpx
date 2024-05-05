@@ -1,23 +1,16 @@
-[@httpx/json-api - v0.5.19](../README.md) / JsonApiErrorFactory
+[**@httpx/json-api v0.5.19**](../README.md) • **Docs**
+
+***
+
+[@httpx/json-api v0.5.19](../README.md) / JsonApiErrorFactory
 
 # Class: JsonApiErrorFactory
 
-## Table of contents
-
-### Constructors
-
-- [constructor](JsonApiErrorFactory.md#constructor)
-
-### Methods
-
-- [fromCatchVariable](JsonApiErrorFactory.md#fromcatchvariable)
-- [fromHttpException](JsonApiErrorFactory.md#fromhttpexception)
-
 ## Constructors
 
-### constructor
+### new JsonApiErrorFactory()
 
-• **new JsonApiErrorFactory**(): [`JsonApiErrorFactory`](JsonApiErrorFactory.md)
+> **new JsonApiErrorFactory**(): [`JsonApiErrorFactory`](JsonApiErrorFactory.md)
 
 #### Returns
 
@@ -25,34 +18,34 @@
 
 ## Methods
 
-### fromCatchVariable
+### fromCatchVariable()
 
-▸ **fromCatchVariable**(`error`, `defaultHttpStatus?`): [`JsonApiError`](../README.md#jsonapierror)
-
-#### Parameters
-
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `error` | `unknown` | `undefined` |
-| `defaultHttpStatus` | `number` | `500` |
-
-#### Returns
-
-[`JsonApiError`](../README.md#jsonapierror)
-
-___
-
-### fromHttpException
-
-▸ **fromHttpException**(`exception`, `defaultHttpStatus?`): [`JsonApiError`](../README.md#jsonapierror)
+> `static` **fromCatchVariable**(`error`, `defaultHttpStatus`): [`JsonApiError`](../type-aliases/JsonApiError.md)
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `exception` | `string` \| `Error` \| `HttpException` | `undefined` | - |
-| `defaultHttpStatus` | `number` | `500` | fallback http status if it can't be inferred from exception |
+• **error**: `unknown`
+
+• **defaultHttpStatus**: `number`= `500`
 
 #### Returns
 
-[`JsonApiError`](../README.md#jsonapierror)
+[`JsonApiError`](../type-aliases/JsonApiError.md)
+
+***
+
+### fromHttpException()
+
+> `static` **fromHttpException**(`exception`, `defaultHttpStatus`): [`JsonApiError`](../type-aliases/JsonApiError.md)
+
+#### Parameters
+
+• **exception**: `string` \| `Error` \| `HttpException`
+
+• **defaultHttpStatus**: `number`= `500`
+
+fallback http status if it can't be inferred from exception
+
+#### Returns
+
+[`JsonApiError`](../type-aliases/JsonApiError.md)
