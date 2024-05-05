@@ -35,3 +35,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 ## Link
 
 https://en.wikipedia.org/wiki/Coordinated_Universal_Time
+
+## Source
+
+[string.guards.ts:35](https://github.com/belgattitude/httpx/blob/c2b4400d3e1e7ce81677911e5629c323b752b635/packages/assert/src/string.guards.ts#L35)

@@ -23,3 +23,7 @@ Assert a value is a valid uuid v4
 ## Throws
 
 TypeError
+
+## Source
+
+[uuid.asserts.ts:71](https://github.com/belgattitude/httpx/blob/c2b4400d3e1e7ce81677911e5629c323b752b635/packages/assert/src/uuid.asserts.ts#L71)
