@@ -7,6 +7,14 @@ flag_management:
   default_rules:
     carryforward: false
   individual_flags:
+    - name: httpx-sql-tag-unit
+      paths:
+        - packages/sql-tag
+      statuses:
+        - type: project
+          target: 90%
+          threshold: 1%
+
     - name: httpx-exception-unit
       paths:
         - packages/exception
