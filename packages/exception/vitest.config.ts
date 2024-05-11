@@ -21,7 +21,7 @@ export default defineConfig({
     deps: {
       optimizer: {
         web: {
-          enabled: false,
+          enabled: true,
         },
         ssr: { enabled: true },
       },
@@ -29,9 +29,12 @@ export default defineConfig({
     typecheck: {
       enabled: false,
     },
-    pool: 'forks',
+    pool: 'vmForks',
     poolOptions: {
       forks: {
+        isolate: true,
+      },
+      vmForks: {
         isolate: true,
       },
       vmThreads: {
