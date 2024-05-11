@@ -23,6 +23,9 @@ export default defineConfig({
     },
     pool: 'forks',
     poolOptions: {
+      forks: {
+        isolate: true,
+      },
       vmThreads: {
         // useAtomics: true,
       },
