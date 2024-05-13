@@ -10,23 +10,23 @@
   "repository": "belgattitude/httpx",
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn workspaces foreach --all -pv run clean",
-    "g:build": "yarn nx affected --target=build --exclude='examples/**' --exclude='docs'",
+    "g:build": "yarn nx affected --output-style=static --target=build --exclude='examples/**' --exclude='docs'",
     "g:build-release": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build-release",
     "g:build-packages": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build",
-    "g:build-examples": "nx affected --target=build --include=examples/**",
-    "g:docgen": "yarn nx affected --target=docgen --exclude='examples/**'",
+    "g:build-examples": "nx affected --output-style=static --target=build --include=examples/**",
+    "g:docgen": "yarn nx affected --output-style=static --target=docgen --exclude='examples/**'",
     "g:test": "yarn workspaces foreach --all -pv run test",
-    "g:test-unit": "yarn nx affected --target=test-unit --exclude='examples/**' --exclude='docs'",
-    "g:test-unit-coverage": "yarn nx affected --target=test-unit-coverage --exclude='examples/**' --exclude='docs'",
-    "g:test-unit-edge": "yarn nx affected --target=test-unit-edge --exclude='examples/**' --exclude='docs'",
-    "g:lint": "yarn nx affected --target=lint",
-    "g:typecheck": "yarn nx affected --target=typecheck --exclude='examples/**' --exclude='docs'",
+    "g:test-unit": "yarn nx affected --output-style=static --target=test-unit --exclude='examples/**' --exclude='docs'",
+    "g:test-unit-coverage": "yarn nx affected --output-style=static --target=test-unit-coverage --exclude='examples/**' --exclude='docs'",
+    "g:test-unit-edge": "yarn nx affected --output-style=static --target=test-unit-edge --exclude='examples/**' --exclude='docs'",
+    "g:lint": "yarn nx affected --output-style=static --target=lint",
+    "g:typecheck": "yarn nx affected --output-style=static --target=typecheck --exclude='examples/**' --exclude='docs'",
     "g:lint-staged-files": "lint-staged --allow-empty",
     "g:fix-all-files": "yarn workspaces foreach --all -ptv run fix-all-files",
     "g:changeset": "changeset",
-    "g:check-dist": "yarn nx affected --target=check-dist --exclude='examples/**' --exclude='docs'",
-    "g:check-size": "yarn nx affected --target=check-size --exclude='examples/**' --exclude='docs'",
-    "g:check-pub": "yarn nx affected --target=check-pub --exclude='examples/**' --exclude='docs'",
+    "g:check-dist": "yarn nx affected --output-style=static --target=check-dist --exclude='examples/**' --exclude='docs'",
+    "g:check-size": "yarn nx affected --output-style=static --target=check-size --exclude='examples/**' --exclude='docs'",
+    "g:check-pub": "yarn nx affected --output-style=static --target=check-pub --exclude='examples/**' --exclude='docs'",
     "g:release": "yarn g:build-release && yarn exec changeset publish",
     "g:ci-coverage-upload": "yarn workspaces foreach --all -tv run ci-coverage-upload",
     "snyk:test": "snyk test --all-projects",
@@ -67,7 +67,7 @@
     "npm-run-all2": "6.1.2",
     "nx": "19.0.2",
     "prettier": "3.2.5",
-    "rimraf": "5.0.6",
+    "rimraf": "5.0.7",
     "rollup": "4.17.2",
     "shell-quote": "1.8.1",
     "snyk": "1.1291.0",
@@ -78,7 +78,7 @@
     "esbuildHelp": "Till tsup update esbuild"
   },
   "resolutions": {
-    "esbuild": "^0.21.0"
+    "esbuild": "^0.21.2"
   },
   "engines": {
     "node": ">=18.18"
