@@ -71,7 +71,7 @@ jobs:
 
       - name: 🧪 Unit tests (no-coverage - node !== 20.x)
         if: matrix.node-version != '20.x'
-        run: yarn nx run-many --verbose --target=test-unit --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=test-unit --exclude='examples/**' --exclude='docs'
 
       - name: 🧪 Unit tests (coverage - only node 20.x)
         if: matrix.node-version == '20.x'
