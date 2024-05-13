@@ -29,7 +29,7 @@ export default defineConfig({
     typecheck: {
       enabled: false,
     },
-    pool: 'vmForks',
+    pool: 'forks',
     poolOptions: {
       forks: {
         isolate: true,
