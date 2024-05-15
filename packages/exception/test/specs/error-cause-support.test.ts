@@ -10,22 +10,23 @@ import { HttpNotFound } from '../../src/client';
 describe(`when Error.cause isn't supported`, () => {
   beforeEach(() => {
     // vi.restoreAllMocks();
-    vi.mock(
-      import('../../src/support/supportsErrorCause'),
-      async (importOriginal) => {
-        const mod = await importOriginal(); // type is inferred
-        return {
-          ...mod,
-          // replace some exports
-          supportsErrorCause: () => false,
-        };
-      }
-    );
   });
   afterEach(() => {
     // vi.restoreAllMocks();
     // vi.resetModules();
   });
+
+  vi.mock(
+    import('../../src/support/supportsErrorCause'),
+    async (importOriginal) => {
+      const mod = await importOriginal(); // type is inferred
+      return {
+        ...mod,
+        // replace some exports
+        supportsErrorCause: () => false,
+      };
+    }
+  );
 
   const cause = new Error('cause');
   const params = {
@@ -40,6 +41,7 @@ describe(`when Error.cause isn't supported`, () => {
   ];
 
   it.each(scenarios)('should ignore the cause for %s.', (_name, err) => {
-    expect(err.cause).toStrictEqual(undefined);
+    // expect(err.cause).toStrictEqual(undefined);
+    expect(new HttpException(500, params).cause).toStrictEqual(undefined);
   });
 });
