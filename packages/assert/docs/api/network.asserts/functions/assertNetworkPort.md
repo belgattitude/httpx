@@ -24,4 +24,4 @@ TypeError
 
 ## Source
 
-[network.asserts.ts:9](https://github.com/belgattitude/httpx/blob/c2b4400d3e1e7ce81677911e5629c323b752b635/packages/assert/src/network.asserts.ts#L9)
+[network.asserts.ts:9](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/network.asserts.ts#L9)

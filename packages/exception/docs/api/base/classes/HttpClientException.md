@@ -20,6 +20,38 @@ either a message or an object containing HttpExceptionParams
 
 - [`HttpException`](HttpException.md)
 
+## Extended by
+
+- [`HttpBadRequest`](../../client/classes/HttpBadRequest.md)
+- [`HttpConflict`](../../client/classes/HttpConflict.md)
+- [`HttpExpectationFailed`](../../client/classes/HttpExpectationFailed.md)
+- [`HttpFailedDependency`](../../client/classes/HttpFailedDependency.md)
+- [`HttpForbidden`](../../client/classes/HttpForbidden.md)
+- [`HttpGone`](../../client/classes/HttpGone.md)
+- [`HttpImATeapot`](../../client/classes/HttpImATeapot.md)
+- [`HttpLengthRequired`](../../client/classes/HttpLengthRequired.md)
+- [`HttpLocked`](../../client/classes/HttpLocked.md)
+- [`HttpMethodNotAllowed`](../../client/classes/HttpMethodNotAllowed.md)
+- [`HttpMisdirectedRequest`](../../client/classes/HttpMisdirectedRequest.md)
+- [`HttpNotAcceptable`](../../client/classes/HttpNotAcceptable.md)
+- [`HttpNotFound`](../../client/classes/HttpNotFound.md)
+- [`HttpPayloadTooLarge`](../../client/classes/HttpPayloadTooLarge.md)
+- [`HttpPaymentRequired`](../../client/classes/HttpPaymentRequired.md)
+- [`HttpPreconditionFailed`](../../client/classes/HttpPreconditionFailed.md)
+- [`HttpPreconditionRequired`](../../client/classes/HttpPreconditionRequired.md)
+- [`HttpProxyAuthenticationRequired`](../../client/classes/HttpProxyAuthenticationRequired.md)
+- [`HttpRangeNotSatisfiable`](../../client/classes/HttpRangeNotSatisfiable.md)
+- [`HttpRequestHeaderFieldsTooLarge`](../../client/classes/HttpRequestHeaderFieldsTooLarge.md)
+- [`HttpRequestTimeout`](../../client/classes/HttpRequestTimeout.md)
+- [`HttpTooEarly`](../../client/classes/HttpTooEarly.md)
+- [`HttpTooManyRequests`](../../client/classes/HttpTooManyRequests.md)
+- [`HttpUnauthorized`](../../client/classes/HttpUnauthorized.md)
+- [`HttpUnavailableForLegalReasons`](../../client/classes/HttpUnavailableForLegalReasons.md)
+- [`HttpUnprocessableEntity`](../../client/classes/HttpUnprocessableEntity.md)
+- [`HttpUnsupportedMediaType`](../../client/classes/HttpUnsupportedMediaType.md)
+- [`HttpUpgradeRequired`](../../client/classes/HttpUpgradeRequired.md)
+- [`HttpUriTooLong`](../../client/classes/HttpUriTooLong.md)
+
 ## Constructors
 
 ### new HttpClientException()

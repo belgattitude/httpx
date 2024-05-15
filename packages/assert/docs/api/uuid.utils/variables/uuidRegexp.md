@@ -12,4 +12,4 @@ Taken from https://github.com/uuidjs/uuid/blob/main/src/regex.js
 
 ## Source
 
-[uuid.utils.ts:4](https://github.com/belgattitude/httpx/blob/c2b4400d3e1e7ce81677911e5629c323b752b635/packages/assert/src/uuid.utils.ts#L4)
+[uuid.utils.ts:4](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/uuid.utils.ts#L4)

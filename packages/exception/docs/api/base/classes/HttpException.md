@@ -10,6 +10,11 @@
 
 - `Error`
 
+## Extended by
+
+- [`HttpClientException`](HttpClientException.md)
+- [`HttpServerException`](HttpServerException.md)
+
 ## Implements
 
 - [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)

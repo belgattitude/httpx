@@ -20,6 +20,20 @@ either a message or an object containing HttpExceptionParams
 
 - [`HttpException`](HttpException.md)
 
+## Extended by
+
+- [`HttpBadGateway`](../../server/classes/HttpBadGateway.md)
+- [`HttpGatewayTimeout`](../../server/classes/HttpGatewayTimeout.md)
+- [`HttpInsufficientStorage`](../../server/classes/HttpInsufficientStorage.md)
+- [`HttpInternalServerError`](../../server/classes/HttpInternalServerError.md)
+- [`HttpLoopDetected`](../../server/classes/HttpLoopDetected.md)
+- [`HttpNetworkAuthenticationRequired`](../../server/classes/HttpNetworkAuthenticationRequired.md)
+- [`HttpNotExtended`](../../server/classes/HttpNotExtended.md)
+- [`HttpNotImplemented`](../../server/classes/HttpNotImplemented.md)
+- [`HttpServiceUnavailable`](../../server/classes/HttpServiceUnavailable.md)
+- [`HttpVariantAlsoNegotiates`](../../server/classes/HttpVariantAlsoNegotiates.md)
+- [`HttpVersionNotSupported`](../../server/classes/HttpVersionNotSupported.md)
+
 ## Constructors
 
 ### new HttpServerException()

@@ -30,4 +30,4 @@ TypeError
 
 ## Source
 
-[array.asserts.ts:10](https://github.com/belgattitude/httpx/blob/c2b4400d3e1e7ce81677911e5629c323b752b635/packages/assert/src/array.asserts.ts#L10)
+[array.asserts.ts:10](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/array.asserts.ts#L10)

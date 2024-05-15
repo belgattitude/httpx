@@ -10,4 +10,4 @@
 
 ## Source
 
-[string.types.ts:5](https://github.com/belgattitude/httpx/blob/c2b4400d3e1e7ce81677911e5629c323b752b635/packages/assert/src/string.types.ts#L5)
+[string.types.ts:5](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/string.types.ts#L5)
