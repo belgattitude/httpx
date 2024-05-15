@@ -32,6 +32,9 @@ export default defineConfig({
     pool: 'forks',
     poolOptions: {
       forks: {
+        // maxForks: 80,
+        // minForks: 1,
+        singleFork: false,
         isolate: true,
       },
       vmForks: {
