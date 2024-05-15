@@ -1,5 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+vi.mock(
+  import('../../src/support/supportsErrorCause'),
+  async (importOriginal) => {
+    const mod = await importOriginal();
+    return {
+      ...mod,
+      supportsErrorCause: () => false,
+    };
+  }
+);
+
 describe(`when Error.cause isn't supported`, () => {
   beforeEach(() => {
     // vi.restoreAllMocks();
@@ -13,17 +24,6 @@ describe(`when Error.cause isn't supported`, () => {
   const params = {
     cause,
   };
-
-  vi.mock(
-    import('../../src/support/supportsErrorCause'),
-    async (importOriginal) => {
-      const mod = await importOriginal();
-      return {
-        ...mod,
-        supportsErrorCause: () => false,
-      };
-    }
-  );
 
   it('should return undefined rather than runtime error', async () => {
     const HttpException = await import('../../src/base/HttpException').then(
