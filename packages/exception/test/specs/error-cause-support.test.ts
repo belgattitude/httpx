@@ -10,11 +10,11 @@ import { supportsErrorCause } from '../../src/support/supportsErrorCause';
 
 describe(`when Error.cause isn't supported`, () => {
   beforeEach(() => {
-    vi.restoreAllMocks();
+    // vi.restoreAllMocks();
   });
   afterEach(() => {
-    vi.restoreAllMocks();
-    vi.resetModules();
+    // vi.restoreAllMocks();
+    // vi.resetModules();
   });
 
   const cause = new Error('cause');
