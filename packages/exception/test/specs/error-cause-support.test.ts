@@ -29,11 +29,17 @@ describe(`when Error.cause isn't supported`, () => {
     ['HttpNotFound', new HttpNotFound(params)],
   ];
 
-  vi.mock('../../src/support/supportsErrorCause', () => {
-    return {
-      supportsErrorCause: () => false,
-    };
-  });
+  vi.mock(
+    import('../../src/support/supportsErrorCause'),
+    async (importOriginal) => {
+      const mod = await importOriginal(); // type is inferred
+      return {
+        ...mod,
+        // replace some exports
+        supportsErrorCause: () => false,
+      };
+    }
+  );
 
   it.each(scenarios)('should ignore the cause for %s.', (_name, err) => {
     expect(supportsErrorCause()).toStrictEqual(false);
