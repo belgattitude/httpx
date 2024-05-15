@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock(
+vi.doMock(
   import('../../src/support/supportsErrorCause'),
   async (importOriginal) => {
     const mod = await importOriginal();
