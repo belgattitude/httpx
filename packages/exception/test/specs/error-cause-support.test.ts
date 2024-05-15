@@ -16,18 +16,6 @@ describe(`when Error.cause isn't supported`, () => {
     // vi.resetModules();
   });
 
-  vi.mock(
-    import('../../src/support/supportsErrorCause'),
-    async (importOriginal) => {
-      const mod = await importOriginal(); // type is inferred
-      return {
-        ...mod,
-        // replace some exports
-        supportsErrorCause: () => false,
-      };
-    }
-  );
-
   const cause = new Error('cause');
   const params = {
     cause,
@@ -40,8 +28,23 @@ describe(`when Error.cause isn't supported`, () => {
     ['HttpNotFound', new HttpNotFound(params)],
   ];
 
-  it.each(scenarios)('should ignore the cause for %s.', (_name, err) => {
-    // expect(err.cause).toStrictEqual(undefined);
+  it('should work', () => {
+    vi.mock(
+      import('../../src/support/supportsErrorCause'),
+      async (importOriginal) => {
+        const mod = await importOriginal(); // type is inferred
+        return {
+          ...mod,
+          // replace some exports
+          supportsErrorCause: () => false,
+        };
+      }
+    );
     expect(new HttpException(500, params).cause).toStrictEqual(undefined);
+  });
+
+  it.each(scenarios)('should ignore the cause for %s.', (_name, err) => {
+    expect(err.cause).toStrictEqual(undefined);
+    // expect(new HttpException(500, params).cause).toStrictEqual(undefined);
   });
 });
