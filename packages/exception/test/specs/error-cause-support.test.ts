@@ -14,17 +14,18 @@ describe(`when Error.cause isn't supported`, () => {
     cause,
   };
 
+  vi.mock(
+    import('../../src/support/supportsErrorCause'),
+    async (importOriginal) => {
+      const mod = await importOriginal();
+      return {
+        ...mod,
+        supportsErrorCause: () => false,
+      };
+    }
+  );
+
   it('should return undefined rather than runtime error', async () => {
-    vi.mock(
-      import('../../src/support/supportsErrorCause'),
-      async (importOriginal) => {
-        const mod = await importOriginal();
-        return {
-          ...mod,
-          supportsErrorCause: () => false,
-        };
-      }
-    );
     const HttpException = await import('../../src/base/HttpException').then(
       (mod) => mod.HttpException
     );
