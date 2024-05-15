@@ -29,11 +29,11 @@ export default defineConfig({
     typecheck: {
       enabled: false,
     },
-    pool: 'forks',
+    pool: 'vmThreads',
     poolOptions: {
       forks: {
-        // maxForks: 80,
-        // minForks: 1,
+        maxForks: 18,
+        minForks: 1,
         singleFork: false,
         isolate: true,
       },
