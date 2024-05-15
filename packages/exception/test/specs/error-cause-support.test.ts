@@ -20,6 +20,7 @@ describe(`when Error.cause isn't supported`, () => {
       async (importOriginal) => {
         const mod = await importOriginal();
         return {
+          ...mod,
           supportsErrorCause: () => false,
         };
       }

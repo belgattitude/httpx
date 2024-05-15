@@ -57,7 +57,7 @@ export default defineConfig({
     // By default, vitest does not provide global APIs for explicitness. If you prefer to use the APIs globally like Jest,
     // you can pass the --globals option to CLI or add globals: true in the config.
     // https://vitest.dev/config/#globals
-    globals: false,
+    globals: true,
     include: testFiles,
     // To mimic Jest behaviour regarding mocks.
     mockReset: true,
