@@ -21,7 +21,7 @@ export default defineConfig({
     typecheck: {
       enabled: false,
     },
-    pool: 'vmThreads',
+    pool: 'forks',
     poolOptions: {
       vmThreads: {
         // useAtomics: true,
