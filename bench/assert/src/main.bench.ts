@@ -38,15 +38,15 @@ describe('isPlainObject', async () => {
     }
   });
 
-  bench.skip('(not compliant !) moderndash: `isPlainObject(v)`', () => {
-    for (const value of realLifeScenarios) {
-      const _v8 = moderndash(value);
-    }
-  });
-
   bench('lodash-es: `_.isPlainObject(v)`', () => {
     for (const value of realLifeScenarios) {
       const _v8 = lodash.isPlainObject(value);
+    }
+  });
+
+  bench.skip('(not compliant !) moderndash: `isPlainObject(v)`', () => {
+    for (const value of realLifeScenarios) {
+      const _v8 = moderndash(value);
     }
   });
 });
