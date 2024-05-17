@@ -8,7 +8,7 @@
 import { isHttpException } from '@httpx/exception';
 
 export interface LoggerInterface {
-  log<T = unknown>(message: string, payload?: T): void;
+  log: <T = unknown>(message: string, payload?: T) => void;
 }
 
 export class ConsoleLogger implements LoggerInterface {
