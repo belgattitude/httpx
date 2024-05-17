@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.10.3
+
+### Patch Changes
+
+- [#1214](https://github.com/belgattitude/httpx/pull/1214) [`226a4b1`](https://github.com/belgattitude/httpx/commit/226a4b12e5fd3eb6eb2a033f13b7988c2e97587c) Thanks [@belgattitude](https://github.com/belgattitude)! - isPlainObject allows Object.create(null) and disallow stringTagName and iterators symbols
+
 ## 0.10.2
 
 ### Patch Changes
@@ -198,22 +204,22 @@
 
   ```typescript
   expect(() => assertUuid("123")).toThrow(
-    new TypeError("Value is expected to be an uuid, got: string(3)"),
+    new TypeError("Value is expected to be an uuid, got: string(3)")
   );
   expect(() => assertUuid(false, undefined, { version: 1 })).toThrow(
-    new TypeError("Value is expected to be an uuid v1, got: boolean(false)"),
+    new TypeError("Value is expected to be an uuid v1, got: boolean(false)")
   );
   expect(() => assertUuidV1(Number.NaN)).toThrow(
-    new TypeError("Value is expected to be an uuid v1, got: NaN"),
+    new TypeError("Value is expected to be an uuid v1, got: NaN")
   );
   expect(() => assertUuidV3(new Error())).toThrow(
-    new TypeError("Value is expected to be an uuid v3, got: Error"),
+    new TypeError("Value is expected to be an uuid v3, got: Error")
   );
   expect(() => assertUuidV4(new Date())).toThrow(
-    new TypeError("Value is expected to be an uuid v4, got: Date"),
+    new TypeError("Value is expected to be an uuid v4, got: Date")
   );
   expect(() => assertUuidV5(() => {})).toThrow(
-    new TypeError("Value is expected to be an uuid v5, got: function"),
+    new TypeError("Value is expected to be an uuid v5, got: function")
   );
   ```
 
