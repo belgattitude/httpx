@@ -298,11 +298,12 @@ assertParsableStrictIsoDateZ('2023-02-29T23:37:31.653z'); // 👉 throws cause n
 
 | Name           | Type                    | Opaque type                                      | Comment |
 |----------------|-------------------------|--------------------------------------------------|--------|
-| isUuid         | `string`                | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5 \| UuidV7`          |  |
+| isUuid         | `string`                | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5 \| UuidV7` |  |
 | isUuidV1       | `string`                | `UuidV1`                                         |  |
 | isUuidV3       | `string`                | `UuidV3`                                         |  |
 | isUuidV4       | `string`                | `UuidV4`                                         |  |
 | isUuidV5       | `string`                | `UuidV5`                                         |  |
+| isUuidV7       | `string`                | `UuidV7`                                         |  |
 | assertUuid     | `string`                | `UuidV1 \| UuidV3 \| UuidV4 \| UuidV5 \| UuidV7` |        |
 | assertUuidV1   | `string`                | `UuidV5`                                         |        |
 | assertUuidV3   | `string`                | `UuidV3`                                         |        |
@@ -401,10 +402,10 @@ ESM individual imports are tracked by a
 
 | Scenario                               | Size (compressed) |
 |----------------------------------------|------------------:|
-| Import `isPlainObject`                 |             ~ 56b |
+| Import `isPlainObject`                 |            ~ 100b |
 | Import `isUuid`                        |            ~ 175b |
 | Import `isEan13`                       |            ~ 117b |
-| All typeguards, assertions and helpers |            ~ 900b |
+| All typeguards, assertions and helpers |           ~ 1700b |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/assert@latest).
 
