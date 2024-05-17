@@ -1,9 +1,11 @@
+import isPlainObj from 'is-plain-obj';
+
 import { isPlainObject } from '../object.guards';
 
 describe('Object typeguards tests', () => {
   describe('isPlainObject', () => {
     const str = 'key';
-    it.each([
+    const cases = [
       [{}, true],
       [Object.create(null), true],
       [{ 1: 'cool' }, true],
@@ -64,8 +66,17 @@ describe('Object typeguards tests', () => {
       // Template literals
       [`cool`, false],
       [String.raw`rawtemplate`, false],
-    ])('when "%s" is given, should return %s', (v, expected) => {
+    ] as const;
+    it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
       expect(isPlainObject(v)).toStrictEqual(expected);
+    });
+    describe('Compatibility with is-plain-obj', () => {
+      it.each(cases)(
+        'compat when "%s" is given, should return %s',
+        (v, expected) => {
+          expect(isPlainObject(v)).toBe(isPlainObj(v));
+        }
+      );
     });
   });
 });
