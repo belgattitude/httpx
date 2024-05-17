@@ -63,11 +63,11 @@ jobs:
 
       - name: 🕵️ Typecheck
         if: matrix.node-version == '20.x'
-        run: yarn nx run-many --target=typecheck --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=typecheck --exclude='examples/**' --exclude='bench/**' --exclude='docs'
 
       - name: 🔬 ESLint checks
         if: matrix.node-version == '20.x'
-        run: yarn nx run-many --target=lint --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --target=lint --exclude='examples/**' --exclude='bench/**' --exclude='docs'
 
       - name: 🧪 Unit tests (no-coverage - node !== 20.x)
         if: matrix.node-version != '20.x'

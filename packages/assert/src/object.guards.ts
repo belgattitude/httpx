@@ -5,14 +5,13 @@ export const isPlainObject = <
 >(
   v: unknown
 ): v is PlainObject<TValue> => {
-  if (v === null || typeof v !== 'object') {
+  if (!v || typeof v !== 'object') {
     return false;
   }
+
   const proto = Object.getPrototypeOf(v) as typeof Object.prototype | null;
   return (
-    (proto === null ||
-      proto === Object.prototype ||
-      Object.getPrototypeOf(proto) === null) &&
+    (proto === null || proto === Object.prototype) &&
     // https://stackoverflow.com/a/76387885/5490184
     !(Symbol.toStringTag in v) &&
     !(Symbol.iterator in v)

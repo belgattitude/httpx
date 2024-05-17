@@ -33,6 +33,11 @@ export default defineConfig({
         isolate: false, // perf+++
       },
     },
+    benchmark: {
+      // reporters: [],
+      outputFile: './bench/benchmark-results.md',
+    },
+
     environment: 'node',
     exclude: [
       '**/node_modules/**',
