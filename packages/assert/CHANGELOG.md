@@ -1,5 +1,15 @@
 # @httpx/assert
 
+## 0.11.0
+
+### Minor Changes
+
+- [#1217](https://github.com/belgattitude/httpx/pull/1217) [`da8474c`](https://github.com/belgattitude/httpx/commit/da8474c55b0a5ae876c0fdff5d7d7e0b237b4ab2) Thanks [@belgattitude](https://github.com/belgattitude)! - @httpx/assert - drop node 16
+
+- [#1217](https://github.com/belgattitude/httpx/pull/1217) [`da8474c`](https://github.com/belgattitude/httpx/commit/da8474c55b0a5ae876c0fdff5d7d7e0b237b4ab2) Thanks [@belgattitude](https://github.com/belgattitude)! - Small perf for isPlainObject and add benchmark
+
+- [`ad7345f`](https://github.com/belgattitude/httpx/commit/ad7345f38026516106eb057d4e8210b94e98bf2d) Thanks [@belgattitude](https://github.com/belgattitude)! - Drop "official" support for node 16 and typesript < 5
+
 ## 0.10.3
 
 ### Patch Changes

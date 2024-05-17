@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.8.0
+
+### Minor Changes
+
+- [`ad7345f`](https://github.com/belgattitude/httpx/commit/ad7345f38026516106eb057d4e8210b94e98bf2d) Thanks [@belgattitude](https://github.com/belgattitude)! - Drop "official" support for node 16 and typesript < 5
+
 ## 1.7.1
 
 ### Patch Changes
