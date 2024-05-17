@@ -34,7 +34,7 @@ If applicable:
 ## Local scripts
 
 | Name                         | Description                                                                                                                           |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
 | `yarn g:changeset`           | Add a changeset to declare a new version                                                                                              |
 | `yarn g:typecheck`           | Run typechecks in all workspaces                                                                                                      |
 | `yarn g:lint`                | Display linter issues in all workspaces                                                                                               |
@@ -45,6 +45,7 @@ If applicable:
 | `yarn g:check-dist`          | Ensure build dist files passes es2017 (run `g:build` first).                                                                          |
 | `yarn g:check-size`          | Ensure build files are within size limit (run `g:build` first).                                                                       |
 | `yarn g:docgen`              | Build documentation (generally api doc)                                                                                               |
+| `yarn g:bench-dist`          | Run benchmarks                                                                                                                        |
 | `yarn clean:global-cache`    | Clean tooling caches (eslint, jest...)                                                                                                |
 | `yarn deps:check --dep dev`  | Will print what packages can be upgraded globally (see also [.ncurc.yml](https://github.com/belgattitude/httpx/blob/main/.ncurc.yml)) |
 | `yarn deps:update --dep dev` | Apply possible updates (run `yarn install && yarn dedupe` after)                                                                      |
