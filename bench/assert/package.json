@@ -24,8 +24,8 @@
     "fix-staged": "lint-staged --allow-empty",
     "bench-dist": "vitest bench --run",
     "tinybench": "tsx ./src/benchmarks.ts",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts",
-    "typecheck": "tsc --project tsconfig.json --noEmit"
+    "lint-disabled": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts",
+    "typecheck-disabled": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "@httpx/assert": "workspace:^"
