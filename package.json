@@ -10,6 +10,7 @@
   "repository": "belgattitude/httpx",
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn workspaces foreach --all -pv run clean",
+    "g:bench": "yarn nx run-many --output-style=static --target=bench --exclude='examples/**' --exclude='docs'",
     "g:build": "yarn nx affected --output-style=static --target=build --exclude='examples/**' --exclude='docs'",
     "g:build-release": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build-release",
     "g:build-packages": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build",
@@ -44,6 +45,7 @@
     "prettier:format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"**/*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
   },
   "workspaces": [
+    "bench/*",
     "docs",
     "examples/*",
     "integrations/*",
