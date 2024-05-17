@@ -54,7 +54,7 @@
       "cache": true
     },
     "bench-dist": {
-      "dependsOn": [],
+      "dependsOn": ["bench-dist"],
       "inputs": ["default", "^public"],
       "outputs": [],
       "cache": false

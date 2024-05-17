@@ -10,9 +10,19 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     pool: 'forks',
+    deps: {
+      optimizer: {
+        web: {
+          enabled: false,
+        },
+        ssr: {
+          enabled: false,
+        },
+      },
+    },
     benchmark: {
-      // reporters: [],
-      outputFile: './bench/benchmark-results.md',
+      reporters: ['default'],
+      outputJson: './bench/benchmark-results.json',
     },
     environment: 'node',
     exclude: [

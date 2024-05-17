@@ -6,12 +6,12 @@ import { Bench } from 'tinybench';
 const bench = new Bench({ time: 1000 });
 
 const realLifeScenarios = [
-  ...Array.from({ length: 80 }).fill({}),
+  ...Array.from({ length: 70 }).map((_) => ({ a: Math.random() })),
+  ...Array.from({ length: 10 }).fill(new Map()),
   ...Array.from({ length: 5 }).fill(null),
   // eslint-disable-next-line unicorn/no-useless-undefined
   ...Array.from({ length: 5 }).fill(undefined),
-  ...Array.from({ length: 5 }).fill('str'),
-  ...Array.from({ length: 5 }).fill(new Map()),
+  ...Array.from({ length: 10 }).fill('str'),
 ];
 const { plainObject } = is;
 bench

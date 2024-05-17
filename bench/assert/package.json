@@ -27,9 +27,11 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts",
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
+  "dependencies": {
+    "@httpx/assert": "workspace:^"
+  },
   "devDependencies": {
     "@belgattitude/eslint-config-bases": "5.8.0",
-    "@httpx/assert": "0.10.3",
     "@sindresorhus/is": "6.3.1",
     "@types/lodash-es": "4.17.12",
     "cross-env": "7.0.3",
@@ -37,6 +39,7 @@
     "eslint": "8.57.0",
     "is-plain-obj": "4.1.0",
     "lodash-es": "4.17.21",
+    "moderndash": "3.11.1",
     "rimraf": "5.0.7",
     "tsx": "4.10.4",
     "type-fest": "4.18.2",

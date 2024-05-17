@@ -369,7 +369,7 @@ __metadata:
   resolution: "@bench/assert@workspace:bench/assert"
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:5.8.0"
-    "@httpx/assert": "npm:0.10.3"
+    "@httpx/assert": "workspace:^"
     "@sindresorhus/is": "npm:6.3.1"
     "@types/lodash-es": "npm:4.17.12"
     cross-env: "npm:7.0.3"
@@ -377,6 +377,7 @@ __metadata:
     eslint: "npm:8.57.0"
     is-plain-obj: "npm:4.1.0"
     lodash-es: "npm:4.17.21"
+    moderndash: "npm:3.11.1"
     rimraf: "npm:5.0.7"
     tsx: "npm:4.10.4"
     type-fest: "npm:4.18.2"
@@ -1196,13 +1197,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@httpx/assert@npm:0.10.3":
-  version: 0.10.3
-  resolution: "@httpx/assert@npm:0.10.3"
-  checksum: 10/f48f967f30aaabd4aa856d637ed87bb94efac1b6d07babf55ea62732f567a154e6ad7d1a37242ec974a0863dbf75970789ea08dd91570584c0a2f278e50209fc
-  languageName: node
-  linkType: hard
-
 "@httpx/assert@workspace:^, @httpx/assert@workspace:packages/assert":
   version: 0.0.0-use.local
   resolution: "@httpx/assert@workspace:packages/assert"
@@ -1221,6 +1215,7 @@ __metadata:
     esbuild: "npm:0.21.3"
     esbuild-plugin-file-path-extensions: "npm:2.1.0"
     eslint: "npm:8.57.0"
+    is-plain-obj: "npm:4.1.0"
     npm-run-all2: "npm:6.2.0"
     rimraf: "npm:5.0.7"
     rollup: "npm:4.17.2"
@@ -5692,9 +5687,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.773
-  resolution: "electron-to-chromium@npm:1.4.773"
-  checksum: 10/d2e6b7bb2f6e2018a7caf0e3854124853826e1a0e675a55d55b2f18b0f7c9d96f665a7c2155d40a35f0da73cd946679c9411c6f20d6f829418f02ee8eaed11a5
+  version: 1.4.774
+  resolution: "electron-to-chromium@npm:1.4.774"
+  checksum: 10/1424a1d4c89b498eaa02146ed89d79b3d9536b8c745753433b1f8b9ed12cc701aa3528e87a86c6c07ac4e35490dc1c44a3955408274a32d1446fbb56a0cffc2d
   languageName: node
   linkType: hard
 
@@ -7825,6 +7820,13 @@ __metadata:
   dependencies:
     lru-cache: "npm:^10.0.1"
   checksum: 10/8f085df8a4a637d995f357f48b1e3f6fc1f9f92e82b33fb406415b5741834ed431a510a09141071001e8deea2eee43ce72786463e2aa5e5a70db8648c0eedeab
+  languageName: node
+  linkType: hard
+
+"hotscript@npm:1.0.13":
+  version: 1.0.13
+  resolution: "hotscript@npm:1.0.13"
+  checksum: 10/c384f44965c8481877f65dacaf1b7162e71ee0b54f5b4a7c28afa7c19e3233fdace3ae61de50984986cf150c392143b577314d30affdbd87e80a394b4042618f
   languageName: node
   linkType: hard
 
@@ -10563,6 +10565,15 @@ __metadata:
     pkg-types: "npm:^1.1.0"
     ufo: "npm:^1.5.3"
   checksum: 10/a52f17767f1aa8133ad4354065e579c3d1cc72e866102bde7e466123772f5e571327b95ce777d1d655724f0c479a82acaafc6e81e25781851779d865682c8823
+  languageName: node
+  linkType: hard
+
+"moderndash@npm:3.11.1":
+  version: 3.11.1
+  resolution: "moderndash@npm:3.11.1"
+  dependencies:
+    hotscript: "npm:1.0.13"
+  checksum: 10/5c791957e9285ac6601d31f05774e8dced8f1259d68f8cb5c5e6746bdb604d2a081ac1bd662395d677c982615495fde430f1a35e6723dabd2efab5855885240d
   languageName: node
   linkType: hard
 
