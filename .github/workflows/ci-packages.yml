@@ -87,7 +87,7 @@ jobs:
 
       - name: 🧪 Unit tests (edge-runtime)
         if: matrix.node-version == '20.x'
-        run: yarn nx run-many --target=test-unit-edge --exclude='examples/**' --exclude='docs'
+        run: yarn nx run-many --parallel=1 --target=test-unit-edge --exclude='examples/**' --exclude='docs'
 
       - name: 🏗 Build packages
         run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
