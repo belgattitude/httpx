@@ -1274,7 +1274,7 @@ __metadata:
     browserslist: "npm:4.23.0"
     browserslist-to-esbuild: "npm:2.1.1"
     cross-env: "npm:7.0.3"
-    es-check: "npm:7.1.1"
+    es-check: "npm:7.2.1"
     esbuild: "npm:0.21.3"
     esbuild-plugin-file-path-extensions: "npm:2.1.1"
     eslint: "npm:8.57.0"
@@ -1309,7 +1309,7 @@ __metadata:
     browserslist: "npm:4.23.0"
     browserslist-to-esbuild: "npm:2.1.1"
     cross-env: "npm:7.0.3"
-    es-check: "npm:7.1.1"
+    es-check: "npm:7.2.1"
     esbuild: "npm:0.21.3"
     eslint: "npm:8.57.0"
     npm-run-all2: "npm:6.2.0"
@@ -1344,7 +1344,7 @@ __metadata:
     browserslist: "npm:4.23.0"
     browserslist-to-esbuild: "npm:2.1.1"
     cross-env: "npm:7.0.3"
-    es-check: "npm:7.1.1"
+    es-check: "npm:7.2.1"
     esbuild: "npm:0.21.3"
     eslint: "npm:8.57.0"
     npm-run-all2: "npm:6.2.0"
@@ -1380,7 +1380,7 @@ __metadata:
     browserslist: "npm:4.23.0"
     browserslist-to-esbuild: "npm:2.1.1"
     cross-env: "npm:7.0.3"
-    es-check: "npm:7.1.1"
+    es-check: "npm:7.2.1"
     esbuild: "npm:0.21.3"
     eslint: "npm:8.57.0"
     npm-run-all2: "npm:6.2.0"
@@ -3619,16 +3619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:8.8.2":
-  version: 8.8.2
-  resolution: "acorn@npm:8.8.2"
-  bin:
-    acorn: bin/acorn
-  checksum: 10/b4e77d56d24d3e11a45d9ac8ae661b4e14a4af04ae33edbf1e6bf910887e5bb352cc60e9ea06a0944880e6b658f58c095d3b54e88e1921cb9319608b51085dd7
-  languageName: node
-  linkType: hard
-
-"acorn@npm:^8.0.0, acorn@npm:^8.11.3, acorn@npm:^8.7.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
+"acorn@npm:8.11.3, acorn@npm:^8.0.0, acorn@npm:^8.11.3, acorn@npm:^8.7.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
   version: 8.11.3
   resolution: "acorn@npm:8.11.3"
   bin:
@@ -4719,13 +4710,6 @@ __metadata:
   version: 2.0.3
   resolution: "comma-separated-tokens@npm:2.0.3"
   checksum: 10/e3bf9e0332a5c45f49b90e79bcdb4a7a85f28d6a6f0876a94f1bb9b2bfbdbbb9292aac50e1e742d8c0db1e62a0229a106f57917e2d067fca951d81737651700d
-  languageName: node
-  linkType: hard
-
-"commander@npm:10.0.0":
-  version: 10.0.0
-  resolution: "commander@npm:10.0.0"
-  checksum: 10/a4fc6d79b44fd87f6c5fbbdfc8d10fa8b33e1676ae170356419b9e06faf802899fae03a3b151c2e6a18047885ca42d2b70e0a94d4e5042edb948100848d43f91
   languageName: node
   linkType: hard
 
@@ -5932,18 +5916,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-check@npm:7.1.1":
-  version: 7.1.1
-  resolution: "es-check@npm:7.1.1"
+"es-check@npm:7.2.1":
+  version: 7.2.1
+  resolution: "es-check@npm:7.2.1"
   dependencies:
-    acorn: "npm:8.8.2"
-    commander: "npm:10.0.0"
-    fast-glob: "npm:^3.2.12"
+    acorn: "npm:8.11.3"
+    commander: "npm:12.0.0"
+    fast-glob: "npm:^3.3.2"
     supports-color: "npm:^8.1.1"
-    winston: "npm:^3.8.2"
+    winston: "npm:3.13.0"
   bin:
     es-check: index.js
-  checksum: 10/768d2dd636e78a8bda6db87a7d8e76604d0294daafcd4b9644909792fba6045a1945c5531f24ded17aca4c90cffb5601543776841fff25516d377c61f4facd8c
+  checksum: 10/0354be9a0a03793985b33a6ea6238e67ad6879a165f3e52c9bca5c42684654040575bf3ab7736b2b19a83697227bd311123379c3f39dd84703d024738dae0194
   languageName: node
   linkType: hard
 
@@ -6898,7 +6882,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.5, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
+"fast-glob@npm:^3.2.5, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -11962,7 +11946,7 @@ __metadata:
     browserslist: "npm:4.23.0"
     browserslist-to-esbuild: "npm:2.1.1"
     cross-env: "npm:7.0.3"
-    es-check: "npm:7.1.1"
+    es-check: "npm:7.2.1"
     esbuild: "npm:0.21.3"
     eslint: "npm:8.57.0"
     npm-run-all2: "npm:6.2.0"
@@ -15207,7 +15191,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"winston@npm:^3.8.2":
+"winston@npm:3.13.0":
   version: 3.13.0
   resolution: "winston@npm:3.13.0"
   dependencies:
