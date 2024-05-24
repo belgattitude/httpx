@@ -47,14 +47,10 @@ export function assertParsableStrictIsoDateZ(
   let check: 'INVALID_FORMAT' | 'INVALID_DATE' | true | null = null;
   if (typeof v !== 'string') {
     check = null;
-  } else if (
-    v.length === 24 &&
-    isoDateTimeZRegexp.test(v.toLocaleUpperCase())
-  ) {
+  } else if (v.length === 24 && isoDateTimeZRegexp.test(v)) {
     try {
-      const d = new Date(v);
       check =
-        d.toISOString().toLocaleLowerCase() === v.toLocaleLowerCase()
+        new Date(v).toISOString().toUpperCase() === v.toUpperCase()
           ? true
           : 'INVALID_DATE';
     } catch {

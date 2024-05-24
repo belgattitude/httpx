@@ -35,16 +35,11 @@ export const isParsableSafeInt = (v: unknown): v is ParsableSafeInt => {
 export const isParsableStrictIsoDateZ = (
   v: unknown
 ): v is ParsableStrictIsoDateZ => {
-  if (
-    !isStringNonEmpty(v) ||
-    v.length !== 24 ||
-    !isoDateTimeZRegexp.test(v.toLocaleUpperCase())
-  ) {
+  if (!isStringNonEmpty(v) || v.length !== 24 || !isoDateTimeZRegexp.test(v)) {
     return false;
   }
   try {
-    const d = new Date(v);
-    return d.toISOString().toLowerCase() === v.toLowerCase();
+    return new Date(v).toISOString().toUpperCase() === v.toUpperCase();
   } catch {
     return false;
   }
