@@ -16,19 +16,10 @@ describe('isPlainObject', async () => {
   const is = await import('@sindresorhus/is').then((mod) => mod.default);
   const isPlainObj = await import('is-plain-obj').then((mod) => mod.default);
   const lodash = await import('lodash-es').then((mod) => mod.default);
-  const moderndash = await import('moderndash').then(
-    (mod) => mod.isPlainObject
-  );
 
-  bench('@httpx/assert:    `isPlainObject(v)`', () => {
+  bench('@httpx/assert: `isPlainObject(v)`', () => {
     for (const value of realLifeScenarios) {
       const _v8 = httpxIsPlainObject(value);
-    }
-  });
-
-  bench('@sindresorhus/is: `is.plainObject(v)`', () => {
-    for (const value of realLifeScenarios) {
-      const _v8 = is.plainObject(value);
     }
   });
 
@@ -38,15 +29,15 @@ describe('isPlainObject', async () => {
     }
   });
 
-  bench('lodash-es: `_.isPlainObject(v)`', () => {
+  bench('@sindresorhus/is: `is.plainObject(v)`', () => {
     for (const value of realLifeScenarios) {
-      const _v8 = lodash.isPlainObject(value);
+      const _v8 = is.plainObject(value);
     }
   });
 
-  bench.skip('(not compliant !) moderndash: `isPlainObject(v)`', () => {
+  bench('lodash-es: `_.isPlainObject(v)`', () => {
     for (const value of realLifeScenarios) {
-      const _v8 = moderndash(value);
+      const _v8 = lodash.isPlainObject(value);
     }
   });
 });
