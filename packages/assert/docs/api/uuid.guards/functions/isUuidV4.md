@@ -1,8 +1,8 @@
-[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.1**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.11.0](../../README.md) / [uuid.guards](../README.md) / isUuidV4
+[@httpx/assert v0.12.1](../../README.md) / [uuid.guards](../README.md) / isUuidV4
 
 # Function: isUuidV4()
 
@@ -18,4 +18,4 @@
 
 ## Source
 
-[uuid.guards.ts:35](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/uuid.guards.ts#L35)
+[uuid.guards.ts:35](https://github.com/belgattitude/httpx/blob/9af23c30700a45e9eb95108b7ac53f133f16092b/packages/assert/src/uuid.guards.ts#L35)

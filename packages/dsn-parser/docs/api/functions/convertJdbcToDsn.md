@@ -1,8 +1,8 @@
-[**@httpx/dsn-parser v1.7.1**](../README.md) • **Docs**
+[**@httpx/dsn-parser v1.8.0**](../README.md) • **Docs**
 
 ***
 
-[@httpx/dsn-parser v1.7.1](../README.md) / convertJdbcToDsn
+[@httpx/dsn-parser v1.8.0](../README.md) / convertJdbcToDsn
 
 # Function: convertJdbcToDsn()
 

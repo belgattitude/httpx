@@ -1,8 +1,8 @@
-[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.1**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.11.0](../../README.md) / [types.asserts](../README.md) / assertNeverNoThrow
+[@httpx/assert v0.12.1](../../README.md) / [types.asserts](../README.md) / assertNeverNoThrow
 
 # Function: assertNeverNoThrow()
 
@@ -21,4 +21,4 @@ will return the value. Typechecks are still enforced.
 
 ## Source
 
-[types.asserts.ts:24](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/types.asserts.ts#L24)
+[types.asserts.ts:24](https://github.com/belgattitude/httpx/blob/9af23c30700a45e9eb95108b7ac53f133f16092b/packages/assert/src/types.asserts.ts#L24)

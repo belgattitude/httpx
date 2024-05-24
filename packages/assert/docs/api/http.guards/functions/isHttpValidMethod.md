@@ -1,8 +1,8 @@
-[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.1**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.11.0](../../README.md) / [http.guards](../README.md) / isHttpValidMethod
+[@httpx/assert v0.12.1](../../README.md) / [http.guards](../README.md) / isHttpValidMethod
 
 # Function: isHttpValidMethod()
 
@@ -21,4 +21,4 @@ a case-insensitive manner.
 
 ## Source
 
-[http.guards.ts:8](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/http.guards.ts#L8)
+[http.guards.ts:8](https://github.com/belgattitude/httpx/blob/9af23c30700a45e9eb95108b7ac53f133f16092b/packages/assert/src/http.guards.ts#L8)

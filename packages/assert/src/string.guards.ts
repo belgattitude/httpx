@@ -25,7 +25,7 @@ export const isParsableSafeInt = (v: unknown): v is ParsableSafeInt => {
  * Format is 'YYYY-MM-DDTHH:mm:ss.sssZ'. Datetime is checked for validity.
  *
  * ```typescript
- * isStrParsableIsoDateZ('2023-12-29T23:37:31.653z')
+ * isParsableStrictIsoDateZ('2023-12-29T23:37:31.653z')
  * ```
  *
  * @link https://en.wikipedia.org/wiki/ISO_8601

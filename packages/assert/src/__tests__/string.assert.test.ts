@@ -5,7 +5,7 @@ import {
 } from '../string.asserts';
 
 describe('string assertions tests', () => {
-  describe('assertStrParsableStrictIsoDateZ', () => {
+  describe('assertParsableStrictIsoDateZ', () => {
     it('should not throw when value is valid', () => {
       expect(() =>
         assertParsableStrictIsoDateZ(new Date().toISOString())
@@ -28,7 +28,7 @@ describe('string assertions tests', () => {
       expect(() => assertParsableStrictIsoDateZ(v)).toThrow(new TypeError(msg));
     });
   });
-  describe('assertStrParsableSafeInt', () => {
+  describe('assertParsableSafeInt', () => {
     it('should not throw when value is valid', () => {
       expect(() => assertParsableSafeInt('10')).not.toThrow();
     });

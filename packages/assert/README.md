@@ -292,11 +292,11 @@ assertStringNonEmpty(''); // 👉 throws
 
 
 ```typescript
-import { assertStrParsableSafeInt, isStrParsableSafeInt } from '@httpx/assert';
+import { assertParsableSafeInt, isParsableSafeInt } from '@httpx/assert';
 
-isStrParsableSafeInt(2); // 👉 false
-isStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}`); // 👉 true
-assertStrParsableSafeInt(`${Number.MAX_SAFE_INTEGER}1`); // 👉 throws
+isParsableSafeInt(2); // 👉 false
+isParsableSafeInt(`${Number.MAX_SAFE_INTEGER}`); // 👉 true
+assertParsableSafeInt(`${Number.MAX_SAFE_INTEGER}1`); // 👉 throws
 ```
 
 #### isParsableStrictIsoDateZ

@@ -1,8 +1,8 @@
-[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.1**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.11.0](../../README.md) / [http.consts](../README.md) / httpMethods
+[@httpx/assert v0.12.1](../../README.md) / [http.consts](../README.md) / httpMethods
 
 # Variable: httpMethods
 
@@ -10,4 +10,4 @@
 
 ## Source
 
-[http.consts.ts:1](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/http.consts.ts#L1)
+[http.consts.ts:1](https://github.com/belgattitude/httpx/blob/9af23c30700a45e9eb95108b7ac53f133f16092b/packages/assert/src/http.consts.ts#L1)

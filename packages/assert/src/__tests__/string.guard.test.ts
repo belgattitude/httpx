@@ -25,7 +25,7 @@ describe('Typeguards string tests', () => {
       expect(isParsableStrictIsoDateZ(v)).toBe(expected);
     });
   });
-  describe('isStrParsableSafeInt', () => {
+  describe('isParsableSafeInt', () => {
     it.each([
       [true, '123'],
       [true, `${Number.MAX_SAFE_INTEGER}`],

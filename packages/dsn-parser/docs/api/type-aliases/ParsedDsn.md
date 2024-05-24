@@ -1,8 +1,8 @@
-[**@httpx/dsn-parser v1.7.1**](../README.md) • **Docs**
+[**@httpx/dsn-parser v1.8.0**](../README.md) • **Docs**
 
 ***
 
-[@httpx/dsn-parser v1.7.1](../README.md) / ParsedDsn
+[@httpx/dsn-parser v1.8.0](../README.md) / ParsedDsn
 
 # Type alias: ParsedDsn
 
