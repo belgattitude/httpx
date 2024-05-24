@@ -10,9 +10,15 @@ describe('isPlainObject', async () => {
     ...Array.from({ length: 10 }).fill('str'),
   ];
 
-  const httpxIsPlainObject = await import('@httpx/assert').then(
-    (mod) => mod.isPlainObject
-  );
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore to apply benchmarks assert must be built
+  const httpxIsPlainObject: (_v) => boolean = await import('@httpx/assert')
+    .then((mod) => mod.isPlainObject)
+    .catch((e) => {
+      throw new Error(
+        'Comparative benchmarks requires httpx/assert to be built (yarn build)'
+      );
+    });
   const is = await import('@sindresorhus/is').then((mod) => mod.default);
   const isPlainObj = await import('is-plain-obj').then((mod) => mod.default);
   const lodash = await import('lodash-es').then((mod) => mod.default);
