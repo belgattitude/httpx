@@ -21,6 +21,10 @@ export default defineConfig({
     typecheck: {
       enabled: false,
     },
+    benchmark: {
+      reporters: ['default'],
+      outputJson: './bench/output/benchmark-results.json',
+    },
     pool: 'forks',
     poolOptions: {
       vmThreads: {
@@ -33,11 +37,6 @@ export default defineConfig({
         isolate: false, // perf+++
       },
     },
-    benchmark: {
-      // reporters: [],
-      outputFile: './bench/benchmark-results.md',
-    },
-
     environment: 'node',
     exclude: [
       '**/node_modules/**',
