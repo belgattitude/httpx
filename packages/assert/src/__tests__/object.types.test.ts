@@ -49,7 +49,6 @@ describe('object types tests', () => {
       if (!typed) {
         throw new Error('Test code is incorrect');
       }
-      const a = unknownPo;
       assertType<PlainObject>(unknownPo);
       expectTypeOf(unknownPo.key).not.toBeString();
     });

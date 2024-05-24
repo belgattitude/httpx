@@ -10,11 +10,12 @@ describe('isPlainObject', async () => {
     ...Array.from({ length: 10 }).fill('str'),
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore to apply benchmarks assert must be built
   const httpxIsPlainObject: (_v) => boolean = await import('@httpx/assert')
     .then((mod) => mod.isPlainObject)
-    .catch((e) => {
+    .catch((_e) => {
       throw new Error(
         'Comparative benchmarks requires httpx/assert to be built (yarn build)'
       );
