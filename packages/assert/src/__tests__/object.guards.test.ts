@@ -6,7 +6,7 @@ describe('Object typeguards tests', () => {
   describe('isPlainObject', () => {
     const str = 'key';
     function fnWithProto(x: number) {
-      // @ts-expect-error
+      // @ts-expect-error for the sake of testing
       this.x = x;
     }
     function ObjectConstructor() {}
