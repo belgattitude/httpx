@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.12.2
+
+### Patch Changes
+
+- [#1236](https://github.com/belgattitude/httpx/pull/1236) [`08e61f7`](https://github.com/belgattitude/httpx/commit/08e61f7a1ba9da91063d91144191938287f57be7) Thanks [@belgattitude](https://github.com/belgattitude)! - make assertParsableStrictIsoDateZ case insensitive
+
 ## 0.12.1
 
 ### Patch Changes
