@@ -7,7 +7,7 @@ import {
 } from '../string.guards';
 
 describe('Typeguards string tests', () => {
-  describe('isParsableIsoStrictDateZ', () => {
+  describe('isParsableStrictIsoDateZ', () => {
     it.each([
       [true, new Date().toISOString()],
       [true, '2023-12-29T23:37:31.653Z'],
