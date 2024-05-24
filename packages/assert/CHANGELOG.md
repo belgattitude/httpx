@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.12.1
+
+### Patch Changes
+
+- [#1234](https://github.com/belgattitude/httpx/pull/1234) [`19a5292`](https://github.com/belgattitude/httpx/commit/19a52921ba7df6bc1828cf7070d76695b79b4372) Thanks [@belgattitude](https://github.com/belgattitude)! - isPlainObject properly support node:vm.runInNewContex('({})')
+
 ## 0.12.0
 
 ### Minor Changes

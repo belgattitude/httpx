@@ -1,5 +1,12 @@
 # @examples/nextjs-app
 
+## 0.1.76
+
+### Patch Changes
+
+- Updated dependencies [[`19a5292`](https://github.com/belgattitude/httpx/commit/19a52921ba7df6bc1828cf7070d76695b79b4372)]:
+  - @httpx/assert@0.12.1
+
 ## 0.1.75
 
 ### Patch Changes
