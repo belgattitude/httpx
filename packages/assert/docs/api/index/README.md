@@ -1,8 +1,8 @@
-[**@httpx/assert v0.10.2**](../README.md) • **Docs**
+[**@httpx/assert v0.11.0**](../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.10.2](../README.md) / index
+[@httpx/assert v0.11.0](../README.md) / index
 
 # index
 
@@ -53,12 +53,6 @@ Re-exports [ParsableStrictIsoDateZ](../string.types/type-aliases/ParsableStrictI
 ### PlainObject
 
 Re-exports [PlainObject](../object.types/type-aliases/PlainObject.md)
-
-***
-
-### PlainObjectDeepPartialUnknown
-
-Re-exports [PlainObjectDeepPartialUnknown](../object.types/type-aliases/PlainObjectDeepPartialUnknown.md)
 
 ***
 

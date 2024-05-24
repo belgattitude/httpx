@@ -1,16 +1,20 @@
-[**@httpx/assert v0.10.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.10.2](../../README.md) / [object.guards](../README.md) / isPlainObject
+[@httpx/assert v0.11.0](../../README.md) / [object.guards](../README.md) / isPlainObject
 
 # Function: isPlainObject()
 
-> **isPlainObject**\<`TValue`\>(`v`): `v is PlainObjectDeepPartialUnknown<TValue>`
+> **isPlainObject**\<`TValue`\>(`v`): `v is TValue extends UnspecifiedPlainObjectType ? BasePlainObject : PlainObject<TValue>`
+
+Check if a value is a plain object
+
+An object is plain if it's created by either {}, new Object(), or Object.create(null).
 
 ## Type parameters
 
-• **TValue** *extends* `Record`\<`string`, `unknown`\> = `Record`\<`string`, `unknown`\>
+• **TValue** *extends* `Record`\<`string`, `unknown`\> = [`UnspecifiedPlainObjectType`](../../object.internal.types/type-aliases/UnspecifiedPlainObjectType.md)
 
 ## Parameters
 
@@ -18,8 +22,28 @@
 
 ## Returns
 
-`v is PlainObjectDeepPartialUnknown<TValue>`
+`v is TValue extends UnspecifiedPlainObjectType ? BasePlainObject : PlainObject<TValue>`
+
+## Example
+
+```typescript
+isPlainObject({ key: 'value' });       // 👈 ✅ true
+isPlainObject({ key: new Date() });    // 👈 ✅ true
+isPlainObject(new Object());           // 👈 ✅ true
+isPlainObject(Object.create(null));    // 👈 ✅ true
+isPlainObject({nested: { key: true} }  // 👈 ✅ true
+
+class Test { };
+
+isPlainObject(new Test())              // 👈 ❌ false
+isPlainObject(10);                     // 👈 ❌ false
+isPlainObject(null);                   // 👈 ❌ false
+isPlainObject('hello');                // 👈 ❌ false
+isPlainObject([]);                     // 👈 ❌ false
+isPlainObject(new Date());             // 👈 ❌ false
+isPlainObject(Math);                   // 👈 ❌ false
+(...)
 
 ## Source
 
-[object.guards.ts:3](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/object.guards.ts#L3)
+[object.guards.ts:31](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/object.guards.ts#L31)

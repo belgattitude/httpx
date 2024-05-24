@@ -1,50 +1,100 @@
-import { assertType } from 'vitest';
+import { assertType, expect, expectTypeOf } from 'vitest';
 
 import { assertPlainObject } from '../object.asserts';
 import { isPlainObject } from '../object.guards';
-import type {
-  PlainObject,
-  PlainObjectDeepPartialUnknown,
-} from '../object.types';
+import type { PlainObjectDeepPartialUnknown } from '../object.internal.types';
+import type { PlainObject } from '../object.types';
 
 describe('object types tests', () => {
-  describe('isPlainObject', () => {
-    it('should return a type PlainObject compatible with object', () => {
-      const po = {};
-      assertPlainObject(po);
-      assertType<PlainObject>(po);
-      assertType<Record<string | number, unknown>>(po);
-    });
+  describe('assertPlainObject', () => {
+    describe('when no generic is given', () => {
+      it('should return a type PlainObject compatible Record<string, unknown>', () => {
+        const unknownPo = {
+          key: 'value',
+        } as unknown;
 
-    it('should return a type PlainObject with shaped values', () => {
+        // @ts-expect-error ensure our plain object is unknown
+        const _notInferrable1 = unknownPo.key;
+        // @ts-expect-error ensure our plain object is unknown
+        const _notInferrable2 = unknownPo.invalidKey;
+
+        // act
+        assertPlainObject(unknownPo);
+
+        // Now the type is Record<string, unknown>, javascript allows to retrieve it
+        // even if it doesn't exist. The value should be undefined|unknown
+        const invalidKeyIsUnknown = unknownPo.invalidKey;
+        expect(invalidKeyIsUnknown).toBe(undefined);
+        // when removing the nullable (undefined) from the union
+        expectTypeOf(invalidKeyIsUnknown).toBeUnknown();
+
+        const unknownPo2 = unknownPo;
+        unknownPo2.key;
+
+        assertType<PlainObject>(unknownPo);
+        assertType<Record<string, unknown>>(unknownPo);
+        expectTypeOf(unknownPo.key).not.toBeString();
+        expectTypeOf(unknownPo.key).not.toBeString();
+      });
+    });
+  });
+
+  describe('isPlainObject', () => {
+    it(`should not make any assumptions when the value isn't statically known`, () => {
+      const unknownPo = {
+        key: 'value',
+      } as unknown;
+      const typed = isPlainObject(unknownPo);
+      // eslint-disable-next-line jest/no-conditional-in-test
+      if (!typed) {
+        throw new Error('Test code is incorrect');
+      }
+      const a = unknownPo;
+      assertType<PlainObject>(unknownPo);
+      expectTypeOf(unknownPo.key).not.toBeString();
+    });
+    it(`should preserve typings if value is statically known`, () => {
+      const knownPo = {
+        key: 'value',
+      };
+      const typed = isPlainObject(knownPo);
+      // eslint-disable-next-line jest/no-conditional-in-test
+      if (!typed) {
+        throw new Error('Test code is incorrect');
+      }
+      assertType<PlainObject>(knownPo);
+      expectTypeOf(knownPo.key).toBeString();
+    });
+    it('should offer convenience typings when a type is given', () => {
       type CustomType = {
         name: string;
         deep: {
           yes: boolean | null;
         };
       };
-      const po = {
+      const unknownPo = {
         name: 'hello',
         deep: {
           yes: true,
         },
       } as unknown;
-      const typed = isPlainObject<CustomType>(po);
+      const typed = isPlainObject<CustomType>(unknownPo);
       // eslint-disable-next-line jest/no-conditional-in-test
       if (!typed) {
         throw new Error('Test code is incorrect');
       }
-      assertType<PlainObject<CustomType>>(po);
-      assertType<Record<string | number, unknown>>(po);
-      assertType<object | undefined>(po?.deep);
-      assertType<unknown>(po?.deep?.yes);
+      assertType<PlainObject<CustomType>>(unknownPo);
+      assertType<Record<string, unknown>>(unknownPo);
+      assertType<object | undefined>(unknownPo?.deep);
+      assertType<unknown>(unknownPo?.deep?.yes);
+      expectTypeOf(unknownPo.name).not.toBeString();
     });
 
     it('should return a type PlainObject with shaped non null | undefined values', () => {
       type DeepCustomType = {
         id: number;
         requiredDeep: {
-          id: number;
+          idReq: number;
         };
         data?: {
           test: string[];
@@ -58,7 +108,7 @@ describe('object types tests', () => {
       const po = {
         id: 1,
         requiredDeep: {
-          id: 1,
+          idReq: 1,
         },
         data: {
           attributes: {
@@ -74,13 +124,16 @@ describe('object types tests', () => {
       }
       assertType<PlainObject>(po);
       assertType<PlainObject<DeepCustomType>>(po);
+      assertType<Record<string, unknown>>(po);
+      assertType<Record<number, unknown>>(po);
       assertType<Record<string | number, unknown>>(po);
       assertType<PlainObjectDeepPartialUnknown<DeepCustomType>>(po);
       expectTypeOf(po?.data).not.toBeUnknown();
       expectTypeOf(po?.data?.attributes).not.toBeUnknown();
       expectTypeOf(po?.data?.attributes?.url).toBeUnknown();
+      expectTypeOf(po?.data?.attributes?.url).not.toBeString();
       expectTypeOf(po?.id).toBeUnknown();
-      expectTypeOf(po?.requiredDeep?.id).toBeUnknown();
+      expectTypeOf(po?.requiredDeep?.idReq).toBeUnknown();
     });
   });
 });

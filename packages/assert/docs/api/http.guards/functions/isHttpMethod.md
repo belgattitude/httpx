@@ -1,8 +1,8 @@
-[**@httpx/assert v0.10.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.10.2](../../README.md) / [http.guards](../README.md) / isHttpMethod
+[@httpx/assert v0.11.0](../../README.md) / [http.guards](../README.md) / isHttpMethod
 
 # Function: isHttpMethod()
 
@@ -24,4 +24,4 @@
 
 ## Source
 
-[http.guards.ts:15](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/http.guards.ts#L15)
+[http.guards.ts:15](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/http.guards.ts#L15)

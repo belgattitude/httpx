@@ -1,8 +1,8 @@
-[**@httpx/assert v0.10.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.10.2](../../README.md) / [number.guards](../README.md) / isNumberSafeInt
+[@httpx/assert v0.11.0](../../README.md) / [number.guards](../README.md) / isNumberSafeInt
 
 # Function: isNumberSafeInt()
 
@@ -18,4 +18,4 @@
 
 ## Source
 
-[number.guards.ts:3](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/number.guards.ts#L3)
+[number.guards.ts:3](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/number.guards.ts#L3)

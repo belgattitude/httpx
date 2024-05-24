@@ -176,14 +176,39 @@ switch(state) {
 | isPlainObject\<T?\>     | `PlainObject` |         |
 | assertPlainObject\<T?\> | `PlainObject` |         |
 
+> Inspired and compatible with [is-plain-obj](https://github.com/sindresorhus/is-plain-obj). Check the [test file](https://github.com/belgattitude/httpx/blob/main/packages/assert/src/__tests__/object.guards.test.ts)
+
 ```typescript
 
 import { isPlainObject, assertPlainObject } from '@httpx/assert';
 
 // Simple case: without generic value
-isPlainObject({cwol: true}); // 👈 true
-isPlainObject(new Promise()); // 👈 false
-assertPlainObject({});
+isPlainObject({ });                     // 👈 ✅ true
+isPlainObject({ key: 'value' });        // 👈 ✅ true
+isPlainObject({ key: new Date() });     // 👈 ✅ true
+isPlainObject(new Object());            // 👈 ✅ true
+isPlainObject(Object.create(null));     // 👈 ✅ true
+isPlainObject({nested: { key: true} }); // 👈 ✅ true
+
+class Test { };
+
+isPlainObject(new Test())               // 👈 ❌ false
+isPlainObject(10);                      // 👈 ❌ false
+isPlainObject(null);                    // 👈 ❌ false
+isPlainObject('hello');                 // 👈 ❌ false
+isPlainObject([]);                      // 👈 ❌ false
+isPlainObject(new Date());              // 👈 ❌ false
+isPlainObject(Math);                    // 👈 ❌ false
+// (... see test file)
+
+assertPlainObject({})                  // 👈 ✅ true
+
+```
+
+#### Usage with generic
+
+```typescript
+import { isPlainObject, assertPlainObject } from '@httpx/assert';
 
 // With generic value (unchecked at runtime!)
 type CustomType = {
@@ -203,6 +228,8 @@ if (isPlainObject<CustomType>(value)) {
   // Notice it's a deep partial to allow autocompletion
   value?.deep?.yes; // 👈  yes will be unknown to reflect that no runtime check was done
 }
+
+assertPlainObject<CustomType>(value);
 ```
 
 ### Number related

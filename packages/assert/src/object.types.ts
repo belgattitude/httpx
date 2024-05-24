@@ -1,9 +1,13 @@
-export type PlainObjectDeepPartialUnknown<T> = {
-  [P in keyof T]?: NonNullable<T[P]> extends Record<string, unknown>
-    ? PlainObjectDeepPartialUnknown<NonNullable<T[P]>>
-    : unknown;
-};
+import type {
+  BasePlainObject,
+  PlainObjectDeepPartialUnknown,
+  PlainObjectKey,
+  UnspecifiedPlainObjectType,
+} from './object.internal.types';
+import type { Simplify } from './types/internal.types';
 
 export type PlainObject<
-  TValue extends Record<string, unknown> = Record<string, unknown>,
-> = PlainObjectDeepPartialUnknown<TValue>;
+  TValue extends BasePlainObject = UnspecifiedPlainObjectType,
+> = TValue extends UnspecifiedPlainObjectType
+  ? Record<PlainObjectKey, unknown>
+  : Simplify<PlainObjectDeepPartialUnknown<TValue>>;

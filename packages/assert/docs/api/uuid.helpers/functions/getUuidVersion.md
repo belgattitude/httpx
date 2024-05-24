@@ -1,8 +1,8 @@
-[**@httpx/assert v0.10.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.10.2](../../README.md) / [uuid.helpers](../README.md) / getUuidVersion
+[@httpx/assert v0.11.0](../../README.md) / [uuid.helpers](../README.md) / getUuidVersion
 
 # Function: getUuidVersion()
 
@@ -20,4 +20,4 @@ Adapted from https://github.com/uuidjs/uuid/blob/main/src/version.js
 
 ## Source
 
-[uuid.helpers.ts:7](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/uuid.helpers.ts#L7)
+[uuid.helpers.ts:7](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/uuid.helpers.ts#L7)
