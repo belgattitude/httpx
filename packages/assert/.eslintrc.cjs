@@ -34,6 +34,14 @@ module.exports = {
   ],
   overrides: [
     {
+      files: ['bench/**/*.bench.ts'],
+      rules: {
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-return': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+      },
+    },
+    {
       files: ['src/**/*.ts'],
       rules: {
         'import-x/no-extraneous-dependencies': [

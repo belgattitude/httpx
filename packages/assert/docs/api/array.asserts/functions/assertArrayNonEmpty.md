@@ -1,8 +1,8 @@
-[**@httpx/assert v0.10.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.10.2](../../README.md) / [array.asserts](../README.md) / assertArrayNonEmpty
+[@httpx/assert v0.11.0](../../README.md) / [array.asserts](../README.md) / assertArrayNonEmpty
 
 # Function: assertArrayNonEmpty()
 
@@ -30,4 +30,4 @@ TypeError
 
 ## Source
 
-[array.asserts.ts:10](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/array.asserts.ts#L10)
+[array.asserts.ts:10](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/array.asserts.ts#L10)

@@ -1,8 +1,8 @@
-[**@httpx/assert v0.10.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.11.0**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.10.2](../../README.md) / [string.asserts](../README.md) / assertParsableSafeInt
+[@httpx/assert v0.11.0](../../README.md) / [string.asserts](../README.md) / assertParsableSafeInt
 
 # Function: assertParsableSafeInt()
 
@@ -20,4 +20,4 @@
 
 ## Source
 
-[string.asserts.ts:28](https://github.com/belgattitude/httpx/blob/9872a04f73c192beff5f4b4d63a156ff5269c00c/packages/assert/src/string.asserts.ts#L28)
+[string.asserts.ts:28](https://github.com/belgattitude/httpx/blob/87fb49862cf7e06acc8e0c35f7b115413ff3c6fe/packages/assert/src/string.asserts.ts#L28)

@@ -1,10 +1,40 @@
+import type {
+  BasePlainObject,
+  UnspecifiedPlainObjectType,
+} from './object.internal.types';
 import type { PlainObject } from './object.types';
 
+/**
+ * Check if a value is a plain object
+ *
+ * An object is plain if it's created by either {}, new Object(), or Object.create(null).
+ *
+ * @example
+ * ```typescript
+ * isPlainObject({ key: 'value' });       // 👈 ✅ true
+ * isPlainObject({ key: new Date() });    // 👈 ✅ true
+ * isPlainObject(new Object());           // 👈 ✅ true
+ * isPlainObject(Object.create(null));    // 👈 ✅ true
+ * isPlainObject({nested: { key: true} }  // 👈 ✅ true
+ *
+ * class Test { };
+ *
+ * isPlainObject(new Test())              // 👈 ❌ false
+ * isPlainObject(10);                     // 👈 ❌ false
+ * isPlainObject(null);                   // 👈 ❌ false
+ * isPlainObject('hello');                // 👈 ❌ false
+ * isPlainObject([]);                     // 👈 ❌ false
+ * isPlainObject(new Date());             // 👈 ❌ false
+ * isPlainObject(Math);                   // 👈 ❌ false
+ * (...)
+ */
 export const isPlainObject = <
-  TValue extends Record<string, unknown> = Record<string, unknown>,
+  TValue extends Record<string, unknown> = UnspecifiedPlainObjectType,
 >(
   v: unknown
-): v is PlainObject<TValue> => {
+): v is TValue extends UnspecifiedPlainObjectType
+  ? BasePlainObject
+  : PlainObject<TValue> => {
   if (!v || typeof v !== 'object') {
     return false;
   }

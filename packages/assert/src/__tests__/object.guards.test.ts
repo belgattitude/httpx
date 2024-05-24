@@ -5,31 +5,47 @@ import { isPlainObject } from '../object.guards';
 describe('Object typeguards tests', () => {
   describe('isPlainObject', () => {
     const str = 'key';
-    const cases = [
+    function fnWithProto(x: number) {
+      // @ts-expect-error for the sake of testing
+      this.x = x;
+    }
+    function ObjectConstructor() {}
+    ObjectConstructor.prototype.constructor = Object;
+
+    const validPlainObjects = [
       [{}, true],
       [Object.create(null), true],
-      [{ 1: 'cool' }, true],
-      [{ name: 'seb' }, true],
-      [{ [str]: 'seb' }, true],
+      [new Object({ key: 'new_object' }), true],
+      [new Object({ key: new Date() }), true],
+      [{ 1: 'integer_key' }, true],
+      [{ name: 'string_key' }, true],
+      [{ [str]: 'dynamic_string_key' }, true],
       [{ [Symbol('tag')]: 'value' }, true],
-      [{ children: [{ test: 1 }], name: 'deep-plain' }, true],
+      [{ children: [{ key: 'deep-children' }], name: 'deep-plain' }, true],
       [
-        { children: [{ test: new Date() }], name: 'deep-with-regular-object' },
+        { children: [{ key: new Date() }], name: 'deep-with-regular-object' },
         true,
       ],
       [{ constructor: { name: 'Object2' } }, true],
       [JSON.parse('{}'), true],
-      // ############ Rejected #############################
+      [new Proxy({}, {}), true],
+      [new Proxy({ key: 'proxied_key' }, {}), true],
+    ] as const;
+
+    const invalidPlainObjects = [
       ['hello', false],
       [false, false],
       [undefined, false],
       [null, false],
       [10, false],
+      [[], false],
       [Number.NaN, false],
       // functions and objects
       [() => 'cool', false],
       [new (class Cls {})(), false],
+      [new Intl.Locale('en'), false],
       [new (class extends Object {})(), false],
+      [fnWithProto, false],
       // Symbols
       [Symbol('cool'), false],
       [
@@ -51,6 +67,7 @@ describe('Object typeguards tests', () => {
       [JSON, false],
       [Math, false],
       [Atomics, false],
+      [JSON, false],
       // built-in classes
       [new Date(), false],
       [new Map(), false],
@@ -63,17 +80,30 @@ describe('Object typeguards tests', () => {
       [/(\d+)/, false],
       // eslint-disable-next-line prefer-regex-literals
       [new RegExp('/d+/'), false],
+      [/d+/, false],
       // Template literals
       [`cool`, false],
       [String.raw`rawtemplate`, false],
+      // @ts-expect-error to allow testing crafted object
+      [new ObjectConstructor(), false],
+      [
+        new Proxy(new Date(), {
+          get(target, _prop, _receiver) {
+            return target;
+          },
+        }),
+        false,
+      ],
     ] as const;
+
+    const cases = [...validPlainObjects, ...invalidPlainObjects] as const;
     it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
       expect(isPlainObject(v)).toStrictEqual(expected);
     });
     describe('Compatibility with is-plain-obj', () => {
       it.each(cases)(
         'compat when "%s" is given, should return %s',
-        (v, expected) => {
+        (v, _expected) => {
           expect(isPlainObject(v)).toBe(isPlainObj(v));
         }
       );

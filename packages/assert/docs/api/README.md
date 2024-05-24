@@ -1,8 +1,8 @@
-**@httpx/assert v0.10.2** • **Docs**
+**@httpx/assert v0.11.0** • **Docs**
 
 ***
 
-# @httpx/assert v0.10.2
+# @httpx/assert v0.11.0
 
 ## Modules
 
@@ -25,6 +25,7 @@
 - [number.types](number.types/README.md)
 - [object.asserts](object.asserts/README.md)
 - [object.guards](object.guards/README.md)
+- [object.internal.types](object.internal.types/README.md)
 - [object.types](object.types/README.md)
 - [string.asserts](string.asserts/README.md)
 - [string.guards](string.guards/README.md)
