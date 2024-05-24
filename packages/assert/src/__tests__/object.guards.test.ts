@@ -109,4 +109,18 @@ describe('Object typeguards tests', () => {
       );
     });
   });
+  describe('Support node:vm.runInNewContext', () => {
+    const isNodeLike = typeof window === 'undefined';
+    it.skipIf(!isNodeLike)('should support vm', async () => {
+      // eslint-disable-next-line import-x/no-nodejs-modules
+      const runInNewContext = await import('node:vm').then(
+        (mod) => mod.runInNewContext
+      );
+      // Needs to update to eslint-plugin-vitest
+      // eslint-disable-next-line jest/no-standalone-expect
+      expect(isPlainObject(runInNewContext('({})'))).toBe(true);
+      // eslint-disable-next-line jest/no-standalone-expect
+      expect(isPlainObj(runInNewContext('({})'))).toBe(true);
+    });
+  });
 });

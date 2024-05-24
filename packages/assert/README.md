@@ -189,6 +189,7 @@ isPlainObject({ key: new Date() });     // 👈 ✅ true
 isPlainObject(new Object());            // 👈 ✅ true
 isPlainObject(Object.create(null));     // 👈 ✅ true
 isPlainObject({nested: { key: true} }); // 👈 ✅ true
+isPlainObject(runInNewContext('({})')); // 👈 ✅ true
 
 class Test { };
 

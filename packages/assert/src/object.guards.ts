@@ -35,13 +35,15 @@ export const isPlainObject = <
 ): v is TValue extends UnspecifiedPlainObjectType
   ? BasePlainObject
   : PlainObject<TValue> => {
-  if (!v || typeof v !== 'object') {
+  if (v === null || typeof v !== 'object') {
     return false;
   }
 
   const proto = Object.getPrototypeOf(v) as typeof Object.prototype | null;
   return (
-    (proto === null || proto === Object.prototype) &&
+    (proto === null ||
+      proto === Object.prototype ||
+      Object.getPrototypeOf(proto) === null) &&
     // https://stackoverflow.com/a/76387885/5490184
     !(Symbol.toStringTag in v) &&
     !(Symbol.iterator in v)
