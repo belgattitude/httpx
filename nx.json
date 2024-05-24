@@ -53,8 +53,8 @@
       "outputs": ["{workspaceRoot}/.cache/eslint/*.eslintcache"],
       "cache": true
     },
-    "bench-dist": {
-      "dependsOn": ["bench-dist"],
+    "bench": {
+      "dependsOn": ["^build", "^bench"],
       "inputs": ["default", "^public"],
       "outputs": [],
       "cache": false
