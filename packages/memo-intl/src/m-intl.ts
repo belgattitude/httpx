@@ -2,8 +2,9 @@ type CacheKey = string;
 
 type IntlLocale = string; // `${string}-${string}`;
 
+const _cacheNumberFormat = new Map<CacheKey, Intl.NumberFormat>();
+
 export class MIntl {
-  private static _cache: Map<CacheKey, Intl.NumberFormat>;
   /**
    * Return a memoized Intl.NumberFormatter instance
    *
@@ -26,15 +27,12 @@ export class MIntl {
     options?: Intl.NumberFormatOptions
   ): Intl.NumberFormat => {
     const key = JSON.stringify({ locale, options: options ?? null });
-    if (!MIntl._cache) {
-      MIntl._cache = new Map<CacheKey, Intl.NumberFormat>();
+    if (!_cacheNumberFormat.has(key)) {
+      _cacheNumberFormat.set(key, new Intl.NumberFormat(locale, options));
     }
-    if (!MIntl._cache.has(key)) {
-      MIntl._cache.set(key, new Intl.NumberFormat(locale, options));
-    }
-    return MIntl._cache.get(key)!;
+    return _cacheNumberFormat.get(key)!;
   };
   static resetCache = (): void => {
-    MIntl._cache = new Map();
+    _cacheNumberFormat.clear();
   };
 }

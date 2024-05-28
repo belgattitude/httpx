@@ -22,13 +22,8 @@ $ pnpm add @httpx/memo-intl
 
 ## Features
 
-- 👉&nbsp; Parse individual fields (ie: `driver`, `user`, `password`, `host`...)
-- 🖖&nbsp; Handle query string parameters and converts to boolean and numeric values.
-- 🦄&nbsp; Handle [special characters like](#why--in-password-matters) `/`, `:`... in the password (some libs won't).
-- 🚀&nbsp; Error with indicative message / reasons (discriminated union or throwable).
-- 🛡️&nbsp; Don't leak passwords in the error message.
-- 🙏&nbsp; Assertion and typeguard helpers
-- 🤗&nbsp; Ecosystem friendly (ie: [zod integration](#zod-integration-example)).
+- 👉&nbsp; Fast memoization for Intl objects (help to not inadvertently create 1000's of instances).
+- 🖖&nbsp; Lightweight: less than 500b compressed.
 
 ## Documentation
 
@@ -44,8 +39,11 @@ const formattedPrice = MIntl.NumberFormat('fr-FR', {
    notation: 'compact',
    minimumFractionDigits: 2,
 }).format(row.price);
+```
 
+## Benchmarks
 
+```
 ```
 
 ## Compatibility
