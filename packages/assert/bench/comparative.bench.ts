@@ -4,13 +4,18 @@ import * as v from 'valibot';
 import { bench, describe } from 'vitest';
 import { z } from 'zod';
 
+/**
+ * Based on a hypothesis:
+ * `isPlainObject` is called 70% of the time with valid plain objects,
+ * 10% with maps, 5% with strings, 10% with null and 5% with undefined.
+ */
 const realLifeScenarios = [
   ...Array.from({ length: 70 }).map((_) => ({ a: Math.random() })),
-  ...Array.from({ length: 10 }).fill(new Map()),
-  ...Array.from({ length: 5 }).fill(null),
+  ...Array.from({ length: 10 }).fill(new Map([['key', Math.random()]])),
+  ...Array.from({ length: 10 }).fill(null),
   // eslint-disable-next-line unicorn/no-useless-undefined
   ...Array.from({ length: 5 }).fill(undefined),
-  ...Array.from({ length: 10 }).fill('str'),
+  ...Array.from({ length: 5 }).fill('str'),
 ];
 
 const zodSchema = z.record(z.string(), z.unknown());
@@ -64,13 +69,13 @@ describe(`Compare calling ${realLifeScenarios.length}x isPlainObject with mixed 
 
   bench('valibot: `z.record(z.string(), z.unknown())`', () => {
     for (const value of realLifeScenarios) {
-      v.safeParse(valibotSchema, v);
+      v.safeParse(valibotSchema, value);
     }
   });
 
   bench('typebox: `Type.Record(Type.String(), Type.Unknown()) (check)`', () => {
     for (const value of realLifeScenarios) {
-      Value.Check(typeboxSchema, v);
+      Value.Check(typeboxSchema, value);
     }
   });
 });

@@ -20,31 +20,30 @@ yarn bench
 See the [source](./comparative.bench.ts). 
 
 ```
- # ubuntu 22.04 - node 22.2.0 - i7-10750H @ 2.60 (12 cores)
- 
-
  RUN  v1.6.0 /home/sebastien/github/httpx/packages/assert
 
- ✓ bench/comparative.bench.ts (7) 5009ms
-   ✓ Compare calling 100x isPlainObject with mixed types values (7) 5006ms
-     name                                                                   hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/assert: `isPlainObject(v)`                              760,563.84  0.0012  0.0278  0.0013  0.0013  0.0020  0.0022  0.0023  ±0.05%   380282   fastest
-   · is-plain-obj: `isPlainObj(v)`                                  741,253.19  0.0013  0.2608  0.0013  0.0014  0.0014  0.0014  0.0023  ±0.12%   370627
-   · @sindresorhus/is: `is.plainObject(v)`                          555,593.76  0.0017  0.0236  0.0018  0.0018  0.0019  0.0019  0.0032  ±0.05%   277797
-   · lodash-es: `_.isPlainObject(v)`                                 12,940.86  0.0736  0.3174  0.0773  0.0783  0.0893  0.0984  0.2169  ±0.23%     6471
-   · zod: `z.record(z.string(), z.unknown())`                        21,757.31  0.0286  5.2246  0.0460  0.0307  0.1145  1.6446  1.8782  ±6.68%    10879
-   · valibot: `z.record(z.string(), z.unknown())`                       110.11  8.8403  9.8349  9.0819  9.1548  9.8349  9.8349  9.8349  ±0.57%       56   slowest
-   · typebox: `Type.Record(Type.String(), Type.Unknown()) (check)`      121.96  7.3245  8.7558  8.1995  8.3888  8.7558  8.7558  8.7558  ±0.83%       61
+ ✓ bench/comparative.bench.ts (7) 5260ms
+   ✓ Compare calling 100x isPlainObject with mixed types values (7) 5259ms
+     name                                                                     hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · @httpx/assert: `isPlainObject(v)`                              1,624,732.52  0.0005  3.0035  0.0006  0.0006  0.0008  0.0010  0.0020  ±2.20%   812367   fastest
+   · is-plain-obj: `isPlainObj(v)`                                  1,568,464.19  0.0005  2.8099  0.0006  0.0006  0.0011  0.0013  0.0018  ±1.27%   784233
+   · @sindresorhus/is: `is.plainObject(v)`                            989,109.67  0.0009  5.6676  0.0010  0.0010  0.0013  0.0016  0.0064  ±2.34%   494555
+   · lodash-es: `_.isPlainObject(v)`                                   23,484.30  0.0354  8.6922  0.0426  0.0423  0.0985  0.1348  0.2692  ±3.61%    11743
+   · zod: `z.record(z.string(), z.unknown())`                          13,001.98  0.0431  6.6726  0.0769  0.0506  1.2964  2.4250  3.3169  ±8.02%     6501   slowest
+   · valibot: `z.record(z.string(), z.unknown())`                     215,860.26  0.0028  6.5643  0.0046  0.0043  0.0144  0.0254  0.1483  ±2.91%   107931
+   · typebox: `Type.Record(Type.String(), Type.Unknown()) (check)`     64,709.99  0.0128  2.1646  0.0155  0.0142  0.0363  0.0626  0.2112  ±1.34%    32355
 
 
  BENCH  Summary
 
   @httpx/assert: `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling 100x isPlainObject with mixed types values
-    1.03x faster than is-plain-obj: `isPlainObj(v)`
-    1.37x faster than @sindresorhus/is: `is.plainObject(v)`
-    34.96x faster than zod: `z.record(z.string(), z.unknown())`
-    58.77x faster than lodash-es: `_.isPlainObject(v)`
-    6236.24x faster than typebox: `Type.Record(Type.String(), Type.Unknown()) (check)`
-    6907.38x faster than valibot: `z.record(z.string(), z.unknown())`
+    1.04x faster than is-plain-obj: `isPlainObj(v)`
+    1.64x faster than @sindresorhus/is: `is.plainObject(v)`
+    7.53x faster than valibot: `z.record(z.string(), z.unknown())`
+    25.11x faster than typebox: `Type.Record(Type.String(), Type.Unknown()) (check)`
+    69.18x faster than lodash-es: `_.isPlainObject(v)`
+    124.96x faster than zod: `z.record(z.string(), z.unknown())`
 
+
+ 
 ```
