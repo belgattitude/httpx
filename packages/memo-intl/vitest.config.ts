@@ -1,3 +1,5 @@
+// @ts-expect-error no definition available
+import codspeedPlugin from '@codspeed/vitest-plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
@@ -7,7 +9,12 @@ export default defineConfig({
   esbuild: {
     target: ['node18'],
   },
-  plugins: [tsconfigPaths()],
+
+  plugins: [
+    tsconfigPaths(),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    codspeedPlugin() as unknown as Plugin,
+  ],
   cacheDir: '../../.cache/vite/httpx-dsn-parser',
   test: {
     // @link https://vitest.dev/config/#clearmocks

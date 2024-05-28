@@ -370,14 +370,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/apply-release-plan@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "@changesets/apply-release-plan@npm:7.0.1"
+"@changesets/apply-release-plan@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "@changesets/apply-release-plan@npm:7.0.2"
   dependencies:
     "@babel/runtime": "npm:^7.20.1"
     "@changesets/config": "npm:^3.0.0"
     "@changesets/get-version-range-type": "npm:^0.4.0"
     "@changesets/git": "npm:^3.0.0"
+    "@changesets/should-skip-package": "npm:^0.1.0"
     "@changesets/types": "npm:^6.0.0"
     "@manypkg/get-packages": "npm:^1.1.3"
     detect-indent: "npm:^6.0.0"
@@ -387,21 +388,22 @@ __metadata:
     prettier: "npm:^2.7.1"
     resolve-from: "npm:^5.0.0"
     semver: "npm:^7.5.3"
-  checksum: 10/dc808835a205cc231215e86ab913294f96c37aa5005d77666d3733fc0d815df567b7fb2f8a5d88b51a331bdba245ea6000689fab31e03046445b064113285e8c
+  checksum: 10/2b08aa856897dc34cfe9cf618d648020bc31d4ef814c044e4f461b1bc4243f46c4d82f26cb58075662921c6676494b955348a3c6b3070df6d28f14a256d8b08b
   languageName: node
   linkType: hard
 
-"@changesets/assemble-release-plan@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@changesets/assemble-release-plan@npm:6.0.0"
+"@changesets/assemble-release-plan@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "@changesets/assemble-release-plan@npm:6.0.1"
   dependencies:
     "@babel/runtime": "npm:^7.20.1"
     "@changesets/errors": "npm:^0.2.0"
     "@changesets/get-dependents-graph": "npm:^2.0.0"
+    "@changesets/should-skip-package": "npm:^0.1.0"
     "@changesets/types": "npm:^6.0.0"
     "@manypkg/get-packages": "npm:^1.1.3"
     semver: "npm:^7.5.3"
-  checksum: 10/ffa8d4877f72209d433987bbc67ac3974c7a06ac700036785e0882bc5bc543b7a52d6643e66c155836dc2e4b08b06fe363d058608a9d57c2c37651d7225222ee
+  checksum: 10/950b16612abbd6e621ecc507e05f6d0c933d0b3eb975aa4342a145efbbe0b43d9a2cd55f4f08c2273e206af27fb801bbcf7cf6edb96aa112624ca6bbfdc80eed
   languageName: node
   linkType: hard
 
@@ -425,22 +427,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/cli@npm:2.27.3":
-  version: 2.27.3
-  resolution: "@changesets/cli@npm:2.27.3"
+"@changesets/cli@npm:2.27.4":
+  version: 2.27.4
+  resolution: "@changesets/cli@npm:2.27.4"
   dependencies:
     "@babel/runtime": "npm:^7.20.1"
-    "@changesets/apply-release-plan": "npm:^7.0.1"
-    "@changesets/assemble-release-plan": "npm:^6.0.0"
+    "@changesets/apply-release-plan": "npm:^7.0.2"
+    "@changesets/assemble-release-plan": "npm:^6.0.1"
     "@changesets/changelog-git": "npm:^0.2.0"
     "@changesets/config": "npm:^3.0.0"
     "@changesets/errors": "npm:^0.2.0"
     "@changesets/get-dependents-graph": "npm:^2.0.0"
-    "@changesets/get-release-plan": "npm:^4.0.0"
+    "@changesets/get-release-plan": "npm:^4.0.1"
     "@changesets/git": "npm:^3.0.0"
     "@changesets/logger": "npm:^0.1.0"
     "@changesets/pre": "npm:^2.0.0"
     "@changesets/read": "npm:^0.6.0"
+    "@changesets/should-skip-package": "npm:^0.1.0"
     "@changesets/types": "npm:^6.0.0"
     "@changesets/write": "npm:^0.3.1"
     "@manypkg/get-packages": "npm:^1.1.3"
@@ -463,7 +466,7 @@ __metadata:
     tty-table: "npm:^4.1.5"
   bin:
     changeset: bin.js
-  checksum: 10/eada8044f2ef517137decb26f9094b74370cccea3d8710837218475b149ee376fc3fd72ae25613841059c6f0d8df6946ac6d83938f71350627f14904c365b5b2
+  checksum: 10/4e7bfcac71bbef5ee7930b109089ff93bc68ce4292eb4980381ad6ee0f2c5767317abfda11a19f645f4f8785af9816e823904e03dae00a482698392bfbc6c489
   languageName: node
   linkType: hard
 
@@ -514,18 +517,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/get-release-plan@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@changesets/get-release-plan@npm:4.0.0"
+"@changesets/get-release-plan@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@changesets/get-release-plan@npm:4.0.1"
   dependencies:
     "@babel/runtime": "npm:^7.20.1"
-    "@changesets/assemble-release-plan": "npm:^6.0.0"
+    "@changesets/assemble-release-plan": "npm:^6.0.1"
     "@changesets/config": "npm:^3.0.0"
     "@changesets/pre": "npm:^2.0.0"
     "@changesets/read": "npm:^0.6.0"
     "@changesets/types": "npm:^6.0.0"
     "@manypkg/get-packages": "npm:^1.1.3"
-  checksum: 10/9c893012d7b16e08acf51a76290a38e3bceac6e5421d5482baadf09e04db30c9159738580bd0695d33d51d9a30d4a72bf186f48785ea653f956397457afa44a5
+  checksum: 10/50e69e9f9e21a297145b6964da539f7febd766569263ed3af572f909496aaf8159d1c05b2f856b389874553df5dd357a127adf079cb310cf614358f97ce68da7
   languageName: node
   linkType: hard
 
@@ -599,6 +602,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@changesets/should-skip-package@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@changesets/should-skip-package@npm:0.1.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.20.1"
+    "@changesets/types": "npm:^6.0.0"
+    "@manypkg/get-packages": "npm:^1.1.3"
+  checksum: 10/3c966feae085a41d4ce10a46a1b525f980cec59951f7cf23ea805866b370de5c75fdd45af326e1a5ef502fa4846f821d9df15550c2b606b96e99ed4b967f01c0
+  languageName: node
+  linkType: hard
+
 "@changesets/types@npm:^4.0.1":
   version: 4.1.0
   resolution: "@changesets/types@npm:4.1.0"
@@ -623,6 +637,30 @@ __metadata:
     human-id: "npm:^1.0.2"
     prettier: "npm:^2.7.1"
   checksum: 10/13b9284e8cb9c55456b62fe4b8e27ab615e46b0214e1a62194afd4ecb33f5e6617478e01b031209d16348e01c7bce5a37cb18afe688c81d98f3657d7c40cc2c9
+  languageName: node
+  linkType: hard
+
+"@codspeed/core@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@codspeed/core@npm:3.1.0"
+  dependencies:
+    axios: "npm:^1.4.0"
+    find-up: "npm:^6.3.0"
+    form-data: "npm:^4.0.0"
+    node-gyp-build: "npm:^4.6.0"
+  checksum: 10/e071b04ecd36aafd27c7c574bcab7ec6e491db8707318ee5a9ddff4bd870eba1c252a487d491b20aa37f90a35e2230e5b03210513259317b2afaa1780f3bcb41
+  languageName: node
+  linkType: hard
+
+"@codspeed/vitest-plugin@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@codspeed/vitest-plugin@npm:3.1.0"
+  dependencies:
+    "@codspeed/core": "npm:^3.1.0"
+  peerDependencies:
+    vite: ^4.2.0 || ^5.0.0
+    vitest: ">=1.2.2"
+  checksum: 10/97651ead915ada07eddb5124cd0d5efd96db37ea90d5950956a6fe201f2c489a41229b366f908a33f629730bc90ce03bd888a20521ba3adb15f2aae79cf28008
   languageName: node
   linkType: hard
 
@@ -1139,7 +1177,7 @@ __metadata:
     cross-env: "npm:7.0.3"
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.3"
-    happy-dom: "npm:14.11.0"
+    happy-dom: "npm:14.11.2"
     ky: "npm:1.2.4"
     next: "npm:14.2.3"
     pino: "npm:9.1.0"
@@ -1150,7 +1188,7 @@ __metadata:
     superjson: "npm:2.2.1"
     tailwindcss: "npm:3.4.3"
     typescript: "npm:5.4.5"
-    vite: "npm:5.2.11"
+    vite: "npm:5.2.12"
     vite-plugin-svgr: "npm:4.2.0"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:1.6.0"
@@ -1178,6 +1216,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@belgattitude/eslint-config-bases": "npm:5.9.0"
+    "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@sinclair/typebox": "npm:0.32.31"
     "@sindresorhus/is": "npm:6.3.1"
@@ -1203,10 +1242,10 @@ __metadata:
     tsup: "npm:8.0.2"
     type-fest: "npm:4.18.3"
     typedoc: "npm:0.25.13"
-    typedoc-plugin-markdown: "npm:4.0.2"
+    typedoc-plugin-markdown: "npm:4.0.3"
     typescript: "npm:5.4.5"
     valibot: "npm:0.30.0"
-    vite: "npm:5.2.11"
+    vite: "npm:5.2.12"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:1.6.0"
     webpack: "npm:5.91.0"
@@ -1220,6 +1259,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@belgattitude/eslint-config-bases": "npm:5.9.0"
+    "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@size-limit/file": "npm:11.1.4"
     "@size-limit/webpack": "npm:11.1.4"
@@ -1237,9 +1277,9 @@ __metadata:
     size-limit: "npm:11.1.4"
     tsup: "npm:8.0.2"
     typedoc: "npm:0.25.13"
-    typedoc-plugin-markdown: "npm:4.0.2"
+    typedoc-plugin-markdown: "npm:4.0.3"
     typescript: "npm:5.4.5"
-    vite: "npm:5.2.11"
+    vite: "npm:5.2.12"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:1.6.0"
     webpack: "npm:5.91.0"
@@ -1252,6 +1292,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@belgattitude/eslint-config-bases": "npm:5.9.0"
+    "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@size-limit/file": "npm:11.1.4"
     "@size-limit/webpack": "npm:11.1.4"
@@ -1275,9 +1316,9 @@ __metadata:
     tsup: "npm:8.0.2"
     tupleson: "npm:0.23.1"
     typedoc: "npm:0.25.13"
-    typedoc-plugin-markdown: "npm:4.0.2"
+    typedoc-plugin-markdown: "npm:4.0.3"
     typescript: "npm:5.4.5"
-    vite: "npm:5.2.11"
+    vite: "npm:5.2.12"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:1.6.0"
     webpack: "npm:5.91.0"
@@ -1290,6 +1331,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@belgattitude/eslint-config-bases": "npm:5.9.0"
+    "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:11.1.4"
@@ -1308,9 +1350,9 @@ __metadata:
     size-limit: "npm:11.1.4"
     tsup: "npm:8.0.2"
     typedoc: "npm:0.25.13"
-    typedoc-plugin-markdown: "npm:4.0.2"
+    typedoc-plugin-markdown: "npm:4.0.3"
     typescript: "npm:5.4.5"
-    vite: "npm:5.2.11"
+    vite: "npm:5.2.12"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:1.6.0"
     webpack: "npm:5.91.0"
@@ -1323,6 +1365,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
     "@belgattitude/eslint-config-bases": "npm:5.9.0"
+    "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@size-limit/file": "npm:11.1.4"
     "@size-limit/webpack": "npm:11.1.4"
@@ -1340,9 +1383,9 @@ __metadata:
     size-limit: "npm:11.1.4"
     tsup: "npm:8.0.2"
     typedoc: "npm:0.25.13"
-    typedoc-plugin-markdown: "npm:4.0.2"
+    typedoc-plugin-markdown: "npm:4.0.3"
     typescript: "npm:5.4.5"
-    vite: "npm:5.2.11"
+    vite: "npm:5.2.12"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:1.6.0"
     webpack: "npm:5.91.0"
@@ -4007,7 +4050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.7.2, axios@npm:^1.6.0":
+"axios@npm:1.7.2, axios@npm:^1.4.0, axios@npm:^1.6.0":
   version: 1.7.2
   resolution: "axios@npm:1.7.2"
   dependencies:
@@ -6984,6 +7027,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"find-up@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "find-up@npm:6.3.0"
+  dependencies:
+    locate-path: "npm:^7.1.0"
+    path-exists: "npm:^5.0.0"
+  checksum: 10/4f3bdc30d41778c647e53f4923e72de5e5fb055157031f34501c5b36c2eb59f77b997edf9cb00165c6060cda7eaa2e3da82cb6be2e61d68ad3e07c4bc4cce67e
+  languageName: node
+  linkType: hard
+
 "find-up@npm:^7.0.0":
   version: 7.0.0
   resolution: "find-up@npm:7.0.0"
@@ -7559,14 +7612,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:14.11.0":
-  version: 14.11.0
-  resolution: "happy-dom@npm:14.11.0"
+"happy-dom@npm:14.11.2":
+  version: 14.11.2
+  resolution: "happy-dom@npm:14.11.2"
   dependencies:
     entities: "npm:^4.5.0"
     webidl-conversions: "npm:^7.0.0"
     whatwg-mimetype: "npm:^3.0.0"
-  checksum: 10/864ffcd723242281e20f0abefbbf1ba90408e612b31f05db6ed018822f1bc1f885345143e5f295c57c627219c76558faabf0e4fe435f42f6ab176e16c8a34ab9
+  checksum: 10/9d1376a84891a7fd710fc167fb5eb88e8af47fe7f7b9955634cd3a68634cf36a3d57bd05f9a0dd56c776a94abbe35038aab2becc584c496970a4a0ae5579a430
   languageName: node
   linkType: hard
 
@@ -7906,7 +7959,7 @@ __metadata:
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:5.9.0"
     "@changesets/changelog-github": "npm:0.5.0"
-    "@changesets/cli": "npm:2.27.3"
+    "@changesets/cli": "npm:2.27.4"
     "@commitlint/cli": "npm:19.3.0"
     "@commitlint/config-conventional": "npm:19.2.2"
     "@types/shell-quote": "npm:1.7.5"
@@ -9182,7 +9235,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"locate-path@npm:^7.2.0":
+"locate-path@npm:^7.1.0, locate-path@npm:^7.2.0":
   version: 7.2.0
   resolution: "locate-path@npm:7.2.0"
   dependencies:
@@ -10868,6 +10921,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-gyp-build@npm:^4.6.0":
+  version: 4.8.1
+  resolution: "node-gyp-build@npm:4.8.1"
+  bin:
+    node-gyp-build: bin.js
+    node-gyp-build-optional: optional.js
+    node-gyp-build-test: build-test.js
+  checksum: 10/b9297770f96a92e5f2b854f3fd5e4bd418df81d7785a81ab60cec5cf2e5e72dc2c3319808978adc572cfa3885e6b12338cb5f4034bed2cab35f0d76a4b75ccdf
+  languageName: node
+  linkType: hard
+
 "node-gyp@npm:latest":
   version: 10.1.0
   resolution: "node-gyp@npm:10.1.0"
@@ -11902,9 +11966,9 @@ __metadata:
     size-limit: "npm:11.1.4"
     tsup: "npm:8.0.2"
     typedoc: "npm:0.25.13"
-    typedoc-plugin-markdown: "npm:4.0.2"
+    typedoc-plugin-markdown: "npm:4.0.3"
     typescript: "npm:5.4.5"
-    vite: "npm:5.2.11"
+    vite: "npm:5.2.12"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:1.6.0"
     webpack: "npm:5.91.0"
@@ -14258,12 +14322,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@npm:4.0.2":
-  version: 4.0.2
-  resolution: "typedoc-plugin-markdown@npm:4.0.2"
+"typedoc-plugin-markdown@npm:4.0.3":
+  version: 4.0.3
+  resolution: "typedoc-plugin-markdown@npm:4.0.3"
   peerDependencies:
     typedoc: 0.25.x
-  checksum: 10/b80af8fed5608e313a9479eecd5e58388ed96d95a1f39e9a64e8dec6a37ea0b8a0d07c026e4f288b9a2465a2fad97ccfc4c725ebe9e06f173b1d47e86af65ec2
+  checksum: 10/ef8eac8e8e614025552426cd265928a46a9eed57da6e5f802e9864924ec7ae99c3d04fb9fd429768cb1e3254ca31577f1b35e60ec6342d79b4229cbe77e6c6d5
   languageName: node
   linkType: hard
 
@@ -14769,9 +14833,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.2.11, vite@npm:^5.0.0":
-  version: 5.2.11
-  resolution: "vite@npm:5.2.11"
+"vite@npm:5.2.12, vite@npm:^5.0.0":
+  version: 5.2.12
+  resolution: "vite@npm:5.2.12"
   dependencies:
     esbuild: "npm:^0.20.1"
     fsevents: "npm:~2.3.3"
@@ -14805,7 +14869,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/ee0ad038f0831c9514796522deb1e2dcb84bc311abbccb77e4b12216d37fc9559137f4f1b8e75187d51007b954e845c6518e36ee3acac2e2a2789c1181ebb16c
+  checksum: 10/c27d3efff93016e8171b6a362f605ad5f78e24086292987097ad4a7382ae78d9e0659065976a13bf7b51ba0f593d675579010692097ef36d8a5cc965f3efec4c
   languageName: node
   linkType: hard
 
