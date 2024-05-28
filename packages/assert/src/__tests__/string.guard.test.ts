@@ -11,15 +11,17 @@ describe('Typeguards string tests', () => {
     it.each([
       [true, new Date().toISOString()],
       [true, '2023-12-29T23:37:31.653Z'],
-      [true, '2023-12-29T23:37:31.653z'],
-      [true, '2023-12-29t23:37:31.653z'],
-      [true, '2500-12-29t23:37:31.653z'], // support for year 2500
-      [true, '1910-12-29t23:37:31.653z'], // support for year below 1910
-      [false, '2100-12-29t25:37:31.653z'], // no support hour 25
-      [false, '2023-02-29T23:37:31.653z'], // no 29/02 in 2023
-      [false, '2023-12-29t23:37:70.653z'], // no support for seconds 70
-      [false, '2023-12-29T23:37:31.653'],
-      [false, '2023-12-29T23:37:31?653z'],
+      [true, '2023-12-29T23:37:31.653z'], // Accept case-insensitive
+      [true, '2023-12-29t23:37:31.653Z'], // Accept case-insensitive
+      [true, '2023-12-29t23:37:31.653z'], // Accept case-insensitive
+      [true, '2023-12-29T23:37:31.653Z'],
+      [true, '2500-12-29T23:37:31.653Z'], // support for year 2500
+      [true, '1910-12-29T23:37:31.653Z'], // support for year below 1910
+      [false, '2100-12-29T25:37:31.653Z'], // no support hour 25
+      [false, '2023-02-29T23:37:31.653Z'], // no 29/02 in 2023
+      [false, '2023-12-29t23:37:70.653Z'], // no support for seconds 70
+      [false, '2023-12-29T23:37:31.653'], // Missing 'Z' suffix
+      [false, '2023-12-29T23:37:31?653Z'], // Invalid character
       [false, 0],
     ])('should return %s when %s(/%s) is given', (expected, v) => {
       expect(isParsableStrictIsoDateZ(v)).toBe(expected);
