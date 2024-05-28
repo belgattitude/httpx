@@ -5,16 +5,17 @@ import { defineConfig } from 'vitest/config';
 
 const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
+const isCodeSpeedEnabled = process.env?.CODSPEED === '1';
+const cspeed = isCodeSpeedEnabled
+  ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    (codspeedPlugin() as unknown as Plugin)
+  : undefined;
+
 export default defineConfig({
   esbuild: {
     target: ['node18'],
   },
-
-  plugins: [
-    tsconfigPaths(),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    codspeedPlugin() as unknown as Plugin,
-  ],
+  plugins: [tsconfigPaths(), ...[cspeed].filter(Boolean)],
   cacheDir: '../../.cache/vite/httpx-dsn-parser',
   test: {
     // @link https://vitest.dev/config/#clearmocks
@@ -27,6 +28,10 @@ export default defineConfig({
     },
     typecheck: {
       enabled: false,
+    },
+    benchmark: {
+      reporters: ['default'],
+      outputJson: './bench/output/benchmark-results.json',
     },
     pool: 'forks',
     poolOptions: {

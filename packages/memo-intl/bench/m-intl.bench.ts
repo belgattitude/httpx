@@ -11,25 +11,33 @@ describe('MIntl benchmarks', () => {
     locale: idx % 2 === 0 ? 'en-US' : 'fr-FR',
   }));
 
-  bench('With memoization `MIntl.NumberFormatter()`', () => {
-    for (const row of arrayMapperScenario) {
-      MIntl.NumberFormat(row.locale, {
-        style: 'currency',
-        currency: row.currency,
-        notation: 'compact',
-        minimumFractionDigits: 2,
-      }).format(row.price);
-    }
-  });
+  bench(
+    'With memoization `MIntl.NumberFormatter()`',
+    () => {
+      for (const row of arrayMapperScenario) {
+        MIntl.NumberFormat(row.locale, {
+          style: 'currency',
+          currency: row.currency,
+          notation: 'compact',
+          minimumFractionDigits: 2,
+        }).format(row.price);
+      }
+    },
+    { time: 1 }
+  );
 
-  bench('Without memoization `new Intl.NumberFormatter()`', () => {
-    for (const row of arrayMapperScenario) {
-      new Intl.NumberFormat(row.locale, {
-        style: 'currency',
-        currency: row.currency,
-        notation: 'compact',
-        minimumFractionDigits: 2,
-      }).format(row.price);
-    }
-  });
+  bench(
+    'Without memoization `new Intl.NumberFormatter()`',
+    () => {
+      for (const row of arrayMapperScenario) {
+        new Intl.NumberFormat(row.locale, {
+          style: 'currency',
+          currency: row.currency,
+          notation: 'compact',
+          minimumFractionDigits: 2,
+        }).format(row.price);
+      }
+    },
+    { time: 1 }
+  );
 });
