@@ -1,21 +1,21 @@
 {
-  "name": "@httpx/json-api",
-  "description": "Basic typescript helpers to work with json-api",
-  "version": "0.5.19",
+  "name": "@httpx/memo-intl",
+  "description": "Memoize intl constructors",
+  "version": "0.0.1",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://github.com/belgattitude/httpx/tree/main/packages/json-api#readme",
+  "homepage": "https://belgattitude.github.io/httpx/memo-intl",
   "repository": {
     "type": "git",
     "url": "https://github.com/belgattitude/httpx.git",
-    "directory": "packages/json-api"
+    "directory": "packages/memo-intl"
   },
   "keywords": [
-    "json-api",
-    "helpers"
+    "intl",
+    "memoize"
   ],
   "sideEffects": false,
   "type": "module",
@@ -44,8 +44,8 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "yarn clean && yarn tsup",
-    "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
+    "build": "run clean && yarn run tsup",
+    "build-release": "run build",
     "bench": "vitest bench --run",
     "bench-watch": "vitest bench",
     "docgen": "run-s docgen-typedoc",
@@ -58,7 +58,7 @@
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/json-api.eslintcache",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/dsn-parser.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
@@ -66,10 +66,7 @@
     "test-unit-watch": "vitest --ui",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-json-api-unit --dir ./coverage"
-  },
-  "dependencies": {
-    "@httpx/exception": "workspace:^"
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-memo-intl-unit --dir ./coverage"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.15.3",
@@ -100,8 +97,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "publishConfig": {
-    "directory": "_release/package"
   }
 }

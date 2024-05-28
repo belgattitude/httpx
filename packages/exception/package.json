@@ -92,6 +92,8 @@
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
     "build-release": "yarn build",
     "build": "run clean && yarn run tsup",
+    "bench": "vitest bench --run",
+    "bench-watch": "vitest bench",
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
