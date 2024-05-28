@@ -56,7 +56,7 @@
     "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
     "check-pub": "attw --pack",
     "check-size": "size-limit",
-    "clean": "rimraf ./dist ./build ./coverage ./_release",
+    "clean": "rimraf ./dist ./build ./coverage ./_release ./.tsup",
     "dev": "tsup --watch",
     "fix-staged": "lint-staged --allow-empty",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/assert.eslintcache",
