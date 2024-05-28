@@ -15,6 +15,7 @@ export default defineConfig({
     coverage: {
       all: true,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
+      exclude: ['**/*.bench.ts'],
       provider: 'istanbul',
       reporter: ['text', 'json', 'clover'],
     },
