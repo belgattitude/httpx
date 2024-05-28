@@ -2,8 +2,9 @@ type CacheKey = string;
 
 type IntlLocale = string; // `${string}-${string}`;
 
-export class MIntl {
-  private static _cache: Map<CacheKey, Intl.NumberFormat>;
+const _cacheNumberFormat = new Map<CacheKey, Intl.NumberFormat>();
+
+export const MIntl = {
   /**
    * Return a memoized Intl.NumberFormatter instance
    *
@@ -21,20 +22,17 @@ export class MIntl {
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
    */
-  static NumberFormat = (
+  NumberFormat: (
     locale: IntlLocale,
     options?: Intl.NumberFormatOptions
   ): Intl.NumberFormat => {
-    const key = JSON.stringify({ locale, options: options ?? null });
-    if (!MIntl._cache) {
-      MIntl._cache = new Map<CacheKey, Intl.NumberFormat>();
+    const key = `${locale}${options === undefined ? '' : JSON.stringify(options)}`;
+    if (_cacheNumberFormat.has(key) === false) {
+      _cacheNumberFormat.set(key, new Intl.NumberFormat(locale, options));
     }
-    if (!MIntl._cache.has(key)) {
-      MIntl._cache.set(key, new Intl.NumberFormat(locale, options));
-    }
-    return MIntl._cache.get(key)!;
-  };
-  static resetCache = (): void => {
-    MIntl._cache = new Map();
-  };
-}
+    return _cacheNumberFormat.get(key)!;
+  },
+  resetCache: (): void => {
+    _cacheNumberFormat.clear();
+  },
+};

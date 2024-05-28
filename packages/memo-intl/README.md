@@ -44,8 +44,25 @@ const formattedPrice = MIntl.NumberFormat('fr-FR', {
    notation: 'compact',
    minimumFractionDigits: 2,
 }).format(row.price);
+```
 
+## Benchmarks
 
+See [bench](./bench/m-intl.bench.ts).
+
+```
+RUN  v1.6.0 /home/sebastien/github/httpx/packages/memo-intl
+
+✓ bench/m-intl.bench.ts (2) 4303ms
+✓ MIntl benchmarks (2) 4301ms
+name                                                  hz     min      max    mean     p75      p99     p995     p999     rme  samples
+· With memoization `MIntl.NumberFormatter()`        117.50  7.4457  14.3255  8.5105  8.8173  14.3255  14.3255  14.3255  ±3.37%       59   fastest
+· Without memoization `new Intl.NumberFormatter()`  4.6488  204.18   236.58  215.11  222.10   236.58   236.58   236.58  ±3.36%       10
+
+BENCH  Summary
+
+With memoization `MIntl.NumberFormatter()` - bench/m-intl.bench.ts > MIntl benchmarks
+25.28x faster than Without memoization `new Intl.NumberFormatter()`
 ```
 
 ## Compatibility
