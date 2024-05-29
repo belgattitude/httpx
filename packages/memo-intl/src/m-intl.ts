@@ -1,8 +1,14 @@
+import QuickLRU from 'quick-lru';
+
 type CacheKey = string;
 
 type IntlLocale = string; // `${string}-${string}`;
 
-const _cacheNumberFormat = new Map<CacheKey, Intl.NumberFormat>();
+const maxSize = 50;
+
+const _cacheNumberFormat = new QuickLRU<CacheKey, Intl.NumberFormat>({
+  maxSize,
+});
 
 export const MIntl = {
   /**
@@ -32,7 +38,7 @@ export const MIntl = {
     }
     return _cacheNumberFormat.get(key)!;
   },
-  resetCache: (): void => {
+  clearCache: (): void => {
     _cacheNumberFormat.clear();
   },
 };

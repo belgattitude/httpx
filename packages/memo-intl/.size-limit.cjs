@@ -7,12 +7,12 @@ module.exports = [
     name: 'Everything (ESM)',
     path: ['dist/index.mjs'],
     import: "*",
-    limit: '0.5KB',
+    limit: '1.20KB',
   },
   {
     name: 'Everything (CJS)',
     import: "*",
     path: ['dist/index.cjs'],
-    limit: '1KB',
+    limit: '1.50KB',
   },
 ];
