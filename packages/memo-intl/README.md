@@ -1,7 +1,6 @@
 # @httpx/memo-intl
 
 LRU-based memoizer for Intl.NumberFormatter and Intl.DateFormatter constructors.
-Don't reacre
 
 [![github](https://img.shields.io/static/v1?label=&message=Github&logo=github&style=for-the-badge&labelColor=444&color=informational)](
 [![npm](https://img.shields.io/npm/v/@httpx/memo-intl?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/memo-intl)
@@ -37,6 +36,8 @@ $ pnpm add @httpx/memo-intl
 
 ## Usage
 
+### MIntl.NumberFormat
+
 ```typescript
 import { MIntl } from '@httpx/memo-intl';
 
@@ -47,6 +48,23 @@ const formattedPrice = MIntl.NumberFormat('fr-FR', {
    notation: 'compact',
    minimumFractionDigits: 2,
 }).format(row.price);
+```
+
+### MIntl.DateTimeFormat
+
+```typescript
+import { MIntl } from '@httpx/memo-intl';
+
+// Notice: `new Intl.DateTimeFormat` vs `MIntl.DateTimeFormat
+const formatter = MIntl.DateTimeFormat('fr-FR', {
+    dateStyle: 'full',
+    timeStyle: 'full',
+});
+const date = Date.parse('2024-05-29T07:42:43.230Z');
+expect(formatter.format(date)).toBe(
+    'mercredi 29 mai 2024 à 09:42:43 heure d’été d’Europe centrale'
+);
+expectTypeOf(formatter).toEqualTypeOf<Intl.DateTimeFormat>();
 ```
 
 ## Benchmarks
