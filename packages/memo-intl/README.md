@@ -69,7 +69,9 @@ expectTypeOf(formatter).toEqualTypeOf<Intl.DateTimeFormat>();
 
 ## Benchmarks
 
-See [bench](./bench/m-intl.bench.ts).
+See [bench](./bench/m-intl.bench.ts) for details. Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx).
+
+[![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
  RUN  v1.6.0 /home/sebastien/github/httpx/packages/memo-intl
@@ -90,22 +92,24 @@ See [bench](./bench/m-intl.bench.ts).
 ## Bundle size
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.size-limit.cjs)
-.
-| Scenario                               | Size (compressed) |
-|----------------------------------------|------------------:|
-| Import `MIntl`                         |           ~ 1.2kB |
 
+| Scenario                               | Size with deps (compressed) |
+|----------------------------------------|----------------------------:|
+| Import `MIntl`                         |                     ~ 1.2kB |
+
+> Note that per-se the library weigths less than 300 bytes, the quick-lru dependency makes the difference.
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/memo-intl@latest).
 
 ## Compatibility
 
-| Level      | CI | Description                                                                                                                                                                                                                                                                                                                                 |
-|------------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node       | ✅  | CI for 18.x, 20.x & 22.x.                                                                                                                                                                                                                                                                                                                   |
+| Level      | CI | Description                                                                                                                                                                                                                                                                                                                              |
+|------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| Node       | ✅  | CI for 18.x, 20.x & 22.x.                                                                                                                                                                                                                                                                                                                |
 | Browsers   | ✅  | [> 96%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Mins to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.browserslistrc) |
-| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                          | 
-| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                               |
-| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                |
+| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                       | 
+| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                            |
+| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                             |
+| Performance| ✅  | Monitored with with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
