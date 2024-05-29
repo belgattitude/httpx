@@ -1,5 +1,11 @@
 # @httpx/memo-intl
 
+## 1.0.0
+
+### Major Changes
+
+- [#1255](https://github.com/belgattitude/httpx/pull/1255) [`a37e9e9`](https://github.com/belgattitude/httpx/commit/a37e9e9335cb6288c0abc72634591ac8d2e654cf) Thanks [@belgattitude](https://github.com/belgattitude)! - Add support for Intl.DateTimeFormatter
+
 ## 0.2.0
 
 ### Minor Changes
