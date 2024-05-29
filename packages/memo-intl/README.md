@@ -1,6 +1,7 @@
 # @httpx/memo-intl
 
-LRU-based memoizer for Intl.NumberFormatter and Intl.DateFormatter constructors.
+LRU-based memoizer for [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) 
+and [Intl.DateFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) constructors.
 
 [![npm](https://img.shields.io/npm/v/@httpx/memo-intl?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/memo-intl)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/CHANGELOG.md)
@@ -23,7 +24,7 @@ $ pnpm add @httpx/memo-intl
 ## Features
 
 - 👉&nbsp; Don't re-create the same Intl instance for the same options (memoized).
-- 👉&nbsp; Keep the Intl api untouched. Just replace `new Intl.NumberFormat` by `MIntl.NumberFormat`.
+- 👉&nbsp; Keep the [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) api untouched. Just replace `new Intl.NumberFormat` by `MIntl.NumberFormat`...
 - 👉&nbsp; Up to 20x faster than non-memoized Intl constructors.
 - 👉&nbsp; Decrease memory and garbage collection pressure.
 - 👉&nbsp; Safe to memory leaks with LRU cache ([quick-lru](https://github.com/sindresorhus/quick-lru)).
