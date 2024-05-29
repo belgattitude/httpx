@@ -2,7 +2,6 @@
 
 LRU-based memoizer for Intl.NumberFormatter and Intl.DateFormatter constructors.
 
-[![github](https://img.shields.io/static/v1?label=&message=Github&logo=github&style=for-the-badge&labelColor=444&color=informational)](
 [![npm](https://img.shields.io/npm/v/@httpx/memo-intl?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/memo-intl)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/CHANGELOG.md)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-memo-intl-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fmemo-intl)
@@ -59,10 +58,11 @@ import { MIntl } from '@httpx/memo-intl';
 const formatter = MIntl.DateTimeFormat('fr-FR', {
     dateStyle: 'full',
     timeStyle: 'full',
+    timeZone: 'UTC'
 });
 const date = Date.parse('2024-05-29T07:42:43.230Z');
 expect(formatter.format(date)).toBe(
-    'mercredi 29 mai 2024 à 09:42:43 heure d’été d’Europe centrale'
+    'mercredi 29 mai 2024 à 07:42:43 temps universel coordonné'
 );
 expectTypeOf(formatter).toEqualTypeOf<Intl.DateTimeFormat>();
 ```

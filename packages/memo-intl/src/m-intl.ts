@@ -49,8 +49,9 @@ export const MIntl = {
    * const formatter = MIntl.DateTimeFormat('fr-FR', {
    *   dateStyle: 'full',
    *   timeStyle: 'full',
+   *   timeZone: 'UTC',
    * });
-   * const value = formatter.format(new Date()); // 👈 '10,13 €'
+   * const value = formatter.format(new Date()); // 👈 'mercredi 29 mai 2024 à 07:42:43 temps universel coordonné'
    * ```
    * </code>
    *

@@ -17,10 +17,11 @@ describe('MIntl tests', () => {
     const formatter = MIntl.DateTimeFormat('fr-FR', {
       dateStyle: 'full',
       timeStyle: 'full',
+      timeZone: 'UTC',
     });
     const date = Date.parse('2024-05-29T07:42:43.230Z');
     expect(formatter.format(date)).toBe(
-      'mercredi 29 mai 2024 à 09:42:43 heure d’été d’Europe centrale'
+      'mercredi 29 mai 2024 à 07:42:43 temps universel coordonné'
     );
     expectTypeOf(formatter).toEqualTypeOf<Intl.DateTimeFormat>();
   });
