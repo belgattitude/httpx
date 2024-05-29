@@ -34,6 +34,17 @@ DSN & JDBC string parser with query params support in a light and modern package
 [![downloads](https://img.shields.io/npm/dm/@httpx/dsn-parser?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/dsn-parser)
 
 
+### [@httpx/memo-intl](https://github.com/belgattitude/httpx/tree/main/packages/memo-intl#readme)
+
+LRU-based memoizer for Intl.NumberFormatter and Intl.DateFormatter constructors.
+
+[![npm](https://img.shields.io/npm/v/@httpx/memo-intl?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/memo-intl)
+[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/CHANGELOG.md)
+[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-memo-intl-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fmemo-intl)
+[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.size-limit.cjs)
+[![downloads](https://img.shields.io/npm/dm/@httpx/memo-intl?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/memo-intl)
+
+
 ## Contributors
 
 Contributions are welcome. Take a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) docs or skip and try

@@ -1,9 +1,9 @@
-**@httpx/memo-intl v0.0.1** • **Docs**
+**@httpx/memo-intl v0.2.0** • **Docs**
 
 ***
 
-# @httpx/memo-intl v0.0.1
+# @httpx/memo-intl v0.2.0
 
-## Classes
+## Variables
 
-- [MIntl](classes/MIntl.md)
+- [MIntl](variables/MIntl.md)
