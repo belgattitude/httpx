@@ -1,6 +1,6 @@
 {
   "name": "@httpx/memo-intl",
-  "description": "Memoize intl constructors",
+  "description": "LRU-based memoizer for Intl constructors.",
   "version": "0.1.0",
   "license": "MIT",
   "author": {
@@ -68,6 +68,9 @@
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-memo-intl-unit --dir ./coverage"
+  },
+  "dependencies": {
+    "quick-lru": "^7.0.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.15.3",

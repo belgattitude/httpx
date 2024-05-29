@@ -1,7 +1,9 @@
 # @httpx/memo-intl
 
-Title
+LRU-based memoizer for Intl.NumberFormatter and Intl.DateFormatter constructors.
+Don't reacre
 
+[![github](https://img.shields.io/static/v1?label=&message=Github&logo=github&style=for-the-badge&labelColor=444&color=informational)](
 [![npm](https://img.shields.io/npm/v/@httpx/memo-intl?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/memo-intl)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/CHANGELOG.md)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-memo-intl-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fmemo-intl)
@@ -22,13 +24,12 @@ $ pnpm add @httpx/memo-intl
 
 ## Features
 
-- 👉&nbsp; Parse individual fields (ie: `driver`, `user`, `password`, `host`...)
-- 🖖&nbsp; Handle query string parameters and converts to boolean and numeric values.
-- 🦄&nbsp; Handle [special characters like](#why--in-password-matters) `/`, `:`... in the password (some libs won't).
-- 🚀&nbsp; Error with indicative message / reasons (discriminated union or throwable).
-- 🛡️&nbsp; Don't leak passwords in the error message.
-- 🙏&nbsp; Assertion and typeguard helpers
-- 🤗&nbsp; Ecosystem friendly (ie: [zod integration](#zod-integration-example)).
+- 👉&nbsp; Don't re-create the same Intl instance for the same options (memoized).
+- 👉&nbsp; Keep the Intl api untouched. Just replace `new Intl.NumberFormat` by `MIntl.NumberFormat`.
+- 👉&nbsp; Up to 20x faster than non-memoized Intl constructors.
+- 👉&nbsp; Decrease memory and garbage collection pressure.
+- 👉&nbsp; Safe to memory leaks with LRU cache ([quick-lru](https://github.com/sindresorhus/quick-lru)).
+- 👉&nbsp; Lightweight. [Node, browser and edge support](#compatibility).
 
 ## Documentation
 
@@ -37,6 +38,8 @@ $ pnpm add @httpx/memo-intl
 ## Usage
 
 ```typescript
+import { MIntl } from '@httpx/memo-intl';
+
 // Notice: `new Intl.NumberFormat` vs `MIntl.NumberFormat`
 const formattedPrice = MIntl.NumberFormat('fr-FR', {
    style: 'currency',
@@ -51,19 +54,30 @@ const formattedPrice = MIntl.NumberFormat('fr-FR', {
 See [bench](./bench/m-intl.bench.ts).
 
 ```
-RUN  v1.6.0 /home/sebastien/github/httpx/packages/memo-intl
+ RUN  v1.6.0 /home/sebastien/github/httpx/packages/memo-intl
 
-✓ bench/m-intl.bench.ts (2) 4303ms
-✓ MIntl benchmarks (2) 4301ms
-name                                                  hz     min      max    mean     p75      p99     p995     p999     rme  samples
-· With memoization `MIntl.NumberFormatter()`        117.50  7.4457  14.3255  8.5105  8.8173  14.3255  14.3255  14.3255  ±3.37%       59   fastest
-· Without memoization `new Intl.NumberFormatter()`  4.6488  204.18   236.58  215.11  222.10   236.58   236.58   236.58  ±3.36%       10
+ ✓ bench/m-intl.bench.ts (2) 3626ms
+   ✓ MIntl benchmarks (2) 3624ms
+     name                                                  hz     min      max    mean     p75      p99     p995     p999     rme  samples
+   · With memoization `MIntl.NumberFormatter()`        108.24  8.6995  10.5676  9.2388  9.8779  10.5676  10.5676  10.5676  ±5.22%       10   fastest
+   · Without memoization `new Intl.NumberFormatter()`  5.0021  192.58   210.78  199.92  201.81   210.78   210.78   210.78  ±1.81%       10
 
-BENCH  Summary
 
-With memoization `MIntl.NumberFormatter()` - bench/m-intl.bench.ts > MIntl benchmarks
-25.28x faster than Without memoization `new Intl.NumberFormatter()`
+ BENCH  Summary
+
+  With memoization `MIntl.NumberFormatter()` - bench/m-intl.bench.ts > MIntl benchmarks
+    21.64x faster than Without memoization `new Intl.NumberFormatter()`
 ```
+
+## Bundle size
+
+Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.size-limit.cjs)
+.
+| Scenario                               | Size (compressed) |
+|----------------------------------------|------------------:|
+| Import `MIntl`                         |           ~ 1.2kB |
+
+> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/memo-intl@latest).
 
 ## Compatibility
 
