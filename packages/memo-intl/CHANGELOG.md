@@ -1,5 +1,11 @@
 # @httpx/memo-intl
 
+## 0.2.0
+
+### Minor Changes
+
+- [#1253](https://github.com/belgattitude/httpx/pull/1253) [`fe460a9`](https://github.com/belgattitude/httpx/commit/fe460a95838470c8439d0e39fe74e38be8fb7c90) Thanks [@belgattitude](https://github.com/belgattitude)! - Add LRU to limit the number of cached instances (50 by default)
+
 ## 0.1.0
 
 ### Minor Changes
