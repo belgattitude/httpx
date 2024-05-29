@@ -70,9 +70,12 @@ expectTypeOf(formatter).toEqualTypeOf<Intl.DateTimeFormat>();
 
 ## Benchmarks
 
-See [bench](./bench/m-intl.bench.ts) for details. Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx).
+Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx).
 
 [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
+
+
+`IntlNumberFormat(locale, options) x 10_000`, see [bench](./bench/m-intl.bench.ts) for details. 
 
 ```
  RUN  v1.6.0 /home/sebastien/github/httpx/packages/memo-intl
@@ -80,8 +83,8 @@ See [bench](./bench/m-intl.bench.ts) for details. Performance is monitored with 
  ✓ bench/m-intl.bench.ts (2) 3626ms
    ✓ MIntl benchmarks (2) 3624ms
      name                                                  hz     min      max    mean     p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.NumberFormatter()`        108.24  8.6995  10.5676  9.2388  9.8779  10.5676  10.5676  10.5676  ±5.22%       10   fastest
-   · Without memoization `new Intl.NumberFormatter()`  5.0021  192.58   210.78  199.92  201.81   210.78   210.78   210.78  ±1.81%       10
+   · With memoization `MIntl.NumberFormat()`        108.24  8.6995  10.5676  9.2388  9.8779  10.5676  10.5676  10.5676  ±5.22%       10   fastest
+   · Without memoization `new Intl.NumberFormat()`  5.0021  192.58   210.78  199.92  201.81   210.78   210.78   210.78  ±1.81%       10
 
 
  BENCH  Summary
@@ -94,9 +97,9 @@ See [bench](./bench/m-intl.bench.ts) for details. Performance is monitored with 
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.size-limit.cjs)
 
-| Scenario                               | Size with deps (compressed) |
-|----------------------------------------|----------------------------:|
-| Import `MIntl`                         |                     ~ 1.2kB |
+| Scenario                                       | Size with deps (compressed) |
+|------------------------------------------------|----------------------------:|
+| `import { MIntl } from '@httpx/memo-intl'      |                     ~ 1.2kB |
 
 > Note that per-se the library weigths less than 300 bytes, the quick-lru dependency makes the difference.
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/memo-intl@latest).
