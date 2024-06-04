@@ -1458,7 +1458,7 @@ __metadata:
     "@size-limit/file": "npm:11.1.4"
     "@size-limit/webpack": "npm:11.1.4"
     "@size-limit/webpack-why": "npm:11.1.4"
-    "@types/node": "npm:20.14.0"
+    "@types/node": "npm:20.14.1"
     "@types/statuses": "npm:2.0.5"
     "@vitest/coverage-istanbul": "npm:1.6.0"
     "@vitest/ui": "npm:1.6.0"
@@ -2990,7 +2990,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.14.0":
+"@types/node@npm:*, @types/node@npm:20.14.1":
+  version: 20.14.1
+  resolution: "@types/node@npm:20.14.1"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 10/1417d9768dccca9491fb5fc41ef0ee9044cef4c86eef413608dd983c30af19d5f0930b356791dde3aec238a6a47bbea42c47b69929b5fe822cf09cd543f6c52f
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:20.14.0":
   version: 20.14.0
   resolution: "@types/node@npm:20.14.0"
   dependencies:
@@ -12195,7 +12204,7 @@ __metadata:
     "@size-limit/file": "npm:11.1.4"
     "@size-limit/webpack": "npm:11.1.4"
     "@size-limit/webpack-why": "npm:11.1.4"
-    "@types/node": "npm:20.14.0"
+    "@types/node": "npm:20.14.1"
     "@vitest/coverage-istanbul": "npm:1.6.0"
     "@vitest/ui": "npm:1.6.0"
     browserslist: "npm:4.23.0"
