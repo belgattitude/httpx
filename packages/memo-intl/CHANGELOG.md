@@ -1,5 +1,11 @@
 # @httpx/memo-intl
 
+## 1.1.0
+
+### Minor Changes
+
+- [#1275](https://github.com/belgattitude/httpx/pull/1275) [`bd35900`](https://github.com/belgattitude/httpx/commit/bd35900b4a57c27f0aa15dd32cd833fcadff23ed) Thanks [@belgattitude](https://github.com/belgattitude)! - Add MIntl.cache to get stats or clear the lru
+
 ## 1.0.0
 
 ### Major Changes
