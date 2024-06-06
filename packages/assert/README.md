@@ -141,6 +141,7 @@ import { HttpBadRequest } from '@httpx/exception';
 
 assertEan13('123', 'Not a barcode'); // 👈 Will throw a TypeError('Not a barcode')
 
+const lang = null;
 assertStringNonEmpty(lang, () => new HttpBadRequest('Missing language'));
 ```
 
@@ -301,9 +302,9 @@ assertParsableSafeInt(`${Number.MAX_SAFE_INTEGER}1`); // 👉 throws
 
 #### isParsableStrictIsoDateZ
 
-Ensure a string contains a strict iso datetime with microseconds and utc suffix
-(aka: zulu time). Date is checked for validity.
-
+Check if a value is a string that contains an ISO-8601 date time in 'YYYY-MM-DDTHH:mm:ss.sssZ'
+format (UTC+0 / time). This check allow the value to be safely passed to `new Date()`or `Date.parse()`
+without parser or timezone mis-interpretations. 'T' and 'Z' checks are done in a case-insensitive way.
 
 | Name                         | Type      | Opaque type              | Comment         |
 |------------------------------|-----------|--------------------------|-----------------|
@@ -313,11 +314,21 @@ Ensure a string contains a strict iso datetime with microseconds and utc suffix
 ```typescript
 import { isParsableStrictIsoDateZ, assertParsableStrictIsoDateZ, type ParsableStrictIsoDateZ } from '@httpx/assert';
 
-isParsableStrictIsoDateZ(new Date().toISOString()); // 👉 true
-isParsableStrictIsoDateZ('2023-12-29T23:37:31.653z'); // 👉 true
-isParsableStrictIsoDateZ('2023-02-29T23:37:31.653'); // 👉 false, cause no 29th february in 2023
+isParsableStrictIsoDateZ(new Date().toISOString());   // ✅ true
+isParsableStrictIsoDateZ('2023-12-28T23:37:31.653Z'); // ✅ true
+isParsableStrictIsoDateZ('2023-12-29T23:37:31.653z'); // ✅ true  (case-insensitive works)
+isParsableStrictIsoDateZ('2023-12-28T23:37:31.653');  // ❌ false (missing 'Z')
+isParsableStrictIsoDateZ('2023-02-29T23:37:31.653Z'); // ❌ false (No 29th february in 2023)
 
-assertParsableStrictIsoDateZ('2023-02-29T23:37:31.653z'); // 👉 throws cause no 29th february
+// assertion
+const dateStr = '2023-12-29T23:37:31.653Z';
+assertParsableStrictIsoDateZ(dateStr, `Invalid date: ${dateStr}`);
+
+// 👉 assertion passed, safe to use -> ParsableStrictIsoDateZ
+const date = new Date(dateStr);
+const timestampNumber = Date.parse(dateStr);
+
+assertParsableStrictIsoDateZ('2023-02-29T23:37:31.653Z'); // 💥 throws cause no 29th february
 ```
 
 ### Uuid

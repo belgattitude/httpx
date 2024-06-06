@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.1**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.1](../../README.md) / [network.asserts](../README.md) / assertNetworkPort
+[@httpx/assert v0.12.2](../../README.md) / [network.asserts](../README.md) / assertNetworkPort
 
 # Function: assertNetworkPort()
 
@@ -24,4 +24,4 @@ TypeError
 
 ## Source
 
-[network.asserts.ts:9](https://github.com/belgattitude/httpx/blob/9af23c30700a45e9eb95108b7ac53f133f16092b/packages/assert/src/network.asserts.ts#L9)
+[network.asserts.ts:9](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/network.asserts.ts#L9)

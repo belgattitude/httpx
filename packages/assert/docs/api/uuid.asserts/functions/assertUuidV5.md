@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.1**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.1](../../README.md) / [uuid.asserts](../README.md) / assertUuidV5
+[@httpx/assert v0.12.2](../../README.md) / [uuid.asserts](../README.md) / assertUuidV5
 
 # Function: assertUuidV5()
 
@@ -26,4 +26,4 @@ TypeError
 
 ## Source
 
-[uuid.asserts.ts:84](https://github.com/belgattitude/httpx/blob/9af23c30700a45e9eb95108b7ac53f133f16092b/packages/assert/src/uuid.asserts.ts#L84)
+[uuid.asserts.ts:84](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/uuid.asserts.ts#L84)

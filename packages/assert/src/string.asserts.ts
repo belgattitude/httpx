@@ -10,7 +10,7 @@ import type { MsgOrErrorFactory } from './types/internal.types';
 import { createAssertException } from './utils/createAssertException';
 
 /**
- * Assert string is not empty (trims the string by default)
+ * Assert a value is a non-empty string (trims the string by default)
  * @throws TypeError
  */
 export function assertStringNonEmpty(
@@ -25,6 +25,10 @@ export function assertStringNonEmpty(
   }
 }
 
+/**
+ *
+ * @throws TypeError
+ */
 export function assertParsableSafeInt(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
@@ -38,6 +42,23 @@ export function assertParsableSafeInt(
 }
 
 /**
+ * Ensure a string that contains an ISO-8601 date time in 'YYYY-MM-DDTHH:mm:ss.sssZ'
+ * format (UTC+0 / time). This check allow the value to be safely passed to `new Date()`or `Date.parse()`
+ * without parser or timezone mis-interpretations. 'T' and 'Z' checks are done in a case-insensitive way.
+ *
+ * ```typescript
+ * assertParsableStrictIsoDateZ('2023-12-28T23:37:31.653Z'); // ✅ true
+ * assertParsableStrictIsoDateZ('2023-12-29T23:37:31.653z'); // ✅ true  (case-insensitive works)
+ * assertParsableStrictIsoDateZ('2023-12-28T23:37:31.653');  // 💥 false (missing 'Z')
+ * assertParsableStrictIsoDateZ('2023-02-29T23:37:31.653Z'); // 💥 false (No 29th february in 2023)
+ *
+ * const dateStr = '2023-12-29T23:37:31.653Z';
+ * assertParsableStrictIsoDateZ(dateStr, `Wrong date: ${dateStr}`);
+ * // 👉 assertion passed, safe to use
+ * const date = new Date(dateStr);
+ * const timestampNumber = Date.parse(dateStr);
+ * ```
+ *
  * @throws TypeError
  */
 export function assertParsableStrictIsoDateZ(

@@ -23,8 +23,15 @@ describe('Typeguards string tests', () => {
       [false, '2023-12-29T23:37:31.653'], // Missing 'Z' suffix
       [false, '2023-12-29T23:37:31?653Z'], // Invalid character
       [false, 0],
-    ])('should return %s when %s(/%s) is given', (expected, v) => {
+      [false, Number.NaN],
+      [false, undefined],
+      [false, null],
+    ] as const)('should return %s when %s(/%s) is given', (expected, v) => {
       expect(isParsableStrictIsoDateZ(v)).toBe(expected);
+      if (expected === true) {
+        expect(new Date(v).toISOString()).toBe(v.toUpperCase());
+        expect(Date.parse(v)).toBe(new Date(v).getTime());
+      }
     });
   });
   describe('isParsableSafeInt', () => {

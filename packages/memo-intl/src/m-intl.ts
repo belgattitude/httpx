@@ -67,7 +67,12 @@ export const MIntl = {
     }
     return _cacheIntl.get(key)! as Intl.DateTimeFormat;
   },
-  clearCache: (): void => {
-    _cacheIntl.clear();
+  cache: {
+    clear: (): void => {
+      _cacheIntl.clear();
+    },
+    stats: (): { cachedInstances: number } => {
+      return { cachedInstances: _cacheIntl.size };
+    },
   },
 };
