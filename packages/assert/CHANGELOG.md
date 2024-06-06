@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.12.3
+
+### Patch Changes
+
+- [#1275](https://github.com/belgattitude/httpx/pull/1275) [`bd35900`](https://github.com/belgattitude/httpx/commit/bd35900b4a57c27f0aa15dd32cd833fcadff23ed) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix and improve assert documentation README
+
 ## 0.12.2
 
 ### Patch Changes
