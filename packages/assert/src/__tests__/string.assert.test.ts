@@ -24,6 +24,14 @@ describe('string assertions tests', () => {
         'Value is expected to be a string containing a strict iso date, got: Date',
         new Date(),
       ],
+      [
+        'Value is expected to be a string containing a strict iso date, got: null',
+        null,
+      ],
+      [
+        'Value is expected to be a string containing a strict iso date, got: NaN',
+        Number.NaN,
+      ],
     ])('should throw with message %s when value is %s', (msg, v) => {
       expect(() => assertParsableStrictIsoDateZ(v)).toThrow(new TypeError(msg));
     });

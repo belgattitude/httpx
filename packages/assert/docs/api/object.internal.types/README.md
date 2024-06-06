@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.1**](../README.md) • **Docs**
+[**@httpx/assert v0.12.2**](../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.1](../README.md) / object.internal.types
+[@httpx/assert v0.12.2](../README.md) / object.internal.types
 
 # object.internal.types
 

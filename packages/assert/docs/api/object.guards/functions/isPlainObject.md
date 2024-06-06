@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.1**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.1](../../README.md) / [object.guards](../README.md) / isPlainObject
+[@httpx/assert v0.12.2](../../README.md) / [object.guards](../README.md) / isPlainObject
 
 # Function: isPlainObject()
 
@@ -46,4 +46,4 @@ isPlainObject(Math);                   // 👈 ❌ false
 
 ## Source
 
-[object.guards.ts:31](https://github.com/belgattitude/httpx/blob/9af23c30700a45e9eb95108b7ac53f133f16092b/packages/assert/src/object.guards.ts#L31)
+[object.guards.ts:31](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/object.guards.ts#L31)

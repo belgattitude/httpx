@@ -20,12 +20,23 @@ export const isParsableSafeInt = (v: unknown): v is ParsableSafeInt => {
 };
 
 /**
- * Checks if the value is a string containing a valid ISO-8601 date time
- * with microseconds that ends with 'z' representing UTC+0 timezone (aka zulu time).
- * Format is 'YYYY-MM-DDTHH:mm:ss.sssZ'. Datetime is checked for validity.
+ * Check if a value is a string that contains an ISO-8601 date time in 'YYYY-MM-DDTHH:mm:ss.sssZ'
+ * format (UTC+0 / time). This check allow the value to be safely passed to `new Date()`or `Date.parse()`
+ * without parser or timezone mis-interpretations. 'T' and 'Z' checks are done in a case-insensitive way.
  *
  * ```typescript
- * isParsableStrictIsoDateZ('2023-12-29T23:37:31.653z')
+ * isParsableStrictIsoDateZ('2023-12-28T23:37:31.653Z'); // ✅ true
+ * isParsableStrictIsoDateZ('2023-12-29T23:37:31.653z'); // ✅ true  (case-insensitive works)
+ * isParsableStrictIsoDateZ('2023-12-28T23:37:31.653');  // ❌ false (missing 'Z')
+ * isParsableStrictIsoDateZ('2023-02-29T23:37:31.653Z'); // ❌ false (No 29th february in 2023)
+ *
+ * const dateStr = '2023-12-29T23:37:31.653Z';
+ * if (isParsableStrictIsoDateZ(dateStr)) {
+ *   const date = new Date(dateStr);
+ *   const timestampNumber = Date.parse(dateStr);
+ * } else {
+ *   // invalid format
+ * }
  * ```
  *
  * @link https://en.wikipedia.org/wiki/ISO_8601
