@@ -363,9 +363,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@belgattitude/eslint-config-bases@npm:5.12.0":
-  version: 5.12.0
-  resolution: "@belgattitude/eslint-config-bases@npm:5.12.0"
+"@belgattitude/eslint-config-bases@npm:5.13.0":
+  version: 5.13.0
+  resolution: "@belgattitude/eslint-config-bases@npm:5.13.0"
   dependencies:
     "@rushstack/eslint-patch": "npm:^1.10.3"
     "@tanstack/eslint-plugin-query": "npm:^5.43.1"
@@ -390,7 +390,7 @@ __metadata:
     eslint-plugin-sonarjs: "npm:^0.25.1"
     eslint-plugin-storybook: "npm:^0.8.0"
     eslint-plugin-testing-library: "npm:^6.2.2"
-    eslint-plugin-unicorn: "npm:^53.0.0"
+    eslint-plugin-unicorn: "npm:^54.0.0"
     eslint-plugin-unused-imports: "npm:^3.2.0"
   peerDependencies:
     "@graphql-eslint/eslint-plugin": ^3.20.1
@@ -421,7 +421,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/5a8bd717fcba68492381e63abf394ff04ceead57de453952c3948550af0904f121be12d7dbaafb26ecb118237e1fdb7c04c65e7c99ad0cf0b05475fd85c60b4b
+  checksum: 10/86061a6e9165edde121b7fcfd6e21b4ac7c740b1329848916c578e09c37e3f10445e4ffaef86467259fb253bcc6ba9a6d9290ab1b8733016921eab9dda5915ed
   languageName: node
   linkType: hard
 
@@ -1438,7 +1438,7 @@ __metadata:
   resolution: "@httpx/assert@workspace:packages/assert"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
-    "@belgattitude/eslint-config-bases": "npm:5.12.0"
+    "@belgattitude/eslint-config-bases": "npm:5.13.0"
     "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@sinclair/typebox": "npm:0.32.32"
@@ -1481,7 +1481,7 @@ __metadata:
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
-    "@belgattitude/eslint-config-bases": "npm:5.12.0"
+    "@belgattitude/eslint-config-bases": "npm:5.13.0"
     "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@size-limit/file": "npm:11.1.4"
@@ -1514,7 +1514,7 @@ __metadata:
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
-    "@belgattitude/eslint-config-bases": "npm:5.12.0"
+    "@belgattitude/eslint-config-bases": "npm:5.13.0"
     "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@size-limit/file": "npm:11.1.4"
@@ -1553,7 +1553,7 @@ __metadata:
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
-    "@belgattitude/eslint-config-bases": "npm:5.12.0"
+    "@belgattitude/eslint-config-bases": "npm:5.13.0"
     "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@httpx/exception": "workspace:^"
@@ -1587,7 +1587,7 @@ __metadata:
   resolution: "@httpx/memo-intl@workspace:packages/memo-intl"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
-    "@belgattitude/eslint-config-bases": "npm:5.12.0"
+    "@belgattitude/eslint-config-bases": "npm:5.13.0"
     "@codspeed/vitest-plugin": "npm:3.1.0"
     "@edge-runtime/vm": "npm:3.2.0"
     "@size-limit/file": "npm:11.1.4"
@@ -6925,6 +6925,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-unicorn@npm:^54.0.0":
+  version: 54.0.0
+  resolution: "eslint-plugin-unicorn@npm:54.0.0"
+  dependencies:
+    "@babel/helper-validator-identifier": "npm:^7.24.5"
+    "@eslint-community/eslint-utils": "npm:^4.4.0"
+    "@eslint/eslintrc": "npm:^3.0.2"
+    ci-info: "npm:^4.0.0"
+    clean-regexp: "npm:^1.0.0"
+    core-js-compat: "npm:^3.37.0"
+    esquery: "npm:^1.5.0"
+    indent-string: "npm:^4.0.0"
+    is-builtin-module: "npm:^3.2.1"
+    jsesc: "npm:^3.0.2"
+    pluralize: "npm:^8.0.0"
+    read-pkg-up: "npm:^7.0.1"
+    regexp-tree: "npm:^0.1.27"
+    regjsparser: "npm:^0.10.0"
+    semver: "npm:^7.6.1"
+    strip-indent: "npm:^3.0.0"
+  peerDependencies:
+    eslint: ">=8.56.0"
+  checksum: 10/9150970d264a03e8cc09509296dbb9aefe8d1cd3c2ee5e69e43d6a0c0401e5e5648eae3f4930ba07833a0f06bd0713b12241337c4303dba862b205e41d64b410
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-unused-imports@npm:^3.2.0":
   version: 3.2.0
   resolution: "eslint-plugin-unused-imports@npm:3.2.0"
@@ -8355,7 +8381,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-docs@workspace:docs"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:5.12.0"
+    "@belgattitude/eslint-config-bases": "npm:5.13.0"
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.4"
     eslint-plugin-tailwindcss: "npm:3.17.3"
@@ -8379,7 +8405,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-monorepo@workspace:."
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:5.12.0"
+    "@belgattitude/eslint-config-bases": "npm:5.13.0"
     "@changesets/changelog-github": "npm:0.5.0"
     "@changesets/cli": "npm:2.27.5"
     "@commitlint/cli": "npm:19.3.0"
@@ -12428,7 +12454,7 @@ __metadata:
   resolution: "prisma-exception@workspace:integrations/prisma-exception"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.15.3"
-    "@belgattitude/eslint-config-bases": "npm:5.12.0"
+    "@belgattitude/eslint-config-bases": "npm:5.13.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:11.1.4"
     "@size-limit/webpack": "npm:11.1.4"
