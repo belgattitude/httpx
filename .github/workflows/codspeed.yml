@@ -25,10 +25,11 @@ jobs:
         uses: ./.github/actions/yarn-nm-install
 
       - name: 🏗 Build packages
-        run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
+        run: yarn g:build
 
       - name: Run benchmarks
         uses: CodSpeedHQ/action@v2
         with:
-          run: yarn g:bench-codspeed
+          #run: yarn g:bench-codspeed
+          run: yarn workspaces foreach run bench-codspeed
           token: ${{ secrets.CODSPEED_TOKEN }}
