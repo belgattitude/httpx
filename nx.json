@@ -85,10 +85,17 @@
       ],
       "cache": true
     },
-    "bench-codespeed": {
-      "dependsOn": ["build", "^bench-codespeed"],
-      "inputs": ["default", "^public"],
-      "cache": false
+    "bench-codspeed": {
+      "dependsOn": ["build", "^bench-codspeed"],
+      "inputs": [
+        "default",
+        "^public",
+        {
+          "runtime": "node -v"
+        }
+      ],
+      "outputs": ["{projectRoot}/bench/output/**/*"],
+      "cache": true
     },
     "test-unit-coverage": {
       "dependsOn": ["^test-unit-coverage"],
