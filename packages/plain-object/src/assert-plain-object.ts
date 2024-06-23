@@ -20,9 +20,7 @@ export function assertPlainObject<
       msgOrErrorFactory === undefined ||
       typeof msgOrErrorFactory === 'string'
     ) {
-      throw new TypeError(
-        msgOrErrorFactory ?? `Not a plain object, got (${typeof v})`
-      );
+      throw new TypeError(msgOrErrorFactory ?? `Not a plain object`);
     }
     throw msgOrErrorFactory();
   }

@@ -21,12 +21,17 @@ const realLifeScenarios = [
 ] as const;
 
 describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed types values`, async () => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const httpxIsPlainObject: (_v: unknown) => boolean = await import(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore to apply benchmarks assert must be built
     '@httpx/plain-object'
   )
-    .then((mod) => mod.isPlainObject)
+    .then(
+      (mod) =>
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
+        mod.isPlainObject
+    )
     .catch((_e) => {
       throw new Error(
         'Comparative benchmarks requires httpx/assert to be built (yarn build)'
