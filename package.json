@@ -10,8 +10,8 @@
   "repository": "belgattitude/httpx",
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn clean:nx && yarn workspaces foreach --all -pv run clean",
-    "g:bench": "nx run-many --output-style=static --target=bench --exclude='examples/**' --exclude='docs'",
-    "g:bench-codspeed": "nx affected --output-style=static --target=bench-codspeed --exclude='examples/**' --exclude='docs'",
+    "g:bench": "nx run-many --output-style=static --parallel --target=bench --exclude='examples/**' --exclude='docs'",
+    "g:bench-codspeed": "nx affected --output-style=static --parallel=1 --target=bench-codspeed --exclude='examples/**' --exclude='docs'",
     "g:build": "nx affected --output-style=static --target=build --exclude='examples/**' --exclude='docs'",
     "g:build-release": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build-release",
     "g:build-packages": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build",
