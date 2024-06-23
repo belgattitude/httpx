@@ -15,7 +15,7 @@ Contributions are warmly appreciated. Have a look to the [CONTRIBUTING](https://
 ## Sponsors
 
 If my OSS work brightens your day, let's take it to new heights together!
-[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
+[Sponsor](), [coffee](),
 or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
 
 ### Special thanks to

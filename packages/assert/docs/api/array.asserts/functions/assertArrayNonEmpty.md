@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.3**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.2](../../README.md) / [array.asserts](../README.md) / assertArrayNonEmpty
+[@httpx/assert v0.12.3](../../README.md) / [array.asserts](../README.md) / assertArrayNonEmpty
 
 # Function: assertArrayNonEmpty()
 
@@ -10,7 +10,7 @@
 
 Assert string is not empty (trims the string by default)
 
-## Type parameters
+## Type Parameters
 
 • **T** = `unknown`
 
@@ -28,6 +28,6 @@ Assert string is not empty (trims the string by default)
 
 TypeError
 
-## Source
+## Defined in
 
-[array.asserts.ts:10](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/array.asserts.ts#L10)
+[array.asserts.ts:10](https://github.com/belgattitude/httpx/blob/74dc9cd764aa64a9b1889ffb70a7f65e9435af37/packages/assert/src/array.asserts.ts#L10)

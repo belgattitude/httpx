@@ -1,10 +1,10 @@
-[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.3**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.2](../../README.md) / [object.internal.types](../README.md) / UnspecifiedPlainObjectType
+[@httpx/assert v0.12.3](../../README.md) / [object.internal.types](../README.md) / UnspecifiedPlainObjectType
 
-# Type alias: UnspecifiedPlainObjectType
+# Type Alias: UnspecifiedPlainObjectType
 
 > **UnspecifiedPlainObjectType**: [`BasePlainObject`](BasePlainObject.md) & `object`
 
@@ -14,6 +14,6 @@
 
 > `readonly` **\_\_httpxInternalTag**: `"@httpx/PlainObject"`
 
-## Source
+## Defined in
 
-[object.internal.types.ts:5](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/object.internal.types.ts#L5)
+[object.internal.types.ts:5](https://github.com/belgattitude/httpx/blob/74dc9cd764aa64a9b1889ffb70a7f65e9435af37/packages/assert/src/object.internal.types.ts#L5)

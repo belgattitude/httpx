@@ -4,6 +4,6 @@
 
 [@httpx/exception](../../README.md) / [serializer](../README.md) / NativeError
 
-# Type alias: NativeError
+# Type Alias: NativeError
 
 > **NativeError**: `Error` \| `EvalError` \| `RangeError` \| `ReferenceError` \| `SyntaxError` \| `TypeError` \| `URIError`

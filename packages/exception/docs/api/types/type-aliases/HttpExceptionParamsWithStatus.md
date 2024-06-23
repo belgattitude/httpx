@@ -4,7 +4,7 @@
 
 [@httpx/exception](../../README.md) / [types](../README.md) / HttpExceptionParamsWithStatus
 
-# Type alias: HttpExceptionParamsWithStatus
+# Type Alias: HttpExceptionParamsWithStatus
 
 > **HttpExceptionParamsWithStatus**: [`HttpExceptionParams`](HttpExceptionParams.md) & `object`
 

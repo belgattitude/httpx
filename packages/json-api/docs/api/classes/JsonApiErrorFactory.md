@@ -26,7 +26,7 @@
 
 • **error**: `unknown`
 
-• **defaultHttpStatus**: `number`= `500`
+• **defaultHttpStatus**: `number` = `500`
 
 #### Returns
 
@@ -42,7 +42,7 @@
 
 • **exception**: `string` \| `Error` \| `HttpException`
 
-• **defaultHttpStatus**: `number`= `500`
+• **defaultHttpStatus**: `number` = `500`
 
 fallback http status if it can't be inferred from exception
 

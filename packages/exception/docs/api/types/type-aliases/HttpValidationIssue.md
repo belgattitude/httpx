@@ -4,7 +4,7 @@
 
 [@httpx/exception](../../README.md) / [types](../README.md) / HttpValidationIssue
 
-# Type alias: HttpValidationIssue
+# Type Alias: HttpValidationIssue
 
 > **HttpValidationIssue**: `object`
 

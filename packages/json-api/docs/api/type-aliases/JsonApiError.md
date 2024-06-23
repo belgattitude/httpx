@@ -4,11 +4,11 @@
 
 [@httpx/json-api v0.5.19](../README.md) / JsonApiError
 
-# Type alias: JsonApiError
+# Type Alias: JsonApiError
 
 > **JsonApiError**: `object`
 
-## Link
+## See
 
 https://jsonapi.org/format/#errors
 

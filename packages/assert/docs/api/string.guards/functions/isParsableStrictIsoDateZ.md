@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.3**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.2](../../README.md) / [string.guards](../README.md) / isParsableStrictIsoDateZ
+[@httpx/assert v0.12.3](../../README.md) / [string.guards](../README.md) / isParsableStrictIsoDateZ
 
 # Function: isParsableStrictIsoDateZ()
 
@@ -35,18 +35,6 @@ if (isParsableStrictIsoDateZ(dateStr)) {
 
 `v is ParsableStrictIsoDateZ`
 
-## Link
+## Defined in
 
-https://en.wikipedia.org/wiki/ISO_8601
-
-## Link
-
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
-
-## Link
-
-https://en.wikipedia.org/wiki/Coordinated_Universal_Time
-
-## Source
-
-[string.guards.ts:46](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/string.guards.ts#L46)
+[string.guards.ts:46](https://github.com/belgattitude/httpx/blob/74dc9cd764aa64a9b1889ffb70a7f65e9435af37/packages/assert/src/string.guards.ts#L46)

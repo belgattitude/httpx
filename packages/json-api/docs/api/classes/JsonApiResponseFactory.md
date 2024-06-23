@@ -40,7 +40,7 @@ fallback http status if not present in JsonApiError
 
 > `static` **fromSuccess**\<`T`\>(`data`, `metadata`?): [`JsonApiSuccessResponse`](../type-aliases/JsonApiSuccessResponse.md)\<`T`\>
 
-#### Type parameters
+#### Type Parameters
 
 • **T**
 

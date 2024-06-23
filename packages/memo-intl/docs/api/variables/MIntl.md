@@ -1,8 +1,8 @@
-[**@httpx/memo-intl v0.2.0**](../README.md) • **Docs**
+[**@httpx/memo-intl v1.1.0**](../README.md) • **Docs**
 
 ***
 
-[@httpx/memo-intl v0.2.0](../README.md) / MIntl
+[@httpx/memo-intl v1.1.0](../README.md) / MIntl
 
 # Variable: MIntl
 
@@ -73,10 +73,26 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 `NumberFormat`
 
-### clearCache()
+### cache
 
-> **clearCache**: () => `void`
+> **cache**: `object`
+
+### cache.clear()
+
+> **clear**: () => `void`
 
 #### Returns
 
 `void`
+
+### cache.stats()
+
+> **stats**: () => `object`
+
+#### Returns
+
+`object`
+
+##### cachedInstances
+
+> **cachedInstances**: `number`

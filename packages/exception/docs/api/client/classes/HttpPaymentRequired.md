@@ -42,7 +42,7 @@ either a message or an object containing HttpExceptionParams
 
 ### cause?
 
-> `optional` `readonly` **cause**: `Error` \| [`HttpException`](../../base/classes/HttpException.md)
+> `readonly` `optional` **cause**: `Error` \| [`HttpException`](../../base/classes/HttpException.md)
 
 If set and the runtime (browser or node) supports it
 you can get back the error cause
@@ -149,7 +149,7 @@ Indicates the original url that caused the error.
 
 ### STATUS
 
-> `static` `readonly` **STATUS**: `402` = `status`
+> `readonly` `static` **STATUS**: `402` = `status`
 
 ---
 

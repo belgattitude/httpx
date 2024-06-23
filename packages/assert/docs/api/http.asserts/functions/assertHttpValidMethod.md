@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.3**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.2](../../README.md) / [http.asserts](../README.md) / assertHttpValidMethod
+[@httpx/assert v0.12.3](../../README.md) / [http.asserts](../README.md) / assertHttpValidMethod
 
 # Function: assertHttpValidMethod()
 
@@ -24,6 +24,6 @@ Assert the value is a valid http method (case-insensitive)
 
 TypeError
 
-## Source
+## Defined in
 
-[http.asserts.ts:10](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/http.asserts.ts#L10)
+[http.asserts.ts:10](https://github.com/belgattitude/httpx/blob/74dc9cd764aa64a9b1889ffb70a7f65e9435af37/packages/assert/src/http.asserts.ts#L10)

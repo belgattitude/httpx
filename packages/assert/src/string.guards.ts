@@ -39,9 +39,9 @@ export const isParsableSafeInt = (v: unknown): v is ParsableSafeInt => {
  * }
  * ```
  *
- * @link https://en.wikipedia.org/wiki/ISO_8601
- * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
- * @link https://en.wikipedia.org/wiki/Coordinated_Universal_Time
+ * @see https://en.wikipedia.org/wiki/ISO_8601
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+ * @see https://en.wikipedia.org/wiki/Coordinated_Universal_Time
  */
 export const isParsableStrictIsoDateZ = (
   v: unknown

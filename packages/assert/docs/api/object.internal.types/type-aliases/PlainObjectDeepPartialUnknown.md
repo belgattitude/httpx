@@ -1,17 +1,17 @@
-[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.3**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.2](../../README.md) / [object.internal.types](../README.md) / PlainObjectDeepPartialUnknown
+[@httpx/assert v0.12.3](../../README.md) / [object.internal.types](../README.md) / PlainObjectDeepPartialUnknown
 
-# Type alias: PlainObjectDeepPartialUnknown\<T\>
+# Type Alias: PlainObjectDeepPartialUnknown\<T\>
 
 > **PlainObjectDeepPartialUnknown**\<`T`\>: `{ [P in keyof T]?: NonNullable<T[P]> extends BasePlainObject ? Simplify<PlainObjectDeepPartialUnknown<NonNullable<T[P]>>> : unknown }`
 
-## Type parameters
+## Type Parameters
 
 • **T**
 
-## Source
+## Defined in
 
-[object.internal.types.ts:11](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/object.internal.types.ts#L11)
+[object.internal.types.ts:11](https://github.com/belgattitude/httpx/blob/74dc9cd764aa64a9b1889ffb70a7f65e9435af37/packages/assert/src/object.internal.types.ts#L11)

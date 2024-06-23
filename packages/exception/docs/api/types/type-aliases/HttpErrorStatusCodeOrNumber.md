@@ -4,6 +4,6 @@
 
 [@httpx/exception](../../README.md) / [types](../README.md) / HttpErrorStatusCodeOrNumber
 
-# Type alias: HttpErrorStatusCodeOrNumber
+# Type Alias: HttpErrorStatusCodeOrNumber
 
 > **HttpErrorStatusCodeOrNumber**: [`HttpErrorStatusCode`](HttpErrorStatusCode.md) \| `number` & `object`

@@ -1,13 +1,13 @@
-[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.3**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.2](../../README.md) / [uuid.types](../README.md) / UuidV3
+[@httpx/assert v0.12.3](../../README.md) / [uuid.types](../README.md) / UuidV3
 
-# Type alias: UuidV3
+# Type Alias: UuidV3
 
 > **UuidV3**: `string` & `WeakOpaqueContainer`\<`"UuidV3"`\>
 
-## Source
+## Defined in
 
-[uuid.types.ts:6](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/uuid.types.ts#L6)
+[uuid.types.ts:6](https://github.com/belgattitude/httpx/blob/74dc9cd764aa64a9b1889ffb70a7f65e9435af37/packages/assert/src/uuid.types.ts#L6)
