@@ -41,12 +41,8 @@ jobs:
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
 
-      - name: 🏗 Build packages
-        run: yarn g:build
-
       - name: Run benchmarks
         uses: CodSpeedHQ/action@v2
         with:
-          #run: yarn g:bench-codspeed
-          run: yarn workspaces foreach run bench-codspeed
+          run: yarn g:bench-codspeed
           token: ${{ secrets.CODSPEED_TOKEN }}
