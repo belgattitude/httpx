@@ -1394,6 +1394,44 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@httpx/plain-object@workspace:packages/plain-object":
+  version: 0.0.0-use.local
+  resolution: "@httpx/plain-object@workspace:packages/plain-object"
+  dependencies:
+    "@arethetypeswrong/cli": "npm:0.15.3"
+    "@belgattitude/eslint-config-bases": "npm:5.13.0"
+    "@codspeed/vitest-plugin": "npm:3.1.0"
+    "@edge-runtime/vm": "npm:3.2.0"
+    "@sindresorhus/is": "npm:6.3.1"
+    "@size-limit/file": "npm:11.1.4"
+    "@size-limit/webpack": "npm:11.1.4"
+    "@types/lodash-es": "npm:4.17.12"
+    "@vitest/coverage-istanbul": "npm:1.6.0"
+    "@vitest/ui": "npm:1.6.0"
+    browserslist: "npm:4.23.1"
+    browserslist-to-esbuild: "npm:2.1.1"
+    cross-env: "npm:7.0.3"
+    es-check: "npm:7.2.1"
+    esbuild: "npm:0.21.5"
+    eslint: "npm:8.57.0"
+    is-plain-obj: "npm:4.1.0"
+    is-plain-object: "npm:5.0.0"
+    lodash-es: "npm:4.17.21"
+    npm-run-all2: "npm:6.2.0"
+    rimraf: "npm:5.0.7"
+    rollup: "npm:4.18.0"
+    size-limit: "npm:11.1.4"
+    tsup: "npm:8.1.0"
+    typedoc: "npm:0.26.1"
+    typedoc-plugin-markdown: "npm:4.1.0"
+    typescript: "npm:5.5.2"
+    vite: "npm:5.3.1"
+    vite-tsconfig-paths: "npm:4.3.2"
+    vitest: "npm:1.6.0"
+    webpack: "npm:5.92.1"
+  languageName: unknown
+  linkType: soft
+
 "@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -8485,6 +8523,13 @@ __metadata:
   version: 3.0.0
   resolution: "is-plain-obj@npm:3.0.0"
   checksum: 10/a6ebdf8e12ab73f33530641972a72a4b8aed6df04f762070d823808303e4f76d87d5ea5bd76f96a7bbe83d93f04ac7764429c29413bd9049853a69cb630fb21c
+  languageName: node
+  linkType: hard
+
+"is-plain-object@npm:5.0.0":
+  version: 5.0.0
+  resolution: "is-plain-object@npm:5.0.0"
+  checksum: 10/e32d27061eef62c0847d303125440a38660517e586f2f3db7c9d179ae5b6674ab0f469d519b2e25c147a1a3bc87156d0d5f4d8821e0ce4a9ee7fe1fcf11ce45c
   languageName: node
   linkType: hard
 

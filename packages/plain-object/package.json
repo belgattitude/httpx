@@ -1,0 +1,112 @@
+{
+  "name": "@httpx/plain-object",
+  "description": "isPlainObject",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "homepage": "https://belgattitude.github.io/httpx/plain-object",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/belgattitude/httpx.git",
+    "directory": "packages/plain-object"
+  },
+  "keywords": [
+    "plainObject",
+    "plain-object",
+    "is-plain-object",
+    "assert-plain-object",
+    "typeguard",
+    "assertion"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
+    "build": "run clean && yarn run tsup",
+    "build-release": "run build",
+    "bench": "vitest bench --run",
+    "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
+    "bench-watch": "vitest bench",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "check-dist": "run-s check-dist-esm check-dist-cjs",
+    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2022 './dist/**/*.cjs'",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
+    "check-pub": "attw --pack",
+    "check-size": "size-limit",
+    "clean": "rimraf ./dist ./build ./coverage ./_release",
+    "dev": "tsup --watch",
+    "fix-staged": "lint-staged --allow-empty",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/dsn-parser.eslintcache",
+    "test": "vitest run",
+    "test-unit": "vitest run",
+    "test-unit-coverage": "vitest run --coverage",
+    "test-unit-edge": "vitest run --environment edge-runtime",
+    "test-unit-watch": "vitest --ui",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-plain-object-unit --dir ./coverage"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.15.3",
+    "@belgattitude/eslint-config-bases": "5.13.0",
+    "@codspeed/vitest-plugin": "3.1.0",
+    "@edge-runtime/vm": "3.2.0",
+    "@sindresorhus/is": "6.3.1",
+    "@size-limit/file": "11.1.4",
+    "@size-limit/webpack": "11.1.4",
+    "@types/lodash-es": "4.17.12",
+    "@vitest/coverage-istanbul": "1.6.0",
+    "@vitest/ui": "1.6.0",
+    "browserslist": "4.23.1",
+    "browserslist-to-esbuild": "2.1.1",
+    "cross-env": "7.0.3",
+    "es-check": "7.2.1",
+    "esbuild": "0.21.5",
+    "eslint": "8.57.0",
+    "is-plain-obj": "4.1.0",
+    "is-plain-object": "5.0.0",
+    "lodash-es": "4.17.21",
+    "npm-run-all2": "6.2.0",
+    "rimraf": "5.0.7",
+    "rollup": "4.18.0",
+    "size-limit": "11.1.4",
+    "tsup": "8.1.0",
+    "typedoc": "0.26.1",
+    "typedoc-plugin-markdown": "4.1.0",
+    "typescript": "5.5.2",
+    "vite": "5.3.1",
+    "vite-tsconfig-paths": "4.3.2",
+    "vitest": "1.6.0",
+    "webpack": "5.92.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

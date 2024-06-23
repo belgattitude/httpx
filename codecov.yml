@@ -31,6 +31,14 @@ flag_management:
           target: 90%
           threshold: 1%
 
+    - name: httpx-plain-object-unit
+      paths:
+        - packages/plain-object
+      statuses:
+        - type: project
+          target: 90%
+          threshold: 1%
+
     - name: httpx-assert
       paths:
         - packages/assert
