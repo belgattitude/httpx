@@ -60,17 +60,17 @@
       "cache": false
     },
     "check-size": {
-      "dependsOn": ["^build", "^check-size"],
+      "dependsOn": ["build", "^check-size"],
       "inputs": ["default", "^public"],
       "cache": true
     },
     "check-dist": {
-      "dependsOn": ["^build", "^check-dist"],
+      "dependsOn": ["build", "^check-dist"],
       "inputs": ["default", "^public"],
       "cache": true
     },
     "check-pub": {
-      "dependsOn": ["^build", "^check-pub"],
+      "dependsOn": ["build", "^check-pub"],
       "inputs": ["default", "^public"],
       "cache": true
     },
@@ -84,6 +84,11 @@
         }
       ],
       "cache": true
+    },
+    "bench-codespeed": {
+      "dependsOn": ["build", "^bench-codespeed"],
+      "inputs": ["default", "^public"],
+      "cache": false
     },
     "test-unit-coverage": {
       "dependsOn": ["^test-unit-coverage"],
