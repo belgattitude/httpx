@@ -4,6 +4,6 @@
 
 [@httpx/dsn-parser v1.8.0](../README.md) / ParsableDsn
 
-# Type alias: ParsableDsn
+# Type Alias: ParsableDsn
 
 > **ParsableDsn**: `string` & `WeakOpaqueContainer`\<`"ParsableDsn"`\>

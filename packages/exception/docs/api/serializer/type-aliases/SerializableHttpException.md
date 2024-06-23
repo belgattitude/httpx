@@ -4,6 +4,6 @@
 
 [@httpx/exception](../../README.md) / [serializer](../README.md) / SerializableHttpException
 
-# Type alias: SerializableHttpException
+# Type Alias: SerializableHttpException
 
 > **SerializableHttpException**: `DiscriminateSerializable`\<`"HttpException"`\>

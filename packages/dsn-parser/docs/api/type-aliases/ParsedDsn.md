@@ -4,7 +4,7 @@
 
 [@httpx/dsn-parser v1.8.0](../README.md) / ParsedDsn
 
-# Type alias: ParsedDsn
+# Type Alias: ParsedDsn
 
 > **ParsedDsn**: `object`
 

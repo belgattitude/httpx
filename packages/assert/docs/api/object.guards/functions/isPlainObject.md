@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.2**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.3**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.2](../../README.md) / [object.guards](../README.md) / isPlainObject
+[@httpx/assert v0.12.3](../../README.md) / [object.guards](../README.md) / isPlainObject
 
 # Function: isPlainObject()
 
@@ -12,7 +12,7 @@ Check if a value is a plain object
 
 An object is plain if it's created by either {}, new Object(), or Object.create(null).
 
-## Type parameters
+## Type Parameters
 
 • **TValue** *extends* `Record`\<`string`, `unknown`\> = [`UnspecifiedPlainObjectType`](../../object.internal.types/type-aliases/UnspecifiedPlainObjectType.md)
 
@@ -24,26 +24,6 @@ An object is plain if it's created by either {}, new Object(), or Object.create(
 
 `v is TValue extends UnspecifiedPlainObjectType ? BasePlainObject : PlainObject<TValue>`
 
-## Example
+## Defined in
 
-```typescript
-isPlainObject({ key: 'value' });       // 👈 ✅ true
-isPlainObject({ key: new Date() });    // 👈 ✅ true
-isPlainObject(new Object());           // 👈 ✅ true
-isPlainObject(Object.create(null));    // 👈 ✅ true
-isPlainObject({nested: { key: true} }  // 👈 ✅ true
-
-class Test { };
-
-isPlainObject(new Test())              // 👈 ❌ false
-isPlainObject(10);                     // 👈 ❌ false
-isPlainObject(null);                   // 👈 ❌ false
-isPlainObject('hello');                // 👈 ❌ false
-isPlainObject([]);                     // 👈 ❌ false
-isPlainObject(new Date());             // 👈 ❌ false
-isPlainObject(Math);                   // 👈 ❌ false
-(...)
-
-## Source
-
-[object.guards.ts:31](https://github.com/belgattitude/httpx/blob/736f60a5e7cab55c1cdb451c3a30a47ad2eca5ed/packages/assert/src/object.guards.ts#L31)
+[object.guards.ts:31](https://github.com/belgattitude/httpx/blob/74dc9cd764aa64a9b1889ffb70a7f65e9435af37/packages/assert/src/object.guards.ts#L31)

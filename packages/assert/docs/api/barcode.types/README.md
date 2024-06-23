@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.2**](../README.md) • **Docs**
+[**@httpx/assert v0.12.3**](../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.2](../README.md) / barcode.types
+[@httpx/assert v0.12.3](../README.md) / barcode.types
 
 # barcode.types
 

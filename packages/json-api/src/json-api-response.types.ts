@@ -1,5 +1,5 @@
 /**
- * @link https://jsonapi.org/format/#errors
+ * @see https://jsonapi.org/format/#errors
  */
 export type JsonApiError = {
   /** an application-specific error code, expressed as a string value. */

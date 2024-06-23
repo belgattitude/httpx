@@ -8,7 +8,7 @@
 
 > **tryOrFail**\<`T`\>(`fn`): `Promise`\<`ReturnType`\<`T`\>\>
 
-## Type parameters
+## Type Parameters
 
 • **T** _extends_ `AsyncFn`\<`unknown`[], `unknown`\>
 

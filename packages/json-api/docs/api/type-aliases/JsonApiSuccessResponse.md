@@ -4,7 +4,7 @@
 
 [@httpx/json-api v0.5.19](../README.md) / JsonApiSuccessResponse
 
-# Type alias: JsonApiSuccessResponse\<T\>
+# Type Alias: JsonApiSuccessResponse\<T\>
 
 > **JsonApiSuccessResponse**\<`T`\>: `object` & [`JsonApiResponseMeta`](JsonApiResponseMeta.md)
 
@@ -18,6 +18,6 @@
 
 > **success**: `true`
 
-## Type parameters
+## Type Parameters
 
 • **T**

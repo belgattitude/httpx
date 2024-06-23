@@ -8,7 +8,7 @@
 
 > **isJsonApiSuccessResponse**\<`T`\>(`val`): `val is JsonApiSuccessResponse<T>`
 
-## Type parameters
+## Type Parameters
 
 • **T** = `unknown`
 

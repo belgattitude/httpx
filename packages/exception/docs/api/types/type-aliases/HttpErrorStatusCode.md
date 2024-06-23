@@ -4,6 +4,6 @@
 
 [@httpx/exception](../../README.md) / [types](../README.md) / HttpErrorStatusCode
 
-# Type alias: HttpErrorStatusCode
+# Type Alias: HttpErrorStatusCode
 
 > **HttpErrorStatusCode**: keyof _typeof_ `statusMap`

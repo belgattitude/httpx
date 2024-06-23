@@ -4,7 +4,7 @@
 
 [@httpx/json-api v0.5.19](../README.md) / JsonApiResponseMeta
 
-# Type alias: JsonApiResponseMeta
+# Type Alias: JsonApiResponseMeta
 
 > **JsonApiResponseMeta**: `object`
 

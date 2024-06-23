@@ -49,7 +49,7 @@ either a message or an object containing HttpExceptionParams
 
 ### cause?
 
-> `optional` `readonly` **cause**: `Error` \| [`HttpException`](HttpException.md)
+> `readonly` `optional` **cause**: `Error` \| [`HttpException`](HttpException.md)
 
 If set and the runtime (browser or node) supports it
 you can get back the error cause

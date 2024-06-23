@@ -17,7 +17,3 @@
 ## Returns
 
 `asserts dsn is ParsableDsn`
-
-## Throws
-
-Error when not parsable

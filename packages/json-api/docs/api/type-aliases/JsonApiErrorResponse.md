@@ -4,7 +4,7 @@
 
 [@httpx/json-api v0.5.19](../README.md) / JsonApiErrorResponse
 
-# Type alias: JsonApiErrorResponse
+# Type Alias: JsonApiErrorResponse
 
 > **JsonApiErrorResponse**: `object`
 
