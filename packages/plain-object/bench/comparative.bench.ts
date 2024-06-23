@@ -21,10 +21,9 @@ const realLifeScenarios = [
 ] as const;
 
 describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed types values`, async () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore to apply benchmarks assert must be built
-  const httpxIsPlainObject: (_v) => boolean = await import(
+  const httpxIsPlainObject: (_v: unknown) => boolean = await import(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore to apply benchmarks assert must be built
     '@httpx/plain-object'
   )
     .then((mod) => mod.isPlainObject)
