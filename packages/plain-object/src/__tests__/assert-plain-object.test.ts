@@ -6,7 +6,7 @@ describe('object assertions tests', () => {
   });
   it('should throw when value is invalid', () => {
     expect(() => assertPlainObject(new Date())).toThrow(
-      new TypeError('Not a plain object, got (object)')
+      new TypeError('Not a plain object')
     );
   });
   it('should throw custom error when value is invalid', () => {
