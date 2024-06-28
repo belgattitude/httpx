@@ -1242,7 +1242,7 @@ __metadata:
     tinybench: "npm:2.8.0"
     tsup: "npm:8.1.0"
     type-fest: "npm:4.20.1"
-    typedoc: "npm:0.26.1"
+    typedoc: "npm:0.26.3"
     typedoc-plugin-markdown: "npm:4.1.0"
     typescript: "npm:5.5.2"
     valibot: "npm:0.33.3"
@@ -1277,7 +1277,7 @@ __metadata:
     rollup: "npm:4.18.0"
     size-limit: "npm:11.1.4"
     tsup: "npm:8.1.0"
-    typedoc: "npm:0.26.1"
+    typedoc: "npm:0.26.3"
     typedoc-plugin-markdown: "npm:4.1.0"
     typescript: "npm:5.5.2"
     vite: "npm:5.3.1"
@@ -1316,7 +1316,7 @@ __metadata:
     superjson: "npm:2.2.1"
     tsup: "npm:8.1.0"
     tupleson: "npm:0.23.1"
-    typedoc: "npm:0.26.1"
+    typedoc: "npm:0.26.3"
     typedoc-plugin-markdown: "npm:4.1.0"
     typescript: "npm:5.5.2"
     vite: "npm:5.3.1"
@@ -1350,7 +1350,7 @@ __metadata:
     rollup: "npm:4.18.0"
     size-limit: "npm:11.1.4"
     tsup: "npm:8.1.0"
-    typedoc: "npm:0.26.1"
+    typedoc: "npm:0.26.3"
     typedoc-plugin-markdown: "npm:4.1.0"
     typescript: "npm:5.5.2"
     vite: "npm:5.3.1"
@@ -1384,7 +1384,7 @@ __metadata:
     rollup: "npm:4.18.0"
     size-limit: "npm:11.1.4"
     tsup: "npm:8.1.0"
-    typedoc: "npm:0.26.1"
+    typedoc: "npm:0.26.3"
     typedoc-plugin-markdown: "npm:4.1.0"
     typescript: "npm:5.5.2"
     vite: "npm:5.3.1"
@@ -2056,10 +2056,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/core@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@shikijs/core@npm:1.9.0"
-  checksum: 10/ec07699742f0561ab4d2fb07715397183cbed23ca42e082b14e9e5f85eb7f8647897f69698d003d8c6a1b8682da0af77861b3a2f78d366eef7581bae4415142c
+"@shikijs/core@npm:1.9.1":
+  version: 1.9.1
+  resolution: "@shikijs/core@npm:1.9.1"
+  checksum: 10/c05c0838278e236a4947b4fa762a361c3f53e9d1db5ff48e45b5beb4a6b9953289a41bd67f989424ba158a24c8be618dc965a7d72de2163aba03bb9d64626eeb
   languageName: node
   linkType: hard
 
@@ -10523,7 +10523,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:9.0.4, minimatch@npm:^9.0.0, minimatch@npm:^9.0.1, minimatch@npm:^9.0.3, minimatch@npm:^9.0.4":
+"minimatch@npm:9.0.4":
   version: 9.0.4
   resolution: "minimatch@npm:9.0.4"
   dependencies:
@@ -10538,6 +10538,15 @@ __metadata:
   dependencies:
     brace-expansion: "npm:^1.1.7"
   checksum: 10/e0b25b04cd4ec6732830344e5739b13f8690f8a012d73445a4a19fbc623f5dd481ef7a5827fde25954cd6026fede7574cc54dc4643c99d6c6b653d6203f94634
+  languageName: node
+  linkType: hard
+
+"minimatch@npm:^9.0.0, minimatch@npm:^9.0.1, minimatch@npm:^9.0.3, minimatch@npm:^9.0.4, minimatch@npm:^9.0.5":
+  version: 9.0.5
+  resolution: "minimatch@npm:9.0.5"
+  dependencies:
+    brace-expansion: "npm:^2.0.1"
+  checksum: 10/dd6a8927b063aca6d910b119e1f2df6d2ce7d36eab91de83167dd136bb85e1ebff97b0d3de1cb08bd1f7e018ca170b4962479fefab5b2a69e2ae12cb2edc8348
   languageName: node
   linkType: hard
 
@@ -12005,7 +12014,7 @@ __metadata:
     rimraf: "npm:5.0.7"
     size-limit: "npm:11.1.4"
     tsup: "npm:8.1.0"
-    typedoc: "npm:0.26.1"
+    typedoc: "npm:0.26.3"
     typedoc-plugin-markdown: "npm:4.1.0"
     typescript: "npm:5.5.2"
     vite: "npm:5.3.1"
@@ -13004,12 +13013,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "shiki@npm:1.9.0"
+"shiki@npm:^1.9.1":
+  version: 1.9.1
+  resolution: "shiki@npm:1.9.1"
   dependencies:
-    "@shikijs/core": "npm:1.9.0"
-  checksum: 10/ce5648b4e1a5e5e81e54e01ec9dc94cf324530f460058f29f1e5e464dbf096fee2194fbef38b29128a747f783f9134531991316b01ed168f65d0617dabf84c33
+    "@shikijs/core": "npm:1.9.1"
+  checksum: 10/27d61557e73854b4c0e652a6fed1153a5f8d1271c5532d96d25fd04cc0eecdaa5cad5e3d83e752f262d8b29096b05fb80252a6801c53161474b3109c91e08f01
   languageName: node
   linkType: hard
 
@@ -14394,20 +14403,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc@npm:0.26.1":
-  version: 0.26.1
-  resolution: "typedoc@npm:0.26.1"
+"typedoc@npm:0.26.3":
+  version: 0.26.3
+  resolution: "typedoc@npm:0.26.3"
   dependencies:
     lunr: "npm:^2.3.9"
     markdown-it: "npm:^14.1.0"
-    minimatch: "npm:^9.0.4"
-    shiki: "npm:^1.9.0"
+    minimatch: "npm:^9.0.5"
+    shiki: "npm:^1.9.1"
     yaml: "npm:^2.4.5"
   peerDependencies:
     typescript: 4.6.x || 4.7.x || 4.8.x || 4.9.x || 5.0.x || 5.1.x || 5.2.x || 5.3.x || 5.4.x || 5.5.x
   bin:
     typedoc: bin/typedoc
-  checksum: 10/fcc36bcc05aff51586a8672614be92d544ffeb0841699629dc172b0b622e80a6160b62cb1eddc0b06b7716117c84b6f04445a42f61f4c68b01694664c2178a20
+  checksum: 10/55473079de55140d29299b449c0c8de6da1c6c76553bae17c11d1be9e4521612c5f0d9d5a6ee4e18ba7103f79de9ff98223fa0fb2d0e09b2bd535e54efe3d08d
   languageName: node
   linkType: hard
 
