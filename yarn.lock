@@ -1245,7 +1245,7 @@ __metadata:
     typedoc: "npm:0.26.1"
     typedoc-plugin-markdown: "npm:4.1.0"
     typescript: "npm:5.5.2"
-    valibot: "npm:0.33.3"
+    valibot: "npm:0.37.0"
     vite: "npm:5.3.1"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:1.6.0"
@@ -14772,10 +14772,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"valibot@npm:0.33.3":
-  version: 0.33.3
-  resolution: "valibot@npm:0.33.3"
-  checksum: 10/9e6124a84809afdabd47409fd1147526f358a8f082acab5255b5b4283e503d268f31b5ab22013b482725b58e93a72f5481f526db872ca01aaa3299bf2cf85fc6
+"valibot@npm:0.37.0":
+  version: 0.37.0
+  resolution: "valibot@npm:0.37.0"
+  peerDependencies:
+    typescript: ">=5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/c55132b60fa0e23b36327b263777065bfb5355dfb454393c39745659984950943ccbf5ff44010a28bcf4696200da29225af4515ac0e584e86554a8540628a579
   languageName: node
   linkType: hard
 
