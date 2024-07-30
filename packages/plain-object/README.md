@@ -21,8 +21,9 @@ $ pnpm add @httpx/plain-object
 
 ## Features
 
-- 👉&nbsp; Don't re-create the same Intl instance for the same options (memoized).
-- 👉&nbsp; Keep the [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) api untouched. Just replace `new Intl.NumberFormat` by `MIntl.NumberFormat`...
+- 👉&nbsp; Lightweight (~100b) and fast performance.
+- 👉&nbsp; Extended typescript support ()
+- 👉&nbsp; Modern es 
 - 👉&nbsp; Up to 20x faster than non-memoized Intl constructors.
 - 👉&nbsp; Decrease memory usage, unwanted memory leaks and garbage collection pressure.
 - 👉&nbsp; Max out 50 cache instances by default with [quick-lru](https://github.com/sindresorhus/quick-lru).
@@ -34,37 +35,44 @@ $ pnpm add @httpx/plain-object
 
 ## Usage
 
-### MIntl.NumberFormat
+### isPlainObject
 
 ```typescript
-import { MIntl } from '@httpx/plain-object';
 
-// Notice: `new Intl.NumberFormat` vs `MIntl.NumberFormat`
-const formattedPrice = MIntl.NumberFormat('fr-FR', {
-   style: 'currency',
-   currency: 'EUR',
-   notation: 'compact',
-   minimumFractionDigits: 2,
-}).format(row.price);
-```
+// ✅👇 True
 
-### MIntl.DateTimeFormat
+isPlainObject({ key: 'value' });          // ✅ 
+isPlainObject({ key: new Date() });       // ✅ 
+isPlainObject(new Object());              // ✅ 
+isPlainObject(Object.create(null));       // ✅ 
+isPlainObject({ nested: { key: true} });  // ✅ 
+isPlainObject(new Proxy({}, {}));         // ✅ 
+isPlainObject({ [Symbol('tag')]: 'A' });  // ✅ 
 
-```typescript
-import { MIntl } from '@httpx/plain-object';
-
-// Notice: `new Intl.DateTimeFormat` vs `MIntl.DateTimeFormat
-const formatter = MIntl.DateTimeFormat('fr-FR', {
-    dateStyle: 'full',
-    timeStyle: 'full',
-    timeZone: 'UTC'
-});
-const date = Date.parse('2024-05-29T07:42:43.230Z');
-expect(formatter.format(date)).toBe(
-    'mercredi 29 mai 2024 à 07:42:43 temps universel coordonné'
+// ✅👇 (node context, workers, ...)
+const runInNewContext = await import('node:vm').then(
+    (mod) => mod.runInNewContext
 );
-expectTypeOf(formatter).toEqualTypeOf<Intl.DateTimeFormat>();
+isPlainObject(runInNewContext('({})'));   // ✅ 
+
+// ❌👇 False
+
+class Test { };
+isPlainObject(new Test())           // ❌ 
+isPlainObject(10);                  // ❌ 
+isPlainObject(null);                // ❌ 
+isPlainObject('hello');             // ❌ 
+isPlainObject([]);                  // ❌ 
+isPlainObject(new Date());          // ❌ 
+isPlainObject(Math);                // ❌ Static built-in classes 
+isPlainObject(Promise.resolve({})); // ❌
+isPlainObject(Object.create({}));   // ❌
 ```
+
+### assertPlainObject
+
+
+
 
 ## Benchmarks
 
@@ -102,23 +110,25 @@ Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/htt
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.size-limit.cjs)
 
-| Scenario                                       | Size with deps (compressed) |
-|------------------------------------------------|----------------------------:|
-| `import { MIntl } from '@httpx/plain-object'      |                     ~ 1.2kB |
+| Scenario (esm)                                           | Size (compressed) |
+|----------------------------------------------------------|------------------:|
+| `import { isPlainObject } from '@httpx/plain-object`     |            ~ 100B |
+| `import { assertPlainObject } from '@httpx/plain-object` |            ~ 160B |
+| `isPlainObject + assertPlainObject`                      |            ~ 325B |
 
-> Note that per-se the library weigths less than 300 bytes, the quick-lru dependency makes the difference.
+
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/plain-object@latest).
 
 ## Compatibility
 
-| Level      | CI | Description                                                                                                                                                                                                                                                                                                                              |
-|------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node       | ✅  | CI for 18.x, 20.x & 22.x.                                                                                                                                                                                                                                                                                                                |
-| Browsers   | ✅  | [> 96%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Mins to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.browserslistrc) |
-| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                       | 
-| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                            |
-| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                             |
-| Performance| ✅  | Monitored with with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                |
+| Level      | CI | Description                                                                                                                                                                                                                                                                                                                                    |
+|------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| Node       | ✅  | CI for 18.x, 20.x & 22.x.                                                                                                                                                                                                                                                                                                                      |
+| Browsers   | ✅  | [> 96%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 07/2024. Mins to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.browserslistrc) |
+| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                             | 
+| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                  |
+| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                   |
+| Performance| ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                      |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 

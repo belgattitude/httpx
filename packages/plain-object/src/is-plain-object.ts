@@ -8,22 +8,31 @@ import type { PlainObject } from './plain-object.types';
  *
  * @example
  * ```typescript
- * isPlainObject({ key: 'value' });       // 👈 ✅ true
- * isPlainObject({ key: new Date() });    // 👈 ✅ true
- * isPlainObject(new Object());           // 👈 ✅ true
- * isPlainObject(Object.create(null));    // 👈 ✅ true
- * isPlainObject({nested: { key: true} }  // 👈 ✅ true
+ * isPlainObject({ key: 'value' });          // ✅
+ * isPlainObject({ key: new Date() });       // ✅
+ * isPlainObject(new Object());              // ✅
+ * isPlainObject(Object.create(null));       // ✅
+ * isPlainObject({ nested: { key: true} });  // ✅
+ * isPlainObject(new Proxy({}, {}));         // ✅
+ * isPlainObject({ [Symbol('tag')]: 'A' });  // ✅
+
+ * // ✅👇 (node context, workers, ...)
+ * const runInNewContext = await import('node:vm').then(
+ *  (mod) => mod.runInNewContext
+ * );
+ * isPlainObject(runInNewContext('({})'));   // ✅
  *
+ *  ❌👇 False
  * class Test { };
- *
- * isPlainObject(new Test())              // 👈 ❌ false
- * isPlainObject(10);                     // 👈 ❌ false
- * isPlainObject(null);                   // 👈 ❌ false
- * isPlainObject('hello');                // 👈 ❌ false
- * isPlainObject([]);                     // 👈 ❌ false
- * isPlainObject(new Date());             // 👈 ❌ false
- * isPlainObject(Math);                   // 👈 ❌ false
- * (...)
+ * isPlainObject(new Test())           // ❌
+ * isPlainObject(10);                  // ❌
+ * isPlainObject(null);                // ❌
+ * isPlainObject('hello');             // ❌
+ * isPlainObject([]);                  // ❌
+ * isPlainObject(new Date());          // ❌
+ * isPlainObject(Math);                // ❌ Static built-in classes
+ * isPlainObject(Promise.resolve({})); // ❌
+ * isPlainObject(Object.create({}));   // ❌
  * ```
  */
 export const isPlainObject = <

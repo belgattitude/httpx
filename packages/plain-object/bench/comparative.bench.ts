@@ -54,7 +54,7 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
     }
   });
 
-  bench('(sindresorhus)/is-plain-obj: `isPlainObj(v)`', () => {
+  bench('(sindresorhus/)is-plain-obj: `isPlainObj(v)`', () => {
     for (const value of realLifeScenarios) {
       isPlainObj(value);
     }
@@ -66,7 +66,7 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
     }
   });
 
-  bench('(jonschlinkert)/is-plain-object: `isPlainObject(v)`', () => {
+  bench('(jonschlinkert/)is-plain-object: `isPlainObject(v)`', () => {
     for (const value of realLifeScenarios) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       jonschlinkertIsPlainObject(value);
