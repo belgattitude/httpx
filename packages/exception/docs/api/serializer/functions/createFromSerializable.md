@@ -20,3 +20,5 @@ serializable representation
 ## Returns
 
 [`HttpException`](../../base/classes/HttpException.md) \| [`NativeError`](../type-aliases/NativeError.md)
+
+## Link

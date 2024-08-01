@@ -8,10 +8,6 @@
 
 > **JsonApiError**: `object`
 
-## See
-
-https://jsonapi.org/format/#errors
-
 ## Type declaration
 
 ### code?
@@ -55,3 +51,7 @@ the HTTP status code applicable to this problem, expressed as a string value.
 > **title**: `string`
 
 a short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+
+## See
+
+https://jsonapi.org/format/#errors

@@ -165,10 +165,6 @@ Indicates the original url that caused the error.
 
 Optional override for formatting stack traces
 
-#### See
-
-https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-
 #### Parameters
 
 • **err**: `Error`
@@ -178,6 +174,10 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 #### Returns
 
 `any`
+
+#### See
+
+https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 #### Inherited from
 

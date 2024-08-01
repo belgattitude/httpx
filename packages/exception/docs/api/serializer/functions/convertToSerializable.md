@@ -20,3 +20,5 @@ an object suitable for serialization (a serializable version).
 ## Returns
 
 `Serializable`
+
+## Link
