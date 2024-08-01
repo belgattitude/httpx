@@ -21,15 +21,14 @@ describe('plain-object types tests', () => {
         // act
         assertPlainObject(unknownPo);
 
+        assertType<PlainObject>(unknownPo);
+
         // Now the type is Record<string, unknown>, javascript allows to retrieve it
         // even if it doesn't exist. The value should be undefined|unknown
         const invalidKeyIsUnknown = unknownPo.invalidKey;
         expect(invalidKeyIsUnknown).toBe(undefined);
         // when removing the nullable (undefined) from the union
         expectTypeOf(invalidKeyIsUnknown).toBeUnknown();
-
-        const unknownPo2 = unknownPo;
-        unknownPo2.key;
 
         assertType<PlainObject>(unknownPo);
         assertType<Record<string, unknown>>(unknownPo);

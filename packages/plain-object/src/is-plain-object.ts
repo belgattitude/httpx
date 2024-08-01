@@ -8,6 +8,10 @@ import type { PlainObject } from './plain-object.types';
  *
  * @example
  * ```typescript
+ * import { isPlainObject } from '@httpx/plain-object';
+ *
+ * // ✅👇 True
+ *
  * isPlainObject({ key: 'value' });          // ✅
  * isPlainObject({ key: new Date() });       // ✅
  * isPlainObject(new Object());              // ✅
@@ -15,14 +19,15 @@ import type { PlainObject } from './plain-object.types';
  * isPlainObject({ nested: { key: true} });  // ✅
  * isPlainObject(new Proxy({}, {}));         // ✅
  * isPlainObject({ [Symbol('tag')]: 'A' });  // ✅
-
+ *
  * // ✅👇 (node context, workers, ...)
  * const runInNewContext = await import('node:vm').then(
- *  (mod) => mod.runInNewContext
+ *     (mod) => mod.runInNewContext
  * );
  * isPlainObject(runInNewContext('({})'));   // ✅
  *
- *  ❌👇 False
+ * // ❌👇 False
+ *
  * class Test { };
  * isPlainObject(new Test())           // ❌
  * isPlainObject(10);                  // ❌

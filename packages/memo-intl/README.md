@@ -75,7 +75,7 @@ Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/htt
 [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 
-`IntlNumberFormat(locale, options) x 10_000`, see [bench](./bench/m-intl.bench.ts) for details. 
+`IntlNumberFormat(locale, options) x 10_000`, see [bench](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/bench/m-intl.bench.ts) for details. 
 
 ```
  RUN  v1.6.0 /home/sebastien/github/httpx/packages/memo-intl
