@@ -1,0 +1,13 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "out": "./docs/api/plain-object",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "includeVersion": true,
+  "disableSources": true,
+  "entryFileName": "README.md",
+  "githubPages": false,
+  "readme": "none",
+  "exclude": ["**/*.test.ts", "**/*.bench.ts"]
+}
