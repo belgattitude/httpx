@@ -13,7 +13,7 @@ export const getNormalizedParams = (
   const { message, ...rest } = {
     ...(typeof msgOrParams === 'string'
       ? { message: msgOrParams }
-      : msgOrParams ?? {}),
+      : (msgOrParams ?? {})),
   };
   return {
     ...rest,

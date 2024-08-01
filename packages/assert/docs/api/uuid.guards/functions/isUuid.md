@@ -23,4 +23,4 @@ optional given version
 
 ## Defined in
 
-[uuid.guards.ts:24](https://github.com/belgattitude/httpx/blob/74dc9cd764aa64a9b1889ffb70a7f65e9435af37/packages/assert/src/uuid.guards.ts#L24)
+[uuid.guards.ts:24](https://github.com/belgattitude/httpx/blob/efdc4c7f5d90eb963a8ba204526e9494bbd080b8/packages/assert/src/uuid.guards.ts#L24)

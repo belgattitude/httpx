@@ -27,10 +27,6 @@ const value = formatter.format(new Date()); // 👈 'mercredi 29 mai 2024 à 07:
 ```
 </code>
 
-#### See
-
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
-
 #### Parameters
 
 • **locale**: `string`
@@ -40,6 +36,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 #### Returns
 
 `DateTimeFormat`
+
+#### See
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
 
 ### NumberFormat()
 
@@ -59,10 +59,6 @@ const value = formatter.format(10.1345); // 👈 '10,13 €'
 ```
 </code>
 
-#### See
-
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
-
 #### Parameters
 
 • **locale**: `string`
@@ -72,6 +68,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 #### Returns
 
 `NumberFormat`
+
+#### See
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
 
 ### cache
 

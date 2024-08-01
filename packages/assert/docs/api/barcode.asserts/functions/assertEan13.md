@@ -26,4 +26,4 @@ TypeError
 
 ## Defined in
 
-[barcode.asserts.ts:10](https://github.com/belgattitude/httpx/blob/74dc9cd764aa64a9b1889ffb70a7f65e9435af37/packages/assert/src/barcode.asserts.ts#L10)
+[barcode.asserts.ts:10](https://github.com/belgattitude/httpx/blob/efdc4c7f5d90eb963a8ba204526e9494bbd080b8/packages/assert/src/barcode.asserts.ts#L10)

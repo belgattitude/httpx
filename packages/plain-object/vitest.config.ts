@@ -1,4 +1,3 @@
-// @ts-expect-error no definition available
 import codspeedPlugin from '@codspeed/vitest-plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
