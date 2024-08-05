@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 3.0.7
+
+### Patch Changes
+
+- [#1335](https://github.com/belgattitude/httpx/pull/1335) [`f6d0479`](https://github.com/belgattitude/httpx/commit/f6d04791f94b43db7335cf1665e60e57e2a89345) Thanks [@belgattitude](https://github.com/belgattitude)! - Minor internal fix to HttpUnprocessableEntity
+
 ## 3.0.6
 
 ### Patch Changes
