@@ -107,7 +107,7 @@
         }
       ],
       "outputs": ["{projectRoot}/coverage/**/*"],
-      "cache": false
+      "cache": true
     },
     "test-unit-edge": {
       "dependsOn": ["^test-unit-edge"],
