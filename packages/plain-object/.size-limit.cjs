@@ -4,12 +4,6 @@
  */
 module.exports = [
   {
-    name: 'Everything (ESM)',
-    path: ['dist/index.mjs'],
-    import: "*",
-    limit: '330B',
-  },
-  {
     name: "Only { isPlainObject } (ESM)",
     path: ["dist/index.mjs"],
     import: "{ isPlainObject }",
@@ -20,6 +14,12 @@ module.exports = [
     path: ["dist/index.mjs"],
     import: "{ assertPlainObject }",
     limit: "164B",
+  },
+  {
+    name: "Import { assertPlainObject, isPlainObject } (ESM)",
+    path: ["dist/index.mjs"],
+    import: "{ assertPlainObject, isPlainObject }",
+    limit: "171B",
   },
   {
     name: 'Everything (CJS)',
