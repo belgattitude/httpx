@@ -84,6 +84,7 @@ jobs:
           fail_ci_if_error: true # optional (default = false)
           #files: ./coverage1.xml,./coverage2.xml # optional
           #flags: unittests # optional
+          flags: httpx-exception-unit,httpx-dsn-parser-unit,httpx-memo-intl-unit,httpx-plain-object-unit,httpx-assert-unit,httpx-json-api-unit
           #name: codecov-umbrella # optional
           verbose: true # optional (default = false)
         env:
