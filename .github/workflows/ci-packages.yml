@@ -87,6 +87,17 @@ jobs:
           yarn g:ci-coverage-upload
         shell: bash
 
+      - uses: codecov/codecov-action@v4
+        if: matrix.node-version == '20.x'
+        with:
+          fail_ci_if_error: true # optional (default = false)
+          #files: ./coverage1.xml,./coverage2.xml # optional
+          #flags: unittests # optional
+          #name: codecov-umbrella # optional
+          verbose: true # optional (default = false)
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
       - name: 🧪 Unit tests (edge-runtime)
         if: matrix.node-version == '20.x'
         run: yarn nx run-many --target=test-unit-edge --exclude='examples/**' --exclude='docs'
