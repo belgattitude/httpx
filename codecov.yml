@@ -39,7 +39,7 @@ flag_management:
           target: 90%
           threshold: 1%
 
-    - name: httpx-assert
+    - name: httpx-assert-unit
       paths:
         - packages/assert
       statuses:
