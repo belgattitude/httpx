@@ -95,7 +95,7 @@
         }
       ],
       "outputs": ["{projectRoot}/bench/output/**/*"],
-      "cache": true
+      "cache": false
     },
     "test-unit-coverage": {
       "dependsOn": ["^test-unit-coverage"],
