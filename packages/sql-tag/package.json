@@ -1,0 +1,102 @@
+{
+  "name": "@httpx/sql-tag",
+  "description": "Sql template literal.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "homepage": "https://belgattitude.github.io/httpx/sql-tag",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/belgattitude/httpx.git",
+    "directory": "packages/sql-tag"
+  },
+  "keywords": [
+    "dsn",
+    "dsn-parser",
+    "dsn parser",
+    "jdbc-parser",
+    "jdbc parser"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
+    "build": "run clean && yarn run tsup",
+    "build-release": "run build",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "check-dist": "run-s check-dist-esm check-dist-cjs",
+    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2022 './dist/**/*.cjs'",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
+    "check-pub": "attw --pack",
+    "check-size": "size-limit",
+    "clean": "rimraf ./dist ./build ./coverage ./_release",
+    "dev": "tsup --watch",
+    "fix-staged": "lint-staged --allow-empty",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/sql-tag.eslintcache",
+    "test": "vitest run",
+    "test-unit": "vitest run",
+    "test-unit-coverage": "vitest run --coverage",
+    "test-unit-edge": "vitest run --environment edge-runtime",
+    "test-unit-watch": "vitest --ui",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-sql-tag-unit --dir ./coverage"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.15.3",
+    "@belgattitude/eslint-config-bases": "5.5.1",
+    "@edge-runtime/vm": "3.2.0",
+    "@size-limit/file": "11.1.2",
+    "@size-limit/webpack": "11.1.2",
+    "@vitest/coverage-istanbul": "1.6.0",
+    "@vitest/ui": "1.6.0",
+    "browserslist": "4.23.0",
+    "browserslist-to-esbuild": "2.1.1",
+    "cross-env": "7.0.3",
+    "es-check": "7.1.1",
+    "esbuild": "0.20.2",
+    "eslint": "8.57.0",
+    "npm-run-all2": "6.1.2",
+    "rimraf": "5.0.5",
+    "rollup": "4.17.2",
+    "size-limit": "11.1.2",
+    "tsup": "8.0.2",
+    "typedoc": "0.25.13",
+    "typedoc-plugin-markdown": "4.0.0",
+    "typescript": "5.4.5",
+    "vite": "5.2.11",
+    "vite-tsconfig-paths": "4.3.2",
+    "vitest": "1.6.0",
+    "webpack": "5.91.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
