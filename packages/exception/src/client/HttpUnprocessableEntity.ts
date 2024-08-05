@@ -26,10 +26,10 @@ export class HttpUnprocessableEntity extends HttpClientException {
   static readonly STATUS = status;
   public readonly issues: HttpValidationIssue[];
   constructor(msgOrParams?: HttpExceptionParamsWithIssues | string) {
-    const { issues = [], ...p } =
+    const { issues = [], ...restParams } =
       typeof msgOrParams === 'string' ? {} : (msgOrParams ?? {});
 
-    super(status, getNormalizedParams(name, msgOrParams));
+    super(status, getNormalizedParams(name, restParams));
     this.issues = issues;
     initProtoAndName(this, name, HttpUnprocessableEntity);
   }
