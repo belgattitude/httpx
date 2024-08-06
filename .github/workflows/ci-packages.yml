@@ -74,28 +74,28 @@ jobs:
         if: matrix.node-version == '20.x'
         run: yarn nx run-many --target=test-unit-coverage --exclude='examples/**' --exclude='docs'
 
-      #- name: ☂️ Codecov upload (only node-20)
-      #  if: matrix.node-version == '20.x'
-      #  working-directory: ${{ github.workspace }}
-      #  run: |
-      #    bash .github/scripts/install-codecov.sh
-      #    yarn g:ci-coverage-upload
-      #  shell: bash
-      #  env:
-      #    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
       - name: ☂️ Codecov upload (only node-20)
-        uses: codecov/codecov-action@v4
         if: matrix.node-version == '20.x'
-        with:
-          fail_ci_if_error: true # optional (default = false)
-          #files: ./coverage1.xml,./coverage2.xml # optional
-          #flags: unittests # optional
-          flags: httpx-exception-unit,httpx-dsn-parser-unit,httpx-memo-intl-unit,httpx-plain-object-unit,httpx-assert-unit,httpx-json-api-unit
-          #name: codecov-umbrella # optional
-          verbose: true # optional (default = false)
+        working-directory: ${{ github.workspace }}
+        run: |
+          bash .github/scripts/install-codecov.sh
+          yarn g:ci-coverage-upload
+        shell: bash
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      #- name: ☂️ Codecov upload (only node-20)
+      #  uses: codecov/codecov-action@v4
+      #  if: matrix.node-version == '20.x'
+      #  with:
+      #    fail_ci_if_error: true # optional (default = false)
+          #files: ./coverage1.xml,./coverage2.xml # optional
+          #flags: unittests # optional
+      #    flags: httpx-exception-unit,httpx-dsn-parser-unit,httpx-memo-intl-unit,httpx-plain-object-unit,httpx-assert-unit,httpx-json-api-unit
+      #    #name: codecov-umbrella # optional
+      #    verbose: true # optional (default = false)
+      #  env:
+      #    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: 🧪 Unit tests (edge-runtime)
         if: matrix.node-version == '20.x'
