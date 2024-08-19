@@ -111,9 +111,45 @@ describe('Object typeguards tests', () => {
         }
       );
     });
+    // eslint-disable-next-line jest/valid-describe-callback
+    describe.skip('Compatibility with jonschlinkert/is-plain-object', async () => {
+      // @ts-expect-error packaging of this lib is not compatible with latest ts / module
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const jonschlinkertIsPlainObject = await import('is-plain-object').then(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
+        (mod) => mod.isPlainObject
+      );
+      it.each(cases)(
+        'compat when "%s" is given, should return %s',
+        (v, _expected) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          expect(isPlainObject(v)).toBe(jonschlinkertIsPlainObject(v));
+        }
+      );
+    });
+
+    // eslint-disable-next-line jest/valid-describe-callback
+    describe.skip('Compatibility with es-toolkit/is-plain-object', async () => {
+      const esToolkitIsPlainObject = await import('es-toolkit').then(
+        (mod) => mod.isPlainObject
+      );
+      it.each(cases)(
+        'compat when "%s" is given, should return %s',
+        (v, _expected) => {
+          expect(isPlainObject(v)).toBe(esToolkitIsPlainObject(v));
+        }
+      );
+    });
   });
+
   describe('Support node:vm.runInNewContext', () => {
     const isNodeLike = typeof window === 'undefined';
+    /*
+    const isNode = () =>
+        typeof process !== 'undefined' &&
+        !!process.versions &&
+        !!process.versions.node;
+    */
     it.skipIf(!isNodeLike)('should support vm', async () => {
       // eslint-disable-next-line import-x/no-nodejs-modules
       const runInNewContext = await import('node:vm').then(
