@@ -76,6 +76,9 @@ describe('Object typeguards tests', () => {
       [new Request('http://localhost'), false],
       [new Promise(() => {}), false],
       [Promise.resolve({}), false],
+      // eslint-disable-next-line no-restricted-globals
+      [Buffer.from('123123'), false],
+      [new Uint8Array([1, 2, 3]), false],
       [Object.create({}), false],
       [/(\d+)/, false],
       // eslint-disable-next-line prefer-regex-literals

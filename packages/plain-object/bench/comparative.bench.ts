@@ -40,6 +40,9 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
   const is = await import('@sindresorhus/is').then((mod) => mod.default);
   const isPlainObj = await import('is-plain-obj').then((mod) => mod.default);
   const lodash = await import('lodash-es').then((mod) => mod.default);
+  const esToolkitIsPlainObject = await import('es-toolkit').then(
+    (mod) => mod.isPlainObject
+  );
 
   // @ts-expect-error packaging of this lib is not compatible with latest ts / module
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -63,6 +66,13 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
   bench('@sindresorhus/is: `is.plainObject(v)`', () => {
     for (const value of realLifeScenarios) {
       is.plainObject(value);
+    }
+  });
+
+  bench('estoolkit:  `isPlainObject(v)`', () => {
+    for (const value of realLifeScenarios) {
+      // Sadly es-toolkit does not give a very usable type for isPlainObject
+      esToolkitIsPlainObject(value as object);
     }
   });
 
