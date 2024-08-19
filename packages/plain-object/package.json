@@ -10,7 +10,7 @@
   "homepage": "https://belgattitude.github.io/httpx/plain-object",
   "repository": {
     "type": "git",
-    "url": "https://github.com/belgattitude/httpx.git",
+    "url": "git+https://github.com/belgattitude/httpx.git",
     "directory": "packages/plain-object"
   },
   "keywords": [
@@ -36,10 +36,6 @@
       "require": {
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
-      },
-      "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
       }
     },
     "./package.json": "./package.json"
@@ -59,7 +55,7 @@
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2022 './dist/**/*.cjs'",
     "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
-    "check-pub": "attw --pack",
+    "check-pub": "attw --pack && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
@@ -69,7 +65,7 @@
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
-    "test-unit-watch": "vitest --ui",
+    "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-plain-object-unit --dir ./coverage"
@@ -96,6 +92,7 @@
     "is-plain-object": "5.0.0",
     "lodash-es": "4.17.21",
     "npm-run-all2": "6.2.2",
+    "publint": "0.2.10",
     "rimraf": "6.0.1",
     "rollup": "4.21.0",
     "size-limit": "11.1.4",
