@@ -10,7 +10,7 @@
   "homepage": "https://github.com/belgattitude/httpx/tree/main/packages/exception#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/belgattitude/httpx",
+    "url": "git+https://github.com/belgattitude/httpx.git",
     "directory": "packages/exception"
   },
   "keywords": [
@@ -34,10 +34,6 @@
       "require": {
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
-      },
-      "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
       }
     },
     "./experimental": {
@@ -48,10 +44,6 @@
       "require": {
         "types": "./dist/experimental/index.d.cts",
         "default": "./dist/experimental/index.cjs"
-      },
-      "default": {
-        "types": "./dist/experimental/index.d.ts",
-        "default": "./dist/experimental/index.mjs"
       }
     },
     "./serializer": {
@@ -62,10 +54,6 @@
       "require": {
         "types": "./dist/serializer/index.d.cts",
         "default": "./dist/serializer/index.cjs"
-      },
-      "default": {
-        "types": "./dist/serializer/index.d.ts",
-        "default": "./dist/serializer/index.mjs"
       }
     },
     "./package.json": "./package.json"
@@ -106,7 +94,7 @@
     "check-dist-cjs": "es-check --not './dist/cjs/*.map.js' -v es2022 './dist/**/*.cjs'",
     "check-dist-esm": "es-check --not './dist/esm/*.map.js' -v es2022 --module './dist/**/*.mjs'",
     "check-size": "size-limit",
-    "check-pub": "attw --pack",
+    "check-pub": "attw --pack && publint",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
@@ -134,6 +122,7 @@
     "esbuild": "0.23.1",
     "eslint": "8.57.0",
     "npm-run-all2": "6.2.2",
+    "publint": "0.2.10",
     "rimraf": "6.0.1",
     "rollup": "4.21.0",
     "size-limit": "11.1.4",
