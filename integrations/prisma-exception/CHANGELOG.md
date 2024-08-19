@@ -1,5 +1,12 @@
 # prisma-exception
 
+## 0.0.14
+
+### Patch Changes
+
+- Updated dependencies [[`b39a71c`](https://github.com/belgattitude/httpx/commit/b39a71c3e6e2b26003c4d496ab32e7f68af7d5e7), [`b39a71c`](https://github.com/belgattitude/httpx/commit/b39a71c3e6e2b26003c4d496ab32e7f68af7d5e7), [`b39a71c`](https://github.com/belgattitude/httpx/commit/b39a71c3e6e2b26003c4d496ab32e7f68af7d5e7)]:
+  - @httpx/exception@3.0.8
+
 ## 0.0.13
 
 ### Patch Changes
