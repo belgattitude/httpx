@@ -136,7 +136,7 @@ describe('Object typeguards tests', () => {
       it.each(cases)(
         'compat when "%s" is given, should return %s',
         (v, _expected) => {
-          expect(isPlainObject(v)).toBe(esToolkitIsPlainObject(v));
+          expect(isPlainObject(v)).toBe(esToolkitIsPlainObject(v as object));
         }
       );
     });
