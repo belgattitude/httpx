@@ -55,6 +55,7 @@ export const isPlainObject = <
   return (
     (proto === null ||
       proto === Object.prototype ||
+      // Required to support node:vm.runInNewContext({})
       Object.getPrototypeOf(proto) === null) &&
     // https://stackoverflow.com/a/76387885/5490184
     !(Symbol.toStringTag in v) &&

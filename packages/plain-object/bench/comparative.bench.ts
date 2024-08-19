@@ -7,14 +7,20 @@ import { bench, describe } from 'vitest';
  */
 const realLifeScenarios = [
   // 70% plain object
-  ...Array.from({ length: 70 }).map((_) => ({
+  ...Array.from({ length: 35 }).map((_) => ({
     key1: Math.random(),
     key2: Math.random(),
     key3: Math.random(),
   })),
+  ...Array.from({ length: 35 }).map((_) => ({
+    key1: {
+      subkey: [],
+    },
+  })),
   // Others: not plain objects
   ...Array.from({ length: 10 }).fill(new Map([['key', Math.random()]])),
-  ...Array.from({ length: 10 }).fill(null),
+  ...Array.from({ length: 5 }).fill(null),
+  ...Array.from({ length: 5 }).fill([]),
   // eslint-disable-next-line unicorn/no-useless-undefined
   ...Array.from({ length: 5 }).fill(undefined),
   ...Array.from({ length: 5 }).fill('str'),
