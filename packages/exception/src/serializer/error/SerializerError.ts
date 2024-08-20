@@ -4,7 +4,7 @@ export class SerializerError extends Error {
   constructor(
     message: string,
     params?: {
-      cause?: Error;
+      cause?: Error | undefined;
     }
   ) {
     const { cause } = params ?? {};

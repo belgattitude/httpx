@@ -25,7 +25,7 @@ export type SerializerParams = {
   /**
    * Whether to include stack strack trace in serialized data
    */
-  includeStack?: boolean;
+  includeStack?: boolean | undefined;
 };
 
 export type NativeErrorFields = {
@@ -34,16 +34,16 @@ export type NativeErrorFields = {
   message: string;
   /** Class name, ie: Error, RangeError, HttpException, HttpBadRequest */
   name: string;
-  stack?: string;
+  stack?: string | undefined;
 };
 
 export type HttpExceptionFields = NativeErrorFields & {
-  code?: string;
-  errorId?: string;
-  issues?: HttpValidationIssue[];
-  method?: HttpMethod;
+  code?: string | undefined;
+  errorId?: string | undefined;
+  issues?: HttpValidationIssue[] | undefined;
+  method?: HttpMethod | undefined;
   statusCode: HttpErrorStatusCodeOrNumber;
-  url?: string;
+  url?: string | undefined;
 };
 
 export type Serializable =

@@ -185,8 +185,10 @@ describe('convertToSerializable', () => {
 
     it.each(eachCases)(
       'for "%s" with includeStack="%s", should return stack="%s"',
-      (label, includeStack, hasStack, error) => {
-        const serializable = convertToSerializable(error, { includeStack });
+      (_label, includeStack, hasStack, error) => {
+        const serializable = convertToSerializable(error, {
+          includeStack: includeStack,
+        });
         const { stack } = serializable;
         expect(stack === undefined).toBe(!hasStack);
       }
