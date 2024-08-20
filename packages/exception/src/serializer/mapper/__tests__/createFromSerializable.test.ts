@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { HttpException } from '../../../base';
 import { HttpBadRequest, HttpUnprocessableEntity } from '../../../client';
+import { isHttpException } from '../../../typeguards/isHttpException';
 import { convertToSerializable } from '../convertToSerializable';
 import { createFromSerializable } from '../createFromSerializable';
 
@@ -134,55 +135,89 @@ describe('createFromSerializable', () => {
     });
   });
 
-  describe('when includeStack is set', () => {
-    const eachCases = [
-      [
-        'http-exception-default-include-stack',
-        undefined,
-        false,
-        new HttpException(500),
-      ],
-      [
-        'http-exception-with-include-stack=true',
-        true,
-        true,
-        new HttpException(500),
-      ],
-      [
-        'http-exception-with-include-stack=false',
-        false,
-        false,
-        new HttpException(500),
-      ],
-      [
-        'native-error-default-include-stack',
-        undefined,
-        false,
-        new Error('test'),
-      ],
-      ['native-error-with-include-stack=true', true, true, new Error('test')],
-      [
-        'native-error-with-include-stack=false',
-        false,
-        false,
-        new Error('test'),
-      ],
-    ] as const satisfies [
-      label: string,
-      includeStack: boolean | undefined,
-      hasStack: boolean,
-      error: HttpException | Error,
-    ][];
-
-    it.each(eachCases)(
-      'for "%s" with includeStack="%s", should return stack="%s"',
-      (label, includeStack, hasStack, error) => {
-        const converted = createFromSerializable(convertToSerializable(error), {
+  describe('testing includeStack param', () => {
+    type CaseParams = {
+      err: HttpException | Error;
+      includeStack: boolean | undefined;
+      expectedReturnType: 'undefined' | 'string';
+    };
+    const createCase = ({
+      err,
+      includeStack,
+      expectedReturnType,
+    }: CaseParams): [label: string, params: CaseParams] => {
+      const exceptionType = isHttpException(err)
+        ? 'HttpException'
+        : 'NativeError';
+      return [
+        `{ includeStack: ${includeStack} } with '${exceptionType}' should return '${expectedReturnType}'`,
+        {
+          err,
           includeStack,
+          expectedReturnType,
+        },
+      ];
+    };
+
+    const eachCases: ReturnType<typeof createCase>[] = [
+      createCase({
+        err: new HttpException(500),
+        includeStack: undefined,
+        expectedReturnType: 'undefined',
+      }),
+      createCase({
+        err: new HttpException(500),
+        includeStack: false,
+        expectedReturnType: 'undefined',
+      }),
+      createCase({
+        err: new HttpException(500),
+        includeStack: true,
+        expectedReturnType: 'string',
+      }),
+      createCase({
+        err: new Error('Err !'),
+        includeStack: undefined,
+        expectedReturnType: 'undefined',
+      }),
+      createCase({
+        err: new Error('Err !'),
+        includeStack: false,
+        expectedReturnType: 'undefined',
+      }),
+      createCase({
+        err: new Error('Err !'),
+        includeStack: true,
+        expectedReturnType: 'string',
+      }),
+    ] as const satisfies ReturnType<typeof createCase>[];
+
+    describe('when initial error has a stack', () => {
+      it.each(eachCases)('"%s"', (_label, caseParams) => {
+        const { includeStack, err, expectedReturnType } = caseParams;
+        const serialized = convertToSerializable(err, {
+          includeStack: true,
+        });
+        const converted = createFromSerializable(serialized, {
+          includeStack: includeStack,
         });
         const { stack } = converted;
-        expect(stack === undefined).toBe(!hasStack);
-      }
-    );
+        expect(stack).toBeTypeOf(expectedReturnType);
+      });
+    });
+
+    describe('when initial error has an undefined stack', () => {
+      it.each(eachCases)('"%s"', (_label, caseParams) => {
+        const { includeStack, err, expectedReturnType } = caseParams;
+        const serialized = convertToSerializable(err, {
+          includeStack: false,
+        });
+        const converted = createFromSerializable(serialized, {
+          includeStack: includeStack,
+        });
+        const { stack } = converted;
+        expect(stack).toBeTypeOf(expectedReturnType);
+      });
+    });
   });
 });

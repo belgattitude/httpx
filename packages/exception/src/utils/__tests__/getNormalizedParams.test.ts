@@ -4,7 +4,6 @@ import { getNormalizedParams } from '../getNormalizedParams';
 
 describe('getSuper', () => {
   it('should return an object from string msg', () => {
-    const cls = { name: 'HttpNotFound' };
     expect(getNormalizedParams('NotFound', {})).toStrictEqual({
       message: 'Not found',
     });

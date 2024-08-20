@@ -23,7 +23,7 @@ const defaultOptions = {
 
 export const parseDsn = (
   dsn: unknown,
-  options?: ParseDsnOptions
+  options?: ParseDsnOptions | undefined
 ): ParserResult => {
   if (!isNonEmptyString(dsn)) {
     return createErrorResult(

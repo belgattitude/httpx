@@ -18,4 +18,4 @@
 
 ## Defined in
 
-[uuid.guards.ts:36](https://github.com/belgattitude/httpx/blob/9d56eb57739de47a2eced4122ffa042138007013/packages/assert/src/uuid.guards.ts#L36)
+[uuid.guards.ts:36](https://github.com/belgattitude/httpx/blob/acde85be3548fccd6cc1a311d7f8d4419e2b6ce0/packages/assert/src/uuid.guards.ts#L36)

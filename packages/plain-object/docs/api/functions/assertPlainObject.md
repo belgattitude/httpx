@@ -1,8 +1,8 @@
-[**@httpx/plain-object v1.1.0**](../README.md) • **Docs**
+[**@httpx/plain-object v1.1.1**](../README.md) • **Docs**
 
 ***
 
-[@httpx/plain-object v1.1.0](../README.md) / assertPlainObject
+[@httpx/plain-object v1.1.1](../README.md) / assertPlainObject
 
 # Function: assertPlainObject()
 

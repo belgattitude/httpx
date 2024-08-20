@@ -26,7 +26,7 @@ import type { HttpErrorStatusCodeOrNumber } from '../types/HttpErrorStatusCodeOr
 
 export const createHttpException = <T extends HttpErrorStatusCodeOrNumber>(
   statusCode: T,
-  msgOrParams?: HttpExceptionParamsFromStatus<T> | string
+  msgOrParams?: HttpExceptionParamsFromStatus<T> | string | undefined
 ): HttpExceptionFromStatus<T> => {
   if (isHttpErrorStatusCode<AssignedErrorStatusCodes>(statusCode)) {
     const cls = statusMap?.[statusCode];

@@ -11,7 +11,8 @@ export class HttpException extends Error implements HttpExceptionParams {
    * you can get back the error cause
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
    */
-  public override readonly cause?: Error | HttpException;
+  public override readonly cause?: Error | HttpException | undefined;
+
   /**
    * Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
    */

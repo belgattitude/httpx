@@ -12,7 +12,7 @@
 
 ### cause?
 
-> `optional` **cause**: `Error`
+> `optional` **cause**: `Error` \| [`HttpException`](../../base/classes/HttpException.md)
 
 Indicates the original cause of the HttpException.
 Will be ignored/discarded if the runtime (browser / node version) does not support it

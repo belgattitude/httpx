@@ -1,19 +1,19 @@
 export type ParsedDsn = {
-  db?: string;
+  db?: string | undefined;
   driver: string;
   host: string;
   /** Query params */
-  params?: Record<string, boolean | number | string>;
-  pass?: string;
-  port?: number;
-  user?: string;
+  params?: Record<string, boolean | number | string> | undefined;
+  pass?: string | undefined;
+  port?: number | undefined;
+  user?: string | undefined;
 };
 
 export type ParseDsnOptions = {
   /** Whether to lowercase parsed driver name, default: false */
-  lowercaseDriver?: boolean;
+  lowercaseDriver?: boolean | undefined;
   /** Overrides parsed values by those one (except query params) */
-  overrides?: Omit<Partial<ParsedDsn>, 'params'>;
+  overrides?: Omit<Partial<ParsedDsn>, 'params'> | undefined;
 };
 
 export const errorReasons = {

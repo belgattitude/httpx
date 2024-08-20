@@ -15,6 +15,8 @@ import type {
   SerializerParams,
 } from '../types';
 
+type MaskedUndefinedAsStringTillLibEs5SupportsExactTypes = string;
+
 const createCustomError = (
   serializable: Omit<SerializableError | SerializableNonNativeError, '__type'>,
   params?: SerializerParams
@@ -28,8 +30,9 @@ const createCustomError = (
       })
     : new cls(message);
   if (!includeStack) {
-    e.stack = undefined;
-  } else if (stack) {
+    e.stack =
+      undefined as unknown as MaskedUndefinedAsStringTillLibEs5SupportsExactTypes;
+  } else if (stack !== undefined) {
     e.stack = stack;
   }
   return e;
@@ -53,7 +56,11 @@ const createHttpExceptionError = (
     issues,
   } = serializable;
   const exceptionParams = {
-    cause: cause ? createFromSerializable(cause) : undefined,
+    cause: cause
+      ? createFromSerializable(cause, {
+          includeStack,
+        })
+      : undefined,
     code: code,
     errorId: errorId,
     message: message,
@@ -67,15 +74,21 @@ const createHttpExceptionError = (
       ? new baseExceptionMap[name](statusCode, exceptionParams)
       : createHttpException(statusCode, exceptionParams);
   } catch {
-    return createCustomError({
-      cause,
-      message: exceptionParams.message,
-      name,
-      stack,
-    });
+    return createCustomError(
+      {
+        ...(cause ? { cause } : {}),
+        message: exceptionParams.message,
+        name,
+        ...(includeStack ? { stack } : {}),
+      },
+      {
+        includeStack,
+      }
+    );
   }
   if (!includeStack) {
-    e.stack = undefined;
+    e.stack =
+      undefined as unknown as MaskedUndefinedAsStringTillLibEs5SupportsExactTypes;
   } else if (stack !== undefined) {
     e.stack = stack;
   }
