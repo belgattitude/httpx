@@ -33,23 +33,6 @@
       ]
     },
     {
-      "groupName": "remix monorepo",
-      "groupSlug": "remix",
-      "matchPackageNames": [
-        "remix",
-      ],
-      "matchPackagePrefixes": [
-        "@remix-run/"
-      ]
-    },
-    {
-      "groupName": "pothos monorepo",
-      "groupSlug": "pothos",
-      "matchPackagePrefixes": [
-        "@pothos/"
-      ]
-    },
-    {
       "groupName": "tailwind monorepo",
       "groupSlug": "tailwind",
       "matchPackageNames": [
@@ -58,23 +41,6 @@
       "matchPackagePrefixes": [
         "@tailwindcss/"
       ]
-    },
-    {
-      "groupName": "graphql-mesh monorepo",
-      "groupSlug": "graphql-mesh",
-      "matchPackagePrefixes": [
-        "@graphql-mesh/"
-      ]
-    },
-    {
-      "groupName": "cache-interop monorepo",
-      "groupSlug": "soluble-cache-interop",
-      "matchPackageNames": [
-        "@soluble/dsn-parser",
-        "@soluble/cache-ioredis",
-        "@soluble/cache-redis",
-        "@soluble/cache-interop"
-      ],
     },
     {
       // Root package.json
@@ -86,7 +52,7 @@
     },
     {
       // Will pin dependencies found in apps/*...
-      "matchPaths": ["apps/**"],
+      "matchPaths": ["apps/**", "examples/**"],
       "matchDepTypes": [
         "dependencies",
       ],
@@ -94,7 +60,7 @@
     },
     {
       // Will preserve semver found in packages/*
-      "matchPaths": ["packages/**"],
+      "matchPaths": ["packages/**", "integrations/**"],
       "matchDepTypes": [
         "dependencies",
       ],
