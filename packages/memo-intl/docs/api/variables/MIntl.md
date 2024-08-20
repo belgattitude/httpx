@@ -1,8 +1,8 @@
-[**@httpx/memo-intl v1.1.0**](../README.md) • **Docs**
+[**@httpx/memo-intl v1.1.1**](../README.md) • **Docs**
 
 ***
 
-[@httpx/memo-intl v1.1.0](../README.md) / MIntl
+[@httpx/memo-intl v1.1.1](../README.md) / MIntl
 
 # Variable: MIntl
 

@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.3**](../README.md) • **Docs**
+[**@httpx/assert v0.12.4**](../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.3](../README.md) / array.asserts
+[@httpx/assert v0.12.4](../README.md) / array.asserts
 
 # array.asserts
 

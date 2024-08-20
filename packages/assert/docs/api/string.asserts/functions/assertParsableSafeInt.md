@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.3**](../../README.md) • **Docs**
+[**@httpx/assert v0.12.4**](../../README.md) • **Docs**
 
 ***
 
-[@httpx/assert v0.12.3](../../README.md) / [string.asserts](../README.md) / assertParsableSafeInt
+[@httpx/assert v0.12.4](../../README.md) / [string.asserts](../README.md) / assertParsableSafeInt
 
 # Function: assertParsableSafeInt()
 
@@ -24,4 +24,4 @@ TypeError
 
 ## Defined in
 
-[string.asserts.ts:32](https://github.com/belgattitude/httpx/blob/efdc4c7f5d90eb963a8ba204526e9494bbd080b8/packages/assert/src/string.asserts.ts#L32)
+[string.asserts.ts:32](https://github.com/belgattitude/httpx/blob/9d56eb57739de47a2eced4122ffa042138007013/packages/assert/src/string.asserts.ts#L32)

@@ -1,6 +1,6 @@
 # @httpx/plain-object
 
-[Fast]((#benchmarks)) and lightweight ([~100B](#bundle-size)) functions to check or assert
+[Fast](#benchmarks) and lightweight ([~100B](#bundle-size)) functions to check or assert
 that a value is a plain object.
 
 [![npm](https://img.shields.io/npm/v/@httpx/plain-object?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/plain-object)
