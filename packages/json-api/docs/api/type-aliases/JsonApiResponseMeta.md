@@ -1,8 +1,8 @@
-[**@httpx/json-api v0.5.19**](../README.md) • **Docs**
+[**@httpx/json-api v0.5.21**](../README.md) • **Docs**
 
 ***
 
-[@httpx/json-api v0.5.19](../README.md) / JsonApiResponseMeta
+[@httpx/json-api v0.5.21](../README.md) / JsonApiResponseMeta
 
 # Type Alias: JsonApiResponseMeta
 

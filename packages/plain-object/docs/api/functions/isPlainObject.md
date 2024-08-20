@@ -1,8 +1,8 @@
-[**@httpx/plain-object v0.1.0**](../README.md) • **Docs**
+[**@httpx/plain-object v1.1.0**](../README.md) • **Docs**
 
 ***
 
-[@httpx/plain-object v0.1.0](../README.md) / isPlainObject
+[@httpx/plain-object v1.1.0](../README.md) / isPlainObject
 
 # Function: isPlainObject()
 
