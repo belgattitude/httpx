@@ -1,5 +1,11 @@
 # @httpx/plain-object
 
+## 1.1.1
+
+### Patch Changes
+
+- [#1371](https://github.com/belgattitude/httpx/pull/1371) [`bda9fa3`](https://github.com/belgattitude/httpx/commit/bda9fa3f5b759a6a09a1a9f5d37e2792b456368b) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix readme links
+
 ## 1.1.0
 
 ### Minor Changes
