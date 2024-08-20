@@ -16,4 +16,4 @@
 
 ## Defined in
 
-[object.internal.types.ts:5](https://github.com/belgattitude/httpx/blob/9d56eb57739de47a2eced4122ffa042138007013/packages/assert/src/object.internal.types.ts#L5)
+[object.internal.types.ts:5](https://github.com/belgattitude/httpx/blob/acde85be3548fccd6cc1a311d7f8d4419e2b6ce0/packages/assert/src/object.internal.types.ts#L5)
