@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 3.0.9
+
+### Patch Changes
+
+- [#1375](https://github.com/belgattitude/httpx/pull/1375) [`36733f0`](https://github.com/belgattitude/httpx/commit/36733f06ef1278a362933c0c4c56e7d6ea9bceca) Thanks [@belgattitude](https://github.com/belgattitude)! - Support typescript "exactOptionalPropertyTypes". See [typescript blog](https://devblogs.microsoft.com/typescript/announcing-typescript-4-4/#exact-optional-property-types)
+
 ## 3.0.8
 
 ### Patch Changes
