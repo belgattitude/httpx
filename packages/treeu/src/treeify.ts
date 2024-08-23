@@ -11,18 +11,18 @@ type TreeifyContext<
 
 export const treeify = <
   TProps extends NodeProps | undefined,
-  TKey extends string = string,
+  TKey extends string,
 >(
   paths:
-    | { path: string; props: TProps }[]
-    | readonly { path: string; props: TProps }[],
+    | { key: TKey; props?: TProps | undefined }[]
+    | readonly { key: TKey; props?: TProps | undefined }[],
   params: Params
 ): TreeNode<TProps, TKey>[] => {
   const { separator } = params;
   const final: TreeifyContext<TProps, TKey> = { result: [] };
-  for (const { path, props } of paths) {
+  for (const { key, props } of paths) {
     let context: TreeifyContext<TProps, TKey> = final;
-    for (const name of path.split(separator)) {
+    for (const name of key.split(separator)) {
       if (!(name in context)) {
         context[name] = { result: [] };
         const node: TreeNode<TProps, TKey> = {
