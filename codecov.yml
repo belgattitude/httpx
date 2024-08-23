@@ -47,6 +47,14 @@ flag_management:
           target: 90%
           threshold: 1%
 
+    - name: httpx-treeu-unit
+      paths:
+        - packages/treeu
+      statuses:
+        - type: project
+          target: 50%
+          threshold: 1%
+
     - name: httpx-json-api-unit
       paths:
         - packages/json-api
