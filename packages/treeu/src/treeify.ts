@@ -9,13 +9,16 @@ type TreeifyContext<
   TKey extends string = string,
 > = Record<'result', TreeNode<TProps, TKey>[]> & Record<string, unknown>;
 
+type Data<TProps extends NodeProps | undefined, TKey extends string> = {
+  key: TKey;
+  props?: TProps | undefined;
+}[];
+
 export const treeify = <
   TProps extends NodeProps | undefined,
   TKey extends string,
 >(
-  paths:
-    | { key: TKey; props?: TProps | undefined }[]
-    | readonly { key: TKey; props?: TProps | undefined }[],
+  paths: Data<TProps, TKey>,
   params: Params
 ): TreeNode<TProps, TKey>[] => {
   const { separator } = params;

@@ -2,16 +2,16 @@ import { treeify } from '../treeify';
 
 describe('treeify', () => {
   const paths = [
-    { path: 'file1.ts', props: undefined },
+    { key: 'file1.ts', props: undefined },
     {
-      path: 'folder1/file1.ts',
+      key: 'folder1/file1.ts',
       props: {
         size: 80,
       },
     },
-    { path: 'folder1/file2.ts', props: {} },
-    { path: 'folder1/subfolder1/file1.ts', props: {} },
-    { path: 'folder1/subfolder1/file2.ts', props: {} },
+    { key: 'folder1/file2.ts', props: {} },
+    { key: 'folder1/subfolder1/file1.ts', props: {} },
+    { key: 'folder1/subfolder1/file2.ts', props: {} },
   ] as const;
 
   it('should work', () => {

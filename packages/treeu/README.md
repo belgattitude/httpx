@@ -35,128 +35,13 @@ $ pnpm add @httpx/treeu
 
 ## Usage
 
-### isPlainObject
+### Loader
 
 ```typescript
-import { isPlainObject } from '@httpx/treeu';
-
-// ✅👇 True
-
-isPlainObject({ key: 'value' });          // ✅ 
-isPlainObject({ key: new Date() });       // ✅ 
-isPlainObject(new Object());              // ✅ 
-isPlainObject(Object.create(null));       // ✅ 
-isPlainObject({ nested: { key: true} });  // ✅ 
-isPlainObject(new Proxy({}, {}));         // ✅ 
-isPlainObject({ [Symbol('tag')]: 'A' });  // ✅ 
-
-// ✅👇 (node context, workers, ...)
-const runInNewContext = await import('node:vm').then(
-    (mod) => mod.runInNewContext
-);
-isPlainObject(runInNewContext('({})'));   // ✅ 
-
-// ❌👇 False
-
-class Test { };
-isPlainObject(new Test())           // ❌ 
-isPlainObject(10);                  // ❌ 
-isPlainObject(null);                // ❌ 
-isPlainObject('hello');             // ❌ 
-isPlainObject([]);                  // ❌ 
-isPlainObject(new Date());          // ❌ 
-isPlainObject(Math);                // ❌ Static built-in classes 
-isPlainObject(Promise.resolve({})); // ❌
-isPlainObject(Object.create({}));   // ❌
-```
-
-### assertPlainObject
-
-```typescript
-import { assertPlainObject } from '@httpx/treeu';
-import type { PlainObject } from '@httpx/treeu';
-
-function fn(value: unknown) {
-
-    // 👇 Throws `new TypeError('Not a plain object')` if not a plain object
-    assertPlainObject(value);
-
-    // 👇 Throws `new TypeError('Custom message')` if not a plain object
-    assertPlainObject(value, 'Custom message');
-
-    // 👇 Throws custom error if not a plain object
-    assertPlainObject(value, () => {
-        throw new HttpBadRequest('Custom message');
-    });
-    
-    return value;
-}
-
-try {
-    const value = fn({ key: 'value' });
-    // ✅ Value is known to be PlainObject<unknown>
-    assertType<PlainObject>(value);
-} catch (error) {
-    console.error(error);
-}
+import { treeify } from '@httpx/treeu';
 
 ```
 
-### PlainObject type
-
-#### Generic
-
-`ìsPlainObject` and `assertPlainObject` accepts a generic to provide type 
-autocompletion. Be aware that no runtime check are done. If you're looking for 
-runtime validation, check zod, valibot or other alternatives.
-
-```typescript
-import { isPlainObject } from '@httpx/treeu';
-import type { PlainObject } from '@httpx/treeu';
-
-type CustomType = {
-    id: number;
-    data?: {
-        test: string[];
-        attributes?: {
-            url?: string | null;
-            caption?: string | null;
-            alternativeText?: string | null;
-        } | null;
-    } | null;
-};
-
-const value = { id: 1 } as unknown;
-
-if (isPlainObject<CustomType>(value)) {
-   // ✅ Value is a PlainObject with typescript autocompletion
-   // Note that there's no runtime checking of keys, so they are
-   // `unknown | undefined`. They will require unsing `?.` to access. 
-    
-  const url = value?.data?.attributes?.url; // autocompletion works
-  // ✅ url is `unknown | undefined`, so in order to use it, you'll need to
-  //    manually check for the type.
-  if (typeof url === 'string') {
-      console.log(url.toUpperCase());
-  }
-}
-
-```
-
-#### PlainObject
-
-```typescript
-import { assertPlainObject } from '@httpx/treeu';
-import type { PlainObject } from '@httpx/treeu';
-
-function someFn(value: PlainObject) {
-  //    
-}
-
-const value = { key: 'value' } as unknown;
-assertPlainObject(value);
-someFn(value)
-```
 
 ## Benchmarks
 
