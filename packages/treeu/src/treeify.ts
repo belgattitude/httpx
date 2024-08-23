@@ -1,31 +1,8 @@
+import type { NodeProps, TreeNode } from './types';
+
 type Params = {
   separator: string;
 };
-
-type NodeProps = Record<string, unknown>;
-
-interface LeafNode<
-  TProps extends NodeProps | undefined = undefined,
-  TKey extends string = string,
-> {
-  key: TKey;
-  children?: never;
-  props?: TProps;
-}
-
-interface ParentNode<
-  TProps extends NodeProps | undefined = undefined,
-  TKey extends string = string,
-> {
-  key: TKey;
-  children: TreeNode<TProps>[];
-  props?: TProps;
-}
-
-type TreeNode<
-  TProps extends NodeProps | undefined = undefined,
-  TKey extends string = string,
-> = LeafNode<TProps, TKey> | ParentNode<TProps, TKey>;
 
 type TreeifyContext<
   TProps extends NodeProps | undefined = undefined,
