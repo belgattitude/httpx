@@ -7,7 +7,9 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "strict": true,
-    "paths": {},
+    "paths": {
+      "@httpx/plain-object": ["../../../packages/plain-object/src/index"]
+    },
     "types": ["vitest/globals"]
   },
   "exclude": ["**/node_modules", "**/.*/*", "dist", "coverage"],

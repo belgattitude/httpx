@@ -7,12 +7,12 @@ module.exports = [
     name: 'Only { treeify} (ESM)',
     path: ['dist/index.mjs'],
     import: '{ treeify }',
-    limit: '150B',
+    limit: '170B',
   },
   {
-    name: 'Everything (CJS)',
+    name: 'Everything (ESM)',
     import: '*',
-    path: ['dist/index.cjs'],
-    limit: '570KB',
+    path: ['dist/index.mjs'],
+    limit: '580KB',
   },
 ];

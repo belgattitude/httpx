@@ -39,8 +39,8 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsup",
-    "build-release": "run build",
+    "build": "yarn clean && yarn tsup",
+    "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
     "bench": "vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
@@ -63,6 +63,9 @@
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-treeu-unit --dir ./coverage"
+  },
+  "dependencies": {
+    "@httpx/plain-object": "workspace:^"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.15.4",
@@ -98,5 +101,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "publishConfig": {
+    "directory": "_release/package"
   }
 }

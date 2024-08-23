@@ -5,8 +5,8 @@ export interface LeafNode<
   TKey extends string = string,
 > {
   key: TKey;
-  children?: never;
-  props?: TProps;
+  children: [];
+  props?: TProps | undefined;
 }
 
 export interface ParentNode<
@@ -22,3 +22,10 @@ export type TreeNode<
   TProps extends NodeProps | undefined = undefined,
   TKey extends string = string,
 > = LeafNode<TProps, TKey> | ParentNode<TProps, TKey>;
+
+export type TreeNodeWithParents<
+  TProps extends NodeProps | undefined = undefined,
+  TKey extends string = string,
+> = TreeNode<TProps, TKey> & {
+  parents: TKey[];
+};

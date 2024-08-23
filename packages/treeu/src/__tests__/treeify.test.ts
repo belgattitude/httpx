@@ -22,12 +22,14 @@ describe('treeify', () => {
       {
         children: [],
         key: 'file1.ts',
+        parents: [],
       },
       {
         children: [
           {
             children: [],
             key: 'file1.ts',
+            parents: ['folder1'],
             props: {
               size: 80,
             },
@@ -35,6 +37,7 @@ describe('treeify', () => {
           {
             children: [],
             key: 'file2.ts',
+            parents: ['folder1'],
             props: {},
           },
           {
@@ -42,19 +45,23 @@ describe('treeify', () => {
               {
                 children: [],
                 key: 'file1.ts',
+                parents: ['folder1', 'subfolder1'],
                 props: {},
               },
               {
                 children: [],
                 key: 'file2.ts',
+                parents: ['folder1', 'subfolder1'],
                 props: {},
               },
             ],
             key: 'subfolder1',
+            parents: ['folder1', 'subfolder1'],
             props: {},
           },
         ],
         key: 'folder1',
+        parents: ['folder1'],
         props: {
           size: 80,
         },
