@@ -18,7 +18,7 @@ export const treeify = <
   TProps extends NodeProps | undefined,
   TKey extends string,
 >(
-  paths: Data<TProps, TKey>,
+  paths: Data<TProps, TKey> | Readonly<Data<TProps, TKey>>,
   params: Params
 ): TreeNode<TProps, TKey>[] => {
   const { separator } = params;
