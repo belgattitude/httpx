@@ -1543,7 +1543,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@httpx/plain-object@workspace:packages/plain-object":
+"@httpx/plain-object@workspace:^, @httpx/plain-object@workspace:packages/plain-object":
   version: 0.0.0-use.local
   resolution: "@httpx/plain-object@workspace:packages/plain-object"
   dependencies:
@@ -1591,6 +1591,7 @@ __metadata:
     "@belgattitude/eslint-config-bases": "npm:5.17.0"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.2"
+    "@httpx/plain-object": "workspace:^"
     "@sindresorhus/is": "npm:7.0.0"
     "@size-limit/file": "npm:11.1.4"
     "@size-limit/webpack": "npm:11.1.4"
