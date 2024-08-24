@@ -15,7 +15,7 @@ export default defineConfig({
     target: ['node18'],
   },
   plugins: [tsconfigPaths(), ...[cspeed].filter(Boolean)],
-  cacheDir: '../../.cache/vite/httpx-dsn-parser',
+  cacheDir: '../../.cache/vite/httpx-plain-object',
   test: {
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,

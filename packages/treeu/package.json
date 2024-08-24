@@ -1,26 +1,20 @@
 {
-  "name": "@httpx/plain-object",
-  "description": "Fast and lightweight utility functions to check if a value is a plain object.",
-  "version": "1.1.1",
+  "name": "@httpx/treeu",
+  "description": "Tree utilities",
+  "version": "0.0.1",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://belgattitude.github.io/httpx/plain-object",
+  "homepage": "https://belgattitude.github.io/httpx/treeu",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
-    "directory": "packages/plain-object"
+    "directory": "packages/treeu"
   },
   "keywords": [
-    "plainObject",
-    "plain-object",
-    "is-plain-object",
-    "id-plain-obj",
-    "assert-plain-object",
-    "typeguard",
-    "assertion"
+    "treeify"
   ],
   "sideEffects": false,
   "type": "module",
@@ -45,8 +39,8 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsup",
-    "build-release": "run build",
+    "build": "yarn clean && yarn tsup",
+    "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
     "bench": "vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
@@ -60,7 +54,7 @@
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/plain-object.eslintcache",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/treeu.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
@@ -68,7 +62,10 @@
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-plain-object-unit --dir ./coverage"
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-treeu-unit --dir ./coverage"
+  },
+  "dependencies": {
+    "@httpx/plain-object": "workspace:^"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.15.4",
@@ -85,11 +82,8 @@
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "7.0.3",
     "es-check": "7.2.1",
-    "es-toolkit": "1.16.0",
     "esbuild": "0.23.1",
     "eslint": "8.57.0",
-    "is-plain-obj": "4.1.0",
-    "is-plain-object": "5.0.0",
     "lodash-es": "4.17.21",
     "npm-run-all2": "6.2.2",
     "publint": "0.2.10",
@@ -103,9 +97,12 @@
     "vite": "5.4.2",
     "vite-tsconfig-paths": "5.0.1",
     "vitest": "2.0.5",
-    "webpack": "5.94.0"
+    "webpack": "5.93.0"
   },
   "engines": {
     "node": ">=18"
+  },
+  "publishConfig": {
+    "directory": "_release/package"
   }
 }

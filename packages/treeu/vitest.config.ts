@@ -1,14 +1,21 @@
+import codspeedPlugin from '@codspeed/vitest-plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
 const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
+const isCodeSpeedEnabled = process.env?.CODSPEED === '1';
+const cspeed = isCodeSpeedEnabled
+  ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    (codspeedPlugin() as unknown as Plugin)
+  : undefined;
+
 export default defineConfig({
   esbuild: {
     target: ['node18'],
   },
-  plugins: [tsconfigPaths()],
-  cacheDir: '../../.cache/vite/httpx-dsn-parser',
+  plugins: [tsconfigPaths(), ...[cspeed].filter(Boolean)],
+  cacheDir: '../../.cache/vite/httpx-treeu',
   test: {
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
@@ -20,6 +27,10 @@ export default defineConfig({
     },
     typecheck: {
       enabled: false,
+    },
+    benchmark: {
+      reporters: ['default'],
+      outputJson: './bench/output/benchmark-results.json',
     },
     pool: 'forks',
     poolOptions: {
@@ -44,7 +55,7 @@ export default defineConfig({
     include: testFiles,
     // To mimic Jest behaviour regarding mocks.
     mockReset: true,
-    passWithNoTests: true,
+    passWithNoTests: false,
     restoreMocks: true,
   },
 });

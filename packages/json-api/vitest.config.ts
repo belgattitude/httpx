@@ -44,7 +44,7 @@ export default defineConfig({
     include: testFiles,
     // To mimic Jest behaviour regarding mocks.
     mockReset: true,
-    passWithNoTests: false,
+    passWithNoTests: true,
     restoreMocks: true,
   },
 });
