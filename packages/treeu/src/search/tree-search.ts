@@ -11,6 +11,13 @@ type NativeNodeSearchKeys = [
   value: string,
 ];
 
+type TreeNodeOptionalChildren<
+  TValue extends TreeNodeValue | undefined,
+  TKey extends string = string,
+> = TreeNode<TValue, TKey> & {
+  children?: TreeNode<TValue, TKey> | undefined;
+};
+
 export class TreeSearch<
   TValue extends TreeNodeValue | undefined,
   TKey extends string = string,
@@ -22,13 +29,13 @@ export class TreeSearch<
       | ((treeNode: TreeNode<TValue, TKey>) => boolean),
     params?: Params | undefined
     // eslint-disable-next-line sonarjs/cognitive-complexity
-  ): TreeNode<TValue, TKey> | undefined => {
+  ): TreeNodeOptionalChildren<TValue, TKey> | undefined => {
     const { includeChildren = false, reverse = false } = { ...params };
     if (!Array.isArray(this.treeNodes)) return;
     let result;
     const isFnSearch = !Array.isArray(condOrFn);
     for (const treeNode of this.treeNodes) {
-      const stack = [treeNode] as TreeNode<TValue, TKey>[];
+      const stack = [treeNode] as TreeNodeOptionalChildren<TValue, TKey>[];
       while (stack.length > 0) {
         const node = stack[reverse ? 'pop' : 'shift']()!;
         const isFound = isFnSearch
@@ -39,17 +46,21 @@ export class TreeSearch<
           break;
         }
         if (node.children) {
-          stack.push(...node.children);
+          stack.push(
+            ...(node.children as unknown as TreeNodeOptionalChildren<
+              TValue,
+              TKey
+            >[])
+          );
         }
       }
       if (result) break;
     }
     if (includeChildren !== true) {
-      const newResult = {
-        ...result,
-      };
-      delete newResult?.children;
-      return newResult;
+      const { children: _children, ...rest } = result ?? {};
+      return {
+        ...rest,
+      } as TreeNodeOptionalChildren<TValue, TKey>;
     }
     return result;
   };
