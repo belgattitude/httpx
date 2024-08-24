@@ -23,10 +23,7 @@ $ pnpm add @httpx/treeu
 
 ## Features
 
-- 👉&nbsp; Provide [isPlainObject](#isplainobject) and [assertPlainObject](#assertplainobject) functions.
-- 👉&nbsp; Convenience [PlainObject](#plainobject-type) type.
-- 👉&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
-- 👉&nbsp; Lightweight (starts at [~100B](#bundle-size)) and [node, browser and edge support](#compatibility).
+- 👉&nbsp; Lightweight (starts at [~200B](#bundle-size)) and [node, browser and edge support](#compatibility).
 - 👉&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
@@ -35,10 +32,48 @@ $ pnpm add @httpx/treeu
 
 ## Usage
 
-### Loader
+### Load
 
 ```typescript
-import { treeify } from '@httpx/treeu';
+import { Tree, FlatTreeWsMapper, type FlatTreeWs } from '@httpx/treeu';
+
+type CustomValue = { byteSize?: number | undefined };
+
+// Load from flat data with key separator
+const paths = [
+  { key: 'file1.ts', value: { byteSize: 80 } },
+  { key: 'folder1/file1.ts', value: { byteSize: 0 } },
+  { key: 'folder1/file2.ts', value: { byteSize: 4 } },
+  { key: 'folder1/subfolder1/file1.ts', byteSize: { size: 10 } },
+  { key: 'folder1/subfolder1/file2.ts', byteSize: { size: 10 } },
+] as const satisfies FlatTreeWs<CustomValue>;
+
+const parsed = FlatTreeWsMapper.toTreeNodes<CustomValue>(paths, {
+  separator: '/',
+});
+if (!parsed.success) {
+  throw new Error(`Couldn't parse !`);
+}
+
+// Create a tree
+
+const tree = new Tree<CustomValue>(parsed.treeNodes);
+
+// Search a node by id
+const node = tree.search.findBy(
+  ['id', '===', 'folder1/subfolder1/file1.ts'],
+  {
+    includeChildren: false,
+    reverse: false,
+  }
+);
+assert.equal(node, {
+    id: 'folder1/subfolder1/file1.ts',
+    parentId: 'folder1/subfolder1',
+    value: {
+      byteSize: 10,
+    },
+});
 
 ```
 
@@ -52,39 +87,35 @@ import { treeify } from '@httpx/treeu';
 ```
  RUN  v2.0.5 /home/sebastien/github/httpx/packages/treeu
 
- ✓ bench/comparative.bench.ts (6) 4778ms
-   ✓ Compare calling isPlainObject with 100x mixed types values (6) 4779ms
-     name                                                           hz     min      max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/treeu: `isPlainObject(v)`              1,494,047.57  0.0005   8.3748  0.0007  0.0007  0.0008  0.0009  0.0047  ±3.40%   747024   fastest
-   · (sindresorhus/)is-plain-obj: `isPlainObj(v)`         1,314,933.16  0.0005  11.7854  0.0008  0.0007  0.0014  0.0015  0.0022  ±6.83%   657467
-   · @sindresorhus/is: `is.plainObject(v)`                  934,442.37  0.0009   2.1268  0.0011  0.0011  0.0015  0.0018  0.0065  ±1.38%   467222
-   · estoolkit:  `isPlainObject(v)`                         378,403.92  0.0020  10.3395  0.0026  0.0026  0.0035  0.0055  0.0155  ±4.23%   189202
-   · (jonschlinkert/)is-treeu: `isPlainObject(v)`    629,387.99  0.0012  13.2170  0.0016  0.0015  0.0023  0.0030  0.0129  ±6.81%   314694
-   · lodash-es: `_.isPlainObject(v)`                         21,164.79  0.0361  11.2577  0.0472  0.0446  0.1057  0.1678  0.5020  ±5.03%    10583   slowest
+ ✓ bench/search.bench.ts (1) 621ms
+   ✓ Bench search (1) 619ms
+     name                      hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · TreeSearch findBy  34,892.20  0.0274  0.2356  0.0287  0.0287  0.0323  0.0342  0.0978  ±0.23%    17447
+ ✓ bench/mapper.bench.ts (1) 608ms
+   ✓ Bench mapper (1) 607ms
+     name                                hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · FlatTreeWsMapper.toTreeNodes  2,145.13  0.4502  1.1320  0.4662  0.4564  0.6713  0.7166  0.8966  ±0.61%     1073
 
 
  BENCH  Summary
 
-  @httpx/treeu: `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 100x mixed types values
-    1.14x faster than (sindresorhus/)is-plain-obj: `isPlainObj(v)`
-    1.60x faster than @sindresorhus/is: `is.plainObject(v)`
-    2.37x faster than (jonschlinkert/)is-treeu: `isPlainObject(v)`
-    3.95x faster than estoolkit:  `isPlainObject(v)`
-    70.59x faster than lodash-es: `_.isPlainObject(v)`
+  FlatTreeWsMapper.toTreeNodes - bench/mapper.bench.ts > Bench mapper
 
+  TreeSearch findBy - bench/search.bench.ts > Bench search
+ 
 ```
 
-> See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/treeu/bench/comparative.bench.ts) for details.
+> See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/treeu/bench/README.md) for details.
 
 ## Bundle size
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/treeu/.size-limit.cjs)
 
-| Scenario (esm)                                           | Size (compressed) |
-|----------------------------------------------------------|------------------:|
-| `import { isPlainObject } from '@httpx/treeu`     |            ~ 100B |
-| `import { assertPlainObject } from '@httpx/treeu` |            ~ 160B |
-| `isPlainObject + assertPlainObject`                      |            ~ 170B |
+| Scenario (esm)                                   | Size (compressed) |
+|--------------------------------------------------|------------------:|
+| `import { Tree } from '@httpx/treeu`             |            ~ 330B |
+| `import { TreeSearch } from '@httpx/treeu`       |            ~ 310B |
+| `import { FlatTreeWsMapper } from '@httpx/treeu` |            ~ 210B |
 
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/treeu@latest).

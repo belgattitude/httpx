@@ -14,7 +14,7 @@ const tryOrFail = <T extends ParsedTreeResult<any, string>>(result: T) => {
 describe('FlatTreeWsMapper', () => {
   describe('toTreeNodes()', () => {
     const paths = [
-      { key: 'file1.ts', value: undefined },
+      { key: 'file1.ts' },
       {
         key: 'folder1/file1.ts',
         value: {
