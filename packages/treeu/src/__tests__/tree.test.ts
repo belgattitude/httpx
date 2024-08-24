@@ -1,7 +1,11 @@
-import { type FlatTreeWs, FlatTreeWsMapper, Tree } from '@httpx/treeu';
+import {
+  type FlatTreeWs,
+  FlatTreeWsMapper,
+} from '../mapper/flat-tree-ws-mapper';
+import { Tree } from '../tree';
 
 describe('Tree', () => {
-  type CustomValue = { size?: number | undefined };
+  type CustomValue = { size: number };
 
   // Load from flat data with key separator
   const paths = [
