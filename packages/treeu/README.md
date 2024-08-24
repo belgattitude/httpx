@@ -1,7 +1,6 @@
 # @httpx/treeu
 
-[Fast](#benchmarks) and lightweight ([~100B](#bundle-size)) functions to check or assert
-that a value is a plain object.
+[Fast](#benchmarks) and lightweight ([~100B](#bundle-size)) utilities to work with trees.
 
 [![npm](https://img.shields.io/npm/v/@httpx/treeu?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/treeu)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/treeu/CHANGELOG.md)
@@ -37,7 +36,7 @@ $ pnpm add @httpx/treeu
 ```typescript
 import { Tree, FlatTreeWsMapper, type FlatTreeWs } from '@httpx/treeu';
 
-type CustomValue = { byteSize?: number | undefined };
+type CustomValue = { byteSize: number };
 
 // Load from flat data with key separator
 const paths = [
