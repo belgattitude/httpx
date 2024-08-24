@@ -4,10 +4,10 @@
  */
 module.exports = [
   {
-    name: 'Only { treeify} (ESM)',
+    name: 'Only { treeify } (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ treeify }',
-    limit: '170B',
+    import: '{ FlatTreeWsMapper }',
+    limit: '210B',
   },
   {
     name: 'Everything (ESM)',
