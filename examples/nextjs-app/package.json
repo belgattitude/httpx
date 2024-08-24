@@ -23,9 +23,11 @@
     "@httpx/dsn-parser": "workspace:^",
     "@httpx/exception": "workspace:^",
     "@httpx/memo-intl": "workspace:^",
-    "axios": "1.7.4",
-    "ky": "1.7.0",
-    "next": "14.2.5",
+    "@httpx/plain-object": "workspace:^",
+    "@httpx/treeu": "workspace:^",
+    "axios": "1.7.5",
+    "ky": "1.7.1",
+    "next": "14.2.6",
     "pino": "9.3.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -34,16 +36,16 @@
   },
   "devDependencies": {
     "@belgattitude/eslint-config-bases": "5.17.0",
-    "@types/node": "22.4.1",
-    "@types/react": "18.3.3",
+    "@types/node": "22.5.0",
+    "@types/react": "18.3.4",
     "@types/react-dom": "18.3.0",
     "@vitejs/plugin-react-swc": "3.7.0",
     "@vitest/coverage-v8": "2.0.5",
     "@vitest/ui": "2.0.5",
     "cross-env": "7.0.3",
     "eslint": "8.57.0",
-    "eslint-config-next": "14.2.5",
-    "happy-dom": "14.12.3",
+    "eslint-config-next": "14.2.6",
+    "happy-dom": "15.0.0",
     "postcss": "8.4.41",
     "rimraf": "6.0.1",
     "tailwindcss": "3.4.10",
@@ -52,6 +54,6 @@
     "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "5.0.1",
     "vitest": "2.0.5",
-    "webpack": "5.93.0"
+    "webpack": "5.94.0"
   }
 }

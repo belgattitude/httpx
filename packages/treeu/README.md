@@ -132,16 +132,6 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
-## Credits
-
-This library wouldn't be possible without [@sindresorhus](https://github.com/sindresorhus) [is-plain-obj](https://github.com/sindresorhus/is-plain-obj).
-It passes the same test suite and should be 100% compatible with it. Notable differences:
-
-- [x] Slighly smaller bundle and performance.
-- [x] Named export.
-- [x] Provide a `PlainObject` type and `assertPlainObject` function.
-- [x] Typescript convenience `PlainObject` type.
-- [x] ESM and CJS formats.
 
 ## Contributors
 

@@ -2,71 +2,11 @@
   "files": [
     {
       "filepath": "/home/sebastien/github/httpx/packages/treeu/bench/mapper.bench.ts",
-      "groups": [
-        {
-          "fullName": "bench/mapper.bench.ts > Bench mapper",
-          "benchmarks": [
-            {
-              "id": "-437365205_0_0",
-              "sampleCount": 1025,
-              "median": 0.45699599757790565,
-              "name": "FlatTreeWsMapper.toTreeNodes",
-              "rank": 1,
-              "rme": 1.2379853602269333,
-              "totalTime": 500.0943880304694,
-              "min": 0.4418490007519722,
-              "max": 1.1471230015158653,
-              "hz": 2049.6130821159095,
-              "period": 0.4878969639321653,
-              "mean": 0.4878969639321653,
-              "variance": 0.009734171013993532,
-              "sd": 0.09866190254598546,
-              "sem": 0.003081680095138718,
-              "df": 1024,
-              "critical": 1.96,
-              "moe": 0.006040092986471887,
-              "p75": 0.4598510004580021,
-              "p99": 0.9380749985575676,
-              "p995": 0.9655830003321171,
-              "p999": 1.0638470016419888
-            }
-          ]
-        }
-      ]
+      "groups": []
     },
     {
       "filepath": "/home/sebastien/github/httpx/packages/treeu/bench/search.bench.ts",
-      "groups": [
-        {
-          "fullName": "bench/search.bench.ts > Bench search",
-          "benchmarks": [
-            {
-              "id": "-375909724_0_0",
-              "sampleCount": 17630,
-              "median": 0.027960000559687614,
-              "name": "TreeSearch findBy",
-              "rank": 1,
-              "rme": 0.2149227847376273,
-              "totalTime": 500.0277671031654,
-              "min": 0.026712998747825623,
-              "max": 0.22881799936294556,
-              "hz": 35258.041972622275,
-              "period": 0.028362323715437628,
-              "mean": 0.028362323715437628,
-              "variance": 0.00001705252546801871,
-              "sd": 0.004129470361683046,
-              "sem": 0.000031100559155877054,
-              "df": 17629,
-              "critical": 1.96,
-              "moe": 0.000060957095945519026,
-              "p75": 0.028272997587919235,
-              "p99": 0.0343720018863678,
-              "p995": 0.040094003081321716,
-              "p999": 0.1011659987270832
-            }
-          ]
-        }
-      ]
+      "groups": []
     }
   ]
 }
