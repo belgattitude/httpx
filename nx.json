@@ -54,7 +54,7 @@
       "cache": true
     },
     "bench": {
-      "dependsOn": ["^build", "^bench"],
+      "dependsOn": ["build", "^bench"],
       "inputs": ["default", "^public"],
       "outputs": [],
       "cache": false

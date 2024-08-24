@@ -1,0 +1,16 @@
+{
+  "targets": {
+    "typecheck": {
+      "dependsOn": ["build, ^typecheck"],
+      "inputs": [
+        "default",
+        "^public",
+        {
+          "externalDependencies": ["typescript"]
+        }
+      ],
+      "outputs": ["{projectRoot}/tsconfig.tsbuildinfo"],
+      "cache": true
+    }
+  }
+}

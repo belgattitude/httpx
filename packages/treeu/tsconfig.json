@@ -4,11 +4,12 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "baseUrl": ".",
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "strict": true,
     "paths": {
-      "@httpx/plain-object": ["../../../packages/plain-object/src/index"]
+      "@httpx/plain-object": ["../../packages/plain-object/src/index"]
     },
     "types": ["vitest/globals"]
   },
