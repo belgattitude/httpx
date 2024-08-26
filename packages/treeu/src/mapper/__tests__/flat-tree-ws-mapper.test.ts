@@ -38,6 +38,14 @@ describe('FlatTreeWsMapper', () => {
           value: { type: 'file', size: 40 },
         },
         {
+          key: 'folder2/subfolder1',
+          value: { type: 'folder' },
+        },
+        {
+          key: 'folder2/subfolder1/file1.ts',
+          value: { type: 'file', size: 50 },
+        },
+        {
           key: 'folder3',
           value: { type: 'folder' },
         },
@@ -95,6 +103,24 @@ describe('FlatTreeWsMapper', () => {
                 type: 'file',
               },
               children: [],
+            },
+            {
+              id: 'folder2/subfolder1',
+              parentId: 'folder2',
+              value: {
+                type: 'folder',
+              },
+              children: [
+                {
+                  id: 'folder2/subfolder1/file1.ts',
+                  parentId: 'folder2/subfolder1',
+                  value: {
+                    size: 50,
+                    type: 'file',
+                  },
+                  children: [],
+                },
+              ],
             },
           ],
         },
