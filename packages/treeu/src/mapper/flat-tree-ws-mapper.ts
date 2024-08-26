@@ -130,4 +130,10 @@ export class FlatTreeWsMapper<
       treeNodes: collector.result,
     };
   };
+
+  fromTreeNodes = (
+    treeNodes: TreeNode<TValue, TKey>
+  ): FlatTreeWs<TValue, TKey> => {
+    throw new Error('not implemented');
+  };
 }
