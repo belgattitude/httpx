@@ -22,7 +22,7 @@ $ pnpm add @httpx/treeu
 
 ## Features
 
-- 👉&nbsp; Lightweight (starts at [~200B](#bundle-size)) and [node, browser and edge support](#compatibility).
+- 👉&nbsp; Lightweight (starts at [~350B](#bundle-size)) and [node, browser and edge support](#compatibility).
 - 👉&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
@@ -281,9 +281,8 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                   | Size (compressed) |
 |--------------------------------------------------|------------------:|
-| `import { Tree } from '@httpx/treeu`             |            ~ 330B |
-| `import { TreeSearch } from '@httpx/treeu`       |            ~ 310B |
-| `import { FlatTreeWsMapper } from '@httpx/treeu` |            ~ 210B |
+| `import { DfsTreeSearch } from '@httpx/treeu`       |            ~ 350B |
+| `import { FlatTreeWsMapper } from '@httpx/treeu` |            ~ 800B |
 
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/treeu@latest).
