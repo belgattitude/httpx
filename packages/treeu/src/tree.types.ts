@@ -17,7 +17,7 @@ export interface ParentNode<
   TId extends ValidId = string,
 > {
   id: TId;
-  parentId?: TId | undefined;
+  parentId: TId | null;
   children: TreeNode<TValue>[];
   value?: TValue | undefined;
 }
@@ -27,7 +27,7 @@ export interface RootNode<
   TId extends ValidId = string,
 > {
   id: TId;
-  parentId?: never;
+  parentId: null;
   children: TreeNode<TValue>[];
   value?: TValue | undefined;
 }

@@ -19,7 +19,7 @@ const getPathNames = () => {
 describe(`Bench mapper`, async () => {
   const pathNames = getPathNames();
   bench('FlatTreeWsMapper.toTreeNodes', () => {
-    const _r = FlatTreeWsMapper.toTreeNodes(pathNames, {
+    const _r = new FlatTreeWsMapper().toTreeNodes(pathNames, {
       separator: '/',
     });
   });

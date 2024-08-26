@@ -2,11 +2,14 @@ import type { TreeNode } from '../../tree.types';
 import { TreeSearch } from '../tree-search';
 
 describe('TreeSearch', () => {
-  const treeNodes = [
+  type CustomType = {
+    size?: number | undefined;
+  };
+  const treeNodes: TreeNode<CustomType | undefined>[] = [
     {
       children: [],
       id: 'file1.ts',
-      parentId: undefined,
+      parentId: null,
     },
     {
       children: [
@@ -54,10 +57,10 @@ describe('TreeSearch', () => {
         size: 80,
       },
     },
-  ] as const satisfies TreeNode<{ size?: number } | undefined>[];
+  ];
 
   describe('findBy', () => {
-    const search = new TreeSearch<{ size?: number } | undefined>(treeNodes);
+    const search = new TreeSearch<CustomType | undefined>(treeNodes);
 
     describe('when giving a search function', () => {
       it('should return the matching node by id', () => {

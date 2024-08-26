@@ -23,6 +23,20 @@ export class TreeSearch<
   TKey extends string = string,
 > {
   constructor(private readonly treeNodes: TreeNode<TValue, TKey>[]) {}
+
+  /**
+   * Depth-First Search (DFS) algorithm to find a node in a tree.
+   *
+   * Uses a stack rather than recursion in order to support deeply
+   * nested trees without call-stack overflows.
+   *
+   * DFS is well-suited for searching for a particular node or for exploring a
+   * branch of a data structure in depth.
+   * It is usually preferred when memory usage is a concern or when the data
+   * structure has many nodes with few levels.
+   *
+   * @see https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
+   */
   findBy = (
     condOrFn:
       | NativeNodeSearchKeys

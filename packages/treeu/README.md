@@ -1,6 +1,6 @@
 # @httpx/treeu
 
-[Fast](#benchmarks) and lightweight ([~100B](#bundle-size)) utilities to work with trees.
+[Fast](#benchmarks) and lightweight ([~300B](#bundle-size)) utilities to work with trees.
 
 [![npm](https://img.shields.io/npm/v/@httpx/treeu?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/treeu)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/treeu/CHANGELOG.md)
@@ -31,12 +31,130 @@ $ pnpm add @httpx/treeu
 
 ## Usage
 
-### Load
+### Creating a tree
+
+```typescript
+
+type CustomValue = { size: number };
+
+const treeNodes: TreeNode<CustomValue>[] = [
+    {
+        children: [],
+        id: 'file1.ts',
+        parentId: undefined,
+        value: {
+            size: 80,
+        },
+    },
+    {
+        children: [
+            {
+                children: [],
+                id: 'folder1/file1.ts',
+                parentId: 'folder1',
+                value: {
+                    size: 20,
+                },
+            },
+            {
+                children: [],
+                id: 'folder1/file2.ts',
+                parentId: 'folder1',
+                value: {
+                    size: 30,
+                },
+            },
+            {
+                children: [
+                    {
+                        children: [],
+                        id: 'folder1/subfolder1/file2.ts',
+                        parentId: 'folder1/subfolder1',
+                        value: {
+                            size: 60,
+                        },
+                    },
+                ],
+                id: 'folder1/subfolder1/file1.ts',
+                parentId: 'folder1/subfolder1',
+                value: {
+                    size: 50,
+                },
+            },
+        ],
+    },
+];
+
+
+
+const treeNodes: TreeNodes<CustomValues, string>[] = [
+  {
+    "children": [],
+    "id": "file1.ts",
+    "parentId": undefined,
+    "value": {
+      "size": 80,
+    },
+  },
+  {
+    "children": [
+      {
+        "children": [],
+        "id": "folder1/file1.ts",
+        "parentId": "folder1",
+        "value": {
+          "size": 20,
+        },
+      },
+      {
+        "children": [],
+        "id": "folder1/file2.ts",
+        "parentId": "folder1",
+        "value": {
+          "size": 30,
+        },
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "id": "folder1/subfolder1/file1.ts",
+            "parentId": "folder1/subfolder1",
+            "value": {
+              "size": 50,
+            },
+          },
+          {
+            "children": [],
+            "id": "folder1/subfolder1/file2.ts",
+            "parentId": "folder1/subfolder1",
+            "value": {
+              "size": 60,
+            },
+          },
+        ],
+        "id": "folder1/subfolder1/file1.ts",
+        "parentId": "folder1/subfolder1",
+        "value": {
+          "size": 50,
+        },
+      },
+    ],
+    "id": "folder1/file1.ts",
+    "parentId": "folder1",
+    "value": {
+      "size": 20,
+    },
+  },
+]
+
+
+```
 
 ```typescript
 import { Tree, FlatTreeWsMapper, type FlatTreeWs } from '@httpx/treeu';
 
-type CustomValue = { byteSize: number };
+type CustomValue = { size: number };
 
 // Load from flat data with key separator
 const paths = [
@@ -73,9 +191,18 @@ assert.equal(node, {
       byteSize: 10,
     },
 });
-
 ```
 
+## Tree
+
+### Types
+
+| TreeNode<TValue, TId> | Type                            | Description                           |
+|-----------------------|---------------------------------|---------------------------------------|
+| id                    | `TValue extends string\|number` | Unique identifier of the node.        |
+| parentId              | `TValue extends string\|number` | Reference to the parent node          |
+| children              | `TreeNode<TValue, TId>[]`       | Children nodes                        |
+| value                 | `TValue\|undefined`             | Custom value associated with the node |
 
 ## Benchmarks
 

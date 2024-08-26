@@ -10,4 +10,8 @@ export class Tree<
   constructor(protected readonly treeNodes: TreeNode<TValue, TKey>[]) {
     this.search = new TreeSearch<TValue, TKey>(this.treeNodes);
   }
+
+  getTreeNodes = (): TreeNode<TValue, TKey>[] => {
+    return this.treeNodes;
+  };
 }

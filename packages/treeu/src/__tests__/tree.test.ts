@@ -1,29 +1,71 @@
-import {
-  type FlatTreeWs,
-  FlatTreeWsMapper,
-} from '../mapper/flat-tree-ws-mapper';
 import { Tree } from '../tree';
+import type { TreeNode } from '../tree.types';
 
 describe('Tree', () => {
   type CustomValue = { size: number };
 
-  // Load from flat data with key separator
-  const paths = [
-    { key: 'file1.ts', value: { size: 80 } },
-    { key: 'folder1/file1.ts', value: { size: 0 } },
-    { key: 'folder1/file2.ts', value: { size: 4 } },
-    { key: 'folder1/subfolder1/file1.ts', value: { size: 10 } },
-    { key: 'folder1/subfolder1/file2.ts', value: { size: 10 } },
-  ] as const satisfies FlatTreeWs<CustomValue>;
+  const treeNodes: TreeNode<CustomValue>[] = [
+    {
+      children: [],
+      id: 'file1.ts',
+      parentId: null,
+      value: {
+        size: 80,
+      },
+    },
+    {
+      id: 'folder1/file1.ts',
+      parentId: 'folder1',
+      value: {
+        size: 20,
+      },
+      children: [
+        {
+          children: [],
+          id: 'folder1/file1.ts',
+          parentId: 'folder1',
+          value: {
+            size: 20,
+          },
+        },
+        {
+          children: [],
+          id: 'folder1/file2.ts',
+          parentId: 'folder1',
+          value: {
+            size: 30,
+          },
+        },
+        {
+          children: [
+            {
+              children: [],
+              id: 'folder1/subfolder1/file1.ts',
+              parentId: 'folder1/subfolder1',
+              value: {
+                size: 50,
+              },
+            },
+            {
+              children: [],
+              id: 'folder1/subfolder1/file2.ts',
+              parentId: 'folder1/subfolder1',
+              value: {
+                size: 60,
+              },
+            },
+          ],
+          id: 'folder1/subfolder1/file1.ts',
+          parentId: 'folder1/subfolder1',
+          value: {
+            size: 50,
+          },
+        },
+      ],
+    },
+  ];
 
-  const parsed = FlatTreeWsMapper.toTreeNodes<CustomValue>(paths, {
-    separator: '/',
-  });
-  if (!parsed.success) {
-    throw new Error(`Couldn't parse !`);
-  }
-
-  const tree = new Tree<CustomValue>(parsed.treeNodes);
+  const tree = new Tree(treeNodes);
   it('should be expose search operations', () => {
     const found = tree.search.findBy(
       ['id', '===', 'folder1/subfolder1/file1.ts'],
@@ -36,7 +78,7 @@ describe('Tree', () => {
       id: 'folder1/subfolder1/file1.ts',
       parentId: 'folder1/subfolder1',
       value: {
-        size: 10,
+        size: 50,
       },
     });
   });
