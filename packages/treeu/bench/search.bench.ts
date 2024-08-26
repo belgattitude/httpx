@@ -2,7 +2,7 @@ import { bench, describe } from 'vitest';
 
 import { FlatTreeWsMapper } from '../src';
 import type { FlatTreeWs } from '../src/mapper/flat-tree-ws-mapper';
-import { TreeSearch } from '../src/search/tree-search';
+import { DfsTreeSearch } from '../src/search/dfs-tree-search';
 
 const getPathNames = () => {
   const length = 1000;
@@ -26,7 +26,7 @@ describe(`Bench search`, async () => {
   }
   const { treeNodes } = result;
 
-  const search = new TreeSearch(treeNodes);
+  const search = new DfsTreeSearch(treeNodes);
   bench('TreeSearch findBy', () => {
     const _r = search.findBy(['id', '===', '04/00']);
   });

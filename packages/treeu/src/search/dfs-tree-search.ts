@@ -1,6 +1,6 @@
 import type { TreeNode, TreeNodeValue } from '../tree.types';
 
-type Params = {
+type TreeSearchFindParams = {
   includeChildren?: boolean | undefined;
   reverse?: boolean;
 };
@@ -13,48 +13,59 @@ type NativeNodeSearchKeys = [
 
 type TreeNodeOptionalChildren<
   TValue extends TreeNodeValue | undefined,
-  TKey extends string = string,
+  TKey extends string | number = string,
 > = TreeNode<TValue, TKey> & {
   children?: TreeNode<TValue, TKey> | undefined;
 };
 
-export class TreeSearch<
+/**
+ * Depth-First Search (DFS) search algorithm based search. It uses a stack rather
+ * than recursion in order to support deeply nested trees without call-stack overflows.
+ * It is well suited for exploring a branch of a data structure in depth and
+ * usually preferred when memory usage is a concern or when the data
+ * structure has many nodes with few levels.
+ *
+ * @see https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
+ */
+export class DfsTreeSearch<
   TValue extends TreeNodeValue | undefined,
-  TKey extends string = string,
+  TKey extends string | number = string,
 > {
   constructor(private readonly treeNodes: TreeNode<TValue, TKey>[]) {}
 
   /**
-   * Depth-First Search (DFS) algorithm to find a node in a tree.
-   *
-   * Uses a stack rather than recursion in order to support deeply
-   * nested trees without call-stack overflows.
-   *
-   * DFS is well-suited for searching for a particular node or for exploring a
-   * branch of a data structure in depth.
-   * It is usually preferred when memory usage is a concern or when the data
-   * structure has many nodes with few levels.
-   *
-   * @see https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
+   * Find first matching node in the tree. The `reverse` parameter can be used
+   * to traverse the tree in reverse order.
    */
-  findBy = (
-    condOrFn:
+  findOne = (
+    idOrConditionOrFn:
+      | TKey
       | NativeNodeSearchKeys
       | ((treeNode: TreeNode<TValue, TKey>) => boolean),
-    params?: Params | undefined
+    params?: TreeSearchFindParams | undefined
     // eslint-disable-next-line sonarjs/cognitive-complexity
   ): TreeNodeOptionalChildren<TValue, TKey> | undefined => {
     const { includeChildren = false, reverse = false } = { ...params };
-    if (!Array.isArray(this.treeNodes)) return;
+    if (!Array.isArray(this.treeNodes) || this.treeNodes.length === 0) return;
     let result;
-    const isFnSearch = !Array.isArray(condOrFn);
+
+    const isIdSearch =
+      typeof idOrConditionOrFn === 'string' ||
+      typeof idOrConditionOrFn === 'number';
+    typeof idOrConditionOrFn === 'string' ||
+      typeof idOrConditionOrFn === 'number';
+    const isFnSearch = !Array.isArray(idOrConditionOrFn);
+
     for (const treeNode of this.treeNodes) {
       const stack = [treeNode] as TreeNodeOptionalChildren<TValue, TKey>[];
       while (stack.length > 0) {
         const node = stack[reverse ? 'pop' : 'shift']()!;
-        const isFound = isFnSearch
-          ? condOrFn(node)
-          : condOrFn[0] in node && node[condOrFn[0]] === condOrFn[2];
+        const isFound = isIdSearch
+          ? node.id === idOrConditionOrFn
+          : isFnSearch
+            ? idOrConditionOrFn(node)
+            : idOrConditionOrFn[0] in node &&
+              node[idOrConditionOrFn[0]] === idOrConditionOrFn[2];
         if (isFound) {
           result = node;
           break;

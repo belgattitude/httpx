@@ -65,21 +65,8 @@ describe('Tree', () => {
     },
   ];
 
-  const tree = new Tree(treeNodes);
-  it('should be expose search operations', () => {
-    const found = tree.search.findBy(
-      ['id', '===', 'folder1/subfolder1/file1.ts'],
-      {
-        includeChildren: false,
-        reverse: false,
-      }
-    );
-    expect(found).toStrictEqual({
-      id: 'folder1/subfolder1/file1.ts',
-      parentId: 'folder1/subfolder1',
-      value: {
-        size: 50,
-      },
-    });
+  it('should return treeNodes', () => {
+    const tree = new Tree(treeNodes);
+    expect(tree.getTreeNodes()).toStrictEqual(treeNodes);
   });
 });
