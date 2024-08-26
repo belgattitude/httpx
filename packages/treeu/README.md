@@ -1,6 +1,6 @@
 # @httpx/treeu
 
-[Fast](#benchmarks) and lightweight ([~100B](#bundle-size)) utilities to work with trees.
+[Fast](#benchmarks) and lightweight ([~300B](#bundle-size)) utilities to work with trees.
 
 [![npm](https://img.shields.io/npm/v/@httpx/treeu?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/treeu)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/treeu/CHANGELOG.md)
@@ -31,51 +31,220 @@ $ pnpm add @httpx/treeu
 
 ## Usage
 
-### Load
+### Search
+
+#### DFSTreeSearch
 
 ```typescript
-import { Tree, FlatTreeWsMapper, type FlatTreeWs } from '@httpx/treeu';
+import { Tree, TreeNode } from '@httpx/treeu';
+import { Tree, TreeNode } from '@httpx/treeu';
 
-type CustomValue = { byteSize: number };
+type CustomValue =
+    | { type: 'folder'; size?: never }
+    | { type: 'file'; size: number };
 
-// Load from flat data with key separator
-const paths = [
-  { key: 'file1.ts', value: { byteSize: 80 } },
-  { key: 'folder1/file1.ts', value: { byteSize: 0 } },
-  { key: 'folder1/file2.ts', value: { byteSize: 4 } },
-  { key: 'folder1/subfolder1/file1.ts', byteSize: { size: 10 } },
-  { key: 'folder1/subfolder1/file2.ts', byteSize: { size: 10 } },
-] as const satisfies FlatTreeWs<CustomValue>;
-
-const parsed = FlatTreeWsMapper.toTreeNodes<CustomValue>(paths, {
-  separator: '/',
-});
-if (!parsed.success) {
-  throw new Error(`Couldn't parse !`);
-}
-
-// Create a tree
-
-const tree = new Tree<CustomValue>(parsed.treeNodes);
-
-// Search a node by id
-const node = tree.search.findBy(
-  ['id', '===', 'folder1/subfolder1/file1.ts'],
-  {
-    includeChildren: false,
-    reverse: false,
-  }
-);
-assert.equal(node, {
-    id: 'folder1/subfolder1/file1.ts',
-    parentId: 'folder1/subfolder1',
-    value: {
-      byteSize: 10,
+const treeNodes: TreeNode<CustomValue>[] = [
+    {
+        id: 'file2.ts',
+        parentId: null,
+        value: { size: 30, type: 'file' },
+        children: [],
     },
-});
+    {
+        id: 'folder1',
+        parentId: null,
+        value: { type: 'folder' },
+        children: [
+            {
+                id: 'folder1/file1.ts',
+                parentId: 'folder1',
+                value: { size: 30, type: 'file' },
+                children: [],
+            },
+        ],
+    },
+];
+
+const search = new DfsTreeSearch<CustomValue>(treeNodes);
+const res1 = search.findOne('folder1/file1.ts');
+const res2 = search.findOne(['id', '===', 'folder1/file1.ts']);
+const res3 = search.findOne((treeNode) => treeNode.value.size === 30);
+
+// res1 === res2 === res3
 
 ```
 
+### Mapper
+
+#### FlatTreeWsMapper
+
+```typescript
+import { FlatTreeWsMapper, type FlatTreeWs } from '@httpx/treeu';
+
+type CustomValue =
+    | { type: 'folder'; size?: never }
+    | { type: 'file'; size: number };
+
+const paths: FlatTreeWs<CustomValue> = [
+    {
+        key: 'file1.ts',
+        value: { type: 'file', size: 10 },
+    },
+    {
+        key: 'folder1',
+        value: { type: 'folder' },
+    },
+    {
+        key: 'folder1/file1.ts',
+        value: { type: 'file', size: 30 },
+    },
+];
+
+const treeResult = new FlatTreeWsMapper().toTreeNodes(paths, {
+    separator: '/',
+});
+
+// Will return 
+const expected: TreeNode<CustomValue>[] = [
+    {
+        id: 'file1.ts',
+        parentId: null,
+        value: {
+            size: 10,
+            type: 'file',
+        },
+        children: [],
+    },
+    {
+        id: 'folder1',
+        parentId: null,
+        value: {
+            type: 'folder',
+        },
+        children: [
+            {
+                id: 'folder1/file1.ts',
+                parentId: 'folder1',
+                value: {
+                    size: 30,
+                    type: 'file',
+                },
+                children: [],
+            },
+        ],
+    },
+];
+
+
+```
+
+### TreeNode
+
+#### Example
+
+Example of TreeNode[] typing:
+
+```typescript
+import { Tree, TreeNode } from '@httpx/treeu';
+
+type CustomValue =
+    | { type: 'folder'; size?: never }
+    | { type: 'file'; size: number };
+
+const treeNodes: TreeNode<CustomValue>[] = [
+    {
+        id: 'file1.ts',
+        parentId: null,
+        value: {
+            size: 10,
+            type: 'file',
+        },
+        children: [],
+    },
+    {
+        id: 'file2.ts',
+        parentId: null,
+        value: {
+            size: 20,
+            type: 'file',
+        },
+        children: [],
+    },
+    {
+        id: 'folder1',
+        parentId: null,
+        value: {
+            type: 'folder',
+        },
+        children: [
+            {
+                id: 'folder1/file1.ts',
+                parentId: 'folder1',
+                value: {
+                    size: 30,
+                    type: 'file',
+                },
+                children: [],
+            },
+        ],
+    },
+    {
+        id: 'folder2',
+        parentId: null,
+        value: {
+            type: 'folder',
+        },
+        children: [
+            {
+                id: 'folder2/file1.ts',
+                parentId: 'folder2',
+                value: {
+                    size: 40,
+                    type: 'file',
+                },
+                children: [],
+            },
+            {
+                id: 'folder2/subfolder1',
+                parentId: 'folder2',
+                value: {
+                    type: 'folder',
+                },
+                children: [
+                    {
+                        id: 'folder2/subfolder1/file1.ts',
+                        parentId: 'folder2/subfolder1',
+                        value: {
+                            size: 50,
+                            type: 'file',
+                        },
+                        children: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: 'folder3',
+        parentId: null,
+        value: {
+            type: 'folder',
+        },
+        children: [],
+    },
+];
+```
+
+## Tree
+
+### Types
+
+| TreeNode<TValue, TId> | Type                            | Description                           |
+|-----------------------|---------------------------------|---------------------------------------|
+| id                    | `TValue extends string\|number` | Unique identifier of the node.        |
+| parentId              | `TValue extends string\|number` | Reference to the parent node          |
+| children              | `TreeNode<TValue, TId>[]`       | Children nodes                        |
+| value                 | `TValue\|undefined`             | Custom value associated with the node |
 
 ## Benchmarks
 

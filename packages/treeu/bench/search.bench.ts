@@ -2,7 +2,7 @@ import { bench, describe } from 'vitest';
 
 import { FlatTreeWsMapper } from '../src';
 import type { FlatTreeWs } from '../src/mapper/flat-tree-ws-mapper';
-import { TreeSearch } from '../src/search/tree-search';
+import { DfsTreeSearch } from '../src/search/dfs-tree-search';
 
 const getPathNames = () => {
   const length = 1000;
@@ -18,7 +18,7 @@ const getPathNames = () => {
 };
 
 describe(`Bench search`, async () => {
-  const result = FlatTreeWsMapper.toTreeNodes(getPathNames(), {
+  const result = new FlatTreeWsMapper().toTreeNodes(getPathNames(), {
     separator: '/',
   });
   if (!result.success) {
@@ -26,8 +26,8 @@ describe(`Bench search`, async () => {
   }
   const { treeNodes } = result;
 
-  const search = new TreeSearch(treeNodes);
-  bench('TreeSearch findBy', () => {
-    const _r = search.findBy(['id', '===', '04/00']);
+  const search = new DfsTreeSearch(treeNodes);
+  bench('TreeSearch findOne', () => {
+    const _r = search.findOne(['id', '===', '04/00']);
   });
 });

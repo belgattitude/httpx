@@ -12,17 +12,17 @@ module.exports = [
   },
   // Search
   {
-    name: 'Only { TreeSearch } (ESM)',
+    name: 'Only { DfsTreeSearch } (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ TreeSearch }',
-    limit: '320B',
+    import: '{ DfsTreeSearch }',
+    limit: '350B',
   },
   // Mappers
   {
     name: 'Only { FlatTreeWsMapper } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ FlatTreeWsMapper }',
-    limit: '210B',
+    limit: '740B',
   },
   {
     name: 'Everything (ESM)',
