@@ -1,6 +1,6 @@
 import { isPlainObject } from '@httpx/plain-object';
 
-import type { TreeNode, TreeNodeValue } from '../tree.types';
+import type { TreeNode, TreeNodeValue, TreeParentNode } from '../tree.types';
 import type { TreeMapperResult } from './mapper.types';
 
 type FlatTreeWsParams = {
@@ -69,6 +69,7 @@ export class FlatTreeWsMapper<
       uniqueKeys.add(key);
     }
   }
+
   toTreeNodes = (
     data: FlatTreeWs<TValue, TKey> | Readonly<FlatTreeWs<TValue, TKey>>,
     params: FlatTreeWsParams
@@ -131,9 +132,63 @@ export class FlatTreeWsMapper<
     };
   };
 
-  fromTreeNodes = (
-    treeNodes: TreeNode<TValue, TKey>
+  /**
+   * @throws Error
+   */
+  toTreeNodesOrThrow = (
+    data: FlatTreeWs<TValue, TKey> | Readonly<FlatTreeWs<TValue, TKey>>,
+    params: FlatTreeWsParams
+  ): TreeNode<TValue, TKey>[] => {
+    const result = this.toTreeNodes(data, params);
+    if (!result.success) {
+      throw new Error(result.message);
+    }
+    return result.treeNodes;
+  };
+
+  /**
+   * Will convert a tree of nodes to a flat tree.
+   *
+   * @param treeNodes
+   */
+  fromTreeNodes = <TId extends string = string>(
+    treeNodes: TreeNode<TValue, TId>[],
+    params: {
+      /**
+       * @see https://en.wikipedia.org/wiki/Breadth-first_search
+       * @see https://en.wikipedia.org/wiki/Depth-first_search
+       */
+      method: 'breadth-first'; // | 'depth-first';
+    }
   ): FlatTreeWs<TValue, TKey> => {
-    throw new Error('not implemented');
+    const result: TreeNode<TValue, TId>[] = [];
+    const queue: TreeNode<TValue, TId>[] = [];
+    const rootNode: TreeParentNode<TValue, TId> = {
+      id: 'root' as TId,
+      parentId: null,
+      children: treeNodes,
+    };
+    // queue.push(treeNodes.forEach((node) => queue.push(node)));
+    treeNodes.forEach((node) => queue.push(node));
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      let count = queue.length;
+      if (count === 0) break;
+      while (count > 0) {
+        const node = queue.shift();
+        result.push(node!);
+        node!.children?.forEach((child) => queue.push(child));
+        count--;
+      }
+    }
+
+    return result
+      .map((node) => {
+        return {
+          key: String(node.id),
+          value: node.value,
+        } as FlatTreeWs<TValue, TKey>[0];
+      })
+      .filter((node) => Boolean);
   };
 }

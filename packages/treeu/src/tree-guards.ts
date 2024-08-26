@@ -1,24 +1,24 @@
 import { isPlainObject } from '@httpx/plain-object';
 
-import type { LeafNode, ParentNode } from './tree.types';
+import type { TreeLeafNode, TreeParentNode } from './tree.types';
 
 export const TreeGuards = {
-  isLeaf: (node: unknown): node is LeafNode => {
+  isLeaf: (node: unknown): node is TreeLeafNode => {
     if (!isPlainObject(node)) {
       return false;
     }
-    return (node as unknown as LeafNode)?.children?.length === 0;
+    return (node as unknown as TreeLeafNode)?.children?.length === 0;
   },
-  isParent: (node: unknown): node is ParentNode => {
+  isParent: (node: unknown): node is TreeParentNode => {
     if (!isPlainObject(node)) {
       return false;
     }
-    return (node as unknown as ParentNode)?.children?.length > 0;
+    return (node as unknown as TreeParentNode)?.children?.length > 0;
   },
-  isRoot: (node: unknown): node is ParentNode => {
+  isRoot: (node: unknown): node is TreeParentNode => {
     if (!isPlainObject(node)) {
       return false;
     }
-    return (node as unknown as ParentNode)?.parentId !== undefined;
+    return (node as unknown as TreeParentNode)?.parentId !== undefined;
   },
 };

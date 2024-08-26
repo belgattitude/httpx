@@ -1,10 +1,10 @@
 export type TreeNodeValue = Record<string, unknown> | string | number | boolean;
 
-type ValidId = string | number;
+type TreeNodeValidId = string | number;
 
-export interface LeafNode<
+export interface TreeLeafNode<
   TValue extends TreeNodeValue | undefined = undefined,
-  TId extends ValidId = string,
+  TId extends TreeNodeValidId = string,
 > {
   id: TId;
   parentId: TId;
@@ -12,27 +12,30 @@ export interface LeafNode<
   value?: TValue | undefined;
 }
 
-export interface ParentNode<
+export interface TreeParentNode<
   TValue extends TreeNodeValue | undefined = undefined,
-  TId extends ValidId = string,
+  TId extends TreeNodeValidId = string,
 > {
   id: TId;
   parentId: TId | null;
-  children: TreeNode<TValue>[];
+  children: TreeNode<TValue, TId>[];
   value?: TValue | undefined;
 }
 
-export interface RootNode<
+export interface TreeRootNode<
   TValue extends TreeNodeValue | undefined = undefined,
-  TId extends ValidId = string,
+  TId extends TreeNodeValidId = string,
 > {
   id: TId;
   parentId: null;
-  children: TreeNode<TValue>[];
+  children: TreeNode<TValue, TId>[];
   value?: TValue | undefined;
 }
 
 export type TreeNode<
   TValue extends TreeNodeValue | undefined = undefined,
-  TId extends ValidId = string,
-> = RootNode<TValue, TId> | ParentNode<TValue, TId> | LeafNode<TValue, TId>;
+  TId extends TreeNodeValidId = string,
+> =
+  | TreeRootNode<TValue, TId>
+  | TreeParentNode<TValue, TId>
+  | TreeLeafNode<TValue, TId>;

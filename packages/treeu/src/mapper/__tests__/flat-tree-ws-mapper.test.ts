@@ -10,148 +10,234 @@ type CustomValue =
   | { type: 'file'; size: number };
 
 describe('FlatTreeWsMapper', () => {
-  describe('toTreeNodes4()', () => {
-    describe('when a valid FlatTreeWs is given', () => {
-      const paths: FlatTreeWs<CustomValue> = [
+  const vadidFlatTreeWs: FlatTreeWs<CustomValue> = [
+    {
+      key: 'file1.ts',
+      value: { type: 'file', size: 10 },
+    },
+    {
+      key: 'file2.ts',
+      value: { type: 'file', size: 20 },
+    },
+    {
+      key: 'folder1',
+      value: { type: 'folder' },
+    },
+    {
+      key: 'folder1/file1.ts',
+      value: { type: 'file', size: 30 },
+    },
+    {
+      key: 'folder2',
+      value: { type: 'folder' },
+    },
+    {
+      key: 'folder2/file1.ts',
+      value: { type: 'file', size: 40 },
+    },
+    {
+      key: 'folder2/subfolder1',
+      value: { type: 'folder' },
+    },
+    {
+      key: 'folder2/subfolder1/file1.ts',
+      value: { type: 'file', size: 50 },
+    },
+    {
+      key: 'folder3',
+      value: { type: 'folder' },
+    },
+  ];
+
+  const validTreeNodes: TreeNode<CustomValue>[] = [
+    {
+      id: 'file1.ts',
+      parentId: null,
+      value: {
+        size: 10,
+        type: 'file',
+      },
+      children: [],
+    },
+    {
+      id: 'file2.ts',
+      parentId: null,
+      value: {
+        size: 20,
+        type: 'file',
+      },
+      children: [],
+    },
+    {
+      id: 'folder1',
+      parentId: null,
+      value: {
+        type: 'folder',
+      },
+      children: [
+        {
+          id: 'folder1/file1.ts',
+          parentId: 'folder1',
+          value: {
+            size: 30,
+            type: 'file',
+          },
+          children: [],
+        },
+      ],
+    },
+    {
+      id: 'folder2',
+      parentId: null,
+      value: {
+        type: 'folder',
+      },
+      children: [
+        {
+          id: 'folder2/file1.ts',
+          parentId: 'folder2',
+          value: {
+            size: 40,
+            type: 'file',
+          },
+          children: [],
+        },
+        {
+          id: 'folder2/subfolder1',
+          parentId: 'folder2',
+          value: {
+            type: 'folder',
+          },
+          children: [
+            {
+              id: 'folder2/subfolder1/file1.ts',
+              parentId: 'folder2/subfolder1',
+              value: {
+                size: 50,
+                type: 'file',
+              },
+              children: [],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'folder3',
+      parentId: null,
+      value: {
+        type: 'folder',
+      },
+      children: [],
+    },
+  ];
+
+  describe('fromTreeNodes', () => {
+    it('should return a valid flat tree', () => {
+      const mapper = new FlatTreeWsMapper<CustomValue>();
+      const treeNodes = mapper.fromTreeNodes(validTreeNodes, {
+        method: 'breadth-first',
+      });
+
+      const flattenedBreadthFirst: FlatTreeWs<CustomValue> = [
         {
           key: 'file1.ts',
-          value: { type: 'file', size: 10 },
-        },
-        {
-          key: 'file2.ts',
-          value: { type: 'file', size: 20 },
-        },
-        {
-          key: 'folder1',
-          value: { type: 'folder' },
-        },
-        {
-          key: 'folder1/file1.ts',
-          value: { type: 'file', size: 30 },
-        },
-        {
-          key: 'folder2',
-          value: { type: 'folder' },
-        },
-        {
-          key: 'folder2/file1.ts',
-          value: { type: 'file', size: 40 },
-        },
-        {
-          key: 'folder2/subfolder1',
-          value: { type: 'folder' },
-        },
-        {
-          key: 'folder2/subfolder1/file1.ts',
-          value: { type: 'file', size: 50 },
-        },
-        {
-          key: 'folder3',
-          value: { type: 'folder' },
-        },
-      ];
-
-      const expected: TreeNode<CustomValue>[] = [
-        {
-          id: 'file1.ts',
-          parentId: null,
           value: {
             size: 10,
             type: 'file',
           },
-          children: [],
         },
         {
-          id: 'file2.ts',
-          parentId: null,
+          key: 'file2.ts',
           value: {
             size: 20,
             type: 'file',
           },
-          children: [],
         },
         {
-          id: 'folder1',
-          parentId: null,
+          key: 'folder1',
           value: {
             type: 'folder',
           },
-          children: [
-            {
-              id: 'folder1/file1.ts',
-              parentId: 'folder1',
-              value: {
-                size: 30,
-                type: 'file',
-              },
-              children: [],
-            },
-          ],
         },
         {
-          id: 'folder2',
-          parentId: null,
+          key: 'folder2',
           value: {
             type: 'folder',
           },
-          children: [
-            {
-              id: 'folder2/file1.ts',
-              parentId: 'folder2',
-              value: {
-                size: 40,
-                type: 'file',
-              },
-              children: [],
-            },
-            {
-              id: 'folder2/subfolder1',
-              parentId: 'folder2',
-              value: {
-                type: 'folder',
-              },
-              children: [
-                {
-                  id: 'folder2/subfolder1/file1.ts',
-                  parentId: 'folder2/subfolder1',
-                  value: {
-                    size: 50,
-                    type: 'file',
-                  },
-                  children: [],
-                },
-              ],
-            },
-          ],
         },
         {
-          id: 'folder3',
-          parentId: null,
+          key: 'folder3',
           value: {
             type: 'folder',
           },
-          children: [],
+        },
+        {
+          key: 'folder1/file1.ts',
+          value: {
+            size: 30,
+            type: 'file',
+          },
+        },
+        {
+          key: 'folder2/file1.ts',
+          value: {
+            size: 40,
+            type: 'file',
+          },
+        },
+        {
+          key: 'folder2/subfolder1',
+          value: {
+            type: 'folder',
+          },
+        },
+        {
+          key: 'folder2/subfolder1/file1.ts',
+          value: {
+            size: 50,
+            type: 'file',
+          },
         },
       ];
 
-      it('should return a success result with expected treeNodes', () => {
-        const treeResult = new FlatTreeWsMapper().toTreeNodes(paths, {
-          separator: '/',
-        });
+      expect(treeNodes).toHaveLength(vadidFlatTreeWs.length);
+      expect(treeNodes).toStrictEqual(flattenedBreadthFirst);
+
+      // Back and forth
+      const treeNodes2 = mapper.toTreeNodesOrThrow(flattenedBreadthFirst, {
+        separator: '/',
+      });
+
+      const flattened2 = mapper.fromTreeNodes(treeNodes2, {
+        method: 'breadth-first',
+      });
+      expect(flattened2).toStrictEqual(flattenedBreadthFirst);
+    });
+  });
+  describe('toTreeNodes()', () => {
+    describe('when a valid FlatTreeWs is given', () => {
+      it('should return a success result with validTreeNodes validTreeNodes', () => {
+        const treeResult = new FlatTreeWsMapper<CustomValue>().toTreeNodes(
+          vadidFlatTreeWs,
+          {
+            separator: '/',
+          }
+        );
         expect(treeResult).toStrictEqual({
           success: true,
-          treeNodes: expected,
+          treeNodes: validTreeNodes,
         });
       });
 
       it.skip('should be insensitive to path order', () => {
-        const reversedPaths = paths.slice().reverse();
+        const reversedPaths = vadidFlatTreeWs.slice().reverse();
         const treeResult = new FlatTreeWsMapper().toTreeNodes(reversedPaths, {
           separator: '/',
         });
         expect(treeResult).toStrictEqual({
           success: true,
-          treeNodes: expected,
+          treeNodes: validTreeNodes,
         });
       });
     });
