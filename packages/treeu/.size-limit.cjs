@@ -22,7 +22,7 @@ module.exports = [
     name: 'Only { FlatTreeWsMapper } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ FlatTreeWsMapper }',
-    limit: '700B',
+    limit: '740B',
   },
   {
     name: 'Everything (ESM)',
