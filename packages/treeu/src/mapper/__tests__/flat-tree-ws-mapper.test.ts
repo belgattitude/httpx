@@ -157,7 +157,7 @@ describe('FlatTreeWsMapper', () => {
     });
 
     describe('when a FlatTreeWs contains an empty key', () => {
-      const pathsWithDuplicates: FlatTreeWs<undefined> = [
+      const pathsWithEmptyKey: FlatTreeWs<undefined> = [
         {
           key: 'file1.ts',
         },
@@ -186,7 +186,7 @@ describe('FlatTreeWsMapper', () => {
 
       it('should return an error result', () => {
         const treeResult = new FlatTreeWsMapper().toTreeNodes(
-          pathsWithDuplicates,
+          pathsWithEmptyKey,
           {
             separator: '/',
           }
@@ -197,6 +197,38 @@ describe('FlatTreeWsMapper', () => {
           issues: [
             {
               message: `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.EMPTY_KEY}`,
+            },
+          ],
+        });
+      });
+    });
+
+    describe('when a FlatTreeWs contains an empty splitted key', () => {
+      const pathsWithEmptySplittedKey: FlatTreeWs<undefined> = [
+        {
+          key: 'file1.ts',
+        },
+        {
+          key: 'folder2',
+        },
+        {
+          key: 'folder2//file1.ts',
+        },
+      ];
+
+      it('should return an error result', () => {
+        const treeResult = new FlatTreeWsMapper().toTreeNodes(
+          pathsWithEmptySplittedKey,
+          {
+            separator: '/',
+          }
+        );
+        expect(treeResult).toStrictEqual({
+          success: false,
+          message: FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.parsedErrorMsg,
+          issues: [
+            {
+              message: `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.SPLIT_EMPTY_KEY}`,
             },
           ],
         });

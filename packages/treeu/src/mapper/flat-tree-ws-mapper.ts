@@ -1,3 +1,5 @@
+import { isPlainObject } from '@httpx/plain-object';
+
 import type { TreeNode, TreeNodeValue } from '../tree.types';
 import type { TreeMapperResult } from './mapper.types';
 
@@ -25,40 +27,49 @@ export const FLAT_TREE_WS_MAPPER_ERR_MSG = {
   toTreeNodes: {
     parsedErrorMsg: `Can't map the flat tree to tree nodes`,
     issues: {
-      NON_STRING_KEY: 'Non-string key found',
+      ARG_NOT_ARRAY: 'Invalid argument: not an array (FlatTreeWs)',
+      ARG_NOT_OBJECT_ARRAY:
+        'Invalid argument: not an array of objects (FlatTreeWs)',
+      NON_STRING_KEY: 'Non-string key',
       EMPTY_KEY: 'Empty key given',
-      DUPLICATE: 'Duplicate key found',
+      SPLIT_EMPTY_KEY: 'Split an empty key',
+      DUPLICATE: 'Duplicate key',
     },
   },
 } as const;
 
-const ensureCorrectKeys = <
+export class FlatTreeWsMapper<
   TValue extends TreeNodeValue | undefined,
   TKey extends string = string,
->(
-  data: FlatTreeWs<TValue, TKey> | Readonly<FlatTreeWs<TValue, TKey>>
-): void => {
-  const uniqueKeys = new Set<string>();
-  for (const { key } of data) {
-    if (typeof key !== 'string') {
+> {
+  assertFlatTreeWs(data: unknown): asserts data is FlatTreeWs<TValue, TKey> {
+    if (!Array.isArray(data)) {
       throw new TypeError(
-        `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.NON_STRING_KEY}`
+        `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.ARG_NOT_ARRAY}`
       );
     }
-    if (uniqueKeys.has(key)) {
-      throw new Error(
-        `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.DUPLICATE}: "${key}"`
-      );
+    const uniqueKeys = new Set<string>();
+    for (const row of data) {
+      if (!isPlainObject(row)) {
+        throw new TypeError(
+          `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.ARG_NOT_OBJECT_ARRAY}`
+        );
+      }
+      const { key } = row;
+      if (typeof key !== 'string') {
+        throw new TypeError(
+          `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.NON_STRING_KEY}`
+        );
+      }
+      if (uniqueKeys.has(key)) {
+        throw new Error(
+          `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.DUPLICATE}: "${key}"`
+        );
+      }
+      uniqueKeys.add(key);
     }
-    uniqueKeys.add(key);
   }
-};
-
-export class FlatTreeWsMapper {
-  toTreeNodes = <
-    TValue extends TreeNodeValue | undefined,
-    TKey extends string = string,
-  >(
+  toTreeNodes = (
     data: FlatTreeWs<TValue, TKey> | Readonly<FlatTreeWs<TValue, TKey>>,
     params: FlatTreeWsParams
     // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -66,9 +77,10 @@ export class FlatTreeWsMapper {
     const { separator } = params;
 
     const collector: CollectorContext<TValue, TKey> = { result: [] };
+
     try {
+      this.assertFlatTreeWs(data);
       for (const { key, value } of data) {
-        ensureCorrectKeys(data);
         const trimmedKey = key.trim() as TKey;
         if (trimmedKey.length === 0) {
           throw new Error(
@@ -79,6 +91,11 @@ export class FlatTreeWsMapper {
         let context: CollectorContext<TValue, TKey> = collector;
         const splitted = trimmedKey.split(separator);
         for (const name of splitted) {
+          if (name.trim().length === 0) {
+            throw new Error(
+              `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.SPLIT_EMPTY_KEY}`
+            );
+          }
           if (!(name in context)) {
             context[name] = { result: [] };
             const parents = splitted.slice(0, -1) as TKey[];
