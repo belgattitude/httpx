@@ -1,5 +1,11 @@
 # @httpx/treeu
 
+## 0.2.0
+
+### Minor Changes
+
+- [`f0227c3`](https://github.com/belgattitude/httpx/commit/f0227c3adedb22431a97f8e01b7b97c39e3108e7) Thanks [@belgattitude](https://github.com/belgattitude)! - Add toTreeNode in mapper
+
 ## 0.1.0
 
 ### Minor Changes
