@@ -186,6 +186,71 @@ describe('FlatTreeWsMapper', () => {
         });
       });
 
+      it('should work with object (Record) and custom separator', () => {
+        // inspired from prime-react onSelect event
+        type PrimeReactSelected = {
+          checked: boolean;
+          partialChecked: boolean;
+        };
+        const selectedTreeNodes: Record<string, PrimeReactSelected> = {
+          root1: { checked: false, partialChecked: true },
+          root1___leaf1: { checked: true, partialChecked: false },
+          root2: { checked: true, partialChecked: false },
+          root2___leaf1: { checked: true, partialChecked: false },
+          root2___leaf2: { checked: true, partialChecked: false },
+        };
+        const mapper = new FlatTreeWsMapper<PrimeReactSelected>();
+        const treeResult = mapper.toTreeNodesOrThrow(selectedTreeNodes, {
+          separator: '___',
+        });
+
+        const expected = [
+          {
+            id: 'root1',
+            parentId: null,
+            value: { checked: false, partialChecked: true },
+            children: [
+              {
+                id: 'root1___leaf1',
+                parentId: 'root1',
+                value: { checked: true, partialChecked: false },
+                children: [],
+              },
+            ],
+          },
+          {
+            id: 'root2',
+            parentId: null,
+            value: { checked: true, partialChecked: false },
+            children: [
+              {
+                id: 'root2___leaf1',
+                parentId: 'root2',
+                value: { checked: true, partialChecked: false },
+                children: [],
+              },
+              {
+                id: 'root2___leaf2',
+                parentId: 'root2',
+                value: { checked: true, partialChecked: false },
+                children: [],
+              },
+            ],
+          },
+        ] as const satisfies TreeNode<PrimeReactSelected>[];
+
+        expect(treeResult).toStrictEqual(expected);
+
+        const flattened = mapper.fromTreeNodesOrThrow(treeResult, {
+          method: 'breadth-first',
+        });
+
+        const mapToObject = (map: Map<string, unknown>) =>
+          Object.fromEntries(map.entries());
+
+        expect(mapToObject(flattened)).toStrictEqual(selectedTreeNodes);
+      });
+
       it.skip('should be insensitive to path order', () => {
         const reversedPaths = new Map([...validFlatTreeWs].reverse());
         const treeResult = new FlatTreeWsMapper().toTreeNodes(reversedPaths, {
