@@ -36,8 +36,7 @@ $ pnpm add @httpx/treeu
 #### DFSTreeSearch
 
 ```typescript
-import { Tree, TreeNode } from '@httpx/treeu';
-import { Tree, TreeNode } from '@httpx/treeu';
+import { Tree, type TreeNode } from '@httpx/treeu';
 
 type CustomValue =
     | { type: 'folder'; size?: never }
@@ -47,7 +46,7 @@ const treeNodes: TreeNode<CustomValue>[] = [
     {
         id: 'file2.ts',
         parentId: null,
-        value: { size: 30, type: 'file' },
+        value: { size: 10, type: 'file' },
         children: [],
     },
     {
@@ -69,8 +68,9 @@ const search = new DfsTreeSearch<CustomValue>(treeNodes);
 const res1 = search.findOne('folder1/file1.ts');
 const res2 = search.findOne(['id', '===', 'folder1/file1.ts']);
 const res3 = search.findOne((treeNode) => treeNode.value.size === 30);
+const res4 = search.findOne(['parentId', '===', 'folder1']);
 
-// res1 === res2 === res3
+// res1 === res2 === res3 === res4
 
 ```
 
@@ -100,7 +100,9 @@ const paths: FlatTreeWs<CustomValue> = [
     },
 ];
 
-const treeResult = new FlatTreeWsMapper().toTreeNodes(paths, {
+const mapper = new FlatTreeWsMapper<CustomValue>();
+
+const treeResult = mapper.toTreeNodes(paths, {
     separator: '/',
 });
 
@@ -135,14 +137,13 @@ const expected: TreeNode<CustomValue>[] = [
     },
 ];
 
-
 ```
 
 ### TreeNode
 
 #### Example
 
-Example of TreeNode[] typing:
+Example of `TreeNode[]` typing:
 
 ```typescript
 import { Tree, TreeNode } from '@httpx/treeu';

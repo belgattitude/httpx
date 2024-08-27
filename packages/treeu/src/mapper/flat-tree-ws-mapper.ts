@@ -1,17 +1,17 @@
 import { isPlainObject } from '@httpx/plain-object';
 
-import type { TreeNode, TreeNodeValue, TreeParentNode } from '../tree.types';
+import type { TreeNode, TreeNodeValue } from '../tree.types';
 import type { TreeMapperResult } from './mapper.types';
 
 type FlatTreeWsParams = {
   separator: string;
 };
 
-type KeyWithSeparator = string;
+type FlatTreeWsUniqueKey = string;
 
 export type FlatTreeWs<
   TValue extends TreeNodeValue | undefined,
-  TKey extends KeyWithSeparator = string,
+  TKey extends FlatTreeWsUniqueKey = string,
 > = {
   /** Unique key with separator */
   key: TKey;
@@ -23,7 +23,7 @@ type CollectorContext<
   TKey extends string = string,
 > = Record<'result', TreeNode<TValue, TKey>[]> & Record<string, unknown>;
 
-export const FLAT_TREE_WS_MAPPER_ERR_MSG = {
+export const flatTreeWsMapperIssues = {
   toTreeNodes: {
     parsedErrorMsg: `Can't map the flat tree to tree nodes`,
     issues: {
@@ -45,25 +45,25 @@ export class FlatTreeWsMapper<
   assertFlatTreeWs(data: unknown): asserts data is FlatTreeWs<TValue, TKey> {
     if (!Array.isArray(data)) {
       throw new TypeError(
-        `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.ARG_NOT_ARRAY}`
+        `${flatTreeWsMapperIssues.toTreeNodes.issues.ARG_NOT_ARRAY}`
       );
     }
     const uniqueKeys = new Set<string>();
     for (const row of data) {
       if (!isPlainObject(row)) {
         throw new TypeError(
-          `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.ARG_NOT_OBJECT_ARRAY}`
+          `${flatTreeWsMapperIssues.toTreeNodes.issues.ARG_NOT_OBJECT_ARRAY}`
         );
       }
       const { key } = row;
       if (typeof key !== 'string') {
         throw new TypeError(
-          `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.NON_STRING_KEY}`
+          `${flatTreeWsMapperIssues.toTreeNodes.issues.NON_STRING_KEY}`
         );
       }
       if (uniqueKeys.has(key)) {
         throw new Error(
-          `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.DUPLICATE}: "${key}"`
+          `${flatTreeWsMapperIssues.toTreeNodes.issues.DUPLICATE}: "${key}"`
         );
       }
       uniqueKeys.add(key);
@@ -85,7 +85,7 @@ export class FlatTreeWsMapper<
         const trimmedKey = key.trim() as TKey;
         if (trimmedKey.length === 0) {
           throw new Error(
-            `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.EMPTY_KEY}`
+            `${flatTreeWsMapperIssues.toTreeNodes.issues.EMPTY_KEY}`
           );
         }
 
@@ -94,7 +94,7 @@ export class FlatTreeWsMapper<
         for (const name of splitted) {
           if (name.trim().length === 0) {
             throw new Error(
-              `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.SPLIT_EMPTY_KEY}`
+              `${flatTreeWsMapperIssues.toTreeNodes.issues.SPLIT_EMPTY_KEY}`
             );
           }
           if (!(name in context)) {
@@ -122,7 +122,7 @@ export class FlatTreeWsMapper<
     } catch (e) {
       return {
         success: false,
-        message: FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.parsedErrorMsg,
+        message: flatTreeWsMapperIssues.toTreeNodes.parsedErrorMsg,
         issues: [{ message: `${(e as Error).message}` }],
       };
     }
@@ -155,6 +155,7 @@ export class FlatTreeWsMapper<
     treeNodes: TreeNode<TValue, TId>[],
     params: {
       /**
+       * @todo Implement depth-first search
        * @see https://en.wikipedia.org/wiki/Breadth-first_search
        * @see https://en.wikipedia.org/wiki/Depth-first_search
        */
@@ -163,12 +164,6 @@ export class FlatTreeWsMapper<
   ): FlatTreeWs<TValue, TKey> => {
     const result: TreeNode<TValue, TId>[] = [];
     const queue: TreeNode<TValue, TId>[] = [];
-    const rootNode: TreeParentNode<TValue, TId> = {
-      id: 'root' as TId,
-      parentId: null,
-      children: treeNodes,
-    };
-    // queue.push(treeNodes.forEach((node) => queue.push(node)));
     treeNodes.forEach((node) => queue.push(node));
     // eslint-disable-next-line no-constant-condition
     while (true) {
@@ -182,13 +177,11 @@ export class FlatTreeWsMapper<
       }
     }
 
-    return result
-      .map((node) => {
-        return {
-          key: String(node.id),
-          value: node.value,
-        } as FlatTreeWs<TValue, TKey>[0];
-      })
-      .filter((node) => Boolean);
+    return result.map((node) => {
+      return {
+        key: String(node.id),
+        value: node.value,
+      } as FlatTreeWs<TValue, TKey>[0];
+    });
   };
 }
