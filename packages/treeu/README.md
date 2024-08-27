@@ -254,17 +254,28 @@ const treeNodes: TreeNode<CustomValue>[] = [
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
- RUN  v2.0.5 /home/sebastien/github/httpx/packages/treeu
-
- ✓ bench/search.bench.ts (1) 615ms
-   ✓ Bench search (10_000 entries) (1) 613ms
-     name                      hz     min      max    mean     p75     p99    p995     p999     rme  samples
-   · TreeSearch findOne  1,691.36  0.4837  12.2686  0.5912  0.5333  1.4216  2.9054  12.2686  ±6.21%      846
- ✓ bench/mapper.bench.ts (1) 644ms
-   ✓ Bench mapper (10_000 entries) (1) 641ms
+ ✓ bench/search.bench.ts (4) 5811ms
+   ✓ Bench search (10_000 entries) (4) 5810ms
+     name                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · DfsTreeSearch.findOne(id_0)          7,040,596.87  0.0001  4.4519  0.0001  0.0001  0.0003  0.0003  0.0005  ±2.65%  3520299   fastest
+   · DfsTreeSearch.findOne(id_1000)          17,133.75  0.0503  3.4926  0.0584  0.0524  0.1352  0.2099  0.4181  ±2.32%     8567
+   · DfsTreeSearch.findOne(id_5000)           3,550.27  0.2517  1.2827  0.2817  0.2659  0.5259  0.6444  0.8769  ±1.10%     1776
+   · DfsTreeSearch.findOne(id_NotExists)      1,815.48  0.4815  1.5752  0.5508  0.5147  0.9761  1.1447  1.5752  ±1.51%      908   slowest
+ ✓ bench/mapper.bench.ts (1) 647ms
+   ✓ Bench mapper (10_000 entries) (1) 644ms
      name                                     hz     min      max    mean     p75      p99     p995     p999     rme  samples
-   · FlatTreeWsMapper.toTreeNodesOrThrow  147.13  5.5108  19.0723  6.7966  6.6468  19.0723  19.0723  19.0723  ±8.55%       74
- 
+   · FlatTreeWsMapper.toTreeNodesOrThrow  140.93  5.5216  15.3510  7.0960  7.2315  15.3510  15.3510  15.3510  ±7.55%       71
+
+
+ BENCH  Summary
+
+  FlatTreeWsMapper.toTreeNodesOrThrow - bench/mapper.bench.ts > Bench mapper (10_000 entries)
+
+  DfsTreeSearch.findOne(id_0) - bench/search.bench.ts > Bench search (10_000 entries)
+    410.92x faster than DfsTreeSearch.findOne(id_1000)
+    1983.12x faster than DfsTreeSearch.findOne(id_5000)
+    3878.08x faster than DfsTreeSearch.findOne(id_NotExists)
+
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/treeu/bench/README.md) for details.
