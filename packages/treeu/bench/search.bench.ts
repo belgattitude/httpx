@@ -6,6 +6,11 @@ import { getBenchFlatTreeWsData } from './treeu-bench-data';
 
 describe(`Bench search (10_000 entries)`, async () => {
   const wsData = getBenchFlatTreeWsData();
+
+  const arrData = Array.from(wsData).map(([key, value]) => ({
+    key,
+    value,
+  }));
   const result = new FlatTreeWsMapper().toTreeNodes(wsData, {
     separator: '/',
   });
@@ -16,16 +21,16 @@ describe(`Bench search (10_000 entries)`, async () => {
   const { treeNodes } = result;
 
   const search = new DfsTreeSearch(treeNodes);
-  bench('DfsTreeSearch.findOne(id_0)', () => {
-    search.findOne(wsData[0]!.key);
+  bench('DfsTreeSearch.findOne(id_0) over 10_000', () => {
+    search.findOne(arrData[0]!.key);
   });
-  bench('DfsTreeSearch.findOne(id_1000)', () => {
-    search.findOne(wsData[1000]!.key);
+  bench('DfsTreeSearch.findOne(id_1000) over 10_000', () => {
+    search.findOne(arrData[1000]!.key);
   });
-  bench('DfsTreeSearch.findOne(id_5000)', () => {
-    search.findOne(wsData[5000]!.key);
+  bench('DfsTreeSearch.findOne(id_5000) over 10_000', () => {
+    search.findOne(arrData[5000]!.key);
   });
-  bench('DfsTreeSearch.findOne(id_NotExists)', () => {
+  bench('DfsTreeSearch.findOne(id_NotExists) over 10_000', () => {
     search.findOne('not-exists');
   });
 });

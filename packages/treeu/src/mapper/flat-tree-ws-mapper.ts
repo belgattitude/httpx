@@ -1,5 +1,3 @@
-import { isPlainObject } from '@httpx/plain-object';
-
 import type { TreeNode, TreeNodeValue } from '../tree.types';
 import type { TreeMapperResult } from './mapper.types';
 
@@ -9,23 +7,29 @@ type FlatTreeWsParams = {
 
 type FlatTreeWsUniqueKey = string;
 
+export type FlatTreeWsMap<
+  TValue extends TreeNodeValue | undefined,
+  TKey extends FlatTreeWsUniqueKey = string,
+> = Map<TKey, TValue>;
+
+export type FlatTreeWsRecord<
+  TValue extends TreeNodeValue | undefined,
+  TKey extends FlatTreeWsUniqueKey = string,
+> = Record<TKey, TValue>;
+
 export type FlatTreeWs<
   TValue extends TreeNodeValue | undefined,
   TKey extends FlatTreeWsUniqueKey = string,
-> = {
-  /** Unique key with separator */
-  key: TKey;
-  value?: TValue | undefined;
-}[];
+> = FlatTreeWsMap<TValue, TKey> | FlatTreeWsRecord<TValue, TKey>;
 
 type CollectorContext<
   TValue extends TreeNodeValue | undefined = undefined,
   TKey extends string = string,
 > = Record<'result', TreeNode<TValue, TKey>[]> & Record<string, unknown>;
 
-export const flatTreeWsMapperIssues = {
+export const flatTreeWsMapperErrors = {
   toTreeNodes: {
-    parsedErrorMsg: `Can't map the flat tree to tree nodes`,
+    parsedErrorMsg: `Can't convert the flat tree to tree nodes`,
     issues: {
       ARG_NOT_ARRAY: 'Invalid argument: not an array (FlatTreeWs)',
       ARG_NOT_OBJECT_ARRAY:
@@ -33,45 +37,23 @@ export const flatTreeWsMapperIssues = {
       NON_STRING_KEY: 'Non-string key',
       EMPTY_KEY: 'Empty key given',
       SPLIT_EMPTY_KEY: 'Split an empty key',
-      DUPLICATE: 'Duplicate key',
+    },
+  },
+  fromTreeNodes: {
+    parsedErrorMsg: `Can't convert the tree to tree nodes to flat with separator`,
+    issues: {
+      DUPLICATE_KEY: 'Duplicate unique id',
+      INVALID_KEY: 'Invalid key found',
     },
   },
 } as const;
 
 export class FlatTreeWsMapper<
-  TValue extends TreeNodeValue | undefined,
+  TValue extends TreeNodeValue,
   TKey extends string = string,
 > {
-  assertFlatTreeWs(data: unknown): asserts data is FlatTreeWs<TValue, TKey> {
-    if (!Array.isArray(data)) {
-      throw new TypeError(
-        `${flatTreeWsMapperIssues.toTreeNodes.issues.ARG_NOT_ARRAY}`
-      );
-    }
-    const uniqueKeys = new Set<string>();
-    for (const row of data) {
-      if (!isPlainObject(row)) {
-        throw new TypeError(
-          `${flatTreeWsMapperIssues.toTreeNodes.issues.ARG_NOT_OBJECT_ARRAY}`
-        );
-      }
-      const { key } = row;
-      if (typeof key !== 'string') {
-        throw new TypeError(
-          `${flatTreeWsMapperIssues.toTreeNodes.issues.NON_STRING_KEY}`
-        );
-      }
-      if (uniqueKeys.has(key)) {
-        throw new Error(
-          `${flatTreeWsMapperIssues.toTreeNodes.issues.DUPLICATE}: "${key}"`
-        );
-      }
-      uniqueKeys.add(key);
-    }
-  }
-
   toTreeNodes = (
-    data: FlatTreeWs<TValue, TKey> | Readonly<FlatTreeWs<TValue, TKey>>,
+    data: FlatTreeWs<TValue, TKey>,
     params: FlatTreeWsParams
     // eslint-disable-next-line sonarjs/cognitive-complexity
   ): TreeMapperResult<TValue, TKey> => {
@@ -79,13 +61,14 @@ export class FlatTreeWsMapper<
 
     const collector: CollectorContext<TValue, TKey> = { result: [] };
 
+    const d = data instanceof Map ? data : new Map(Object.entries(data));
+
     try {
-      this.assertFlatTreeWs(data);
-      for (const { key, value } of data) {
+      for (const [key, value] of d) {
         const trimmedKey = key.trim() as TKey;
         if (trimmedKey.length === 0) {
           throw new Error(
-            `${flatTreeWsMapperIssues.toTreeNodes.issues.EMPTY_KEY}`
+            `${flatTreeWsMapperErrors.toTreeNodes.issues.EMPTY_KEY}`
           );
         }
 
@@ -94,7 +77,7 @@ export class FlatTreeWsMapper<
         for (const name of splitted) {
           if (name.trim().length === 0) {
             throw new Error(
-              `${flatTreeWsMapperIssues.toTreeNodes.issues.SPLIT_EMPTY_KEY}`
+              `${flatTreeWsMapperErrors.toTreeNodes.issues.SPLIT_EMPTY_KEY}`
             );
           }
           if (!(name in context)) {
@@ -111,18 +94,17 @@ export class FlatTreeWsMapper<
               children: children,
             };
             if (value !== undefined) {
-              node.value = value;
+              node.value = value as TValue;
             }
             context.result.push(node);
           }
-
           context = context[name] as CollectorContext<TValue, TKey>;
         }
       }
     } catch (e) {
       return {
         success: false,
-        message: flatTreeWsMapperIssues.toTreeNodes.parsedErrorMsg,
+        message: flatTreeWsMapperErrors.toTreeNodes.parsedErrorMsg,
         issues: [{ message: `${(e as Error).message}` }],
       };
     }
@@ -136,7 +118,7 @@ export class FlatTreeWsMapper<
    * @throws Error
    */
   toTreeNodesOrThrow = (
-    data: FlatTreeWs<TValue, TKey> | Readonly<FlatTreeWs<TValue, TKey>>,
+    data: FlatTreeWs<TValue, TKey>,
     params: FlatTreeWsParams
   ): TreeNode<TValue, TKey>[] => {
     const result = this.toTreeNodes(data, params);
@@ -148,10 +130,8 @@ export class FlatTreeWsMapper<
 
   /**
    * Will convert a tree of nodes to a flat tree.
-   *
-   * @param treeNodes
    */
-  fromTreeNodes = <TId extends string = string>(
+  fromTreeNodesOrThrow = <TId extends string = string>(
     treeNodes: TreeNode<TValue, TId>[],
     params: {
       /**
@@ -161,7 +141,7 @@ export class FlatTreeWsMapper<
        */
       method: 'breadth-first'; // | 'depth-first';
     }
-  ): FlatTreeWs<TValue, TKey> => {
+  ): FlatTreeWsMap<TValue, TKey> => {
     const result: TreeNode<TValue, TId>[] = [];
     const queue: TreeNode<TValue, TId>[] = [];
     treeNodes.forEach((node) => queue.push(node));
@@ -176,12 +156,22 @@ export class FlatTreeWsMapper<
         count--;
       }
     }
-
-    return result.map((node) => {
-      return {
-        key: String(node.id),
-        value: node.value,
-      } as FlatTreeWs<TValue, TKey>[0];
-    });
+    const map = new Map() as FlatTreeWsMap<TValue, TKey>;
+    const { parsedErrorMsg, issues } = flatTreeWsMapperErrors.fromTreeNodes;
+    for (const node of result) {
+      const key = node.id as unknown as TKey;
+      if (typeof key !== 'string' && typeof key !== 'number') {
+        throw new TypeError(
+          `${parsedErrorMsg} (${issues.INVALID_KEY}: '${key}')`
+        );
+      }
+      if (map.has(key)) {
+        throw new Error(
+          `${parsedErrorMsg} (${issues.DUPLICATE_KEY}: '${key}' of type ${typeof key}')`
+        );
+      }
+      map.set(key, node.value as TValue);
+    }
+    return map;
   };
 }
