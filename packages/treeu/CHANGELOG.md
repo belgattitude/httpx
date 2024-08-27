@@ -1,5 +1,11 @@
 # @httpx/treeu
 
+## 0.3.0
+
+### Minor Changes
+
+- [#1391](https://github.com/belgattitude/httpx/pull/1391) [`131eb9d`](https://github.com/belgattitude/httpx/commit/131eb9dcad6cbde78831e42ff1cfcbde63cb6ace) Thanks [@belgattitude](https://github.com/belgattitude)! - Doc fixes
+
 ## 0.2.0
 
 ### Minor Changes
