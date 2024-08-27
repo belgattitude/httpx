@@ -12,5 +12,3 @@ yarn build
 yarn bench
 ```
 
-### Example
-

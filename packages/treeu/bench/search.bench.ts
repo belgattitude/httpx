@@ -1,28 +1,16 @@
 import { bench, describe } from 'vitest';
 
 import { FlatTreeWsMapper } from '../src';
-import type { FlatTreeWs } from '../src/mapper/flat-tree-ws-mapper';
 import { DfsTreeSearch } from '../src/search/dfs-tree-search';
-
-const getPathNames = () => {
-  const length = 1000;
-  const arr = Array.from({ length });
-  const result: FlatTreeWs<undefined> = [];
-  for (let i = 0; i < arr.length; i++) {
-    const key = String(i).padStart(String(length).length, '0');
-    result.push({
-      key: key.slice(0, 2) + '/' + key.slice(-2),
-    });
-  }
-  return result;
-};
+import { getTestFlatTreeWsData } from './treeu-test-data';
 
 describe(`Bench search (10_000 entries)`, async () => {
-  const result = new FlatTreeWsMapper().toTreeNodes(getPathNames(), {
+  const result = new FlatTreeWsMapper().toTreeNodes(getTestFlatTreeWsData(), {
     separator: '/',
   });
   if (!result.success) {
-    throw new Error('Please fix the benchmarks');
+    console.log(result.issues);
+    throw new Error(`Please fix the benchmarks: ${JSON.stringify(result)}`);
   }
   const { treeNodes } = result;
 
