@@ -35,6 +35,12 @@ $ pnpm add @httpx/treeu
 
 #### DFSTreeSearch
 
+Depth-First Search (DFS) search algorithm based search. It uses a stack rather
+than recursion in order to support deeply nested trees without call-stack overflows.
+It is well suited for exploring a branch of a data structure in depth and
+usually preferred when memory usage is a concern or when the data
+structure has many nodes with few levels.
+
 ```typescript
 import { Tree, type TreeNode } from '@httpx/treeu';
 
@@ -78,6 +84,11 @@ const res4 = search.findOne(['parentId', '===', 'folder1']);
 
 #### FlatTreeWsMapper
 
+| FlatTreeWsMapper | Description                                 |
+|------------------|---------------------------------------------|
+| `toTreeNodes`    | Convert to flat map with separator          |
+| `fromTreeNodes`  | Convert a tree to a flat map with separator |
+
 ```typescript
 import { FlatTreeWsMapper, type FlatTreeWs } from '@httpx/treeu';
 
@@ -85,20 +96,12 @@ type CustomValue =
     | { type: 'folder'; size?: never }
     | { type: 'file'; size: number };
 
-const paths: FlatTreeWs<CustomValue> = [
-    {
-        key: 'file1.ts',
-        value: { type: 'file', size: 10 },
-    },
-    {
-        key: 'folder1',
-        value: { type: 'folder' },
-    },
-    {
-        key: 'folder1/file1.ts',
-        value: { type: 'file', size: 30 },
-    },
-];
+// Use an object or a Record<string, CustomValue>
+const paths: FlatTreeWs<CustomValue> = new Map([
+    [ 'file1.ts', { type: 'file', size: 10 } ],
+    [ 'folder1', { type: 'folder' }],
+    [ 'folder1/file1.ts', { type: 'file', size: 30 }],
+]);
 
 const mapper = new FlatTreeWsMapper<CustomValue>();
 
@@ -254,28 +257,30 @@ const treeNodes: TreeNode<CustomValue>[] = [
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
- ✓ bench/search.bench.ts (4) 5811ms
-   ✓ Bench search (10_000 entries) (4) 5810ms
-     name                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · DfsTreeSearch.findOne(id_0)          7,040,596.87  0.0001  4.4519  0.0001  0.0001  0.0003  0.0003  0.0005  ±2.65%  3520299   fastest
-   · DfsTreeSearch.findOne(id_1000)          17,133.75  0.0503  3.4926  0.0584  0.0524  0.1352  0.2099  0.4181  ±2.32%     8567
-   · DfsTreeSearch.findOne(id_5000)           3,550.27  0.2517  1.2827  0.2817  0.2659  0.5259  0.6444  0.8769  ±1.10%     1776
-   · DfsTreeSearch.findOne(id_NotExists)      1,815.48  0.4815  1.5752  0.5508  0.5147  0.9761  1.1447  1.5752  ±1.51%      908   slowest
- ✓ bench/mapper.bench.ts (1) 647ms
-   ✓ Bench mapper (10_000 entries) (1) 644ms
-     name                                     hz     min      max    mean     p75      p99     p995     p999     rme  samples
-   · FlatTreeWsMapper.toTreeNodesOrThrow  140.93  5.5216  15.3510  7.0960  7.2315  15.3510  15.3510  15.3510  ±7.55%       71
+ RUN  v2.0.5 
+
+ ✓ bench/search.bench.ts (4) 6714ms
+   ✓ Bench search (10_000 entries) (4) 6713ms
+     name                                                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · DfsTreeSearch.findOne(id_0) over 10_000          9,360,159.92  0.0001  3.5234  0.0001  0.0001  0.0002  0.0002  0.0004  ±1.88%  4680081   fastest
+   · DfsTreeSearch.findOne(id_1000) over 10_000          64,337.37  0.0097  0.7432  0.0155  0.0151  0.0437  0.0752  0.2380  ±1.09%    32169
+   · DfsTreeSearch.findOne(id_5000) over 10_000          13,027.78  0.0505  0.9968  0.0768  0.0753  0.2389  0.2790  0.4839  ±1.33%     6514
+   · DfsTreeSearch.findOne(id_NotExists) over 10_000      6,335.21  0.1020  0.8740  0.1578  0.1582  0.4216  0.4970  0.6655  ±1.47%     3168   slowest
+ ✓ bench/mapper.bench.ts (1) 621ms
+   ✓ Bench mapper (10_000 entries) (1) 620ms
+     name                                     hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · FlatTreeWsMapper.toTreeNodesOrThrow  323.01  2.1707  9.7894  3.0959  3.5083  9.2491  9.7894  9.7894  ±5.95%      162
 
 
  BENCH  Summary
 
   FlatTreeWsMapper.toTreeNodesOrThrow - bench/mapper.bench.ts > Bench mapper (10_000 entries)
 
-  DfsTreeSearch.findOne(id_0) - bench/search.bench.ts > Bench search (10_000 entries)
-    410.92x faster than DfsTreeSearch.findOne(id_1000)
-    1983.12x faster than DfsTreeSearch.findOne(id_5000)
-    3878.08x faster than DfsTreeSearch.findOne(id_NotExists)
-
+  DfsTreeSearch.findOne(id_0) over 10_000 - bench/search.bench.ts > Bench search (10_000 entries)
+    145.49x faster than DfsTreeSearch.findOne(id_1000) over 10_000
+    718.48x faster than DfsTreeSearch.findOne(id_5000) over 10_000
+    1477.48x faster than DfsTreeSearch.findOne(id_NotExists) over 10_000
+ 
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/treeu/bench/README.md) for details.

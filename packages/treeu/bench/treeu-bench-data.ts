@@ -1,14 +1,16 @@
-import type { FlatTreeWs } from '../src';
+import type { FlatTreeWsMap } from '../src/mapper/flat-tree-ws-mapper';
 
-export const getBenchFlatTreeWsData = (): FlatTreeWs<undefined> => {
+type Custom = {
+  idx: number;
+};
+
+export const getBenchFlatTreeWsData = (): FlatTreeWsMap<Custom> => {
   const length = 10_000;
   const arr = Array.from({ length });
-  const result: FlatTreeWs<undefined> = [];
+  const map: FlatTreeWsMap<Custom> = new Map();
   for (let i = 0; i < arr.length; i++) {
     const key = String(i).padStart(String(length).length, '0');
-    result.push({
-      key: key.slice(0, 3) + '/' + key.slice(-3),
-    });
+    map.set(key, { idx: i });
   }
-  return result;
+  return map;
 };

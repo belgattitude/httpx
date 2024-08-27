@@ -1,4 +1,9 @@
-export type TreeNodeValue = Record<string, unknown> | string | number | boolean;
+export type TreeNodeValue =
+  | Record<string, unknown>
+  | string
+  | number
+  | boolean
+  | null;
 
 type TreeNodeValidId = string | number;
 
