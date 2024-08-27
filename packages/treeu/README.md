@@ -256,21 +256,12 @@ const treeNodes: TreeNode<CustomValue>[] = [
 ```
  RUN  v2.0.5 /home/sebastien/github/httpx/packages/treeu
 
- ✓ bench/search.bench.ts (1) 621ms
-   ✓ Bench search (1) 619ms
-     name                      hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · TreeSearch findBy  34,892.20  0.0274  0.2356  0.0287  0.0287  0.0323  0.0342  0.0978  ±0.23%    17447
- ✓ bench/mapper.bench.ts (1) 608ms
-   ✓ Bench mapper (1) 607ms
-     name                                hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · FlatTreeWsMapper.toTreeNodes  2,145.13  0.4502  1.1320  0.4662  0.4564  0.6713  0.7166  0.8966  ±0.61%     1073
-
-
- BENCH  Summary
-
-  FlatTreeWsMapper.toTreeNodes - bench/mapper.bench.ts > Bench mapper
-
-  TreeSearch findBy - bench/search.bench.ts > Bench search
+ ✓ bench/search.bench.ts (1) 624ms
+   ✓ Bench search (1) 620ms
+     name                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · TreeSearch findOne  39,141.31  0.0202  1.0839  0.0255  0.0216  0.1027  0.1722  0.4752  ±1.53%    19571
+ ✓ bench/mapper.bench.ts (1) 611ms
+   ✓ Bench mapper (1) 608ms
  
 ```
 

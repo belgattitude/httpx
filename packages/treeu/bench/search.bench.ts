@@ -17,7 +17,7 @@ const getPathNames = () => {
   return result;
 };
 
-describe(`Bench search`, async () => {
+describe(`Bench search (10_000 entries)`, async () => {
   const result = new FlatTreeWsMapper().toTreeNodes(getPathNames(), {
     separator: '/',
   });

@@ -16,7 +16,7 @@ const getPathNames = () => {
   return result;
 };
 
-describe(`Bench mapper`, async () => {
+describe(`Bench mapper (10_000 entries)`, async () => {
   const pathNames = getPathNames();
   bench('FlatTreeWsMapper.toTreeNodes', () => {
     const _r = new FlatTreeWsMapper().toTreeNodes(pathNames, {
