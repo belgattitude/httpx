@@ -36,8 +36,7 @@ $ pnpm add @httpx/treeu
 #### DFSTreeSearch
 
 ```typescript
-import { Tree, TreeNode } from '@httpx/treeu';
-import { Tree, TreeNode } from '@httpx/treeu';
+import { Tree, type TreeNode } from '@httpx/treeu';
 
 type CustomValue =
     | { type: 'folder'; size?: never }
@@ -47,7 +46,7 @@ const treeNodes: TreeNode<CustomValue>[] = [
     {
         id: 'file2.ts',
         parentId: null,
-        value: { size: 30, type: 'file' },
+        value: { size: 10, type: 'file' },
         children: [],
     },
     {
@@ -69,8 +68,9 @@ const search = new DfsTreeSearch<CustomValue>(treeNodes);
 const res1 = search.findOne('folder1/file1.ts');
 const res2 = search.findOne(['id', '===', 'folder1/file1.ts']);
 const res3 = search.findOne((treeNode) => treeNode.value.size === 30);
+const res4 = search.findOne(['parentId', '===', 'folder1']);
 
-// res1 === res2 === res3
+// res1 === res2 === res3 === res4
 
 ```
 
@@ -100,7 +100,9 @@ const paths: FlatTreeWs<CustomValue> = [
     },
 ];
 
-const treeResult = new FlatTreeWsMapper().toTreeNodes(paths, {
+const mapper = new FlatTreeWsMapper<CustomValue>();
+
+const treeResult = mapper.toTreeNodes(paths, {
     separator: '/',
 });
 
@@ -135,14 +137,13 @@ const expected: TreeNode<CustomValue>[] = [
     },
 ];
 
-
 ```
 
 ### TreeNode
 
 #### Example
 
-Example of TreeNode[] typing:
+Example of `TreeNode[]` typing:
 
 ```typescript
 import { Tree, TreeNode } from '@httpx/treeu';
@@ -253,24 +254,28 @@ const treeNodes: TreeNode<CustomValue>[] = [
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
- RUN  v2.0.5 /home/sebastien/github/httpx/packages/treeu
-
- ✓ bench/search.bench.ts (1) 621ms
-   ✓ Bench search (1) 619ms
-     name                      hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · TreeSearch findBy  34,892.20  0.0274  0.2356  0.0287  0.0287  0.0323  0.0342  0.0978  ±0.23%    17447
- ✓ bench/mapper.bench.ts (1) 608ms
-   ✓ Bench mapper (1) 607ms
-     name                                hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · FlatTreeWsMapper.toTreeNodes  2,145.13  0.4502  1.1320  0.4662  0.4564  0.6713  0.7166  0.8966  ±0.61%     1073
+ ✓ bench/search.bench.ts (4) 5811ms
+   ✓ Bench search (10_000 entries) (4) 5810ms
+     name                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · DfsTreeSearch.findOne(id_0)          7,040,596.87  0.0001  4.4519  0.0001  0.0001  0.0003  0.0003  0.0005  ±2.65%  3520299   fastest
+   · DfsTreeSearch.findOne(id_1000)          17,133.75  0.0503  3.4926  0.0584  0.0524  0.1352  0.2099  0.4181  ±2.32%     8567
+   · DfsTreeSearch.findOne(id_5000)           3,550.27  0.2517  1.2827  0.2817  0.2659  0.5259  0.6444  0.8769  ±1.10%     1776
+   · DfsTreeSearch.findOne(id_NotExists)      1,815.48  0.4815  1.5752  0.5508  0.5147  0.9761  1.1447  1.5752  ±1.51%      908   slowest
+ ✓ bench/mapper.bench.ts (1) 647ms
+   ✓ Bench mapper (10_000 entries) (1) 644ms
+     name                                     hz     min      max    mean     p75      p99     p995     p999     rme  samples
+   · FlatTreeWsMapper.toTreeNodesOrThrow  140.93  5.5216  15.3510  7.0960  7.2315  15.3510  15.3510  15.3510  ±7.55%       71
 
 
  BENCH  Summary
 
-  FlatTreeWsMapper.toTreeNodes - bench/mapper.bench.ts > Bench mapper
+  FlatTreeWsMapper.toTreeNodesOrThrow - bench/mapper.bench.ts > Bench mapper (10_000 entries)
 
-  TreeSearch findBy - bench/search.bench.ts > Bench search
- 
+  DfsTreeSearch.findOne(id_0) - bench/search.bench.ts > Bench search (10_000 entries)
+    410.92x faster than DfsTreeSearch.findOne(id_1000)
+    1983.12x faster than DfsTreeSearch.findOne(id_5000)
+    3878.08x faster than DfsTreeSearch.findOne(id_NotExists)
+
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/treeu/bench/README.md) for details.

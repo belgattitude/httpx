@@ -1,8 +1,8 @@
 import type { TreeNode } from '../../tree.types';
 import {
-  FLAT_TREE_WS_MAPPER_ERR_MSG,
   type FlatTreeWs,
   FlatTreeWsMapper,
+  flatTreeWsMapperIssues,
 } from '../flat-tree-ws-mapper';
 
 type CustomValue =
@@ -279,10 +279,10 @@ describe('FlatTreeWsMapper', () => {
         );
         expect(treeResult).toStrictEqual({
           success: false,
-          message: FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.parsedErrorMsg,
+          message: flatTreeWsMapperIssues.toTreeNodes.parsedErrorMsg,
           issues: [
             {
-              message: `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.EMPTY_KEY}`,
+              message: `${flatTreeWsMapperIssues.toTreeNodes.issues.EMPTY_KEY}`,
             },
           ],
         });
@@ -311,10 +311,10 @@ describe('FlatTreeWsMapper', () => {
         );
         expect(treeResult).toStrictEqual({
           success: false,
-          message: FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.parsedErrorMsg,
+          message: flatTreeWsMapperIssues.toTreeNodes.parsedErrorMsg,
           issues: [
             {
-              message: `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.SPLIT_EMPTY_KEY}`,
+              message: `${flatTreeWsMapperIssues.toTreeNodes.issues.SPLIT_EMPTY_KEY}`,
             },
           ],
         });
@@ -358,10 +358,10 @@ describe('FlatTreeWsMapper', () => {
         );
         expect(treeResult).toStrictEqual({
           success: false,
-          message: FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.parsedErrorMsg,
+          message: flatTreeWsMapperIssues.toTreeNodes.parsedErrorMsg,
           issues: [
             {
-              message: `${FLAT_TREE_WS_MAPPER_ERR_MSG.toTreeNodes.issues.DUPLICATE}: "folder2/file1.ts"`,
+              message: `${flatTreeWsMapperIssues.toTreeNodes.issues.DUPLICATE}: "folder2/file1.ts"`,
             },
           ],
         });
