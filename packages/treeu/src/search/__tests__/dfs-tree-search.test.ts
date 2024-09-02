@@ -187,12 +187,9 @@ describe('TreeSearch', () => {
         it.each([false, undefined] as const)(
           'should return the node without children',
           (includeChildren) => {
-            const result = search.findOne(
-              ['id', '===', 'folder2/subfolder1/file1.ts'],
-              {
-                includeChildren: includeChildren,
-              }
-            );
+            const result = search.findOne('folder2/subfolder1/file1.ts', {
+              includeChildren: includeChildren,
+            });
             expect(result).toStrictEqual({
               id: 'folder2/subfolder1/file1.ts',
               parentId: 'folder2/subfolder1',
@@ -204,9 +201,9 @@ describe('TreeSearch', () => {
           }
         );
       });
-      describe('when includeChildren is true', () => {
+      describe('when `includeChildren` is true', () => {
         it('should return the node with children', () => {
-          const result = search.findOne(['id', '===', 'folder2/subfolder1'], {
+          const result = search.findOne('folder2/subfolder1', {
             includeChildren: true,
           });
           expect(result).toStrictEqual({
