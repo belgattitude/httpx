@@ -1,3 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer tailwind-base, primereact, tailwind-utilities;
+
+/*
+@import 'primereact/resources/themes/soho-light/theme.css' layer(primereact);
+*/
+
+/*
+@import 'primereact/resources/themes/soho-light/theme.css' layer(primereact);
+*/
+
+@layer tailwind-base {
+  @tailwind base;
+}
+/*
+@layer primereact {
+}*/
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
