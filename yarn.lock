@@ -1397,7 +1397,7 @@ __metadata:
     typedoc-plugin-markdown: "npm:4.2.6"
     typescript: "npm:5.5.4"
     valibot: "npm:0.41.0"
-    vite: "npm:5.4.2"
+    vite: "npm:5.4.3"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.0.5"
     webpack: "npm:5.94.0"
@@ -1432,7 +1432,7 @@ __metadata:
     typedoc: "npm:0.26.6"
     typedoc-plugin-markdown: "npm:4.2.6"
     typescript: "npm:5.5.4"
-    vite: "npm:5.4.2"
+    vite: "npm:5.4.3"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.0.5"
     webpack: "npm:5.94.0"
@@ -1472,7 +1472,7 @@ __metadata:
     typedoc: "npm:0.26.6"
     typedoc-plugin-markdown: "npm:4.2.6"
     typescript: "npm:5.5.4"
-    vite: "npm:5.4.2"
+    vite: "npm:5.4.3"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.0.5"
     webpack: "npm:5.94.0"
@@ -1507,7 +1507,7 @@ __metadata:
     typedoc: "npm:0.26.6"
     typedoc-plugin-markdown: "npm:4.2.6"
     typescript: "npm:5.5.4"
-    vite: "npm:5.4.2"
+    vite: "npm:5.4.3"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.0.5"
     webpack: "npm:5.94.0"
@@ -1542,7 +1542,7 @@ __metadata:
     typedoc: "npm:0.26.6"
     typedoc-plugin-markdown: "npm:4.2.6"
     typescript: "npm:5.5.4"
-    vite: "npm:5.4.2"
+    vite: "npm:5.4.3"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.0.5"
     webpack: "npm:5.94.0"
@@ -1582,7 +1582,7 @@ __metadata:
     typedoc: "npm:0.26.6"
     typedoc-plugin-markdown: "npm:4.2.6"
     typescript: "npm:5.5.4"
-    vite: "npm:5.4.2"
+    vite: "npm:5.4.3"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.0.5"
     webpack: "npm:5.94.0"
@@ -1620,7 +1620,7 @@ __metadata:
     typedoc: "npm:0.26.6"
     typedoc-plugin-markdown: "npm:4.2.6"
     typescript: "npm:5.5.4"
-    vite: "npm:5.4.2"
+    vite: "npm:5.4.3"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.0.5"
     webpack: "npm:5.94.0"
@@ -12413,7 +12413,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.44, postcss@npm:^8.4.23, postcss@npm:^8.4.4, postcss@npm:^8.4.41":
+"postcss@npm:8.4.44, postcss@npm:^8.4.23, postcss@npm:^8.4.4, postcss@npm:^8.4.41, postcss@npm:^8.4.43":
   version: 8.4.44
   resolution: "postcss@npm:8.4.44"
   dependencies:
@@ -12532,7 +12532,7 @@ __metadata:
     typedoc: "npm:0.26.6"
     typedoc-plugin-markdown: "npm:4.2.6"
     typescript: "npm:5.5.4"
-    vite: "npm:5.4.2"
+    vite: "npm:5.4.3"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.0.5"
     webpack: "npm:5.94.0"
@@ -15396,7 +15396,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.4.2, vite@npm:^5.0.0":
+"vite@npm:5.4.2":
   version: 5.4.2
   resolution: "vite@npm:5.4.2"
   dependencies:
@@ -15436,6 +15436,49 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 10c0/23e347ca8aa6f0a774227e4eb7abae228f12c6806a727b046aa75e7ee37ffc2d68cff74360e12a42c347f79adc294e2363bc723b957bf4b382b5a8fb39e4df9d
+  languageName: node
+  linkType: hard
+
+"vite@npm:5.4.3, vite@npm:^5.0.0":
+  version: 5.4.3
+  resolution: "vite@npm:5.4.3"
+  dependencies:
+    esbuild: "npm:^0.21.3"
+    fsevents: "npm:~2.3.3"
+    postcss: "npm:^8.4.43"
+    rollup: "npm:^4.20.0"
+  peerDependencies:
+    "@types/node": ^18.0.0 || >=20.0.0
+    less: "*"
+    lightningcss: ^1.21.0
+    sass: "*"
+    sass-embedded: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.4.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    less:
+      optional: true
+    lightningcss:
+      optional: true
+    sass:
+      optional: true
+    sass-embedded:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: 10c0/7afe601bcba82f81980c718fc171ba8f0c45e3bffaeb7ef831b64b84e396f963c3c87818b74da4c8e817d1bce1c179f1efae3bcb14d2e94b4eb635071722c8f2
   languageName: node
   linkType: hard
 
