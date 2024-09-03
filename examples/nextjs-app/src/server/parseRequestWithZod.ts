@@ -1,7 +1,5 @@
-import type { IncomingMessage } from 'node:http';
-
 import { HttpBadRequest, type HttpException } from '@httpx/exception';
-import type { NextApiRequest } from 'next';
+import type { NextRequest } from 'next/server';
 import type { z, ZodSchema } from 'zod';
 
 type Params<T> = {
@@ -16,7 +14,7 @@ type Params<T> = {
  */
 export const parseRequestWithZod = <
   T extends ZodSchema,
-  TReq extends IncomingMessage = NextApiRequest,
+  TReq extends NextRequest = NextRequest,
 >(
   req: TReq,
   schema: T,
