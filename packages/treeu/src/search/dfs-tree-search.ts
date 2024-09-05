@@ -19,7 +19,7 @@ type TreeNodeOptionalChildren<
 };
 
 /**
- * Depth-First Search (DFS) search algorithm based search. It uses a stack rather
+ * Depth-First Search (DFS) algorithm for tree structures. It uses a stack rather
  * than recursion in order to support deeply nested trees without call-stack overflows.
  * It is well suited for exploring a branch of a data structure in depth and
  * usually preferred when memory usage is a concern or when the data
