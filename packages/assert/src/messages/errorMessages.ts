@@ -10,9 +10,6 @@ export const formatErrMsg = (
   }
 ): string => {
   const { pfx = true } = options ?? {};
-  return `${
-    pfx
-      ? `${errPfx} ${vowelsAndH.has((msg?.[0] ?? '').toLowerCase()) ? 'an' : 'a'} `
-      : ''
-  }${msg}, got: ${getTypeInfo(v)}`;
+  const aOrAn = vowelsAndH.has((msg?.[0] ?? '').toLowerCase()) ? 'an' : 'a';
+  return `${pfx ? `${errPfx} ${aOrAn} ` : ''}${msg}, got: ${getTypeInfo(v)}`;
 };

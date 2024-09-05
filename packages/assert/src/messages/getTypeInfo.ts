@@ -47,7 +47,6 @@ export const getTypeInfo = (v: unknown): string => {
       break;
     }
     default:
-      v = typeof v;
   }
   return type;
 };
