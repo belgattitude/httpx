@@ -31,6 +31,7 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
   const httpxIsPlainObject: (_v: unknown) => boolean = await import(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore to apply benchmarks assert must be built
+    // eslint-disable-next-line import-x/no-unresolved
     '@httpx/plain-object'
   )
     .then(
