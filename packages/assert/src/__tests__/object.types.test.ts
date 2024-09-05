@@ -28,9 +28,6 @@ describe('object types tests', () => {
         // when removing the nullable (undefined) from the union
         expectTypeOf(invalidKeyIsUnknown).toBeUnknown();
 
-        const unknownPo2 = unknownPo;
-        unknownPo2.key;
-
         assertType<PlainObject>(unknownPo);
         assertType<Record<string, unknown>>(unknownPo);
         expectTypeOf(unknownPo.key).not.toBeString();
