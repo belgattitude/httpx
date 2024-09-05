@@ -21,15 +21,15 @@ describe('string assertions tests', () => {
         '2023-02-29T23:37:31.653z', // no 29th feb in 2023
       ],
       [
-        'Value is expected to be a string containing a strict iso date, got: Date',
+        'Value is expected to be a string containing a strict iso date (INVALID_ARGUMENT), got: Date',
         new Date(),
       ],
       [
-        'Value is expected to be a string containing a strict iso date, got: null',
+        'Value is expected to be a string containing a strict iso date (INVALID_ARGUMENT), got: null',
         null,
       ],
       [
-        'Value is expected to be a string containing a strict iso date, got: NaN',
+        'Value is expected to be a string containing a strict iso date (INVALID_ARGUMENT), got: NaN',
         Number.NaN,
       ],
     ])('should throw with message %s when value is %s', (msg, v) => {
