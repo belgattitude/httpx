@@ -5,10 +5,7 @@ import { defineConfig } from 'vitest/config';
 const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
 const isCodeSpeedEnabled = process.env?.CODSPEED === '1';
-const cspeed = isCodeSpeedEnabled
-  ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    (codspeedPlugin() as unknown as Plugin)
-  : undefined;
+const cspeed = isCodeSpeedEnabled ? codspeedPlugin() : undefined;
 
 export default defineConfig({
   esbuild: {
