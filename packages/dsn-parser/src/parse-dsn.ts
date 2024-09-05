@@ -13,7 +13,7 @@ import {
 import { parseQueryParams } from './query-param-parser';
 
 const dsnRegexp =
-  // eslint-disable-next-line regexp/no-unused-capturing-group,regexp/no-misleading-capturing-group
+  // eslint-disable-next-line regexp/no-unused-capturing-group,regexp/no-misleading-capturing-group,sonarjs/regex-complexity,sonarjs/unused-named-groups
   /^(?<driver>([\w+-]{1,40})):\/\/((?<user>[^/:]{1,200})?(:(?<pass>.{0,200}))?@)?(?<host>[^/:]{1,200}?)(:(?<port>\d+)?)?(\/(?<db>([\w#$.@-])+))?(\?(?<params>.{1,1000}))?$/;
 
 const defaultOptions = {
@@ -32,7 +32,7 @@ export const parseDsn = (
   }
   const opts = { ...defaultOptions, ...options };
   const { lowercaseDriver, overrides = {} } = opts;
-  const matches = dsn.match(dsnRegexp);
+  const matches = dsnRegexp.exec(dsn);
   if (!matches?.groups) {
     return createErrorResult('PARSE_ERROR');
   }
