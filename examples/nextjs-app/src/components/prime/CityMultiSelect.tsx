@@ -32,7 +32,8 @@ export const CityMultiSelect: FC<Props> = (props) => {
         display="chip"
         placeholder="Select Cities"
         maxSelectedLabels={3}
-        className="w-full md:w-20rem"
+        filter={true}
+        className="w-full"
       />
     </div>
   );
