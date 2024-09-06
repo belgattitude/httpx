@@ -29,11 +29,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.15.4":
-  version: 0.15.4
-  resolution: "@arethetypeswrong/cli@npm:0.15.4"
+"@arethetypeswrong/cli@npm:0.16.1":
+  version: 0.16.1
+  resolution: "@arethetypeswrong/cli@npm:0.16.1"
   dependencies:
-    "@arethetypeswrong/core": "npm:0.15.1"
+    "@arethetypeswrong/core": "npm:0.16.0"
     chalk: "npm:^4.1.2"
     cli-table3: "npm:^0.6.3"
     commander: "npm:^10.0.1"
@@ -42,21 +42,22 @@ __metadata:
     semver: "npm:^7.5.4"
   bin:
     attw: dist/index.js
-  checksum: 10c0/2a69c2a8b4b535a61e49c0266baba6956345d4d00f87bc463ef6a9af5fe39fce7d94c89f189d5a4fa86b2ea6e26238ef703e40f13544ac3c8f08016552825c36
+  checksum: 10c0/bf51dd730ffcf98f00a6cc9567eeb4713b06d36d502f3d6b75cdec8b1560ca72077b35203aa756502be331fa4f10ab4051a72a9a3dd7974e35ede9eea510e23a
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/core@npm:0.15.1":
-  version: 0.15.1
-  resolution: "@arethetypeswrong/core@npm:0.15.1"
+"@arethetypeswrong/core@npm:0.16.0":
+  version: 0.16.0
+  resolution: "@arethetypeswrong/core@npm:0.16.0"
   dependencies:
     "@andrewbranch/untar.js": "npm:^1.0.3"
+    cjs-module-lexer: "npm:^1.2.3"
     fflate: "npm:^0.8.2"
+    lru-cache: "npm:^11.0.1"
     semver: "npm:^7.5.4"
-    ts-expose-internals-conditionally: "npm:1.0.0-empty.0"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.6.1-rc"
     validate-npm-package-name: "npm:^5.0.0"
-  checksum: 10c0/85385378a62be4d6b6e445d7f32e1e20452db0f4cfe337eead747fead9f20cccdf8ee69e3ce8c74736cab9effd6800d8bf6047c35a54474d3e1c5d5f168cf39f
+  checksum: 10c0/1b9bb779bc4c5968ba70a538a3477f3bb3054ec9af1d1a72dae4c5019af3d1e1d3119b998c6dba5af49cd80aff8b47d8b1099784da040dc564c6a501fcfaa867
   languageName: node
   linkType: hard
 
@@ -1353,7 +1354,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/assert@workspace:packages/assert"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.15.4"
+    "@arethetypeswrong/cli": "npm:0.16.1"
     "@belgattitude/eslint-config-bases": "npm:5.17.0"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.3"
@@ -1397,7 +1398,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.15.4"
+    "@arethetypeswrong/cli": "npm:0.16.1"
     "@belgattitude/eslint-config-bases": "npm:5.17.0"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.3"
@@ -1431,7 +1432,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.15.4"
+    "@arethetypeswrong/cli": "npm:0.16.1"
     "@belgattitude/eslint-config-bases": "npm:5.17.0"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.3"
@@ -1471,7 +1472,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.15.4"
+    "@arethetypeswrong/cli": "npm:0.16.1"
     "@belgattitude/eslint-config-bases": "npm:5.17.0"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.3"
@@ -1506,7 +1507,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/memo-intl@workspace:packages/memo-intl"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.15.4"
+    "@arethetypeswrong/cli": "npm:0.16.1"
     "@belgattitude/eslint-config-bases": "npm:5.17.0"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.3"
@@ -1541,7 +1542,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/plain-object@workspace:packages/plain-object"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.15.4"
+    "@arethetypeswrong/cli": "npm:0.16.1"
     "@belgattitude/eslint-config-bases": "npm:5.17.0"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.3"
@@ -1581,7 +1582,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/treeu@workspace:packages/treeu"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.15.4"
+    "@arethetypeswrong/cli": "npm:0.16.1"
     "@belgattitude/eslint-config-bases": "npm:5.17.0"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.3"
@@ -4844,6 +4845,13 @@ __metadata:
   version: 4.0.0
   resolution: "ci-info@npm:4.0.0"
   checksum: 10c0/ecc003e5b60580bd081d83dd61d398ddb8607537f916313e40af4667f9c92a1243bd8e8a591a5aa78e418afec245dbe8e90a0e26e39ca0825129a99b978dd3f9
+  languageName: node
+  linkType: hard
+
+"cjs-module-lexer@npm:^1.2.3":
+  version: 1.4.0
+  resolution: "cjs-module-lexer@npm:1.4.0"
+  checksum: 10c0/b5ef03e10297c24f0db56b13d7d2f92e377499c83d7bf9352ec73df544b5310e024dfb1779a6b810e7a06eb18caa6a0e2da5f11df8116af73306f362e67fb61a
   languageName: node
   linkType: hard
 
@@ -9933,10 +9941,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^11.0.0":
-  version: 11.0.0
-  resolution: "lru-cache@npm:11.0.0"
-  checksum: 10c0/827ff0e0739f9b0f30f92f5a5fc97c6a2bd3ae32c0452bc58cb7411d6c589d49536073027293f2d1f02d0c2e72b63b162f238df7e9ff6f4cc0345f92afec4d1d
+"lru-cache@npm:^11.0.0, lru-cache@npm:^11.0.1":
+  version: 11.0.1
+  resolution: "lru-cache@npm:11.0.1"
+  checksum: 10c0/8bad6603dc67eb5b03520fba05bce5df6473dbba58ac4c6067ed088d29225a0a04416bb1462acd8c1f819d1fbf37920446a1c36bafd9c384bcc54cee0d3b697a
   languageName: node
   linkType: hard
 
@@ -12530,7 +12538,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "prisma-exception@workspace:integrations/prisma-exception"
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.15.4"
+    "@arethetypeswrong/cli": "npm:0.16.1"
     "@belgattitude/eslint-config-bases": "npm:5.17.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:11.1.4"
@@ -14666,13 +14674,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-expose-internals-conditionally@npm:1.0.0-empty.0":
-  version: 1.0.0-empty.0
-  resolution: "ts-expose-internals-conditionally@npm:1.0.0-empty.0"
-  checksum: 10c0/47c68497ec75b75a903db518b146d3599b71f62382368af4dd70c1fc2de777791620beac4afb4a2eaf7cf08efa68d7389bc5ea007c3c2d07cae2f3d482111db8
-  languageName: node
-  linkType: hard
-
 "ts-interface-checker@npm:^0.1.9":
   version: 0.1.13
   resolution: "ts-interface-checker@npm:0.1.13"
@@ -14919,16 +14920,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.3.3":
-  version: 5.3.3
-  resolution: "typescript@npm:5.3.3"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/e33cef99d82573624fc0f854a2980322714986bc35b9cb4d1ce736ed182aeab78e2cb32b385efa493b2a976ef52c53e20d6c6918312353a91850e2b76f1ea44f
-  languageName: node
-  linkType: hard
-
 "typescript@npm:5.5.4":
   version: 5.5.4
   resolution: "typescript@npm:5.5.4"
@@ -14939,13 +14930,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>":
-  version: 5.3.3
-  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
+"typescript@npm:5.6.1-rc":
+  version: 5.6.1-rc
+  resolution: "typescript@npm:5.6.1-rc"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/1d0a5f4ce496c42caa9a30e659c467c5686eae15d54b027ee7866744952547f1be1262f2d40de911618c242b510029d51d43ff605dba8fb740ec85ca2d3f9500
+  checksum: 10c0/9d6e99b7ddbc797ebc8d09e5d7f2f81ce5f288a4e607bcded3c545ced8582796c937fba31bede5660a56f978b2f68e7c4ee85614b307425a2b4617535721509f
   languageName: node
   linkType: hard
 
@@ -14956,6 +14947,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/73409d7b9196a5a1217b3aaad929bf76294d3ce7d6e9766dd880ece296ee91cf7d7db6b16c6c6c630ee5096eccde726c0ef17c7dfa52b01a243e57ae1f09ef07
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A5.6.1-rc#optional!builtin<compat/typescript>":
+  version: 5.6.1-rc
+  resolution: "typescript@patch:typescript@npm%3A5.6.1-rc#optional!builtin<compat/typescript>::version=5.6.1-rc&hash=8c6c40"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/9c6f8d864bc2efc964d1bfc94bf2e14f35cd2ad3df5e92d5304c8759674ba77ae927078a5fc06a527c087953615465dd5decc2d4d28ca8e13c11f9b29e068d93
   languageName: node
   linkType: hard
 
