@@ -1,5 +1,8 @@
-import type { BasePlainObject, DefaultBasePlainObject } from './internal.types';
-import type { MsgOrErrorFactory } from './internal.types';
+import type {
+  BasePlainObject,
+  DefaultBasePlainObject,
+  MsgOrErrorFactory,
+} from './internal.types';
 import { isPlainObject } from './is-plain-object';
 import type { PlainObject } from './plain-object.types';
 

@@ -39,10 +39,13 @@ export const isValidNetworkPort = (port: number): port is ValidNetworkPort => {
 export const removeUndefined = (
   obj: Record<string, unknown>
 ): Record<string, unknown> => {
-  return Object.keys(obj).reduce<Record<string, unknown>>((acc, key) => {
-    if (obj[key] !== undefined) acc[key] = obj[key];
-    return acc;
-  }, {});
+  const definedObj: Record<string, unknown> = {};
+  for (const key in obj) {
+    if (obj[key] !== undefined) {
+      definedObj[key] = obj[key];
+    }
+  }
+  return definedObj;
 };
 
 export const mergeDsnOverrides = (

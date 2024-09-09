@@ -65,9 +65,14 @@ export function assertParsableStrictIsoDateZ(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is ParsableStrictIsoDateZ {
-  let check: 'INVALID_FORMAT' | 'INVALID_DATE' | true | null = null;
+  let check:
+    | 'INVALID_FORMAT'
+    | 'INVALID_DATE'
+    | 'INVALID_ARGUMENT'
+    | true
+    | undefined = undefined;
   if (typeof v !== 'string') {
-    check = null;
+    check = 'INVALID_ARGUMENT';
   } else if (v.length === 24 && isoDateTimeZRegexp.test(v)) {
     try {
       check =
@@ -83,12 +88,7 @@ export function assertParsableStrictIsoDateZ(
   if (check !== true) {
     throw createAssertException(
       msgOrErrorFactory,
-      formatErrMsg(
-        `string containing a strict iso date${
-          check === null ? '' : ` (${check})`
-        }`,
-        v
-      )
+      formatErrMsg(`string containing a strict iso date (${check})`, v)
     );
   }
 }

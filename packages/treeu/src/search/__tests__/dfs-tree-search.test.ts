@@ -187,6 +187,7 @@ describe('TreeSearch', () => {
         it.each([false, undefined] as const)(
           'should return the node without children',
           (includeChildren) => {
+            // @ts-expect-error for testing purposes allow to pass includeChildren as undefined
             const result = search.findOne('folder2/subfolder1/file1.ts', {
               includeChildren: includeChildren,
             });

@@ -1,7 +1,7 @@
 import type { TreeNode, TreeNodeValue } from '../tree.types';
 
 type TreeSearchFindParams = {
-  includeChildren?: boolean | undefined;
+  includeChildren?: boolean;
   reverse?: boolean;
 };
 
@@ -15,7 +15,7 @@ type TreeNodeOptionalChildren<
   TValue extends TreeNodeValue | undefined,
   TKey extends string | number = string,
 > = TreeNode<TValue, TKey> & {
-  children?: TreeNode<TValue, TKey> | undefined;
+  children?: TreeNode<TValue, TKey>;
 };
 
 /**
@@ -52,8 +52,7 @@ export class DfsTreeSearch<
     const isIdSearch =
       typeof idOrConditionOrFn === 'string' ||
       typeof idOrConditionOrFn === 'number';
-    typeof idOrConditionOrFn === 'string' ||
-      typeof idOrConditionOrFn === 'number';
+
     const isFnSearch = !Array.isArray(idOrConditionOrFn);
 
     for (const treeNode of this.treeNodes) {
@@ -62,9 +61,11 @@ export class DfsTreeSearch<
         const node = stack[reverse ? 'pop' : 'shift']()!;
         const isFound = isIdSearch
           ? node.id === idOrConditionOrFn
-          : isFnSearch
+          : // eslint-disable-next-line sonarjs/no-nested-conditional
+            isFnSearch
             ? idOrConditionOrFn(node)
             : idOrConditionOrFn[0] in node &&
+              // eslint-disable-next-line sonarjs/different-types-comparison
               node[idOrConditionOrFn[0]] === idOrConditionOrFn[2];
         if (isFound) {
           result = node;

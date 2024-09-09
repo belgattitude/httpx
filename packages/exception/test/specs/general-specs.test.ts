@@ -6,7 +6,7 @@ import {
   HttpException,
   HttpNotFound,
   HttpUnprocessableEntity,
-} from '../../src/';
+} from '../../src';
 import type { HttpExceptionParamsWithIssues } from '../../src/types/HttpExceptionParamsWithIssues';
 
 describe('Common specs', () => {

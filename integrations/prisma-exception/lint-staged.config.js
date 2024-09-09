@@ -17,18 +17,13 @@ const {
  */
 const rules = {
   '**/*.{js,jsx,ts,tsx}': (filenames) => {
-    return [
-      getEslintFixCmd({
-        cache: true,
-        cwd: __dirname,
-        files: filenames,
-        // when autofixing staged-files a good tip is to disable react-hooks/exhaustive-deps, cause
-        fix: true,
-        maxWarnings: 25,
-        // a change here can potentially break things without proper visibility.
-        rules: ['react-hooks/exhaustive-deps: off'],
-      }),
-    ];
+    return getEslintFixCmd({
+      cache: true,
+      cwd: __dirname,
+      files: filenames,
+      fix: true,
+      maxWarnings: 25,
+    });
   },
   '**/*.{json,md,mdx,css,html,yml,yaml,scss}': (filenames) => {
     return [`prettier --write ${concatFilesForPrettier(filenames)}`];

@@ -7,7 +7,6 @@ import { twMerge } from 'tailwind-merge';
 const providerValue = {
   // Will add  as a pass through preset based on PrimeOne Design
   // @link https://primereact.org/tailwind/#unstyledmode
-  // @todo choose whether we're ready to go full unstyled
   unstyled: false,
   pt: {},
   ptOptions: {

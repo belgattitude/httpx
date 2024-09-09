@@ -4,7 +4,7 @@
 export const createAssertException = (
   msgOrErrorFactory?: string | (() => Error),
   fallbackMsg?: string
-) => {
+): TypeError | Error => {
   if (
     typeof msgOrErrorFactory === 'string' ||
     msgOrErrorFactory === undefined

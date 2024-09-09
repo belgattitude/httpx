@@ -47,11 +47,10 @@ export const getTypeInfo = (v: unknown): string => {
       break;
     }
     default:
-      v = typeof v;
   }
   return type;
 };
-const vowels = new Set(['a', 'e', 'i', 'o', 'u', 'y']);
+const vowelsAndH = new Set(['a', 'e', 'i', 'o', 'u', 'y', 'h']);
 export const formatErrMsg = (
   msg: string,
   v: unknown,
@@ -60,9 +59,6 @@ export const formatErrMsg = (
   }
 ): string => {
   const { pfx = true } = options ?? {};
-  return `${
-    pfx
-      ? `${errPfx} ${vowels.has((msg?.[0] ?? '').toLowerCase()) ? 'an' : 'a'} `
-      : ''
-  }${msg}, got: ${getTypeInfo(v)}`;
+  const aOrAn = vowelsAndH.has((msg?.[0] ?? '').toLowerCase()) ? 'an' : 'a';
+  return `${pfx ? `${errPfx} ${aOrAn} ` : ''}${msg}, got: ${getTypeInfo(v)}`;
 };
