@@ -134,11 +134,6 @@ export class FlatTreeWsMapper<
   fromTreeNodesOrThrow = <TId extends string = string>(
     treeNodes: TreeNode<TValue, TId>[],
     params: {
-      /**
-       * @todo Implement depth-first search
-       * @see https://en.wikipedia.org/wiki/Breadth-first_search
-       * @see https://en.wikipedia.org/wiki/Depth-first_search
-       */
       method: 'breadth-first'; // | 'depth-first';
     }
   ): FlatTreeWsMap<TValue, TKey> => {
