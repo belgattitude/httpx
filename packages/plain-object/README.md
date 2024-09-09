@@ -24,10 +24,13 @@ $ pnpm add @httpx/plain-object
 ## Features
 
 - 👉&nbsp; Provide [isPlainObject](#isplainobject) and [assertPlainObject](#assertplainobject) functions.
-- 👉&nbsp; Convenience [PlainObject](#plainobject-type) type.
-- 👉&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
-- 👉&nbsp; Lightweight (starts at [~100B](#bundle-size)) and [node, browser and edge support](#compatibility).
-- 👉&nbsp; Available in ESM and CJS formats.
+- 🦄&nbsp; Convenience [PlainObject](#plainobject-type) typescript typings.
+- 🚀&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
+- 📐&nbsp; Lightweight (starts at [~100B](#bundle-size)) 
+- 🫶&nbsp; Inspired and compatible with [@sindresorhus/is-plain-obj](#credits).
+- 🛡️&nbsp; Tested on [node 18-22, browser and runtime/edge](#compatibility).
+- 🙏&nbsp; Cross-realms tolerant (node:vm runInNewContext,...)
+- 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
 
@@ -218,6 +221,8 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
 ## Credits
+
+### @sindresorhus/is-plain-obj
 
 This library wouldn't be possible without [@sindresorhus](https://github.com/sindresorhus) [is-plain-obj](https://github.com/sindresorhus/is-plain-obj).
 It passes the same test suite and should be 100% compatible with it. Notable differences:
