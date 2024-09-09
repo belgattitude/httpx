@@ -61,9 +61,11 @@ export class DfsTreeSearch<
         const node = stack[reverse ? 'pop' : 'shift']()!;
         const isFound = isIdSearch
           ? node.id === idOrConditionOrFn
-          : isFnSearch
+          : // eslint-disable-next-line sonarjs/no-nested-conditional
+            isFnSearch
             ? idOrConditionOrFn(node)
             : idOrConditionOrFn[0] in node &&
+              // eslint-disable-next-line sonarjs/different-types-comparison
               node[idOrConditionOrFn[0]] === idOrConditionOrFn[2];
         if (isFound) {
           result = node;

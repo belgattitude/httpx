@@ -19,6 +19,8 @@ export const TreeGuards = {
     if (!isPlainObject(node)) {
       return false;
     }
-    return (node as unknown as TreeParentNode)?.parentId !== undefined;
+    return (
+      ((node as unknown as TreeParentNode)?.parentId ?? undefined) !== undefined
+    );
   },
 };

@@ -3,7 +3,7 @@ import { type HttpException, isHttpException } from '@httpx/exception';
 import type { JsonApiError } from './json-api-response.types';
 
 export class JsonApiErrorFactory {
-  static fromCatchVariable = (
+  static readonly fromCatchVariable = (
     error: unknown,
     defaultHttpStatus = 500
   ): JsonApiError => {
@@ -14,7 +14,7 @@ export class JsonApiErrorFactory {
     return JsonApiErrorFactory.fromHttpException(e, defaultHttpStatus);
   };
 
-  static fromHttpException = (
+  static readonly fromHttpException = (
     exception: Error | HttpException | string,
     /** fallback http status if it can't be inferred from exception */
     defaultHttpStatus = 500

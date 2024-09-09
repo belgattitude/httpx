@@ -6,7 +6,7 @@ import type {
 import { isPlainObject } from './typeguards';
 
 export class JsonApiResponseFactory {
-  static fromError = (
+  static readonly fromError = (
     errors: JsonApiError | JsonApiError[] | string,
     /** fallback http status if not present in JsonApiError */
     httpStatus?: number
@@ -24,7 +24,7 @@ export class JsonApiResponseFactory {
       success: false,
     };
   };
-  static fromSuccess = <T>(
+  static readonly fromSuccess = <T>(
     data: T,
     metadata?: JsonApiSuccessResponse<T>['meta']
   ): JsonApiSuccessResponse<T> => {

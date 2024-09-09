@@ -243,6 +243,7 @@ describe('parseDsn', () => {
         pass: undefined,
         user: 'replaced',
       };
+      // @ts-expect-error it shouldn't accept undefined as a password
       expect(parseDsn(dsn, { overrides })).toStrictEqual({
         success: true,
         value: {
@@ -254,6 +255,7 @@ describe('parseDsn', () => {
     });
     it('should set overrides as {} if undefined', () => {
       const dsn = 'redis://localhost';
+      // @ts-expect-error shouldn't accept overrides as undefined
       expect(parseDsn(dsn, { overrides: undefined })).toStrictEqual({
         success: true,
         value: {
