@@ -1,5 +1,17 @@
 # @examples/nextjs-app
 
+## 0.1.86
+
+### Patch Changes
+
+- Updated dependencies [[`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045), [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045), [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045), [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045), [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045), [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045), [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045), [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045)]:
+  - @httpx/dsn-parser@1.8.3
+  - @httpx/assert@0.13.0
+  - @httpx/plain-object@1.1.2
+  - @httpx/exception@3.0.10
+  - @httpx/memo-intl@1.1.2
+  - @httpx/treeu@0.4.1
+
 ## 0.1.85
 
 ### Patch Changes
