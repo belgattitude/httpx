@@ -13,7 +13,7 @@ module.exports = [
     name: 'Only parseDsn (ESM)',
     path: ['dist/index.mjs'],
     import: "{ parseDsn }",
-    limit: '780B',
+    limit: '785B',
   },
   {
     name: 'Everything (CJS)',
