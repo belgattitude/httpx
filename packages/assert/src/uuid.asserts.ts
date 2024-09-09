@@ -25,7 +25,7 @@ export function assertUuid(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory | undefined,
   options?: {
-    version?: UuidVersion | undefined;
+    version?: UuidVersion;
   }
 ): asserts v is Uuid {
   const { version } = options ?? {};
