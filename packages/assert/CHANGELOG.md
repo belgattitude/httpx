@@ -1,5 +1,17 @@
 # @httpx/assert
 
+## 0.13.0
+
+### Minor Changes
+
+- [#1418](https://github.com/belgattitude/httpx/pull/1418) [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045) Thanks [@belgattitude](https://github.com/belgattitude)! - Add INVALID_ARGUMENT reason to assertParsableStrictIsoDateZ
+
+- [#1418](https://github.com/belgattitude/httpx/pull/1418) [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045) Thanks [@belgattitude](https://github.com/belgattitude)! - BC getUuidVersion returns null instead of false when the uuid isn't correct
+
+### Patch Changes
+
+- [#1418](https://github.com/belgattitude/httpx/pull/1418) [`366520a`](https://github.com/belgattitude/httpx/commit/366520abbc4c8161fc42bc241f73338d262d8045) Thanks [@belgattitude](https://github.com/belgattitude)! - Internal refactor based on linter updates
+
 ## 0.12.4
 
 ### Patch Changes
