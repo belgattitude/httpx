@@ -1,3 +1,4 @@
+/* eslint-disable import-x/no-unresolved */
 import { Type } from '@sinclair/typebox';
 import { Value } from '@sinclair/typebox/value';
 import * as v from 'valibot';
@@ -23,8 +24,7 @@ const valibotSchema = v.record(v.string(), v.unknown());
 const typeboxSchema = Type.Record(Type.String(), Type.Unknown());
 
 describe(`Compare calling ${realLifeScenarios.length}x isPlainObject with mixed types values`, async () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment,import-x/no-unresolved,@typescript-eslint/no-unsafe-assignment
   // @ts-ignore to apply benchmarks assert must be built
   const httpxIsPlainObject: (_v) => boolean = await import('@httpx/assert')
     .then((mod) => mod.isPlainObject)

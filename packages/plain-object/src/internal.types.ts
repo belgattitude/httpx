@@ -8,6 +8,7 @@ export interface DefaultBasePlainObject extends BasePlainObject {
 
 export type Simplify<T> = {
   [P in keyof T]: T[P];
+  // eslint-disable-next-line sonarjs/no-useless-intersection
 } & NonNullable<unknown>;
 
 export type PlainObjectDeepPartialUnknown<T> = {
