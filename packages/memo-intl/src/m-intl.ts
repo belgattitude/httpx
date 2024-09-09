@@ -17,7 +17,7 @@ export const MIntl = {
   /**
    * Return a memoized Intl.NumberFormatter instance
    *
-   * <code>
+   * @example Usage
    * ```typescript
    * const formatter = MIntl.NumberFormat('fr-FR', {
    *   style: 'currency',
@@ -27,7 +27,6 @@ export const MIntl = {
    * });
    * const value = formatter.format(10.1345); // 👈 '10,13 €'
    * ```
-   * </code>
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
    */
@@ -36,7 +35,7 @@ export const MIntl = {
     options?: Intl.NumberFormatOptions
   ): Intl.NumberFormat => {
     const key = `NumberFormat:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (_cacheIntl.has(key) === false) {
+    if (!_cacheIntl.has(key)) {
       _cacheIntl.set(key, new Intl.NumberFormat(locale, options));
     }
     return _cacheIntl.get(key)! as Intl.NumberFormat;
@@ -44,6 +43,7 @@ export const MIntl = {
   /**
    * Return a memoized Intl.DateTimeFormatter instance
    *
+   * @example Usage
    * <code>
    * ```typescript
    * const formatter = MIntl.DateTimeFormat('fr-FR', {
@@ -62,7 +62,7 @@ export const MIntl = {
     options?: Intl.DateTimeFormatOptions
   ): Intl.DateTimeFormat => {
     const key = `DateTimeFormat:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (_cacheIntl.has(key) === false) {
+    if (!_cacheIntl.has(key)) {
       _cacheIntl.set(key, new Intl.DateTimeFormat(locale, options));
     }
     return _cacheIntl.get(key)! as Intl.DateTimeFormat;
