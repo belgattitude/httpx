@@ -52,8 +52,7 @@ export class DfsTreeSearch<
     const isIdSearch =
       typeof idOrConditionOrFn === 'string' ||
       typeof idOrConditionOrFn === 'number';
-    typeof idOrConditionOrFn === 'string' ||
-      typeof idOrConditionOrFn === 'number';
+
     const isFnSearch = !Array.isArray(idOrConditionOrFn);
 
     for (const treeNode of this.treeNodes) {
