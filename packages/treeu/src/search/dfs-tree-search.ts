@@ -1,7 +1,7 @@
 import type { TreeNode, TreeNodeValue } from '../tree.types';
 
 type TreeSearchFindParams = {
-  includeChildren?: boolean | undefined;
+  includeChildren?: boolean;
   reverse?: boolean;
 };
 
@@ -15,7 +15,7 @@ type TreeNodeOptionalChildren<
   TValue extends TreeNodeValue | undefined,
   TKey extends string | number = string,
 > = TreeNode<TValue, TKey> & {
-  children?: TreeNode<TValue, TKey> | undefined;
+  children?: TreeNode<TValue, TKey>;
 };
 
 /**
