@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.8.4
+
+### Patch Changes
+
+- [#1434](https://github.com/belgattitude/httpx/pull/1434) [`6bd5105`](https://github.com/belgattitude/httpx/commit/6bd5105190e290b84417a8b8fe535b3a3df9816b) Thanks [@belgattitude](https://github.com/belgattitude)! - [internal cleanup] refactor some unions with undefined for optional parameters
+
 ## 1.8.3
 
 ### Patch Changes
