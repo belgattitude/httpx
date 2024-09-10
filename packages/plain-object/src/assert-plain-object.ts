@@ -45,7 +45,7 @@ export function assertPlainObject<
   TValue extends BasePlainObject = DefaultBasePlainObject,
 >(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory | undefined
+  msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is TValue extends DefaultBasePlainObject
   ? BasePlainObject
   : PlainObject<TValue> {
