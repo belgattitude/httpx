@@ -46,7 +46,9 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
     });
   const is = await import('@sindresorhus/is').then((mod) => mod.default);
   const isPlainObj = await import('is-plain-obj').then((mod) => mod.default);
-  const lodash = await import('lodash-es').then((mod) => mod.default);
+  const lodashIsPlainObject = await import('lodash-es').then(
+    (mod) => mod.isPlainObject
+  );
   const esToolkitIsPlainObject = await import('es-toolkit').then(
     (mod) => mod.isPlainObject
   );
@@ -92,7 +94,7 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
 
   bench('lodash-es: `_.isPlainObject(v)`', () => {
     for (const value of realLifeScenarios) {
-      lodash.isPlainObject(value);
+      lodashIsPlainObject(value);
     }
   });
 });

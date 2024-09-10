@@ -35,7 +35,9 @@ describe(`Compare calling ${realLifeScenarios.length}x isPlainObject with mixed 
     });
   const is = await import('@sindresorhus/is').then((mod) => mod.default);
   const isPlainObj = await import('is-plain-obj').then((mod) => mod.default);
-  const lodash = await import('lodash-es').then((mod) => mod.default);
+  const lodashIsPlainObject = await import('lodash-es').then(
+    (mod) => mod.isPlainObject
+  );
 
   bench('@httpx/assert: `isPlainObject(v)`', () => {
     for (const value of realLifeScenarios) {
@@ -57,7 +59,7 @@ describe(`Compare calling ${realLifeScenarios.length}x isPlainObject with mixed 
 
   bench('lodash-es: `_.isPlainObject(v)`', () => {
     for (const value of realLifeScenarios) {
-      lodash.isPlainObject(value);
+      lodashIsPlainObject(value);
     }
   });
 
