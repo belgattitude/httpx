@@ -42,7 +42,7 @@ export class DfsTreeSearch<
       | TKey
       | NativeNodeSearchKeys
       | ((treeNode: TreeNode<TValue, TKey>) => boolean),
-    params?: TreeSearchFindParams | undefined
+    params?: TreeSearchFindParams
     // eslint-disable-next-line sonarjs/cognitive-complexity
   ): TreeNodeOptionalChildren<TValue, TKey> | undefined => {
     const { includeChildren = false, reverse = false } = { ...params };

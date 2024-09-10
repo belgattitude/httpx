@@ -11,7 +11,7 @@ import type {
   UuidVersion,
 } from './uuid.types';
 
-const errMsg = (version?: UuidVersion | undefined) =>
+const errMsg = (version?: UuidVersion) =>
   [`uuid`, version === undefined ? undefined : `v${version}`]
     .filter(Boolean)
     .join(' ');
@@ -23,7 +23,7 @@ const errMsg = (version?: UuidVersion | undefined) =>
  */
 export function assertUuid(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory | undefined,
+  msgOrErrorFactory?: MsgOrErrorFactory,
   options?: {
     version?: UuidVersion;
   }
@@ -43,7 +43,7 @@ export function assertUuid(
  */
 export function assertUuidV1(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory | undefined
+  msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is UuidV1 {
   assertUuid(v, msgOrErrorFactory, {
     version: 1,
@@ -57,7 +57,7 @@ export function assertUuidV1(
 
 export function assertUuidV3(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory | undefined
+  msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is UuidV3 {
   assertUuid(v, msgOrErrorFactory, {
     version: 3,
@@ -70,7 +70,7 @@ export function assertUuidV3(
  */
 export function assertUuidV4(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory | undefined
+  msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is UuidV4 {
   assertUuid(v, msgOrErrorFactory, {
     version: 4,
@@ -83,7 +83,7 @@ export function assertUuidV4(
  */
 export function assertUuidV5(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory | undefined
+  msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is UuidV5 {
   assertUuid(v, msgOrErrorFactory, {
     version: 5,
