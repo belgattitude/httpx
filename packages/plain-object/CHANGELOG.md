@@ -1,5 +1,11 @@
 # @httpx/plain-object
 
+## 1.1.3
+
+### Patch Changes
+
+- [#1434](https://github.com/belgattitude/httpx/pull/1434) [`6bd5105`](https://github.com/belgattitude/httpx/commit/6bd5105190e290b84417a8b8fe535b3a3df9816b) Thanks [@belgattitude](https://github.com/belgattitude)! - internal: assertPlainObject error message remove explicit undefined union
+
 ## 1.1.2
 
 ### Patch Changes
