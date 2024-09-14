@@ -2751,7 +2751,7 @@ __metadata:
     "@size-limit/file": "npm:11.1.5"
     "@size-limit/webpack": "npm:11.1.5"
     "@size-limit/webpack-why": "npm:11.1.5"
-    "@types/node": "npm:22.5.4"
+    "@types/node": "npm:22.5.5"
     "@types/statuses": "npm:2.0.5"
     "@vitest/coverage-istanbul": "npm:2.1.1"
     "@vitest/ui": "npm:2.1.1"
@@ -4461,7 +4461,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:22.5.4":
+"@types/node@npm:*, @types/node@npm:22.5.5":
+  version: 22.5.5
+  resolution: "@types/node@npm:22.5.5"
+  dependencies:
+    undici-types: "npm:~6.19.2"
+  checksum: 10c0/ead9495cfc6b1da5e7025856dcce2591e9bae635357410c0d2dd619fce797d2a1d402887580ca4b336cb78168b195224869967de370a23f61663cf1e4836121c
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:22.5.4":
   version: 22.5.4
   resolution: "@types/node@npm:22.5.4"
   dependencies:
@@ -14231,7 +14240,7 @@ __metadata:
     "@size-limit/file": "npm:11.1.5"
     "@size-limit/webpack": "npm:11.1.5"
     "@size-limit/webpack-why": "npm:11.1.5"
-    "@types/node": "npm:22.5.4"
+    "@types/node": "npm:22.5.5"
     "@vitest/coverage-istanbul": "npm:2.1.1"
     "@vitest/ui": "npm:2.1.1"
     browserslist: "npm:4.23.3"
