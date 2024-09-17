@@ -11,6 +11,14 @@ The base branch is **`main`**.
 - On your fork, create a branch make the changes, commit and push.
 - Create a pull-request.
 
+## Install
+
+Before running install, ensure that corepack is enabled: `corepack enable`
+
+```bash
+yarn install
+```
+
 ## Checklist
 
 If applicable:
