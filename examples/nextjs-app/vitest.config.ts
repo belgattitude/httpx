@@ -30,7 +30,7 @@ export default defineConfig({
     },
     // threads is good, vmThreads is faster (perf++) but comes with possible memory leaks
     // @link https://vitest.dev/config/#vmthreads
-    pool: 'threads',
+    pool: 'forks',
     poolOptions: {
       vmThreads: {
         // useAtomics -> perf+

@@ -33,26 +33,17 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['**/*.ts'],
+      files: ['src/**/*.ts'],
       rules: {
         'import-x/no-extraneous-dependencies': [
           'error',
           {
-            devDependencies: [
-              '**/*.test.ts',
-              '**/*.spec.ts',
-              '**/*.config.js',
-              '**/*.config.mjs',
-              '**/*.config.cjs',
-              '**/*.config.ts',
-              '**/*.d.ts',
-              '.eslint*.*',
-            ],
+            devDependencies: ['**/*.test.ts', '**/*.spec.ts'],
             optionalDependencies: false,
             peerDependencies: false,
           },
         ],
-        'import-x/no-cycle': [1, { maxDepth: 100 }],
+        'import-x/no-cycle': [1, { maxDepth: 5 }],
         'import-x/no-nodejs-modules': 'error',
         'import-x/no-self-import': 'error',
       },
@@ -64,20 +55,4 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   root: true,
-  rules: {
-    'import-x/no-self-import': 'error',
-    'jest/no-restricted-matchers': [
-      'error',
-      {
-        toBeFalsy: null,
-        resolves: 'Use `expect(await promise)` instead.',
-        toHaveBeenCalledWith: null,
-        'not.toHaveBeenCalledWith': null,
-        'resolves.toHaveBeenCalledWith': null,
-        'rejects.toHaveBeenCalledWith': null,
-        'resolves.not.toHaveBeenCalledWith': null,
-        'rejects.not.toHaveBeenCalledWith': null,
-      },
-    ],
-  },
 };

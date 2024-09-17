@@ -21,7 +21,7 @@ export default defineConfig({
     deps: {
       optimizer: {
         web: {
-          enabled: false,
+          enabled: true,
         },
         ssr: { enabled: true },
       },
@@ -31,7 +31,7 @@ export default defineConfig({
     },
     // threads is good, vmThreads is faster (perf++) but comes with limitations
     // @link https://vitest.dev/config/#vmthreads
-    pool: 'threads',
+    pool: 'forks',
     poolOptions: {
       vmThreads: {
         // useAtomics -> perf+

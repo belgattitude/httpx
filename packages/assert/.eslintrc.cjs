@@ -52,7 +52,7 @@ module.exports = {
             peerDependencies: false,
           },
         ],
-        'import-x/no-cycle': [1, { maxDepth: 100 }],
+        'import-x/no-cycle': [1, { maxDepth: 5 }],
         'import-x/no-nodejs-modules': 'error',
         'import-x/no-self-import': 'error',
       },
