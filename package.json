@@ -47,6 +47,7 @@
     "prettier:format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"**/*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
   },
   "workspaces": [
+    "docs2",
     "docs",
     "examples/*",
     "integrations/*",
@@ -54,7 +55,7 @@
   ],
   "packageManager": "yarn@4.5.0",
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "6.0.0-canary.13",
+    "@belgattitude/eslint-config-bases": "6.0.0-canary.12",
     "@changesets/changelog-github": "0.5.0",
     "@changesets/cli": "2.27.8",
     "@commitlint/cli": "19.5.0",
