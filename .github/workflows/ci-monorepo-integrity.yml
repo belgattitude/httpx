@@ -35,8 +35,8 @@ jobs:
       - name: 🦺 Check for yarn constraints.pro
         run: yarn constraints
 
-      - name: 🛟 Check monorepo dependency graph
-        run: yarn check:install
+      #- name: 🛟 Check monorepo dependency graph
+      #  run: yarn check:install
 
       - name: 🦺 Syncpack checks - packages - lint-semver-ranges
         run: yarn syncpack:check

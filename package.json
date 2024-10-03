@@ -38,7 +38,7 @@
     "website:deploy": "gh-pages -d ./docs/out -t true",
     "deps:check": "npx npm-check-updates@latest --configFileName .ncurc.yml --deep",
     "deps:update": "npx npm-check-updates@latest --configFileName .ncurc.yml -u --deep",
-    "check:install": "yarn dlx @yarnpkg/doctor .",
+    "check:install": "yarn dlx @yarnpkg/doctor@3 .",
     "postinstall": "is-ci || yarn husky install",
     "syncpack:format": "syncpack format",
     "syncpack:check": "syncpack lint-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
