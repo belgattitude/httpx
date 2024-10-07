@@ -3372,7 +3372,7 @@ __metadata:
     browserslist-to-esbuild: "npm:2.1.1"
     cross-env: "npm:7.0.3"
     es-check: "npm:7.2.1"
-    es-toolkit: "npm:1.23.0"
+    es-toolkit: "npm:1.24.0"
     esbuild: "npm:0.24.0"
     eslint: "npm:8.57.1"
     is-plain-obj: "npm:4.1.0"
@@ -8934,13 +8934,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-toolkit@npm:1.23.0":
-  version: 1.23.0
-  resolution: "es-toolkit@npm:1.23.0"
+"es-toolkit@npm:1.24.0":
+  version: 1.24.0
+  resolution: "es-toolkit@npm:1.24.0"
   dependenciesMeta:
     "@trivago/prettier-plugin-sort-imports@4.3.0":
       unplugged: true
-  checksum: 10c0/63f4c2386e1b7feccb50a50bbeb4659cd07e07c9fa9e080b417159168525f093a70e9a00175a9909ae777e6f97182ef12a27fda8f1cab1fae30758677293eb4e
+    prettier-plugin-sort-re-exports@0.0.1:
+      unplugged: true
+  checksum: 10c0/0b4cfcfae2dcd9efcf9292e0de9bf04f3fc63dcb70df8341b5f7b742f7794194bca6090a09a8dda0f8f706e6726051d94721a844b3daa8e071456efbde416d14
   languageName: node
   linkType: hard
 
