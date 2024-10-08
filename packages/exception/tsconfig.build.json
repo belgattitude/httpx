@@ -7,7 +7,8 @@
     "declaration": true,
     "declarationMap": false,
     "declarationDir": "./dist",
-    "tsBuildInfoFile": "./tsconfig.build.tsbuildinfo" // for tsup rollup dts tsBuildInfoFile is required when using incremental
+    "incremental": false
+    // "tsBuildInfoFile": "./tsconfig.build.tsbuildinfo" // for tsup rollup dts tsBuildInfoFile is required when using incremental
   },
   "exclude": ["*.test.ts"]
 }
