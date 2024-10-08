@@ -62,13 +62,15 @@ describe('Object typeguards tests', () => {
         },
         false,
       ],
+      // globalThis
+      [globalThis, false],
       // Static built-in classes
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
       [JSON, false],
       [Math, false],
       [Atomics, false],
       [JSON, false],
-      // built-in classes
+      // Built-in classes
       [new Date(), false],
       [new Map(), false],
       [new Error(), false],
@@ -143,7 +145,7 @@ describe('Object typeguards tests', () => {
   });
 
   describe('Support node:vm.runInNewContext', () => {
-    const isNodeLike = typeof window === 'undefined';
+    const isNodeLike = 'window' in globalThis;
     /*
     const isNode = () =>
         typeof process !== 'undefined' &&
