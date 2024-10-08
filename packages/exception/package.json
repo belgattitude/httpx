@@ -79,7 +79,7 @@
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
     "build-release": "yarn build",
-    "build": "run clean && bunchee",
+    "build": "run clean && bunchee --target es2022 --runtime browser --minify --tsconfig ./tsconfig.build.json",
     "build-tsup": "run clean && yarn run tsup",
     "bench": "vitest bench --run",
     "bench-watch": "vitest bench",
