@@ -21,6 +21,8 @@ describe('object types tests', () => {
         // act
         assertPlainObject(unknownPo);
 
+        assertType<PlainObject>(unknownPo);
+
         // Now the type is Record<string, unknown>, javascript allows to retrieve it
         // even if it doesn't exist. The value should be undefined|unknown
         const invalidKeyIsUnknown = unknownPo.invalidKey;

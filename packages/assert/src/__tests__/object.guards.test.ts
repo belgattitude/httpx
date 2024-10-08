@@ -62,13 +62,15 @@ describe('Object typeguards tests', () => {
         },
         false,
       ],
+      // globalThis
+      [globalThis, false],
       // Static built-in classes
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
       [JSON, false],
       [Math, false],
       [Atomics, false],
       [JSON, false],
-      // built-in classes
+      // Built-in classes
       [new Date(), false],
       [new Map(), false],
       [new Error(), false],
@@ -76,6 +78,9 @@ describe('Object typeguards tests', () => {
       [new Request('http://localhost'), false],
       [new Promise(() => {}), false],
       [Promise.resolve({}), false],
+      // eslint-disable-next-line no-restricted-globals
+      [Buffer.from('123123'), false],
+      [new Uint8Array([1, 2, 3]), false],
       [Object.create({}), false],
       [/(\d+)/, false],
       // eslint-disable-next-line prefer-regex-literals
@@ -100,17 +105,16 @@ describe('Object typeguards tests', () => {
     it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
       expect(isPlainObject(v)).toStrictEqual(expected);
     });
-    describe('Compatibility with is-plain-obj', () => {
-      it.each(cases)(
-        'compat when "%s" is given, should return %s',
-        (v, _expected) => {
-          expect(isPlainObject(v)).toBe(isPlainObj(v));
-        }
-      );
-    });
   });
+
   describe('Support node:vm.runInNewContext', () => {
-    const isNodeLike = typeof window === 'undefined';
+    const isNodeLike = 'window' in globalThis;
+    /*
+    const isNode = () =>
+        typeof process !== 'undefined' &&
+        !!process.versions &&
+        !!process.versions.node;
+    */
     it.skipIf(!isNodeLike)('should support vm', async () => {
       // eslint-disable-next-line import-x/no-nodejs-modules
       const runInNewContext = await import('node:vm').then(

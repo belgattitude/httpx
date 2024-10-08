@@ -1,6 +1,6 @@
 import type {
   BasePlainObject,
-  UnspecifiedPlainObjectType,
+  DefaultBasePlainObject,
 } from './object.internal.types';
 import type { PlainObject } from './object.types';
 
@@ -11,28 +11,43 @@ import type { PlainObject } from './object.types';
  *
  * @example
  * ```typescript
- * isPlainObject({ key: 'value' });       // 👈 ✅ true
- * isPlainObject({ key: new Date() });    // 👈 ✅ true
- * isPlainObject(new Object());           // 👈 ✅ true
- * isPlainObject(Object.create(null));    // 👈 ✅ true
- * isPlainObject({nested: { key: true} }  // 👈 ✅ true
+ * import { isPlainObject } from '@httpx/plain-object';
+ *
+ * // ✅👇 True
+ *
+ * isPlainObject({ key: 'value' });          // ✅
+ * isPlainObject({ key: new Date() });       // ✅
+ * isPlainObject(new Object());              // ✅
+ * isPlainObject(Object.create(null));       // ✅
+ * isPlainObject({ nested: { key: true} });  // ✅
+ * isPlainObject(new Proxy({}, {}));         // ✅
+ * isPlainObject({ [Symbol('tag')]: 'A' });  // ✅
+ *
+ * // ✅👇 (node context, workers, ...)
+ * const runInNewContext = await import('node:vm').then(
+ *     (mod) => mod.runInNewContext
+ * );
+ * isPlainObject(runInNewContext('({})'));   // ✅
+ *
+ * // ❌👇 False
  *
  * class Test { };
- *
- * isPlainObject(new Test())              // 👈 ❌ false
- * isPlainObject(10);                     // 👈 ❌ false
- * isPlainObject(null);                   // 👈 ❌ false
- * isPlainObject('hello');                // 👈 ❌ false
- * isPlainObject([]);                     // 👈 ❌ false
- * isPlainObject(new Date());             // 👈 ❌ false
- * isPlainObject(Math);                   // 👈 ❌ false
- * (...)
+ * isPlainObject(new Test())           // ❌
+ * isPlainObject(10);                  // ❌
+ * isPlainObject(null);                // ❌
+ * isPlainObject('hello');             // ❌
+ * isPlainObject([]);                  // ❌
+ * isPlainObject(new Date());          // ❌
+ * isPlainObject(Math);                // ❌ Static built-in classes
+ * isPlainObject(Promise.resolve({})); // ❌
+ * isPlainObject(Object.create({}));   // ❌
+ * ```
  */
 export const isPlainObject = <
-  TValue extends Record<string, unknown> = UnspecifiedPlainObjectType,
+  TValue extends BasePlainObject = DefaultBasePlainObject,
 >(
   v: unknown
-): v is TValue extends UnspecifiedPlainObjectType
+): v is TValue extends DefaultBasePlainObject
   ? BasePlainObject
   : PlainObject<TValue> => {
   if (v === null || typeof v !== 'object') {
@@ -43,6 +58,7 @@ export const isPlainObject = <
   return (
     (proto === null ||
       proto === Object.prototype ||
+      // Required to support node:vm.runInNewContext({})
       Object.getPrototypeOf(proto) === null) &&
     // https://stackoverflow.com/a/76387885/5490184
     !(Symbol.toStringTag in v) &&
