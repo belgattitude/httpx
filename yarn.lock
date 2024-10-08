@@ -3198,18 +3198,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@httpx/docs@workspace:docs2":
-  version: 0.0.0-use.local
-  resolution: "@httpx/docs@workspace:docs2"
-  dependencies:
-    "@astrojs/check": "npm:0.9.4"
-    "@astrojs/starlight": "npm:0.28.3"
-    astro: "npm:4.15.12"
-    sharp: "npm:0.33.5"
-    typescript: "npm:5.6.2"
-  languageName: unknown
-  linkType: soft
-
 "@httpx/dsn-parser@workspace:^, @httpx/dsn-parser@workspace:packages/dsn-parser":
   version: 0.0.0-use.local
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
@@ -11433,6 +11421,18 @@ __metadata:
   checksum: 10c0/2490e3acec397abeb88807db52cac59102d5ed758feee6df6112ab3ccd8325e8a1ce8bce6f4b66e5470eca102d31e425ace904242e4fa28dbe0c59c4bafa7b2c
   languageName: node
   linkType: hard
+
+"httpx-docs-2@workspace:docs2":
+  version: 0.0.0-use.local
+  resolution: "httpx-docs-2@workspace:docs2"
+  dependencies:
+    "@astrojs/check": "npm:0.9.4"
+    "@astrojs/starlight": "npm:0.28.3"
+    astro: "npm:4.15.12"
+    sharp: "npm:0.33.5"
+    typescript: "npm:5.6.2"
+  languageName: unknown
+  linkType: soft
 
 "httpx-docs@workspace:docs":
   version: 0.0.0-use.local
