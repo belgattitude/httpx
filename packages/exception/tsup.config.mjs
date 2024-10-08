@@ -13,10 +13,10 @@ export default defineConfig((options) => {
     ],
     bundle: true,
     format: ['esm', 'cjs'],
-    minify: !options.watch,
-    minifyIdentifiers: !options.watch,
-    minifySyntax: !options.watch,
-    minifyWhitespace: !options.watch,
+    minify: false,
+    minifyIdentifiers: false,
+    minifySyntax: false,
+    minifyWhitespace: false,
     outExtension({ format }) {
       return {
         js: `.${format === 'cjs' ? 'cjs' : 'mjs'}`,
@@ -28,6 +28,7 @@ export default defineConfig((options) => {
     splitting: true,
     target: ['es2022', ...browserslistToEsbuild()],
     treeshake: true,
+    outDir: './dist-tsup',
     tsconfig: './tsconfig.build.json',
   };
 });
