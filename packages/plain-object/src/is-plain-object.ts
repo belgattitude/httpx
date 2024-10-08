@@ -12,6 +12,7 @@ import type { PlainObject } from './plain-object.types';
  *
  * // ✅👇 True
  *
+ * isPlainObject({ });                       // ✅
  * isPlainObject({ key: 'value' });          // ✅
  * isPlainObject({ key: new Date() });       // ✅
  * isPlainObject(new Object());              // ✅
@@ -36,8 +37,12 @@ import type { PlainObject } from './plain-object.types';
  * isPlainObject([]);                  // ❌
  * isPlainObject(new Date());          // ❌
  * isPlainObject(Math);                // ❌ Static built-in classes
+ * isPlainObject(new Uint8Array([1])); // ❌
+ * isPlainObject(Buffer.from('ABC'));  // ❌
  * isPlainObject(Promise.resolve({})); // ❌
  * isPlainObject(Object.create({}));   // ❌
+ * isPlainObject(new (class Cls {}));  // ❌
+ * isPlainObject(globalThis);          // ❌,
  * ```
  */
 export const isPlainObject = <

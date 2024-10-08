@@ -145,7 +145,7 @@ describe('Object typeguards tests', () => {
   });
 
   describe('Support node:vm.runInNewContext', () => {
-    const isNodeLike = 'window' in globalThis;
+    const isNodeLike = !('window' in globalThis);
     /*
     const isNode = () =>
         typeof process !== 'undefined' &&
