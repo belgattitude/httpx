@@ -5,6 +5,7 @@ type FlatTreeWsParams = {
   separator: string;
 };
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases
 type FlatTreeWsUniqueKey = string;
 
 export type FlatTreeWsMap<
@@ -81,6 +82,7 @@ export class FlatTreeWsMapper<
             );
           }
           if (!(name in context)) {
+            console.log('name', name, splitted);
             context[name] = { result: [] };
             const parents = splitted.slice(0, -1) as TKey[];
             const parentId = (parents.length > 0
@@ -96,6 +98,10 @@ export class FlatTreeWsMapper<
             if (value !== undefined) {
               node.value = value as TValue;
             }
+            if (!Array.isArray(context.result)) {
+              console.log({ context });
+              throw new TypeError(JSON.stringify(node));
+            }
             context.result.push(node);
           }
           context = context[name] as CollectorContext<TValue, TKey>;
@@ -105,7 +111,7 @@ export class FlatTreeWsMapper<
       return {
         success: false,
         message: flatTreeWsMapperErrors.toTreeNodes.parsedErrorMsg,
-        issues: [{ message: `${(e as Error).message}` }],
+        issues: [{ message: `${(e as Error).message} ${(e as Error).stack}` }],
       };
     }
     return {
@@ -123,7 +129,12 @@ export class FlatTreeWsMapper<
   ): TreeNode<TValue, TKey>[] => {
     const result = this.toTreeNodes(data, params);
     if (!result.success) {
-      throw new Error(result.message);
+      const { message, issues } = result;
+      const errors =
+        issues.length > 0
+          ? issues.map((issue) => issue.message).join(', ')
+          : null;
+      throw new Error(`${message} (${errors})`);
     }
     return result.treeNodes;
   };
