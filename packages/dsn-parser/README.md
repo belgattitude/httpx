@@ -1,6 +1,6 @@
 # @httpx/dsn-parser
 
-DSN & JDBC string parser with query params support in a light and modern package.
+DSN & JDBC string parser with query params support in a light ([~750B](#bundle-size)) and modern package.
 
 [![npm](https://img.shields.io/npm/v/@httpx/dsn-parser?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/dsn-parser)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/dsn-parser/CHANGELOG.md)
@@ -323,6 +323,15 @@ openssl rand 60 | openssl base64 -A
 
 # YFUXIG9INIK7dFyE9aXtxLmjmnYL0zv6YluBJJbC6alKIBema/MwEGy3VUpx0oLAvWHUFGFMagAdLxrB
 ```
+
+## Bundle size
+
+Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/dsn-parser/.size-limit.cjs)
+
+| Scenario (esm)                                           | Size (compressed) |
+|----------------------------------------------------------|------------------:|
+| `import { parseDsn } from '@httpx/dsn-parser`            |            ~ 750B |
+
 
 ## Compatibility
 
