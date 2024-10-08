@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.13.2
+
+### Patch Changes
+
+- [#1515](https://github.com/belgattitude/httpx/pull/1515) [`2692a50`](https://github.com/belgattitude/httpx/commit/2692a50a3f1f1ae1d3d8e6f9269b62483b369638) Thanks [@renovate](https://github.com/apps/renovate)! - Improve isPlainObject and base it on @httpx/plain-object
+
 ## 0.13.1
 
 ### Patch Changes
