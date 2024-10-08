@@ -79,7 +79,8 @@
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
     "build-release": "yarn build",
-    "build": "run clean && yarn run tsup",
+    "build": "run clean && bunchee",
+    "build-tsup": "run clean && yarn run tsup",
     "bench": "vitest bench --run",
     "bench-watch": "vitest bench",
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
@@ -117,6 +118,7 @@
     "@vitest/ui": "2.1.2",
     "browserslist": "4.24.0",
     "browserslist-to-esbuild": "2.1.1",
+    "bunchee": "5.5.1",
     "cross-env": "7.0.3",
     "es-check": "7.2.1",
     "esbuild": "0.24.0",
