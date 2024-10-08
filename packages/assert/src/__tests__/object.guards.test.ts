@@ -105,6 +105,14 @@ describe('Object typeguards tests', () => {
     it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
       expect(isPlainObject(v)).toStrictEqual(expected);
     });
+    describe('Compatibility with is-plain-obj', () => {
+      it.each(cases)(
+        'compat when "%s" is given, should return %s',
+        (v, _expected) => {
+          expect(isPlainObject(v)).toBe(isPlainObj(v));
+        }
+      );
+    });
   });
 
   describe('Support node:vm.runInNewContext', () => {

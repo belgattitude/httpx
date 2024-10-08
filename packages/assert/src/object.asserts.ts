@@ -1,3 +1,4 @@
+import { formatErrMsg } from './messages/errorMessages';
 import { isPlainObject } from './object.guards';
 import type {
   BasePlainObject,
@@ -5,6 +6,7 @@ import type {
 } from './object.internal.types';
 import type { PlainObject } from './object.types';
 import type { MsgOrErrorFactory } from './types/internal.types';
+import { createAssertException } from './utils/createAssertException';
 /**
  * Assert a value is a plain object
  *
@@ -49,12 +51,9 @@ export function assertPlainObject<
   ? BasePlainObject
   : PlainObject<TValue> {
   if (!isPlainObject<TValue>(v)) {
-    if (
-      msgOrErrorFactory === undefined ||
-      typeof msgOrErrorFactory === 'string'
-    ) {
-      throw new TypeError(msgOrErrorFactory ?? `Not a plain object`);
-    }
-    throw msgOrErrorFactory();
+    throw createAssertException(
+      msgOrErrorFactory,
+      formatErrMsg('plain object', v)
+    );
   }
 }
