@@ -1,5 +1,11 @@
 # @httpx/plain-object
 
+## 1.2.0
+
+### Minor Changes
+
+- [#1523](https://github.com/belgattitude/httpx/pull/1523) [`003cdb3`](https://github.com/belgattitude/httpx/commit/003cdb3f4e0ff00970ac00b56659a47a30f7358f) Thanks [@belgattitude](https://github.com/belgattitude)! - Small speedup for isPlainObject and size reduction
+
 ## 1.1.3
 
 ### Patch Changes
