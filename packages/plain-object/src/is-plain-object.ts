@@ -52,7 +52,7 @@ export const isPlainObject = <
 ): v is TValue extends DefaultBasePlainObject
   ? BasePlainObject
   : PlainObject<TValue> => {
-  if (v === null || typeof v !== 'object') {
+  if (!v || typeof v !== 'object') {
     return false;
   }
 

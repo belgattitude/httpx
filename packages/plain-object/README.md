@@ -200,9 +200,9 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                           | Size (compressed) |
 |----------------------------------------------------------|------------------:|
-| `import { isPlainObject } from '@httpx/plain-object`     |            ~ 100B |
-| `import { assertPlainObject } from '@httpx/plain-object` |            ~ 160B |
-| `isPlainObject + assertPlainObject`                      |            ~ 170B |
+| `import { isPlainObject } from '@httpx/plain-object`     |            ~ 101B |
+| `import { assertPlainObject } from '@httpx/plain-object` |            ~ 165B |
+| `isPlainObject + assertPlainObject`                      |            ~ 165B |
 
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/plain-object@latest).
