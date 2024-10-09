@@ -1,6 +1,6 @@
 # @httpx/plain-object
 
-[Fast](#benchmarks) and lightweight ([~100B](#bundle-size)) functions to check or assert
+[Fast](#benchmarks) and lightweight ([~80B](#bundle-size)) functions to check or assert
 that a value is a plain object.
 
 [![npm](https://img.shields.io/npm/v/@httpx/plain-object?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/plain-object)
@@ -26,7 +26,7 @@ $ pnpm add @httpx/plain-object
 - 👉&nbsp; Provide [isPlainObject](#isplainobject) and [assertPlainObject](#assertplainobject) functions.
 - 🦄&nbsp; Convenience [PlainObject](#plainobject-type) typescript typings.
 - 🚀&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
-- 📐&nbsp; Lightweight (starts at [~100B](#bundle-size)) 
+- 📐&nbsp; Lightweight (starts at [~80B](#bundle-size)) 
 - 🫶&nbsp; Inspired and compatible with [@sindresorhus/is-plain-obj](#credits).
 - 🛡️&nbsp; Tested on [node 18-22, browser and runtime/edge](#compatibility).
 - 🙏&nbsp; Cross-realms tolerant (node:vm runInNewContext,...)
@@ -34,7 +34,7 @@ $ pnpm add @httpx/plain-object
 
 ## Documentation
 
-👉 [Official website](https://belgattitude.github.io/httpx/plain-object) or [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/plain-object#readme)
+👉 [Official website](https://belgattitude.github.io/httpx/plain-object) or [GitHub Readme](https://github.com/belgattitude/httpx/tree/main/packages/plain-object#readme)
 
 ## Usage
 
@@ -44,33 +44,43 @@ $ pnpm add @httpx/plain-object
 import { isPlainObject } from '@httpx/plain-object';
 
 // ✅👇 True
-
-isPlainObject({ key: 'value' });          // ✅ 
-isPlainObject({ key: new Date() });       // ✅ 
-isPlainObject(new Object());              // ✅ 
-isPlainObject(Object.create(null));       // ✅ 
-isPlainObject({ nested: { key: true} });  // ✅ 
-isPlainObject(new Proxy({}, {}));         // ✅ 
-isPlainObject({ [Symbol('tag')]: 'A' });  // ✅ 
+isPlainObject({ });                       // ✅
+isPlainObject({ key: 'value' });          // ✅
+isPlainObject({ key: new Date() });       // ✅
+isPlainObject(new Object());              // ✅
+isPlainObject(Object.create(null));       // ✅
+isPlainObject({ nested: { key: true} });  // ✅
+isPlainObject(new Proxy({}, {}));         // ✅
+isPlainObject({ [Symbol('tag')]: 'A' });  // ✅
 
 // ✅👇 (node context, workers, ...)
 const runInNewContext = await import('node:vm').then(
     (mod) => mod.runInNewContext
 );
-isPlainObject(runInNewContext('({})'));   // ✅ 
+isPlainObject(runInNewContext('({})'));   // ✅
+
+// ✅👇 Static built-in classes are treated as plain objects
+//       check for `isStaticBuiltInClass` to exclude if needed
+
+isPlainObject(Math);                // ✅
+isPlainObject(JSON);                // ✅
+isPlainObject(Atomics);             // ✅
 
 // ❌👇 False
 
 class Test { };
-isPlainObject(new Test())           // ❌ 
-isPlainObject(10);                  // ❌ 
-isPlainObject(null);                // ❌ 
-isPlainObject('hello');             // ❌ 
-isPlainObject([]);                  // ❌ 
-isPlainObject(new Date());          // ❌ 
-isPlainObject(Math);                // ❌ Static built-in classes 
+isPlainObject(new Test())           // ❌
+isPlainObject(10);                  // ❌
+isPlainObject(null);                // ❌
+isPlainObject('hello');             // ❌
+isPlainObject([]);                  // ❌
+isPlainObject(new Date());          // ❌
+isPlainObject(new Uint8Array([1])); // ❌
+isPlainObject(Buffer.from('ABC'));  // ❌
 isPlainObject(Promise.resolve({})); // ❌
 isPlainObject(Object.create({}));   // ❌
+isPlainObject(new (class Cls {}));  // ❌
+isPlainObject(globalThis);          // ❌,
 ```
 
 ### assertPlainObject
@@ -81,7 +91,7 @@ import type { PlainObject } from '@httpx/plain-object';
 
 function fn(value: unknown) {
 
-    // 👇 Throws `new TypeError('Not a plain object')` if not a plain object
+    // 👇 Throws `new TypeError('Not a PlainObject')` if not a plain object
     assertPlainObject(value);
 
     // 👇 Throws `new TypeError('Custom message')` if not a plain object
@@ -102,9 +112,23 @@ try {
 } catch (error) {
     console.error(error);
 }
-
 ```
 
+### isStaticBuiltInClass
+
+> info: Since v2.0.0
+
+Since v2.0.0, `isPlainObject` will accept static built-in classes 
+as plain objects (Math, JSON, Atomics). If you need to exclude them,
+a new typeguard has been created `isStaticBuiltInClass`.
+
+```typescript
+import { isPlainObject, isStaticBuiltInClass } from '@httpx/plain-object';
+const v = Math; // or Atomics or JSON
+if (isPlainObject(v) && !isStaticBuiltInClass(v)) {
+    console.log('v is a plain object but not a static built-in class');
+}
+```
 ### PlainObject type
 
 #### Generic
@@ -143,7 +167,6 @@ if (isPlainObject<CustomType>(value)) {
       console.log(url.toUpperCase());
   }
 }
-
 ```
 
 #### PlainObject
@@ -160,7 +183,6 @@ const value = { key: 'value' } as unknown;
 assertPlainObject(value);
 someFn(value)
 ```
-
 ## Benchmarks
 
 > Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx). 
@@ -170,26 +192,25 @@ someFn(value)
 ```
  RUN  v2.1.2 /home/sebastien/github/httpx/packages/plain-object
 
- ✓ bench/comparative.bench.ts (6) 4398ms
-   ✓ Compare calling isPlainObject with 100x mixed types values (6) 4396ms
-     name                                                         hz     min      max    mean     p75     p99    p995    p999     rme  samples      
-   · @httpx/plain-object: `isPlainObject(v)`              870,872.90  0.0009   8.7832  0.0011  0.0010  0.0019  0.0021  0.0068  ±4.74%   435437   fastest
-   · (sindresorhus/)is-plain-obj: `isPlainObj(v)`         847,061.21  0.0009   6.4363  0.0012  0.0010  0.0019  0.0020  0.0088  ±5.07%   423531      
-   · @sindresorhus/is: `is.plainObject(v)`                515,510.42  0.0015  11.1225  0.0019  0.0017  0.0030  0.0032  0.0092  ±7.23%   257756      
-   · estoolkit:  `isPlainObject(v)`                       223,151.78  0.0037   1.5797  0.0045  0.0041  0.0076  0.0090  0.0311  ±1.21%   111576      
-   · (jonschlinkert/)is-plain-object: `isPlainObject(v)`  376,177.02  0.0020   8.2668  0.0027  0.0023  0.0039  0.0047  0.0277  ±4.96%   188089      
-   · lodash-es: `_.isPlainObject(v)`                       15,546.36  0.0533   6.8019  0.0643  0.0555  0.1326  0.2533  0.6342  ±3.14%     7774   slowest
+ ✓ bench/comparative.bench.ts (6) 4597ms
+   ✓ Compare calling isPlainObject with 110x mixed types values (6) 4594ms
+     name                                                           hz     min      max    mean     p75     p99    p995    p999     rme  samples    
+   · @httpx/plain-object: `isPlainObject(v)`              1,806,371.37  0.0004  11.6450  0.0006  0.0005  0.0006  0.0007  0.0012  ±6.82%   903186   fastest
+   · (sindresorhus/)is-plain-obj: `isPlainObj(v)`         1,598,094.82  0.0005   1.0909  0.0006  0.0006  0.0011  0.0013  0.0016  ±0.92%   799048    
+   · @sindresorhus/is: `is.plainObject(v)`                  960,264.30  0.0009   5.9891  0.0010  0.0011  0.0011  0.0015  0.0033  ±2.47%   480133    
+   · estoolkit:  `isPlainObject(v)`                         127,719.90  0.0061   9.4934  0.0078  0.0077  0.0131  0.0215  0.0818  ±3.89%    63860    
+   · (jonschlinkert/)is-plain-object: `isPlainObject(v)`    817,269.76  0.0010   7.7567  0.0012  0.0012  0.0025  0.0028  0.0059  ±3.97%   408635    
+   · lodash-es: `_.isPlainObject(v)`                         25,029.13  0.0341  11.9151  0.0400  0.0391  0.0574  0.0751  0.4693  ±4.84%    12515   slowest
 
 
  BENCH  Summary
 
-  @httpx/plain-object: `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 100x mixed types values
-    1.03x faster than (sindresorhus/)is-plain-obj: `isPlainObj(v)`
-    1.69x faster than @sindresorhus/is: `is.plainObject(v)`
-    2.32x faster than (jonschlinkert/)is-plain-object: `isPlainObject(v)`
-    3.90x faster than estoolkit:  `isPlainObject(v)`
-    56.02x faster than lodash-es: `_.isPlainObject(v)`
-
+  @httpx/plain-object: `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
+    1.13x faster than (sindresorhus/)is-plain-obj: `isPlainObj(v)`
+    1.88x faster than @sindresorhus/is: `is.plainObject(v)`
+    2.21x faster than (jonschlinkert/)is-plain-object: `isPlainObject(v)`
+    14.14x faster than estoolkit:  `isPlainObject(v)`
+    72.17x faster than lodash-es: `_.isPlainObject(v)`
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/bench/comparative.bench.ts) for details.
@@ -198,12 +219,12 @@ someFn(value)
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.size-limit.cjs)
 
-| Scenario (esm)                                           | Size (compressed) |
-|----------------------------------------------------------|------------------:|
-| `import { isPlainObject } from '@httpx/plain-object`     |            ~ 101B |
-| `import { assertPlainObject } from '@httpx/plain-object` |            ~ 165B |
-| `isPlainObject + assertPlainObject`                      |            ~ 165B |
-
+| Scenario (esm)                                              | Size (compressed) |
+|-------------------------------------------------------------|------------------:|
+| `import { isPlainObject } from '@httpx/plain-object`        |             ~ 80B |
+| `import { assertPlainObject } from '@httpx/plain-object`    |            ~ 134B |
+| `Both isPlainObject and assertPlainObject`                  |            ~ 142B |
+| `import { isStaticBuiltInClass } from '@httpx/plain-object` |             ~ 37B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/plain-object@latest).
 
@@ -220,18 +241,25 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
-## Credits
+## Comparison with other libraries
 
 ### @sindresorhus/is-plain-obj
 
 This library wouldn't be possible without [@sindresorhus](https://github.com/sindresorhus) [is-plain-obj](https://github.com/sindresorhus/is-plain-obj).
-It passes the same test suite and should be 100% compatible with it. Notable differences:
+Notable differences:
 
-- [x] Slighly smaller bundle and performance.
+- [x] SLightly faster (10%)
+- [x] ESM and CJS formats.
 - [x] Named export.
+- [x] Smaller bundle size.
 - [x] Provide a `PlainObject` type and `assertPlainObject` function.
 - [x] Typescript convenience `PlainObject` type.
-- [x] ESM and CJS formats.
+
+Since v2, it diverges from `is-plain-obj` by 
+
+- [x] Static built-in classes are considered as plain objects (use [isStaticBuiltInClass](#isstaticbuiltinclass) to exclude).
+- [x] `[Symbol.iterator]` is considered as a valid property for plain objects.
+- [x] `[Symbol.toStringTag]` is considered as a valid property for plain objects.`
 
 ## Contributors
 
