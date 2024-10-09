@@ -35,6 +35,22 @@ describe('Object typeguards tests', () => {
       [JSON, true],
       [Math, true],
       [Atomics, true],
+
+      [
+        {
+          [Symbol.iterator]: function* () {
+            yield 1;
+          },
+        },
+        true,
+      ],
+
+      [
+        {
+          [Symbol.toStringTag]: 'string-tagged',
+        },
+        true,
+      ],
     ] as const;
 
     const invalidPlainObjects = [
@@ -53,24 +69,6 @@ describe('Object typeguards tests', () => {
       [fnWithProto, false],
       // Symbols
       [Symbol('cool'), false],
-      /*
-      [
-        {
-          [Symbol.iterator]: function* () {
-            yield 1;
-          },
-        },
-        false,
-      ],
-      */
-      /*
-      [
-        {
-          [Symbol.toStringTag]: 'string-tagged',
-        },
-        false,
-      ], */
-
       // globalThis
       [globalThis, false],
       // Built-in classes
@@ -163,7 +161,9 @@ describe('Object typeguards tests', () => {
       // Needs to update to eslint-plugin-vitest
       // eslint-disable-next-line jest/no-standalone-expect
       expect(isPlainObject(runInNewContext('({})'))).toBe(true);
+      // eslint-disable-next-line jest/no-standalone-expect
       expect(isPlainObject(runInNewContext('(false)'))).toBe(false);
+      // eslint-disable-next-line jest/no-standalone-expect
       expect(isPlainObject(runInNewContext('(new Date())'))).toBe(false);
       // eslint-disable-next-line jest/no-standalone-expect
       // expect(isPlainObj(runInNewContext('("cool")'))).toBe(false);
