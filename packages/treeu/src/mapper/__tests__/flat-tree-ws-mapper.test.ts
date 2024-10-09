@@ -10,7 +10,7 @@ type CustomValue =
   | { type: 'file'; size: number };
 
 describe('FlatTreeWsMapper', () => {
-  const validFlatTreeWs: FlatTreeWs<CustomValue, string> = new Map([
+  const validFlatTreeWs: FlatTreeWs<CustomValue> = new Map([
     ['file1.ts', { type: 'file', size: 10 }],
     ['file2.ts', { type: 'file', size: 20 }],
     ['folder1', { type: 'folder' }],
