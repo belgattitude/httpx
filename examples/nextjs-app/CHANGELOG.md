@@ -1,5 +1,13 @@
 # @examples/nextjs-app
 
+## 0.1.90
+
+### Patch Changes
+
+- Updated dependencies [[`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b)]:
+  - @httpx/plain-object@2.0.0
+  - @httpx/treeu@0.4.4
+
 ## 0.1.89
 
 ### Patch Changes
