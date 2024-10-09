@@ -5,7 +5,7 @@
 Not 100% compatible with sindreshorsus/is-plain-obj anymore
 
 The changes shouldn't affect most users, but it's worth noting that the `isPlainObject` 
-function no longer consider static build-in objects as plain objects (Math, JSON, Atomics).
+function no longer consider static built-in objects as plain objects (Math, JSON, Atomics).
 
 This fix an issue with `{ [Symbol.toStringTag]: 'tag' }` that wasn't considered as a plain object.
 
