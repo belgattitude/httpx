@@ -3195,7 +3195,7 @@ __metadata:
     type-fest: "npm:4.26.1"
     typedoc: "npm:0.26.8"
     typedoc-plugin-markdown: "npm:4.2.9"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
     valibot: "npm:0.42.1"
     vite: "npm:5.4.8"
     vite-tsconfig-paths: "npm:5.0.1"
@@ -3231,7 +3231,7 @@ __metadata:
     tsup: "npm:8.3.0"
     typedoc: "npm:0.26.8"
     typedoc-plugin-markdown: "npm:4.2.9"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
     vite: "npm:5.4.8"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.1.2"
@@ -3272,7 +3272,7 @@ __metadata:
     tupleson: "npm:0.23.1"
     typedoc: "npm:0.26.8"
     typedoc-plugin-markdown: "npm:4.2.9"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
     vite: "npm:5.4.8"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.1.2"
@@ -3307,7 +3307,7 @@ __metadata:
     tsup: "npm:8.3.0"
     typedoc: "npm:0.26.8"
     typedoc-plugin-markdown: "npm:4.2.9"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
     vite: "npm:5.4.8"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.1.2"
@@ -3342,7 +3342,7 @@ __metadata:
     tsup: "npm:8.3.0"
     typedoc: "npm:0.26.8"
     typedoc-plugin-markdown: "npm:4.2.9"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
     vite: "npm:5.4.8"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.1.2"
@@ -3382,7 +3382,7 @@ __metadata:
     tsup: "npm:8.3.0"
     typedoc: "npm:0.26.8"
     typedoc-plugin-markdown: "npm:4.2.9"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
     vite: "npm:5.4.8"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.1.2"
@@ -3420,7 +3420,7 @@ __metadata:
     tsup: "npm:8.3.0"
     typedoc: "npm:0.26.8"
     typedoc-plugin-markdown: "npm:4.2.9"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
     vite: "npm:5.4.8"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.1.2"
@@ -11579,7 +11579,7 @@ __metadata:
     "@astrojs/starlight": "npm:0.28.3"
     astro: "npm:4.15.12"
     sharp: "npm:0.33.5"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
   languageName: unknown
   linkType: soft
 
@@ -11603,7 +11603,7 @@ __metadata:
     sirv: "npm:2.0.4"
     sirv-cli: "npm:2.0.2"
     tailwindcss: "npm:3.4.13"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
   languageName: unknown
   linkType: soft
 
@@ -11632,7 +11632,7 @@ __metadata:
     rollup: "npm:4.24.0"
     shell-quote: "npm:1.8.1"
     syncpack: "npm:13.0.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
   languageName: unknown
   linkType: soft
 
@@ -16615,7 +16615,7 @@ __metadata:
     tsup: "npm:8.3.0"
     typedoc: "npm:0.26.8"
     typedoc-plugin-markdown: "npm:4.2.9"
-    typescript: "npm:5.6.2"
+    typescript: "npm:5.6.3"
     vite: "npm:5.4.8"
     vite-tsconfig-paths: "npm:5.0.1"
     vitest: "npm:2.1.2"
@@ -19421,13 +19421,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:*, typescript@npm:5.6.2":
-  version: 5.6.2
-  resolution: "typescript@npm:5.6.2"
+"typescript@npm:*, typescript@npm:5.6.3":
+  version: 5.6.3
+  resolution: "typescript@npm:5.6.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/3ed8297a8c7c56b7fec282532503d1ac795239d06e7c4966b42d4330c6cf433a170b53bcf93a130a7f14ccc5235de5560df4f1045eb7f3550b46ebed16d3c5e5
+  checksum: 10c0/44f61d3fb15c35359bc60399cb8127c30bae554cd555b8e2b46d68fa79d680354b83320ad419ff1b81a0bdf324197b29affe6cc28988cd6a74d4ac60c94f9799
   languageName: node
   linkType: hard
 
@@ -19441,13 +19441,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A*#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>":
+"typescript@npm:5.6.2":
   version: 5.6.2
-  resolution: "typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=8c6c40"
+  resolution: "typescript@npm:5.6.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/94eb47e130d3edd964b76da85975601dcb3604b0c848a36f63ac448d0104e93819d94c8bdf6b07c00120f2ce9c05256b8b6092d23cf5cf1c6fa911159e4d572f
+  checksum: 10c0/3ed8297a8c7c56b7fec282532503d1ac795239d06e7c4966b42d4330c6cf433a170b53bcf93a130a7f14ccc5235de5560df4f1045eb7f3550b46ebed16d3c5e5
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A*#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>":
+  version: 5.6.3
+  resolution: "typescript@patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/7c9d2e07c81226d60435939618c91ec2ff0b75fbfa106eec3430f0fcf93a584bc6c73176676f532d78c3594fe28a54b36eb40b3d75593071a7ec91301533ace7
   languageName: node
   linkType: hard
 
@@ -19458,6 +19468,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/9c6f8d864bc2efc964d1bfc94bf2e14f35cd2ad3df5e92d5304c8759674ba77ae927078a5fc06a527c087953615465dd5decc2d4d28ca8e13c11f9b29e068d93
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>":
+  version: 5.6.2
+  resolution: "typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=8c6c40"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/94eb47e130d3edd964b76da85975601dcb3604b0c848a36f63ac448d0104e93819d94c8bdf6b07c00120f2ce9c05256b8b6092d23cf5cf1c6fa911159e4d572f
   languageName: node
   linkType: hard
 
