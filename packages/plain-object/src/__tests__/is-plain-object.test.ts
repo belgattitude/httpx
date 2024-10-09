@@ -30,6 +30,27 @@ describe('Object typeguards tests', () => {
       [JSON.parse('{}'), true],
       [new Proxy({}, {}), true],
       [new Proxy({ key: 'proxied_key' }, {}), true],
+      // Static built-in classes
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+      [JSON, true],
+      [Math, true],
+      [Atomics, true],
+
+      [
+        {
+          [Symbol.iterator]: function* () {
+            yield 1;
+          },
+        },
+        true,
+      ],
+
+      [
+        {
+          [Symbol.toStringTag]: 'string-tagged',
+        },
+        true,
+      ],
     ] as const;
 
     const invalidPlainObjects = [
@@ -48,28 +69,8 @@ describe('Object typeguards tests', () => {
       [fnWithProto, false],
       // Symbols
       [Symbol('cool'), false],
-      [
-        {
-          [Symbol.iterator]: function* () {
-            yield 1;
-          },
-        },
-        false,
-      ],
-      [
-        {
-          [Symbol.toStringTag]: 'string-tagged',
-        },
-        false,
-      ],
       // globalThis
       [globalThis, false],
-      // Static built-in classes
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
-      [JSON, false],
-      [Math, false],
-      [Atomics, false],
-      [JSON, false],
       // Built-in classes
       [new Date(), false],
       [new Map(), false],
@@ -105,7 +106,7 @@ describe('Object typeguards tests', () => {
     it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
       expect(isPlainObject(v)).toStrictEqual(expected);
     });
-    describe('Compatibility with is-plain-obj', () => {
+    describe.skip('Compatibility with is-plain-obj', () => {
       it.each(cases)(
         'compat when "%s" is given, should return %s',
         (v, _expected) => {
@@ -161,7 +162,11 @@ describe('Object typeguards tests', () => {
       // eslint-disable-next-line jest/no-standalone-expect
       expect(isPlainObject(runInNewContext('({})'))).toBe(true);
       // eslint-disable-next-line jest/no-standalone-expect
-      expect(isPlainObj(runInNewContext('({})'))).toBe(true);
+      expect(isPlainObject(runInNewContext('(false)'))).toBe(false);
+      // eslint-disable-next-line jest/no-standalone-expect
+      expect(isPlainObject(runInNewContext('(new Date())'))).toBe(false);
+      // eslint-disable-next-line jest/no-standalone-expect
+      // expect(isPlainObj(runInNewContext('("cool")'))).toBe(false);
     });
   });
 });

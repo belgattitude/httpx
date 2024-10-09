@@ -27,6 +27,13 @@ import type { PlainObject } from './plain-object.types';
  * );
  * isPlainObject(runInNewContext('({})'));   // ✅
  *
+ * // ✅👇 Static built-in classes are treated as plain objects
+ * //       check for `isStaticBuiltInClass` to exclude if needed
+ *
+ * isPlainObject(Math);                // ✅
+ * isPlainObject(JSON);                // ✅
+ * isPlainObject(Atomics);             // ✅
+ *
  * // ❌👇 False
  *
  * class Test { };
@@ -36,7 +43,6 @@ import type { PlainObject } from './plain-object.types';
  * isPlainObject('hello');             // ❌
  * isPlainObject([]);                  // ❌
  * isPlainObject(new Date());          // ❌
- * isPlainObject(Math);                // ❌ Static built-in classes
  * isPlainObject(new Uint8Array([1])); // ❌
  * isPlainObject(Buffer.from('ABC'));  // ❌
  * isPlainObject(Promise.resolve({})); // ❌
@@ -52,18 +58,15 @@ export const isPlainObject = <
 ): v is TValue extends DefaultBasePlainObject
   ? BasePlainObject
   : PlainObject<TValue> => {
-  if (!v || typeof v !== 'object') {
+  if (v === null || typeof v !== 'object') {
     return false;
   }
 
   const proto = Object.getPrototypeOf(v) as typeof Object.prototype | null;
   return (
-    (proto === null ||
-      proto === Object.prototype ||
-      // Required to support node:vm.runInNewContext({})
-      Object.getPrototypeOf(proto) === null) &&
-    // https://stackoverflow.com/a/76387885/5490184
-    !(Symbol.toStringTag in v) &&
-    !(Symbol.iterator in v)
+    proto === null ||
+    proto === Object.prototype ||
+    // Required to support node:vm.runInNewContext({})
+    Object.getPrototypeOf(proto) === null
   );
 };
