@@ -1,5 +1,11 @@
 # @httpx/plain-object
 
+## 2.0.1
+
+### Patch Changes
+
+- [#1535](https://github.com/belgattitude/httpx/pull/1535) [`d1a01e2`](https://github.com/belgattitude/httpx/commit/d1a01e2af290f9f5bc0f2357773616b39a9e048d) Thanks [@belgattitude](https://github.com/belgattitude)! - Mention comparison with redux isPlainObject (100% compat)
+
 ## 2.0.0
 
 ### Major Changes
