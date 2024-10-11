@@ -4,7 +4,10 @@ import type { PlainObject } from './plain-object.types';
 /**
  * Check if a value is a plain object
  *
- * An object is plain if it's created by either {}, new Object(), or Object.create(null).
+ * A plain object is a basic JavaScript object, such as `{}`, `{ data: [] }`, `new Object()` or `Object.create(null)`.
+ *
+ * It isn't derived from as class (`new Date()`, `new CustomClass()`) and
+ * has either `Object.prototype` or `null` as its prototype.
  *
  * @example
  * ```typescript
@@ -27,13 +30,6 @@ import type { PlainObject } from './plain-object.types';
  * );
  * isPlainObject(runInNewContext('({})'));   // ✅
  *
- * // ✅👇 Static built-in classes are treated as plain objects
- * //       check for `isStaticBuiltInClass` to exclude if needed
- *
- * isPlainObject(Math);                // ✅
- * isPlainObject(JSON);                // ✅
- * isPlainObject(Atomics);             // ✅
- *
  * // ❌👇 False
  *
  * class Test { };
@@ -50,6 +46,13 @@ import type { PlainObject } from './plain-object.types';
  * isPlainObject(new (class Cls {}));  // ❌
  * isPlainObject(globalThis);          // ❌,
  * ```
+ *
+ * // ✅👇 Note that static built-in classes are treated as plain objects
+ * //    check for `isStaticBuiltInClass` to exclude if needed
+ *
+ * isPlainObject(Math);                // ✅
+ * isPlainObject(JSON);                // ✅
+ * isPlainObject(Atomics);             // ✅
  */
 export const isPlainObject = <
   TValue extends BasePlainObject = DefaultBasePlainObject,

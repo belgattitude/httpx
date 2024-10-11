@@ -1,7 +1,14 @@
 # @httpx/plain-object
 
 [Fast](#benchmarks) and lightweight ([~80B](#bundle-size)) functions to check or assert
-that a value is a plain object.
+that a value is a plain object. 
+
+A plain object is a basic JavaScript object, such as `{}`, `{ data: [] }`, `new Object()` or `Object.create(null)`.
+
+It isn't derived from as class (`new Date()`, `new CustomClass()`) and
+has either `Object.prototype` or `null` as its prototype.
+
+See how it [compares to other libraries](#comparison-with-other-libraries).
 
 [![npm](https://img.shields.io/npm/v/@httpx/plain-object?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/plain-object)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/CHANGELOG.md)
@@ -192,25 +199,27 @@ someFn(value)
 ```
  RUN  v2.1.2 /home/sebastien/github/httpx/packages/plain-object
 
- ✓ bench/comparative.bench.ts (6) 4597ms
-   ✓ Compare calling isPlainObject with 110x mixed types values (6) 4594ms
-     name                                                           hz     min      max    mean     p75     p99    p995    p999     rme  samples    
-   · @httpx/plain-object: `isPlainObject(v)`              1,806,371.37  0.0004  11.6450  0.0006  0.0005  0.0006  0.0007  0.0012  ±6.82%   903186   fastest
-   · (sindresorhus/)is-plain-obj: `isPlainObj(v)`         1,598,094.82  0.0005   1.0909  0.0006  0.0006  0.0011  0.0013  0.0016  ±0.92%   799048    
-   · @sindresorhus/is: `is.plainObject(v)`                  960,264.30  0.0009   5.9891  0.0010  0.0011  0.0011  0.0015  0.0033  ±2.47%   480133    
-   · estoolkit:  `isPlainObject(v)`                         127,719.90  0.0061   9.4934  0.0078  0.0077  0.0131  0.0215  0.0818  ±3.89%    63860    
-   · (jonschlinkert/)is-plain-object: `isPlainObject(v)`    817,269.76  0.0010   7.7567  0.0012  0.0012  0.0025  0.0028  0.0059  ±3.97%   408635    
-   · lodash-es: `_.isPlainObject(v)`                         25,029.13  0.0341  11.9151  0.0400  0.0391  0.0574  0.0751  0.4693  ±4.84%    12515   slowest
+ ✓ bench/comparative.bench.ts (7) 5226ms
+   ✓ Compare calling isPlainObject with 110x mixed types values (7) 5225ms
+     name                                                         hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · @httpx/plain-object: `isPlainObject(v)`              940,131.15  0.0010  0.0600  0.0011  0.0011  0.0011  0.0011  0.0037  ±0.07%   470068   fastest
+   · (sindresorhus/)is-plain-obj: `isPlainObj(v)`         859,797.90  0.0011  0.4133  0.0012  0.0012  0.0012  0.0017  0.0033  ±0.17%   429899
+   · @sindresorhus/is: `is.plainObject(v)`                561,555.15  0.0017  0.3331  0.0018  0.0018  0.0019  0.0019  0.0040  ±0.14%   280778
+   · estoolkit:  `isPlainObject(v)`                        88,719.29  0.0102  0.2623  0.0113  0.0111  0.0230  0.0250  0.0497  ±0.28%    44360
+   · redux:  `isPlainObject(v)`                           335,666.75  0.0028  0.0336  0.0030  0.0030  0.0031  0.0031  0.0052  ±0.05%   167834
+   · (jonschlinkert/)is-plain-object: `isPlainObject(v)`  529,142.52  0.0018  0.2266  0.0019  0.0019  0.0023  0.0028  0.0046  ±0.21%   264572
+   · lodash-es: `_.isPlainObject(v)`                       14,195.79  0.0656  0.3710  0.0704  0.0700  0.1272  0.1594  0.3159  ±0.53%     7098   slowest
 
 
  BENCH  Summary
 
   @httpx/plain-object: `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
-    1.13x faster than (sindresorhus/)is-plain-obj: `isPlainObj(v)`
-    1.88x faster than @sindresorhus/is: `is.plainObject(v)`
-    2.21x faster than (jonschlinkert/)is-plain-object: `isPlainObject(v)`
-    14.14x faster than estoolkit:  `isPlainObject(v)`
-    72.17x faster than lodash-es: `_.isPlainObject(v)`
+    1.09x faster than (sindresorhus/)is-plain-obj: `isPlainObj(v)`
+    1.67x faster than @sindresorhus/is: `is.plainObject(v)`
+    1.78x faster than (jonschlinkert/)is-plain-object: `isPlainObject(v)`
+    2.80x faster than redux:  `isPlainObject(v)`
+    10.60x faster than estoolkit:  `isPlainObject(v)`
+    66.23x faster than lodash-es: `_.isPlainObject(v)`
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/bench/comparative.bench.ts) for details.
@@ -242,6 +251,16 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
 ## Comparison with other libraries
+
+| Library                                                        | Compat      | Perf         | CJS+ESM |
+|----------------------------------------------------------------|-------------|--------------|---------|  
+| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj)   | Differences | 1.09x slower | No      | 
+| [es-toolkit](https://github.com/toss/es-toolkit)               | No          |              | Yes     | 
+| (@redux)[isPlainObject](https://github.com/reduxjs/redux)      | ✅ 100%      | 2.80x slower | Yes     |
+
+### redux/isPlainObject
+
+100% compatible see tests.
 
 ### @sindresorhus/is-plain-obj
 
