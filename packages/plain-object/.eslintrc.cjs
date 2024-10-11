@@ -56,5 +56,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   root: true,
-  rules: {},
+  rules: {
+    'jest/no-standalone-expect': 'off',
+  },
 };
