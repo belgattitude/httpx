@@ -21,6 +21,7 @@
     "g:test-unit": "nx run-many --output-style=static --target=test-unit --exclude='examples/**' --exclude='docs'",
     "g:test-unit-coverage": "nx run-many --output-style=static --target=test-unit-coverage --exclude='examples/**' --exclude='docs'",
     "g:test-unit-edge": "nx run-many --output-style=static --target=test-unit-edge --exclude='examples/**' --exclude='docs'",
+    "g:test-unit-browser": "nx run-many --output-style=static --target=test-unit-browser --exclude='examples/**' --exclude='docs'",
     "g:lint": "nx run-many --output-style=static --target=lint",
     "g:typecheck": "nx run-many --output-style=static --target=typecheck --exclude='examples/**' --exclude='docs'",
     "g:lint-staged-files": "lint-staged --allow-empty",

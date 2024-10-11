@@ -120,6 +120,17 @@
       ],
       "cache": true
     },
+    "test-unit-browser": {
+      "dependsOn": ["^test-unit-browser"],
+      "inputs": [
+        "default",
+        "^public",
+        {
+          "externalDependencies": ["vitest", "playwright"]
+        }
+      ],
+      "cache": true
+    },
     "docgen": {
       "dependsOn": ["^docgen"],
       "inputs": ["all", "^public"],
