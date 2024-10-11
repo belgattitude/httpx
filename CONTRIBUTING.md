@@ -17,6 +17,8 @@ Before running install, ensure that corepack is enabled: `corepack enable`
 
 ```bash
 yarn install
+# to run test-unit-browser scripts, you can install the browser dependencies
+yarn playwright install chrome
 ```
 
 ## Checklist
