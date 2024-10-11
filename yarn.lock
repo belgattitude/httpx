@@ -153,6 +153,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@astrojs/markdown-remark@npm:5.3.0":
+  version: 5.3.0
+  resolution: "@astrojs/markdown-remark@npm:5.3.0"
+  dependencies:
+    "@astrojs/prism": "npm:3.1.0"
+    github-slugger: "npm:^2.0.0"
+    hast-util-from-html: "npm:^2.0.3"
+    hast-util-to-text: "npm:^4.0.2"
+    import-meta-resolve: "npm:^4.1.0"
+    mdast-util-definitions: "npm:^6.0.0"
+    rehype-raw: "npm:^7.0.0"
+    rehype-stringify: "npm:^10.0.1"
+    remark-gfm: "npm:^4.0.0"
+    remark-parse: "npm:^11.0.0"
+    remark-rehype: "npm:^11.1.1"
+    remark-smartypants: "npm:^3.0.2"
+    shiki: "npm:^1.22.0"
+    unified: "npm:^11.0.5"
+    unist-util-remove-position: "npm:^5.0.0"
+    unist-util-visit: "npm:^5.0.0"
+    unist-util-visit-parents: "npm:^6.0.1"
+    vfile: "npm:^6.0.3"
+  checksum: 10c0/b42d38940cef4ba700dcf9996b3fd631bd1ef560a6619cb5c7a5e9b3a6ef5ff7c6064aeba1b50e9ada904ad930b21f60e352f9c79d38d6ce4da4091e5b3a3c0c
+  languageName: node
+  linkType: hard
+
 "@astrojs/mdx@npm:^3.1.3":
   version: 3.1.7
   resolution: "@astrojs/mdx@npm:3.1.7"
@@ -6693,13 +6719,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:4.15.12":
-  version: 4.15.12
-  resolution: "astro@npm:4.15.12"
+"astro@npm:4.16.0":
+  version: 4.16.0
+  resolution: "astro@npm:4.16.0"
   dependencies:
     "@astrojs/compiler": "npm:^2.10.3"
     "@astrojs/internal-helpers": "npm:0.4.1"
-    "@astrojs/markdown-remark": "npm:5.2.0"
+    "@astrojs/markdown-remark": "npm:5.3.0"
     "@astrojs/telemetry": "npm:3.1.0"
     "@babel/core": "npm:^7.25.7"
     "@babel/plugin-transform-react-jsx": "npm:^7.25.7"
@@ -6767,7 +6793,7 @@ __metadata:
       optional: true
   bin:
     astro: astro.js
-  checksum: 10c0/936d7805102d4732d5f0afee8646fc67e7ef6ee25d6ed10b84a7e4c1836592061ff0b6165051d41755938ab0a764b65ede1712878577bae2399e3a87ccc4d864
+  checksum: 10c0/0aec66bfad7bc506c9f0f277e7791f821f5fc3178dfdd29ad5362656cea0bbba47362a8b579beb0edb11f20351520cea9e33078e577f28003889adaf0d9dda1f
   languageName: node
   linkType: hard
 
@@ -11107,7 +11133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hast-util-from-html@npm:^2.0.0, hast-util-from-html@npm:^2.0.1":
+"hast-util-from-html@npm:^2.0.0, hast-util-from-html@npm:^2.0.1, hast-util-from-html@npm:^2.0.3":
   version: 2.0.3
   resolution: "hast-util-from-html@npm:2.0.3"
   dependencies:
@@ -11495,7 +11521,7 @@ __metadata:
   dependencies:
     "@astrojs/check": "npm:0.9.4"
     "@astrojs/starlight": "npm:0.28.3"
-    astro: "npm:4.15.12"
+    astro: "npm:4.16.0"
     sharp: "npm:0.33.5"
     typescript: "npm:5.6.3"
   languageName: unknown
@@ -17085,7 +17111,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehype-stringify@npm:^10.0.0":
+"rehype-stringify@npm:^10.0.0, rehype-stringify@npm:^10.0.1":
   version: 10.0.1
   resolution: "rehype-stringify@npm:10.0.1"
   dependencies:
@@ -17225,7 +17251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remark-rehype@npm:^11.0.0, remark-rehype@npm:^11.1.0":
+"remark-rehype@npm:^11.0.0, remark-rehype@npm:^11.1.0, remark-rehype@npm:^11.1.1":
   version: 11.1.1
   resolution: "remark-rehype@npm:11.1.1"
   dependencies:
