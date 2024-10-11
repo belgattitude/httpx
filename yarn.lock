@@ -11693,7 +11693,7 @@ __metadata:
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     rimraf: "npm:6.0.1"
-    sirv: "npm:2.0.4"
+    sirv: "npm:3.0.0"
     sirv-cli: "npm:2.0.2"
     tailwindcss: "npm:3.4.13"
     typescript: "npm:5.6.3"
@@ -18204,7 +18204,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sirv@npm:2.0.4, sirv@npm:^2.0.0, sirv@npm:^2.0.4":
+"sirv@npm:3.0.0":
+  version: 3.0.0
+  resolution: "sirv@npm:3.0.0"
+  dependencies:
+    "@polka/url": "npm:^1.0.0-next.24"
+    mrmime: "npm:^2.0.0"
+    totalist: "npm:^3.0.0"
+  checksum: 10c0/282c52ee5a93cafa297096ad31aa6c3004a21d4c93abe728b701e51e4329acb887f6e92f07696225414fd6bb4a7782fd64a42d0b6b6467ae0f66bd3fde90b865
+  languageName: node
+  linkType: hard
+
+"sirv@npm:^2.0.0, sirv@npm:^2.0.4":
   version: 2.0.4
   resolution: "sirv@npm:2.0.4"
   dependencies:
