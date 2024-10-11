@@ -1,7 +1,14 @@
 # @httpx/plain-object
 
 [Fast](#benchmarks) and lightweight ([~80B](#bundle-size)) functions to check or assert
-that a value is a plain object. See how it [compares to other libraries](#comparison-with-other-libraries).
+that a value is a plain object. 
+
+A plain object is a basic JavaScript object, such as `{}`, `{ data: [] }`, `new Object()` or `Object.create(null)`.
+
+It isn't derived from as class (`new Date()`, `new CustomClass()`) and
+has either `Object.prototype` or `null` as its prototype.
+
+See how it [compares to other libraries](#comparison-with-other-libraries).
 
 [![npm](https://img.shields.io/npm/v/@httpx/plain-object?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/plain-object)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/CHANGELOG.md)
