@@ -50,6 +50,10 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
     (mod) => mod.isPlainObject
   );
 
+  const reduxIsPlainObject = await import('redux').then(
+    (mod) => mod.isPlainObject
+  );
+
   // @ts-expect-error packaging of this lib is not compatible with latest ts / module
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const jonschlinkertIsPlainObject = await import('is-plain-object').then(
@@ -77,8 +81,13 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
 
   bench('estoolkit:  `isPlainObject(v)`', () => {
     for (const value of realLifeScenarios) {
-      // Sadly es-toolkit does not give a very usable type for isPlainObject
-      esToolkitIsPlainObject(value as object);
+      esToolkitIsPlainObject(value);
+    }
+  });
+
+  bench('redux:  `isPlainObject(v)`', () => {
+    for (const value of realLifeScenarios) {
+      reduxIsPlainObject(value);
     }
   });
 

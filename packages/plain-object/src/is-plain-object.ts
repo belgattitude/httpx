@@ -27,13 +27,6 @@ import type { PlainObject } from './plain-object.types';
  * );
  * isPlainObject(runInNewContext('({})'));   // ✅
  *
- * // ✅👇 Static built-in classes are treated as plain objects
- * //       check for `isStaticBuiltInClass` to exclude if needed
- *
- * isPlainObject(Math);                // ✅
- * isPlainObject(JSON);                // ✅
- * isPlainObject(Atomics);             // ✅
- *
  * // ❌👇 False
  *
  * class Test { };
@@ -50,6 +43,13 @@ import type { PlainObject } from './plain-object.types';
  * isPlainObject(new (class Cls {}));  // ❌
  * isPlainObject(globalThis);          // ❌,
  * ```
+ *
+ * // ✅👇 Note that static built-in classes are treated as plain objects
+ * //    check for `isStaticBuiltInClass` to exclude if needed
+ *
+ * isPlainObject(Math);                // ✅
+ * isPlainObject(JSON);                // ✅
+ * isPlainObject(Atomics);             // ✅
  */
 export const isPlainObject = <
   TValue extends BasePlainObject = DefaultBasePlainObject,
