@@ -100,6 +100,7 @@
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
+    "test-unit-browser": "vitest run --browser",
     "test-unit-watch": "vitest --ui  --api 4212",
     "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage"
@@ -114,6 +115,7 @@
     "@size-limit/webpack-why": "11.1.6",
     "@types/node": "22.7.5",
     "@types/statuses": "2.0.5",
+    "@vitest/browser": "2.1.2",
     "@vitest/coverage-istanbul": "2.1.2",
     "@vitest/ui": "2.1.2",
     "browserslist": "4.24.0",
@@ -124,6 +126,7 @@
     "esbuild": "0.24.0",
     "eslint": "8.57.1",
     "npm-run-all2": "6.2.3",
+    "playwright": "1.48.0",
     "publint": "0.2.11",
     "rimraf": "6.0.1",
     "rollup": "4.24.0",

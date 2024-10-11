@@ -17,6 +17,8 @@ Before running install, ensure that corepack is enabled: `corepack enable`
 
 ```bash
 yarn install
+# to run test-unit-browser scripts, you can install the browser dependencies
+yarn playwright install chrome
 ```
 
 ## Checklist
@@ -41,24 +43,26 @@ If applicable:
 
 ## Local scripts
 
-| Name                         | Description                                                                                                                             |
-|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| `yarn g:changeset`           | Add a changeset to declare a new version                                                                                                |
-| `yarn g:typecheck`           | Run typechecks in all workspaces                                                                                                        |
-| `yarn g:lint`                | Display linter issues in all workspaces                                                                                                 |
-| `yarn g:lint --fix`          | Attempt to run linter auto-fix in all workspaces                                                                                        |
-| `yarn g:test-unit`           | Run unit tests in all workspaces                                                                                                        |
-| `yarn g:build`               | Run build in all workspaces                                                                                                             |
-| `yarn g:clean`               | Clean builds in all workspaces                                                                                                          |
-| `yarn g:check-dist`          | Ensure build dist files passes es2017 (run `g:build` first).                                                                            |
-| `yarn g:check-size`          | Ensure build files are within size limit (run `g:build` first).                                                                         |
-| `yarn g:docgen`              | Build documentation (generally api doc)                                                                                                 |
-| `yarn g:bench`               | Run benchmarks for all workspaces.                                                                                                      |
-| `yarn clean:global-cache`    | Clean tooling caches (eslint, jest...)                                                                                                  |
-| `yarn deps:check --dep dev`  | Will print what packages can be upgraded globally (see also [.ncurc.yml](https://github.com/belgattitude/httpx/blob/main/.ncurc.yml))   |
-| `yarn deps:update --dep dev` | Apply possible updates (run `yarn install && yarn dedupe` after)                                                                        |
-| `yarn check:install`         | Verify if there's no peer-deps missing in packages                                                                                      |
-| `yarn dedupe`                | Built-in yarn deduplication of the lock file                                                                                            |
+| Name                         | Description                                                                                                                           |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| `yarn g:changeset`           | Add a changeset to declare a new version                                                                                              |
+| `yarn g:typecheck`           | Run typechecks in all workspaces                                                                                                      |
+| `yarn g:lint`                | Display linter issues in all workspaces                                                                                               |
+| `yarn g:lint --fix`          | Attempt to run linter auto-fix in all workspaces                                                                                      |
+| `yarn g:test-unit`           | Run unit tests in all workspaces (node)                                                                                               |
+| `yarn g:test-unit-edge`      | Run unit tests in all workspaces (@vercel-edge-runtime)                                                                               |
+| `yarn g:test-unit-browser`   | Run unit tests in all workspaces (latest chrome)                                                                                      |
+| `yarn g:build`               | Run build in all workspaces                                                                                                           |
+| `yarn g:clean`               | Clean builds in all workspaces                                                                                                        |
+| `yarn g:check-dist`          | Ensure build dist files passes es2017 (run `g:build` first).                                                                          |
+| `yarn g:check-size`          | Ensure build files are within size limit (run `g:build` first).                                                                       |
+| `yarn g:docgen`              | Build documentation (generally api doc)                                                                                               |
+| `yarn g:bench`               | Run benchmarks for all workspaces.                                                                                                    |
+| `yarn clean:global-cache`    | Clean tooling caches (eslint, jest...)                                                                                                |
+| `yarn deps:check --dep dev`  | Will print what packages can be upgraded globally (see also [.ncurc.yml](https://github.com/belgattitude/httpx/blob/main/.ncurc.yml)) |
+| `yarn deps:update --dep dev` | Apply possible updates (run `yarn install && yarn dedupe` after)                                                                      |
+| `yarn check:install`         | Verify if there's no peer-deps missing in packages                                                                                    |
+| `yarn dedupe`                | Built-in yarn deduplication of the lock file                                                                                          |
 
 ## Git message format
 

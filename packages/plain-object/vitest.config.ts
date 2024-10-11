@@ -14,6 +14,10 @@ export default defineConfig({
   plugins: [tsconfigPaths(), ...[cspeed].filter(Boolean)],
   cacheDir: '../../.cache/vite/httpx-plain-object',
   test: {
+    browser: {
+      provider: 'playwright',
+      name: 'chromium',
+    },
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
     coverage: {

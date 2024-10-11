@@ -1,15 +1,18 @@
-import isPlainObj from 'is-plain-obj';
-
 import { isPlainObject } from '../object.guards';
 
 describe('Object typeguards tests', () => {
+  const isNodeLike = !('window' in globalThis);
+
   describe('isPlainObject', () => {
     const str = 'key';
+
     function fnWithProto(x: number) {
       // @ts-expect-error for the sake of testing
       this.x = x;
     }
+
     function ObjectConstructor() {}
+
     ObjectConstructor.prototype.constructor = Object;
 
     const validPlainObjects = [
@@ -30,6 +33,30 @@ describe('Object typeguards tests', () => {
       [JSON.parse('{}'), true],
       [new Proxy({}, {}), true],
       [new Proxy({ key: 'proxied_key' }, {}), true],
+
+      [
+        {
+          [Symbol.iterator]: function* () {
+            yield 1;
+          },
+        },
+        true,
+      ],
+
+      [
+        {
+          [Symbol.toStringTag]: 'string-tagged',
+        },
+        true,
+      ],
+    ] as const;
+
+    const validPlainObjectsBuiltIn = [
+      // Static built-in classes
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+      [JSON, true],
+      [Math, true],
+      [Atomics, true],
     ] as const;
 
     const invalidPlainObjects = [
@@ -48,28 +75,8 @@ describe('Object typeguards tests', () => {
       [fnWithProto, false],
       // Symbols
       [Symbol('cool'), false],
-      [
-        {
-          [Symbol.iterator]: function* () {
-            yield 1;
-          },
-        },
-        false,
-      ],
-      [
-        {
-          [Symbol.toStringTag]: 'string-tagged',
-        },
-        false,
-      ],
       // globalThis
       [globalThis, false],
-      // Static built-in classes
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
-      [JSON, false],
-      [Math, false],
-      [Atomics, false],
-      [JSON, false],
       // Built-in classes
       [new Date(), false],
       [new Map(), false],
@@ -78,8 +85,6 @@ describe('Object typeguards tests', () => {
       [new Request('http://localhost'), false],
       [new Promise(() => {}), false],
       [Promise.resolve({}), false],
-      // eslint-disable-next-line no-restricted-globals
-      [Buffer.from('123123'), false],
       [new Uint8Array([1, 2, 3]), false],
       [Object.create({}), false],
       [/(\d+)/, false],
@@ -101,38 +106,33 @@ describe('Object typeguards tests', () => {
       ],
     ] as const;
 
-    const cases = [...validPlainObjects, ...invalidPlainObjects] as const;
+    const cases = [
+      ...validPlainObjects,
+      ...validPlainObjectsBuiltIn,
+      ...invalidPlainObjects,
+    ] as const;
     it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
       expect(isPlainObject(v)).toStrictEqual(expected);
     });
-    describe('Compatibility with is-plain-obj', () => {
-      it.each(cases)(
-        'compat when "%s" is given, should return %s',
-        (v, _expected) => {
-          expect(isPlainObject(v)).toBe(isPlainObj(v));
-        }
-      );
-    });
-  });
 
-  describe('Support node:vm.runInNewContext', () => {
-    const isNodeLike = 'window' in globalThis;
-    /*
-    const isNode = () =>
-        typeof process !== 'undefined' &&
-        !!process.versions &&
-        !!process.versions.node;
-    */
-    it.skipIf(!isNodeLike)('should support vm', async () => {
-      // eslint-disable-next-line import-x/no-nodejs-modules
-      const runInNewContext = await import('node:vm').then(
-        (mod) => mod.runInNewContext
-      );
-      // Needs to update to eslint-plugin-vitest
-      // eslint-disable-next-line jest/no-standalone-expect
-      expect(isPlainObject(runInNewContext('({})'))).toBe(true);
-      // eslint-disable-next-line jest/no-standalone-expect
-      expect(isPlainObj(runInNewContext('({})'))).toBe(true);
+    it.skipIf(!isNodeLike)(
+      'should return false when node Buffer is given',
+      () => {
+        // eslint-disable-next-line no-restricted-globals
+        expect(isPlainObject(Buffer.from('123123'))).toBe(false);
+      }
+    );
+
+    describe('Support node:vm.runInNewContext', () => {
+      it.skipIf(!isNodeLike)('should support vm', async () => {
+        // eslint-disable-next-line import-x/no-nodejs-modules
+        const runInNewContext = await import('node:vm').then(
+          (mod) => mod.runInNewContext
+        );
+        expect(isPlainObject(runInNewContext('({})'))).toBe(true);
+        expect(isPlainObject(runInNewContext('(false)'))).toBe(false);
+        expect(isPlainObject(runInNewContext('(new Date())'))).toBe(false);
+      });
     });
   });
 });

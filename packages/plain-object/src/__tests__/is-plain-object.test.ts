@@ -84,8 +84,6 @@ describe('isPlainObject', () => {
     [new Request('http://localhost'), false],
     [new Promise(() => {}), false],
     [Promise.resolve({}), false],
-    // eslint-disable-next-line no-restricted-globals
-    [Buffer.from('123123'), false],
     [new Uint8Array([1, 2, 3]), false],
     [Object.create({}), false],
     [/(\d+)/, false],
@@ -115,6 +113,14 @@ describe('isPlainObject', () => {
   it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
     expect(isPlainObject(v)).toStrictEqual(expected);
   });
+
+  it.skipIf(!isNodeLike)(
+    'should return false when node Buffer is given',
+    () => {
+      // eslint-disable-next-line no-restricted-globals
+      expect(isPlainObject(Buffer.from('123123'))).toBe(false);
+    }
+  );
 
   describe('Compatibility with other libraries', () => {
     describe.skip('Compatibility with is-plain-obj', () => {
