@@ -32,11 +32,6 @@ describe('isPlainObject', () => {
     [JSON.parse('{}'), true],
     [new Proxy({}, {}), true],
     [new Proxy({ key: 'proxied_key' }, {}), true],
-    // Static built-in classes
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
-    [JSON, true],
-    [Math, true],
-    [Atomics, true],
 
     [
       {
@@ -53,6 +48,14 @@ describe('isPlainObject', () => {
       },
       true,
     ],
+  ] as const;
+
+  const validPlainObjectsBuiltIn = [
+    // Static built-in classes
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+    [JSON, true],
+    [Math, true],
+    [Atomics, true],
   ] as const;
 
   const invalidPlainObjects = [
@@ -104,7 +107,11 @@ describe('isPlainObject', () => {
     ],
   ] as const;
 
-  const cases = [...validPlainObjects, ...invalidPlainObjects] as const;
+  const cases = [
+    ...validPlainObjects,
+    ...validPlainObjectsBuiltIn,
+    ...invalidPlainObjects,
+  ] as const;
   it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
     expect(isPlainObject(v)).toStrictEqual(expected);
   });
