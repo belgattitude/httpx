@@ -147,11 +147,9 @@ describe('isPlainObject', () => {
           const runInNewContext = await import('node:vm').then(
             (mod) => mod.runInNewContext
           );
-          // eslint-disable-next-line jest/no-standalone-expect
           expect(reduxIsPlainObject(runInNewContext('({})'))).toBe(true);
           const sandbox = { fromAnotherRealm: false };
           runInNewContext('fromAnotherRealm = {}', sandbox);
-          // eslint-disable-next-line jest/no-standalone-expect
           expect(isPlainObject(sandbox.fromAnotherRealm)).toBe(true);
         }
       );
@@ -182,15 +180,9 @@ describe('Support node:vm.runInNewContext', () => {
     const runInNewContext = await import('node:vm').then(
       (mod) => mod.runInNewContext
     );
-    // Needs to update to eslint-plugin-vitest
-    // eslint-disable-next-line jest/no-standalone-expect
     expect(isPlainObject(runInNewContext('({})'))).toBe(true);
-    // eslint-disable-next-line jest/no-standalone-expect
     expect(isPlainObject(runInNewContext('(false)'))).toBe(false);
-    // eslint-disable-next-line jest/no-standalone-expect
     expect(isPlainObject(runInNewContext('(new Date())'))).toBe(false);
-    // eslint-disable-next-line jest/no-standalone-expect
-    // expect(isPlainObj(runInNewContext('("cool")'))).toBe(false);
     expect(reduxIsPlainObject(runInNewContext('({})'))).toBe(true);
   });
 });
