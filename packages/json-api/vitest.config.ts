@@ -13,6 +13,7 @@ export default defineConfig({
     browser: {
       provider: 'playwright',
       name: 'chromium',
+      headless: true,
     },
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
