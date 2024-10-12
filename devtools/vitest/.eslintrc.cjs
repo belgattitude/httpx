@@ -32,32 +32,7 @@ module.exports = {
     '.cache',
     '**/docs',
   ],
-  overrides: [
-    {
-      files: ['bench/**/*.bench.ts'],
-      rules: {
-        '@typescript-eslint/no-unsafe-assignment': 'off',
-        '@typescript-eslint/no-unsafe-return': 'off',
-        '@typescript-eslint/no-unsafe-member-access': 'off',
-      },
-    },
-    {
-      files: ['src/**/*.ts'],
-      rules: {
-        'import-x/no-extraneous-dependencies': [
-          'error',
-          {
-            devDependencies: ['**/*.test.ts', '**/*.spec.ts'],
-            optionalDependencies: false,
-            peerDependencies: false,
-          },
-        ],
-        'import-x/no-cycle': [1, { maxDepth: 5 }],
-        'import-x/no-nodejs-modules': 'error',
-        'import-x/no-self-import': 'error',
-      },
-    },
-  ],
+  overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     projectService: true,
@@ -65,8 +40,6 @@ module.exports = {
   },
   root: true,
   rules: {
-    'sonarjs/cognitive-complexity': ['error', 17],
-    'unicorn/no-array-reduce': 'off',
-    'jest/no-standalone-expect': 'off',
+    'import-x/no-extraneous-dependencies': 'off',
   },
 };

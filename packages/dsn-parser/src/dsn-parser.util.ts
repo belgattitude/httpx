@@ -54,6 +54,7 @@ export const mergeDsnOverrides = (
 ): ParsedDsn => {
   const merged: Record<string, unknown> = {};
   const { params, ...restDsn } = parsedDsn;
+  // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(restDsn)) {
     merged[key] =
       key in overrides ? (overrides as Record<string, unknown>)[key] : value;

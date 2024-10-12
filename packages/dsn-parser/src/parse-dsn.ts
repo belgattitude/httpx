@@ -37,7 +37,8 @@ export const parseDsn = (
     return createErrorResult('PARSE_ERROR');
   }
   const parsed: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(matches.groups)) {
+  for (const key of Object.keys(matches.groups)) {
+    const value = matches.groups[key];
     if (typeof value === 'string') {
       switch (key) {
         case 'driver': {
