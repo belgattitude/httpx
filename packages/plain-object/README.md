@@ -194,28 +194,29 @@ someFn(value)
 
 ```
  RUN  v2.1.2 /home/sebastien/github/httpx/packages/plain-object
-
- ✓ bench/comparative.bench.ts (7) 5226ms
-   ✓ Compare calling isPlainObject with 110x mixed types values (7) 5225ms
+ 
+ ✓ bench/comparative.bench.ts (7) 5269ms
+   ✓ Compare calling isPlainObject with 110x mixed types values (7) 5267ms
      name                                                         hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/plain-object: `isPlainObject(v)`              940,131.15  0.0010  0.0600  0.0011  0.0011  0.0011  0.0011  0.0037  ±0.07%   470068   fastest
-   · (sindresorhus/)is-plain-obj: `isPlainObj(v)`         859,797.90  0.0011  0.4133  0.0012  0.0012  0.0012  0.0017  0.0033  ±0.17%   429899
-   · @sindresorhus/is: `is.plainObject(v)`                561,555.15  0.0017  0.3331  0.0018  0.0018  0.0019  0.0019  0.0040  ±0.14%   280778
-   · estoolkit:  `isPlainObject(v)`                        88,719.29  0.0102  0.2623  0.0113  0.0111  0.0230  0.0250  0.0497  ±0.28%    44360
-   · redux:  `isPlainObject(v)`                           335,666.75  0.0028  0.0336  0.0030  0.0030  0.0031  0.0031  0.0052  ±0.05%   167834
-   · (jonschlinkert/)is-plain-object: `isPlainObject(v)`  529,142.52  0.0018  0.2266  0.0019  0.0019  0.0023  0.0028  0.0046  ±0.21%   264572
-   · lodash-es: `_.isPlainObject(v)`                       14,195.79  0.0656  0.3710  0.0704  0.0700  0.1272  0.1594  0.3159  ±0.53%     7098   slowest
+   · @httpx/plain-object: `isPlainObject(v)`              948,266.97  0.0010  0.0700  0.0011  0.0011  0.0013  0.0017  0.0034  ±0.10%   474134   fastest
+   · (sindresorhus/)is-plain-obj: `isPlainObj(v)`         796,997.41  0.0011  0.0718  0.0013  0.0012  0.0026  0.0028  0.0053  ±0.14%   398499
+   · @sindresorhus/is: `is.plainObject(v)`                544,333.86  0.0017  0.0359  0.0018  0.0018  0.0032  0.0037  0.0083  ±0.11%   272167
+   · estoolkit:  `isPlainObject(v)`                        87,689.00  0.0103  1.0569  0.0114  0.0112  0.0189  0.0208  0.0350  ±0.47%    43845
+   · redux:  `isPlainObject(v)`                           257,141.86  0.0030  0.3135  0.0039  0.0038  0.0070  0.0094  0.0219  ±0.23%   128571
+   · (jonschlinkert/)is-plain-object: `isPlainObject(v)`  403,749.92  0.0018  0.3947  0.0025  0.0024  0.0057  0.0083  0.0185  ±0.38%   201875
+   · lodash-es: `_.isPlainObject(v)`                        9,949.41  0.0685  0.6957  0.1005  0.1101  0.1964  0.2144  0.2790  ±0.95%     4975   slowest
 
 
  BENCH  Summary
 
   @httpx/plain-object: `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
-    1.09x faster than (sindresorhus/)is-plain-obj: `isPlainObj(v)`
-    1.67x faster than @sindresorhus/is: `is.plainObject(v)`
-    1.78x faster than (jonschlinkert/)is-plain-object: `isPlainObject(v)`
-    2.80x faster than redux:  `isPlainObject(v)`
-    10.60x faster than estoolkit:  `isPlainObject(v)`
-    66.23x faster than lodash-es: `_.isPlainObject(v)`
+    1.19x faster than (sindresorhus/)is-plain-obj: `isPlainObj(v)`
+    1.74x faster than @sindresorhus/is: `is.plainObject(v)`
+    2.35x faster than (jonschlinkert/)is-plain-object: `isPlainObject(v)`
+    3.69x faster than redux:  `isPlainObject(v)`
+    10.81x faster than estoolkit:  `isPlainObject(v)`
+    95.31x faster than lodash-es: `_.isPlainObject(v)`
+
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/bench/comparative.bench.ts) for details.
