@@ -22,6 +22,7 @@
     "g:test-unit-coverage": "nx run-many --output-style=static --target=test-unit-coverage --exclude='examples/**' --exclude='docs'",
     "g:test-unit-edge": "nx run-many --output-style=static --target=test-unit-edge --exclude='examples/**' --exclude='docs'",
     "g:test-unit-browser": "nx run-many --output-style=static --target=test-unit-browser --exclude='examples/**' --exclude='docs'",
+    "g:test-unit-cloudflare": "nx run-many --output-style=static --target=test-unit-cloudflare --exclude='examples/**' --exclude='docs'",
     "g:lint": "nx run-many --output-style=static --target=lint",
     "g:typecheck": "nx run-many --output-style=static --target=typecheck --exclude='examples/**' --exclude='docs'",
     "g:lint-staged-files": "lint-staged --allow-empty",
@@ -53,11 +54,12 @@
     "docs",
     "examples/*",
     "integrations/*",
-    "packages/*"
+    "packages/*",
+    "devtools/*"
   ],
   "packageManager": "yarn@4.5.0",
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "6.0.0-canary.16",
+    "@belgattitude/eslint-config-bases": "6.0.0-canary.19",
     "@changesets/changelog-github": "0.5.0",
     "@changesets/cli": "2.27.9",
     "@commitlint/cli": "19.5.0",
@@ -83,5 +85,9 @@
   },
   "engines": {
     "node": ">=18.18"
+  },
+  "resolutions": {
+    "esbuild": "0.24.0",
+    "eslint-plugin-react-hooks": "5.0.0"
   }
 }

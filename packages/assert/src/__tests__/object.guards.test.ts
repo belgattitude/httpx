@@ -2,6 +2,7 @@ import { isPlainObject } from '../object.guards';
 
 describe('Object typeguards tests', () => {
   const isNodeLike = !('window' in globalThis);
+  const isCloudflareWorker = 'caches' in globalThis;
 
   describe('isPlainObject', () => {
     const str = 'key';
@@ -33,7 +34,6 @@ describe('Object typeguards tests', () => {
       [JSON.parse('{}'), true],
       [new Proxy({}, {}), true],
       [new Proxy({ key: 'proxied_key' }, {}), true],
-
       [
         {
           [Symbol.iterator]: function* () {
@@ -42,7 +42,6 @@ describe('Object typeguards tests', () => {
         },
         true,
       ],
-
       [
         {
           [Symbol.toStringTag]: 'string-tagged',
@@ -75,8 +74,6 @@ describe('Object typeguards tests', () => {
       [fnWithProto, false],
       // Symbols
       [Symbol('cool'), false],
-      // globalThis
-      [globalThis, false],
       // Built-in classes
       [new Date(), false],
       [new Map(), false],
@@ -123,8 +120,14 @@ describe('Object typeguards tests', () => {
       }
     );
 
-    describe('Support node:vm.runInNewContext', () => {
-      it.skipIf(!isNodeLike)('should support vm', async () => {
+    it('should return true when globalThis is given', () => {
+      expect(isPlainObject(globalThis)).toBe(false);
+    });
+  });
+  describe.skipIf(!isNodeLike || isCloudflareWorker)(
+    'Support node:vm.runInNewContext',
+    () => {
+      it('should support vm', async () => {
         // eslint-disable-next-line import-x/no-nodejs-modules
         const runInNewContext = await import('node:vm').then(
           (mod) => mod.runInNewContext
@@ -133,6 +136,6 @@ describe('Object typeguards tests', () => {
         expect(isPlainObject(runInNewContext('(false)'))).toBe(false);
         expect(isPlainObject(runInNewContext('(new Date())'))).toBe(false);
       });
-    });
-  });
+    }
+  );
 });
