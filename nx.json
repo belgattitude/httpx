@@ -131,6 +131,18 @@
       ],
       "cache": true
     },
+    "test-unit-cloudflare": {
+      "dependsOn": ["^test-unit-cloudflare"],
+      "inputs": [
+        "default",
+        "^public",
+        {
+          "externalDependencies": ["vitest"]
+        }
+      ],
+      "cache": true
+    },
+
     "docgen": {
       "dependsOn": ["^docgen"],
       "inputs": ["all", "^public"],
