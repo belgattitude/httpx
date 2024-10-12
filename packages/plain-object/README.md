@@ -31,7 +31,7 @@ $ pnpm add @httpx/plain-object
 - 🦄&nbsp; Convenience [PlainObject](#plainobject-type) typescript typings.
 - 🚀&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
 - 📐&nbsp; Lightweight (starts at [~80B](#bundle-size)) 
-- 🛡️&nbsp; Tested on [node 18-22, browser and runtime/edge](#compatibility).
+- 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🙏&nbsp; Cross-realms tolerant (node:vm runInNewContext,...)
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
