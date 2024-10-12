@@ -1,5 +1,11 @@
 # @httpx/plain-object
 
+## 2.0.2
+
+### Patch Changes
+
+- [#1546](https://github.com/belgattitude/httpx/pull/1546) [`bdf9e19`](https://github.com/belgattitude/httpx/commit/bdf9e19d11bc66b9b7279da8f292a889f0acbffa) Thanks [@belgattitude](https://github.com/belgattitude)! - Ensure CI tests on Clouflare workers and latest chrome (playwright)
+
 ## 2.0.1
 
 ### Patch Changes
