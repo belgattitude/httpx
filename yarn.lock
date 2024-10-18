@@ -2973,7 +2973,7 @@ __metadata:
     eslint: "npm:8.57.1"
     is-plain-obj: "npm:4.1.0"
     lodash-es: "npm:4.17.21"
-    npm-run-all2: "npm:6.2.3"
+    npm-run-all2: "npm:6.2.4"
     publint: "npm:0.2.11"
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
@@ -3028,7 +3028,7 @@ __metadata:
     es-check: "npm:7.2.1"
     esbuild: "npm:0.24.0"
     eslint: "npm:8.57.1"
-    npm-run-all2: "npm:6.2.3"
+    npm-run-all2: "npm:6.2.4"
     publint: "npm:0.2.11"
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
@@ -3060,7 +3060,7 @@ __metadata:
     es-check: "npm:7.2.1"
     esbuild: "npm:0.24.0"
     eslint: "npm:8.57.1"
-    npm-run-all2: "npm:6.2.3"
+    npm-run-all2: "npm:6.2.4"
     publint: "npm:0.2.11"
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
@@ -3093,7 +3093,7 @@ __metadata:
     es-check: "npm:7.2.1"
     esbuild: "npm:0.24.0"
     eslint: "npm:8.57.1"
-    npm-run-all2: "npm:6.2.3"
+    npm-run-all2: "npm:6.2.4"
     publint: "npm:0.2.11"
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
@@ -3122,7 +3122,7 @@ __metadata:
     es-check: "npm:7.2.1"
     esbuild: "npm:0.24.0"
     eslint: "npm:8.57.1"
-    npm-run-all2: "npm:6.2.3"
+    npm-run-all2: "npm:6.2.4"
     publint: "npm:0.2.11"
     quick-lru: "npm:^7.0.0"
     rimraf: "npm:6.0.1"
@@ -3158,7 +3158,7 @@ __metadata:
     is-plain-obj: "npm:4.1.0"
     is-plain-object: "npm:5.0.0"
     lodash-es: "npm:4.17.21"
-    npm-run-all2: "npm:6.2.3"
+    npm-run-all2: "npm:6.2.4"
     publint: "npm:0.2.11"
     redux: "npm:5.0.1"
     rimraf: "npm:6.0.1"
@@ -3192,7 +3192,7 @@ __metadata:
     esbuild: "npm:0.24.0"
     eslint: "npm:8.57.1"
     lodash-es: "npm:4.17.21"
-    npm-run-all2: "npm:6.2.3"
+    npm-run-all2: "npm:6.2.4"
     publint: "npm:0.2.11"
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
@@ -11580,7 +11580,7 @@ __metadata:
     husky: "npm:9.1.6"
     is-ci: "npm:3.0.1"
     lint-staged: "npm:15.2.10"
-    npm-run-all2: "npm:6.2.3"
+    npm-run-all2: "npm:6.2.4"
     nx: "npm:20.0.2"
     playwright: "npm:1.48.1"
     prettier: "npm:3.3.3"
@@ -15502,9 +15502,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"npm-run-all2@npm:6.2.3":
-  version: 6.2.3
-  resolution: "npm-run-all2@npm:6.2.3"
+"npm-run-all2@npm:6.2.4":
+  version: 6.2.4
+  resolution: "npm-run-all2@npm:6.2.4"
   dependencies:
     ansi-styles: "npm:^6.2.1"
     cross-spawn: "npm:^7.0.3"
@@ -15513,12 +15513,13 @@ __metadata:
     pidtree: "npm:^0.6.0"
     read-package-json-fast: "npm:^3.0.2"
     shell-quote: "npm:^1.7.3"
+    which: "npm:^3.0.1"
   bin:
     npm-run-all: bin/npm-run-all/index.js
     npm-run-all2: bin/npm-run-all/index.js
     run-p: bin/run-p/index.js
     run-s: bin/run-s/index.js
-  checksum: 10c0/1f9b4c2aed4dbbb9ddea51693ea5bd83b63602bf824032491156118e2c3ec2598edc1353376a8bb9541d1e2a6899959548a49656a9f87a2e4fc0643be6e2eb6e
+  checksum: 10c0/eac76285d3cd4571ff249376c0e9a5adfafbc534fa1fb8ad51349fbd38f813e08631f42875ced101b3f6b227a4e60d5e5ceaa881b13446e4ed80d8bacd2407c1
   languageName: node
   linkType: hard
 
@@ -16685,7 +16686,7 @@ __metadata:
     es-check: "npm:7.2.1"
     esbuild: "npm:0.24.0"
     eslint: "npm:8.57.1"
-    npm-run-all2: "npm:6.2.3"
+    npm-run-all2: "npm:6.2.4"
     publint: "npm:0.2.11"
     rimraf: "npm:6.0.1"
     size-limit: "npm:11.1.6"
@@ -20911,6 +20912,17 @@ __metadata:
   bin:
     node-which: ./bin/node-which
   checksum: 10c0/66522872a768b60c2a65a57e8ad184e5372f5b6a9ca6d5f033d4b0dc98aff63995655a7503b9c0a2598936f532120e81dd8cc155e2e92ed662a2b9377cc4374f
+  languageName: node
+  linkType: hard
+
+"which@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "which@npm:3.0.1"
+  dependencies:
+    isexe: "npm:^2.0.0"
+  bin:
+    node-which: bin/which.js
+  checksum: 10c0/15263b06161a7c377328fd2066cb1f093f5e8a8f429618b63212b5b8847489be7bcab0ab3eb07f3ecc0eda99a5a7ea52105cf5fa8266bedd083cc5a9f6da24f1
   languageName: node
   linkType: hard
 
