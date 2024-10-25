@@ -2979,7 +2979,7 @@ __metadata:
     rollup: "npm:4.24.0"
     size-limit: "npm:11.1.6"
     tinybench: "npm:2.9.0"
-    tsup: "npm:8.3.0"
+    tsup: "npm:8.3.4"
     type-fest: "npm:4.26.1"
     typedoc: "npm:0.26.10"
     typedoc-plugin-markdown: "npm:4.2.9"
@@ -3033,7 +3033,7 @@ __metadata:
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
     size-limit: "npm:11.1.6"
-    tsup: "npm:8.3.0"
+    tsup: "npm:8.3.4"
     typedoc: "npm:0.26.10"
     typedoc-plugin-markdown: "npm:4.2.9"
     typescript: "npm:5.6.3"
@@ -3067,7 +3067,7 @@ __metadata:
     size-limit: "npm:11.1.6"
     statuses: "npm:2.0.1"
     superjson: "npm:2.2.1"
-    tsup: "npm:8.3.0"
+    tsup: "npm:8.3.4"
     tupleson: "npm:0.23.1"
     typedoc: "npm:0.26.10"
     typedoc-plugin-markdown: "npm:4.2.9"
@@ -3098,7 +3098,7 @@ __metadata:
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
     size-limit: "npm:11.1.6"
-    tsup: "npm:8.3.0"
+    tsup: "npm:8.3.4"
     typedoc: "npm:0.26.10"
     typedoc-plugin-markdown: "npm:4.2.9"
     typescript: "npm:5.6.3"
@@ -3128,7 +3128,7 @@ __metadata:
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
     size-limit: "npm:11.1.6"
-    tsup: "npm:8.3.0"
+    tsup: "npm:8.3.4"
     typedoc: "npm:0.26.10"
     typedoc-plugin-markdown: "npm:4.2.9"
     typescript: "npm:5.6.3"
@@ -3164,7 +3164,7 @@ __metadata:
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
     size-limit: "npm:11.1.6"
-    tsup: "npm:8.3.0"
+    tsup: "npm:8.3.4"
     typedoc: "npm:0.26.10"
     typedoc-plugin-markdown: "npm:4.2.9"
     typescript: "npm:5.6.3"
@@ -3197,7 +3197,7 @@ __metadata:
     rimraf: "npm:6.0.1"
     rollup: "npm:4.24.0"
     size-limit: "npm:11.1.6"
-    tsup: "npm:8.3.0"
+    tsup: "npm:8.3.4"
     typedoc: "npm:0.26.10"
     typedoc-plugin-markdown: "npm:4.2.9"
     typescript: "npm:5.6.3"
@@ -7376,7 +7376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.5.3, chokidar@npm:^3.6.0":
+"chokidar@npm:^3.5.3":
   version: 3.6.0
   resolution: "chokidar@npm:3.6.0"
   dependencies:
@@ -10125,23 +10125,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "execa@npm:5.1.1"
-  dependencies:
-    cross-spawn: "npm:^7.0.3"
-    get-stream: "npm:^6.0.0"
-    human-signals: "npm:^2.1.0"
-    is-stream: "npm:^2.0.0"
-    merge-stream: "npm:^2.0.0"
-    npm-run-path: "npm:^4.0.1"
-    onetime: "npm:^5.1.2"
-    signal-exit: "npm:^3.0.3"
-    strip-final-newline: "npm:^2.0.0"
-  checksum: 10c0/c8e615235e8de4c5addf2fa4c3da3e3aa59ce975a3e83533b4f6a71750fb816a2e79610dc5f1799b6e28976c9ae86747a36a606655bf8cb414a74d8d507b304f
-  languageName: node
-  linkType: hard
-
 "execa@npm:~8.0.1":
   version: 8.0.1
   resolution: "execa@npm:8.0.1"
@@ -10301,15 +10284,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fdir@npm:^6.4.0":
-  version: 6.4.0
-  resolution: "fdir@npm:6.4.0"
+"fdir@npm:^6.4.2":
+  version: 6.4.2
+  resolution: "fdir@npm:6.4.2"
   peerDependencies:
     picomatch: ^3 || ^4
   peerDependenciesMeta:
     picomatch:
       optional: true
-  checksum: 10c0/9a03efa1335d78ea386b701799b08ad9e7e8da85d88567dc162cd28dd8e9486e8c269b3e95bfeb21dd6a5b14ebf69d230eb6e18f49d33fbda3cd97432f648c48
+  checksum: 10c0/34829886f34a3ca4170eca7c7180ec4de51a3abb4d380344063c0ae2e289b11d2ba8b724afee974598c83027fea363ff598caf2b51bc4e6b1e0d8b80cc530573
   languageName: node
   linkType: hard
 
@@ -10736,13 +10719,6 @@ __metadata:
   version: 3.0.0
   resolution: "get-stream@npm:3.0.0"
   checksum: 10c0/003f5f3b8870da59c6aafdf6ed7e7b07b48c2f8629cd461bd3900726548b6b8cfa2e14d6b7814fbb08f07a42f4f738407fa70b989928b2783a76b278505bba22
-  languageName: node
-  linkType: hard
-
-"get-stream@npm:^6.0.0":
-  version: 6.0.1
-  resolution: "get-stream@npm:6.0.1"
-  checksum: 10c0/49825d57d3fd6964228e6200a58169464b8e8970489b3acdc24906c782fb7f01f9f56f8e6653c4a50713771d6658f7cfe051e5eb8c12e334138c9c918b296341
   languageName: node
   linkType: hard
 
@@ -11654,13 +11630,6 @@ __metadata:
   version: 1.0.2
   resolution: "human-id@npm:1.0.2"
   checksum: 10c0/e4c3be49b3927ff8ac54ae4a95ed77ad94fd793b57be51aff39aa81931c6efe56303ce1ec76a70c74f85748644207c89ccfa63d828def1313eff7526a14c3b3b
-  languageName: node
-  linkType: hard
-
-"human-signals@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "human-signals@npm:2.1.0"
-  checksum: 10c0/695edb3edfcfe9c8b52a76926cd31b36978782062c0ed9b1192b36bebc75c4c87c82e178dfcb0ed0fc27ca59d434198aac0bd0be18f5781ded775604db22304a
   languageName: node
   linkType: hard
 
@@ -15898,7 +15867,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"onetime@npm:^5.1.0, onetime@npm:^5.1.2":
+"onetime@npm:^5.1.0":
   version: 5.1.2
   resolution: "onetime@npm:5.1.2"
   dependencies:
@@ -16426,7 +16395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^1.0.0, picocolors@npm:^1.0.1, picocolors@npm:^1.1.0, picocolors@npm:^1.1.1":
+"picocolors@npm:^1.0.0, picocolors@npm:^1.1.0, picocolors@npm:^1.1.1":
   version: 1.1.1
   resolution: "picocolors@npm:1.1.1"
   checksum: 10c0/e2e3e8170ab9d7c7421969adaa7e1b31434f789afb9b3f115f6b96d91945041ac3ceb02e9ec6fe6510ff036bcc0bf91e69a1772edc0b707e12b19c0f2d6bcf58
@@ -16823,7 +16792,7 @@ __metadata:
     publint: "npm:0.2.12"
     rimraf: "npm:6.0.1"
     size-limit: "npm:11.1.6"
-    tsup: "npm:8.3.0"
+    tsup: "npm:8.3.4"
     typedoc: "npm:0.26.10"
     typedoc-plugin-markdown: "npm:4.2.9"
     typescript: "npm:5.6.3"
@@ -17847,7 +17816,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:4.24.0, rollup@npm:^4.19.0, rollup@npm:^4.20.0":
+"rollup@npm:4.24.0, rollup@npm:^4.20.0, rollup@npm:^4.24.0":
   version: 4.24.0
   resolution: "rollup@npm:4.24.0"
   dependencies:
@@ -18268,7 +18237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"signal-exit@npm:^3.0.0, signal-exit@npm:^3.0.2, signal-exit@npm:^3.0.3":
+"signal-exit@npm:^3.0.0, signal-exit@npm:^3.0.2":
   version: 3.0.7
   resolution: "signal-exit@npm:3.0.7"
   checksum: 10c0/25d272fa73e146048565e08f3309d5b942c1979a6f4a58a8c59d5fa299728e9c2fcd1a759ec870863b1fd38653670240cd420dad2ad9330c71f36608a6a1c912
@@ -18865,13 +18834,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-final-newline@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "strip-final-newline@npm:2.0.0"
-  checksum: 10c0/bddf8ccd47acd85c0e09ad7375409d81653f645fda13227a9d459642277c253d877b68f2e5e4d819fe75733b0e626bac7e954c04f3236f6d196f79c94fa4a96f
-  languageName: node
-  linkType: hard
-
 "strip-final-newline@npm:^3.0.0":
   version: 3.0.0
   resolution: "strip-final-newline@npm:3.0.0"
@@ -19316,20 +19278,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyexec@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "tinyexec@npm:0.3.0"
-  checksum: 10c0/138a4f4241aea6b6312559508468ab275a31955e66e2f57ed206e0aaabecee622624f208c5740345f0a66e33478fd065e359ed1eb1269eb6fd4fa25d44d0ba3b
+"tinyexec@npm:^0.3.0, tinyexec@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "tinyexec@npm:0.3.1"
+  checksum: 10c0/11e7a7c5d8b3bddf8b5cbe82a9290d70a6fad84d528421d5d18297f165723cb53d2e737d8f58dcce5ca56f2e4aa2d060f02510b1f8971784f97eb3e9aec28f09
   languageName: node
   linkType: hard
 
-"tinyglobby@npm:^0.2.1, tinyglobby@npm:^0.2.6, tinyglobby@npm:^0.2.7":
-  version: 0.2.9
-  resolution: "tinyglobby@npm:0.2.9"
+"tinyglobby@npm:^0.2.6, tinyglobby@npm:^0.2.7, tinyglobby@npm:^0.2.9":
+  version: 0.2.10
+  resolution: "tinyglobby@npm:0.2.10"
   dependencies:
-    fdir: "npm:^6.4.0"
+    fdir: "npm:^6.4.2"
     picomatch: "npm:^4.0.2"
-  checksum: 10c0/f65f847afe70f56de069d4f1f9c3b0c1a76aaf2b0297656754734a83b9bac8e105b5534dfbea8599560476b88f7b747d0855370a957a07246d18b976addb87ec
+  checksum: 10c0/ce946135d39b8c0e394e488ad59f4092e8c4ecd675ef1bcd4585c47de1b325e61ec6adfbfbe20c3c2bfa6fd674c5b06de2a2e65c433f752ae170aff11793e5ef
   languageName: node
   linkType: hard
 
@@ -19562,25 +19524,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsup@npm:8.3.0":
-  version: 8.3.0
-  resolution: "tsup@npm:8.3.0"
+"tsup@npm:8.3.4":
+  version: 8.3.4
+  resolution: "tsup@npm:8.3.4"
   dependencies:
     bundle-require: "npm:^5.0.0"
     cac: "npm:^6.7.14"
-    chokidar: "npm:^3.6.0"
+    chokidar: "npm:^4.0.1"
     consola: "npm:^3.2.3"
-    debug: "npm:^4.3.5"
-    esbuild: "npm:^0.23.0"
-    execa: "npm:^5.1.1"
+    debug: "npm:^4.3.7"
+    esbuild: "npm:^0.24.0"
     joycon: "npm:^3.1.1"
-    picocolors: "npm:^1.0.1"
+    picocolors: "npm:^1.1.1"
     postcss-load-config: "npm:^6.0.1"
     resolve-from: "npm:^5.0.0"
-    rollup: "npm:^4.19.0"
+    rollup: "npm:^4.24.0"
     source-map: "npm:0.8.0-beta.0"
     sucrase: "npm:^3.35.0"
-    tinyglobby: "npm:^0.2.1"
+    tinyexec: "npm:^0.3.1"
+    tinyglobby: "npm:^0.2.9"
     tree-kill: "npm:^1.2.2"
   peerDependencies:
     "@microsoft/api-extractor": ^7.36.0
@@ -19599,7 +19561,7 @@ __metadata:
   bin:
     tsup: dist/cli-default.js
     tsup-node: dist/cli-node.js
-  checksum: 10c0/7f7132e48fca2284fd721077c6462c440dabdc95bcacf2e9837f81d2ca9771f804ff4f8b81a743e8fc6c3def856cf3ae99421c0568a7f030196abdc9e12e97e8
+  checksum: 10c0/bb60a1ed4edfd6f3c161c002c267e331bcefaf68df572d2a67039b0a85ba70af7ecb6627d6a4166ec1122bac3a06d7eb725113f532c0fa681816daf658eb2732
   languageName: node
   linkType: hard
 
