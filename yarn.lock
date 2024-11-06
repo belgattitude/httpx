@@ -2135,9 +2135,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/vitest-pool-workers@npm:0.5.24":
-  version: 0.5.24
-  resolution: "@cloudflare/vitest-pool-workers@npm:0.5.24"
+"@cloudflare/vitest-pool-workers@npm:0.5.25":
+  version: 0.5.25
+  resolution: "@cloudflare/vitest-pool-workers@npm:0.5.25"
   dependencies:
     birpc: "npm:0.2.14"
     cjs-module-lexer: "npm:^1.2.3"
@@ -2145,13 +2145,13 @@ __metadata:
     esbuild: "npm:0.17.19"
     miniflare: "npm:3.20241022.0"
     semver: "npm:^7.5.1"
-    wrangler: "npm:3.84.1"
+    wrangler: "npm:3.85.0"
     zod: "npm:^3.22.3"
   peerDependencies:
     "@vitest/runner": 2.0.x - 2.1.x
     "@vitest/snapshot": 2.0.x - 2.1.x
     vitest: 2.0.x - 2.1.x
-  checksum: 10c0/fd9a07eea4535b004cc17c972cd24192eb813744f9ee88f7e5a0b16f33b4c13a5fd828027cc43cc40f5609383ef8225a53254105c2a517fd7b26061b8ec3a1e1
+  checksum: 10c0/a149233aaca739807a89514a25245c543caf30bae8798c0a59b2a86a22d59eac73bc1e5ceb2c618e01995f029304b0a39203534012703e87d4349f8b0a786f8d
   languageName: node
   linkType: hard
 
@@ -2992,7 +2992,7 @@ __metadata:
   resolution: "@httpx/devtools-vitest@workspace:devtools/vitest"
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:6.3.0"
-    "@cloudflare/vitest-pool-workers": "npm:0.5.24"
+    "@cloudflare/vitest-pool-workers": "npm:0.5.25"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.3"
     "@vitest/browser": "npm:2.1.4"
@@ -20846,9 +20846,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:3.84.1":
-  version: 3.84.1
-  resolution: "wrangler@npm:3.84.1"
+"wrangler@npm:3.85.0":
+  version: 3.85.0
+  resolution: "wrangler@npm:3.85.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.3.4"
     "@cloudflare/workers-shared": "npm:0.7.0"
@@ -20881,7 +20881,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/7ac877b2c3dc569cad51a9c458f8eb5de05b95f90c37fd433c3a6b6d2ffe2a81a64ebf1676accd5e10e7fe074f40c27d9ddc2b761b55c467ff2cc4226d69f119
+  checksum: 10c0/df727eba2d4fa77b705b878baacbc55020a477a2a1e0839e6d911669c50c24cd78dfcbc7c11a38901571a2ec4e963b564fc690a3d5baf88a7a5c1e9ac9ab9fee
   languageName: node
   linkType: hard
 
