@@ -85,8 +85,8 @@ jobs:
           bash .github/scripts/install-codecov.sh
           yarn g:ci-coverage-upload
         shell: bash
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      #  env:
+      #    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       #- name: ☂️ Codecov upload (only node-20)
       #  uses: codecov/codecov-action@v5
