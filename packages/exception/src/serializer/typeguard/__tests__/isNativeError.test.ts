@@ -11,7 +11,7 @@ describe('isNativeError', () => {
     }) as [name: string, err: NativeError][];
 
     it.each(native)('should return true for %p', (_name, err) => {
-      expect(isNativeError(err)).toBeTruthy();
+      expect(isNativeError(err)).toBe(true);
     });
   });
   describe('when a custom error is provided', () => {
@@ -24,7 +24,7 @@ describe('isNativeError', () => {
         }
       }
       const e = new NonNativeError('cool');
-      expect(isNativeError(e)).toBeFalsy();
+      expect(isNativeError(e)).toBe(false);
     });
   });
 
@@ -33,6 +33,6 @@ describe('isNativeError', () => {
     ['null', null],
     ['undefined', undefined],
   ])('"%p" is not native', (_name, err) => {
-    expect(isNativeError(err as unknown as Error)).toBeFalsy();
+    expect(isNativeError(err as unknown as Error)).toBe(false);
   });
 });

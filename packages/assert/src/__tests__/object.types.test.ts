@@ -44,7 +44,7 @@ describe('object types tests', () => {
         key: 'value',
       } as unknown;
       const typed = isPlainObject(unknownPo);
-      // eslint-disable-next-line jest/no-conditional-in-test
+      // eslint-disable-next-line @vitest/no-conditional-in-test
       if (!typed) {
         throw new Error('Test code is incorrect');
       }
@@ -56,7 +56,7 @@ describe('object types tests', () => {
         key: 'value',
       };
       const typed = isPlainObject(knownPo);
-      // eslint-disable-next-line jest/no-conditional-in-test
+      // eslint-disable-next-line @vitest/no-conditional-in-test
       if (!typed) {
         throw new Error('Test code is incorrect');
       }
@@ -77,7 +77,7 @@ describe('object types tests', () => {
         },
       } as unknown;
       const typed = isPlainObject<CustomType>(unknownPo);
-      // eslint-disable-next-line jest/no-conditional-in-test
+      // eslint-disable-next-line @vitest/no-conditional-in-test
       if (!typed) {
         throw new Error('Test code is incorrect');
       }
@@ -116,7 +116,7 @@ describe('object types tests', () => {
         },
       } as unknown;
       const typed = isPlainObject<DeepCustomType>(po);
-      // eslint-disable-next-line jest/no-conditional-in-test
+      // eslint-disable-next-line @vitest/no-conditional-in-test
       if (!typed) {
         throw new Error('Test code is incorrect');
       }
