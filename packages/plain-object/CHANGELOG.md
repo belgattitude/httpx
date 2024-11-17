@@ -1,5 +1,11 @@
 # @httpx/plain-object
 
+## 2.0.3
+
+### Patch Changes
+
+- [#1661](https://github.com/belgattitude/httpx/pull/1661) [`be1dbb3`](https://github.com/belgattitude/httpx/commit/be1dbb30bca671124f91de5714aadfc0a46789a0) Thanks [@belgattitude](https://github.com/belgattitude)! - Tiny size reduction
+
 ## 2.0.2
 
 ### Patch Changes
