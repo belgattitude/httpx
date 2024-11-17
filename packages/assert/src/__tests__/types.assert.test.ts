@@ -8,7 +8,7 @@ describe('type assertions', () => {
           state: 'loading' | 'error';
         };
         const ret = (net: Network) => {
-          // eslint-disable-next-line jest/no-conditional-in-test
+          // eslint-disable-next-line @vitest/no-conditional-in-test
           switch (net.state) {
             case 'error':
               return 'error';
@@ -35,7 +35,7 @@ describe('type assertions', () => {
             state: 'loading' | 'error';
           };
           const ret = (net: Network) => {
-            // eslint-disable-next-line jest/no-conditional-in-test
+            // eslint-disable-next-line @vitest/no-conditional-in-test
             switch (net.state) {
               case 'error':
                 return 'error';
@@ -65,7 +65,7 @@ describe('type assertions', () => {
           state: 'loading' | 'error';
         };
         const ret = (net: Network) => {
-          // eslint-disable-next-line jest/no-conditional-in-test
+          // eslint-disable-next-line @vitest/no-conditional-in-test
           switch (net.state) {
             case 'error':
               return 'error';
@@ -92,7 +92,7 @@ describe('type assertions', () => {
             state: 'loading' | 'error';
           };
           const ret = (net: Network) => {
-            // eslint-disable-next-line jest/no-conditional-in-test
+            // eslint-disable-next-line @vitest/no-conditional-in-test
             switch (net.state) {
               case 'error':
                 return 'error';

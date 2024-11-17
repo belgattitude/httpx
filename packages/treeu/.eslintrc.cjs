@@ -17,7 +17,7 @@ module.exports = {
     '@belgattitude/eslint-config-bases/import-x',
     '@belgattitude/eslint-config-bases/sonar',
     '@belgattitude/eslint-config-bases/regexp',
-    '@belgattitude/eslint-config-bases/jest',
+    '@belgattitude/eslint-config-bases/vitest',
     '@belgattitude/eslint-config-bases/performance',
 
     // Apply prettier and disable incompatible rules

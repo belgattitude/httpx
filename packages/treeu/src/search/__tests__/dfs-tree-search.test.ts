@@ -137,9 +137,9 @@ describe('TreeSearch', () => {
         it('should return the last matching node', () => {
           const result = search.findOne(
             (treeNode) => {
-              // eslint-disable-next-line jest/no-conditional-in-test
+              // eslint-disable-next-line @vitest/no-conditional-in-test
               const size = treeNode.value?.size ?? 0;
-              // eslint-disable-next-line jest/no-conditional-in-test
+              // eslint-disable-next-line @vitest/no-conditional-in-test
               return size > 30 && size < 80;
             },
             {
@@ -161,9 +161,9 @@ describe('TreeSearch', () => {
         it('should return the first matching node', () => {
           const result = search.findOne(
             (treeNode) => {
-              // eslint-disable-next-line jest/no-conditional-in-test
+              // eslint-disable-next-line @vitest/no-conditional-in-test
               const size = treeNode.value?.size ?? 0;
-              // eslint-disable-next-line jest/no-conditional-in-test
+              // eslint-disable-next-line @vitest/no-conditional-in-test
               return size > 30 && size < 80;
             },
             {
