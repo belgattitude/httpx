@@ -29,7 +29,7 @@ describe.skipIf(isCloudflareWorker)(
           '%s(%i) match statuses "%s"',
           (className, status, npmStatusMsg) => {
             const title = npmStatusMsg.replaceAll(/[\W_]+/g, '').toLowerCase();
-            // eslint-disable-next-line jest/no-conditional-in-test
+            // eslint-disable-next-line @vitest/no-conditional-in-test
             const expected = title.startsWith('http') ? title : `http${title}`;
             expect(className.toLowerCase()).toStrictEqual(expected);
           }

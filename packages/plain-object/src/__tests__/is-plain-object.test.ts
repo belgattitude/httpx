@@ -135,7 +135,6 @@ describe('isPlainObject', () => {
         );
       });
 
-      // eslint-disable-next-line jest/valid-describe-callback
       describe.skip('Compatibility with es-toolkit/is-plain-object', async () => {
         const esToolkitIsPlainObject = await import('es-toolkit').then(
           (mod) => mod.isPlainObject
@@ -148,7 +147,6 @@ describe('isPlainObject', () => {
         );
       });
 
-      // eslint-disable-next-line jest/valid-describe-callback
       describe('Compatibility with redux/isPlainObject', async () => {
         it.each(cases)(
           'compat when "%s" is given, should return %s',
@@ -171,7 +169,6 @@ describe('isPlainObject', () => {
         );
       });
 
-      // eslint-disable-next-line jest/valid-describe-callback
       describe.skip('Compatibility with jonschlinkert/is-plain-object', async () => {
         // @ts-expect-error packaging of this lib is not compatible with latest ts / module
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
