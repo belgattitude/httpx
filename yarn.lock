@@ -2072,9 +2072,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/vitest-pool-workers@npm:0.5.28":
-  version: 0.5.28
-  resolution: "@cloudflare/vitest-pool-workers@npm:0.5.28"
+"@cloudflare/vitest-pool-workers@npm:0.5.29":
+  version: 0.5.29
+  resolution: "@cloudflare/vitest-pool-workers@npm:0.5.29"
   dependencies:
     birpc: "npm:0.2.14"
     cjs-module-lexer: "npm:^1.2.3"
@@ -2082,13 +2082,13 @@ __metadata:
     esbuild: "npm:0.17.19"
     miniflare: "npm:3.20241106.0"
     semver: "npm:^7.5.1"
-    wrangler: "npm:3.87.0"
+    wrangler: "npm:3.88.0"
     zod: "npm:^3.22.3"
   peerDependencies:
     "@vitest/runner": 2.0.x - 2.1.x
     "@vitest/snapshot": 2.0.x - 2.1.x
     vitest: 2.0.x - 2.1.x
-  checksum: 10c0/31abc229fbacbebfc610cfc3cd01242bc292677c8b9e6376b69cb28ba0983a0e59c61147146b51f3dea33fbbc7f48053d1f521b259cda00d8b67efaf16d34cf9
+  checksum: 10c0/1172f96dfad28a3d189e8dbcc06e25abbcbdf27359d7152ae0bee24233357f10acaeadc444c6ad3e41fb90170b636785426878eca75456bcae50606c907fe01a
   languageName: node
   linkType: hard
 
@@ -2931,7 +2931,7 @@ __metadata:
   resolution: "@httpx/devtools-vitest@workspace:devtools/vitest"
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:6.5.0"
-    "@cloudflare/vitest-pool-workers": "npm:0.5.28"
+    "@cloudflare/vitest-pool-workers": "npm:0.5.29"
     "@codspeed/vitest-plugin": "npm:3.1.1"
     "@edge-runtime/vm": "npm:4.0.4"
     "@vitest/browser": "npm:2.1.5"
@@ -19491,15 +19491,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unenv@npm:unenv-nightly@2.0.0-20241024-111401-d4156ac":
-  version: 2.0.0-20241024-111401-d4156ac
-  resolution: "unenv-nightly@npm:2.0.0-20241024-111401-d4156ac"
+"unenv@npm:unenv-nightly@2.0.0-20241111-080453-894aa31":
+  version: 2.0.0-20241111-080453-894aa31
+  resolution: "unenv-nightly@npm:2.0.0-20241111-080453-894aa31"
   dependencies:
     defu: "npm:^6.1.4"
     ohash: "npm:^1.1.4"
     pathe: "npm:^1.1.2"
     ufo: "npm:^1.5.4"
-  checksum: 10c0/22c0d93fd72629d94f3a2730790cda817d63813b9d349147c611cfcc0e489416b5dba926e1b8e517e6c7a992016edb6267446a9c26a79c3bb7e90ec899be98e3
+  checksum: 10c0/08ca9bd6549144f6fc635de2cf5d3016082e69fef32668bc297dfb49b3323aeebbbb4b9ef2d2a11b7206add9a62103a2187eda8ea57b3f68ae7d0894efb86388
   languageName: node
   linkType: hard
 
@@ -20723,9 +20723,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:3.87.0":
-  version: 3.87.0
-  resolution: "wrangler@npm:3.87.0"
+"wrangler@npm:3.88.0":
+  version: 3.88.0
+  resolution: "wrangler@npm:3.88.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.3.4"
     "@cloudflare/workers-shared": "npm:0.7.1"
@@ -20744,7 +20744,7 @@ __metadata:
     resolve.exports: "npm:^2.0.2"
     selfsigned: "npm:^2.0.1"
     source-map: "npm:^0.6.1"
-    unenv: "npm:unenv-nightly@2.0.0-20241024-111401-d4156ac"
+    unenv: "npm:unenv-nightly@2.0.0-20241111-080453-894aa31"
     workerd: "npm:1.20241106.1"
     xxhash-wasm: "npm:^1.0.1"
   peerDependencies:
@@ -20758,7 +20758,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/9c9b768046e579e898dfd2ca73e0fb25eedd95cb729797871972d5101bbed2f186283d479d2f87459462c0486eed7462d2ad036449eeb01577f55b4731246073
+  checksum: 10c0/88e063f8347133c172d493e33edac9a15918418bf0c61e1471d30d7e4ff9d591c8645b5741a289be99a4a6b18f1f98f1c3ddcfb9e3783c375a73d77f9b918c69
   languageName: node
   linkType: hard
 
