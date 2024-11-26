@@ -35,7 +35,7 @@ module.exports = {
     {
       files: ['src/**/*.ts'],
       rules: {
-        'import-x/no-cycle': [1, { maxDepth: 100 }],
+        // 'import-x/no-cycle': [1, { maxDepth: 100 }],
         'import-x/no-extraneous-dependencies': [
           'error',
           {
