@@ -41,7 +41,7 @@ For Further details.`},buildEmptyRepetitionError(e){let t=nm(e.repetition);retur
 This could lead to an infinite loop.`},buildTokenNameError:e=>"deprecated",buildEmptyAlternationError:e=>`Ambiguous empty alternative: <${e.emptyChoiceIdx+1}> in <OR${e.alternation.idx}> inside <${e.topLevelRule.name}> Rule.
 Only the last alternative may be an empty alternative.`,buildTooManyAlternativesError:e=>`An Alternation cannot have more than 256 alternatives:
 <OR${e.alternation.idx}> inside <${e.topLevelRule.name}> Rule.
- has ${e.alternation.definition.length+1} alternatives.`,buildLeftRecursionError(e){let t=e.topLevelRule.name,r=(0,rN.A)(e.leftRecursionPath,e=>e.name),n=`${t} --> ${r.concat([t]).join(" --> ")}`;return`Left Recursion found in grammar.
+ has ${e.alternation.definition.length+1} alternatives.`,buildLeftRecursionError(e){let t=e.topLevelRule.name,r=(0,rN.A)(e.leftRecursionPath,e=>e.name),n=`${t} --> ${r.concat([t]).join(" --\x3e ")}`;return`Left Recursion found in grammar.
 rule: <${t}> can be invoked from itself (directly or indirectly)
 without consuming any Tokens. The grammar path that causes this is: 
  ${n}
