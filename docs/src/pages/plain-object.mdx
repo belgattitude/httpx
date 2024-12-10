@@ -1,4 +1,4 @@
-import { Tabs, Tab } from 'nextra/components';
+import { Tabs } from 'nextra/components';
 
 <div className={'shadow-md -ml-2 mt-[30px] mb-[5px] border p-5 rounded '}>
     [Fast](#benchmarks) and lightweight ([~100B](#bundle-size)) functions to check or assert
@@ -21,21 +21,21 @@ import { Tabs, Tab } from 'nextra/components';
 
 
 <Tabs items={['yarn', 'pnpm', 'npm']} defaultIndex={0}>
-    <Tab>
+    <Tabs.Tab>
         ```bash
         yarn add @httpx/plain-object
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash
         pnpm add @httpx/plain-object
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash
         npm install @httpx/plain-object
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 ## Features

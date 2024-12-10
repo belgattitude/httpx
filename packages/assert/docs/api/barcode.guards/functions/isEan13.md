@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.4**](../../README.md) • **Docs**
+[**@httpx/assert v0.15.1**](../../README.md)
 
 ***
 
-[@httpx/assert v0.12.4](../../README.md) / [barcode.guards](../README.md) / isEan13
+[@httpx/assert](../../README.md) / [barcode.guards](../README.md) / isEan13
 
 # Function: isEan13()
 
@@ -10,7 +10,9 @@
 
 ## Parameters
 
-• **v**: `unknown`
+### v
+
+`unknown`
 
 ## Returns
 
@@ -18,4 +20,4 @@
 
 ## Defined in
 
-[barcode.guards.ts:3](https://github.com/belgattitude/httpx/blob/acde85be3548fccd6cc1a311d7f8d4419e2b6ce0/packages/assert/src/barcode.guards.ts#L3)
+[barcode.guards.ts:3](https://github.com/belgattitude/httpx/blob/d121a71b95064daafd75a20aabf0a30f5fcdfbfa/packages/assert/src/barcode.guards.ts#L3)

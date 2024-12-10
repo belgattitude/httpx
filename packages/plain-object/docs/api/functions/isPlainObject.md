@@ -1,8 +1,8 @@
-[**@httpx/plain-object v1.1.1**](../README.md) • **Docs**
+[**@httpx/plain-object v2.0.3**](../README.md)
 
 ***
 
-[@httpx/plain-object v1.1.1](../README.md) / isPlainObject
+[@httpx/plain-object](../README.md) / isPlainObject
 
 # Function: isPlainObject()
 
@@ -10,7 +10,7 @@
 
 Check if a value is a plain object
 
-An object is plain if it's created by either {}, new Object(), or Object.create(null).
+A plain object is a basic JavaScript object, such as {}, { data: [] }, new Object() or Object.create(null).
 
 ## Type Parameters
 
@@ -18,7 +18,9 @@ An object is plain if it's created by either {}, new Object(), or Object.create(
 
 ## Parameters
 
-• **v**: `unknown`
+### v
+
+`unknown`
 
 ## Returns
 
@@ -31,6 +33,7 @@ import { isPlainObject } from '@httpx/plain-object';
 
 // ✅👇 True
 
+isPlainObject({ });                       // ✅
 isPlainObject({ key: 'value' });          // ✅
 isPlainObject({ key: new Date() });       // ✅
 isPlainObject(new Object());              // ✅
@@ -54,7 +57,17 @@ isPlainObject(null);                // ❌
 isPlainObject('hello');             // ❌
 isPlainObject([]);                  // ❌
 isPlainObject(new Date());          // ❌
-isPlainObject(Math);                // ❌ Static built-in classes
+isPlainObject(new Uint8Array([1])); // ❌
+isPlainObject(Buffer.from('ABC'));  // ❌
 isPlainObject(Promise.resolve({})); // ❌
 isPlainObject(Object.create({}));   // ❌
+isPlainObject(new (class Cls {}));  // ❌
+isPlainObject(globalThis);          // ❌,
 ```
+
+// ✅👇 Note that static built-in classes are treated as plain objects
+//    check for `isStaticBuiltInClass` to exclude if needed
+
+isPlainObject(Math);                // ✅
+isPlainObject(JSON);                // ✅
+isPlainObject(Atomics);             // ✅

@@ -1,28 +1,63 @@
-[**@httpx/assert v0.12.4**](../../README.md) • **Docs**
+[**@httpx/assert v0.15.1**](../../README.md)
 
 ***
 
-[@httpx/assert v0.12.4](../../README.md) / [object.asserts](../README.md) / assertPlainObject
+[@httpx/assert](../../README.md) / [object.asserts](../README.md) / assertPlainObject
 
 # Function: assertPlainObject()
 
-> **assertPlainObject**\<`TValue`\>(`v`, `msgOrErrorFactory`?): `asserts v is TValue extends UnspecifiedPlainObjectType ? BasePlainObject : PlainObject<TValue>`
+> **assertPlainObject**\<`TValue`\>(`v`, `msgOrErrorFactory`?): `asserts v is TValue extends DefaultBasePlainObject ? BasePlainObject : PlainObject<TValue>`
 
 Assert a value is a plain object
 
 ## Type Parameters
 
-• **TValue** *extends* `Record`\<`string`, `unknown`\> = [`UnspecifiedPlainObjectType`](../../object.internal.types/type-aliases/UnspecifiedPlainObjectType.md)
+• **TValue** *extends* [`BasePlainObject`](../../object.internal.types/type-aliases/BasePlainObject.md) = [`DefaultBasePlainObject`](../../object.internal.types/interfaces/DefaultBasePlainObject.md)
 
 ## Parameters
 
-• **v**: `unknown`
+### v
 
-• **msgOrErrorFactory?**: `MsgOrErrorFactory`
+`unknown`
+
+### msgOrErrorFactory?
+
+`MsgOrErrorFactory`
 
 ## Returns
 
-`asserts v is TValue extends UnspecifiedPlainObjectType ? BasePlainObject : PlainObject<TValue>`
+`asserts v is TValue extends DefaultBasePlainObject ? BasePlainObject : PlainObject<TValue>`
+
+## Example
+
+```typescript
+import { assertPlainObject } from '@httpx/plain-object';
+import type { PlainObject } from '@httpx/plain-object';
+
+function fn(value: unknown) {
+
+    // 👇 Throws `new TypeError('Not a plain object')` if not a plain object
+    assertPlainObject(value);
+
+    // 👇 Throws `new TypeError('Custom message')` if not a plain object
+    assertPlainObject(value, 'Custom message');
+
+    // 👇 Throws custom error if not a plain object
+    assertPlainObject(value, () => {
+        throw new HttpBadRequest('Custom message');
+    });
+
+    return value;
+}
+
+try {
+    const value = fn({ key: 'value' });
+    // ✅ Value is known to be PlainObject<unknown>
+    assertType<PlainObject>(value);
+} catch (error) {
+    console.error(error);
+}
+```
 
 ## Throws
 
@@ -30,4 +65,4 @@ TypeError
 
 ## Defined in
 
-[object.asserts.ts:15](https://github.com/belgattitude/httpx/blob/acde85be3548fccd6cc1a311d7f8d4419e2b6ce0/packages/assert/src/object.asserts.ts#L15)
+[object.asserts.ts:45](https://github.com/belgattitude/httpx/blob/d121a71b95064daafd75a20aabf0a30f5fcdfbfa/packages/assert/src/object.asserts.ts#L45)

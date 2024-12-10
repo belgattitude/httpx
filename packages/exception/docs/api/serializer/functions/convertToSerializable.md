@@ -1,6 +1,6 @@
-[**@httpx/exception**](../../README.md) • **Docs**
+[**@httpx/exception**](../../README.md)
 
----
+***
 
 [@httpx/exception](../../README.md) / [serializer](../README.md) / convertToSerializable
 
@@ -13,9 +13,13 @@ an object suitable for serialization (a serializable version).
 
 ## Parameters
 
-• **e**: [`HttpException`](../../base/classes/HttpException.md) \| [`NativeError`](../type-aliases/NativeError.md)
+### e
 
-• **params?**: `SerializerParams`
+[`HttpException`](../../base/classes/HttpException.md) | [`NativeError`](../type-aliases/NativeError.md)
+
+### params?
+
+`SerializerParams`
 
 ## Returns
 

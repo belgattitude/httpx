@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.4**](../../README.md) • **Docs**
+[**@httpx/assert v0.15.1**](../../README.md)
 
 ***
 
-[@httpx/assert v0.12.4](../../README.md) / [string.guards](../README.md) / isStringNonEmpty
+[@httpx/assert](../../README.md) / [string.guards](../README.md) / isStringNonEmpty
 
 # Function: isStringNonEmpty()
 
@@ -10,7 +10,9 @@
 
 ## Parameters
 
-• **v**: `unknown`
+### v
+
+`unknown`
 
 ## Returns
 
@@ -18,4 +20,4 @@
 
 ## Defined in
 
-[string.guards.ts:9](https://github.com/belgattitude/httpx/blob/acde85be3548fccd6cc1a311d7f8d4419e2b6ce0/packages/assert/src/string.guards.ts#L9)
+[string.guards.ts:9](https://github.com/belgattitude/httpx/blob/d121a71b95064daafd75a20aabf0a30f5fcdfbfa/packages/assert/src/string.guards.ts#L9)

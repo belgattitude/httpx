@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.4**](../../README.md) • **Docs**
+[**@httpx/assert v0.15.1**](../../README.md)
 
 ***
 
-[@httpx/assert v0.12.4](../../README.md) / [network.types](../README.md) / NetworkPort
+[@httpx/assert](../../README.md) / [network.types](../README.md) / NetworkPort
 
 # Type Alias: NetworkPort
 
@@ -10,4 +10,4 @@
 
 ## Defined in
 
-[network.types.ts:3](https://github.com/belgattitude/httpx/blob/acde85be3548fccd6cc1a311d7f8d4419e2b6ce0/packages/assert/src/network.types.ts#L3)
+[network.types.ts:3](https://github.com/belgattitude/httpx/blob/d121a71b95064daafd75a20aabf0a30f5fcdfbfa/packages/assert/src/network.types.ts#L3)

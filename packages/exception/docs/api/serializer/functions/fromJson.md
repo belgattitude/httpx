@@ -1,6 +1,6 @@
-[**@httpx/exception**](../../README.md) • **Docs**
+[**@httpx/exception**](../../README.md)
 
----
+***
 
 [@httpx/exception](../../README.md) / [serializer](../README.md) / fromJson
 
@@ -10,9 +10,13 @@
 
 ## Parameters
 
-• **json**: `string`
+### json
 
-• **params?**: `SerializerParams`
+`string`
+
+### params?
+
+`SerializerParams`
 
 ## Returns
 

@@ -8,7 +8,7 @@ const themeConfig: DocsThemeConfig = {
   },
   docsRepositoryBase: 'https://github.com/belgattitude/httpx/tree/main/docs',
   editLink: {
-    text: 'Edit this page on GitHub',
+    content: 'Edit this page on GitHub',
   },
   /*
   primaryHue: {

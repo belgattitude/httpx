@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.4**](../README.md) • **Docs**
+[**@httpx/assert v0.15.1**](../README.md)
 
 ***
 
-[@httpx/assert v0.12.4](../README.md) / number.asserts
+[@httpx/assert](../README.md) / number.asserts
 
 # number.asserts
 

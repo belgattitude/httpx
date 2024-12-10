@@ -1,4 +1,4 @@
-import { Tabs, Tab, Callout } from 'nextra/components';
+import { Tabs } from 'nextra/components';
 
 <div className={'shadow-md -ml-2 mt-[30px] mb-[5px] border p-5 rounded '}>
    DSN & JDBC string parser with query params support in a light and modern package.
@@ -31,21 +31,21 @@ import { Tabs, Tab, Callout } from 'nextra/components';
 
 
 <Tabs items={['yarn', 'pnpm', 'npm']} defaultIndex={0}>
-    <Tab>
+    <Tabs.Tab>
         ```bash
         yarn add @httpx/dsn-parser
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash
         pnpm add @httpx/dsn-parser
         ```
-    </Tab>
-    <Tab>
+    </Tabs.Tab>
+    <Tabs.Tab>
         ```bash
         npm install @httpx/dsn-parser
         ```
-    </Tab>
+    </Tabs.Tab>
 </Tabs>
 
 

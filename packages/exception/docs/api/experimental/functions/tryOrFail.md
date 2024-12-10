@@ -1,6 +1,6 @@
-[**@httpx/exception**](../../README.md) • **Docs**
+[**@httpx/exception**](../../README.md)
 
----
+***
 
 [@httpx/exception](../../README.md) / [experimental](../README.md) / tryOrFail
 
@@ -10,11 +10,13 @@
 
 ## Type Parameters
 
-• **T** _extends_ `AsyncFn`\<`unknown`[], `unknown`\>
+• **T** *extends* `AsyncFn`\<`unknown`[], `unknown`\>
 
 ## Parameters
 
-• **fn**: `T`
+### fn
+
+`T`
 
 ## Returns
 
