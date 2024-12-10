@@ -1,14 +1,16 @@
-**@httpx/plain-object v1.1.1** • **Docs**
+**@httpx/plain-object v2.0.3**
 
 ***
 
-# @httpx/plain-object v1.1.1
+# @httpx/plain-object v2.0.3
 
 ## Type Aliases
 
 - [PlainObject](type-aliases/PlainObject.md)
+- [StaticBuiltInClass](type-aliases/StaticBuiltInClass.md)
 
 ## Functions
 
 - [assertPlainObject](functions/assertPlainObject.md)
 - [isPlainObject](functions/isPlainObject.md)
+- [isStaticBuiltInClass](functions/isStaticBuiltInClass.md)

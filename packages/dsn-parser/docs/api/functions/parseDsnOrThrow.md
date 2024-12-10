@@ -1,8 +1,8 @@
-[**@httpx/dsn-parser v1.8.1**](../README.md) • **Docs**
+[**@httpx/dsn-parser v1.8.5**](../README.md)
 
 ***
 
-[@httpx/dsn-parser v1.8.1](../README.md) / parseDsnOrThrow
+[@httpx/dsn-parser](../README.md) / parseDsnOrThrow
 
 # Function: parseDsnOrThrow()
 
@@ -10,9 +10,13 @@
 
 ## Parameters
 
-• **dsn**: `unknown`
+### dsn
 
-• **options?**: [`ParseDsnOptions`](../type-aliases/ParseDsnOptions.md) & `object`
+`unknown`
+
+### options?
+
+[`ParseDsnOptions`](../type-aliases/ParseDsnOptions.md) & `object`
 
 ## Returns
 

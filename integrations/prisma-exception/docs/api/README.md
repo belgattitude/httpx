@@ -1,6 +1,6 @@
-**prisma-exception** • [**Docs**](globals.md)
+**prisma-exception**
 
----
+***
 
 # prisma-exception
 

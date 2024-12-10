@@ -16,7 +16,7 @@
     "g:build-release": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build-release",
     "g:build-packages": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build",
     "g:build-examples": "nx affected --output-style=static --target=build --include=examples/**",
-    "g:docgen": "nx affected --output-style=static --target=docgen --exclude='examples/**'",
+    "g:docgen": "nx run-many --output-style=static --target=docgen --exclude='examples/**'",
     "g:test": "yarn workspaces foreach --all -pv run test",
     "g:test-unit": "nx run-many --output-style=static --target=test-unit --exclude='examples/**' --exclude='docs'",
     "g:test-unit-coverage": "nx run-many --output-style=static --target=test-unit-coverage --exclude='examples/**' --exclude='docs'",

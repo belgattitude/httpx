@@ -1,8 +1,8 @@
-[**@httpx/plain-object v1.1.1**](../README.md) • **Docs**
+[**@httpx/plain-object v2.0.3**](../README.md)
 
 ***
 
-[@httpx/plain-object v1.1.1](../README.md) / PlainObject
+[@httpx/plain-object](../README.md) / PlainObject
 
 # Type Alias: PlainObject\<TValue\>
 

@@ -1,8 +1,8 @@
-[**@httpx/json-api v0.5.21**](../README.md) • **Docs**
+[**@httpx/json-api v0.5.24**](../README.md)
 
 ***
 
-[@httpx/json-api v0.5.21](../README.md) / JsonApiResponseFactory
+[@httpx/json-api](../README.md) / JsonApiResponseFactory
 
 # Class: JsonApiResponseFactory
 
@@ -20,13 +20,17 @@
 
 ### fromError()
 
-> `static` **fromError**(`errors`, `httpStatus`?): [`JsonApiErrorResponse`](../type-aliases/JsonApiErrorResponse.md)
+> `readonly` `static` **fromError**(`errors`, `httpStatus`?): [`JsonApiErrorResponse`](../type-aliases/JsonApiErrorResponse.md)
 
 #### Parameters
 
-• **errors**: `string` \| [`JsonApiError`](../type-aliases/JsonApiError.md) \| [`JsonApiError`](../type-aliases/JsonApiError.md)[]
+##### errors
 
-• **httpStatus?**: `number`
+`string` | [`JsonApiError`](../type-aliases/JsonApiError.md) | [`JsonApiError`](../type-aliases/JsonApiError.md)[]
+
+##### httpStatus?
+
+`number`
 
 fallback http status if not present in JsonApiError
 
@@ -38,7 +42,7 @@ fallback http status if not present in JsonApiError
 
 ### fromSuccess()
 
-> `static` **fromSuccess**\<`T`\>(`data`, `metadata`?): [`JsonApiSuccessResponse`](../type-aliases/JsonApiSuccessResponse.md)\<`T`\>
+> `readonly` `static` **fromSuccess**\<`T`\>(`data`, `metadata`?): [`JsonApiSuccessResponse`](../type-aliases/JsonApiSuccessResponse.md)\<`T`\>
 
 #### Type Parameters
 
@@ -46,9 +50,13 @@ fallback http status if not present in JsonApiError
 
 #### Parameters
 
-• **data**: `T`
+##### data
 
-• **metadata?**: `object` & `Record`\<`string`, `string` \| `number` \| `boolean` \| `Record`\<`string`, `unknown`\>\>
+`T`
+
+##### metadata?
+
+`object` & `Record`\<`string`, `string` \| `number` \| `boolean` \| `Record`\<`string`, `unknown`\>\>
 
 #### Returns
 

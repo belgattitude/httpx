@@ -1,8 +1,8 @@
-[**@httpx/json-api v0.5.21**](../README.md) • **Docs**
+[**@httpx/json-api v0.5.24**](../README.md)
 
 ***
 
-[@httpx/json-api v0.5.21](../README.md) / JsonApiSuccessResponse
+[@httpx/json-api](../README.md) / JsonApiSuccessResponse
 
 # Type Alias: JsonApiSuccessResponse\<T\>
 

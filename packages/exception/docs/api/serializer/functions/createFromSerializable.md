@@ -1,6 +1,6 @@
-[**@httpx/exception**](../../README.md) • **Docs**
+[**@httpx/exception**](../../README.md)
 
----
+***
 
 [@httpx/exception](../../README.md) / [serializer](../README.md) / createFromSerializable
 
@@ -13,9 +13,13 @@ serializable representation
 
 ## Parameters
 
-• **payload**: `Serializable`
+### payload
 
-• **params?**: `SerializerParams`
+`Serializable`
+
+### params?
+
+`SerializerParams`
 
 ## Returns
 

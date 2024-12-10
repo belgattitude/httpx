@@ -1,8 +1,8 @@
-[**@httpx/json-api v0.5.21**](../README.md) • **Docs**
+[**@httpx/json-api v0.5.24**](../README.md)
 
 ***
 
-[@httpx/json-api v0.5.21](../README.md) / isJsonApiErrorResponse
+[@httpx/json-api](../README.md) / isJsonApiErrorResponse
 
 # Function: isJsonApiErrorResponse()
 
@@ -10,7 +10,9 @@
 
 ## Parameters
 
-• **val**: `unknown`
+### val
+
+`unknown`
 
 ## Returns
 
