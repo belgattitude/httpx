@@ -11339,8 +11339,8 @@ __metadata:
     eslint-config-next: "npm:15.1.2"
     eslint-plugin-tailwindcss: "npm:3.17.5"
     next: "npm:15.1.2"
-    nextra: "npm:3.2.5"
-    nextra-theme-docs: "npm:3.2.5"
+    nextra: "npm:3.3.0"
+    nextra-theme-docs: "npm:3.3.0"
     postcss: "npm:8.4.49"
     postcss-nesting: "npm:13.0.1"
     prettier: "npm:3.4.2"
@@ -14431,9 +14431,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nextra-theme-docs@npm:3.2.5":
-  version: 3.2.5
-  resolution: "nextra-theme-docs@npm:3.2.5"
+"nextra-theme-docs@npm:3.3.0":
+  version: 3.3.0
+  resolution: "nextra-theme-docs@npm:3.3.0"
   dependencies:
     "@headlessui/react": "npm:^2.1.2"
     clsx: "npm:^2.0.0"
@@ -14444,16 +14444,16 @@ __metadata:
     zod: "npm:^3.22.3"
   peerDependencies:
     next: ">=13"
-    nextra: 3.2.5
+    nextra: 3.3.0
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10c0/a67b27a22314127b1c5b4b0d4f035cfda2b906a1c0d5cff3c65fe7b0c957ebf4c5415360a87f373aaaf67a96782134dbbf6ae24981dbac691b4997737db8bb1b
+  checksum: 10c0/fcbe6971684e09e60989090061c4e9879160d7504e79bfea5c4ac03c051e87404fca914ac787d94743c39aec0b16c3a445a37fd3a4979e82b59ea61d949f82e3
   languageName: node
   linkType: hard
 
-"nextra@npm:3.2.5":
-  version: 3.2.5
-  resolution: "nextra@npm:3.2.5"
+"nextra@npm:3.3.0":
+  version: 3.3.0
+  resolution: "nextra@npm:3.3.0"
   dependencies:
     "@formatjs/intl-localematcher": "npm:^0.5.4"
     "@headlessui/react": "npm:^2.1.2"
@@ -14477,6 +14477,7 @@ __metadata:
     mdast-util-to-hast: "npm:^13.2.0"
     negotiator: "npm:^1.0.0"
     p-limit: "npm:^6.0.0"
+    react-medium-image-zoom: "npm:^5.2.12"
     rehype-katex: "npm:^7.0.0"
     rehype-pretty-code: "npm:0.14.0"
     rehype-raw: "npm:^7.0.0"
@@ -14497,7 +14498,7 @@ __metadata:
     next: ">=13"
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10c0/c2d7ea15d202840a440b66b940fe2d96e82f95b619b2d5525c012e8135d7020f42ce7bbb259644ca91c3693601f120d8766df48043ba926c5057ceef8c3c0885
+  checksum: 10c0/91fc2405f4187564706f86bc1e9fbb18d9829761be6dc334e0797b805e6f0c17de787c275fe6ab563c258645a72a4ead67e8323851bdff8905ae52cdafa1b8b5
   languageName: node
   linkType: hard
 
@@ -16041,6 +16042,16 @@ __metadata:
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
   checksum: 10c0/f2f1e60010c683479e74c63f96b09fb41603527cd131a9959e2aee1e5a8b0caf270b365e5ca77d4a6b18aae659b60a86150bb3979073528877029b35aecd2072
+  languageName: node
+  linkType: hard
+
+"react-medium-image-zoom@npm:^5.2.12":
+  version: 5.2.12
+  resolution: "react-medium-image-zoom@npm:5.2.12"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/23b87da1661e68cd2f55c589afee9559be6a59594b3639df76c9c84e43ae50b4043452d8aa243a07ce3732bde34494eaf17d5c62de478b6b3801af86be68979f
   languageName: node
   linkType: hard
 
