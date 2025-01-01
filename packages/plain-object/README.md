@@ -264,7 +264,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 This library wouldn't be possible without [@sindresorhus](https://github.com/sindresorhus) [is-plain-obj](https://github.com/sindresorhus/is-plain-obj).
 Notable differences:
 
-- [x] SLightly faster (10%)
+- [x] Slightly faster (10%)
 - [x] ESM and CJS formats.
 - [x] Named export.
 - [x] Smaller bundle size.
