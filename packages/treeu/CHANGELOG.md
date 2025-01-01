@@ -1,5 +1,12 @@
 # @httpx/treeu
 
+## 0.4.8
+
+### Patch Changes
+
+- Updated dependencies [[`946f440`](https://github.com/belgattitude/httpx/commit/946f4400576ccc72f1b3c9fa140e84ea82e0e997)]:
+  - @httpx/plain-object@2.0.4
+
 ## 0.4.7
 
 ### Patch Changes
