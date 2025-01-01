@@ -1,5 +1,9 @@
 import { bench, describe } from 'vitest';
 
+import { devDependencies } from '../package.json' with { type: 'json' };
+
+const versions = devDependencies;
+
 /**
  * Based on a hypothesis:
  */
@@ -61,44 +65,50 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
     (mod) => mod.isPlainObject
   );
 
-  bench('@httpx/plain-object: `isPlainObject(v)`', () => {
+  bench('"@httpx/plain-object": `isPlainObject(v)`', () => {
     for (const value of realLifeScenarios) {
       httpxIsPlainObject(value);
     }
   });
 
-  bench('(sindresorhus/)is-plain-obj: `isPlainObj(v)`', () => {
+  bench(`"is-plain-obj":"${versions['is-plain-obj']}": 'isPlainObj(v)'`, () => {
     for (const value of realLifeScenarios) {
       isPlainObj(value);
     }
   });
 
-  bench('@sindresorhus/is: `is.plainObject(v)`', () => {
-    for (const value of realLifeScenarios) {
-      is.plainObject(value);
+  bench(
+    `"@sindresorhus/is":"${versions['@sindresorhus/is']}": 'is.plainObject(v)'`,
+    () => {
+      for (const value of realLifeScenarios) {
+        is.plainObject(value);
+      }
     }
-  });
+  );
 
-  bench('estoolkit:  `isPlainObject(v)`', () => {
+  bench(`"es-toolkit":"${versions['es-toolkit']}": 'isPlainObject(v)'`, () => {
     for (const value of realLifeScenarios) {
       esToolkitIsPlainObject(value);
     }
   });
 
-  bench('redux:  `isPlainObject(v)`', () => {
+  bench(`"redux":"${versions.redux}": 'isPlainObject(v)'`, () => {
     for (const value of realLifeScenarios) {
       reduxIsPlainObject(value);
     }
   });
 
-  bench('(jonschlinkert/)is-plain-object: `isPlainObject(v)`', () => {
-    for (const value of realLifeScenarios) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      jonschlinkertIsPlainObject(value);
+  bench(
+    `"is-plain-object":"${versions['is-plain-object']}": 'isPlainObject(v)'`,
+    () => {
+      for (const value of realLifeScenarios) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        jonschlinkertIsPlainObject(value);
+      }
     }
-  });
+  );
 
-  bench('lodash-es: `_.isPlainObject(v)`', () => {
+  bench(`lodash-es:"${versions['lodash-es']}": '_.isPlainObject(v)'`, () => {
     for (const value of realLifeScenarios) {
       lodashIsPlainObject(value);
     }
