@@ -1789,22 +1789,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/unenv-preset@npm:1.x":
-  version: 1.0.0
-  resolution: "@cloudflare/unenv-preset@npm:1.0.0"
-  peerDependencies:
-    unenv: "*"
-    workerd: ^1.20241230.0
-  peerDependenciesMeta:
-    workerd:
-      optional: true
-  checksum: 10c0/766e6b25948b7aecd960d935ba59114ecbef19cb55e05a06044a0bcf4b916fac9419be168e24ae3b14d1cbf75d146b0fdc98fe7f5458a48b9fbac212485b4f03
-  languageName: node
-  linkType: hard
-
-"@cloudflare/vitest-pool-workers@npm:0.6.2":
-  version: 0.6.2
-  resolution: "@cloudflare/vitest-pool-workers@npm:0.6.2"
+"@cloudflare/vitest-pool-workers@npm:0.6.3":
+  version: 0.6.3
+  resolution: "@cloudflare/vitest-pool-workers@npm:0.6.3"
   dependencies:
     birpc: "npm:0.2.14"
     cjs-module-lexer: "npm:^1.2.3"
@@ -1812,13 +1799,13 @@ __metadata:
     esbuild: "npm:0.17.19"
     miniflare: "npm:3.20241230.2"
     semver: "npm:^7.5.1"
-    wrangler: "npm:3.103.0"
+    wrangler: "npm:3.103.1"
     zod: "npm:^3.22.3"
   peerDependencies:
     "@vitest/runner": 2.0.x - 2.1.x
     "@vitest/snapshot": 2.0.x - 2.1.x
     vitest: 2.0.x - 2.1.x
-  checksum: 10c0/5471829b39d2d62ca1bdfa66053598bb2482e06e9a4144336208534bac50b1157be40fcfc3c6180cd6d8e575dea06b775a90cc4fc8280e7d71508545346a458a
+  checksum: 10c0/ea47ebf329302880adf36cb7738e0da3b1a8bbd58cc5ed3cdb71e09f9ff6e6db11b869b4b2ec887d56aff8cd8d4738889b7fc614435c1d4ec02a71cd596f2678
   languageName: node
   linkType: hard
 
@@ -2615,7 +2602,7 @@ __metadata:
   resolution: "@httpx/devtools-vitest@workspace:devtools/vitest"
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:6.19.0"
-    "@cloudflare/vitest-pool-workers": "npm:0.6.2"
+    "@cloudflare/vitest-pool-workers": "npm:0.6.3"
     "@codspeed/vitest-plugin": "npm:4.0.0"
     "@edge-runtime/vm": "npm:5.0.0"
     "@vitest/browser": "npm:2.1.8"
@@ -18331,12 +18318,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:3.103.0":
-  version: 3.103.0
-  resolution: "wrangler@npm:3.103.0"
+"wrangler@npm:3.103.1":
+  version: 3.103.1
+  resolution: "wrangler@npm:3.103.1"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.3.4"
-    "@cloudflare/unenv-preset": "npm:1.x"
     "@esbuild-plugins/node-globals-polyfill": "npm:0.2.3"
     "@esbuild-plugins/node-modules-polyfill": "npm:0.2.2"
     blake3-wasm: "npm:2.1.5"
@@ -18357,7 +18343,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/8476f29c056e812f3d9b861013d9775bbd15f62e02e0839bc97a996d983a6917e0d39c9b3b081051f3df5015772f65c13842f7056be68e622fdbc2cccf9b81d8
+  checksum: 10c0/1547555817d5be8c2a86396f4a6473e36e0e579ba14780e706c94a7520b984d237fef3f1014fd9713136983dfb84ab75d326bf9fc64bc498f1154501f3d6fc46
   languageName: node
   linkType: hard
 
