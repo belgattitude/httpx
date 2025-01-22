@@ -15,8 +15,10 @@ export default defineConfig({
   cacheDir: '../../.cache/vite/httpx-plain-object',
   test: {
     browser: {
-      provider: 'playwright',
-      name: 'chromium',
+      provider: 'playwright', // or 'webdriverio'
+      enabled: false,
+      // at least one instance is required
+      instances: [{ browser: 'chromium' }],
     },
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
