@@ -9,7 +9,9 @@ import {
   FlatTreeWsMapper,
 } from '../src/mapper/flat-tree-ws-mapper';
 
-const baseDir = path.dirname(path.dirname(process.cwd()));
+const baseDir =
+  path.dirname(path.dirname(process.cwd())) +
+  '/node_modules/jsdoc-type-pratt-parser/dist/src';
 console.log(baseDir);
 
 const files = globSync(['**/*', '!.*', '!**/.cache'], {
@@ -73,13 +75,13 @@ for (const file of files) {
   });
 }
 
-console.log(flat);
+console.log(flat.keys());
 // throw new Error('cool');
 const tree = new FlatTreeWsMapper<PathStats>().toTreeNodesOrThrow(flat, {
   separator: '/',
 });
 
 const search = new DfsTreeSearch<PathStats>(tree);
-const first = search.findOne((node) => node.id.includes('.test.ts'));
+const first = search.findOne((node) => node.id.includes('.d.ts'));
 
 console.log(first);

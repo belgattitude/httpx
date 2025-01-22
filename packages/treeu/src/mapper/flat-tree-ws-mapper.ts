@@ -23,11 +23,21 @@ export type FlatTreeWs<
   TKey extends FlatTreeWsUniqueKey = string,
 > = FlatTreeWsMap<TValue, TKey> | FlatTreeWsRecord<TValue, TKey>;
 
+const sym = Symbol('@@result');
+/*
 type CollectorContext<
   TValue extends TreeNodeValue | undefined = undefined,
   TKey extends string = string,
 > = Record<'result', TreeNode<TValue, TKey>[]> & Record<string, unknown>;
+*/
 
+interface CollectorContext<
+  TValue extends TreeNodeValue | undefined = undefined,
+  TKey extends string = string,
+> {
+  result: TreeNode<TValue, TKey>[];
+  [key: string]: unknown;
+}
 export const flatTreeWsMapperErrors = {
   toTreeNodes: {
     parsedErrorMsg: `Can't convert the flat tree to tree nodes`,
@@ -82,9 +92,12 @@ export class FlatTreeWsMapper<
               `${flatTreeWsMapperErrors.toTreeNodes.issues.SPLIT_EMPTY_KEY}`
             );
           }
-          if (!(name in context)) {
-            console.log('name', name, splitted);
-            context[name] = { result: [] };
+          if (!Object.hasOwn(context, name)) {
+            Object.defineProperty(context, name, {
+              value: { result: [] },
+              writable: false,
+            });
+
             const parents = splitted.slice(0, -1) as TKey[];
             const parentId = (parents.length > 0
               ? parents.join(separator)
@@ -100,7 +113,6 @@ export class FlatTreeWsMapper<
               node.value = value as TValue;
             }
             if (!Array.isArray(context.result)) {
-              console.log({ context });
               throw new TypeError(JSON.stringify(node));
             }
             context.result.push(node);
@@ -112,7 +124,7 @@ export class FlatTreeWsMapper<
       return {
         success: false,
         message: flatTreeWsMapperErrors.toTreeNodes.parsedErrorMsg,
-        issues: [{ message: `${(e as Error).message} ${(e as Error).stack}` }],
+        issues: [{ message: `${(e as Error).message}` }],
       };
     }
     return {
