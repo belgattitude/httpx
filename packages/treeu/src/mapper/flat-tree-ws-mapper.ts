@@ -35,7 +35,7 @@ interface CollectorContext<
   TValue extends TreeNodeValue | undefined = undefined,
   TKey extends string = string,
 > {
-  result: TreeNode<TValue, TKey>[];
+  [sym]: TreeNode<TValue, TKey>[];
   [key: string]: unknown;
 }
 export const flatTreeWsMapperErrors = {
@@ -70,7 +70,7 @@ export class FlatTreeWsMapper<
   ): TreeMapperResult<TValue, TKey> => {
     const { separator } = params;
 
-    const collector: CollectorContext<TValue, TKey> = { result: [] };
+    const collector: CollectorContext<TValue, TKey> = { [sym]: [] };
 
     // eslint-disable-next-line no-restricted-syntax
     const d = data instanceof Map ? data : new Map(Object.entries(data));
@@ -94,7 +94,7 @@ export class FlatTreeWsMapper<
           }
           if (!Object.hasOwn(context, name)) {
             Object.defineProperty(context, name, {
-              value: { result: [] },
+              value: { [sym]: [] },
               writable: false,
             });
 
@@ -102,8 +102,9 @@ export class FlatTreeWsMapper<
             const parentId = (parents.length > 0
               ? parents.join(separator)
               : null) as unknown as TKey | null;
-            const children = (context[name] as CollectorContext<TValue, TKey>)
-              .result;
+            const children = (context[name] as CollectorContext<TValue, TKey>)[
+              sym
+            ];
             const node: TreeNode<TValue, TKey> = {
               id: trimmedKey,
               parentId: parentId,
@@ -112,10 +113,10 @@ export class FlatTreeWsMapper<
             if (value !== undefined) {
               node.value = value as TValue;
             }
-            if (!Array.isArray(context.result)) {
+            if (!Array.isArray(context[sym])) {
               throw new TypeError(JSON.stringify(node));
             }
-            context.result.push(node);
+            context[sym].push(node);
           }
           context = context[name] as CollectorContext<TValue, TKey>;
         }
@@ -129,7 +130,7 @@ export class FlatTreeWsMapper<
     }
     return {
       success: true,
-      treeNodes: collector.result,
+      treeNodes: collector[sym],
     };
   };
 

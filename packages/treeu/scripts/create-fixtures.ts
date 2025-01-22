@@ -9,9 +9,7 @@ import {
   FlatTreeWsMapper,
 } from '../src/mapper/flat-tree-ws-mapper';
 
-const baseDir =
-  path.dirname(path.dirname(process.cwd())) +
-  '/node_modules/jsdoc-type-pratt-parser/dist/src';
+const baseDir = path.dirname(path.dirname(process.cwd()));
 console.log(baseDir);
 
 const files = globSync(['**/*', '!.*', '!**/.cache'], {

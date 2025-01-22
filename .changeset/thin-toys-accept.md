@@ -2,4 +2,5 @@
 "@httpx/treeu": patch
 ---
 
-Fix an issue when a key is named 'constructor'
+Fix FlatTreeWsMapper.toTreeNodes(), allow 'constructor' as a valid key name
+
