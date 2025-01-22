@@ -257,30 +257,29 @@ const treeNodes: TreeNode<CustomValue>[] = [
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
- RUN  v2.0.5 
+ RUN  v3.0.3 /home/sebastien/github/httpx/packages/treeu
 
- ✓ bench/search.bench.ts (4) 6714ms
-   ✓ Bench search (10_000 entries) (4) 6713ms
+
+ ✓ bench/search.bench.ts > Bench search (10_000 entries) 3827ms
      name                                                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · DfsTreeSearch.findOne(id_0) over 10_000          9,360,159.92  0.0001  3.5234  0.0001  0.0001  0.0002  0.0002  0.0004  ±1.88%  4680081   fastest
-   · DfsTreeSearch.findOne(id_1000) over 10_000          64,337.37  0.0097  0.7432  0.0155  0.0151  0.0437  0.0752  0.2380  ±1.09%    32169
-   · DfsTreeSearch.findOne(id_5000) over 10_000          13,027.78  0.0505  0.9968  0.0768  0.0753  0.2389  0.2790  0.4839  ±1.33%     6514
-   · DfsTreeSearch.findOne(id_NotExists) over 10_000      6,335.21  0.1020  0.8740  0.1578  0.1582  0.4216  0.4970  0.6655  ±1.47%     3168   slowest
- ✓ bench/mapper.bench.ts (1) 621ms
-   ✓ Bench mapper (10_000 entries) (1) 620ms
-     name                                     hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · FlatTreeWsMapper.toTreeNodesOrThrow  323.01  2.1707  9.7894  3.0959  3.5083  9.2491  9.7894  9.7894  ±5.95%      162
+   · DfsTreeSearch.findOne(id_0) over 10_000          4,951,722.70  0.0002  0.2812  0.0002  0.0002  0.0004  0.0005  0.0009  ±0.36%  2475862   fastest
+   · DfsTreeSearch.findOne(id_1000) over 10_000          36,877.99  0.0242  0.2565  0.0271  0.0265  0.0417  0.0496  0.1387  ±0.39%    18439
+   · DfsTreeSearch.findOne(id_5000) over 10_000           7,109.04  0.1321  0.4006  0.1407  0.1401  0.2237  0.2336  0.3525  ±0.35%     3555
+   · DfsTreeSearch.findOne(id_NotExists) over 10_000      3,637.79  0.2513  0.5789  0.2749  0.2768  0.3892  0.4068  0.5149  ±0.43%     1819   slowest
 
+ ✓ bench/mapper.bench.ts > Bench mapper (10_000 entries) 647ms
+     name                                     hz     min      max    mean     p75      p99     p995     p999     rme  samples
+   · FlatTreeWsMapper.toTreeNodesOrThrow  148.37  6.3635  11.2594  6.7397  6.8240  11.2594  11.2594  11.2594  ±2.05%       75
 
  BENCH  Summary
 
   FlatTreeWsMapper.toTreeNodesOrThrow - bench/mapper.bench.ts > Bench mapper (10_000 entries)
 
   DfsTreeSearch.findOne(id_0) over 10_000 - bench/search.bench.ts > Bench search (10_000 entries)
-    145.49x faster than DfsTreeSearch.findOne(id_1000) over 10_000
-    718.48x faster than DfsTreeSearch.findOne(id_5000) over 10_000
-    1477.48x faster than DfsTreeSearch.findOne(id_NotExists) over 10_000
- 
+    134.27x faster than DfsTreeSearch.findOne(id_1000) over 10_000
+    696.54x faster than DfsTreeSearch.findOne(id_5000) over 10_000
+    1361.19x faster than DfsTreeSearch.findOne(id_NotExists) over 10_000
+
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/treeu/bench/README.md) for details.
