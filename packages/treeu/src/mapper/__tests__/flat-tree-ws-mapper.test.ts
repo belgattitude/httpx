@@ -10,16 +10,20 @@ type CustomValue =
   | { type: 'file'; size: number };
 
 describe('FlatTreeWsMapper', () => {
-  const validFlatTreeWs: FlatTreeWs<CustomValue, string> = new Map([
+  const validFlatTreeWs: FlatTreeWs<CustomValue> = new Map([
     ['file1.ts', { type: 'file', size: 10 }],
     ['file2.ts', { type: 'file', size: 20 }],
     ['folder1', { type: 'folder' }],
     ['folder1/file1.ts', { type: 'file', size: 30 }],
+
     ['folder2', { type: 'folder' }],
     ['folder2/file1.ts', { type: 'file', size: 40 }],
     ['folder2/subfolder1', { type: 'folder' }],
     ['folder2/subfolder1/file1.ts', { type: 'file', size: 50 }],
-    ['folder3', { type: 'folder' }],
+
+    // Testing reserved "constructor" keyword
+    ['constructor', { type: 'folder' }],
+    ['constructor/constructor.d.ts', { type: 'file', size: 50 }],
   ]);
 
   const validTreeNodes: TreeNode<CustomValue>[] = [
@@ -96,12 +100,22 @@ describe('FlatTreeWsMapper', () => {
       ],
     },
     {
-      id: 'folder3',
+      id: 'constructor',
       parentId: null,
       value: {
         type: 'folder',
       },
-      children: [],
+      children: [
+        {
+          id: 'constructor/constructor.d.ts',
+          parentId: 'constructor',
+          value: {
+            size: 50,
+            type: 'file',
+          },
+          children: [],
+        },
+      ],
     },
   ];
 
@@ -123,9 +137,16 @@ describe('FlatTreeWsMapper', () => {
           },
         ],
         [
-          'folder3',
+          'constructor',
           {
             type: 'folder',
+          },
+        ],
+        [
+          'constructor/constructor.d.ts',
+          {
+            size: 50,
+            type: 'file',
           },
         ],
         [

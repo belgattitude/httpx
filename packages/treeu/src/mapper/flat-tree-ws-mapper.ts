@@ -5,6 +5,7 @@ type FlatTreeWsParams = {
   separator: string;
 };
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases
 type FlatTreeWsUniqueKey = string;
 
 export type FlatTreeWsMap<
@@ -22,11 +23,21 @@ export type FlatTreeWs<
   TKey extends FlatTreeWsUniqueKey = string,
 > = FlatTreeWsMap<TValue, TKey> | FlatTreeWsRecord<TValue, TKey>;
 
+const sym = Symbol('@@result');
+/*
 type CollectorContext<
   TValue extends TreeNodeValue | undefined = undefined,
   TKey extends string = string,
 > = Record<'result', TreeNode<TValue, TKey>[]> & Record<string, unknown>;
+*/
 
+interface CollectorContext<
+  TValue extends TreeNodeValue | undefined = undefined,
+  TKey extends string = string,
+> {
+  [sym]: TreeNode<TValue, TKey>[];
+  [key: string]: unknown;
+}
 export const flatTreeWsMapperErrors = {
   toTreeNodes: {
     parsedErrorMsg: `Can't convert the flat tree to tree nodes`,
@@ -59,7 +70,7 @@ export class FlatTreeWsMapper<
   ): TreeMapperResult<TValue, TKey> => {
     const { separator } = params;
 
-    const collector: CollectorContext<TValue, TKey> = { result: [] };
+    const collector: CollectorContext<TValue, TKey> = { [sym]: [] };
 
     // eslint-disable-next-line no-restricted-syntax
     const d = data instanceof Map ? data : new Map(Object.entries(data));
@@ -81,14 +92,19 @@ export class FlatTreeWsMapper<
               `${flatTreeWsMapperErrors.toTreeNodes.issues.SPLIT_EMPTY_KEY}`
             );
           }
-          if (!(name in context)) {
-            context[name] = { result: [] };
+          if (!Object.hasOwn(context, name)) {
+            Object.defineProperty(context, name, {
+              value: { [sym]: [] },
+              writable: false,
+            });
+
             const parents = splitted.slice(0, -1) as TKey[];
             const parentId = (parents.length > 0
               ? parents.join(separator)
               : null) as unknown as TKey | null;
-            const children = (context[name] as CollectorContext<TValue, TKey>)
-              .result;
+            const children = (context[name] as CollectorContext<TValue, TKey>)[
+              sym
+            ];
             const node: TreeNode<TValue, TKey> = {
               id: trimmedKey,
               parentId: parentId,
@@ -97,7 +113,10 @@ export class FlatTreeWsMapper<
             if (value !== undefined) {
               node.value = value as TValue;
             }
-            context.result.push(node);
+            if (!Array.isArray(context[sym])) {
+              throw new TypeError(JSON.stringify(node));
+            }
+            context[sym].push(node);
           }
           context = context[name] as CollectorContext<TValue, TKey>;
         }
@@ -111,7 +130,7 @@ export class FlatTreeWsMapper<
     }
     return {
       success: true,
-      treeNodes: collector.result,
+      treeNodes: collector[sym],
     };
   };
 
@@ -124,7 +143,12 @@ export class FlatTreeWsMapper<
   ): TreeNode<TValue, TKey>[] => {
     const result = this.toTreeNodes(data, params);
     if (!result.success) {
-      throw new Error(result.message);
+      const { message, issues } = result;
+      const errors =
+        issues.length > 0
+          ? issues.map((issue) => issue.message).join(', ')
+          : null;
+      throw new Error(`${message} (${errors})`);
     }
     return result.treeNodes;
   };
