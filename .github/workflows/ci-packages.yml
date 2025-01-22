@@ -106,12 +106,12 @@ jobs:
       #  if: matrix.node-version == '20.x'
       #  run: yarn nx run-many --target=test-unit-cloudflare --exclude='examples/**' --exclude='docs'
 
-      - name: ⚙️ Install Playwright Chrome (only node 22.x)
+      - name: ⚙️ Install Playwright Chromium (only node 22.x)
         if: matrix.node-version == '22.x'
         run: yarn playwright install chromium
 
       # @todo make this working
-      - name: 🧪 Unit tests (playwright chrome - only node 22.x)
+      - name: 🧪 Unit tests (playwright chromium - only node 22.x)
         if: matrix.node-version == '22.x'
         run: yarn nx run-many --target=test-unit-browser --exclude='examples/**' --exclude='docs'
 
