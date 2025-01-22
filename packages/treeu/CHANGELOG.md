@@ -1,5 +1,13 @@
 # @httpx/treeu
 
+## 0.4.9
+
+### Patch Changes
+
+- [#1524](https://github.com/belgattitude/httpx/pull/1524) [`a76d0ec`](https://github.com/belgattitude/httpx/commit/a76d0ec782f3483de13f9a626e59488fbdfecb38) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix FlatTreeWsMapper.toTreeNodes(), allow 'result' as a valid key name
+
+- [#1524](https://github.com/belgattitude/httpx/pull/1524) [`a85186b`](https://github.com/belgattitude/httpx/commit/a85186bffb0f5a615e65e2c05f919b182d23ad80) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix FlatTreeWsMapper.toTreeNodes(), allow 'constructor' as a valid key name
+
 ## 0.4.8
 
 ### Patch Changes
