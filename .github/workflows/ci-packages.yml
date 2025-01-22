@@ -108,7 +108,7 @@ jobs:
 
       - name: ⚙️ Install Playwright Chrome (only node 20.x)
         if: matrix.node-version == '20.x'
-        run: yarn playwright install chrome
+        run: yarn playwright install chromium
 
       # @todo make this working
       - name: 🧪 Unit tests (playwright chrome - only node 20.x)
