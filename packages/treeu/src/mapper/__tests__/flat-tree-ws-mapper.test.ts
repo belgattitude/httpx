@@ -178,7 +178,7 @@ describe('FlatTreeWsMapper', () => {
         ],
       ]);
 
-      // expect(treeNodes).toHaveLength(validFlatTreeWs.size);
+      expect(treeNodes).toHaveLength(validFlatTreeWs.size);
       expect(treeNodes).toStrictEqual(flattenedBreadthFirst);
 
       // Back and forth
