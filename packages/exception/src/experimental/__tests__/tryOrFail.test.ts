@@ -64,10 +64,10 @@ describe('tryOrFail', () => {
           if (response === 'cool') {
             throw new (class extends Error {
               statusCode = 404;
-            })('cool');
+            })('Http404');
           }
         })
-      ).rejects.toThrow(new HttpNotFound('cool'));
+      ).rejects.toThrowErrorMatchingInlineSnapshot('[HttpNotFound: Http404]');
     });
   });
 });
