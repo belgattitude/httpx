@@ -1,14 +1,14 @@
-**@httpx/dsn-parser v1.8.1** • **Docs**
+**@httpx/dsn-parser v1.8.5**
 
 ***
 
-# @httpx/dsn-parser v1.8.1
+# @httpx/dsn-parser v1.8.5
 
 ## Type Aliases
 
 - [ParsableDsn](type-aliases/ParsableDsn.md)
-- [ParseDsnOptions](type-aliases/ParseDsnOptions.md)
 - [ParsedDsn](type-aliases/ParsedDsn.md)
+- [ParseDsnOptions](type-aliases/ParseDsnOptions.md)
 
 ## Functions
 

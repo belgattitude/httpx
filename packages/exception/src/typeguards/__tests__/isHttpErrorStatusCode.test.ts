@@ -4,19 +4,19 @@ import { isHttpErrorStatusCode } from '../isHttpErrorStatusCode';
 
 describe('isHttpErrorStatusCode', () => {
   it('should return true if status code is an http error status', () => {
-    expect(isHttpErrorStatusCode(400)).toBeTruthy();
-    expect(isHttpErrorStatusCode(599)).toBeTruthy();
+    expect(isHttpErrorStatusCode(400)).toBe(true);
+    expect(isHttpErrorStatusCode(599)).toBe(true);
   });
 
   it('should return false if status code not an error', () => {
-    expect(isHttpErrorStatusCode(200)).toBeFalsy();
-    expect(isHttpErrorStatusCode(399)).toBeFalsy();
-    expect(isHttpErrorStatusCode(600)).toBeFalsy();
+    expect(isHttpErrorStatusCode(200)).toBe(false);
+    expect(isHttpErrorStatusCode(399)).toBe(false);
+    expect(isHttpErrorStatusCode(600)).toBe(false);
   });
 
   it('should return false if status is not a number', () => {
-    expect(isHttpErrorStatusCode(new Date())).toBeFalsy();
-    expect(isHttpErrorStatusCode(Number.NaN)).toBeFalsy();
-    expect(isHttpErrorStatusCode('100')).toBeFalsy();
+    expect(isHttpErrorStatusCode(new Date())).toBe(false);
+    expect(isHttpErrorStatusCode(Number.NaN)).toBe(false);
+    expect(isHttpErrorStatusCode('100')).toBe(false);
   });
 });

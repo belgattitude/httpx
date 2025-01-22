@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.7.3
+VERSION=0.8.0
 PLATFORM=linux
 CODECOV_BINARY_URL=https://github.com/codecov/uploader/releases/download/v${VERSION}/codecov-${PLATFORM}
 OUTPUT_DIR="$(cd $(dirname $0); pwd)/download"

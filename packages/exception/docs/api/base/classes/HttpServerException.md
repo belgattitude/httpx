@@ -1,6 +1,6 @@
-[**@httpx/exception**](../../README.md) • **Docs**
+[**@httpx/exception**](../../README.md)
 
----
+***
 
 [@httpx/exception](../../README.md) / [base](../README.md) / HttpServerException
 
@@ -42,9 +42,13 @@ either a message or an object containing HttpExceptionParams
 
 #### Parameters
 
-• **statusCode**: [`HttpErrorStatusCodeOrNumber`](../../types/type-aliases/HttpErrorStatusCodeOrNumber.md)
+##### statusCode
 
-• **msgOrParams?**: `string` \| [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
+[`HttpErrorStatusCodeOrNumber`](../../types/type-aliases/HttpErrorStatusCodeOrNumber.md)
+
+##### msgOrParams?
+
+`string` | [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
 
 #### Returns
 
@@ -71,7 +75,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 [`HttpException`](HttpException.md).[`cause`](HttpException.md#cause)
 
----
+***
 
 ### code
 
@@ -83,7 +87,7 @@ Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k
 
 [`HttpException`](HttpException.md).[`code`](HttpException.md#code)
 
----
+***
 
 ### errorId
 
@@ -95,7 +99,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 [`HttpException`](HttpException.md).[`errorId`](HttpException.md#errorid)
 
----
+***
 
 ### message
 
@@ -105,7 +109,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 [`HttpException`](HttpException.md).[`message`](HttpException.md#message)
 
----
+***
 
 ### method
 
@@ -117,7 +121,7 @@ Http method
 
 [`HttpException`](HttpException.md).[`method`](HttpException.md#method)
 
----
+***
 
 ### name
 
@@ -127,7 +131,7 @@ Http method
 
 [`HttpException`](HttpException.md).[`name`](HttpException.md#name)
 
----
+***
 
 ### stack?
 
@@ -137,7 +141,7 @@ Http method
 
 [`HttpException`](HttpException.md).[`stack`](HttpException.md#stack)
 
----
+***
 
 ### statusCode
 
@@ -147,9 +151,9 @@ Http error status code (400-599)
 
 #### Inherited from
 
-[`HttpException`](HttpException.md).[`statusCode`](HttpException.md#statuscode)
+[`HttpException`](HttpException.md).[`statusCode`](HttpException.md#statuscode-1)
 
----
+***
 
 ### url
 
@@ -161,7 +165,7 @@ Indicates the original url that caused the error.
 
 [`HttpException`](HttpException.md).[`url`](HttpException.md#url)
 
----
+***
 
 ### prepareStackTrace()?
 
@@ -171,9 +175,13 @@ Optional override for formatting stack traces
 
 #### Parameters
 
-• **err**: `Error`
+##### err
 
-• **stackTraces**: `CallSite`[]
+`Error`
+
+##### stackTraces
+
+`CallSite`[]
 
 #### Returns
 
@@ -187,7 +195,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 [`HttpException`](HttpException.md).[`prepareStackTrace`](HttpException.md#preparestacktrace)
 
----
+***
 
 ### stackTraceLimit
 
@@ -207,9 +215,13 @@ Create .stack property on a target object
 
 #### Parameters
 
-• **targetObject**: `object`
+##### targetObject
 
-• **constructorOpt?**: `Function`
+`object`
+
+##### constructorOpt?
+
+`Function`
 
 #### Returns
 

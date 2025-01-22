@@ -1,49 +1,77 @@
-[**@httpx/assert v0.12.4**](../../README.md) • **Docs**
+[**@httpx/assert v0.15.1**](../../README.md)
 
 ***
 
-[@httpx/assert v0.12.4](../../README.md) / [object.guards](../README.md) / isPlainObject
+[@httpx/assert](../../README.md) / [object.guards](../README.md) / isPlainObject
 
 # Function: isPlainObject()
 
-> **isPlainObject**\<`TValue`\>(`v`): `v is TValue extends UnspecifiedPlainObjectType ? BasePlainObject : PlainObject<TValue>`
+> **isPlainObject**\<`TValue`\>(`v`): `v is TValue extends DefaultBasePlainObject ? BasePlainObject : PlainObject<TValue>`
 
 Check if a value is a plain object
 
-An object is plain if it's created by either {}, new Object(), or Object.create(null).
+A plain object is a basic JavaScript object, such as {}, { data: [] }, new Object() or Object.create(null).
 
 ## Type Parameters
 
-• **TValue** *extends* `Record`\<`string`, `unknown`\> = [`UnspecifiedPlainObjectType`](../../object.internal.types/type-aliases/UnspecifiedPlainObjectType.md)
+• **TValue** *extends* [`BasePlainObject`](../../object.internal.types/type-aliases/BasePlainObject.md) = [`DefaultBasePlainObject`](../../object.internal.types/interfaces/DefaultBasePlainObject.md)
 
 ## Parameters
 
-• **v**: `unknown`
+### v
+
+`unknown`
 
 ## Returns
 
-`v is TValue extends UnspecifiedPlainObjectType ? BasePlainObject : PlainObject<TValue>`
+`v is TValue extends DefaultBasePlainObject ? BasePlainObject : PlainObject<TValue>`
 
 ## Example
 
 ```typescript
-isPlainObject({ key: 'value' });       // 👈 ✅ true
-isPlainObject({ key: new Date() });    // 👈 ✅ true
-isPlainObject(new Object());           // 👈 ✅ true
-isPlainObject(Object.create(null));    // 👈 ✅ true
-isPlainObject({nested: { key: true} }  // 👈 ✅ true
+import { isPlainObject } from '@httpx/plain-object';
+
+// ✅👇 True
+
+isPlainObject({ });                       // ✅
+isPlainObject({ key: 'value' });          // ✅
+isPlainObject({ key: new Date() });       // ✅
+isPlainObject(new Object());              // ✅
+isPlainObject(Object.create(null));       // ✅
+isPlainObject({ nested: { key: true} });  // ✅
+isPlainObject(new Proxy({}, {}));         // ✅
+isPlainObject({ [Symbol('tag')]: 'A' });  // ✅
+
+// ✅👇 (node context, workers, ...)
+const runInNewContext = await import('node:vm').then(
+    (mod) => mod.runInNewContext
+);
+isPlainObject(runInNewContext('({})'));   // ✅
+
+// ❌👇 False
 
 class Test { };
+isPlainObject(new Test())           // ❌
+isPlainObject(10);                  // ❌
+isPlainObject(null);                // ❌
+isPlainObject('hello');             // ❌
+isPlainObject([]);                  // ❌
+isPlainObject(new Date());          // ❌
+isPlainObject(new Uint8Array([1])); // ❌
+isPlainObject(Buffer.from('ABC'));  // ❌
+isPlainObject(Promise.resolve({})); // ❌
+isPlainObject(Object.create({}));   // ❌
+isPlainObject(new (class Cls {}));  // ❌
+isPlainObject(globalThis);          // ❌,
+```
 
-isPlainObject(new Test())              // 👈 ❌ false
-isPlainObject(10);                     // 👈 ❌ false
-isPlainObject(null);                   // 👈 ❌ false
-isPlainObject('hello');                // 👈 ❌ false
-isPlainObject([]);                     // 👈 ❌ false
-isPlainObject(new Date());             // 👈 ❌ false
-isPlainObject(Math);                   // 👈 ❌ false
-(...)
+// ✅👇 Note that static built-in classes are treated as plain objects
+//    check for `isStaticBuiltInClass` to exclude if needed
+
+isPlainObject(Math);                // ✅
+isPlainObject(JSON);                // ✅
+isPlainObject(Atomics);             // ✅
 
 ## Defined in
 
-[object.guards.ts:31](https://github.com/belgattitude/httpx/blob/acde85be3548fccd6cc1a311d7f8d4419e2b6ce0/packages/assert/src/object.guards.ts#L31)
+[object.guards.ts:96](https://github.com/belgattitude/httpx/blob/d121a71b95064daafd75a20aabf0a30f5fcdfbfa/packages/assert/src/object.guards.ts#L96)

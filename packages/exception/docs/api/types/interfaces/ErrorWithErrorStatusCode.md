@@ -1,6 +1,6 @@
-[**@httpx/exception**](../../README.md) • **Docs**
+[**@httpx/exception**](../../README.md)
 
----
+***
 
 [@httpx/exception](../../README.md) / [types](../README.md) / ErrorWithErrorStatusCode
 
@@ -20,7 +20,7 @@
 
 `Error.cause`
 
----
+***
 
 ### message
 
@@ -30,7 +30,7 @@
 
 `Error.message`
 
----
+***
 
 ### name
 
@@ -40,7 +40,7 @@
 
 `Error.name`
 
----
+***
 
 ### stack?
 
@@ -50,7 +50,7 @@
 
 `Error.stack`
 
----
+***
 
 ### statusCode
 

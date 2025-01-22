@@ -17,7 +17,7 @@ module.exports = {
     '@belgattitude/eslint-config-bases/import-x',
     '@belgattitude/eslint-config-bases/sonar',
     '@belgattitude/eslint-config-bases/regexp',
-    '@belgattitude/eslint-config-bases/jest',
+    '@belgattitude/eslint-config-bases/vitest',
     '@belgattitude/eslint-config-bases/performance',
 
     // Apply prettier and disable incompatible rules
@@ -44,7 +44,7 @@ module.exports = {
             peerDependencies: false,
           },
         ],
-        'import-x/no-cycle': [1, { maxDepth: 5 }],
+        // 'import-x/no-cycle': [1, { maxDepth: 5 }],
         'import-x/no-nodejs-modules': 'error',
         'import-x/no-self-import': 'error',
       },

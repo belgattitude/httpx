@@ -16,11 +16,13 @@
     "g:build-release": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build-release",
     "g:build-packages": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build",
     "g:build-examples": "nx affected --output-style=static --target=build --include=examples/**",
-    "g:docgen": "nx affected --output-style=static --target=docgen --exclude='examples/**'",
+    "g:docgen": "nx run-many --output-style=static --target=docgen --exclude='examples/**'",
     "g:test": "yarn workspaces foreach --all -pv run test",
     "g:test-unit": "nx run-many --output-style=static --target=test-unit --exclude='examples/**' --exclude='docs'",
     "g:test-unit-coverage": "nx run-many --output-style=static --target=test-unit-coverage --exclude='examples/**' --exclude='docs'",
     "g:test-unit-edge": "nx run-many --output-style=static --target=test-unit-edge --exclude='examples/**' --exclude='docs'",
+    "g:test-unit-browser": "nx run-many --output-style=static --target=test-unit-browser --exclude='examples/**' --exclude='docs'",
+    "g:test-unit-cloudflare": "nx run-many --output-style=static --target=test-unit-cloudflare --exclude='examples/**' --exclude='docs'",
     "g:lint": "nx run-many --output-style=static --target=lint",
     "g:typecheck": "nx run-many --output-style=static --target=typecheck --exclude='examples/**' --exclude='docs'",
     "g:lint-staged-files": "lint-staged --allow-empty",
@@ -39,46 +41,54 @@
     "deps:check": "npx npm-check-updates@latest --configFileName .ncurc.yml --deep",
     "deps:update": "npx npm-check-updates@latest --configFileName .ncurc.yml -u --deep",
     "check:install": "yarn dlx @yarnpkg/doctor@3 .",
-    "postinstall": "is-ci || yarn husky install",
+    "postinstall": "is-ci || yarn husky",
     "syncpack:format": "syncpack format",
     "syncpack:check": "syncpack lint-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "syncpack:list": "syncpack list-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "nuke:node_modules": "rimraf --glob '**/node_modules'",
-    "prettier:format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"**/*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write"
+    "prettier:format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"**/*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write",
+    "prepare": "husky"
   },
   "workspaces": [
-    "docs2",
     "docs",
     "examples/*",
     "integrations/*",
-    "packages/*"
+    "packages/*",
+    "devtools/*"
   ],
-  "packageManager": "yarn@4.5.0",
+  "packageManager": "yarn@4.6.0",
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "6.0.0-canary.14",
+    "@belgattitude/eslint-config-bases": "6.19.0",
     "@changesets/changelog-github": "0.5.0",
-    "@changesets/cli": "2.27.9",
-    "@commitlint/cli": "19.5.0",
-    "@commitlint/config-conventional": "19.5.0",
+    "@changesets/cli": "2.27.11",
+    "@commitlint/cli": "19.6.1",
+    "@commitlint/config-conventional": "19.6.0",
     "@types/shell-quote": "1.7.5",
-    "@typescript-eslint/eslint-plugin": "8.8.1",
-    "@typescript-eslint/parser": "8.8.1",
+    "@typescript-eslint/eslint-plugin": "8.21.0",
+    "@typescript-eslint/parser": "8.21.0",
     "cross-env": "7.0.3",
     "eslint": "8.57.1",
-    "gh-pages": "6.1.1",
-    "husky": "9.1.6",
-    "is-ci": "3.0.1",
-    "lint-staged": "15.2.10",
-    "npm-run-all2": "6.2.3",
-    "nx": "20.0.0",
-    "prettier": "3.3.3",
+    "gh-pages": "6.3.0",
+    "husky": "9.1.7",
+    "is-ci": "4.1.0",
+    "lint-staged": "15.4.1",
+    "npm-run-all2": "7.0.2",
+    "nx": "20.3.2",
+    "playwright": "1.49.1",
+    "prettier": "3.4.2",
     "rimraf": "6.0.1",
-    "rollup": "4.24.0",
-    "shell-quote": "1.8.1",
+    "rollup": "4.31.0",
+    "shell-quote": "1.8.2",
     "syncpack": "13.0.0",
-    "typescript": "5.6.2"
+    "typescript": "5.7.3"
   },
   "engines": {
     "node": ">=18.18"
+  },
+  "resolutions": {
+    "esbuild": "^0.24.2"
+  },
+  "resolutionsHelp": {
+    "esbuild": "To prevent multiple versions"
   }
 }

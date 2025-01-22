@@ -1,6 +1,6 @@
-[**@httpx/exception**](../../README.md) • **Docs**
+[**@httpx/exception**](../../README.md)
 
----
+***
 
 [@httpx/exception](../../README.md) / [server](../README.md) / HttpLoopDetected
 
@@ -28,7 +28,9 @@ either a message or an object containing HttpExceptionParams
 
 #### Parameters
 
-• **msgOrParams?**: `string` \| [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
+##### msgOrParams?
+
+`string` | [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
 
 #### Returns
 
@@ -55,7 +57,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`cause`](../../base/classes/HttpServerException.md#cause)
 
----
+***
 
 ### code
 
@@ -67,7 +69,7 @@ Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`code`](../../base/classes/HttpServerException.md#code)
 
----
+***
 
 ### errorId
 
@@ -79,7 +81,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`errorId`](../../base/classes/HttpServerException.md#errorid)
 
----
+***
 
 ### message
 
@@ -89,7 +91,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`message`](../../base/classes/HttpServerException.md#message)
 
----
+***
 
 ### method
 
@@ -101,7 +103,7 @@ Http method
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`method`](../../base/classes/HttpServerException.md#method)
 
----
+***
 
 ### name
 
@@ -111,7 +113,7 @@ Http method
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`name`](../../base/classes/HttpServerException.md#name)
 
----
+***
 
 ### stack?
 
@@ -121,7 +123,7 @@ Http method
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`stack`](../../base/classes/HttpServerException.md#stack)
 
----
+***
 
 ### statusCode
 
@@ -131,9 +133,9 @@ Http error status code (400-599)
 
 #### Inherited from
 
-[`HttpServerException`](../../base/classes/HttpServerException.md).[`statusCode`](../../base/classes/HttpServerException.md#statuscode)
+[`HttpServerException`](../../base/classes/HttpServerException.md).[`statusCode`](../../base/classes/HttpServerException.md#statuscode-1)
 
----
+***
 
 ### url
 
@@ -145,13 +147,7 @@ Indicates the original url that caused the error.
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`url`](../../base/classes/HttpServerException.md#url)
 
----
-
-### STATUS
-
-> `readonly` `static` **STATUS**: `508` = `status`
-
----
+***
 
 ### prepareStackTrace()?
 
@@ -161,9 +157,13 @@ Optional override for formatting stack traces
 
 #### Parameters
 
-• **err**: `Error`
+##### err
 
-• **stackTraces**: `CallSite`[]
+`Error`
+
+##### stackTraces
+
+`CallSite`[]
 
 #### Returns
 
@@ -177,7 +177,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`prepareStackTrace`](../../base/classes/HttpServerException.md#preparestacktrace)
 
----
+***
 
 ### stackTraceLimit
 
@@ -186,6 +186,12 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 #### Inherited from
 
 [`HttpServerException`](../../base/classes/HttpServerException.md).[`stackTraceLimit`](../../base/classes/HttpServerException.md#stacktracelimit)
+
+***
+
+### STATUS
+
+> `readonly` `static` **STATUS**: `508` = `status`
 
 ## Methods
 
@@ -197,9 +203,13 @@ Create .stack property on a target object
 
 #### Parameters
 
-• **targetObject**: `object`
+##### targetObject
 
-• **constructorOpt?**: `Function`
+`object`
+
+##### constructorOpt?
+
+`Function`
 
 #### Returns
 

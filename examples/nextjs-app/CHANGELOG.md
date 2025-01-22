@@ -1,5 +1,65 @@
 # @examples/nextjs-app
 
+## 0.1.95
+
+### Patch Changes
+
+- Updated dependencies [[`946f440`](https://github.com/belgattitude/httpx/commit/946f4400576ccc72f1b3c9fa140e84ea82e0e997)]:
+  - @httpx/plain-object@2.0.4
+  - @httpx/treeu@0.4.8
+
+## 0.1.94
+
+### Patch Changes
+
+- Updated dependencies [[`be1dbb3`](https://github.com/belgattitude/httpx/commit/be1dbb30bca671124f91de5714aadfc0a46789a0)]:
+  - @httpx/plain-object@2.0.3
+  - @httpx/treeu@0.4.7
+
+## 0.1.93
+
+### Patch Changes
+
+- Updated dependencies [[`bdf9e19`](https://github.com/belgattitude/httpx/commit/bdf9e19d11bc66b9b7279da8f292a889f0acbffa)]:
+  - @httpx/plain-object@2.0.2
+  - @httpx/dsn-parser@1.8.5
+  - @httpx/exception@3.0.11
+  - @httpx/memo-intl@1.1.3
+  - @httpx/assert@0.15.1
+  - @httpx/treeu@0.4.6
+
+## 0.1.92
+
+### Patch Changes
+
+- Updated dependencies [[`dfb209f`](https://github.com/belgattitude/httpx/commit/dfb209f9b0184ec26d437471cb9d731f40e17b1f)]:
+  - @httpx/assert@0.15.0
+
+## 0.1.91
+
+### Patch Changes
+
+- Updated dependencies [[`d1a01e2`](https://github.com/belgattitude/httpx/commit/d1a01e2af290f9f5bc0f2357773616b39a9e048d)]:
+  - @httpx/plain-object@2.0.1
+  - @httpx/treeu@0.4.5
+
+## 0.1.90
+
+### Patch Changes
+
+- Updated dependencies [[`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b), [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b)]:
+  - @httpx/plain-object@2.0.0
+  - @httpx/treeu@0.4.4
+
+## 0.1.89
+
+### Patch Changes
+
+- Updated dependencies [[`003cdb3`](https://github.com/belgattitude/httpx/commit/003cdb3f4e0ff00970ac00b56659a47a30f7358f), [`003cdb3`](https://github.com/belgattitude/httpx/commit/003cdb3f4e0ff00970ac00b56659a47a30f7358f)]:
+  - @httpx/assert@0.14.0
+  - @httpx/plain-object@1.2.0
+  - @httpx/treeu@0.4.3
+
 ## 0.1.88
 
 ### Patch Changes

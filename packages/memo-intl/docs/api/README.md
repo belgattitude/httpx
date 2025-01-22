@@ -1,8 +1,8 @@
-**@httpx/memo-intl v1.1.1** • **Docs**
+**@httpx/memo-intl v1.1.3**
 
 ***
 
-# @httpx/memo-intl v1.1.1
+# @httpx/memo-intl v1.1.3
 
 ## Variables
 

@@ -14,6 +14,12 @@ export default defineConfig({
   plugins: [tsconfigPaths(), ...[cspeed].filter(Boolean)],
   cacheDir: '../../.cache/vite/httpx-treeu',
   test: {
+    browser: {
+      provider: 'playwright', // or 'webdriverio'
+      enabled: false,
+      // at least one instance is required
+      instances: [{ browser: 'chromium' }],
+    },
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
     coverage: {

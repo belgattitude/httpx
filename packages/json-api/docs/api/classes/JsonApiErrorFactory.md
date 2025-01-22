@@ -1,8 +1,8 @@
-[**@httpx/json-api v0.5.21**](../README.md) • **Docs**
+[**@httpx/json-api v0.5.24**](../README.md)
 
 ***
 
-[@httpx/json-api v0.5.21](../README.md) / JsonApiErrorFactory
+[@httpx/json-api](../README.md) / JsonApiErrorFactory
 
 # Class: JsonApiErrorFactory
 
@@ -20,13 +20,17 @@
 
 ### fromCatchVariable()
 
-> `static` **fromCatchVariable**(`error`, `defaultHttpStatus`): [`JsonApiError`](../type-aliases/JsonApiError.md)
+> `readonly` `static` **fromCatchVariable**(`error`, `defaultHttpStatus`): [`JsonApiError`](../type-aliases/JsonApiError.md)
 
 #### Parameters
 
-• **error**: `unknown`
+##### error
 
-• **defaultHttpStatus**: `number` = `500`
+`unknown`
+
+##### defaultHttpStatus
+
+`number` = `500`
 
 #### Returns
 
@@ -36,13 +40,17 @@
 
 ### fromHttpException()
 
-> `static` **fromHttpException**(`exception`, `defaultHttpStatus`): [`JsonApiError`](../type-aliases/JsonApiError.md)
+> `readonly` `static` **fromHttpException**(`exception`, `defaultHttpStatus`): [`JsonApiError`](../type-aliases/JsonApiError.md)
 
 #### Parameters
 
-• **exception**: `string` \| `Error` \| `HttpException`
+##### exception
 
-• **defaultHttpStatus**: `number` = `500`
+`string` | `Error` | `HttpException`
+
+##### defaultHttpStatus
+
+`number` = `500`
 
 fallback http status if it can't be inferred from exception
 

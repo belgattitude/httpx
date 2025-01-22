@@ -1,8 +1,8 @@
-[**@httpx/assert v0.12.4**](../README.md) • **Docs**
+[**@httpx/assert v0.15.1**](../README.md)
 
 ***
 
-[@httpx/assert v0.12.4](../README.md) / index
+[@httpx/assert](../README.md) / index
 
 # index
 
@@ -11,102 +11,6 @@
 ### ArrayNonEmpty
 
 Re-exports [ArrayNonEmpty](../array.types/type-aliases/ArrayNonEmpty.md)
-
-***
-
-### Ean13
-
-Re-exports [Ean13](../barcode.types/type-aliases/Ean13.md)
-
-***
-
-### HttpMethod
-
-Re-exports [HttpMethod](../http.types/type-aliases/HttpMethod.md)
-
-***
-
-### NetworkPort
-
-Re-exports [NetworkPort](../network.types/type-aliases/NetworkPort.md)
-
-***
-
-### NumberSafeInt
-
-Re-exports [NumberSafeInt](../number.types/type-aliases/NumberSafeInt.md)
-
-***
-
-### ParsableSafeInt
-
-Re-exports [ParsableSafeInt](../string.types/type-aliases/ParsableSafeInt.md)
-
-***
-
-### ParsableStrictIsoDateZ
-
-Re-exports [ParsableStrictIsoDateZ](../string.types/type-aliases/ParsableStrictIsoDateZ.md)
-
-***
-
-### PlainObject
-
-Re-exports [PlainObject](../object.types/type-aliases/PlainObject.md)
-
-***
-
-### StringNonEmpty
-
-Re-exports [StringNonEmpty](../string.types/type-aliases/StringNonEmpty.md)
-
-***
-
-### Uuid
-
-Re-exports [Uuid](../uuid.types/type-aliases/Uuid.md)
-
-***
-
-### UuidV1
-
-Re-exports [UuidV1](../uuid.types/type-aliases/UuidV1.md)
-
-***
-
-### UuidV3
-
-Re-exports [UuidV3](../uuid.types/type-aliases/UuidV3.md)
-
-***
-
-### UuidV4
-
-Re-exports [UuidV4](../uuid.types/type-aliases/UuidV4.md)
-
-***
-
-### UuidV5
-
-Re-exports [UuidV5](../uuid.types/type-aliases/UuidV5.md)
-
-***
-
-### UuidV7
-
-Re-exports [UuidV7](../uuid.types/type-aliases/UuidV7.md)
-
-***
-
-### UuidVersion
-
-Re-exports [UuidVersion](../uuid.types/type-aliases/UuidVersion.md)
-
-***
-
-### UuidVersionOrNumber
-
-Re-exports [UuidVersionOrNumber](../uuid.types/type-aliases/UuidVersionOrNumber.md)
 
 ***
 
@@ -212,9 +116,21 @@ Re-exports [assertUuidV5](../uuid.asserts/functions/assertUuidV5.md)
 
 ***
 
+### Ean13
+
+Re-exports [Ean13](../barcode.types/type-aliases/Ean13.md)
+
+***
+
 ### getUuidVersion
 
 Re-exports [getUuidVersion](../uuid.helpers/functions/getUuidVersion.md)
+
+***
+
+### HttpMethod
+
+Re-exports [HttpMethod](../http.types/type-aliases/HttpMethod.md)
 
 ***
 
@@ -320,6 +236,48 @@ Re-exports [isUuidVersion](../uuid.guards/functions/isUuidVersion.md)
 
 ***
 
+### NetworkPort
+
+Re-exports [NetworkPort](../network.types/type-aliases/NetworkPort.md)
+
+***
+
+### NumberSafeInt
+
+Re-exports [NumberSafeInt](../number.types/type-aliases/NumberSafeInt.md)
+
+***
+
+### ParsableSafeInt
+
+Re-exports [ParsableSafeInt](../string.types/type-aliases/ParsableSafeInt.md)
+
+***
+
+### ParsableStrictIsoDateZ
+
+Re-exports [ParsableStrictIsoDateZ](../string.types/type-aliases/ParsableStrictIsoDateZ.md)
+
+***
+
+### PlainObject
+
+Re-exports [PlainObject](../object.types/type-aliases/PlainObject.md)
+
+***
+
+### StringNonEmpty
+
+Re-exports [StringNonEmpty](../string.types/type-aliases/StringNonEmpty.md)
+
+***
+
+### Uuid
+
+Re-exports [Uuid](../uuid.types/type-aliases/Uuid.md)
+
+***
+
 ### uuidRegexp
 
 Re-exports [uuidRegexp](../uuid.utils/variables/uuidRegexp.md)
@@ -329,3 +287,45 @@ Re-exports [uuidRegexp](../uuid.utils/variables/uuidRegexp.md)
 ### uuidSupportedVersions
 
 Re-exports [uuidSupportedVersions](../uuid.utils/variables/uuidSupportedVersions.md)
+
+***
+
+### UuidV1
+
+Re-exports [UuidV1](../uuid.types/type-aliases/UuidV1.md)
+
+***
+
+### UuidV3
+
+Re-exports [UuidV3](../uuid.types/type-aliases/UuidV3.md)
+
+***
+
+### UuidV4
+
+Re-exports [UuidV4](../uuid.types/type-aliases/UuidV4.md)
+
+***
+
+### UuidV5
+
+Re-exports [UuidV5](../uuid.types/type-aliases/UuidV5.md)
+
+***
+
+### UuidV7
+
+Re-exports [UuidV7](../uuid.types/type-aliases/UuidV7.md)
+
+***
+
+### UuidVersion
+
+Re-exports [UuidVersion](../uuid.types/type-aliases/UuidVersion.md)
+
+***
+
+### UuidVersionOrNumber
+
+Re-exports [UuidVersionOrNumber](../uuid.types/type-aliases/UuidVersionOrNumber.md)

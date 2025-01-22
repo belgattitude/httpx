@@ -4,27 +4,33 @@
  */
 module.exports = [
   {
-    name: "Only { isPlainObject } (ESM)",
-    path: ["dist/index.mjs"],
-    import: "{ isPlainObject }",
-    limit: "108B",
+    name: 'Only { isPlainObject } (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ isPlainObject }',
+    limit: '81B',
   },
   {
-    name: "Only { assertPlainObject } (ESM)",
-    path: ["dist/index.mjs"],
-    import: "{ assertPlainObject }",
-    limit: "164B",
+    name: 'Only { assertPlainObject } (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ assertPlainObject }',
+    limit: '135B',
   },
   {
-    name: "Import { assertPlainObject, isPlainObject } (ESM)",
-    path: ["dist/index.mjs"],
-    import: "{ assertPlainObject, isPlainObject }",
-    limit: "171B",
+    name: 'Only { isStaticBuiltInClass } (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ isStaticBuiltInClass }',
+    limit: '38B',
   },
   {
-    name: 'Everything (CJS)',
-    import: "*",
+    name: 'Import { assertPlainObject, isPlainObject } (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ assertPlainObject, isPlainObject }',
+    limit: '143B',
+  },
+  {
+    name: 'Require isPlainObject from CJS',
+    import: '{ isPlainObject }',
     path: ['dist/index.cjs'],
-    limit: '570KB',
+    limit: '158KB',
   },
 ];

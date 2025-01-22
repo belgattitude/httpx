@@ -3,6 +3,8 @@ import { default as nextra } from 'nextra';
 const withNextra = nextra({
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.tsx',
+  staticImage: true,
+  defaultShowCopyCode: true,
 });
 
 /** Useful when you publish the static export in a different basePath */

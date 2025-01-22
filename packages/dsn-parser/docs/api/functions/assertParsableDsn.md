@@ -1,8 +1,8 @@
-[**@httpx/dsn-parser v1.8.1**](../README.md) • **Docs**
+[**@httpx/dsn-parser v1.8.5**](../README.md)
 
 ***
 
-[@httpx/dsn-parser v1.8.1](../README.md) / assertParsableDsn
+[@httpx/dsn-parser](../README.md) / assertParsableDsn
 
 # Function: assertParsableDsn()
 
@@ -10,9 +10,13 @@
 
 ## Parameters
 
-• **dsn**: `unknown`
+### dsn
 
-• **msg?**: `string`
+`unknown`
+
+### msg?
+
+`string`
 
 ## Returns
 

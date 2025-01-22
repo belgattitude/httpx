@@ -1,6 +1,6 @@
-[**@httpx/exception**](../../README.md) • **Docs**
+[**@httpx/exception**](../../README.md)
 
----
+***
 
 [@httpx/exception](../../README.md) / [base](../README.md) / HttpException
 
@@ -29,13 +29,17 @@ Construct a new HttpException class
 
 #### Parameters
 
-• **statusCode**: [`HttpErrorStatusCodeOrNumber`](../../types/type-aliases/HttpErrorStatusCodeOrNumber.md)
+##### statusCode
+
+[`HttpErrorStatusCodeOrNumber`](../../types/type-aliases/HttpErrorStatusCodeOrNumber.md)
 
 http status code between 400-599, no checks are done on the validity of the number.
 
-• **msgOrParams?**: `string` \| [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
+##### msgOrParams?
 
 either a message or an object containing HttpExceptionParams
+
+`string` | [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
 
 #### Returns
 
@@ -66,7 +70,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 `Error.cause`
 
----
+***
 
 ### code
 
@@ -78,7 +82,7 @@ Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k
 
 `HttpExceptionParams.code`
 
----
+***
 
 ### errorId
 
@@ -90,7 +94,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 `HttpExceptionParams.errorId`
 
----
+***
 
 ### message
 
@@ -104,7 +108,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 `Error.message`
 
----
+***
 
 ### method
 
@@ -116,7 +120,7 @@ Http method
 
 `HttpExceptionParams.method`
 
----
+***
 
 ### name
 
@@ -126,7 +130,7 @@ Http method
 
 `Error.name`
 
----
+***
 
 ### stack?
 
@@ -136,7 +140,7 @@ Http method
 
 `Error.stack`
 
----
+***
 
 ### statusCode
 
@@ -144,7 +148,7 @@ Http method
 
 Http error status code (400-599)
 
----
+***
 
 ### url
 
@@ -156,7 +160,7 @@ Indicates the original url that caused the error.
 
 `HttpExceptionParams.url`
 
----
+***
 
 ### prepareStackTrace()?
 
@@ -166,9 +170,13 @@ Optional override for formatting stack traces
 
 #### Parameters
 
-• **err**: `Error`
+##### err
 
-• **stackTraces**: `CallSite`[]
+`Error`
+
+##### stackTraces
+
+`CallSite`[]
 
 #### Returns
 
@@ -182,7 +190,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 `Error.prepareStackTrace`
 
----
+***
 
 ### stackTraceLimit
 
@@ -202,9 +210,13 @@ Create .stack property on a target object
 
 #### Parameters
 
-• **targetObject**: `object`
+##### targetObject
 
-• **constructorOpt?**: `Function`
+`object`
+
+##### constructorOpt?
+
+`Function`
 
 #### Returns
 

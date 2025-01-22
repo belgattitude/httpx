@@ -1,8 +1,8 @@
-[**@httpx/plain-object v1.1.1**](../README.md) • **Docs**
+[**@httpx/plain-object v2.0.3**](../README.md)
 
 ***
 
-[@httpx/plain-object v1.1.1](../README.md) / assertPlainObject
+[@httpx/plain-object](../README.md) / assertPlainObject
 
 # Function: assertPlainObject()
 
@@ -16,9 +16,13 @@ Assert a value is a plain object
 
 ## Parameters
 
-• **v**: `unknown`
+### v
 
-• **msgOrErrorFactory?**: `MsgOrErrorFactory`
+`unknown`
+
+### msgOrErrorFactory?
+
+`MsgOrErrorFactory`
 
 ## Returns
 

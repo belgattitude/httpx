@@ -1,0 +1,53 @@
+{
+  "name": "@httpx/devtools-vitest",
+  "description": "Shareable dev setups for vitest",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/belgattitude/httpx.git",
+    "directory": "tools/vitest"
+  },
+  "sideEffects": false,
+  "exports": {
+    "./package.json": "./package.json",
+    "./wrangler.toml": "./wrangler.toml"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist ./build ./coverage ./_release",
+    "fix-staged": "lint-staged --allow-empty",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "install-playwright": "playwright install chromium"
+  },
+  "peerDependencies": {
+    "vitest": "^3.0.3"
+  },
+  "dependencies": {
+    "@belgattitude/eslint-config-bases": "6.19.0",
+    "@cloudflare/vitest-pool-workers": "0.6.5",
+    "@codspeed/vitest-plugin": "4.0.0",
+    "@edge-runtime/vm": "5.0.0",
+    "@vitest/browser": "3.0.3",
+    "@vitest/coverage-istanbul": "3.0.3",
+    "@vitest/runner": "3.0.3",
+    "@vitest/snapshot": "3.0.3",
+    "@vitest/ui": "3.0.3",
+    "esbuild": "0.24.2",
+    "eslint": "8.57.1",
+    "playwright": "1.49.1",
+    "prettier": "3.4.2",
+    "typescript": "5.7.3",
+    "vite": "6.0.11",
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest-browser-react": "0.0.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

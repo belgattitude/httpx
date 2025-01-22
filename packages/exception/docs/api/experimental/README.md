@@ -1,6 +1,6 @@
-[**@httpx/exception**](../README.md) • **Docs**
+[**@httpx/exception**](../README.md)
 
----
+***
 
 [@httpx/exception](../README.md) / experimental
 

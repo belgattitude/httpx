@@ -1,6 +1,6 @@
-**@httpx/exception** • **Docs**
+**@httpx/exception**
 
----
+***
 
 # @httpx/exception
 

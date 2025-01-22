@@ -1,6 +1,6 @@
-[**@httpx/exception**](../../README.md) • **Docs**
+[**@httpx/exception**](../../README.md)
 
----
+***
 
 [@httpx/exception](../../README.md) / [serializer](../README.md) / SerializerError
 
@@ -18,11 +18,15 @@
 
 #### Parameters
 
-• **message**: `string`
+##### message
 
-• **params?**
+`string`
 
-• **params.cause?**: `Error`
+##### params?
+
+###### cause
+
+`Error`
 
 #### Returns
 
@@ -42,7 +46,7 @@
 
 `Error.cause`
 
----
+***
 
 ### message
 
@@ -52,7 +56,7 @@
 
 `Error.message`
 
----
+***
 
 ### name
 
@@ -62,7 +66,7 @@
 
 `Error.name`
 
----
+***
 
 ### stack?
 
@@ -72,7 +76,7 @@
 
 `Error.stack`
 
----
+***
 
 ### prepareStackTrace()?
 
@@ -82,9 +86,13 @@ Optional override for formatting stack traces
 
 #### Parameters
 
-• **err**: `Error`
+##### err
 
-• **stackTraces**: `CallSite`[]
+`Error`
+
+##### stackTraces
+
+`CallSite`[]
 
 #### Returns
 
@@ -98,7 +106,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 `Error.prepareStackTrace`
 
----
+***
 
 ### stackTraceLimit
 
@@ -118,9 +126,13 @@ Create .stack property on a target object
 
 #### Parameters
 
-• **targetObject**: `object`
+##### targetObject
 
-• **constructorOpt?**: `Function`
+`object`
+
+##### constructorOpt?
+
+`Function`
 
 #### Returns
 

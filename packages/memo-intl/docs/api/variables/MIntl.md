@@ -1,8 +1,8 @@
-[**@httpx/memo-intl v1.1.1**](../README.md) • **Docs**
+[**@httpx/memo-intl v1.1.3**](../README.md)
 
 ***
 
-[@httpx/memo-intl v1.1.1](../README.md) / MIntl
+[@httpx/memo-intl](../README.md) / MIntl
 
 # Variable: MIntl
 
@@ -10,11 +10,51 @@
 
 ## Type declaration
 
+### cache
+
+> **cache**: `object`
+
+#### cache.clear()
+
+> **clear**: () => `void`
+
+##### Returns
+
+`void`
+
+#### cache.stats()
+
+> **stats**: () => `object`
+
+##### Returns
+
+`object`
+
+###### cachedInstances
+
+> **cachedInstances**: `number`
+
 ### DateTimeFormat()
 
 > **DateTimeFormat**: (`locale`, `options`?) => `DateTimeFormat`
 
 Return a memoized Intl.DateTimeFormatter instance
+
+#### Parameters
+
+##### locale
+
+`string`
+
+##### options?
+
+`DateTimeFormatOptions`
+
+#### Returns
+
+`DateTimeFormat`
+
+#### Example
 
 <code>
 ```typescript
@@ -27,16 +67,6 @@ const value = formatter.format(new Date()); // 👈 'mercredi 29 mai 2024 à 07:
 ```
 </code>
 
-#### Parameters
-
-• **locale**: `string`
-
-• **options?**: `DateTimeFormatOptions`
-
-#### Returns
-
-`DateTimeFormat`
-
 #### See
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
@@ -47,7 +77,22 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 Return a memoized Intl.NumberFormatter instance
 
-<code>
+#### Parameters
+
+##### locale
+
+`string`
+
+##### options?
+
+`NumberFormatOptions`
+
+#### Returns
+
+`NumberFormat`
+
+#### Example
+
 ```typescript
 const formatter = MIntl.NumberFormat('fr-FR', {
   style: 'currency',
@@ -57,42 +102,7 @@ const formatter = MIntl.NumberFormat('fr-FR', {
 });
 const value = formatter.format(10.1345); // 👈 '10,13 €'
 ```
-</code>
-
-#### Parameters
-
-• **locale**: `string`
-
-• **options?**: `NumberFormatOptions`
-
-#### Returns
-
-`NumberFormat`
 
 #### See
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
-
-### cache
-
-> **cache**: `object`
-
-### cache.clear()
-
-> **clear**: () => `void`
-
-#### Returns
-
-`void`
-
-### cache.stats()
-
-> **stats**: () => `object`
-
-#### Returns
-
-`object`
-
-##### cachedInstances
-
-> **cachedInstances**: `number`

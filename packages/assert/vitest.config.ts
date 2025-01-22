@@ -10,6 +10,12 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   cacheDir: '../../.cache/vite/httpx-assert',
   test: {
+    browser: {
+      provider: 'playwright', // or 'webdriverio'
+      enabled: false,
+      // at least one instance is required
+      instances: [{ browser: 'chromium' }],
+    },
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
     coverage: {

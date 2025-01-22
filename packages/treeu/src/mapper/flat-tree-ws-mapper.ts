@@ -62,6 +62,7 @@ export class FlatTreeWsMapper<
 
     const collector: CollectorContext<TValue, TKey> = { result: [] };
 
+    // eslint-disable-next-line no-restricted-syntax
     const d = data instanceof Map ? data : new Map(Object.entries(data));
 
     try {

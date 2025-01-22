@@ -18,7 +18,7 @@ module.exports = {
     '@belgattitude/eslint-config-bases/perfectionist',
     '@belgattitude/eslint-config-bases/sonar',
     '@belgattitude/eslint-config-bases/regexp',
-    '@belgattitude/eslint-config-bases/jest',
+    '@belgattitude/eslint-config-bases/vitest',
     '@belgattitude/eslint-config-bases/react',
     '@belgattitude/eslint-config-bases/rtl',
     // Add specific rules for nextjs
