@@ -36,6 +36,7 @@
     "clean:lint": "rimraf ./.cache/eslint",
     "clean:global-cache": "rimraf ./.cache",
     "clean:nx": "nx reset",
+    "install:playwright": "yarn workspace @httpx/devtools-vitest install-playwright",
     "website:build": "yarn workspace httpx-docs run build",
     "website:deploy": "gh-pages -d ./docs/out -t",
     "deps:check": "npx npm-check-updates@latest --configFileName .ncurc.yml --deep",

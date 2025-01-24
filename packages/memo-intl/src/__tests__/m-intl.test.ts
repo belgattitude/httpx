@@ -10,6 +10,7 @@ describe('MIntl tests', () => {
         currency: 'EUR',
         notation: 'compact',
         minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
       });
       expect(formatter.format(10.1345)).toBe('10,13 €');
       expectTypeOf(formatter).toEqualTypeOf<Intl.NumberFormat>();
