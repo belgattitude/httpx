@@ -22,7 +22,7 @@ export default defineConfig((options) => {
     splitting: true,
     bundle: true,
     target: ['es2022', ...browserslistToEsbuild()],
-    treeshake: false,
+    treeshake: true,
     tsconfig: './tsconfig.build.json',
   };
 });
