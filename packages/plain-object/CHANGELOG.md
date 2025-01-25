@@ -1,5 +1,13 @@
 # @httpx/plain-object
 
+## 2.0.5
+
+### Patch Changes
+
+- [#1849](https://github.com/belgattitude/httpx/pull/1849) [`f6e8044`](https://github.com/belgattitude/httpx/commit/f6e80441c4c231aa3c754a19dfb2ef740f10876b) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix invalid jsdoc in `isPlainObject`.
+
+- [#1849](https://github.com/belgattitude/httpx/pull/1849) [`f6e8044`](https://github.com/belgattitude/httpx/commit/f6e80441c4c231aa3c754a19dfb2ef740f10876b) Thanks [@belgattitude](https://github.com/belgattitude)! - Update benchmarks in readme
+
 ## 2.0.4
 
 ### Patch Changes
