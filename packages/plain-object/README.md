@@ -32,7 +32,7 @@ $ pnpm add @httpx/plain-object
 - 🚀&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
 - 📐&nbsp; Lightweight (starts at [~80B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
-- 🙏&nbsp; Cross-realms tolerant (node:vm runInNewContext,...)
+- 🙏&nbsp; Works cross-realms (node:vm runInNewContext,...)
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
@@ -193,28 +193,28 @@ someFn(value)
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
-RUN  v2.1.8
+ RUN  v3.0.4 /home/sebastien/github/httpx/packages/plain-object
 
- ✓ bench/comparative.bench.ts (7) 5774ms
-   ✓ Compare calling isPlainObject with 110x mixed types values (7) 5773ms
+
+ ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 5684ms
      name                                                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · "@httpx/plain-object": `isPlainObject(v)`        1,395,419.02  0.0006  1.8273  0.0007  0.0007  0.0012  0.0013  0.0022  ±1.01%   697710   fastest
-   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'          1,308,696.50  0.0006  1.0286  0.0008  0.0007  0.0013  0.0013  0.0022  ±0.71%   654349
-   · "@sindresorhus/is":"7.0.1": 'is.plainObject(v)'    780,257.18  0.0011  0.9150  0.0013  0.0012  0.0024  0.0025  0.0073  ±0.56%   390129
-   · "es-toolkit":"1.31.0": 'isPlainObject(v)'        1,077,076.98  0.0007  2.5125  0.0009  0.0008  0.0016  0.0017  0.0118  ±1.46%   538539
-   · "redux":"5.0.1": 'isPlainObject(v)'                473,750.80  0.0017  0.9967  0.0021  0.0019  0.0034  0.0038  0.0197  ±0.70%   236878
-   · "is-plain-object":"5.0.0": 'isPlainObject(v)'      569,808.67  0.0014  2.0280  0.0018  0.0016  0.0031  0.0033  0.0199  ±1.25%   284905
-   · lodash-es:"4.17.21": '_.isPlainObject(v)'           19,551.73  0.0452  1.2833  0.0511  0.0473  0.1073  0.1498  0.3331  ±0.96%     9776   slowest
-
- BENCH  Summary
-
-  "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
-    1.07x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
-    1.30x faster than "es-toolkit":"1.31.0": 'isPlainObject(v)'
-    1.79x faster than "@sindresorhus/is":"7.0.1": 'is.plainObject(v)'
-    2.45x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
-    2.95x faster than "redux":"5.0.1": 'isPlainObject(v)'
-    71.37x faster than lodash-es:"4.17.21": '_.isPlainObject(v)'
+   · "@httpx/plain-object": `isPlainObject(v)`        1,832,016.65  0.0004  0.4702  0.0005  0.0005  0.0009  0.0011  0.0018  ±0.49%   916009   fastest
+   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'          1,565,569.05  0.0005  0.5879  0.0006  0.0006  0.0014  0.0015  0.0018  ±0.53%   782785
+   · "@sindresorhus/is":"7.0.1": 'is.plainObject(v)'    944,124.29  0.0008  0.5417  0.0011  0.0010  0.0017  0.0023  0.0032  ±0.38%   472063
+   · "es-toolkit":"1.31.0": 'isPlainObject(v)'        1,432,993.92  0.0005  0.4105  0.0007  0.0007  0.0012  0.0016  0.0028  ±0.56%   716497
+   · "redux":"5.0.1": 'isPlainObject(v)'                651,167.40  0.0012  0.7868  0.0015  0.0015  0.0021  0.0028  0.0071  ±0.55%   325584
+   · "is-plain-object":"5.0.0": 'isPlainObject(v)'      828,601.23  0.0010  0.7233  0.0012  0.0012  0.0022  0.0028  0.0106  ±0.68%   414301
+   · lodash-es:"4.17.21": '_.isPlainObject(v)'           23,543.74  0.0332  0.6199  0.0425  0.0399  0.1037  0.1168  0.2867  ±0.80%    11772   slowest
+                                                                                                                                                    
+ BENCH  Summary                                                                                                                                     
+                                                                                                                                                    
+  "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values               
+    1.17x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'                                                                                       
+    1.28x faster than "es-toolkit":"1.31.0": 'isPlainObject(v)'                                                                                     
+    1.94x faster than "@sindresorhus/is":"7.0.1": 'is.plainObject(v)'                                                                               
+    2.21x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
+    2.81x faster than "redux":"5.0.1": 'isPlainObject(v)'
+    77.81x faster than lodash-es:"4.17.21": '_.isPlainObject(v)'
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/bench/comparative.bench.ts) for details.
@@ -226,8 +226,8 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | Scenario (esm)                                              | Size (compressed) |
 |-------------------------------------------------------------|------------------:|
 | `import { isPlainObject } from '@httpx/plain-object`        |             ~ 80B |
-| `import { assertPlainObject } from '@httpx/plain-object`    |            ~ 134B |
-| `Both isPlainObject and assertPlainObject`                  |            ~ 142B |
+| `import { assertPlainObject } from '@httpx/plain-object`    |            ~ 133B |
+| `Both isPlainObject and assertPlainObject`                  |            ~ 141B |
 | `import { isStaticBuiltInClass } from '@httpx/plain-object` |             ~ 37B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/plain-object@latest).
@@ -249,11 +249,12 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 ## Comparison with other libraries
 
-| Library                                                        | Compat      | Perf         | CJS+ESM |
-|----------------------------------------------------------------|-------------|--------------|---------|  
-| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj)   | Differences | 1.09x slower | No      | 
-| [es-toolkit](https://github.com/toss/es-toolkit)               | No          |              | Yes     | 
-| (@redux)[isPlainObject](https://github.com/reduxjs/redux)      | ✅ 100%      | 2.80x slower | Yes     |
+| Library                                                      | Compat      | Perf          | CJS+ESM |
+|--------------------------------------------------------------|-------------|---------------|---------|  
+| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj) | Differences | 1.17x slower  | No      | 
+| [es-toolkit](https://github.com/toss/es-toolkit)             | No          | 1.25x slower  | Yes     | 
+| (@redux)[isPlainObject](https://github.com/reduxjs/redux)    | ✅ 100%      | 2.76x slower  | Yes     |
+| (lodash)[isPlainObject](https://lodash.com/docs/4.17.15#isPlainObject)    | No          | 83.50x slower | No      |
 
 ### redux/isPlainObject
 
@@ -314,4 +315,4 @@ or star – any gesture of support fuels my passion to improve. Thanks for being
 
 ## License
 
-MIT © [belgattitude](https://github.com/belgattitude) and contributors.
+MIT © [Sébastien Vanvelthem](https://github.com/belgattitude) and contributors.
