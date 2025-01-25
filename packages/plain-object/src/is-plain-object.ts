@@ -41,8 +41,7 @@ import type { PlainObject } from './plain-object.types';
  * isPlainObject(Promise.resolve({})); // ❌
  * isPlainObject(Object.create({}));   // ❌
  * isPlainObject(new (class Cls {}));  // ❌
- * isPlainObject(globalThis);          // ❌,
- * ```
+ * isPlainObject(globalThis);          // ❌
  *
  * // ✅👇 Note that static built-in classes are treated as plain objects
  * //    check for `isStaticBuiltInClass` to exclude if needed
@@ -50,6 +49,7 @@ import type { PlainObject } from './plain-object.types';
  * isPlainObject(Math);                // ✅
  * isPlainObject(JSON);                // ✅
  * isPlainObject(Atomics);             // ✅
+ * ```
  */
 export const isPlainObject = <
   TValue extends BasePlainObject = DefaultBasePlainObject,
