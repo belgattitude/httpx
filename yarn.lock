@@ -3201,18 +3201,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdx-js/react@npm:^3.0.0":
-  version: 3.1.0
-  resolution: "@mdx-js/react@npm:3.1.0"
-  dependencies:
-    "@types/mdx": "npm:^2.0.0"
-  peerDependencies:
-    "@types/react": ">=16"
-    react: ">=16"
-  checksum: 10c0/381ed1211ba2b8491bf0ad9ef0d8d1badcdd114e1931d55d44019d4b827cc2752586708f9c7d2f9c3244150ed81f1f671a6ca95fae0edd5797fb47a22e06ceca
-  languageName: node
-  linkType: hard
-
 "@mermaid-js/parser@npm:^0.3.0":
   version: 0.3.0
   resolution: "@mermaid-js/parser@npm:0.3.0"
@@ -3896,32 +3884,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/core@npm:1.29.1":
-  version: 1.29.1
-  resolution: "@shikijs/core@npm:1.29.1"
+"@shikijs/core@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@shikijs/core@npm:2.1.0"
   dependencies:
-    "@shikijs/engine-javascript": "npm:1.29.1"
-    "@shikijs/engine-oniguruma": "npm:1.29.1"
-    "@shikijs/types": "npm:1.29.1"
+    "@shikijs/engine-javascript": "npm:2.1.0"
+    "@shikijs/engine-oniguruma": "npm:2.1.0"
+    "@shikijs/types": "npm:2.1.0"
     "@shikijs/vscode-textmate": "npm:^10.0.1"
     "@types/hast": "npm:^3.0.4"
     hast-util-to-html: "npm:^9.0.4"
-  checksum: 10c0/241669ed9a7e25028551a7d7b6dbc347da0663396d7e3ee448b8599df5c804861dde522df13a574464c1e420347b4d9890755d0793ce856591058928a0b12764
+  checksum: 10c0/fb43f97e6a43e97a72bdac055ce7db8e5949f790e3612fc8b7b225b3cc52c11d0eb0a5bd0f615a59d8036df6bf937e8d3bef1a91eba28a3618eeed9aeede7c72
   languageName: node
   linkType: hard
 
-"@shikijs/engine-javascript@npm:1.29.1":
-  version: 1.29.1
-  resolution: "@shikijs/engine-javascript@npm:1.29.1"
+"@shikijs/engine-javascript@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@shikijs/engine-javascript@npm:2.1.0"
   dependencies:
-    "@shikijs/types": "npm:1.29.1"
+    "@shikijs/types": "npm:2.1.0"
     "@shikijs/vscode-textmate": "npm:^10.0.1"
-    oniguruma-to-es: "npm:^2.2.0"
-  checksum: 10c0/ea0c0d20231d589ebb178b716147057d1d649e3f0ffaf22720bc9a8130b0f58d2ad5380f861f640a38901131545afb16cd9ee07c1413f892807c4a2be7350601
+    oniguruma-to-es: "npm:^2.3.0"
+  checksum: 10c0/3d1c4bf45818a698fc428cdbf9a8a14f291870f32e388fb4fc4aeaad11cd50d30a82627ba80e73e567980e22bbc242c494658716eb6e0ea367d8da522ec02297
   languageName: node
   linkType: hard
 
-"@shikijs/engine-oniguruma@npm:1.29.1, @shikijs/engine-oniguruma@npm:^1.27.2":
+"@shikijs/engine-oniguruma@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@shikijs/engine-oniguruma@npm:2.1.0"
+  dependencies:
+    "@shikijs/types": "npm:2.1.0"
+    "@shikijs/vscode-textmate": "npm:^10.0.1"
+  checksum: 10c0/18c2bcba4246456a14aff6517c0db37dbe4969725c4470f2c1f631f6b69cb38777c685912b081ffadbd024fe9de35385a11b9639d177a263ecdb9a74579f9d13
+  languageName: node
+  linkType: hard
+
+"@shikijs/engine-oniguruma@npm:^1.27.2":
   version: 1.29.1
   resolution: "@shikijs/engine-oniguruma@npm:1.29.1"
   dependencies:
@@ -3931,32 +3929,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/langs@npm:1.29.1":
-  version: 1.29.1
-  resolution: "@shikijs/langs@npm:1.29.1"
+"@shikijs/langs@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@shikijs/langs@npm:2.1.0"
   dependencies:
-    "@shikijs/types": "npm:1.29.1"
-  checksum: 10c0/91b5018302da670938d0508514159423f958051201ce74643d9f317ed6af34f602ea1451c70dc85a67c3cca58708e0d22c2fa033a8f0e9afc4158ea530ce0d7a
+    "@shikijs/types": "npm:2.1.0"
+  checksum: 10c0/98b145ba37cccbeaabf072ada8cb58fbc09b414f87c6d9c6eef59f11cb11788c73a48d4a44318c44d445d4c792a174e415c965107167ad6dda1346032b704b8f
   languageName: node
   linkType: hard
 
-"@shikijs/themes@npm:1.29.1":
-  version: 1.29.1
-  resolution: "@shikijs/themes@npm:1.29.1"
+"@shikijs/themes@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@shikijs/themes@npm:2.1.0"
   dependencies:
-    "@shikijs/types": "npm:1.29.1"
-  checksum: 10c0/fef064a45e12ab207817c115188290208e6a2a85240051ccd86900d49e359ced876c2214b11846146400bf1a579e9d6843862d0b92f073c9de7037abecc1f79b
+    "@shikijs/types": "npm:2.1.0"
+  checksum: 10c0/ef5e403a163a312d24df8633c163a5f783a590baf4a4adc00552afb52f24ae58359f286fee29579d730d83bd9531ed26d77933d83a5822dede763ab2918fe38f
   languageName: node
   linkType: hard
 
-"@shikijs/twoslash@npm:^1.0.0":
-  version: 1.29.1
-  resolution: "@shikijs/twoslash@npm:1.29.1"
+"@shikijs/twoslash@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "@shikijs/twoslash@npm:2.1.0"
   dependencies:
-    "@shikijs/core": "npm:1.29.1"
-    "@shikijs/types": "npm:1.29.1"
+    "@shikijs/core": "npm:2.1.0"
+    "@shikijs/types": "npm:2.1.0"
     twoslash: "npm:^0.2.12"
-  checksum: 10c0/68edc6553b129b3f1bb99cb1e25384d716d1416258bbe4d0c3e8af61f72cd291973580a3f2a245c34e8829c8bd039539a5e6920e049350b8941a4cf923f6e482
+  checksum: 10c0/1def9c7154e593d2fd1caf1c6b0811966eab595b22c6759a995efffffe1798a7566216b6057c1493d113348e11b54e31c95e6b61481648573dd30d80ddc411d8
   languageName: node
   linkType: hard
 
@@ -3967,6 +3965,16 @@ __metadata:
     "@shikijs/vscode-textmate": "npm:^10.0.1"
     "@types/hast": "npm:^3.0.4"
   checksum: 10c0/8dc7a362c6da86fd1a54f41af020e844cfb0208721348a4a3ba97ab2cf6543e69c364e7c38731cee7ab189b9435ef91943401ef104c6d3a92b8b06055f35620b
+  languageName: node
+  linkType: hard
+
+"@shikijs/types@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@shikijs/types@npm:2.1.0"
+  dependencies:
+    "@shikijs/vscode-textmate": "npm:^10.0.1"
+    "@types/hast": "npm:^3.0.4"
+  checksum: 10c0/5470e3e7d6f9cb32b89e7a5153248335d4a76ecc742ad630f128fc68c95d6b8f24270d42095c305dd15a34f4954476d93871bd70956569bb2b5c6d7f2a19f327
   languageName: node
   linkType: hard
 
@@ -4696,15 +4704,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@theguild/remark-mermaid@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "@theguild/remark-mermaid@npm:0.1.3"
+"@theguild/remark-mermaid@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@theguild/remark-mermaid@npm:0.2.0"
   dependencies:
     mermaid: "npm:^11.0.0"
     unist-util-visit: "npm:^5.0.0"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/9a257fe36b750ff183e5040678384dd9069b0c235c4df797298339f92621183e62f54646ea1ca1948fe7c69c352b36f211b28451e86731db505c01c91398a58b
+  checksum: 10c0/ecf97f232222a79abe3a6325d50d905e48a6031f0578c0d43074dfef00d9ec6072d30a8697882c09209b98be56df8278b494f5277b4da19a642e1d56c72e474b
   languageName: node
   linkType: hard
 
@@ -6952,7 +6960,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:2.1.1, clsx@npm:^2.0.0":
+"clsx@npm:2.1.1, clsx@npm:^2.0.0, clsx@npm:^2.1.0":
   version: 2.1.1
   resolution: "clsx@npm:2.1.1"
   checksum: 10c0/c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
@@ -9267,15 +9275,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extend-shallow@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "extend-shallow@npm:2.0.1"
-  dependencies:
-    is-extendable: "npm:^0.1.0"
-  checksum: 10c0/ee1cb0a18c9faddb42d791b2d64867bd6cfd0f3affb711782eb6e894dd193e2934a7f529426aac7c8ddb31ac5d38000a00aa2caf08aa3dfc3e1c8ff6ba340bd9
-  languageName: node
-  linkType: hard
-
 "extend@npm:^3.0.0":
   version: 3.0.2
   resolution: "extend@npm:3.0.2"
@@ -9552,13 +9551,6 @@ __metadata:
   version: 3.3.2
   resolution: "flatted@npm:3.3.2"
   checksum: 10c0/24cc735e74d593b6c767fe04f2ef369abe15b62f6906158079b9874bdb3ee5ae7110bb75042e70cd3f99d409d766f357caf78d5ecee9780206f5fdc5edbad334
-  languageName: node
-  linkType: hard
-
-"flexsearch@npm:^0.7.43":
-  version: 0.7.43
-  resolution: "flexsearch@npm:0.7.43"
-  checksum: 10c0/797dc474ed97750b8e85c118b1af63eb2709da5fc05defcb13e96515774f28743ccb2448b63f3b703cf1ca571928c006069503dacf7d177bc07b9ee15e1f85d0
   languageName: node
   linkType: hard
 
@@ -10070,18 +10062,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gray-matter@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "gray-matter@npm:4.0.3"
-  dependencies:
-    js-yaml: "npm:^3.13.1"
-    kind-of: "npm:^6.0.2"
-    section-matter: "npm:^1.0.0"
-    strip-bom-string: "npm:^1.0.0"
-  checksum: 10c0/e38489906dad4f162ca01e0dcbdbed96d1a53740cef446b9bf76d80bec66fa799af07776a18077aee642346c5e1365ed95e4c91854a12bf40ba0d4fb43a625a6
-  languageName: node
-  linkType: hard
-
 "gzip-size@npm:^6.0.0":
   version: 6.0.0
   resolution: "gzip-size@npm:6.0.0"
@@ -10462,8 +10442,8 @@ __metadata:
     eslint-config-next: "npm:15.1.6"
     eslint-plugin-tailwindcss: "npm:3.18.0"
     next: "npm:15.1.6"
-    nextra: "npm:3.3.1"
-    nextra-theme-docs: "npm:3.3.1"
+    nextra: "npm:4.1.0"
+    nextra-theme-docs: "npm:4.1.0"
     postcss: "npm:8.5.1"
     postcss-nesting: "npm:13.0.1"
     prettier: "npm:3.4.2"
@@ -10824,13 +10804,6 @@ __metadata:
   bin:
     is-docker: cli.js
   checksum: 10c0/d2c4f8e6d3e34df75a5defd44991b6068afad4835bb783b902fa12d13ebdb8f41b2a199dcb0b5ed2cb78bfee9e4c0bbdb69c2d9646f4106464674d3e697a5856
-  languageName: node
-  linkType: hard
-
-"is-extendable@npm:^0.1.0":
-  version: 0.1.1
-  resolution: "is-extendable@npm:0.1.1"
-  checksum: 10c0/dd5ca3994a28e1740d1e25192e66eed128e0b2ff161a7ea348e87ae4f616554b486854de423877a2a2c171d5f7cd6e8093b91f54533bc88a59ee1c9838c43879
   languageName: node
   linkType: hard
 
@@ -11520,14 +11493,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:^0.16.0, katex@npm:^0.16.9":
-  version: 0.16.11
-  resolution: "katex@npm:0.16.11"
+"katex@npm:^0.16.0, katex@npm:^0.16.21, katex@npm:^0.16.9":
+  version: 0.16.21
+  resolution: "katex@npm:0.16.21"
   dependencies:
     commander: "npm:^8.3.0"
   bin:
     katex: cli.js
-  checksum: 10c0/be405d45d7228bbfeecd491e0f74d9da0066b5e7b457e3f1dc833de5b63f9e98e40d2ef6b46e1cbe577490a43338c043851da032c45aeec0cc03ad431ef6fd83
+  checksum: 10c0/e2e4139ba72a13f2393308fbb2b4c5511611a19a40a6e39d956cf775e553af3517dbfd0a54477faaf401c923e4654e32296347846b8ff15dfa579f88ff8579bb
   languageName: node
   linkType: hard
 
@@ -11544,13 +11517,6 @@ __metadata:
   version: 2.1.0
   resolution: "khroma@npm:2.1.0"
   checksum: 10c0/634d98753ff5d2540491cafeb708fc98de0d43f4e6795256d5c8f6e3ad77de93049ea41433928fda3697adf7bbe6fe27351858f6d23b78f8b5775ef314c59891
-  languageName: node
-  linkType: hard
-
-"kind-of@npm:^6.0.0, kind-of@npm:^6.0.2":
-  version: 6.0.3
-  resolution: "kind-of@npm:6.0.3"
-  checksum: 10c0/61cdff9623dabf3568b6445e93e31376bee1cdb93f8ba7033d86022c2a9b1791a1d9510e026e6465ebd701a6dd2f7b0808483ad8838341ac52f003f512e0b4c4
   languageName: node
   linkType: hard
 
@@ -13487,52 +13453,51 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nextra-theme-docs@npm:3.3.1":
-  version: 3.3.1
-  resolution: "nextra-theme-docs@npm:3.3.1"
+"nextra-theme-docs@npm:4.1.0":
+  version: 4.1.0
+  resolution: "nextra-theme-docs@npm:4.1.0"
   dependencies:
     "@headlessui/react": "npm:^2.1.2"
-    clsx: "npm:^2.0.0"
-    escape-string-regexp: "npm:^5.0.0"
-    flexsearch: "npm:^0.7.43"
+    clsx: "npm:^2.1.0"
     next-themes: "npm:^0.4.0"
+    react-compiler-runtime: "npm:0.0.0-experimental-22c6e49-20241219"
     scroll-into-view-if-needed: "npm:^3.1.0"
     zod: "npm:^3.22.3"
+    zod-validation-error: "npm:^3.0.0"
+    zustand: "npm:^5.0.1"
   peerDependencies:
-    next: ">=13"
-    nextra: 3.3.1
+    next: ">=14"
+    nextra: 4.1.0
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10c0/5759be78bc3b5774d45b944ac194b1c755d246883078a1d96fe5a820be9ddb755bff77a7fd30cf2dd5624f0d46be9cd1e53318d11e58b6fb8a2dd54cd969ea89
+  checksum: 10c0/cc26d29c7644ac6ad15bd979eec4d85009219c8539fc10eab08668ce136d30e3ecae99382c7d4f524735fa7e7a9cd232d817495d3b3c69471345e5aa60a28972
   languageName: node
   linkType: hard
 
-"nextra@npm:3.3.1":
-  version: 3.3.1
-  resolution: "nextra@npm:3.3.1"
+"nextra@npm:4.1.0":
+  version: 4.1.0
+  resolution: "nextra@npm:4.1.0"
   dependencies:
     "@formatjs/intl-localematcher": "npm:^0.5.4"
     "@headlessui/react": "npm:^2.1.2"
     "@mdx-js/mdx": "npm:^3.0.0"
-    "@mdx-js/react": "npm:^3.0.0"
     "@napi-rs/simple-git": "npm:^0.1.9"
-    "@shikijs/twoslash": "npm:^1.0.0"
-    "@theguild/remark-mermaid": "npm:^0.1.3"
+    "@shikijs/twoslash": "npm:^2.0.0"
+    "@theguild/remark-mermaid": "npm:^0.2.0"
     "@theguild/remark-npm2yarn": "npm:^0.3.2"
     better-react-mathjax: "npm:^2.0.3"
-    clsx: "npm:^2.0.0"
+    clsx: "npm:^2.1.0"
     estree-util-to-js: "npm:^2.0.0"
     estree-util-value-to-estree: "npm:^3.0.1"
+    fast-glob: "npm:^3.3.2"
     github-slugger: "npm:^2.0.0"
-    graceful-fs: "npm:^4.2.11"
-    gray-matter: "npm:^4.0.3"
     hast-util-to-estree: "npm:^3.1.0"
-    katex: "npm:^0.16.9"
+    katex: "npm:^0.16.21"
     mdast-util-from-markdown: "npm:^2.0.1"
     mdast-util-gfm: "npm:^3.0.0"
     mdast-util-to-hast: "npm:^13.2.0"
     negotiator: "npm:^1.0.0"
-    p-limit: "npm:^6.0.0"
+    react-compiler-runtime: "npm:0.0.0-experimental-22c6e49-20241219"
     react-medium-image-zoom: "npm:^5.2.12"
     rehype-katex: "npm:^7.0.0"
     rehype-pretty-code: "npm:0.14.0"
@@ -13542,19 +13507,20 @@ __metadata:
     remark-math: "npm:^6.0.0"
     remark-reading-time: "npm:^2.0.1"
     remark-smartypants: "npm:^3.0.0"
-    shiki: "npm:^1.0.0"
+    shiki: "npm:^2.0.0"
     slash: "npm:^5.1.0"
-    title: "npm:^4.0.0"
+    title: "npm:^4.0.1"
     unist-util-remove: "npm:^4.0.0"
     unist-util-visit: "npm:^5.0.0"
+    unist-util-visit-children: "npm:^3.0.0"
     yaml: "npm:^2.3.2"
     zod: "npm:^3.22.3"
     zod-validation-error: "npm:^3.0.0"
   peerDependencies:
-    next: ">=13"
+    next: ">=14"
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10c0/0afbad1e54a3ccf8f684dd4fd2e00ade84741381d0685ee6f6f5abd9fce7c01e4884916b832513097c6e9e370ca8e802deb0e7078e0cff3111f868b4c98ad96b
+  checksum: 10c0/2fea209d94b803a1e58b384c7d075b1003f5cf9cad3cdd17e3d83cd253caf84debef2443514fc60f6b51c18ca1c41c7ae540ed2af6cbd029fb4637ba460f483b
   languageName: node
   linkType: hard
 
@@ -13960,7 +13926,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oniguruma-to-es@npm:^2.2.0":
+"oniguruma-to-es@npm:^2.3.0":
   version: 2.3.0
   resolution: "oniguruma-to-es@npm:2.3.0"
   dependencies:
@@ -14094,15 +14060,6 @@ __metadata:
   dependencies:
     yocto-queue: "npm:^1.0.0"
   checksum: 10c0/a56af34a77f8df2ff61ddfb29431044557fcbcb7642d5a3233143ebba805fc7306ac1d448de724352861cb99de934bc9ab74f0d16fe6a5460bdbdf938de875ad
-  languageName: node
-  linkType: hard
-
-"p-limit@npm:^6.0.0":
-  version: 6.2.0
-  resolution: "p-limit@npm:6.2.0"
-  dependencies:
-    yocto-queue: "npm:^1.1.1"
-  checksum: 10c0/448bf55a1776ca1444594d53b3c731e68cdca00d44a6c8df06a2f6e506d5bbd540ebb57b05280f8c8bff992a630ed782a69612473f769a7473495d19e2270166
   languageName: node
   linkType: hard
 
@@ -14853,6 +14810,15 @@ __metadata:
   dependencies:
     safe-buffer: "npm:^5.1.0"
   checksum: 10c0/50395efda7a8c94f5dffab564f9ff89736064d32addf0cc7e8bf5e4166f09f8ded7a0849ca6c2d2a59478f7d90f78f20d8048bca3cdf8be09d8e8a10790388f3
+  languageName: node
+  linkType: hard
+
+"react-compiler-runtime@npm:0.0.0-experimental-22c6e49-20241219":
+  version: 0.0.0-experimental-22c6e49-20241219
+  resolution: "react-compiler-runtime@npm:0.0.0-experimental-22c6e49-20241219"
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/ebe13dd77fd5252772b54326817eac3f3369056e6d8893929fa27a135c918013ec52119aad747762bbea61162a861eb55d2ce02217bd2f07328e7b0884d703b6
   languageName: node
   linkType: hard
 
@@ -15858,16 +15824,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"section-matter@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "section-matter@npm:1.0.0"
-  dependencies:
-    extend-shallow: "npm:^2.0.1"
-    kind-of: "npm:^6.0.0"
-  checksum: 10c0/8007f91780adc5aaa781a848eaae50b0f680bbf4043b90cf8a96778195b8fab690c87fe7a989e02394ce69890e330811ec8dab22397d384673ce59f7d750641d
-  languageName: node
-  linkType: hard
-
 "semiver@npm:^1.0.0":
   version: 1.1.0
   resolution: "semiver@npm:1.1.0"
@@ -16040,19 +15996,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki@npm:^1.0.0":
-  version: 1.29.1
-  resolution: "shiki@npm:1.29.1"
+"shiki@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "shiki@npm:2.1.0"
   dependencies:
-    "@shikijs/core": "npm:1.29.1"
-    "@shikijs/engine-javascript": "npm:1.29.1"
-    "@shikijs/engine-oniguruma": "npm:1.29.1"
-    "@shikijs/langs": "npm:1.29.1"
-    "@shikijs/themes": "npm:1.29.1"
-    "@shikijs/types": "npm:1.29.1"
+    "@shikijs/core": "npm:2.1.0"
+    "@shikijs/engine-javascript": "npm:2.1.0"
+    "@shikijs/engine-oniguruma": "npm:2.1.0"
+    "@shikijs/langs": "npm:2.1.0"
+    "@shikijs/themes": "npm:2.1.0"
+    "@shikijs/types": "npm:2.1.0"
     "@shikijs/vscode-textmate": "npm:^10.0.1"
     "@types/hast": "npm:^3.0.4"
-  checksum: 10c0/d16683a812df8c21489e83ad90207ebf6552c42575117ab9015989795f0d2d5153cb41364611ad8233441643002fee4490bbf45a438cb20766a176a5c0ecafb0
+  checksum: 10c0/6d53343dbcefcbbd09f903869750a43cf97440ce0a9ed044cd4d27495124a2da3b99cf62dc28437a2220cfcada462447aa998c790371342dfa088eab6e66b00d
   languageName: node
   linkType: hard
 
@@ -16648,13 +16604,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-bom-string@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "strip-bom-string@npm:1.0.0"
-  checksum: 10c0/5c5717e2643225aa6a6d659d34176ab2657037f1fe2423ac6fcdb488f135e14fef1022030e426d8b4d0989e09adbd5c3288d5d3b9c632abeefd2358dfc512bca
-  languageName: node
-  linkType: hard
-
 "strip-bom@npm:^3.0.0":
   version: 3.0.0
   resolution: "strip-bom@npm:3.0.0"
@@ -17086,7 +17035,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"title@npm:^4.0.0":
+"title@npm:^4.0.1":
   version: 4.0.1
   resolution: "title@npm:4.0.1"
   dependencies:
@@ -18624,7 +18573,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yocto-queue@npm:^1.0.0, yocto-queue@npm:^1.1.1":
+"yocto-queue@npm:^1.0.0":
   version: 1.1.1
   resolution: "yocto-queue@npm:1.1.1"
   checksum: 10c0/cb287fe5e6acfa82690acb43c283de34e945c571a78a939774f6eaba7c285bacdf6c90fbc16ce530060863984c906d2b4c6ceb069c94d1e0a06d5f2b458e2a92
@@ -18662,6 +18611,27 @@ __metadata:
   version: 3.24.1
   resolution: "zod@npm:3.24.1"
   checksum: 10c0/0223d21dbaa15d8928fe0da3b54696391d8e3e1e2d0283a1a070b5980a1dbba945ce631c2d1eccc088fdbad0f2dfa40155590bf83732d3ac4fcca2cc9237591b
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^5.0.1":
+  version: 5.0.3
+  resolution: "zustand@npm:5.0.3"
+  peerDependencies:
+    "@types/react": ">=18.0.0"
+    immer: ">=9.0.6"
+    react: ">=18.0.0"
+    use-sync-external-store: ">=1.2.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+    use-sync-external-store:
+      optional: true
+  checksum: 10c0/dad96c6c123fda088c583d5df6692e9245cd207583078dc15f93d255a67b0f346bad4535545c98852ecde93d254812a0c799579dfde2ab595016b99fbe20e4d5
   languageName: node
   linkType: hard
 
