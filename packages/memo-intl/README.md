@@ -47,6 +47,7 @@ const formattedPrice = MIntl.NumberFormat('fr-FR', {
    currency: 'EUR',
    notation: 'compact',
    minimumFractionDigits: 2,
+   maximumFractionDigits: 2,
 }).format(row.price);
 ```
 
