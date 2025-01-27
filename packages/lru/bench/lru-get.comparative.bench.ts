@@ -16,12 +16,12 @@ describe(`LRU.get comparison`, async () => {
     prepopulate: seeds,
   });
 
-  bench(`@httpx/lru@${lrus['@httpx/lru'].version}`, () => {
+  bench(`@httpx/lru@${lrus['@httpx/lru'].version}.get()`, () => {
     seeds.forEach(({ key }) => lrus['@httpx/lru'].cache.get(key));
   });
 
   bench(
-    `@httpx/lru@${lrus['@httpx/lru(compiled)']?.version ?? 'N/A'} - compiled`,
+    `@httpx/lru@${lrus['@httpx/lru(compiled)']?.version ?? 'N/A'}.get() - compiled`,
     () => {
       if ('@httpx/lru(compiled)' in lrus) {
         seeds.forEach(({ key }) =>
@@ -31,10 +31,10 @@ describe(`LRU.get comparison`, async () => {
     }
   );
 
-  bench(`quick-lru@${lrus['quick-lru'].version}`, () => {
+  bench(`quick-lru@${lrus['quick-lru'].version}.get()`, () => {
     seeds.forEach(({ key }) => lrus['quick-lru'].cache.get(key));
   });
-  bench(`lru-cache@${lrus['lru-cache'].version}`, () => {
+  bench(`lru-cache@${lrus['lru-cache'].version}.get()`, () => {
     seeds.forEach(({ key }) => lrus['lru-cache'].cache.get(key));
   });
 });
