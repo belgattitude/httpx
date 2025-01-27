@@ -1,0 +1,40 @@
+import { bench, describe } from 'vitest';
+
+import { getLruCaches } from './get-lru-caches';
+
+describe(`LRU.get comparison`, async () => {
+  const SEEDS_COUNT = 1000;
+  const MAX_SIZE = 500;
+
+  const seeds = Array.from({ length: SEEDS_COUNT }).map((_, i) => ({
+    key: `key-${i}`,
+    value: `value-${i}`,
+  }));
+
+  const lrus = await getLruCaches({
+    maxSize: MAX_SIZE,
+    prepopulate: seeds,
+  });
+
+  bench(`@httpx/lru@${lrus['@httpx/lru'].version}`, () => {
+    seeds.forEach(({ key }) => lrus['@httpx/lru'].cache.get(key));
+  });
+
+  bench(
+    `@httpx/lru@${lrus['@httpx/lru(compiled)']?.version ?? 'N/A'} - compiled`,
+    () => {
+      if ('@httpx/lru(compiled)' in lrus) {
+        seeds.forEach(({ key }) =>
+          lrus['@httpx/lru(compiled)']!.cache.get(key)
+        );
+      }
+    }
+  );
+
+  bench(`quick-lru@${lrus['quick-lru'].version}`, () => {
+    seeds.forEach(({ key }) => lrus['quick-lru'].cache.get(key));
+  });
+  bench(`lru-cache@${lrus['lru-cache'].version}`, () => {
+    seeds.forEach(({ key }) => lrus['lru-cache'].cache.get(key));
+  });
+});

@@ -2680,6 +2680,39 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@httpx/lru@workspace:packages/lru":
+  version: 0.0.0-use.local
+  resolution: "@httpx/lru@workspace:packages/lru"
+  dependencies:
+    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@belgattitude/eslint-config-bases": "npm:6.20.0"
+    "@httpx/devtools-vitest": "workspace:^"
+    "@size-limit/file": "npm:11.1.6"
+    "@size-limit/webpack": "npm:11.1.6"
+    "@types/lodash-es": "npm:4.17.12"
+    browserslist: "npm:4.24.4"
+    browserslist-to-esbuild: "npm:2.1.1"
+    cross-env: "npm:7.0.3"
+    es-check: "npm:8.0.1"
+    esbuild: "npm:0.24.2"
+    eslint: "npm:8.57.1"
+    lru-cache: "npm:11.0.2"
+    npm-run-all2: "npm:7.0.2"
+    prettier: "npm:3.4.2"
+    publint: "npm:0.3.2"
+    quick-lru: "npm:7.0.0"
+    rimraf: "npm:6.0.1"
+    rollup: "npm:4.32.0"
+    size-limit: "npm:11.1.6"
+    tsup: "npm:8.3.6"
+    typedoc: "npm:0.27.6"
+    typedoc-plugin-markdown: "npm:4.4.1"
+    typescript: "npm:5.7.3"
+    vitest: "npm:3.0.4"
+    webpack: "npm:5.97.1"
+  languageName: unknown
+  linkType: soft
+
 "@httpx/memo-intl@workspace:^, @httpx/memo-intl@workspace:packages/memo-intl":
   version: 0.0.0-use.local
   resolution: "@httpx/memo-intl@workspace:packages/memo-intl"
@@ -12039,17 +12072,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:11.0.2, lru-cache@npm:^11.0.0":
+  version: 11.0.2
+  resolution: "lru-cache@npm:11.0.2"
+  checksum: 10c0/c993b8e06ead0b24b969c1dbb5b301716aed66e320e9014a80012f5febe280b438f28ff50046b2c55ff404e889351ccb332ff91f8dd175a21f5eae80e3fb155f
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0, lru-cache@npm:^10.4.3":
   version: 10.4.3
   resolution: "lru-cache@npm:10.4.3"
   checksum: 10c0/ebd04fbca961e6c1d6c0af3799adcc966a1babe798f685bb84e6599266599cd95d94630b10262f5424539bc4640107e8a33aa28585374abf561d30d16f4b39fb
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:^11.0.0":
-  version: 11.0.1
-  resolution: "lru-cache@npm:11.0.1"
-  checksum: 10c0/8bad6603dc67eb5b03520fba05bce5df6473dbba58ac4c6067ed088d29225a0a04416bb1462acd8c1f819d1fbf37920446a1c36bafd9c384bcc54cee0d3b697a
   languageName: node
   linkType: hard
 
@@ -14840,7 +14873,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"quick-lru@npm:^7.0.0":
+"quick-lru@npm:7.0.0, quick-lru@npm:^7.0.0":
   version: 7.0.0
   resolution: "quick-lru@npm:7.0.0"
   checksum: 10c0/d46e3dc6d2f79f83d3dc852b32b3d9fcf5337bf5b4016122c1b729aa7bcd54dd79b2f3cb36b59a5a3f5c30443ecfbc9e7d400cfc30feedd8d58d3d4213d08a18
