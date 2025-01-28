@@ -286,12 +286,12 @@ const treeNodes: TreeNode<CustomValue>[] = [
 
 ## Bundle size
 
-Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/treeu/.size-limit.cjs)
+Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/treeu/.size-limit.ts)
 
 | Scenario (esm)                                   | Size (compressed) |
 |--------------------------------------------------|------------------:|
-| `import { DfsTreeSearch } from '@httpx/treeu`       |            ~ 350B |
-| `import { FlatTreeWsMapper } from '@httpx/treeu` |            ~ 800B |
+| `import { DfsTreeSearch } from '@httpx/treeu`       |            ~ 270B |
+| `import { FlatTreeWsMapper } from '@httpx/treeu` |            ~ 802B |
 
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/treeu@latest).
