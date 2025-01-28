@@ -1,0 +1,15 @@
+---
+"@httpx/lru": patch
+---
+
+Update browserslist minimums
+
+```
+defaults
+chrome >= 96
+firefox >= 94
+edge >= 91
+safari >= 14
+ios >= 14
+opera >= 83
+```
