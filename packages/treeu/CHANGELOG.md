@@ -1,5 +1,22 @@
 # @httpx/treeu
 
+## 0.4.11
+
+### Patch Changes
+
+- [#1861](https://github.com/belgattitude/httpx/pull/1861) [`ef8940e`](https://github.com/belgattitude/httpx/commit/ef8940ec444138720cf043784fdbac030ddfeb3c) Thanks [@belgattitude](https://github.com/belgattitude)! - Update browserslist minimums
+
+  ```
+  # Supported browsers
+  defaults
+  chrome >= 96
+  firefox >= 90
+  edge >= 19
+  safari >= 14
+  ios >= 14
+  opera >= 90
+  ```
+
 ## 0.4.10
 
 ### Patch Changes
