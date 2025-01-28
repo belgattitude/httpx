@@ -12,20 +12,17 @@ describe(`LRU.set comparison`, async () => {
     maxSize: 500,
   });
 
-  bench(`@httpx/lru@${lrus['@httpx/lru'].version}.set()`, () => {
+  bench(`@httpx/lru.set()`, () => {
     seeds.forEach(({ key, value }) => lrus['@httpx/lru'].cache.set(key, value));
   });
 
-  bench(
-    `@httpx/lru@${lrus['@httpx/lru(compiled)']?.version ?? 'N/A'}.set() - compiled`,
-    () => {
-      if ('@httpx/lru(compiled)' in lrus) {
-        seeds.forEach(({ key, value }) =>
-          lrus['@httpx/lru(compiled)']!.cache.set(key, value)
-        );
-      }
+  bench(`@httpx/lru.set() - compiled`, () => {
+    if ('@httpx/lru(compiled)' in lrus) {
+      seeds.forEach(({ key, value }) =>
+        lrus['@httpx/lru(compiled)']!.cache.set(key, value)
+      );
     }
-  );
+  });
 
   bench(`quick-lru@${lrus['quick-lru'].version}.set()`, () => {
     seeds.forEach(({ key, value }) => lrus['quick-lru'].cache.set(key, value));
