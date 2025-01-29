@@ -25,9 +25,9 @@ $ pnpm add @httpx/memo-intl
 
 - 👉&nbsp; Don't re-create the same Intl instance for the same options (memoized).
 - 👉&nbsp; Keep the [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) api untouched. Just replace `new Intl.NumberFormat` by `MIntl.NumberFormat`...
-- 👉&nbsp; Up to 20x faster than non-memoized Intl constructors.
+- 👉&nbsp; Up to 30x faster than non-memoized Intl constructors.
 - 👉&nbsp; Decrease memory usage, unwanted memory leaks and garbage collection pressure.
-- 👉&nbsp; Max out 50 cache instances by default with [quick-lru](https://github.com/sindresorhus/quick-lru).
+- 👉&nbsp; Max out 50 cache instances by default with [@httpx/lru](https://github.com/belgattitude/httpx/tree/main/packages/lru#readme).
 - 👉&nbsp; Lightweight. [Node, browser and edge support](#compatibility).
 
 ## Documentation
@@ -76,22 +76,30 @@ Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/htt
 [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 
-`IntlNumberFormat(locale, options) x 10_000`, see [bench](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/bench/m-intl.bench.ts) for details. 
+See [bench](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/bench) for details. 
 
 ```
- RUN  v1.6.0 /home/sebastien/github/httpx/packages/memo-intl
+ RUN  v3.0.4 /home/sebastien/github/httpx/packages/memo-intl
 
- ✓ bench/m-intl.bench.ts (2) 3626ms
-   ✓ MIntl benchmarks (2) 3624ms
-     name                                                  hz     min      max    mean     p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.NumberFormat()`        108.24  8.6995  10.5676  9.2388  9.8779  10.5676  10.5676  10.5676  ±5.22%       10   fastest
-   · Without memoization `new Intl.NumberFormat()`  5.0021  192.58   210.78  199.92  201.81   210.78   210.78   210.78  ±1.81%       10
 
+ ✓ bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks 9266ms
+     name                                                   hz      min      max     mean      p75      p99     p995     p999     rme  samples
+   · With memoization `MIntl.NumberFormatter()`        61.4100  16.2165  16.3436  16.2840  16.2996  16.3436  16.3436  16.3436  ±0.18%       10   fastest
+   · Without memoization `new Intl.NumberFormatter()`   1.9086   495.64   548.86   523.95   534.82   548.86   548.86   548.86  ±2.22%       10
+
+ ✓ bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks 2002ms
+     name                                                hz      min     max    mean     p75     p99    p995    p999      rme  samples
+   · With memoization `MIntl.DateFormatter()`        336.49   2.9111  3.1260  2.9718  2.9825  3.1260  3.1260  3.1260   ±1.57%       10   fastest
+   · Without memoization `new Intl.DateFormatter()`  9.4553  91.5618  159.43  105.76  107.41  159.43  159.43  159.43  ±13.45%       10
 
  BENCH  Summary
 
-  With memoization `MIntl.NumberFormatter()` - bench/m-intl.bench.ts > MIntl benchmarks
-    21.64x faster than Without memoization `new Intl.NumberFormatter()`
+  With memoization `MIntl.DateFormatter()` - bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks
+    35.59x faster than Without memoization `new Intl.DateFormatter()`
+
+  With memoization `MIntl.NumberFormatter()` - bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks
+    32.18x faster than Without memoization `new Intl.NumberFormatter()`
+
 ```
 
 ## Bundle size
@@ -100,23 +108,23 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario                                       | Size with deps (compressed) |
 |------------------------------------------------|----------------------------:|
-| `import { MIntl } from '@httpx/memo-intl'      |                     ~ 1.2kB |
+| `import { MIntl } from '@httpx/memo-intl'      |                      ~ 900B |
 
 > Note that per-se the library weigths less than 300 bytes, the quick-lru dependency makes the difference.
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/memo-intl@latest).
 
 ## Compatibility
 
-| Level        | CI | Description                                                                                                                                                                                                                                                                                                                            |
-|--------------|----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅  | CI for 18.x, 20.x & 22.x.                                                                                                                                                                                                                                                                                                              |
-| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                          |
-| Browserslist | ✅  | [> 96%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gMTksc2FmYXJpID49IDEyLGlvcyA%2BPSAxMixvcGVyYSA%2BPSA3Nw%3D%3D) on 12/2023. Mins to [Chrome 96+, Firefox 90+, Edge 19+, iOS 12+, Safari 12+, Opera 77+](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.browserslistrc) |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                     | 
-| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                       | 
-| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                            |
-| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                             |
-| Performance| ✅  | Monitored with with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                |
+| Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                  |
+|--------------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| Node         | ✅  | CI for 18.x, 20.x & 22.x.                                                                                                                                                                                                                                                                                                                                    |
+| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                |
+| Browsers   | ✅  | [> 94%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NixmaXJlZm94ID49IDkwLGVkZ2UgPj0gOTEsc2FmYXJpID49IDE0LGlvcyA%2BPSAxNCxvcGVyYSA%2BPSA5MA%3D%3D) on 01/2025. Mins to [defaults, chrome >= 96,firefox >= 90,edge >= 91,safari >= 14,ios >= 14,opera >= 90](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.browserslistrc) |
+| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                           | 
+| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                             | 
+| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                |
+| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                 |
+| Performance| ✅  | Monitored with with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                    |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
