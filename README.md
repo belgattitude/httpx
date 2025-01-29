@@ -44,7 +44,7 @@ Fast and lightweight utility functions to check if a value is a plain object.
 [![downloads](https://img.shields.io/npm/dm/@httpx/plain-object?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/plain-object)
 
 
-### [@httpx/lru](https://github.com/belgattitude/httpx/tree/main/packages/treeu#readme)
+### [@httpx/lru](https://github.com/belgattitude/httpx/tree/main/packages/lru#readme)
 
 Fast and lightweight lru caches collection
 

@@ -20,7 +20,7 @@ $ pnpm add @httpx/lru
 
 ## Features
 
-- 📐&nbsp; Lightweight (starts at [~600B](#bundle-size)) 
+- 📐&nbsp; Lightweight (starts at [~620B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
@@ -28,9 +28,9 @@ $ pnpm add @httpx/lru
 
 ```typescript
 // bundle size: ~500B
-import { TinyLRU } from '@httpx/lru';
+import { LRUCache } from '@httpx/lru';
 
-const lru = new TinyLRU({ maxSize: 1000 });
+const lru = new LRUCache({ maxSize: 1000 });
 
 lru.set('🦄', ['cool', 'stuff']);
 
@@ -45,6 +45,55 @@ lru.clear();
 
 ## Usage
 
+### Iterable
+
+```typescript
+import { LRUCache } from '@httpx/lru';
+
+const lru = new LRUCache({ maxSize: 2 });
+
+// 👇 Fill the cache with 3 entries
+lru.set('key1', 'value1');
+lru.set('key2', 'value2');
+lru.set('key3', 'value3'); // 👈 Will evict key1 as maxSize is 2
+
+lru.get('key2'); // 👈 Trigger a get to move key2 to the head
+
+const results = [];
+
+// 🖖 Iterate over the cache entries
+for (const [key, value] of lru) {
+  results.push([key, value]);
+}
+
+expect(results).toStrictEqual([
+   ['key3', 'value3'], // 👈  Least recently used first
+   ['key2', 'value2'], // 👈  Most recently used last
+]);
+```
+
+### Callbacks
+
+#### onEviction callback
+ 
+Can be useful to clean up resources or trigger side effects. onEviction callback 
+is called right before an entry is evicted.
+
+```typescript
+const fn = vi.fn();
+
+const lru = new LRUCache({
+  maxSize: 2,
+  onEviction: (key, value) => {
+    fn(key, value);
+  },
+});
+lru.set('key1', 'value1');
+lru.set('key2', 'value2');
+lru.set('key3', 'value3'); // 👈 Will evict key1 due to capacity
+expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
+```
+
 ## Benchmarks
 
 > Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx). 
@@ -55,27 +104,31 @@ lru.clear();
  RUN  v3.0.4 /home/sebastien/github/httpx/packages/lru
 
 
- ✓ bench/tiny-lru/tiny-lru-get.bench.ts > TinyLRU.get comparison 2477ms
-     name                                 hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/lru.get() - compiled   68,854.72  0.0123  0.4935  0.0145  0.0145  0.0203  0.0257  0.0733  ±0.48%    34428
-   · quick-lru@7.0.0.get()         24,138.89  0.0343  0.6402  0.0414  0.0412  0.1020  0.1334  0.3009  ±0.76%    12070   slowest
-   · lru-cache@11.0.2.get()       108,310.41  0.0078  0.3333  0.0092  0.0097  0.0113  0.0155  0.0437  ±0.39%    54156   fastest
+ ✓ bench/lru-cache/lru-cache-get.bench.ts > LRUCache.get comparison 2464ms
+     name                                hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · @httpx/lru                   37,264.34  0.0248  0.4753  0.0268  0.0261  0.0431  0.0657  0.0691  ±0.30%    18633
+   · @httpx/lru.get() - compiled  36,992.39  0.0250  0.0870  0.0270  0.0264  0.0529  0.0533  0.0578  ±0.25%    18497
+   · quick-lru@7.0.0.get()        12,111.96  0.0772  0.3672  0.0826  0.0823  0.0980  0.1904  0.2396  ±0.34%     6056   slowest
+   · lru-cache@11.0.2.get()       47,699.16  0.0185  0.0784  0.0210  0.0206  0.0372  0.0378  0.0597  ±0.23%    23850   fastest
 
- ✓ bench/tiny-lru/tiny-lru-set.bench.ts > TinyLRU.set comparison 2448ms
-     name                                hz     min      max    mean     p75     p99    p995     p999      rme  samples
-   · @httpx/lru.set() - compiled   9,567.32  0.0513   1.9479  0.1045  0.1030  0.3086  0.5215   1.4154   ±2.25%     4784
-   · quick-lru@7.0.0.set()        30,591.01  0.0257   1.6706  0.0327  0.0317  0.0785  0.1748   0.2440   ±1.06%    15296   fastest
-   · lru-cache@11.0.2.set()       11,392.88  0.0572   3.1955  0.0878  0.0847  0.2480  0.3641   1.6572   ±2.68%     5697
-                                                                                                                                                                                                                                    
- BENCH  Summary                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                    
-  lru-cache@11.0.2.get() - bench/tiny-lru/tiny-lru-get.bench.ts > TinyLRU.get comparison                                                                                                                                                                                                                                                                                                  
-    1.63x faster than @httpx/lru                                                                                                                                                                                                    
-    4.49x faster than quick-lru@7.0.0.get()                                                                                                                                                                                         
+ ✓ bench/lru-cache/lru-cache-set.bench.ts > LRUCache.set comparison 2433ms
+     name                                hz     min     max    mean     p75     p99    p995    p999      rme  samples
+   · @httpx/lru.set()              4,365.61  0.1218  8.4117  0.2291  0.1538  1.7588  7.6830  8.1496  ±12.66%     2183   slowest
+   · @httpx/lru.set() - compiled   7,859.02  0.0934  1.3761  0.1272  0.1215  0.3422  0.6207  1.3161   ±1.91%     3930
+   · quick-lru@7.0.0.set()        16,306.63  0.0515  1.6058  0.0613  0.0571  0.1982  0.2514  0.3188   ±1.07%     8154   fastest
+   · lru-cache@11.0.2.set()        7,639.91  0.1060  1.4439  0.1309  0.1315  0.2578  0.2918  1.3275   ±1.24%     3820
 
-  quick-lru@7.0.0.set() - bench/tiny-lru/tiny-lru-set.bench.ts > TinyLRU.set comparison
-    2.69x faster than lru-cache@11.0.2.set()
-    6.35x faster than @httpx/lru.set()
+ BENCH  Summary
+
+  lru-cache@11.0.2.get() - bench/lru-cache/lru-cache-get.bench.ts > LRUCache.get comparison
+    1.28x faster than @httpx/lru
+    1.29x faster than @httpx/lru.get() - compiled
+    3.94x faster than quick-lru@7.0.0.get()
+
+  quick-lru@7.0.0.set() - bench/lru-cache/lru-cache-set.bench.ts > LRUCache.set comparison
+    2.07x faster than @httpx/lru.set() - compiled
+    2.13x faster than lru-cache@11.0.2.set()
+    3.74x faster than @httpx/lru.set()
  
 ```
 
@@ -83,11 +136,11 @@ lru.clear();
 
 ## Bundle size
 
-Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/lru/.size-limit.cjs)
+Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/lru/.size-limit.ts)
 
 | Scenario (esm)                                     | Size (compressed) |
 |----------------------------------------------------|------------------:|
-| `import { LRUCache  } from '@httpx/lru`            |            ~ 510B |
+| `import { LRUCache  } from '@httpx/lru`            |            ~ 620B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
 
