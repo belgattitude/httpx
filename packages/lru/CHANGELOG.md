@@ -1,5 +1,57 @@
 # @httpx/lru
 
+## 0.4.0
+
+### Minor Changes
+
+- [#1866](https://github.com/belgattitude/httpx/pull/1866) [`59e5b25`](https://github.com/belgattitude/httpx/commit/59e5b255d7658993c6524e5798a47ffbdca5380d) Thanks [@belgattitude](https://github.com/belgattitude)! - Add getOrInsert method
+
+  ```typescript
+  const lru = new LRUCache({ maxSize: 2 });
+  lru.set("key1", "value1");
+  lru.getOrInsert("key1", "value2"); // 👈 will not overwrite the value
+  console.log(lru.get("key1")); // value1
+  ```
+
+- [#1866](https://github.com/belgattitude/httpx/pull/1866) [`fa3287a`](https://github.com/belgattitude/httpx/commit/fa3287a512b9d39f684620cfabe6e303dd1af8a8) Thanks [@belgattitude](https://github.com/belgattitude)! - Rename TinyLRU into LRUCache
+
+- [#1866](https://github.com/belgattitude/httpx/pull/1866) [`59e5b25`](https://github.com/belgattitude/httpx/commit/59e5b255d7658993c6524e5798a47ffbdca5380d) Thanks [@belgattitude](https://github.com/belgattitude)! - Add iterator symbol
+
+  ```typescript
+  const lru = new LRUCache({ maxSize: 2 });
+  lru.set("key1", "value1");
+  lru.set("key2", "value2");
+  lru.set("key3", "value3");
+  // trigger a get to move key2 to the head
+  lru.get("key2");
+  const results = [];
+  // iterate over the cache entries
+  for (const [key, value] of lru) {
+    results.push([key, value]);
+  }
+  expect(results).toStrictEqual([
+    ["key3", "value3"], // Least recently used
+    ["key2", "value2"], // Most recently used
+  ]);
+  ```
+
+- [#1866](https://github.com/belgattitude/httpx/pull/1866) [`59e5b25`](https://github.com/belgattitude/httpx/commit/59e5b255d7658993c6524e5798a47ffbdca5380d) Thanks [@belgattitude](https://github.com/belgattitude)! - Add onEviction callback
+
+  ```typescript
+  const fn = vi.fn();
+
+  const lru = new LRUCacheLRU({
+    maxSize: 2,
+    onEviction: (key, value) => {
+      fn(key, value);
+    },
+  });
+  lru.set("key1", "value1");
+  lru.set("key2", "value2");
+  lru.set("key3", "value3"); // 👈 Will evict key1 due to capacity
+  expect(fn).toHaveBeenCalledExactlyOnceWith("key1", "value1");
+  ```
+
 ## 0.3.0
 
 ### Minor Changes
