@@ -2,7 +2,7 @@ import { bench } from 'vitest';
 
 import { MIntl } from '../src';
 
-describe('MIntl benchmarks', () => {
+describe('MIntl NumberFormatter benchmarks', () => {
   const nbRows = 10_000;
   const arrayMapperScenario = Array.from({ length: nbRows }).map((_v, idx) => ({
     productId: idx,

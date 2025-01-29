@@ -2680,7 +2680,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@httpx/lru@workspace:packages/lru":
+"@httpx/lru@workspace:^, @httpx/lru@workspace:packages/lru":
   version: 0.0.0-use.local
   resolution: "@httpx/lru@workspace:packages/lru"
   dependencies:
@@ -2720,6 +2720,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.17.3"
     "@belgattitude/eslint-config-bases": "npm:6.20.0"
     "@httpx/devtools-vitest": "workspace:^"
+    "@httpx/lru": "workspace:^"
     "@size-limit/file": "npm:11.1.6"
     "@size-limit/webpack": "npm:11.1.6"
     browserslist: "npm:4.24.4"
@@ -2731,7 +2732,6 @@ __metadata:
     npm-run-all2: "npm:7.0.2"
     prettier: "npm:3.4.2"
     publint: "npm:0.3.2"
-    quick-lru: "npm:^7.0.0"
     rimraf: "npm:6.0.1"
     rollup: "npm:4.32.1"
     size-limit: "npm:11.1.6"
@@ -14873,7 +14873,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"quick-lru@npm:7.0.0, quick-lru@npm:^7.0.0":
+"quick-lru@npm:7.0.0":
   version: 7.0.0
   resolution: "quick-lru@npm:7.0.0"
   checksum: 10c0/d46e3dc6d2f79f83d3dc852b32b3d9fcf5337bf5b4016122c1b729aa7bcd54dd79b2f3cb36b59a5a3f5c30443ecfbc9e7d400cfc30feedd8d58d3d4213d08a18

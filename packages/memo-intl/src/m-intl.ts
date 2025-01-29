@@ -1,14 +1,13 @@
-import QuickLRU from 'quick-lru';
-
+import { LRUCache } from '@httpx/lru';
 type CacheKey = string;
 
 type IntlLocale = string; // `${string}-${string}`;
 
 const maxSize = 50;
 
-const _cacheIntl = new QuickLRU<
-  CacheKey,
-  Intl.NumberFormat | Intl.DateTimeFormat
+const _cacheIntl = new LRUCache<
+  Intl.NumberFormat | Intl.DateTimeFormat,
+  CacheKey
 >({
   maxSize,
 });
