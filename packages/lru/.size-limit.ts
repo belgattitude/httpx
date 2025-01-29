@@ -2,14 +2,14 @@ import type { SizeLimitConfig } from 'size-limit';
 
 module.exports = [
   {
-    name: 'import { TinyLRU } (ESM)',
+    name: 'import { LRUCache } (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ TinyLRU }',
+    import: '{ LRUCache }',
     limit: '630B',
   },
   {
-    name: 'require { TinyLRU } (CJS)',
-    import: '{ TinyLRU }',
+    name: 'require { LRUCache } (CJS)',
+    import: '{ LRUCache }',
     path: ['dist/index.cjs'],
     limit: '730B',
   },

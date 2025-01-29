@@ -28,7 +28,7 @@ type Params<TValue, TKey extends SupportedKeys = string> = {
 /**
  * Double linked list based lru cache that supports get in O(1)
  */
-export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
+export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
   private maxSize: number;
   private touchOnHas: boolean;
   private onEviction: ((key: TKey, value: TValue) => void) | undefined;
@@ -38,13 +38,13 @@ export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
   private tail: Node<TValue, TKey> | null = null;
 
   /**
-   * Create a new TinyLRU instance
+   * Create a new LRUCache instance
    *
    * @example
    * ```typescript
-   * import { TinyLRU } from '@httpx/lru';
+   * import { LRUCache } from '@httpx/lru';
    *
-   * const lru = new TinyLRU({ maxSize: 1000 });
+   * const lru = new LRUCache({ maxSize: 1000 });
    * lru.set('🦄', ['cool', 'stuff']);
    * if (lru.has('🦄')) {;
    *  console.log(lru.get('🦄'));
@@ -139,7 +139,7 @@ export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
    *
    * @example
    * ```typescript
-   * const lru = new TinyLRU({ maxSize: 2 });
+   * const lru = new LRUCache({ maxSize: 2 });
    * lru.set('key1', 'value1');
    * lru.getOrInsert('key1', 'value2'); // 👈 will not overwrite the value
    * console.log(lru.get('key1')); // value1
@@ -194,7 +194,7 @@ export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
    * Iterate over the cache from the least recently used to the most recently used.
    *
    * ```typescript
-   * const lru = new TinyLRU({ maxSize: 2 });
+   * const lru = new LRUCache({ maxSize: 2 });
    * lru.set('key1', 'value1');
    * lru.set('key2', 'value2');
    * lru.set('key3', 'value3');

@@ -1,1 +1,1 @@
-export { TinyLRU } from './tiny-lru';
+export { LRUCache } from './lru-cache';

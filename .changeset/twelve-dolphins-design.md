@@ -7,7 +7,7 @@ Add onEviction callback
 ```typescript
 const fn = vi.fn();
 
-const lru = new TinyLRU({
+const lru = new LRUCacheLRU({
   maxSize: 2,
   onEviction: (key, value) => {
     fn(key, value);

@@ -1,9 +1,9 @@
-import { TinyLRU } from '../tiny-lru';
+import { LRUCache } from '../lru-cache';
 
-describe('TinyLRU', () => {
+describe('LRUCache', () => {
   describe('get/set', () => {
     it('should set a value in the cache', () => {
-      const lru = new TinyLRU({
+      const lru = new LRUCache({
         maxSize: 1,
       });
       lru.set('key', 'value');
@@ -13,7 +13,7 @@ describe('TinyLRU', () => {
   });
   describe('delete', () => {
     it('should properly delete a value and update size', () => {
-      const lru = new TinyLRU({
+      const lru = new LRUCache({
         maxSize: 2,
       });
       lru.set('key1', 'value1');
@@ -27,7 +27,7 @@ describe('TinyLRU', () => {
 
   describe('clear', () => {
     it('should properly clear all values and report size 0', () => {
-      const lru = new TinyLRU({
+      const lru = new LRUCache({
         maxSize: 2,
       });
       lru.set('key1', 'value1');
@@ -41,7 +41,7 @@ describe('TinyLRU', () => {
 
   describe('getOrInsert', () => {
     it('should not overwrite existing entry if exist', () => {
-      const lru = new TinyLRU({
+      const lru = new LRUCache({
         maxSize: 2,
       });
       lru.set('key', 'value');
@@ -50,7 +50,7 @@ describe('TinyLRU', () => {
       expect(lru.size).toBe(1);
     });
     it(`should add new entry if it doesn't exist`, () => {
-      const lru = new TinyLRU({
+      const lru = new LRUCache({
         maxSize: 2,
       });
       lru.set('key', 'value');
@@ -61,7 +61,7 @@ describe('TinyLRU', () => {
   });
   describe('iterable', () => {
     it('should be iterable with for const of and orders by least recently usage', () => {
-      const lru = new TinyLRU({
+      const lru = new LRUCache({
         maxSize: 2,
       });
       lru.set('key1', 'value1');
@@ -80,7 +80,7 @@ describe('TinyLRU', () => {
   });
   describe('eviction', () => {
     it('should evict items based on maxSize', () => {
-      const lru = new TinyLRU({
+      const lru = new LRUCache({
         maxSize: 2,
       });
       lru.set('key1', 'value1');
@@ -95,7 +95,7 @@ describe('TinyLRU', () => {
     it('should call onEviction with correct key and value', () => {
       const fn = vi.fn();
 
-      const lru = new TinyLRU({
+      const lru = new LRUCache({
         maxSize: 2,
         onEviction: (key, value) => {
           fn(key, value);

@@ -5,7 +5,7 @@
 Add iterator symbol
 
 ```typescript
-const lru = new TinyLRU({ maxSize: 2 });
+const lru = new LRUCache({ maxSize: 2 });
 lru.set('key1', 'value1');
 lru.set('key2', 'value2');
 lru.set('key3', 'value3');

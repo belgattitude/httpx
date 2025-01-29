@@ -2,7 +2,7 @@ import { bench, describe } from 'vitest';
 
 import { getLruCaches } from '../get-lru-caches';
 
-describe(`TinyLRU.get comparison`, async () => {
+describe(`LRUCache.get comparison`, async () => {
   const SEEDS_COUNT = 1000;
   const MAX_SIZE = 500;
 

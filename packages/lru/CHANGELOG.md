@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- [`76556f0`](https://github.com/belgattitude/httpx/commit/76556f07d831a8f0d21943817e08f1f08a499c5e) - Rename LRUCache in TinyLRU
+- [`76556f0`](https://github.com/belgattitude/httpx/commit/76556f07d831a8f0d21943817e08f1f08a499c5e) - Rename LRUCache in LRUCache
 
 ## 0.2.1
 
