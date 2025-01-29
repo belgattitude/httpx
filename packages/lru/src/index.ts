@@ -1,1 +1,1 @@
-export { BaseLru } from './base-lru';
+export { TinyLRU } from './tiny-lru';

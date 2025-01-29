@@ -4,14 +4,14 @@
  */
 module.exports = [
   {
-    name: 'import { BaseLru } (ESM)',
+    name: 'import { TinyLRU } (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ BaseLru }',
+    import: '{ TinyLRU }',
     limit: '600B',
   },
   {
-    name: 'require { BaseLru } (CJS)',
-    import: '{ BaseLru }',
+    name: 'require { TinyLRU } (CJS)',
+    import: '{ TinyLRU }',
     path: ['dist/index.cjs'],
     limit: '700B',
   },

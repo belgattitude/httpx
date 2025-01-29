@@ -26,6 +26,22 @@ $ pnpm add @httpx/lru
 
 ## Documentation
 
+```typescript
+// bundle size: ~500B
+import { TinyLRU } from '@httpx/lru';
+
+const lru = new TinyLRU({ maxSize: 1000 });
+
+lru.set('🦄', ['cool', 'stuff']);
+
+if (lru.has('🦄')) {;
+ console.log(lru.get('🦄'));
+ // ['cool', 'stuff']
+}
+
+lru.delete('🦄');
+lru.clear();
+```
 
 ## Usage
 
@@ -36,25 +52,34 @@ $ pnpm add @httpx/lru
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
-RUN  v3.0.4 /home/sebastien/github/httpx/packages/lru
+ RUN  v3.0.4 /home/sebastien/github/httpx/packages/lru
 
- ✓ bench/lru-get.comparative.bench.ts > LRU.get comparison 2479ms
+
+ ✓ bench/tiny-lru/tiny-lru-get.bench.ts > TinyLRU.get comparison 2477ms
      name                                 hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/lru@0.1.0              67,479.50  0.0114  0.2499  0.0148  0.0151  0.0307  0.0370  0.0791  ±0.37%    33740
-   · @httpx/lru@0.1.0 - compiled   67,544.83  0.0116  0.5466  0.0148  0.0151  0.0249  0.0323  0.0558  ±0.33%    33773
-   · quick-lru@7.0.0               26,237.48  0.0318  0.4600  0.0381  0.0389  0.0721  0.1371  0.1807  ±0.54%    13119   slowest
-   · lru-cache@11.0.2             111,356.68  0.0075  0.3962  0.0090  0.0090  0.0126  0.0193  0.0476  ±0.35%    55679   fastest
+   · @httpx/lru.get() - compiled   68,854.72  0.0123  0.4935  0.0145  0.0145  0.0203  0.0257  0.0733  ±0.48%    34428
+   · quick-lru@7.0.0.get()         24,138.89  0.0343  0.6402  0.0414  0.0412  0.1020  0.1334  0.3009  ±0.76%    12070   slowest
+   · lru-cache@11.0.2.get()       108,310.41  0.0078  0.3333  0.0092  0.0097  0.0113  0.0155  0.0437  ±0.39%    54156   fastest
 
- ✓ bench/lru-set.comparative.bench.ts > LRU.set comparison 2433ms
-     name                                hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/lru@0.1.0              8,273.94  0.0555  5.5043  0.1209  0.0850  1.5624  2.9561  3.3352  ±7.76%     4137   slowest
-   · @httpx/lru@0.1.0 - compiled   8,935.53  0.0500  3.0366  0.1119  0.1373  0.3607  0.5755  1.7015  ±2.91%     4468
-   · quick-lru@7.0.0              24,714.73  0.0254  1.5023  0.0405  0.0428  0.1489  0.2337  0.4687  ±1.43%    12358   fastest
-   · lru-cache@11.0.2             11,027.03  0.0584  2.3836  0.0907  0.0865  0.2830  0.5085  1.4927  ±2.38%     5514
+ ✓ bench/tiny-lru/tiny-lru-set.bench.ts > TinyLRU.set comparison 2448ms
+     name                                hz     min      max    mean     p75     p99    p995     p999      rme  samples
+   · @httpx/lru.set() - compiled   9,567.32  0.0513   1.9479  0.1045  0.1030  0.3086  0.5215   1.4154   ±2.25%     4784
+   · quick-lru@7.0.0.set()        30,591.01  0.0257   1.6706  0.0327  0.0317  0.0785  0.1748   0.2440   ±1.06%    15296   fastest
+   · lru-cache@11.0.2.set()       11,392.88  0.0572   3.1955  0.0878  0.0847  0.2480  0.3641   1.6572   ±2.68%     5697
+                                                                                                                                                                                                                                    
+ BENCH  Summary                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                    
+  lru-cache@11.0.2.get() - bench/tiny-lru/tiny-lru-get.bench.ts > TinyLRU.get comparison                                                                                                                                                                                                                                                                                                  
+    1.63x faster than @httpx/lru                                                                                                                                                                                                    
+    4.49x faster than quick-lru@7.0.0.get()                                                                                                                                                                                         
+
+  quick-lru@7.0.0.set() - bench/tiny-lru/tiny-lru-set.bench.ts > TinyLRU.set comparison
+    2.69x faster than lru-cache@11.0.2.set()
+    6.35x faster than @httpx/lru.set()
  
 ```
 
-> See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/lru/bench/comparative.bench.ts) for details.
+> See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/lru/bench) for details.
 
 ## Bundle size
 

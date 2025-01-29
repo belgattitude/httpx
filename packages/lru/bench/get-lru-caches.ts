@@ -5,11 +5,11 @@ import {
   devDependencies,
   version,
 } from '../package.json' with { type: 'json' };
-import { BaseLru } from '../src';
+import { TinyLRU } from '../src';
 
 const versions = devDependencies;
 
-const asyncLoadCompiled = async (): Promise<typeof BaseLru | null> => {
+const asyncLoadCompiled = async (): Promise<typeof TinyLRU | null> => {
   return await import(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore to apply benchmarks assert must be built
@@ -18,7 +18,7 @@ const asyncLoadCompiled = async (): Promise<typeof BaseLru | null> => {
   )
     .then((mod) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      return mod.BaseLru as unknown as typeof BaseLru;
+      return mod.TinyLRU as unknown as typeof TinyLRU;
     })
     .catch((_e) => {
       console.warn('Requires httpx/lru to be built (yarn build)');
@@ -35,7 +35,7 @@ export const getLruCaches = async (params: {
   const { maxSize, prepopulate } = params;
   const caches = {
     '@httpx/lru': {
-      cache: new BaseLru({ maxSize }),
+      cache: new TinyLRU({ maxSize }),
       version: version,
     },
     ...(LRUCacheCompiled

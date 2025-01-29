@@ -19,13 +19,30 @@ type Params<TValue, TKey extends SupportedKeys = string> = {
 /**
  * Double linked list based lru cache that supports get in O(1)
  */
-export class BaseLru<TValue = unknown, TKey extends SupportedKeys = string> {
+export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
   private maxSize: number;
 
   private cache: Map<TKey, DataType<TValue, TKey>>;
   private head: Node<TValue, TKey> | null = null;
   private tail: Node<TValue, TKey> | null = null;
 
+  /**
+   * Create a new TinyLRU instance
+   *
+   * @example
+   * ```typescript
+   * import { TinyLRU } from '@httpx/lru';
+   *
+   * const lru = new TinyLRU({ maxSize: 1000 });
+   * lru.set('🦄', ['cool', 'stuff']);
+   * if (lru.has('🦄')) {;
+   *  console.log(lru.get('🦄'));
+   *  // ['cool', 'stuff']
+   * }
+   * lru.delete('🦄');
+   * lru.clear();
+   * ```
+   */
   constructor(params: Params<TValue, TKey>) {
     const { maxSize } = params;
     if (!Number.isSafeInteger(maxSize) && maxSize < 1) {

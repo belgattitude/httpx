@@ -2,7 +2,7 @@ import { bench, describe } from 'vitest';
 
 import { getLruCaches } from '../get-lru-caches';
 
-describe(`BaseLru.get comparison`, async () => {
+describe(`TinyLRU.get comparison`, async () => {
   const SEEDS_COUNT = 1000;
   const MAX_SIZE = 500;
 
@@ -16,11 +16,11 @@ describe(`BaseLru.get comparison`, async () => {
     prepopulate: seeds,
   });
 
-  bench(`@httpx/lru}`, () => {
+  bench(`@httpx/lru`, () => {
     seeds.forEach(({ key }) => lrus['@httpx/lru'].cache.get(key));
   });
 
-  bench(`@httpx/lru}.get() - compiled`, () => {
+  bench(`@httpx/lru.get() - compiled`, () => {
     if ('@httpx/lru(compiled)' in lrus) {
       seeds.forEach(({ key }) => lrus['@httpx/lru(compiled)']!.cache.get(key));
     }

@@ -1,9 +1,9 @@
-import { BaseLru } from '../base-lru';
+import { TinyLRU } from '../tiny-lru';
 
-describe('BaseLru', () => {
+describe('TinyLRU', () => {
   describe('Base.get/set', () => {
     it('should set a value in the cache', () => {
-      const lru = new BaseLru({
+      const lru = new TinyLRU({
         maxSize: 1,
       });
       lru.set('key', 'value');
@@ -12,7 +12,7 @@ describe('BaseLru', () => {
   });
   describe('Eviction', () => {
     it('should evict items based on maxSize', () => {
-      const lru = new BaseLru({
+      const lru = new TinyLRU({
         maxSize: 2,
       });
       lru.set('key1', 'value1');
