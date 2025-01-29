@@ -13,6 +13,15 @@ type DataType<TValue, TKey extends SupportedKeys = string> = {
 
 type Params<TValue, TKey extends SupportedKeys = string> = {
   maxSize: number;
+  /**
+   * If true, the item will be marked as recently used when calling has.
+   * @default false
+   */
+  touchOnHas?: boolean;
+  /**
+   * Callback that will be called before an item is evicted from the cache.
+   * Useful for side effects or for items like object URLs that need explicit cleanup (revokeObjectURL).
+   */
   onEviction?: (key: TKey, value: TValue) => void;
 };
 
@@ -21,6 +30,8 @@ type Params<TValue, TKey extends SupportedKeys = string> = {
  */
 export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
   private maxSize: number;
+  private touchOnHas: boolean;
+  private onEviction: ((key: TKey, value: TValue) => void) | undefined;
 
   private cache: Map<TKey, DataType<TValue, TKey>>;
   private head: Node<TValue, TKey> | null = null;
@@ -39,76 +50,57 @@ export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
    *  console.log(lru.get('🦄'));
    *  // ['cool', 'stuff']
    * }
+   * console.log(lru.size); // 1
    * lru.delete('🦄');
+   * console.log(lru.size); // 0
    * lru.clear();
    * ```
    */
   constructor(params: Params<TValue, TKey>) {
-    const { maxSize } = params;
+    const { maxSize, touchOnHas = false, onEviction } = params;
     if (!Number.isSafeInteger(maxSize) && maxSize < 1) {
       throw new TypeError(
         'Invalid maxSize param. Must be an integer greater than zero'
       );
     }
+    this.touchOnHas = touchOnHas;
+    this.onEviction = onEviction;
     this.maxSize = maxSize;
     this.cache = new Map();
   }
 
-  private moveToHead(node: Node<TValue, TKey>): void {
-    if (node === this.head) {
-      return;
-    }
-    if (node.prev) {
-      node.prev.next = node.next;
-    }
-
-    if (node.next) {
-      node.next.prev = node.prev;
-    }
-
-    if (node === this.tail) {
-      this.tail = node.prev;
-    }
-
-    node.next = this.head;
-    node.prev = null;
-
-    if (this.head) {
-      this.head.prev = node;
-    }
-
-    this.head = node;
-
-    if (!this.tail) {
-      this.tail = node;
-    }
-  }
-
-  private removeTail() {
-    if (!this.tail) {
-      return;
-    }
-
-    this.cache.delete(this.tail.key);
-
-    if (this.tail.prev) {
-      this.tail = this.tail.prev;
-      this.tail.next = null;
-    } else {
-      this.head = this.tail = null;
-    }
-  }
-
-  size(): number {
+  /**
+   * Return the current size of the cache
+   */
+  get size(): number {
     return this.cache.size;
   }
 
+  /**
+   * Clear all entries from the cache
+   */
   clear(): void {
     this.cache.clear();
   }
 
-  has(key: TKey): boolean {
-    return this.cache.has(key);
+  /**
+   * Check if an item exists.
+   */
+  has(
+    key: TKey,
+    options?: {
+      /**
+       * If true, the item will be marked as recently used.
+       * @default option touchOnHas in the constructor
+       */
+      touch?: boolean;
+    }
+  ): boolean {
+    const hasEntry = this.cache.has(key);
+    if (hasEntry && (options?.touch ?? this.touchOnHas) === true) {
+      this.moveToHead(this.cache.get(key)!.node);
+    }
+    return hasEntry;
   }
 
   set(key: TKey, value: TValue): boolean {
@@ -116,18 +108,18 @@ export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
       const data = this.cache.get(key)!;
       data.value = value;
       this.moveToHead(data.node);
-    } else {
-      const newNode = new Node(key);
-      const data: DataType<TValue, TKey> = { value, node: newNode };
-
-      this.cache.set(key, data);
-      this.moveToHead(newNode);
-
-      if (this.cache.size > this.maxSize) {
-        this.removeTail();
-      }
+      return false;
     }
-    return this.cache.has(key);
+    const newNode = new Node(key);
+    const data: DataType<TValue, TKey> = { value, node: newNode };
+
+    this.cache.set(key, data);
+    this.moveToHead(newNode);
+
+    if (this.cache.size > this.maxSize) {
+      this.removeTail();
+    }
+    return true;
   }
 
   get(key: TKey): TValue | undefined {
@@ -139,6 +131,37 @@ export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
     this.moveToHead(data.node);
 
     return data.value;
+  }
+
+  /**
+   * Get an item from the cache without overwritting it if it already exists.
+   * @see upcoming proposal https://github.com/tc39/proposal-upsert
+   *
+   * @example
+   * ```typescript
+   * const lru = new TinyLRU({ maxSize: 2 });
+   * lru.set('key1', 'value1');
+   * lru.getOrInsert('key1', 'value2'); // 👈 will not overwrite the value
+   * console.log(lru.get('key1')); // value1
+   * ```
+   */
+  getOrInsert(key: TKey, value: TValue): TValue {
+    if (this.cache.has(key)) {
+      return this.get(key)!;
+    }
+    this.set(key, value);
+    return value;
+  }
+
+  /**
+   * Get an item without marking it as recently used.
+   */
+  peek(key: TKey): TValue | undefined {
+    if (!this.cache.has(key)) {
+      return;
+    }
+
+    return this.cache.get(key)!.value;
   }
 
   delete(key: TKey): boolean {
@@ -167,15 +190,87 @@ export class TinyLRU<TValue = unknown, TKey extends SupportedKeys = string> {
     return this.cache.delete(key);
   }
 
-  toArray(): [key: TKey, value: TValue][] {
-    const result: [key: TKey, value: TValue][] = [];
+  /**
+   * Iterate over the cache from the least recently used to the most recently used.
+   *
+   * ```typescript
+   * const lru = new TinyLRU({ maxSize: 2 });
+   * lru.set('key1', 'value1');
+   * lru.set('key2', 'value2');
+   * lru.set('key3', 'value3');
+   * // trigger a get to move key2 to the head
+   * lru.get('key2');
+   * const results = [];
+   * // iterate over the cache entries
+   * for (const [key, value] of lru) {
+   *   results.push([key, value]);
+   * }
+   * expect(results).toStrictEqual([
+   *    ['key3', 'value3'], // Least recently used
+   *    ['key2', 'value2'], // Most recently used
+   * ]);
+   * ```
+   */
+  *[Symbol.iterator](): IterableIterator<[TKey, TValue]> {
     let current = this.tail;
 
     while (current) {
       const data = this.cache.get(current.key)!;
-      result.push([current.key, data.value]);
+      yield [current.key, data.value];
       current = current.prev;
     }
-    return result;
+  }
+
+  private moveToHead(node: Node<TValue, TKey>): boolean {
+    if (node === this.head) {
+      return false;
+    }
+    if (node.prev) {
+      node.prev.next = node.next;
+    }
+
+    if (node.next) {
+      node.next.prev = node.prev;
+    }
+
+    if (node === this.tail) {
+      this.tail = node.prev;
+    }
+
+    node.next = this.head;
+    node.prev = null;
+
+    if (this.head) {
+      this.head.prev = node;
+    }
+
+    this.head = node;
+
+    if (!this.tail) {
+      this.tail = node;
+    }
+    return true;
+  }
+
+  private removeTail() {
+    if (!this.tail) {
+      return;
+    }
+
+    if (this.onEviction !== undefined) {
+      const value = this.cache.get(this.tail.key)!.value;
+      if (value) {
+        this.onEviction(this.tail.key, value);
+      }
+    }
+
+    this.cache.delete(this.tail.key);
+
+    if (this.tail.prev) {
+      this.tail = this.tail.prev;
+      this.tail.next = null;
+    } else {
+      this.head = this.tail = null;
+    }
   }
 }

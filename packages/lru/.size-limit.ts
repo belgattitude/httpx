@@ -1,18 +1,16 @@
-/**
- * @link https://github.com/ai/size-limit/
- * @type {{name: string, path: string[], limit: string, import?: string, webpack?: boolean}[]}
- */
+import type { SizeLimitConfig } from 'size-limit';
+
 module.exports = [
   {
     name: 'import { TinyLRU } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ TinyLRU }',
-    limit: '600B',
+    limit: '630B',
   },
   {
     name: 'require { TinyLRU } (CJS)',
     import: '{ TinyLRU }',
     path: ['dist/index.cjs'],
-    limit: '700B',
+    limit: '730B',
   },
-];
+] satisfies SizeLimitConfig;
