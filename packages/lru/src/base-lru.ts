@@ -1,25 +1,32 @@
-class Node<T> {
-  prev: Node<T> | null = null;
-  next: Node<T> | null = null;
-  constructor(public readonly key: T) {}
+type SupportedKeys = string;
+
+class Node<TValue, TKey extends SupportedKeys = string> {
+  prev: Node<TValue, TKey> | null = null;
+  next: Node<TValue, TKey> | null = null;
+  constructor(public readonly key: TKey) {}
 }
 
-type DataType<T> = {
-  value: T;
-  node: Node<T>;
+type DataType<TValue, TKey extends SupportedKeys = string> = {
+  value: TValue;
+  node: Node<TValue, TKey>;
+};
+
+type Params<TValue, TKey extends SupportedKeys = string> = {
+  maxSize: number;
+  onEviction?: (key: TKey, value: TValue) => void;
 };
 
 /**
  * Double linked list based lru cache that supports get in O(1)
  */
-export class LRUCache<TValue = unknown> {
+export class BaseLru<TValue = unknown, TKey extends SupportedKeys = string> {
   private maxSize: number;
 
-  private cache: Map<TValue, DataType<TValue>>;
-  private head: Node<TValue> | null = null;
-  private tail: Node<TValue> | null = null;
+  private cache: Map<TKey, DataType<TValue, TKey>>;
+  private head: Node<TValue, TKey> | null = null;
+  private tail: Node<TValue, TKey> | null = null;
 
-  constructor(params: { maxSize: number }) {
+  constructor(params: Params<TValue, TKey>) {
     const { maxSize } = params;
     if (!Number.isSafeInteger(maxSize) && maxSize < 1) {
       throw new TypeError(
@@ -30,7 +37,7 @@ export class LRUCache<TValue = unknown> {
     this.cache = new Map();
   }
 
-  private moveToHead(node: Node<TValue>): void {
+  private moveToHead(node: Node<TValue, TKey>): void {
     if (node === this.head) {
       return;
     }
@@ -83,18 +90,18 @@ export class LRUCache<TValue = unknown> {
     this.cache.clear();
   }
 
-  has(key: TValue): boolean {
+  has(key: TKey): boolean {
     return this.cache.has(key);
   }
 
-  set(key: TValue, value: TValue): boolean {
+  set(key: TKey, value: TValue): boolean {
     if (this.cache.has(key)) {
       const data = this.cache.get(key)!;
       data.value = value;
       this.moveToHead(data.node);
     } else {
       const newNode = new Node(key);
-      const data: DataType<TValue> = { value, node: newNode };
+      const data: DataType<TValue, TKey> = { value, node: newNode };
 
       this.cache.set(key, data);
       this.moveToHead(newNode);
@@ -106,7 +113,7 @@ export class LRUCache<TValue = unknown> {
     return this.cache.has(key);
   }
 
-  get(key: TValue): TValue | undefined {
+  get(key: TKey): TValue | undefined {
     if (!this.cache.has(key)) {
       return;
     }
@@ -117,7 +124,7 @@ export class LRUCache<TValue = unknown> {
     return data.value;
   }
 
-  delete(key: TValue): boolean {
+  delete(key: TKey): boolean {
     const node = this.cache.get(key)?.node;
 
     if (!node) {
@@ -143,8 +150,8 @@ export class LRUCache<TValue = unknown> {
     return this.cache.delete(key);
   }
 
-  toArray(): TValue[][] {
-    const result: TValue[][] = [];
+  toArray(): [key: TKey, value: TValue][] {
+    const result: [key: TKey, value: TValue][] = [];
     let current = this.tail;
 
     while (current) {
@@ -152,7 +159,6 @@ export class LRUCache<TValue = unknown> {
       result.push([current.key, data.value]);
       current = current.prev;
     }
-
     return result;
   }
 }

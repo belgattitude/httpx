@@ -1,8 +1,8 @@
 import { bench, describe } from 'vitest';
 
-import { getLruCaches } from './get-lru-caches';
+import { getLruCaches } from '../get-lru-caches';
 
-describe(`LRU.set comparison`, async () => {
+describe(`BaseLru.set comparison`, async () => {
   const seeds = Array.from({ length: 1000 }).map((_, i) => ({
     key: `key-${i}`,
     value: `value-${i}`,

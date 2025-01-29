@@ -1,9 +1,9 @@
-import { LRUCache } from '../lru-cache';
+import { BaseLru } from '../base-lru';
 
-describe('LRU cache', () => {
-  describe('LRUCache.get/set', () => {
+describe('BaseLru', () => {
+  describe('Base.get/set', () => {
     it('should set a value in the cache', () => {
-      const lru = new LRUCache({
+      const lru = new BaseLru({
         maxSize: 1,
       });
       lru.set('key', 'value');
@@ -12,7 +12,7 @@ describe('LRU cache', () => {
   });
   describe('Eviction', () => {
     it('should evict items based on maxSize', () => {
-      const lru = new LRUCache({
+      const lru = new BaseLru({
         maxSize: 2,
       });
       lru.set('key1', 'value1');

@@ -4,14 +4,14 @@
  */
 module.exports = [
   {
-    name: 'import { LruCache } (ESM)',
+    name: 'import { BaseLru } (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ LRUCache }',
+    import: '{ BaseLru }',
     limit: '600B',
   },
   {
-    name: 'require { LRUCache } (CJS)',
-    import: '{ LRUCache }',
+    name: 'require { BaseLru } (CJS)',
+    import: '{ BaseLru }',
     path: ['dist/index.cjs'],
     limit: '700B',
   },

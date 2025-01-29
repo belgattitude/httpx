@@ -1,1 +1,1 @@
-export { LRUCache } from './lru-cache';
+export { BaseLru } from './base-lru';

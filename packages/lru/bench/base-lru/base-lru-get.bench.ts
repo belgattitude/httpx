@@ -1,8 +1,8 @@
 import { bench, describe } from 'vitest';
 
-import { getLruCaches } from './get-lru-caches';
+import { getLruCaches } from '../get-lru-caches';
 
-describe(`LRU.get comparison`, async () => {
+describe(`BaseLru.get comparison`, async () => {
   const SEEDS_COUNT = 1000;
   const MAX_SIZE = 500;
 
