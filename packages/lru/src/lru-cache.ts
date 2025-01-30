@@ -59,9 +59,7 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
   constructor(params: Params<TValue, TKey>) {
     const { maxSize, touchOnHas = false, onEviction } = params;
     if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
-      throw new TypeError(
-        'Invalid maxSize param. Must be an integer greater than zero'
-      );
+      throw new TypeError('Invalid maxSize');
     }
     this.#touchOnHas = touchOnHas;
     this.#onEviction = onEviction;

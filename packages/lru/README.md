@@ -21,7 +21,7 @@ $ pnpm add @httpx/lru
 ## Features
 
 - 🚀&nbsp; Fast `cache.get()` in O(1) thx to [doubly linked list](https://en.wikipedia.org/wiki/Doubly_linked_list).
-- 📐&nbsp; Lightweight (starts at [~550B](#bundle-size)) 
+- 📐&nbsp; Lightweight ([~535B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
@@ -140,7 +140,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                     | Size (compressed) |
 |----------------------------------------------------|------------------:|
-| `import { LRUCache  } from '@httpx/lru`            |            ~ 550B |
+| `import { LRUCache  } from '@httpx/lru`            |            ~ 535B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
 
