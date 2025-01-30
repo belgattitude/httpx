@@ -20,7 +20,7 @@ $ pnpm add @httpx/lru
 
 ## Features
 
-- 📐&nbsp; Lightweight (starts at [~620B](#bundle-size)) 
+- 📐&nbsp; Lightweight (starts at [~550B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
@@ -104,31 +104,31 @@ expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
  RUN  v3.0.4 /home/sebastien/github/httpx/packages/lru
 
 
- ✓ bench/lru-cache/lru-cache-get.bench.ts > LRUCache.get comparison 2464ms
+ ✓ bench/lru-cache/lru-cache-get.bench.ts > LRUCache.get comparison 2461ms
      name                                hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/lru                   37,264.34  0.0248  0.4753  0.0268  0.0261  0.0431  0.0657  0.0691  ±0.30%    18633
-   · @httpx/lru.get() - compiled  36,992.39  0.0250  0.0870  0.0270  0.0264  0.0529  0.0533  0.0578  ±0.25%    18497
-   · quick-lru@7.0.0.get()        12,111.96  0.0772  0.3672  0.0826  0.0823  0.0980  0.1904  0.2396  ±0.34%     6056   slowest
-   · lru-cache@11.0.2.get()       47,699.16  0.0185  0.0784  0.0210  0.0206  0.0372  0.0378  0.0597  ±0.23%    23850   fastest
+   · @httpx/lru                   37,774.50  0.0236  0.0917  0.0265  0.0276  0.0414  0.0422  0.0507  ±0.19%    18888   fastest
+   · @httpx/lru.get() - compiled  36,527.68  0.0236  0.1150  0.0274  0.0267  0.0499  0.0520  0.0590  ±0.25%    18264
+   · quick-lru@7.0.0.get()        12,619.56  0.0673  0.4327  0.0792  0.0811  0.1075  0.1940  0.2374  ±0.41%     6310   slowest
+   · lru-cache@11.0.2.get()       34,335.17  0.0207  0.3159  0.0291  0.0358  0.0504  0.0565  0.0646  ±0.44%    17168
 
- ✓ bench/lru-cache/lru-cache-set.bench.ts > LRUCache.set comparison 2433ms
+ ✓ bench/lru-cache/lru-cache-set.bench.ts > LRUCache.set comparison 2464ms
      name                                hz     min     max    mean     p75     p99    p995    p999      rme  samples
-   · @httpx/lru.set()              4,365.61  0.1218  8.4117  0.2291  0.1538  1.7588  7.6830  8.1496  ±12.66%     2183   slowest
-   · @httpx/lru.set() - compiled   7,859.02  0.0934  1.3761  0.1272  0.1215  0.3422  0.6207  1.3161   ±1.91%     3930
-   · quick-lru@7.0.0.set()        16,306.63  0.0515  1.6058  0.0613  0.0571  0.1982  0.2514  0.3188   ±1.07%     8154   fastest
-   · lru-cache@11.0.2.set()        7,639.91  0.1060  1.4439  0.1309  0.1315  0.2578  0.2918  1.3275   ±1.24%     3820
+   · @httpx/lru.set()              4,311.48  0.1233  9.2856  0.2319  0.1782  1.6186  7.6737  9.0301  ±12.57%     2156   slowest
+   · @httpx/lru.set() - compiled   7,609.28  0.0981  1.4244  0.1314  0.1271  0.2500  0.5833  1.3474   ±1.74%     3806
+   · quick-lru@7.0.0.set()        14,597.79  0.0574  1.5144  0.0685  0.0680  0.1703  0.2863  0.5746   ±1.56%     7299   fastest
+   · lru-cache@11.0.2.set()        7,523.05  0.1087  1.4737  0.1329  0.1311  0.2706  0.3570  1.3162   ±1.26%     3762
 
  BENCH  Summary
 
-  lru-cache@11.0.2.get() - bench/lru-cache/lru-cache-get.bench.ts > LRUCache.get comparison
-    1.28x faster than @httpx/lru
-    1.29x faster than @httpx/lru.get() - compiled
-    3.94x faster than quick-lru@7.0.0.get()
+  @httpx/lru - bench/lru-cache/lru-cache-get.bench.ts > LRUCache.get comparison
+    1.03x faster than @httpx/lru.get() - compiled
+    1.10x faster than lru-cache@11.0.2.get()
+    2.99x faster than quick-lru@7.0.0.get()
 
   quick-lru@7.0.0.set() - bench/lru-cache/lru-cache-set.bench.ts > LRUCache.set comparison
-    2.07x faster than @httpx/lru.set() - compiled
-    2.13x faster than lru-cache@11.0.2.set()
-    3.74x faster than @httpx/lru.set()
+    1.92x faster than @httpx/lru.set() - compiled
+    1.94x faster than lru-cache@11.0.2.set()
+    3.39x faster than @httpx/lru.set()
  
 ```
 
@@ -140,7 +140,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                     | Size (compressed) |
 |----------------------------------------------------|------------------:|
-| `import { LRUCache  } from '@httpx/lru`            |            ~ 620B |
+| `import { LRUCache  } from '@httpx/lru`            |            ~ 550B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
 
