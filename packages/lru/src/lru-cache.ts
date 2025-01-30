@@ -81,6 +81,7 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
    */
   clear(): void {
     this.cache.clear();
+    this.head = this.tail = null;
   }
 
   /**
@@ -157,11 +158,7 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
    * Get an item without marking it as recently used.
    */
   peek(key: TKey): TValue | undefined {
-    if (!this.cache.has(key)) {
-      return;
-    }
-
-    return this.cache.get(key)!.value;
+    return this.cache.get(key)?.value;
   }
 
   delete(key: TKey): boolean {
