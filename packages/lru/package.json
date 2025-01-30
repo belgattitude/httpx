@@ -1,6 +1,6 @@
 {
   "name": "@httpx/lru",
-  "description": "Simple lru cache",
+  "description": "LRUCache implementations with O(1) complexity",
   "version": "0.4.1",
   "license": "MIT",
   "author": {
@@ -15,7 +15,9 @@
   },
   "keywords": [
     "cache",
-    "lru"
+    "lru",
+    "doubly linked list",
+    "O(1)"
   ],
   "sideEffects": false,
   "type": "module",

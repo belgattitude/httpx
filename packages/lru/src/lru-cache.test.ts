@@ -1,4 +1,4 @@
-import { LRUCache } from '../lru-cache';
+import { LRUCache } from './lru-cache';
 
 describe('LRUCache', () => {
   describe('get/set', () => {
@@ -26,16 +26,19 @@ describe('LRUCache', () => {
   });
 
   describe('clear', () => {
-    it('should properly clear all values and report size 0', () => {
+    it('should properly clear all values and report size 0 and unset initial params', () => {
       const lru = new LRUCache({
         maxSize: 2,
       });
       lru.set('key1', 'value1');
       lru.set('key2', 'value2');
+      expect(lru.size).toBe(2);
       lru.clear();
+      expect(lru.size).toBe(0);
       expect(lru.get('key1')).toBeUndefined();
       expect(lru.get('key2')).toBeUndefined();
-      expect(lru.size).toBe(0);
+      lru.set('key1', 'value1');
+      expect(lru.get('key1')).toBe('value1');
     });
   });
 

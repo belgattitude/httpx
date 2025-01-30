@@ -1,22 +1,25 @@
 import { bench, describe } from 'vitest';
 
-import { getLruCaches } from '../get-lru-caches';
+import { getLruCaches } from '../../get-lru-caches';
 
-describe(`LRUCache.set comparison`, async () => {
-  const seeds = Array.from({ length: 1000 }).map((_, i) => ({
+const SEEDS_COUNT = 1000;
+const MAX_SIZE = 500;
+
+describe(`LRUCache.set() ${SEEDS_COUNT} items / maxSize: ${MAX_SIZE}`, async () => {
+  const seeds = Array.from({ length: SEEDS_COUNT }).map((_, i) => ({
     key: `key-${i}`,
     value: `value-${i}`,
   }));
 
   const lrus = await getLruCaches({
-    maxSize: 500,
+    maxSize: MAX_SIZE,
   });
 
-  bench(`@httpx/lru.set()`, () => {
+  bench(`@httpx/lru.set() - ts files (dev)`, () => {
     seeds.forEach(({ key, value }) => lrus['@httpx/lru'].cache.set(key, value));
   });
 
-  bench(`@httpx/lru.set() - compiled`, () => {
+  bench(`@httpx/lru.set() - compiled (dist)`, () => {
     if ('@httpx/lru(compiled)' in lrus) {
       seeds.forEach(({ key, value }) =>
         lrus['@httpx/lru(compiled)']!.cache.set(key, value)
