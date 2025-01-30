@@ -29,13 +29,13 @@ type Params<TValue, TKey extends SupportedKeys = string> = {
  * Double linked list based lru cache that supports get in O(1)
  */
 export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
-  private maxSize: number;
-  private touchOnHas: boolean;
-  private onEviction?: ((key: TKey, value: TValue) => void) | undefined;
+  #maxSize: number;
+  #touchOnHas: boolean;
+  #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
-  private cache: Map<TKey, DataType<TValue, TKey>>;
-  private head: Node<TValue, TKey> | null = null;
-  private tail: Node<TValue, TKey> | null = null;
+  #cache: Map<TKey, DataType<TValue, TKey>>;
+  #head: Node<TValue, TKey> | null = null;
+  #tail: Node<TValue, TKey> | null = null;
 
   /**
    * Create a new LRUCache instance
@@ -63,25 +63,25 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
         'Invalid maxSize param. Must be an integer greater than zero'
       );
     }
-    this.touchOnHas = touchOnHas;
-    this.onEviction = onEviction;
-    this.maxSize = maxSize;
-    this.cache = new Map();
+    this.#touchOnHas = touchOnHas;
+    this.#onEviction = onEviction;
+    this.#maxSize = maxSize;
+    this.#cache = new Map();
   }
 
   /**
    * Return the current size of the cache
    */
   get size(): number {
-    return this.cache.size;
+    return this.#cache.size;
   }
 
   /**
    * Clear all entries from the cache
    */
   clear(): void {
-    this.cache.clear();
-    this.head = this.tail = null;
+    this.#cache.clear();
+    this.#head = this.#tail = null;
   }
 
   /**
@@ -97,40 +97,40 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
       touch?: boolean;
     }
   ): boolean {
-    const hasEntry = this.cache.has(key);
-    if (hasEntry && (options?.touch ?? this.touchOnHas)) {
-      this.moveToHead(this.cache.get(key)!.node);
+    const hasEntry = this.#cache.has(key);
+    if (hasEntry && (options?.touch ?? this.#touchOnHas)) {
+      this.#moveToHead(this.#cache.get(key)!.node);
     }
     return hasEntry;
   }
 
   set(key: TKey, value: TValue): boolean {
-    if (this.cache.has(key)) {
-      const data = this.cache.get(key)!;
+    if (this.#cache.has(key)) {
+      const data = this.#cache.get(key)!;
       data.value = value;
-      this.moveToHead(data.node);
+      this.#moveToHead(data.node);
       return false;
     }
 
     const newNode = new Node(key);
     const data: DataType<TValue, TKey> = { value, node: newNode };
 
-    this.cache.set(key, data);
-    this.moveToHead(newNode);
+    this.#cache.set(key, data);
+    this.#moveToHead(newNode);
 
-    if (this.cache.size > this.maxSize) {
-      this.removeTail();
+    if (this.#cache.size > this.#maxSize) {
+      this.#removeTail();
     }
     return true;
   }
 
   get(key: TKey): TValue | undefined {
-    if (!this.cache.has(key)) {
+    if (!this.#cache.has(key)) {
       return;
     }
 
-    const data = this.cache.get(key)!;
-    this.moveToHead(data.node);
+    const data = this.#cache.get(key)!;
+    this.#moveToHead(data.node);
 
     return data.value;
   }
@@ -148,7 +148,7 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
    * ```
    */
   getOrInsert(key: TKey, value: TValue): TValue {
-    if (this.cache.has(key)) {
+    if (this.#cache.has(key)) {
       return this.get(key)!;
     }
     this.set(key, value);
@@ -159,17 +159,17 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
    * Get an item without marking it as recently used.
    */
   peek(key: TKey): TValue | undefined {
-    return this.cache.get(key)?.value;
+    return this.#cache.get(key)?.value;
   }
 
   delete(key: TKey): boolean {
-    const node = this.cache.get(key)?.node;
+    const node = this.#cache.get(key)?.node;
 
     if (!node) {
       return false;
     }
-    this.removeNode(node);
-    return this.cache.delete(key);
+    this.#removeNode(node);
+    return this.#cache.delete(key);
   }
 
   /**
@@ -194,56 +194,55 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
    * ```
    */
   *[Symbol.iterator](): IterableIterator<[TKey, TValue]> {
-    let current = this.tail;
+    let current = this.#tail;
 
     while (current) {
-      const data = this.cache.get(current.key)!;
+      const data = this.#cache.get(current.key)!;
       yield [current.key, data.value];
       current = current.prev;
     }
   }
 
-  private moveToHead(node: Node<TValue, TKey>): void {
-    if (node === this.head) {
+  #moveToHead(node: Node<TValue, TKey>): void {
+    if (node === this.#head) {
       return;
     }
-    this.removeNode(node);
-    node.next = this.head;
+    this.#removeNode(node);
+    node.next = this.#head;
     node.prev = null;
-    if (this.head) {
-      this.head.prev = node;
+    if (this.#head) {
+      this.#head.prev = node;
     }
-    this.head = node;
-    if (!this.tail) {
-      this.tail = node;
+    this.#head = node;
+    if (!this.#tail) {
+      this.#tail = node;
     }
   }
 
-  private removeNode(node: Node<TValue, TKey>): void {
+  #removeNode(node: Node<TValue, TKey>): void {
     if (node.prev) {
       node.prev.next = node.next;
     }
     if (node.next) {
       node.next.prev = node.prev;
     }
-    if (node === this.head) {
-      this.head = node.next;
+    if (node === this.#head) {
+      this.#head = node.next;
     }
-    if (node === this.tail) {
-      this.tail = node.prev;
+    if (node === this.#tail) {
+      this.#tail = node.prev;
     }
   }
 
-  private removeTail(): void {
-    if (!this.tail) {
+  #removeTail(): void {
+    if (!this.#tail) {
       return;
     }
-    const tailKey = this.tail.key;
-    this.removeNode(this.tail);
-    if (this.onEviction) {
-      const value = this.cache.get(tailKey)!.value;
-      this.onEviction(tailKey, value);
+    const tailKey = this.#tail.key;
+    this.#removeNode(this.#tail);
+    if (this.#onEviction) {
+      this.#onEviction(tailKey, this.#cache.get(tailKey)!.value);
     }
-    this.cache.delete(tailKey);
+    this.#cache.delete(tailKey);
   }
 }
