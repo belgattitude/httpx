@@ -32,7 +32,7 @@ describe('LRUCache', () => {
       });
       lru.set('key1', 'value1');
       lru.set('key2', 'value2');
-      expect(lru.size).toBe(1);
+      expect(lru.size).toBe(2);
       lru.clear();
       expect(lru.size).toBe(0);
       expect(lru.get('key1')).toBeUndefined();

@@ -31,7 +31,7 @@ type Params<TValue, TKey extends SupportedKeys = string> = {
 export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
   private maxSize: number;
   private touchOnHas: boolean;
-  private onEviction: ((key: TKey, value: TValue) => void) | undefined;
+  private onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
   private cache: Map<TKey, DataType<TValue, TKey>>;
   private head: Node<TValue, TKey> | null = null;
@@ -58,7 +58,7 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
    */
   constructor(params: Params<TValue, TKey>) {
     const { maxSize, touchOnHas = false, onEviction } = params;
-    if (!Number.isSafeInteger(maxSize) && maxSize < 1) {
+    if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
       throw new TypeError(
         'Invalid maxSize param. Must be an integer greater than zero'
       );
@@ -98,7 +98,7 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
     }
   ): boolean {
     const hasEntry = this.cache.has(key);
-    if (hasEntry && (options?.touch ?? this.touchOnHas) === true) {
+    if (hasEntry && (options?.touch ?? this.touchOnHas)) {
       this.moveToHead(this.cache.get(key)!.node);
     }
     return hasEntry;
@@ -111,6 +111,7 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
       this.moveToHead(data.node);
       return false;
     }
+
     const newNode = new Node(key);
     const data: DataType<TValue, TKey> = { value, node: newNode };
 
@@ -135,7 +136,7 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
   }
 
   /**
-   * Get an item from the cache without overwritting it if it already exists.
+   * Get an item from the cache without overwriting it if it already exists.
    * @see upcoming proposal https://github.com/tc39/proposal-upsert
    *
    * @example
@@ -167,23 +168,7 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
     if (!node) {
       return false;
     }
-
-    if (node.prev) {
-      node.prev.next = node.next;
-    }
-
-    if (node.next) {
-      node.next.prev = node.prev;
-    }
-
-    if (node === this.head) {
-      this.head = node.next;
-    }
-
-    if (node === this.tail) {
-      this.tail = node.prev;
-    }
-
+    this.removeNode(node);
     return this.cache.delete(key);
   }
 
@@ -218,56 +203,47 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
     }
   }
 
-  private moveToHead(node: Node<TValue, TKey>): boolean {
+  private moveToHead(node: Node<TValue, TKey>): void {
     if (node === this.head) {
-      return false;
+      return;
     }
-    if (node.prev) {
-      node.prev.next = node.next;
-    }
-
-    if (node.next) {
-      node.next.prev = node.prev;
-    }
-
-    if (node === this.tail) {
-      this.tail = node.prev;
-    }
-
+    this.removeNode(node);
     node.next = this.head;
     node.prev = null;
-
     if (this.head) {
       this.head.prev = node;
     }
-
     this.head = node;
-
     if (!this.tail) {
       this.tail = node;
     }
-    return true;
   }
 
-  private removeTail() {
+  private removeNode(node: Node<TValue, TKey>): void {
+    if (node.prev) {
+      node.prev.next = node.next;
+    }
+    if (node.next) {
+      node.next.prev = node.prev;
+    }
+    if (node === this.head) {
+      this.head = node.next;
+    }
+    if (node === this.tail) {
+      this.tail = node.prev;
+    }
+  }
+
+  private removeTail(): void {
     if (!this.tail) {
       return;
     }
-
-    if (this.onEviction !== undefined) {
-      const value = this.cache.get(this.tail.key)!.value;
-      if (value) {
-        this.onEviction(this.tail.key, value);
-      }
+    const tailKey = this.tail.key;
+    this.removeNode(this.tail);
+    if (this.onEviction) {
+      const value = this.cache.get(tailKey)!.value;
+      this.onEviction(tailKey, value);
     }
-
-    this.cache.delete(this.tail.key);
-
-    if (this.tail.prev) {
-      this.tail = this.tail.prev;
-      this.tail.next = null;
-    } else {
-      this.head = this.tail = null;
-    }
+    this.cache.delete(tailKey);
   }
 }
