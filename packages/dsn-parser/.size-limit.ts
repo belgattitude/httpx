@@ -1,24 +1,22 @@
-/**
- * @link https://github.com/ai/size-limit/
- * @type {{name: string, path: string[], limit: string, import?: string, webpack?: boolean}[]}
- */
+import type { SizeLimitConfig } from 'size-limit';
+
 module.exports = [
   {
     name: 'Everything (ESM)',
     path: ['dist/index.mjs'],
-    import: "*",
+    import: '*',
     limit: '1.15KB',
   },
   {
     name: 'Only parseDsn (ESM)',
     path: ['dist/index.mjs'],
-    import: "{ parseDsn }",
+    import: '{ parseDsn }',
     limit: '785B',
   },
   {
     name: 'Everything (CJS)',
-    import: "*",
+    import: '*',
     path: ['dist/index.cjs'],
     limit: '1.40KB',
   },
-];
+] satisfies SizeLimitConfig;

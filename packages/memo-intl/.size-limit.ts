@@ -1,7 +1,5 @@
-/**
- * @link https://github.com/ai/size-limit/
- * @type {{name: string, path: string[], limit: string, import?: string, webpack?: boolean}[]}
- */
+import type { SizeLimitConfig } from 'size-limit';
+
 module.exports = [
   {
     name: 'Everything (ESM)',
@@ -15,4 +13,4 @@ module.exports = [
     path: ['dist/index.cjs'],
     limit: '1.30KB',
   },
-];
+] satisfies SizeLimitConfig;
