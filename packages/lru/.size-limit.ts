@@ -8,9 +8,9 @@ module.exports = [
     limit: '540B',
   },
   {
-    name: 'require { LRUCache } (CJS)',
-    import: '{ LRUCache }',
-    path: ['dist/index.cjs'],
-    limit: '640B',
+    name: 'import { TinyLRUCache } (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ TinyLRUCache }',
+    limit: '365B',
   },
 ] satisfies SizeLimitConfig;
