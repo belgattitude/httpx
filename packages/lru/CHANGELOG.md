@@ -1,5 +1,21 @@
 # @httpx/lru
 
+## 0.5.0
+
+### Minor Changes
+
+- [#1875](https://github.com/belgattitude/httpx/pull/1875) [`0ace180`](https://github.com/belgattitude/httpx/commit/0ace180551519c3af7cd4e6b2779569954ff51c2) Thanks [@belgattitude](https://github.com/belgattitude)! - ~85 bytes size reduction
+
+  Before ~620 bytes, now ~535b compressed
+
+- [#1875](https://github.com/belgattitude/httpx/pull/1875) [`a0b2c12`](https://github.com/belgattitude/httpx/commit/a0b2c12948f26000d40f36f6e0bb0dc70c89e5eb) Thanks [@belgattitude](https://github.com/belgattitude)! - Move to native javascript private class properties (#)
+
+### Patch Changes
+
+- [#1875](https://github.com/belgattitude/httpx/pull/1875) [`0ace180`](https://github.com/belgattitude/httpx/commit/0ace180551519c3af7cd4e6b2779569954ff51c2) Thanks [@belgattitude](https://github.com/belgattitude)! - Small performance increase for peek()
+
+- [#1875](https://github.com/belgattitude/httpx/pull/1875) [`0ace180`](https://github.com/belgattitude/httpx/commit/0ace180551519c3af7cd4e6b2779569954ff51c2) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix ensure proper reinitialization after calling clear
+
 ## 0.4.1
 
 ### Patch Changes
