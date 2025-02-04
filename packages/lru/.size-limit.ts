@@ -8,6 +8,12 @@ module.exports = [
     limit: '540B',
   },
   {
+    name: 'import { TimeLRUCache } (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ TimeLRUCache }',
+    limit: '650B',
+  },
+  {
     name: 'require { LRUCache } (CJS)',
     import: '{ LRUCache }',
     path: ['dist/index.cjs'],

@@ -5,7 +5,7 @@ import {
   devDependencies,
   version,
 } from '../package.json' with { type: 'json' };
-import { LRUCache } from '../src';
+import { LRUCache, TimeLRUCache } from '../src';
 
 const versions = devDependencies;
 
@@ -26,6 +26,8 @@ const asyncLoadCompiled = async (): Promise<typeof LRUCache | null> => {
     });
 };
 
+const TWO_SECONDS = 2000;
+
 export const getLruCaches = async (params: {
   maxSize: number;
   prepopulate?: { key: string; value: string }[];
@@ -36,6 +38,10 @@ export const getLruCaches = async (params: {
   const caches = {
     '@httpx/lru': {
       cache: new LRUCache({ maxSize }),
+      version: version,
+    },
+    '@httpx/lru-time': {
+      cache: new TimeLRUCache({ maxSize, defaultTTL: TWO_SECONDS }),
       version: version,
     },
     ...(LRUCacheCompiled
@@ -58,6 +64,7 @@ export const getLruCaches = async (params: {
   if (Array.isArray(prepopulate)) {
     prepopulate.forEach(({ key, value }) => {
       caches['@httpx/lru'].cache.set(key, value);
+      caches['@httpx/lru-time'].cache.set(key, value);
       if ('@httpx/lru(compiled)' in caches) {
         caches['@httpx/lru(compiled)'].cache.set(key, value);
       }

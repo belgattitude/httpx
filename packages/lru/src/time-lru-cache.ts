@@ -1,4 +1,10 @@
-import type { BaseCache, BaseCacheKeyTypes } from './types';
+import type { LRUCacheParams } from './lru-cache';
+import type {
+  BaseCache,
+  BaseCacheKeyTypes,
+  EpochTimeInMilliseconds,
+  Milliseconds,
+} from './types';
 
 class Node<TValue, TKey extends BaseCacheKeyTypes = string> {
   prev: Node<TValue, TKey> | null = null;
@@ -8,34 +14,33 @@ class Node<TValue, TKey extends BaseCacheKeyTypes = string> {
 
 type DataType<TValue, TKey extends BaseCacheKeyTypes = string> = {
   value: TValue;
+  expiry: EpochTimeInMilliseconds;
   node: Node<TValue, TKey>;
 };
 
-export type LRUCacheParams<TValue, TKey extends BaseCacheKeyTypes = string> = {
+type TimeLRUCacheParams<
+  TValue,
+  TKey extends BaseCacheKeyTypes = string,
+> = LRUCacheParams<TValue, TKey> & {
   /**
-   * The maximum number of items that the cache can hold.
+   * Default time to live for each entry in milliseconds
    */
-  maxSize: number;
-  /**
-   * If true, the item will be marked as recently used when calling has.
-   * @default false
-   */
-  touchOnHas?: boolean;
-  /**
-   * Callback that will be called before an item is evicted from the cache.
-   * Useful for side effects or for items like object URLs that need explicit cleanup (revokeObjectURL).
-   */
-  onEviction?: (key: TKey, value: TValue) => void;
+  defaultTTL: Milliseconds;
 };
 
 /**
  * Double linked list based lru cache that supports get in O(1)
  */
-export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
-  implements BaseCache<TValue, TKey>
+export class TimeLRUCache<
+  TValue = unknown,
+  TKey extends BaseCacheKeyTypes = string,
+> implements BaseCache<TValue, TKey>
 {
   #maxSize: number;
   #touchOnHas: boolean;
+
+  #ttl: Milliseconds;
+
   #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
   #cache: Map<TKey, DataType<TValue, TKey>>;
@@ -61,14 +66,19 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
    * lru.clear();
    * ```
    */
-  constructor(params: LRUCacheParams<TValue, TKey>) {
-    const { maxSize, touchOnHas = false, onEviction } = params;
+  constructor(params: TimeLRUCacheParams<TValue, TKey>) {
+    const { maxSize, touchOnHas = false, onEviction, defaultTTL } = params;
     if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
       throw new TypeError('Invalid maxSize');
     }
+    if (!Number.isSafeInteger(defaultTTL) || defaultTTL < 1) {
+      throw new TypeError('Invalid ttl');
+    }
+
     this.#touchOnHas = touchOnHas;
     this.#onEviction = onEviction;
     this.#maxSize = maxSize;
+    this.#ttl = defaultTTL;
     this.#cache = new Map();
   }
 
@@ -109,16 +119,21 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
     return hasEntry;
   }
 
-  set(key: TKey, value: TValue): boolean {
+  set(key: TKey, value: TValue, ttl?: Milliseconds): boolean {
     if (this.#cache.has(key)) {
       const data = this.#cache.get(key)!;
       data.value = value;
+      data.expiry = Date.now() + (ttl ?? this.#ttl);
       this.#moveToHead(data.node);
       return false;
     }
 
     const newNode = new Node(key);
-    const data: DataType<TValue, TKey> = { value, node: newNode };
+    const data: DataType<TValue, TKey> = {
+      value,
+      expiry: Date.now() + (ttl ?? this.#ttl),
+      node: newNode,
+    };
 
     this.#cache.set(key, data);
     this.#moveToHead(newNode);
@@ -135,6 +150,14 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
     }
 
     const data = this.#cache.get(key)!;
+    if (data.expiry < Date.now()) {
+      if (this.#onEviction) {
+        this.#onEviction(key, this.#cache.get(key)!.value);
+      }
+      this.#removeNode(data.node);
+      return;
+    }
+
     this.#moveToHead(data.node);
 
     return data.value;
@@ -152,19 +175,24 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
    * console.log(lru.get('key1')); // value1
    * ```
    */
-  getOrSet(key: TKey, value: TValue): TValue {
-    if (this.#cache.has(key)) {
-      return this.get(key)!;
+  getOrSet(key: TKey, value: TValue, ttl?: Milliseconds): TValue {
+    const val = this.get(key);
+    if (val === undefined) {
+      this.set(key, value, ttl);
+      return value;
     }
-    this.set(key, value);
-    return value;
+    return val;
   }
 
   /**
    * Get an item without marking it as recently used.
    */
   peek(key: TKey): TValue | undefined {
-    return this.#cache.get(key)?.value;
+    const val = this.#cache.get(key);
+    if (val === undefined) {
+      return;
+    }
+    return val.expiry < Date.now() ? undefined : val.value;
   }
 
   /**

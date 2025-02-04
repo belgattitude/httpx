@@ -1,4 +1,7 @@
 export type BaseCacheKeyTypes = string | number;
+export type Milliseconds = number;
+type PositiveNumberGreaterThanZero = number;
+export type EpochTimeInMilliseconds = PositiveNumberGreaterThanZero;
 
 export interface BaseCacheHasOptions {
   /**

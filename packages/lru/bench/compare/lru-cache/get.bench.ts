@@ -26,6 +26,10 @@ describe(`LRUCache.get() - ${SEEDS_COUNT} items / maxSize: ${MAX_SIZE}`, async (
     }
   });
 
+  bench(`@httpx/time-lru.get() - ts files (dev)`, () => {
+    seeds.forEach(({ key }) => lrus['@httpx/lru-time'].cache.get(key));
+  });
+
   bench(`quick-lru@${lrus['quick-lru'].version}.get()`, () => {
     seeds.forEach(({ key }) => lrus['quick-lru'].cache.get(key));
   });
