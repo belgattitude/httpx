@@ -33,7 +33,8 @@ describe('LRUCache', () => {
       lru.set('key1', 'value1');
       lru.set('key2', 'value2');
       expect(lru.size).toBe(2);
-      lru.clear();
+      const cleared = lru.clear();
+      expect(cleared).toBe(2);
       expect(lru.size).toBe(0);
       expect(lru.get('key1')).toBeUndefined();
       expect(lru.get('key2')).toBeUndefined();
@@ -42,13 +43,13 @@ describe('LRUCache', () => {
     });
   });
 
-  describe('getOrInsert', () => {
+  describe('getOrSet', () => {
     it('should not overwrite existing entry if exist', () => {
       const lru = new LRUCache({
         maxSize: 2,
       });
       lru.set('key', 'value');
-      const value = lru.getOrInsert('key', 'newValue');
+      const value = lru.getOrSet('key', 'newValue');
       expect(value).toBe('value');
       expect(lru.size).toBe(1);
     });
@@ -57,7 +58,7 @@ describe('LRUCache', () => {
         maxSize: 2,
       });
       lru.set('key', 'value');
-      const value = lru.getOrInsert('key2', 'value2');
+      const value = lru.getOrSet('key2', 'value2');
       expect(value).toBe('value2');
       expect(lru.size).toBe(2);
     });
