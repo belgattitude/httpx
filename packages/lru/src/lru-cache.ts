@@ -1,17 +1,20 @@
-type SupportedKeys = string;
+import type { BaseCache, BaseCacheKeyTypes } from './types';
 
-class Node<TValue, TKey extends SupportedKeys = string> {
+class Node<TValue, TKey extends BaseCacheKeyTypes = string> {
   prev: Node<TValue, TKey> | null = null;
   next: Node<TValue, TKey> | null = null;
   constructor(public readonly key: TKey) {}
 }
 
-type DataType<TValue, TKey extends SupportedKeys = string> = {
+type DataType<TValue, TKey extends BaseCacheKeyTypes = string> = {
   value: TValue;
   node: Node<TValue, TKey>;
 };
 
-type Params<TValue, TKey extends SupportedKeys = string> = {
+type Params<TValue, TKey extends BaseCacheKeyTypes = string> = {
+  /**
+   * The maximum number of items that the cache can hold.
+   */
   maxSize: number;
   /**
    * If true, the item will be marked as recently used when calling has.
@@ -28,7 +31,9 @@ type Params<TValue, TKey extends SupportedKeys = string> = {
 /**
  * Double linked list based lru cache that supports get in O(1)
  */
-export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
+export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
+  implements BaseCache<TValue, TKey>
+{
   #maxSize: number;
   #touchOnHas: boolean;
   #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
@@ -77,9 +82,11 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
   /**
    * Clear all entries from the cache
    */
-  clear(): void {
+  clear(): number {
+    const size = this.#cache.size;
     this.#cache.clear();
     this.#head = this.#tail = null;
+    return size;
   }
 
   /**
@@ -141,11 +148,11 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
    * ```typescript
    * const lru = new LRUCache({ maxSize: 2 });
    * lru.set('key1', 'value1');
-   * lru.getOrInsert('key1', 'value2'); // 👈 will not overwrite the value
+   * lru.getOrSet('key1', 'value2'); // 👈 will not overwrite the value
    * console.log(lru.get('key1')); // value1
    * ```
    */
-  getOrInsert(key: TKey, value: TValue): TValue {
+  getOrSet(key: TKey, value: TValue): TValue {
     if (this.#cache.has(key)) {
       return this.get(key)!;
     }
@@ -160,6 +167,10 @@ export class LRUCache<TValue = unknown, TKey extends SupportedKeys = string> {
     return this.#cache.get(key)?.value;
   }
 
+  /**
+   * Delete an item from the cache and return a boolean indicating
+   * if the item was actually deleted in case it exist.
+   */
   delete(key: TKey): boolean {
     const node = this.#cache.get(key)?.node;
 
