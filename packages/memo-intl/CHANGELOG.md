@@ -1,5 +1,12 @@
 # @httpx/memo-intl
 
+## 1.2.3
+
+### Patch Changes
+
+- Updated dependencies [[`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02), [`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02), [`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02), [`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02), [`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02)]:
+  - @httpx/lru@0.6.0
+
 ## 1.2.2
 
 ### Patch Changes
