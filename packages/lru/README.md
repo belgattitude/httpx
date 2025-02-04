@@ -44,7 +44,19 @@ lru.delete('🦄');
 lru.clear();
 ```
 
+
 ## Usage
+
+### API
+
+| Method                          | Description                                                        |
+|---------------------------------|--------------------------------------------------------------------|
+| `get(key): TValue \| undefined` | Retrieve a cache entry by key                                      |
+| `set(key, value): boolean`      | Add a new entry and return true if entry was overwritten           |
+| `has(key): boolean`             | Check if an entry exist                                            |
+| `delete(key): boolean`          | Remove an entry, returns bool indicating if the entry was existing |
+| `getOrSet(key, value): TValue`  | Return the entry if exists otherwise save a new entry              |
+| `clear(): number`               | Clear the cache and return the actual number of deleted entries    |
 
 ### Iterable
 
