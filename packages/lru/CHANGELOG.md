@@ -1,5 +1,21 @@
 # @httpx/lru
 
+## 0.6.0
+
+### Minor Changes
+
+- [#1890](https://github.com/belgattitude/httpx/pull/1890) [`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02) Thanks [@belgattitude](https://github.com/belgattitude)! - Rename getOrInsert into getOrSet (BC)
+
+- [#1890](https://github.com/belgattitude/httpx/pull/1890) [`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02) Thanks [@belgattitude](https://github.com/belgattitude)! - LRU.clear now returns the number of cleared items
+
+- [#1890](https://github.com/belgattitude/httpx/pull/1890) [`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02) Thanks [@belgattitude](https://github.com/belgattitude)! - Allow CacheKey type to be a number (still default to string)
+
+- [#1890](https://github.com/belgattitude/httpx/pull/1890) [`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02) Thanks [@belgattitude](https://github.com/belgattitude)! - Export BaseCache interface for customization
+
+### Patch Changes
+
+- [#1890](https://github.com/belgattitude/httpx/pull/1890) [`2bf1642`](https://github.com/belgattitude/httpx/commit/2bf164234c128c8c47bf708f66084e9403015a02) Thanks [@belgattitude](https://github.com/belgattitude)! - Add benchmarks for iterators and peek
+
 ## 0.5.0
 
 ### Minor Changes
