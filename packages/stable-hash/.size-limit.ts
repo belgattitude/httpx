@@ -10,7 +10,7 @@ module.exports = [
   {
     name: 'sortObjKeys (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ sortObjKeys } ',
+    import: '{ sortObjKeys }',
     limit: '30B',
   },
 ] satisfies SizeLimitConfig;
