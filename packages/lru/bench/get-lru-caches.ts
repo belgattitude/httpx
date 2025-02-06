@@ -26,7 +26,7 @@ const asyncLoadCompiled = async (): Promise<typeof LRUCache | null> => {
     });
 };
 
-const TWO_SECONDS = 2000;
+const EIGHT_SECONDS = 8000;
 
 export const getLruCaches = async (params: {
   maxSize: number;
@@ -41,7 +41,7 @@ export const getLruCaches = async (params: {
       version: version,
     },
     '@httpx/lru-time': {
-      cache: new TimeLRUCache({ maxSize, defaultTTL: TWO_SECONDS }),
+      cache: new TimeLRUCache({ maxSize, defaultTTL: EIGHT_SECONDS }),
       version: version,
     },
     ...(LRUCacheCompiled
@@ -68,8 +68,12 @@ export const getLruCaches = async (params: {
       if ('@httpx/lru(compiled)' in caches) {
         caches['@httpx/lru(compiled)'].cache.set(key, value);
       }
-      caches['quick-lru'].cache.set(key, value);
-      caches['lru-cache'].cache.set(key, value);
+      caches['quick-lru'].cache.set(key, value, {
+        maxAge: EIGHT_SECONDS,
+      });
+      caches['lru-cache'].cache.set(key, value, {
+        ttl: EIGHT_SECONDS,
+      });
     });
   }
   return caches;
