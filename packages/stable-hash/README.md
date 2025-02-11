@@ -29,6 +29,31 @@ $ pnpm add @httpx/stable-hash
 ## Usage
 
 
+```typescript
+import { createStableKey } from '@httpx/stable-hash'
+
+const params = {
+  key8: 'a string',
+  key1: 1,
+  key3: true,
+  key2: [3, 2, 1],
+  key7: {
+    key2: true,
+    key1: new Date('2025-02-11T08:58:32.075Z'),
+  },
+};
+
+const key = createStableKey(params);
+
+// Key contains a json comptatible string with object keys sorted.
+// By default it will sort arrays if they contains only strings or numbers
+// including bigints.
+
+// "{"key1":1,"key2":[1,2,3],"key3":true,"key7":{"key1":"2025-02-11T08:58:32.075Z","key2":true},"key8":"a string"}"
+
+
+```
+
 ## Benchmarks
 
 Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx).
@@ -43,9 +68,9 @@ See [bench](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.size-limit.cjs)
 
-| Scenario                                         | Size with deps (compressed) |
-|--------------------------------------------------|----------------------------:|
-| `import { stableHash } from '@httpx/stable-hash' |                      ~ 900B |
+| Scenario                                              | Size with deps (compressed) |
+|-------------------------------------------------------|----------------------------:|
+| `import { createStableKey } from '@httpx/stable-hash' |                      ~ 380B |
 
 
 ## Compatibility

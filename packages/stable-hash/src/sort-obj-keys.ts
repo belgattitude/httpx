@@ -1,3 +1,8 @@
 export const sortObjKeys = <T extends object>(object: T): T => {
-  return Object.fromEntries(Object.entries(object).sort()) as unknown as T;
+  const sortedKeys = Object.keys(object).sort() as unknown as [keyof T];
+  const sorted = {} as T;
+  for (const key of sortedKeys) {
+    sorted[key] = object[key]!;
+  }
+  return sorted;
 };

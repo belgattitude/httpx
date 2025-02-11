@@ -7,7 +7,6 @@ type SupportedDataTypes =
   | Record<string, unknown>
   | unknown[]
   | Date
-  | Map<string, unknown>
   | string
   | number
   | boolean
@@ -17,40 +16,43 @@ type SupportedDataTypes =
 
 type SupportedDataTypesRW = SupportedDataTypes | Readonly<SupportedDataTypes>;
 
+type Options = {
+  sortArrayValues?: boolean;
+};
+
 /**
+ * Create a stable key from a given value useful for caching or memoization.
  *
+ * Object keys are sorted to maintain equality between objects with
+ * the same keys but in different order.
+ *
+ * This function is
  * @example
  * ```typescript
  * import { createStableKey } from '@httpx/stable-hash';
  *
  * const params = {
- *   a: null,
- *   c: undefined,
- *   isOk: true,
- *   isNotOk: false,
- *   date: new Date('2025-02-11T08:58:32.075z'),
- *   strArr: ['a', 'z', 'b],
- *   numberArr: [4, 3.1, 3, 10],
- *   bigintArr: [11n, 10n],
- *   str: 'Hello',
- *   nestedObject: {
- *     z: 'last',
- *     a: 'first',
- *   }
- *   nestedArray: {
- *     arr: [1, 2, 3],
- *   }
- * }
+ *   key8: 'a string',
+ *   key1: 1,
+ *   key3: true,
+ *   key2: [3, 2, 1],
+ *   key7: {
+ *     key2: true,
+ *     key1: new Date('2025-02-11T08:58:32.075Z'),
+ *   },
+ * };
  *
- * const strHash = createStableKey(params);
+ * const key = createStableKey(params);
  *
  * // Will return a string containing
- * // {"a":null,"bigintArr":["[10n]","[11n]"],"c":"[undefined]","date":"2025-02-11T08:58:32.075Z","isNotOk":false,"isOk":true,"nestedArray":{"arr":[1,2,3]},"nestedObject":{"a":"first","z":"last"},"numberArr":[3,3.1,4,10],"str":"Hello","strArr":["a","b","z"]}
+ * // "{"key1":1,"key2":[1,2,3],"key3":true,"key7":{"key1":"2025-02-11T08:58:32.075Z","key2":true},"key8":"a string"}"
  * ```
  */
 export const createStableKey = <T extends SupportedDataTypesRW>(
-  value: T
+  value: T,
+  options?: Options
 ): string => {
+  const { sortArrayValues = true } = options ?? {};
   return JSON.stringify(value, (_, val) => {
     if (val === undefined) {
       return '[undefined]';
@@ -64,7 +66,7 @@ export const createStableKey = <T extends SupportedDataTypesRW>(
     if (isPlainObject(val)) {
       return sortObjKeys(val);
     }
-    if (Array.isArray(val)) {
+    if (sortArrayValues && Array.isArray(val)) {
       return sortArr<unknown>(val);
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

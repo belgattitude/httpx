@@ -48,28 +48,19 @@ describe('createStableKey', () => {
       );
     });
 
-    it('example test', () => {
+    it('Test full example', () => {
       const params = {
-        a: null,
-        c: undefined,
-        isOk: true,
-        isNotOk: false,
-        date: new Date('2025-02-11T08:58:32.075z'),
-        strArr: ['a', 'z', 'b'],
-        numberArr: [4, 3.1, 3, 10],
-        bigintArr: [11n, 10n],
-        str: 'Hello',
-        nestedObject: {
-          z: 'last',
-          a: 'first',
-        },
-        nestedArray: {
-          arr: [1, 2, 3],
+        key8: 'a string',
+        key1: 1,
+        key3: true,
+        key2: [3, 2, 1],
+        key7: {
+          key2: true,
+          key1: new Date('2025-02-11T08:58:32.075Z'),
         },
       };
-
       const strHash = createStableKey(params);
-      expect(strHash).toStrictEqual('');
+      expect(strHash).toMatchSnapshot();
     });
   });
 });
