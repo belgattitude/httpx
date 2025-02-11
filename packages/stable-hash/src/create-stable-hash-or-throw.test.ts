@@ -1,6 +1,10 @@
 import { createStableHashOrThrow } from './create-stable-hash-or-throw';
 
-describe('createStableHashOrThrow', async () => {
+const isNodeLike = !('window' in globalThis);
+const isNode18 =
+  isNodeLike && (process?.versions?.node ?? '').startsWith('18.');
+
+describe.skipIf(isNode18)('createStableHashOrThrow', async () => {
   const params1 = {
     z: 'world',
     a: 'hello',

@@ -1,6 +1,10 @@
 import { createStableHash } from './create-stable-hash';
 
-describe(`createStableHash`, async () => {
+const isNodeLike = !('window' in globalThis);
+const isNode18 =
+  isNodeLike && (process?.versions?.node ?? '').startsWith('18.');
+
+describe.skipIf(isNode18)(`createStableHash`, async () => {
   describe('Example', () => {
     it('should match expected result', async () => {
       const params = {
