@@ -1,0 +1,105 @@
+{
+  "name": "@httpx/stable-hash",
+  "description": "A buffer stable hash.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "homepage": "https://belgattitude.github.io/httpx/stable-hash",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/belgattitude/httpx.git",
+    "directory": "packages/stable-hash"
+  },
+  "keywords": [
+    "intl",
+    "memoize"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
+    "build": "run clean && yarn run tsup",
+    "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
+    "bench": "vitest bench --run",
+    "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
+    "bench-watch": "vitest bench",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "check-dist": "run-s check-dist-esm check-dist-cjs",
+    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2022 './dist/**/*.cjs'",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
+    "check-pub": "attw --pack && publint",
+    "check-size": "size-limit",
+    "clean": "rimraf ./dist ./build ./coverage ./_release",
+    "dev": "tsup --watch",
+    "fix-staged": "lint-staged --allow-empty",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/object-hash.eslintcache",
+    "test": "vitest run",
+    "test-unit": "vitest run",
+    "test-unit-coverage": "vitest run --coverage",
+    "test-unit-edge": "vitest run --environment edge-runtime",
+    "test-unit-browser": "vitest run --browser",
+    "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
+    "test-unit-watch": "vitest --ui  --api 4414",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-stable-hash-unit --dir ./coverage"
+  },
+  "dependencies": {
+    "@httpx/plain-object": "workspace:^"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.17.3",
+    "@belgattitude/eslint-config-bases": "6.22.0",
+    "@httpx/devtools-vitest": "workspace:^",
+    "@size-limit/file": "11.1.6",
+    "@size-limit/webpack": "11.1.6",
+    "browserslist": "4.24.4",
+    "browserslist-to-esbuild": "2.1.1",
+    "cross-env": "7.0.3",
+    "es-check": "8.0.1",
+    "esbuild": "0.25.0",
+    "eslint": "8.57.1",
+    "npm-run-all2": "7.0.2",
+    "prettier": "3.5.0",
+    "publint": "0.3.4",
+    "rimraf": "6.0.1",
+    "rollup": "4.34.6",
+    "size-limit": "11.1.6",
+    "stable-hash": "0.0.4",
+    "tsup": "8.3.6",
+    "typedoc": "0.27.7",
+    "typedoc-plugin-markdown": "4.4.2",
+    "typescript": "5.7.3",
+    "vitest": "3.0.5",
+    "webpack": "5.97.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "directory": "_release/package"
+  }
+}
