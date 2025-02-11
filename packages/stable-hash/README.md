@@ -35,6 +35,11 @@ $ pnpm add @httpx/stable-hash
 
 ## Usage
 
+- [x] [createStableKey](#createStableKey) - Create a stable key from a value as a string (result object)
+- [x] [createStableKeyOrThrow](#createstablekeyorthrow) - Create a stable key from value a string (throws).
+- [x] [createStableHash](#createStableHash) - Create a stable hash from a javascript object as a SHA-256/hexa (result object)
+- [x] [createStableHashOrThrow](#createStableHashOrThrow) - Create a stable hash from a javascript object as a SHA-256/hexa (throws)
+
 ### createStableKey
 
 ```typescript
@@ -91,6 +96,54 @@ const key = createStableKeyOrThrow(params);
 // "{"key1":1,"key2":[1,2,3],"key3":true,"key7":{"key1":"2025-02-11T08:58:32.075Z","key2":true},"key8":"a string"}"
 ```
 
+### createStableHash
+
+```typescript
+import { createStableHash } from '@httpx/stable-hash';
+
+const params = {
+  key8: 'a string',
+  key1: 1,
+  key3: true,
+  key2: [3, 2, 1],
+  key7: {
+    key2: true,
+    key1: new Date('2025-02-11T08:58:32.075Z'),
+  },
+};
+
+const result = await createStableHash(params);
+if (!result.success) {
+  throw result.error;
+}
+const hash = result.hash;
+// -> 'fb17a6300efcf62ae80708e2a672aee581b7f0dd7c6a9a7a748218846c679394'
+``` 
+
+### createStableHashOrThrow
+
+```typescript
+import { createStableHashOrThrow } from '@httpx/stable-hash';
+
+const params = {
+  key8: 'a string',
+  key1: 1,
+  key3: true,
+  key2: [3, 2, 1],
+  key7: {
+    key2: true,
+    key1: new Date('2025-02-11T08:58:32.075Z'),
+  },
+};
+
+try {
+  const hash = await createStableHashOrThrow(params);
+  // -> 'fb17a6300efcf62ae80708e2a672aee581b7f0dd7c6a9a7a748218846c679394'
+} catch (e) {
+  // TypeError in case of an unserializable data type
+}
+```
+
 ## Alternatives
 
 - [x] [stable-hash](https://github.com/shuding/stable-hash). Fastest alternative. Might swallow errors though.
@@ -107,12 +160,14 @@ See [bench](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash
 
 ## Bundle size
 
-Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.size-limit.cjs)
+Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.size-limit.ts)
 
-| Scenario                                              | Size with deps (compressed) |
-|-------------------------------------------------------|----------------------------:|
+| Scenario                                               | Size with deps (compressed) |
+|--------------------------------------------------------|----------------------------:|
 | `import { createStableKeyOrThrow } from '@httpx/stable-hash' |                      ~ 480B |
-| `import { createStableKey } from '@httpx/stable-hash' |                      ~ 520B |
+| `import { createStableKey } from '@httpx/stable-hash'  |                      ~ 520B |
+| `import { createStableHashOrThrow } from '@httpx/stable-hash' |                      ~ 602B |
+| `import { createStableHash } from '@httpx/stable-hash' |                      ~ 631B |
 
 
 ## Compatibility
