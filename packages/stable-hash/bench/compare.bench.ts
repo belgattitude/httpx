@@ -1,3 +1,4 @@
+import { hashKey } from '@tanstack/query-core';
 import hash from 'stable-hash';
 import { bench } from 'vitest';
 
@@ -26,6 +27,13 @@ describe(`Comparison`, async () => {
     'stable-hash',
     () => {
       hash(params);
+    },
+    { iterations: 10 }
+  );
+  bench(
+    '@tanstack/query-core (hashKey)',
+    () => {
+      hashKey([params]);
     },
     { iterations: 10 }
   );
