@@ -13,6 +13,10 @@ export type SupportedDataTypesRW =
   | SupportedDataTypes
   | Readonly<SupportedDataTypes>;
 
-export type Options = {
+export type CreateStableKeyOptions = {
   sortArrayValues?: boolean;
+};
+
+export type CreateStableHashOptions = CreateStableKeyOptions & {
+  algorithm?: 'SHA-256';
 };

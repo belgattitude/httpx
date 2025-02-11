@@ -1,10 +1,11 @@
+import { hashKey } from '@tanstack/query-core';
 import hash from 'stable-hash';
 import { bench } from 'vitest';
 
-import { loadcreateStableKeyOrThrow } from './utils';
+import { loadCreateStableKeyOrThrow } from './utils';
 
 describe(`Comparison`, async () => {
-  const createStableKeyOrThrow = await loadcreateStableKeyOrThrow();
+  const createStableKeyOrThrow = await loadCreateStableKeyOrThrow();
   const params = {
     key8: true,
     key7: 'string',
@@ -26,6 +27,13 @@ describe(`Comparison`, async () => {
     'stable-hash',
     () => {
       hash(params);
+    },
+    { iterations: 10 }
+  );
+  bench(
+    '@tanstack/query-core (hashKey)',
+    () => {
+      hashKey([params]);
     },
     { iterations: 10 }
   );

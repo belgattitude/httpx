@@ -2,7 +2,7 @@ import { isPlainObject } from '@httpx/plain-object';
 
 import { sortArr } from './sort-arr';
 import { sortObjKeys } from './sort-obj-keys';
-import type { Options, SupportedDataTypesRW } from './types';
+import type { CreateStableKeyOptions, SupportedDataTypesRW } from './types';
 
 const baseTypes = new Set(['string', 'number', 'boolean']);
 
@@ -39,7 +39,7 @@ const baseTypes = new Set(['string', 'number', 'boolean']);
  */
 export const createStableKeyOrThrow = <T extends SupportedDataTypesRW>(
   value: T,
-  options?: Options
+  options?: CreateStableKeyOptions
 ): string => {
   const { sortArrayValues = true } = options ?? {};
   return JSON.stringify(value, (_, val) => {

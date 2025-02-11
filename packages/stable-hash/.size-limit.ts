@@ -5,7 +5,7 @@ module.exports = [
     name: 'Everything (ESM)',
     path: ['dist/index.mjs'],
     import: '*',
-    limit: '680B',
+    limit: '830B',
   },
   {
     name: 'createStableKeyOrThrow (ESM)',
@@ -18,5 +18,17 @@ module.exports = [
     path: ['dist/index.mjs'],
     import: '{ createStableKey }',
     limit: '520B',
+  },
+  {
+    name: 'createStableHashOrThrow (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ createStableHashOrThrow }',
+    limit: '610B',
+  },
+  {
+    name: 'createStableHash (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ createStableHash }',
+    limit: '640B',
   },
 ] satisfies SizeLimitConfig;
