@@ -5,12 +5,12 @@ module.exports = [
     name: 'Everything (ESM)',
     path: ['dist/index.mjs'],
     import: '*',
-    limit: '600B',
+    limit: '630B',
   },
   {
     name: 'createStableKey (ESM)',
     path: ['dist/index.mjs'],
     import: '{ createStableKey }',
-    limit: '420B',
+    limit: '480B',
   },
 ] satisfies SizeLimitConfig;

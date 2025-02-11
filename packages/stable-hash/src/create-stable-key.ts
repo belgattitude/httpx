@@ -20,6 +20,8 @@ type Options = {
   sortArrayValues?: boolean;
 };
 
+const baseTypes = new Set(['string', 'number', 'boolean']);
+
 /**
  * Create a stable key from a given value useful for caching or memoization.
  *
@@ -61,20 +63,25 @@ export const createStableKey = <T extends SupportedDataTypesRW>(
       return null;
     }
     const valType = typeof val;
-    if (valType === 'bigint') {
-      return `[${val}n]`;
-    }
-    if (['boolean', 'number', 'string'].includes(valType)) {
+    if (baseTypes.has(valType)) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return val;
     }
-    if (sortArrayValues && Array.isArray(val)) {
-      return sortArr<unknown>(val);
+    if (valType === 'bigint') {
+      return `[${val}n]`;
+    }
+    if (Array.isArray(val)) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return sortArrayValues ? sortArr<unknown>(val) : val;
     }
     if (isPlainObject(val)) {
       return sortObjKeys(val);
     }
+    if (val instanceof Date) {
+      return val.toJSON();
+    }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return val;
+    // return val;
+    throw new TypeError(`Unsupported data type: ${valType}`);
   });
 };
