@@ -60,14 +60,19 @@ export const createStableKey = <T extends SupportedDataTypesRW>(
     if (val === null) {
       return null;
     }
-    if (typeof val === 'bigint') {
+    const valType = typeof val;
+    if (valType === 'bigint') {
       return `[${val}n]`;
     }
-    if (isPlainObject(val)) {
-      return sortObjKeys(val);
+    if (['boolean', 'number', 'string'].includes(valType)) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return val;
     }
     if (sortArrayValues && Array.isArray(val)) {
       return sortArr<unknown>(val);
+    }
+    if (isPlainObject(val)) {
+      return sortObjKeys(val);
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return val;

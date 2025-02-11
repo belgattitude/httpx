@@ -14,4 +14,9 @@ describe(`createStableKey`, async () => {
   bench('createStableKey with array sorting', () => {
     createStableKey(params);
   });
+  bench('createStableKey without array sorting', () => {
+    createStableKey(params, {
+      sortArrayValues: false,
+    });
+  });
 });

@@ -70,7 +70,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario                                              | Size with deps (compressed) |
 |-------------------------------------------------------|----------------------------:|
-| `import { createStableKey } from '@httpx/stable-hash' |                      ~ 380B |
+| `import { createStableKey } from '@httpx/stable-hash' |                      ~ 420B |
 
 
 ## Compatibility
