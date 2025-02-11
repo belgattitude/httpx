@@ -47,5 +47,29 @@ describe('createStableKey', () => {
         '{"boolean":true,"nested":{"params":{"bigint":"[1n]","boolean":true,"date":"2025-02-11T08:58:32.075Z","null":null,"number":1,"string":"string","undefined":"[undefined]"}}}'
       );
     });
+
+    it('example test', () => {
+      const params = {
+        a: null,
+        c: undefined,
+        isOk: true,
+        isNotOk: false,
+        date: new Date('2025-02-11T08:58:32.075z'),
+        strArr: ['a', 'z', 'b'],
+        numberArr: [4, 3.1, 3, 10],
+        bigintArr: [11n, 10n],
+        str: 'Hello',
+        nestedObject: {
+          z: 'last',
+          a: 'first',
+        },
+        nestedArray: {
+          arr: [1, 2, 3],
+        },
+      };
+
+      const strHash = createStableKey(params);
+      expect(strHash).toStrictEqual('');
+    });
   });
 });

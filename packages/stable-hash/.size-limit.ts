@@ -5,12 +5,12 @@ module.exports = [
     name: 'Everything (ESM)',
     path: ['dist/index.mjs'],
     import: '*',
-    limit: '1KB',
+    limit: '600B',
   },
   {
-    name: 'sortObjKeys (ESM)',
+    name: 'createStableKey (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ sortObjKeys }',
-    limit: '30B',
+    import: '{ createStableKey }',
+    limit: '370B',
   },
 ] satisfies SizeLimitConfig;

@@ -1,2 +1,2 @@
-# @httpx/object-hash
+# @httpx/stable-hash
 

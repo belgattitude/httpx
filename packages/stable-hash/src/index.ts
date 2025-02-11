@@ -1,1 +1,1 @@
-export { sortObjKeys } from './sort-obj-keys';
+export { createStableKey } from './create-stable-key';
