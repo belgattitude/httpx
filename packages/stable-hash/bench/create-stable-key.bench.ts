@@ -11,12 +11,20 @@ describe(`createStableKey`, async () => {
       key1: 'string',
     },
   };
-  bench('createStableKey with array sorting', () => {
-    createStableKey(params);
-  });
-  bench('createStableKey without array sorting', () => {
-    createStableKey(params, {
-      sortArrayValues: false,
-    });
-  });
+  bench(
+    'createStableKey with array sorting',
+    () => {
+      createStableKey(params);
+    },
+    { iterations: 10 }
+  );
+  bench(
+    'createStableKey without array sorting',
+    () => {
+      createStableKey(params, {
+        sortArrayValues: false,
+      });
+    },
+    { iterations: 10 }
+  );
 });
