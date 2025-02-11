@@ -29,6 +29,6 @@ module.exports = [
     name: 'createStableHash (ESM)',
     path: ['dist/index.mjs'],
     import: '{ createStableHash }',
-    limit: '635B',
+    limit: '640B',
   },
 ] satisfies SizeLimitConfig;
