@@ -1,5 +1,7 @@
 # @httpx/stable-hash
 
+Humble set of functions to create keys from javascript values. Particularly useful for memoization or
+cache keys generation. 
 
 [![npm](https://img.shields.io/npm/v/@httpx/stable-hash?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/stable-hash)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/CHANGELOG.md)
@@ -21,6 +23,12 @@ $ pnpm add @httpx/stable-hash
 
 ## Features
 
+- 👉&nbsp; Works with plain objects, dates, bigint, number, null, undefined and arrays.
+- 🦄&nbsp; Insensitive to object keys or array parameters order.
+- 📐&nbsp; Lightweight (starts at [~500B](#bundle-size)).
+- 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
+- 🙏&nbsp; Properly error if it encounters an unsupported datatype.
+- 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
 
@@ -28,6 +36,7 @@ $ pnpm add @httpx/stable-hash
 
 ## Usage
 
+### createStableKey
 
 ```typescript
 import { createStableKey } from '@httpx/stable-hash'
@@ -43,16 +52,46 @@ const params = {
   },
 };
 
-const key = createStableKey(params);
+const result = createStableKey(params);
+
+if (!result.success) {
+  throw result.error; // TypeError
+}
+
+const key = result.key;
 
 // Key contains a json comptatible string with object keys sorted.
 // By default it will sort arrays if they contains only strings or numbers
 // including bigints.
 
 // "{"key1":1,"key2":[1,2,3],"key3":true,"key7":{"key1":"2025-02-11T08:58:32.075Z","key2":true},"key8":"a string"}"
-
-
 ```
+
+### createStableKeyOrThrow
+
+```typescript
+import { createStableKeyOrThrow } from '@httpx/stable-hash'
+
+const params = {
+  key8: 'a string',
+  key1: 1,
+  key3: true,
+  key2: [3, 2, 1],
+  key7: {
+    key2: true,
+    key1: new Date('2025-02-11T08:58:32.075Z'),
+  },
+};
+
+const key = createStableKeyOrThrow(params);
+
+// Key contains a json comptatible string with object keys sorted.
+// By default it will sort arrays if they contains only strings or numbers
+// including bigints.
+
+// "{"key1":1,"key2":[1,2,3],"key3":true,"key7":{"key1":"2025-02-11T08:58:32.075Z","key2":true},"key8":"a string"}"
+```
+
 
 ## Benchmarks
 
@@ -70,7 +109,8 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario                                              | Size with deps (compressed) |
 |-------------------------------------------------------|----------------------------:|
-| `import { createStableKey } from '@httpx/stable-hash' |                      ~ 420B |
+| `import { createStableKeyOrThrow } from '@httpx/stable-hash' |                      ~ 480B |
+| `import { createStableKey } from '@httpx/stable-hash' |                      ~ 520B |
 
 
 ## Compatibility

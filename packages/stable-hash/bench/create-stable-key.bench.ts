@@ -1,8 +1,8 @@
 import { bench } from 'vitest';
 
-import { createStableKey } from '../src';
+import { createStableKeyOrThrow } from '../src';
 
-describe(`createStableKey`, async () => {
+describe(`createStableKeyOrThrow`, async () => {
   const params = {
     key8: true,
     key7: 'string',
@@ -12,16 +12,16 @@ describe(`createStableKey`, async () => {
     },
   };
   bench(
-    'createStableKey with array sorting',
+    'createStableKeyOrThrow with array sorting',
     () => {
-      createStableKey(params);
+      createStableKeyOrThrow(params);
     },
     { iterations: 10 }
   );
   bench(
-    'createStableKey without array sorting',
+    'createStableKeyOrThrow without array sorting',
     () => {
-      createStableKey(params, {
+      createStableKeyOrThrow(params, {
         sortArrayValues: false,
       });
     },

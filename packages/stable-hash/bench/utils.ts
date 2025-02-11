@@ -1,6 +1,6 @@
-import type { createStableKey as Src } from '../src';
+import type { createStableKeyOrThrow as Src } from '../src';
 
-export const loadCreateStableKey = async () =>
+export const loadcreateStableKeyOrThrow = async () =>
   await import(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore to apply benchmarks assert must be built
@@ -9,7 +9,7 @@ export const loadCreateStableKey = async () =>
   )
     .then((mod) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      return mod.createStableKey as unknown as typeof Src;
+      return mod.createStableKeyOrThrow as unknown as typeof Src;
     })
     .catch((_e) => {
       const msg = 'Requires httpx/stable-key to be built (yarn build)';

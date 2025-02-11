@@ -1,10 +1,10 @@
 import hash from 'stable-hash';
 import { bench } from 'vitest';
 
-import { loadCreateStableKey } from './utils';
+import { loadcreateStableKeyOrThrow } from './utils';
 
 describe(`Comparison`, async () => {
-  const createStableKey = await loadCreateStableKey();
+  const createStableKeyOrThrow = await loadcreateStableKeyOrThrow();
   const params = {
     key8: true,
     key7: 'string',
@@ -16,7 +16,7 @@ describe(`Comparison`, async () => {
   bench(
     '@httpx/stable-hash',
     () => {
-      createStableKey(params, {
+      createStableKeyOrThrow(params, {
         sortArrayValues: false,
       });
     },

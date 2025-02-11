@@ -1,6 +1,6 @@
-import { createStableKey } from './create-stable-key';
+import { createStableKeyOrThrow } from './create-stable-key-or-throw';
 
-describe('createStableKey', () => {
+describe('createStableKeyOrThrow', () => {
   describe('base types', () => {
     const stableDate = new Date('2025-02-11T08:58:32.075z');
     const baseTypes = [
@@ -16,7 +16,7 @@ describe('createStableKey', () => {
     it.each(baseTypes)(
       'when %s is provided, should return %s',
       (value, expected) => {
-        expect(createStableKey(value)).toBe(expected);
+        expect(createStableKeyOrThrow(value)).toBe(expected);
       }
     );
   });
@@ -33,7 +33,7 @@ describe('createStableKey', () => {
     } as const;
 
     it('should return a sort object params', () => {
-      expect(createStableKey(baseParams)).toBe(
+      expect(createStableKeyOrThrow(baseParams)).toBe(
         '{"bigint":"[1n]","boolean":true,"date":"2025-02-11T08:58:32.075Z","null":null,"number":1,"string":"string","undefined":"[undefined]"}'
       );
     });
@@ -43,7 +43,7 @@ describe('createStableKey', () => {
         boolean: true,
         nested: { params: baseParams },
       } as const;
-      expect(createStableKey(nested)).toBe(
+      expect(createStableKeyOrThrow(nested)).toBe(
         '{"boolean":true,"nested":{"params":{"bigint":"[1n]","boolean":true,"date":"2025-02-11T08:58:32.075Z","null":null,"number":1,"string":"string","undefined":"[undefined]"}}}'
       );
     });
@@ -59,7 +59,7 @@ describe('createStableKey', () => {
           key1: new Date('2025-02-11T08:58:32.075Z'),
         },
       };
-      const strHash = createStableKey(params);
+      const strHash = createStableKeyOrThrow(params);
       expect(strHash).toMatchSnapshot();
     });
   });

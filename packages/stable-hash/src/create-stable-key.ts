@@ -1,26 +1,7 @@
-import { isPlainObject } from '@httpx/plain-object';
+import { createStableKeyOrThrow } from './create-stable-key-or-throw';
+import type { Options, SupportedDataTypesRW } from './types';
 
-import { sortArr } from './sort-arr';
-import { sortObjKeys } from './sort-obj-keys';
-
-type SupportedDataTypes =
-  | Record<string, unknown>
-  | unknown[]
-  | Date
-  | string
-  | number
-  | boolean
-  | bigint
-  | null
-  | undefined;
-
-type SupportedDataTypesRW = SupportedDataTypes | Readonly<SupportedDataTypes>;
-
-type Options = {
-  sortArrayValues?: boolean;
-};
-
-const baseTypes = new Set(['string', 'number', 'boolean']);
+type Result = { success: true; key: string } | { success: false; error: Error };
 
 /**
  * Create a stable key from a given value useful for caching or memoization.
@@ -44,7 +25,11 @@ const baseTypes = new Set(['string', 'number', 'boolean']);
  *   },
  * };
  *
- * const key = createStableKey(params);
+ * const result = createStableKey(params);
+ * if (!result.success) {
+ *   throw result.error;
+ * }
+ * const key = result.key;
  *
  * // Will return a string containing
  * // "{"key1":1,"key2":[1,2,3],"key3":true,"key7":{"key1":"2025-02-11T08:58:32.075Z","key2":true},"key8":"a string"}"
@@ -53,35 +38,14 @@ const baseTypes = new Set(['string', 'number', 'boolean']);
 export const createStableKey = <T extends SupportedDataTypesRW>(
   value: T,
   options?: Options
-): string => {
-  const { sortArrayValues = true } = options ?? {};
-  return JSON.stringify(value, (_, val) => {
-    if (val === undefined) {
-      return '[undefined]';
-    }
-    if (val === null) {
-      return null;
-    }
-    const valType = typeof val;
-    if (baseTypes.has(valType)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return val;
-    }
-    if (valType === 'bigint') {
-      return `[${val}n]`;
-    }
-    if (Array.isArray(val)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return sortArrayValues ? sortArr<unknown>(val) : val;
-    }
-    if (isPlainObject(val)) {
-      return sortObjKeys(val);
-    }
-    if (val instanceof Date) {
-      return val.toJSON();
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    // return val;
-    throw new TypeError(`Unsupported data type: ${valType}`);
-  });
+): Result => {
+  try {
+    const key = createStableKeyOrThrow(value, options);
+    return {
+      success: true,
+      key,
+    };
+  } catch (e) {
+    return { success: false, error: e as TypeError };
+  }
 };
