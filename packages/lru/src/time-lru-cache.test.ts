@@ -1,6 +1,7 @@
 import { TimeLRUCache } from './time-lru-cache';
 
-const HUNDRED_MILLIS = 1000;
+const HUNDRED_MILLIS = 100;
+const SIXTY_MILLIS = 60;
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -113,10 +114,10 @@ describe('TimeLRUCache', () => {
         defaultTTL: HUNDRED_MILLIS,
       });
       lru.set('key1', 'value1', HUNDRED_MILLIS);
-      lru.set('key2', 'value2', HUNDRED_MILLIS * 4);
+      lru.set('key2', 'value2', 4 * HUNDRED_MILLIS);
       expect(lru.get('key1')).toBe('value1');
       expect(lru.get('key2')).toBe('value2');
-      await wait(HUNDRED_MILLIS);
+      await wait(HUNDRED_MILLIS + SIXTY_MILLIS);
       expect(lru.get('key1')).toBeUndefined();
       expect(lru.get('key2')).toBe('value2');
     });
@@ -148,8 +149,8 @@ describe('TimeLRUCache', () => {
         },
       });
       lru.set('key1', 'value1', HUNDRED_MILLIS);
-      lru.set('key2', 'value2', HUNDRED_MILLIS * 4);
-      await wait(HUNDRED_MILLIS);
+      lru.set('key2', 'value2', 4 * HUNDRED_MILLIS);
+      await wait(HUNDRED_MILLIS + SIXTY_MILLIS);
       lru.get('key1');
       lru.get('key2');
       expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
