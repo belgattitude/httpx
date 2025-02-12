@@ -2411,6 +2411,7 @@ __metadata:
     "@httpx/lru": "workspace:^"
     "@httpx/memo-intl": "workspace:^"
     "@httpx/plain-object": "workspace:^"
+    "@httpx/stable-hash": "workspace:^"
     "@httpx/treeu": "workspace:^"
     "@tailwindcss/postcss": "npm:4.0.6"
     "@types/node": "npm:22.13.1"
@@ -2424,8 +2425,8 @@ __metadata:
     cross-env: "npm:7.0.3"
     eslint: "npm:8.57.1"
     eslint-config-next: "npm:15.1.7"
-    happy-dom: "npm:17.0.4"
-    ky: "npm:1.7.4"
+    happy-dom: "npm:17.1.0"
+    ky: "npm:1.7.5"
     next: "npm:15.1.7"
     pino: "npm:9.6.0"
     postcss: "npm:8.5.2"
@@ -2443,7 +2444,7 @@ __metadata:
     vite-tsconfig-paths: "npm:5.1.4"
     vitest: "npm:3.0.5"
     webpack: "npm:5.97.1"
-    zod: "npm:3.24.1"
+    zod: "npm:3.24.2"
   languageName: unknown
   linkType: soft
 
@@ -2806,7 +2807,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@httpx/stable-hash@workspace:packages/stable-hash":
+"@httpx/stable-hash@workspace:^, @httpx/stable-hash@workspace:packages/stable-hash":
   version: 0.0.0-use.local
   resolution: "@httpx/stable-hash@workspace:packages/stable-hash"
   dependencies:
@@ -10207,13 +10208,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:17.0.4":
-  version: 17.0.4
-  resolution: "happy-dom@npm:17.0.4"
+"happy-dom@npm:17.1.0":
+  version: 17.1.0
+  resolution: "happy-dom@npm:17.1.0"
   dependencies:
     webidl-conversions: "npm:^7.0.0"
     whatwg-mimetype: "npm:^3.0.0"
-  checksum: 10c0/6d88ae10b64eac5e1188540d43be4883256f0f4bc7a0f2b153b05e205f669f665ed6ed9793c8ffb0fb2936c068c47572b915c6b8a01298d9dbde45b168ca7d84
+  checksum: 10c0/36e8798d152c15a113e47474d14fd5e9d064a8baaf8ba7e7c802c85ecadc216681e9decce911eb9156cbf26524f14a39c0c3f8a04b02d0edf698c27da0a7653f
   languageName: node
   linkType: hard
 
@@ -11700,10 +11701,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ky@npm:1.7.4":
-  version: 1.7.4
-  resolution: "ky@npm:1.7.4"
-  checksum: 10c0/8b28b85cbee6d3e073ff796b92661f4bf155ec9b9a131411de1c34fb2f89f8507e67ff3df369e3c6d18714134774e8735e88cba72b19d005a09112b800d14474
+"ky@npm:1.7.5":
+  version: 1.7.5
+  resolution: "ky@npm:1.7.5"
+  checksum: 10c0/9f9c70a4916592f728c90e38ecbe2ed468eb7161b7525a4561a861e457edd5cb706751e2aba615d350380231d021f535147f9ed3ca07271af836465ecc725761
   languageName: node
   linkType: hard
 
@@ -18800,13 +18801,6 @@ __metadata:
   version: 3.22.3
   resolution: "zod@npm:3.22.3"
   checksum: 10c0/cb4b24aed7dec98552eb9042e88cbd645455bf2830e5704174d2da96f554dabad4630e3b4f6623e1b6562b9eaa43535a37b7f2011f29b8d8e9eabe1ddf3b656b
-  languageName: node
-  linkType: hard
-
-"zod@npm:3.24.1":
-  version: 3.24.1
-  resolution: "zod@npm:3.24.1"
-  checksum: 10c0/0223d21dbaa15d8928fe0da3b54696391d8e3e1e2d0283a1a070b5980a1dbba945ce631c2d1eccc088fdbad0f2dfa40155590bf83732d3ac4fcca2cc9237591b
   languageName: node
   linkType: hard
 
