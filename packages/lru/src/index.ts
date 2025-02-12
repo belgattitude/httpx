@@ -1,7 +1,3 @@
-export { LRUCache } from './lru-cache';
-export { TimeLRUCache } from './time-lru-cache';
-export type {
-  BaseCache,
-  BaseCacheHasOptions,
-  BaseCacheKeyTypes,
-} from './types';
+export { LruCache } from './lru-cache';
+export { TimeLruCache } from './time-lru-cache';
+export type { BaseCache, BaseCacheKeyTypes, BaseLruHasOptions } from './types';

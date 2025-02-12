@@ -1,14 +1,14 @@
-import { TimeLRUCache } from './time-lru-cache';
+import { TimeLruCache } from './time-lru-cache';
 
 const HUNDRED_MILLIS = 100;
 const SIXTY_MILLIS = 60;
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-describe('TimeLRUCache', () => {
+describe('TimeLruCache', () => {
   describe('get/set', () => {
     it('should set a value in the cache', async () => {
-      const lru = new TimeLRUCache({
+      const lru = new TimeLruCache({
         maxSize: 1,
         defaultTTL: HUNDRED_MILLIS,
       });
@@ -19,7 +19,7 @@ describe('TimeLRUCache', () => {
   });
   describe('delete', () => {
     it('should properly delete a value and update size', () => {
-      const lru = new TimeLRUCache({
+      const lru = new TimeLruCache({
         maxSize: 2,
         defaultTTL: HUNDRED_MILLIS,
       });
@@ -34,7 +34,7 @@ describe('TimeLRUCache', () => {
 
   describe('clear', () => {
     it('should properly clear all values and report size 0 and unset initial params', () => {
-      const lru = new TimeLRUCache({
+      const lru = new TimeLruCache({
         maxSize: 2,
         defaultTTL: HUNDRED_MILLIS,
       });
@@ -53,7 +53,7 @@ describe('TimeLRUCache', () => {
 
   describe('getOrSet', () => {
     it('should not overwrite existing entry if exist', () => {
-      const lru = new TimeLRUCache({
+      const lru = new TimeLruCache({
         maxSize: 2,
         defaultTTL: HUNDRED_MILLIS,
       });
@@ -62,20 +62,23 @@ describe('TimeLRUCache', () => {
       expect(value).toBe('value');
       expect(lru.size).toBe(1);
     });
+
     it(`should add new entry if it doesn't exist`, () => {
-      const lru = new TimeLRUCache({
-        maxSize: 2,
+      const lru = new TimeLruCache({
+        maxSize: 3,
         defaultTTL: HUNDRED_MILLIS,
       });
       lru.set('key', 'value');
-      const value = lru.getOrSet('key2', 'value2');
-      expect(value).toBe('value2');
-      expect(lru.size).toBe(2);
+      const value2 = lru.getOrSet('key2', 'value2', 2 * HUNDRED_MILLIS);
+      const value3 = lru.getOrSet('key3', 'value3', 2 * HUNDRED_MILLIS);
+      expect(value2).toBe('value2');
+      expect(value3).toBe('value3');
+      expect(lru.size).toBe(3);
     });
   });
   describe('iterable', () => {
     it('should be iterable with for const of and orders by least recently usage', () => {
-      const lru = new TimeLRUCache({
+      const lru = new TimeLruCache({
         maxSize: 2,
         defaultTTL: HUNDRED_MILLIS,
       });
@@ -95,7 +98,7 @@ describe('TimeLRUCache', () => {
   });
   describe('eviction', () => {
     it('should evict items based on maxSize', () => {
-      const lru = new TimeLRUCache({
+      const lru = new TimeLruCache({
         maxSize: 2,
         defaultTTL: HUNDRED_MILLIS,
       });
@@ -109,7 +112,7 @@ describe('TimeLRUCache', () => {
     });
 
     it('should evict items based on ttl', async () => {
-      const lru = new TimeLRUCache({
+      const lru = new TimeLruCache({
         maxSize: 2,
         defaultTTL: HUNDRED_MILLIS,
       });
@@ -125,7 +128,7 @@ describe('TimeLRUCache', () => {
     it('should call onEviction when capacity reached', async () => {
       const fn = vi.fn();
 
-      const lru = new TimeLRUCache({
+      const lru = new TimeLruCache({
         maxSize: 2,
         defaultTTL: HUNDRED_MILLIS,
         onEviction: (key, value) => {
@@ -141,7 +144,7 @@ describe('TimeLRUCache', () => {
     it('should call onEviction when trying to get an expired item', async () => {
       const fn = vi.fn();
 
-      const lru = new TimeLRUCache({
+      const lru = new TimeLruCache({
         maxSize: 2,
         defaultTTL: HUNDRED_MILLIS,
         onEviction: (key, value) => {
@@ -153,6 +156,21 @@ describe('TimeLRUCache', () => {
       await wait(HUNDRED_MILLIS + SIXTY_MILLIS);
       lru.get('key1');
       lru.get('key2');
+      expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
+    });
+    it('should call eviction on has() if item expired', async () => {
+      const fn = vi.fn();
+
+      const lru = new TimeLruCache({
+        maxSize: 2,
+        defaultTTL: HUNDRED_MILLIS,
+        onEviction: (key, value) => {
+          fn(key, value);
+        },
+      });
+      lru.set('key1', 'value1', HUNDRED_MILLIS);
+      await wait(HUNDRED_MILLIS + SIXTY_MILLIS);
+      lru.has('key1');
       expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
     });
   });

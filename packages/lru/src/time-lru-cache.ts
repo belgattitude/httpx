@@ -1,27 +1,23 @@
-import type { LRUCacheParams } from './lru-cache';
+import { DoublyLinkedListNode } from './base';
+import type { LruCacheParams } from './lru-cache';
 import type {
   BaseCache,
   BaseCacheKeyTypes,
   EpochTimeInMilliseconds,
   Milliseconds,
+  SupportedCacheValues,
 } from './types';
 
-class Node<TValue, TKey extends BaseCacheKeyTypes = string> {
-  prev: Node<TValue, TKey> | null = null;
-  next: Node<TValue, TKey> | null = null;
-  constructor(public readonly key: TKey) {}
-}
-
-type DataType<TValue, TKey extends BaseCacheKeyTypes = string> = {
+type TimeLruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
   value: TValue;
   expiry: EpochTimeInMilliseconds;
-  node: Node<TValue, TKey>;
+  node: DoublyLinkedListNode<TValue, TKey>;
 };
 
-type TimeLRUCacheParams<
+type TimeLruCacheParams<
   TValue,
   TKey extends BaseCacheKeyTypes = string,
-> = LRUCacheParams<TValue, TKey> & {
+> = LruCacheParams<TValue, TKey> & {
   /**
    * Default time to live for each entry in milliseconds
    */
@@ -29,10 +25,10 @@ type TimeLRUCacheParams<
 };
 
 /**
- * Double linked list based lru cache that supports get in O(1)
+ * Double linked list based lru cache that supports get in O(1) and time to live for each entry
  */
-export class TimeLRUCache<
-  TValue = unknown,
+export class TimeLruCache<
+  TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
 > implements BaseCache<TValue, TKey>
 {
@@ -43,18 +39,20 @@ export class TimeLRUCache<
 
   #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
-  #cache: Map<TKey, DataType<TValue, TKey>>;
-  #head: Node<TValue, TKey> | null = null;
-  #tail: Node<TValue, TKey> | null = null;
+  #cache: Map<TKey, TimeLruCacheEntry<TValue, TKey>>;
+  #head: DoublyLinkedListNode<TValue, TKey> | null = null;
+  #tail: DoublyLinkedListNode<TValue, TKey> | null = null;
 
   /**
-   * Create a new LRUCache instance
+   * Create a new LruCache instance
    *
    * @example
    * ```typescript
-   * import { LRUCache } from '@httpx/lru';
+   * import { TimeLruCache } from '@httpx/lru';
    *
-   * const lru = new LRUCache({ maxSize: 1000 });
+   * const THIRTY_SECONDS_IN_MILLIS = 30_000
+   *
+   * const lru = new TimeLruCache({ maxSize: 1000, defaultTTL: THIRTY_SECONDS_IN_MILLIS});
    * lru.set('🦄', ['cool', 'stuff']);
    * if (lru.has('🦄')) {;
    *  console.log(lru.get('🦄'));
@@ -66,7 +64,7 @@ export class TimeLRUCache<
    * lru.clear();
    * ```
    */
-  constructor(params: TimeLRUCacheParams<TValue, TKey>) {
+  constructor(params: TimeLruCacheParams<TValue, TKey>) {
     const { maxSize, touchOnHas = false, onEviction, defaultTTL } = params;
     if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
       throw new TypeError('Invalid maxSize');
@@ -100,7 +98,35 @@ export class TimeLRUCache<
   }
 
   /**
-   * Check if an item exists.
+   * Checks whether an entry exist and hasn't expired. If the entry exists but has expired, it will be removed
+   * automatically and trigger the `onEviction` callback if present.
+   *
+   * ```typescript
+   * import { TimeLruCache } from '@httpx/lru';
+   *
+   * const oneSecondInMillis = 1000;
+   *
+   * const lru = new TimeLruCache({
+   *   maxSize: 1,
+   *   defaultTTL: oneSecondInMillis,
+   *   onEviction: () => { console.log('evicted') }
+   * });
+   *
+   * lru.set('key0', 'value0', 2 * oneSecondInMillis);
+   *
+   * // 👇 Will evict key0 as maxSize is 1
+   * lru.set('key1', 'value1', 2 * oneSecondInMillis);
+   *
+   * lru.has('key0'); // 👈 false (item does not exists)
+   * lru.has('key1'); // 👈 true  (item is present and is not expired)
+   *
+   * const value = lru.get('key1'); // 👈 'value1' (item is present and is not expired)
+   *
+   * // 🕛 wait 3 seconds, time for the item to expire
+   *
+   * lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction will be called)
+   * ```
+   *
    */
   has(
     key: TKey,
@@ -112,7 +138,18 @@ export class TimeLRUCache<
       touch?: boolean;
     }
   ): boolean {
-    const hasEntry = this.#cache.has(key);
+    const value = this.#cache.get(key);
+    const hasEntry = value !== undefined;
+    const hasExpired = hasEntry && value.expiry < Date.now();
+
+    if (hasExpired) {
+      if (this.#onEviction) {
+        this.#onEviction(key, this.#cache.get(key)!.value);
+      }
+      this.#removeNode(value.node);
+      return false;
+    }
+
     if (hasEntry && (options?.touch ?? this.#touchOnHas)) {
       this.#moveToHead(this.#cache.get(key)!.node);
     }
@@ -128,8 +165,8 @@ export class TimeLRUCache<
       return false;
     }
 
-    const newNode = new Node(key);
-    const data: DataType<TValue, TKey> = {
+    const newNode = new DoublyLinkedListNode(key);
+    const data: TimeLruCacheEntry<TValue, TKey> = {
       value,
       expiry: Date.now() + (ttl ?? this.#ttl),
       node: newNode,
@@ -169,15 +206,21 @@ export class TimeLRUCache<
    *
    * @example
    * ```typescript
-   * const lru = new LRUCache({ maxSize: 2 });
+   * const lru = new TimeLruCache({ maxSize: 2 });
    * lru.set('key1', 'value1');
    * lru.getOrSet('key1', 'value2'); // 👈 will not overwrite the value
+   * lru.getOrSet('key2', () => true)); // 👈 with callback
    * console.log(lru.get('key1')); // value1
    * ```
    */
-  getOrSet(key: TKey, value: TValue, ttl?: Milliseconds): TValue {
+  getOrSet(
+    key: TKey,
+    valueOrFn: TValue | (() => TValue),
+    ttl?: Milliseconds
+  ): TValue {
     const val = this.get(key);
     if (val === undefined) {
+      const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
       this.set(key, value, ttl);
       return value;
     }
@@ -213,7 +256,7 @@ export class TimeLRUCache<
    * Iterate over the cache from the least recently used to the most recently used.
    *
    * ```typescript
-   * const lru = new LRUCache({ maxSize: 2 });
+   * const lru = new LruCache({ maxSize: 2 });
    * lru.set('key1', 'value1');
    * lru.set('key2', 'value2');
    * lru.set('key3', 'value3');
@@ -240,7 +283,7 @@ export class TimeLRUCache<
     }
   }
 
-  #moveToHead(node: Node<TValue, TKey>): void {
+  #moveToHead(node: DoublyLinkedListNode<TValue, TKey>): void {
     if (node === this.#head) {
       return;
     }
@@ -256,7 +299,7 @@ export class TimeLRUCache<
     }
   }
 
-  #removeNode(node: Node<TValue, TKey>): void {
+  #removeNode(node: DoublyLinkedListNode<TValue, TKey>): void {
     if (node.prev) {
       node.prev.next = node.next;
     }

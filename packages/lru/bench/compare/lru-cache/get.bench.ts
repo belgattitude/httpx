@@ -5,7 +5,7 @@ import { getLruCaches } from '../../get-lru-caches';
 const SEEDS_COUNT = 1000;
 const MAX_SIZE = 500;
 
-describe(`LRUCache.get() - ${SEEDS_COUNT} items / maxSize: ${MAX_SIZE}`, async () => {
+describe(`LruCache.get() - ${SEEDS_COUNT} items / maxSize: ${MAX_SIZE}`, async () => {
   const seeds = Array.from({ length: SEEDS_COUNT }).map((_, i) => ({
     key: `key-${i}`,
     value: `value-${i}`,

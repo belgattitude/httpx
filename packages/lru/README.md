@@ -20,18 +20,39 @@ $ pnpm add @httpx/lru
 
 ## Features
 
+- 🖖&nbsp; Provides [LruCache](#lrucache) and [TimeLruCache](#timelrucache).
 - 🚀&nbsp; Fast `cache.get()` in O(1) thx to [doubly linked list](https://en.wikipedia.org/wiki/Doubly_linked_list).
-- 📐&nbsp; Lightweight ([~535B](#bundle-size)) 
+- 📐&nbsp; Lightweight ([~550B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
 
-```typescript
-// bundle size: ~500B
-import { LRUCache } from '@httpx/lru';
+## LruCache
 
-const lru = new LRUCache({ maxSize: 1000 });
+LruCache provides a base LRU implementation. It is a simple cache with a fixed capacity. 
+When the cache is full, the least recently used item is removed. Under the hood it uses
+a doubly linked list implementation to allow `get()` in O(1). 
+
+### API
+
+| Method                             | Description                                                        |
+|------------------------------------|--------------------------------------------------------------------|
+| `set(key, value): boolean`         | Add a new entry and return true if entry was overwritten           |
+| `get(key): TValue \| undefined`    | Retrieve a cache entry by key                                      |
+| `has(key): boolean`                | Check if an entry exist                                            |
+| `delete(key): boolean`             | Remove an entry, returns bool indicating if the entry was existing |
+| `getOrSet(key, valueOrFn): TValue` | Return the entry if exists otherwise save a new entry              |
+| `clear(): number`                  | Clear the cache and return the actual number of deleted entries    |
+
+
+### Usage
+
+```typescript
+// bundle size: ~550B
+import { LruCache } from '@httpx/lru';
+
+const lru = new LruCache({ maxSize: 1000 });
 
 lru.set('🦄', ['cool', 'stuff']);
 
@@ -44,26 +65,60 @@ lru.delete('🦄');
 lru.clear();
 ```
 
+## TimeLruCache
 
-## Usage
+TimeLruCache allows to work with expiry time (TTL). Time-to-live are expressed in milliseconds. The API is similar to LruCache.
 
-### API
+| Method                                   | Description                                                               |
+|------------------------------------------|---------------------------------------------------------------------------|
+| `set(key, value, ttl?): boolean`         | Add a new entry and return true if entry was overwritten                  |
+| `get(key): TValue \| undefined`          | Retrieve an entry if exists and hasn't expired.                           |
+| `has(key): boolean`                      | Check if an entry exist and hasn't expired                                |
+| `delete(key): boolean`                   | Remove an entry, returns bool indicating if the entry was existing        |
+| `getOrSet(key, valueOrFn, ttl?): TValue` | Return the entry if exists otherwise save a new entry (value or callback) |
+| `clear(): number`                        | Clear the cache and return the actual number of deleted entries           |
 
-| Method                          | Description                                                        |
-|---------------------------------|--------------------------------------------------------------------|
-| `get(key): TValue \| undefined` | Retrieve a cache entry by key                                      |
-| `set(key, value): boolean`      | Add a new entry and return true if entry was overwritten           |
-| `has(key): boolean`             | Check if an entry exist                                            |
-| `delete(key): boolean`          | Remove an entry, returns bool indicating if the entry was existing |
-| `getOrSet(key, value): TValue`  | Return the entry if exists otherwise save a new entry              |
-| `clear(): number`               | Clear the cache and return the actual number of deleted entries    |
+
+### TimeLruCache.has(key)
+
+Checks whether an entry exist and hasn't expired. If the entry exists but has expired, it will be removed
+automatically and trigger the `onEviction` callback if present. 
+
+```typescript
+import { TimeLruCache } from '@httpx/lru';
+
+const oneSecondInMillis = 1000;
+
+const lru = new TimeLruCache({
+  maxSize: 1,
+  defaultTTL: oneSecondInMillis,
+  onEviction: () => { console.log('evicted') }
+});
+
+lru.set('key0', 'value0', 2 * oneSecondInMillis);
+
+// 👇 Will evict key0 as maxSize is 1 
+lru.set('key1', 'value1', 2 * oneSecondInMillis); 
+
+lru.has('key0'); // 👈 false (item does not exists)
+lru.has('key1'); // 👈 true  (item is present and is not expired)
+
+const value = lru.get('key1'); // 👈 'value1' (item is present and is not expired)
+
+// 🕛 wait 3 seconds, time for the item to expire
+
+lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction will be called)
+```
+
+
+## API
 
 ### Iterable
 
 ```typescript
-import { LRUCache } from '@httpx/lru';
+import { LruCache } from '@httpx/lru';
 
-const lru = new LRUCache({ maxSize: 2 });
+const lru = new LruCache({ maxSize: 2 });
 
 // 👇 Fill the cache with 3 entries
 lru.set('key1', 'value1');
@@ -95,7 +150,7 @@ is called right before an entry is evicted.
 ```typescript
 const fn = vi.fn();
 
-const lru = new LRUCache({
+const lru = new LruCache({
   maxSize: 2,
   onEviction: (key, value) => {
     fn(key, value);
@@ -117,28 +172,28 @@ expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
  RUN  v3.0.5 /home/sebastien/github/httpx/packages/lru
 
 
- ✓ bench/compare/lru-cache/iterate.bench.ts > LRUCache iterator - 1000 items 2442ms
+ ✓ bench/compare/lru-cache/iterate.bench.ts > LruCache iterator - 1000 items 2442ms
      name                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
    · @httpx/lru - forEach - ts files (dev)   34,902.06  0.0221  0.9028  0.0287  0.0279  0.0794  0.0927  0.2815  ±0.88%    17452   fastest
    · @httpx/lru - forEach - compiled (dist)  33,415.30  0.0227  1.3977  0.0299  0.0298  0.0937  0.1131  0.1902  ±0.84%    16709
    · quick-lru@7.0.0 - forEach               24,043.90  0.0310  0.6072  0.0416  0.0406  0.1177  0.1458  0.3901  ±0.93%    12022
    · lru-cache@11.0.2 - forEach              18,692.02  0.0389  0.9620  0.0535  0.0527  0.1578  0.1944  0.2975  ±0.96%     9358   slowest
 
- ✓ bench/compare/lru-cache/set.bench.ts > LRUCache.set() 1000 items / maxSize: 500 2438ms
+ ✓ bench/compare/lru-cache/set.bench.ts > LruCache.set() 1000 items / maxSize: 500 2438ms
      name                                       hz     min      max    mean     p75     p99    p995     p999      rme  samples
    · @httpx/lru.set() - ts files (dev)    6,505.49  0.0580  17.2624  0.1537  0.0988  0.6561  3.5929  10.5129  ±15.27%     3253   slowest
    · @httpx/lru.set() - compiled (dist)   9,382.90  0.0516   1.9482  0.1066  0.1080  0.3110  0.5594   1.2600   ±2.23%     4692
    · quick-lru@7.0.0.set()               30,127.38  0.0251   0.6143  0.0332  0.0330  0.0867  0.1924   0.3293   ±1.04%    15064   fastest
    · lru-cache@11.0.2.set()              11,515.22  0.0574   1.8515  0.0868  0.0869  0.2429  0.3960   1.2257   ±1.84%     5759
 
- ✓ bench/compare/lru-cache/peek.bench.ts > LRUCache.peek() - 1000 items / maxSize: 500 2533ms
+ ✓ bench/compare/lru-cache/peek.bench.ts > LruCache.peek() - 1000 items / maxSize: 500 2533ms
      name                                         hz     min     max    mean     p75     p99    p995    p999     rme  samples
    · @httpx/lru.peek() - ts files (dev)   113,618.01  0.0064  0.4988  0.0088  0.0089  0.0184  0.0261  0.0593  ±0.41%    56810
    · @httpx/lru.peek() - compiled (dist)  125,609.48  0.0065  0.3238  0.0080  0.0082  0.0116  0.0188  0.0512  ±0.33%    62805   fastest
    · quick-lru@7.0.0.peek()                50,329.00  0.0151  0.7934  0.0199  0.0201  0.0392  0.0474  0.1252  ±0.62%    25165   slowest
    · lru-cache@11.0.2.peek()              108,351.01  0.0070  1.9459  0.0092  0.0090  0.0196  0.0203  0.0356  ±0.90%    54176
 
- ✓ bench/compare/lru-cache/get.bench.ts > LRUCache.get() - 1000 items / maxSize: 500 2464ms
+ ✓ bench/compare/lru-cache/get.bench.ts > LruCache.get() - 1000 items / maxSize: 500 2464ms
      name                                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
    · @httpx/lru.get() - ts files (dev)   47,992.86  0.0115  7.2249  0.0208  0.0229  0.0423  0.0519  0.1573  ±3.22%    23997
    · @httpx/lru.get() - compiled (dist)  44,748.92  0.0129  1.2364  0.0223  0.0260  0.0455  0.0497  0.1212  ±0.80%    22375
@@ -147,22 +202,22 @@ expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
                                                                                                                                                                                                                                     
  BENCH  Summary                                                                                                                                                                                                                     
                                                                                                                                                                                                                                     
-  lru-cache@11.0.2.get() - bench/compare/lru-cache/get.bench.ts > LRUCache.get() - 1000 items / maxSize: 500                                                                                                                        
+  lru-cache@11.0.2.get() - bench/compare/lru-cache/get.bench.ts > LruCache.get() - 1000 items / maxSize: 500                                                                                                                        
     1.72x faster than @httpx/lru.get() - ts files (dev)                                                                                                                                                                             
     1.84x faster than @httpx/lru.get() - compiled (dist)                                                                                                                                                                            
     5.07x faster than quick-lru@7.0.0.get()                                                                                                                                                                                         
 
-  @httpx/lru - forEach - ts files (dev) - bench/compare/lru-cache/iterate.bench.ts > LRUCache iterator - 1000 items
+  @httpx/lru - forEach - ts files (dev) - bench/compare/lru-cache/iterate.bench.ts > LruCache iterator - 1000 items
     1.04x faster than @httpx/lru - forEach - compiled (dist)
     1.45x faster than quick-lru@7.0.0 - forEach
     1.87x faster than lru-cache@11.0.2 - forEach
 
-  @httpx/lru.peek() - compiled (dist) - bench/compare/lru-cache/peek.bench.ts > LRUCache.peek() - 1000 items / maxSize: 500
+  @httpx/lru.peek() - compiled (dist) - bench/compare/lru-cache/peek.bench.ts > LruCache.peek() - 1000 items / maxSize: 500
     1.11x faster than @httpx/lru.peek() - ts files (dev)
     1.16x faster than lru-cache@11.0.2.peek()
     2.50x faster than quick-lru@7.0.0.peek()
 
-  quick-lru@7.0.0.set() - bench/compare/lru-cache/set.bench.ts > LRUCache.set() 1000 items / maxSize: 500
+  quick-lru@7.0.0.set() - bench/compare/lru-cache/set.bench.ts > LruCache.set() 1000 items / maxSize: 500
     2.62x faster than lru-cache@11.0.2.set()
     3.21x faster than @httpx/lru.set() - compiled (dist)
     4.63x faster than @httpx/lru.set() - ts files (dev)
@@ -177,7 +232,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                     | Size (compressed) |
 |----------------------------------------------------|------------------:|
-| `import { LRUCache  } from '@httpx/lru`            |            ~ 538B |
+| `import { LruCache  } from '@httpx/lru`            |            ~ 538B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
 

@@ -1,11 +1,11 @@
-import { LRUCache } from '@httpx/lru';
+import { LruCache } from '@httpx/lru';
 type CacheKey = string;
 
 type IntlLocale = string; // `${string}-${string}`;
 
 const maxSize = 50;
 
-const _cacheIntl = new LRUCache<
+const _cacheIntl = new LruCache<
   Intl.NumberFormat | Intl.DateTimeFormat,
   CacheKey
 >({
