@@ -1,5 +1,50 @@
 # @httpx/lru
 
+## 0.7.0
+
+### Minor Changes
+
+- [#1892](https://github.com/belgattitude/httpx/pull/1892) [`68e7ebe`](https://github.com/belgattitude/httpx/commit/68e7ebef40f7182365676b3a21f99e398b93dd78) Thanks [@belgattitude](https://github.com/belgattitude)! - Rename LRUCache into LruCache (Breaking)
+
+  ```typescript
+  import { LruCache } from "@httpx/lru";
+  ```
+
+- [#1892](https://github.com/belgattitude/httpx/pull/1892) [`68e7ebe`](https://github.com/belgattitude/httpx/commit/68e7ebef40f7182365676b3a21f99e398b93dd78) Thanks [@belgattitude](https://github.com/belgattitude)! - All TimeLruCache with support for ttl expiry
+
+  ```typescript
+  import { TimeLruCache } from "@httpx/lru";
+
+  const oneSecondInMillis = 1000;
+
+  const lru = new TimeLruCache({
+    maxSize: 10,
+    defaultTTL: oneSecondInMillis,
+    onEviction: () => {
+      console.log("evicted");
+    },
+  });
+  ```
+
+- [#1892](https://github.com/belgattitude/httpx/pull/1892) [`68e7ebe`](https://github.com/belgattitude/httpx/commit/68e7ebef40f7182365676b3a21f99e398b93dd78) Thanks [@belgattitude](https://github.com/belgattitude)! - TValue now extends SupportedValues (instead of unknown)
+
+  ```typescript
+  type BaseCacheValueTypes =
+    | string
+    | number
+    | bigint
+    | boolean
+    | null
+    | unknown[]
+    // objects or functions, but not promises
+    | (object & { then?: void })
+    | Record<string | number | symbol, unknown>;
+
+  export type SupportedCacheValues =
+    | Readonly<BaseCacheValueTypes>
+    | BaseCacheValueTypes;
+  ```
+
 ## 0.6.0
 
 ### Minor Changes
