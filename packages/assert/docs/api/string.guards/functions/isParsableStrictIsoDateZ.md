@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.1**](../../README.md)
+[**@httpx/assert v0.15.2**](../../README.md)
 
 ***
 
@@ -7,6 +7,8 @@
 # Function: isParsableStrictIsoDateZ()
 
 > **isParsableStrictIsoDateZ**(`v`): `v is ParsableStrictIsoDateZ`
+
+Defined in: [string.guards.ts:46](https://github.com/belgattitude/httpx/blob/68e7ebef40f7182365676b3a21f99e398b93dd78/packages/assert/src/string.guards.ts#L46)
 
 Check if a value is a string that contains an ISO-8601 date time in 'YYYY-MM-DDTHH:mm:ss.sssZ'
 format (UTC+0 / time). This check allow the value to be safely passed to `new Date()`or `Date.parse()`
@@ -42,7 +44,3 @@ if (isParsableStrictIsoDateZ(dateStr)) {
  - https://en.wikipedia.org/wiki/ISO_8601
  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
  - https://en.wikipedia.org/wiki/Coordinated_Universal_Time
-
-## Defined in
-
-[string.guards.ts:46](https://github.com/belgattitude/httpx/blob/d121a71b95064daafd75a20aabf0a30f5fcdfbfa/packages/assert/src/string.guards.ts#L46)

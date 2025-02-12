@@ -6,8 +6,6 @@
 
 # experimental
 
-## Index
-
-### Functions
+## Functions
 
 - [tryOrFail](functions/tryOrFail.md)

@@ -1,17 +1,16 @@
-import type { BaseCache, BaseCacheKeyTypes } from './types';
+import { DoublyLinkedListNode } from './base';
+import type {
+  BaseCache,
+  BaseCacheKeyTypes,
+  SupportedCacheValues,
+} from './types';
 
-class Node<TValue, TKey extends BaseCacheKeyTypes = string> {
-  prev: Node<TValue, TKey> | null = null;
-  next: Node<TValue, TKey> | null = null;
-  constructor(public readonly key: TKey) {}
-}
-
-type DataType<TValue, TKey extends BaseCacheKeyTypes = string> = {
+type LruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
   value: TValue;
-  node: Node<TValue, TKey>;
+  node: DoublyLinkedListNode<TValue, TKey>;
 };
 
-type Params<TValue, TKey extends BaseCacheKeyTypes = string> = {
+export type LruCacheParams<TValue, TKey extends BaseCacheKeyTypes = string> = {
   /**
    * The maximum number of items that the cache can hold.
    */
@@ -31,25 +30,27 @@ type Params<TValue, TKey extends BaseCacheKeyTypes = string> = {
 /**
  * Double linked list based lru cache that supports get in O(1)
  */
-export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
-  implements BaseCache<TValue, TKey>
+export class LruCache<
+  TValue extends SupportedCacheValues = SupportedCacheValues,
+  TKey extends BaseCacheKeyTypes = string,
+> implements BaseCache<TValue, TKey>
 {
   #maxSize: number;
   #touchOnHas: boolean;
   #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
-  #cache: Map<TKey, DataType<TValue, TKey>>;
-  #head: Node<TValue, TKey> | null = null;
-  #tail: Node<TValue, TKey> | null = null;
+  #cache: Map<TKey, LruCacheEntry<TValue, TKey>>;
+  #head: DoublyLinkedListNode<TValue, TKey> | null = null;
+  #tail: DoublyLinkedListNode<TValue, TKey> | null = null;
 
   /**
-   * Create a new LRUCache instance
+   * Create a new LruCache instance
    *
    * @example
    * ```typescript
-   * import { LRUCache } from '@httpx/lru';
+   * import { LruCache } from '@httpx/lru';
    *
-   * const lru = new LRUCache({ maxSize: 1000 });
+   * const lru = new LruCache({ maxSize: 1000 });
    * lru.set('🦄', ['cool', 'stuff']);
    * if (lru.has('🦄')) {;
    *  console.log(lru.get('🦄'));
@@ -61,7 +62,7 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
    * lru.clear();
    * ```
    */
-  constructor(params: Params<TValue, TKey>) {
+  constructor(params: LruCacheParams<TValue, TKey>) {
     const { maxSize, touchOnHas = false, onEviction } = params;
     if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
       throw new TypeError('Invalid maxSize');
@@ -90,7 +91,21 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
   }
 
   /**
-   * Check if an item exists.
+   * Checks whether an entry exist.
+   *
+   * ```typescript
+   * import { LruCache } from '@httpx/lru';
+   *
+   * const lru = new LruCache({ maxSize: 1 });
+   *
+   * lru.set('key0', 'value0');
+   * // 👇 Will evict key0 as maxSize is 1
+   * lru.set('key1', 'value1');
+   *
+   * lru.has('key0'); // 👈 false
+   * lru.has('key1'); // 👈 true  (item is present)
+   *
+   * ```
    */
   has(
     key: TKey,
@@ -109,6 +124,27 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
     return hasEntry;
   }
 
+  /**
+   * Add a new entry to the cache and overwrite value if the key was already
+   * present.It will move the item as the most recently used.
+   *
+   * Note that eviction will happen if maximum capacity is reached..
+   *
+   * ```typescript
+   * import { LruCache } from '@httpx/lru';
+   *
+   * const lru = new LruCache({
+   *   maxSize: 1,
+   *   onEviction: () => { console.log('evicted') }
+   * });
+   *
+   * lru.set('key0', 'value0'); // 👈 true (new key, size increase)
+   * lru.set('key0', 'valuex'); // 👈 false (existing key, no size increase)
+   *
+   *  // 👇 Will evict key0 as maxSize is 1 and trigger onEviction
+   * lru.set('key2', 'value2'); // 👈 true (existing key, no size increase)
+   * ```
+   */
   set(key: TKey, value: TValue): boolean {
     if (this.#cache.has(key)) {
       const data = this.#cache.get(key)!;
@@ -117,8 +153,8 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
       return false;
     }
 
-    const newNode = new Node(key);
-    const data: DataType<TValue, TKey> = { value, node: newNode };
+    const newNode = new DoublyLinkedListNode(key);
+    const data: LruCacheEntry<TValue, TKey> = { value, node: newNode };
 
     this.#cache.set(key, data);
     this.#moveToHead(newNode);
@@ -146,16 +182,18 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
    *
    * @example
    * ```typescript
-   * const lru = new LRUCache({ maxSize: 2 });
+   * const lru = new LruCache({ maxSize: 2 });
    * lru.set('key1', 'value1');
-   * lru.getOrSet('key1', 'value2'); // 👈 will not overwrite the value
+   * lru.getOrSet('key1', 'value2');    // 👈 will not overwrite the value
+   * lru.getOrSet('key2', () => true)); // 👈 with callback
    * console.log(lru.get('key1')); // value1
    * ```
    */
-  getOrSet(key: TKey, value: TValue): TValue {
+  getOrSet(key: TKey, valueOrFn: TValue | (() => TValue)): TValue {
     if (this.#cache.has(key)) {
       return this.get(key)!;
     }
+    const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
     this.set(key, value);
     return value;
   }
@@ -185,7 +223,7 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
    * Iterate over the cache from the least recently used to the most recently used.
    *
    * ```typescript
-   * const lru = new LRUCache({ maxSize: 2 });
+   * const lru = new LruCache({ maxSize: 2 });
    * lru.set('key1', 'value1');
    * lru.set('key2', 'value2');
    * lru.set('key3', 'value3');
@@ -212,7 +250,7 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
     }
   }
 
-  #moveToHead(node: Node<TValue, TKey>): void {
+  #moveToHead(node: DoublyLinkedListNode<TValue, TKey>): void {
     if (node === this.#head) {
       return;
     }
@@ -228,7 +266,7 @@ export class LRUCache<TValue = unknown, TKey extends BaseCacheKeyTypes = string>
     }
   }
 
-  #removeNode(node: Node<TValue, TKey>): void {
+  #removeNode(node: DoublyLinkedListNode<TValue, TKey>): void {
     if (node.prev) {
       node.prev.next = node.next;
     }

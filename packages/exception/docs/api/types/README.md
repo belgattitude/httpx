@@ -6,14 +6,12 @@
 
 # types
 
-## Index
-
-### Interfaces
+## Interfaces
 
 - [ErrorWithErrorStatusCode](interfaces/ErrorWithErrorStatusCode.md)
 - [ObjectWithErrorStatusCode](interfaces/ObjectWithErrorStatusCode.md)
 
-### Type Aliases
+## Type Aliases
 
 - [HttpErrorStatusCode](type-aliases/HttpErrorStatusCode.md)
 - [HttpErrorStatusCodeOrNumber](type-aliases/HttpErrorStatusCodeOrNumber.md)

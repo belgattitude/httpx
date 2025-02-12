@@ -1,4 +1,4 @@
-[**@httpx/treeu v0.4.7**](../README.md)
+[**@httpx/treeu v0.4.12**](../README.md)
 
 ***
 
@@ -16,7 +16,7 @@
 
 ### children
 
-> **children**: []
+> **children**: \[\]
 
 ***
 

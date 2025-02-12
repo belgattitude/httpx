@@ -4,7 +4,7 @@ import { getLruCaches } from '../../get-lru-caches';
 
 const SEEDS_COUNT = 1000;
 
-describe(`LRUCache iterator - ${SEEDS_COUNT} items`, async () => {
+describe(`LruCache iterator - ${SEEDS_COUNT} items`, async () => {
   const seeds = Array.from({ length: SEEDS_COUNT }).map((_, i) => ({
     key: `key-${i}`,
     value: `value-${i}`,

@@ -17,7 +17,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: 'tsconfig.json',
   },
-  ignorePatterns: [...getDefaultIgnorePatterns()],
+  ignorePatterns: [...getDefaultIgnorePatterns(), 'out'],
   extends: [
     '@belgattitude/eslint-config-bases/typescript',
     '@belgattitude/eslint-config-bases/simple-import-sort',
@@ -26,7 +26,7 @@ module.exports = {
     '@belgattitude/eslint-config-bases/vitest',
     '@belgattitude/eslint-config-bases/react',
     '@belgattitude/eslint-config-bases/rtl',
-    '@belgattitude/eslint-config-bases/tailwind',
+    // '@belgattitude/eslint-config-bases/tailwind',
     // Add specific rules for nextjs
     'next/core-web-vitals',
     // Apply prettier and disable incompatible rules

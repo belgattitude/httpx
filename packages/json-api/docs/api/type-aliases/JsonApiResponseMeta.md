@@ -1,4 +1,4 @@
-[**@httpx/json-api v0.5.24**](../README.md)
+[**@httpx/json-api v0.5.25**](../README.md)
 
 ***
 

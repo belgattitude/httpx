@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.1**](../README.md)
+[**@httpx/assert v0.15.2**](../README.md)
 
 ***
 
@@ -6,9 +6,7 @@
 
 # uuid.guards
 
-## Index
-
-### Functions
+## Functions
 
 - [isUuid](functions/isUuid.md)
 - [isUuidV1](functions/isUuidV1.md)

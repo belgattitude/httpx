@@ -6,20 +6,18 @@
 
 # serializer
 
-## Index
-
-### Classes
+## Classes
 
 - [SerializerError](classes/SerializerError.md)
 
-### Type Aliases
+## Type Aliases
 
 - [NativeError](type-aliases/NativeError.md)
 - [SerializableError](type-aliases/SerializableError.md)
 - [SerializableHttpException](type-aliases/SerializableHttpException.md)
 - [SerializableNonNativeError](type-aliases/SerializableNonNativeError.md)
 
-### Functions
+## Functions
 
 - [convertToSerializable](functions/convertToSerializable.md)
 - [createFromSerializable](functions/createFromSerializable.md)

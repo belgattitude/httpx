@@ -8,6 +8,8 @@
 
 > **export=**: `object`
 
+Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/68e7ebef40f7182365676b3a21f99e398b93dd78/integrations/prisma-exception/package.json#L1)
+
 ## Type declaration
 
 ### author
@@ -40,11 +42,11 @@
 
 #### devDependencies.@arethetypeswrong/cli
 
-> **@arethetypeswrong/cli**: `string` = `"0.17.1"`
+> **@arethetypeswrong/cli**: `string` = `"0.17.3"`
 
 #### devDependencies.@belgattitude/eslint-config-bases
 
-> **@belgattitude/eslint-config-bases**: `string` = `"6.14.0"`
+> **@belgattitude/eslint-config-bases**: `string` = `"6.22.0"`
 
 #### devDependencies.@size-limit/file
 
@@ -60,19 +62,19 @@
 
 #### devDependencies.@types/node
 
-> **@types/node**: `string` = `"22.10.1"`
+> **@types/node**: `string` = `"22.13.1"`
 
 #### devDependencies.@vitest/coverage-istanbul
 
-> **@vitest/coverage-istanbul**: `string` = `"2.1.8"`
+> **@vitest/coverage-istanbul**: `string` = `"3.0.5"`
 
 #### devDependencies.@vitest/ui
 
-> **@vitest/ui**: `string` = `"2.1.8"`
+> **@vitest/ui**: `string` = `"3.0.5"`
 
 #### devDependencies.browserslist
 
-> **browserslist**: `string` = `"4.24.2"`
+> **browserslist**: `string` = `"4.24.4"`
 
 #### devDependencies.browserslist-to-esbuild
 
@@ -84,11 +86,11 @@
 
 #### devDependencies.es-check
 
-> **es-check**: `string` = `"7.2.1"`
+> **es-check**: `string` = `"8.0.1"`
 
 #### devDependencies.esbuild
 
-> **esbuild**: `string` = `"0.24.0"`
+> **esbuild**: `string` = `"0.25.0"`
 
 #### devDependencies.eslint
 
@@ -96,15 +98,15 @@
 
 #### devDependencies.npm-run-all2
 
-> **npm-run-all2**: `string` = `"7.0.1"`
+> **npm-run-all2**: `string` = `"7.0.2"`
 
 #### devDependencies.prettier
 
-> **prettier**: `string` = `"3.4.2"`
+> **prettier**: `string` = `"3.5.0"`
 
 #### devDependencies.publint
 
-> **publint**: `string` = `"0.2.12"`
+> **publint**: `string` = `"0.3.4"`
 
 #### devDependencies.rimraf
 
@@ -116,19 +118,19 @@
 
 #### devDependencies.tsup
 
-> **tsup**: `string` = `"8.3.5"`
+> **tsup**: `string` = `"8.3.6"`
 
 #### devDependencies.typedoc
 
-> **typedoc**: `string` = `"0.27.4"`
+> **typedoc**: `string` = `"0.27.7"`
 
 #### devDependencies.typedoc-plugin-markdown
 
-> **typedoc-plugin-markdown**: `string` = `"4.3.2"`
+> **typedoc-plugin-markdown**: `string` = `"4.4.2"`
 
 #### devDependencies.typescript
 
-> **typescript**: `string` = `"5.7.2"`
+> **typescript**: `string` = `"5.7.3"`
 
 #### devDependencies.vite-tsconfig-paths
 
@@ -136,7 +138,7 @@
 
 #### devDependencies.vitest
 
-> **vitest**: `string` = `"2.1.8"`
+> **vitest**: `string` = `"3.0.5"`
 
 #### devDependencies.webpack
 
@@ -328,8 +330,4 @@
 
 ### version
 
-> **version**: `string` = `"0.0.17"`
-
-## Defined in
-
-[package.json:1](https://github.com/belgattitude/httpx/blob/d121a71b95064daafd75a20aabf0a30f5fcdfbfa/integrations/prisma-exception/package.json#L1)
+> **version**: `string` = `"0.0.18"`

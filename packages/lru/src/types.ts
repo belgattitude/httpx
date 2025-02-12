@@ -1,6 +1,9 @@
 export type BaseCacheKeyTypes = string | number;
+export type Milliseconds = number;
+type PositiveNumberGreaterThanZero = number;
+export type EpochTimeInMilliseconds = PositiveNumberGreaterThanZero;
 
-export interface BaseCacheHasOptions {
+export interface BaseLruHasOptions {
   /**
    * If true, the item will be marked as recently used.
    * @default option touchOnHas in the constructor
@@ -8,8 +11,23 @@ export interface BaseCacheHasOptions {
   touch?: boolean;
 }
 
+type BaseCacheValueTypes =
+  | string
+  | number
+  | bigint
+  | boolean
+  | null
+  | unknown[]
+  // objects or functions, but not promises
+  | (object & { then?: void })
+  | Record<string | number | symbol, unknown>;
+
+export type SupportedCacheValues =
+  | Readonly<BaseCacheValueTypes>
+  | BaseCacheValueTypes;
+
 export interface BaseCache<
-  TValue = unknown,
+  TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
 > {
   /**
@@ -25,7 +43,7 @@ export interface BaseCache<
   /**
    * Check if an item exists.
    */
-  has: (key: TKey, options?: BaseCacheHasOptions) => boolean;
+  has: (key: TKey, options?: BaseLruHasOptions) => boolean;
 
   /**
    * Get an item from the cache or return undefined if it doesn't exist
@@ -38,13 +56,14 @@ export interface BaseCache<
    *
    * @example
    * ```typescript
-   * const lru = new LRUCache({ maxSize: 2 });
+   * const lru = new LruCache({ maxSize: 2 });
    * lru.set('key1', 'value1');
    * lru.getOrSet('key1', 'value2'); // 👈 will not overwrite the value
+   * lru.getOrSet('key2', () => 'value2');
    * console.log(lru.get('key1')); // value1
    * ```
    */
-  getOrSet: (key: TKey, value: TValue) => TValue;
+  getOrSet: (key: TKey, valueOrFn: TValue | (() => TValue)) => TValue;
 
   /**
    * Get an item without marking it as recently used or undefined if item doesn't exist.

@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.1**](../README.md)
+[**@httpx/assert v0.15.2**](../README.md)
 
 ***
 
@@ -6,9 +6,7 @@
 
 # string.asserts
 
-## Index
-
-### Functions
+## Functions
 
 - [assertParsableSafeInt](functions/assertParsableSafeInt.md)
 - [assertParsableStrictIsoDateZ](functions/assertParsableStrictIsoDateZ.md)

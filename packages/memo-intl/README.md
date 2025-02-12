@@ -108,7 +108,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario                                       | Size with deps (compressed) |
 |------------------------------------------------|----------------------------:|
-| `import { MIntl } from '@httpx/memo-intl'      |                      ~ 900B |
+| `import { MIntl } from '@httpx/memo-intl'      |                      ~ 700B |
 
 > Note that per-se the library weights less than 300 bytes, the size limit accounts for the @httpx/lru dependency.
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/memo-intl@latest).
