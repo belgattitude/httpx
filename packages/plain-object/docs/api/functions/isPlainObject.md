@@ -1,4 +1,4 @@
-[**@httpx/plain-object v2.0.3**](../README.md)
+[**@httpx/plain-object v2.0.6**](../README.md)
 
 ***
 
@@ -62,8 +62,7 @@ isPlainObject(Buffer.from('ABC'));  // ❌
 isPlainObject(Promise.resolve({})); // ❌
 isPlainObject(Object.create({}));   // ❌
 isPlainObject(new (class Cls {}));  // ❌
-isPlainObject(globalThis);          // ❌,
-```
+isPlainObject(globalThis);          // ❌
 
 // ✅👇 Note that static built-in classes are treated as plain objects
 //    check for `isStaticBuiltInClass` to exclude if needed
@@ -71,3 +70,4 @@ isPlainObject(globalThis);          // ❌,
 isPlainObject(Math);                // ✅
 isPlainObject(JSON);                // ✅
 isPlainObject(Atomics);             // ✅
+```

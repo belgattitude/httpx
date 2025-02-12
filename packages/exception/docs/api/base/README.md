@@ -6,9 +6,7 @@
 
 # base
 
-## Index
-
-### Classes
+## Classes
 
 - [HttpClientException](classes/HttpClientException.md)
 - [HttpException](classes/HttpException.md)

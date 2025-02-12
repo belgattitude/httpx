@@ -6,9 +6,7 @@
 
 # server
 
-## Index
-
-### Classes
+## Classes
 
 - [HttpBadGateway](classes/HttpBadGateway.md)
 - [HttpGatewayTimeout](classes/HttpGatewayTimeout.md)

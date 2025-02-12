@@ -6,9 +6,7 @@
 
 # client
 
-## Index
-
-### Classes
+## Classes
 
 - [HttpBadRequest](classes/HttpBadRequest.md)
 - [HttpConflict](classes/HttpConflict.md)

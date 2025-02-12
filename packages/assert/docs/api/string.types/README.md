@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.1**](../README.md)
+[**@httpx/assert v0.15.2**](../README.md)
 
 ***
 
@@ -6,9 +6,7 @@
 
 # string.types
 
-## Index
-
-### Type Aliases
+## Type Aliases
 
 - [ParsableSafeInt](type-aliases/ParsableSafeInt.md)
 - [ParsableStrictIsoDateZ](type-aliases/ParsableStrictIsoDateZ.md)

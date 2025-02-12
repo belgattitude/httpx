@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.1**](../README.md)
+[**@httpx/assert v0.15.2**](../README.md)
 
 ***
 
@@ -6,8 +6,6 @@
 
 # string.utils
 
-## Index
-
-### Variables
+## Variables
 
 - [isoDateTimeZRegexp](variables/isoDateTimeZRegexp.md)

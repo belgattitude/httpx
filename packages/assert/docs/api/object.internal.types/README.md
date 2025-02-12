@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.1**](../README.md)
+[**@httpx/assert v0.15.2**](../README.md)
 
 ***
 
@@ -6,13 +6,11 @@
 
 # object.internal.types
 
-## Index
-
-### Interfaces
+## Interfaces
 
 - [DefaultBasePlainObject](interfaces/DefaultBasePlainObject.md)
 
-### Type Aliases
+## Type Aliases
 
 - [BasePlainObject](type-aliases/BasePlainObject.md)
 - [PlainObjectDeepPartialUnknown](type-aliases/PlainObjectDeepPartialUnknown.md)

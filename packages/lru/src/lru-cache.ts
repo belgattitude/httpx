@@ -91,7 +91,21 @@ export class LruCache<
   }
 
   /**
-   * Check if an item exists.
+   * Checks whether an entry exist.
+   *
+   * ```typescript
+   * import { LruCache } from '@httpx/lru';
+   *
+   * const lru = new LruCache({ maxSize: 1 });
+   *
+   * lru.set('key0', 'value0');
+   * // 👇 Will evict key0 as maxSize is 1
+   * lru.set('key1', 'value1');
+   *
+   * lru.has('key0'); // 👈 false
+   * lru.has('key1'); // 👈 true  (item is present)
+   *
+   * ```
    */
   has(
     key: TKey,
@@ -110,6 +124,27 @@ export class LruCache<
     return hasEntry;
   }
 
+  /**
+   * Add a new entry to the cache and overwrite value if the key was already
+   * present.It will move the item as the most recently used.
+   *
+   * Note that eviction will happen if maximum capacity is reached..
+   *
+   * ```typescript
+   * import { LruCache } from '@httpx/lru';
+   *
+   * const lru = new LruCache({
+   *   maxSize: 1,
+   *   onEviction: () => { console.log('evicted') }
+   * });
+   *
+   * lru.set('key0', 'value0'); // 👈 true (new key, size increase)
+   * lru.set('key0', 'valuex'); // 👈 false (existing key, no size increase)
+   *
+   *  // 👇 Will evict key0 as maxSize is 1 and trigger onEviction
+   * lru.set('key2', 'value2'); // 👈 true (existing key, no size increase)
+   * ```
+   */
   set(key: TKey, value: TValue): boolean {
     if (this.#cache.has(key)) {
       const data = this.#cache.get(key)!;

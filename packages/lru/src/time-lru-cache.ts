@@ -53,7 +53,7 @@ export class TimeLruCache<
    * const THIRTY_SECONDS_IN_MILLIS = 30_000
    *
    * const lru = new TimeLruCache({ maxSize: 1000, defaultTTL: THIRTY_SECONDS_IN_MILLIS});
-   * lru.set('🦄', ['cool', 'stuff']);
+   * lru.set('🦄', ['cool', 'stuff'], THIRTY_SECONDS_IN_MILLIS);
    * if (lru.has('🦄')) {;
    *  console.log(lru.get('🦄'));
    *  // ['cool', 'stuff']
@@ -114,7 +114,7 @@ export class TimeLruCache<
    *
    * lru.set('key0', 'value0', 2 * oneSecondInMillis);
    *
-   * // 👇 Will evict key0 as maxSize is 1
+   // 👇 Will evict key0 as maxSize is 1 and trigger onEviction
    * lru.set('key1', 'value1', 2 * oneSecondInMillis);
    *
    * lru.has('key0'); // 👈 false (item does not exists)
@@ -156,6 +156,28 @@ export class TimeLruCache<
     return hasEntry;
   }
 
+  /**
+   * Add a new entry to the cache and overwrite value if the key was already
+   * present.It will move the item as the most recently used.
+   *
+   * Note that eviction will happen if maximum capacity is reached..
+   *
+   * ```typescript
+   * import { TimeLruCache } from '@httpx/lru';
+   *
+   * const lru = new TimeLruCache({
+   *   maxSize: 1,
+   *   defaultTTL: 30_000,
+   *   onEviction: () => { console.log('evicted') }
+   * });
+   *
+   * lru.set('key0', 'value0', 1000); // 👈 true (new key, size increase)
+   * lru.set('key0', 'valuex', 1000); // 👈 false (existing key, no size increase)
+   *
+   *  // 👇 Will evict key0 as maxSize is 1 and trigger onEviction
+   * lru.set('key2', 'value2', 1000); // 👈 true (existing key, no size increase)
+   * ```
+   */
   set(key: TKey, value: TValue, ttl?: Milliseconds): boolean {
     if (this.#cache.has(key)) {
       const data = this.#cache.get(key)!;
@@ -206,7 +228,7 @@ export class TimeLruCache<
    *
    * @example
    * ```typescript
-   * const lru = new TimeLruCache({ maxSize: 2 });
+   * const lru = new TimeLruCache({ maxSize: 2, defaultTTL: 30000 });
    * lru.set('key1', 'value1');
    * lru.getOrSet('key1', 'value2'); // 👈 will not overwrite the value
    * lru.getOrSet('key2', () => true)); // 👈 with callback

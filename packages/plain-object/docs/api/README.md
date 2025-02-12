@@ -1,8 +1,8 @@
-**@httpx/plain-object v2.0.3**
+**@httpx/plain-object v2.0.6**
 
 ***
 
-# @httpx/plain-object v2.0.3
+# @httpx/plain-object v2.0.6
 
 ## Type Aliases
 

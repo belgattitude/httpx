@@ -24,7 +24,7 @@
 
 ##### params?
 
-###### cause
+###### cause?
 
 `Error`
 

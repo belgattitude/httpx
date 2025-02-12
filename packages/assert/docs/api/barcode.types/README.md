@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.1**](../README.md)
+[**@httpx/assert v0.15.2**](../README.md)
 
 ***
 
@@ -6,8 +6,6 @@
 
 # barcode.types
 
-## Index
-
-### Type Aliases
+## Type Aliases
 
 - [Ean13](type-aliases/Ean13.md)
