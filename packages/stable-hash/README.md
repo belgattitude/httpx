@@ -1,0 +1,225 @@
+# @httpx/stable-hash
+
+Create keys or hashes from javascript values, useful for memoization or cache key generation.
+
+[![npm](https://img.shields.io/npm/v/@httpx/stable-hash?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/stable-hash)
+[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/CHANGELOG.md)
+[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-stable-hash-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fstable-hash)
+[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.size-limit.cjs)
+[![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
+[![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
+[![size](https://img.shields.io/bundlephobia/minzip/@httpx/stable-hash@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/stable-hash@latest)
+[![downloads](https://img.shields.io/npm/dm/@httpx/stable-hash?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/stable-hash)
+[![license](https://img.shields.io/npm/l/@httpx/stable-hash?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+
+## Install
+
+```bash
+$ npm install @httpx/stable-hash
+$ yarn add @httpx/stable-hash
+$ pnpm add @httpx/stable-hash
+```
+
+## Features
+
+- 👉&nbsp; Works with plain objects, dates, bigint, number, null, undefined and arrays.
+- 🦄&nbsp; Insensitive to object keys or array parameters order.
+- 🙏&nbsp; Properly error if it encounters an unsupported datatype.
+- 📐&nbsp; Lightweight (starts at [~500B](#bundle-size)).
+- 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
+- 🗝️&nbsp; Available in ESM and CJS formats.
+
+## Documentation
+
+👉 [Official website](https://belgattitude.github.io/httpx/stable-hash) or [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/stable-hash#readme)
+
+## Usage
+
+- [x] [createStableKey](#createStableKey) - Create a stable key from a value as a string (result object)
+- [x] [createStableKeyOrThrow](#createstablekeyorthrow) - Create a stable key from value a string (throws).
+- [x] [createStableHash](#createStableHash) - Create a stable hash from a javascript object as a SHA-256/hexa (result object)
+- [x] [createStableHashOrThrow](#createStableHashOrThrow) - Create a stable hash from a javascript object as a SHA-256/hexa (throws)
+
+### createStableKey
+
+```typescript
+import { createStableKey } from '@httpx/stable-hash'
+
+const params = {
+  key8: 'a string',
+  key1: 1,
+  key3: true,
+  key2: [3, 2, 1],
+  key7: {
+    key2: true,
+    key1: new Date('2025-02-11T08:58:32.075Z'),
+  },
+};
+
+const result = createStableKey(params);
+
+if (!result.success) {
+  throw result.error; // TypeError
+}
+
+const key = result.key;
+
+// Key contains a json comptatible string with object keys sorted.
+// By default it will sort arrays if they contains only strings or numbers
+// including bigints.
+
+// "{"key1":1,"key2":[1,2,3],"key3":true,"key7":{"key1":"2025-02-11T08:58:32.075Z","key2":true},"key8":"a string"}"
+```
+
+### createStableKeyOrThrow
+
+```typescript
+import { createStableKeyOrThrow } from '@httpx/stable-hash'
+
+const params = {
+  key8: 'a string',
+  key1: 1,
+  key3: true,
+  key2: [3, 2, 1],
+  key7: {
+    key2: true,
+    key1: new Date('2025-02-11T08:58:32.075Z'),
+  },
+};
+
+const key = createStableKeyOrThrow(params);
+
+// Key contains a json comptatible string with object keys sorted.
+// By default it will sort arrays if they contains only strings or numbers
+// including bigints.
+
+// "{"key1":1,"key2":[1,2,3],"key3":true,"key7":{"key1":"2025-02-11T08:58:32.075Z","key2":true},"key8":"a string"}"
+```
+
+### createStableHash
+
+```typescript
+import { createStableHash } from '@httpx/stable-hash';
+
+const params = {
+  key8: 'a string',
+  key1: 1,
+  key3: true,
+  key2: [3, 2, 1],
+  key7: {
+    key2: true,
+    key1: new Date('2025-02-11T08:58:32.075Z'),
+  },
+};
+
+const result = await createStableHash(params);
+if (!result.success) {
+  throw result.error;
+}
+const hash = result.hash;
+// -> 'fb17a6300efcf62ae80708e2a672aee581b7f0dd7c6a9a7a748218846c679394'
+``` 
+
+### createStableHashOrThrow
+
+```typescript
+import { createStableHashOrThrow } from '@httpx/stable-hash';
+
+const params = {
+  key8: 'a string',
+  key1: 1,
+  key3: true,
+  key2: [3, 2, 1],
+  key7: {
+    key2: true,
+    key1: new Date('2025-02-11T08:58:32.075Z'),
+  },
+};
+
+try {
+  const hash = await createStableHashOrThrow(params);
+  // -> 'fb17a6300efcf62ae80708e2a672aee581b7f0dd7c6a9a7a748218846c679394'
+} catch (e) {
+  // TypeError in case of an unserializable data type
+}
+```
+
+## Alternatives
+
+- [x] [stable-hash](https://github.com/shuding/stable-hash). Fastest alternative. Might swallow errors though.
+
+## Benchmarks
+
+Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx).
+
+[![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
+
+
+See [bench](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/bench) for details. 
+
+
+## Bundle size
+
+Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.size-limit.ts)
+
+| Scenario                                                      | Size with deps (compressed) |
+|---------------------------------------------------------------|----------------------------:|
+| `import { createStableKeyOrThrow } from '@httpx/stable-hash'  |                      ~ 480B |
+| `import { createStableKey } from '@httpx/stable-hash'         |                      ~ 520B |
+| `import { createStableHashOrThrow } from '@httpx/stable-hash' |                      ~ 602B |
+| `import { createStableHash } from '@httpx/stable-hash'        |                      ~ 631B |
+
+
+## Compatibility
+
+| Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                              |
+|--------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| Node         | ✅  | CI for 20.x & 22.x.                                                                                                                                                                                                                                                                                                                                                                      |
+| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                            |
+| Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.browserslistrc) |
+| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                       | 
+| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                         | 
+| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                            |
+| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                             |
+| Performance| ✅  | Monitored with with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                |
+
+> For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
+
+## Contributors
+
+Contributions are warmly appreciated. Have a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) document.
+
+## Sponsors
+
+If my OSS work brightens your day, let's take it to new heights together!
+[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
+or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+
+### Special thanks to
+
+<table>
+  <tr>
+    <td>
+      <a href="https://www.jetbrains.com/?ref=belgattitude" target="_blank">
+         <img width="65" src="https://asset.brandfetch.io/idarKiKkI-/id53SttZhi.jpeg" alt="Jetbrains logo" />
+      </a>
+    </td>
+    <td>
+      <a href="https://www.embie.be/?ref=belgattitude" target="_blank">
+        <img width="65" src="https://avatars.githubusercontent.com/u/98402122?s=200&v=4" alt="Jetbrains logo" />    
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://www.jetbrains.com/?ref=belgattitude" target="_blank">JetBrains</a>
+    </td>
+    <td align="center">
+      <a href="https://www.embie.be/?ref=belgattitude" target="_blank">Embie.be</a>
+    </td>
+   </tr>
+</table>
+
+## License
+
+MIT © [Sébastien Vanvelthem](https://github.com/belgattitude) and contributors.

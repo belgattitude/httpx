@@ -221,7 +221,7 @@ someFn(value)
 
 ## Bundle size
 
-Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.size-limit.cjs)
+Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.size-limit.ts)
 
 | Scenario (esm)                                              | Size (compressed) |
 |-------------------------------------------------------------|------------------:|
