@@ -22,7 +22,7 @@ $ pnpm add @httpx/lru
 
 - 🖖&nbsp; Provides [LruCache](#lrucache) and [TimeLruCache](#timelrucache).
 - 🚀&nbsp; Fast `cache.get()` in O(1) thx to [doubly linked list](https://en.wikipedia.org/wiki/Doubly_linked_list).
-- 📐&nbsp; Lightweight ([~550B](#bundle-size)) 
+- 📐&nbsp; Lightweight (starts at [~550B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
@@ -172,55 +172,57 @@ expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
  RUN  v3.0.5 /home/sebastien/github/httpx/packages/lru
 
 
- ✓ bench/compare/lru-cache/iterate.bench.ts > LruCache iterator - 1000 items 2442ms
+ ✓ bench/compare/lru-cache/iterate.bench.ts > LruCache iterator - 1000 items 2433ms
      name                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/lru - forEach - ts files (dev)   34,902.06  0.0221  0.9028  0.0287  0.0279  0.0794  0.0927  0.2815  ±0.88%    17452   fastest
-   · @httpx/lru - forEach - compiled (dist)  33,415.30  0.0227  1.3977  0.0299  0.0298  0.0937  0.1131  0.1902  ±0.84%    16709
-   · quick-lru@7.0.0 - forEach               24,043.90  0.0310  0.6072  0.0416  0.0406  0.1177  0.1458  0.3901  ±0.93%    12022
-   · lru-cache@11.0.2 - forEach              18,692.02  0.0389  0.9620  0.0535  0.0527  0.1578  0.1944  0.2975  ±0.96%     9358   slowest
+   · @httpx/lru - forEach - ts files (dev)   11,848.10  0.0750  0.5561  0.0844  0.0836  0.1535  0.1695  0.2220  ±0.48%     5925
+   · @httpx/lru - forEach - compiled (dist)  19,088.34  0.0460  1.1223  0.0524  0.0496  0.1261  0.1340  0.2207  ±0.70%     9545   fastest
+   · quick-lru@7.0.0 - forEach                7,608.46  0.1232  0.4721  0.1314  0.1277  0.2467  0.2501  0.3380  ±0.51%     3805   slowest
+   · lru-cache@11.0.2 - forEach              10,638.32  0.0862  0.3423  0.0940  0.0910  0.1881  0.1925  0.2291  ±0.51%     5320
 
- ✓ bench/compare/lru-cache/set.bench.ts > LruCache.set() 1000 items / maxSize: 500 2438ms
-     name                                       hz     min      max    mean     p75     p99    p995     p999      rme  samples
-   · @httpx/lru.set() - ts files (dev)    6,505.49  0.0580  17.2624  0.1537  0.0988  0.6561  3.5929  10.5129  ±15.27%     3253   slowest
-   · @httpx/lru.set() - compiled (dist)   9,382.90  0.0516   1.9482  0.1066  0.1080  0.3110  0.5594   1.2600   ±2.23%     4692
-   · quick-lru@7.0.0.set()               30,127.38  0.0251   0.6143  0.0332  0.0330  0.0867  0.1924   0.3293   ±1.04%    15064   fastest
-   · lru-cache@11.0.2.set()              11,515.22  0.0574   1.8515  0.0868  0.0869  0.2429  0.3960   1.2257   ±1.84%     5759
+ ✓ bench/compare/lru-cache/get.bench.ts > LruCache.get() - 1000 items / maxSize: 500 3061ms
+     name                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · @httpx/lru.get() - ts files (dev)       34,364.83  0.0257  0.1172  0.0291  0.0286  0.0460  0.0471  0.0609  ±0.23%    17183
+   · @httpx/lru.get() - compiled (dist)      36,841.89  0.0256  0.0519  0.0271  0.0276  0.0354  0.0404  0.0411  ±0.08%    18421
+   · @httpx/time-lru.get() - ts files (dev)  18,623.66  0.0470  0.9621  0.0537  0.0552  0.0814  0.0834  0.1641  ±0.49%     9312
+   · quick-lru@7.0.0.get()                    9,667.96  0.0942  0.3501  0.1034  0.1066  0.1330  0.2138  0.2809  ±0.36%     4834   slowest
+   · lru-cache@11.0.2.get()                  39,172.66  0.0235  0.1227  0.0255  0.0257  0.0384  0.0397  0.0687  ±0.20%    19587   fastest
 
- ✓ bench/compare/lru-cache/peek.bench.ts > LruCache.peek() - 1000 items / maxSize: 500 2533ms
-     name                                         hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/lru.peek() - ts files (dev)   113,618.01  0.0064  0.4988  0.0088  0.0089  0.0184  0.0261  0.0593  ±0.41%    56810
-   · @httpx/lru.peek() - compiled (dist)  125,609.48  0.0065  0.3238  0.0080  0.0082  0.0116  0.0188  0.0512  ±0.33%    62805   fastest
-   · quick-lru@7.0.0.peek()                50,329.00  0.0151  0.7934  0.0199  0.0201  0.0392  0.0474  0.1252  ±0.62%    25165   slowest
-   · lru-cache@11.0.2.peek()              108,351.01  0.0070  1.9459  0.0092  0.0090  0.0196  0.0203  0.0356  ±0.90%    54176
-
- ✓ bench/compare/lru-cache/get.bench.ts > LruCache.get() - 1000 items / maxSize: 500 2464ms
+ ✓ bench/compare/lru-cache/set.bench.ts > LruCache.set() 1000 items / maxSize: 500 2430ms
      name                                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/lru.get() - ts files (dev)   47,992.86  0.0115  7.2249  0.0208  0.0229  0.0423  0.0519  0.1573  ±3.22%    23997
-   · @httpx/lru.get() - compiled (dist)  44,748.92  0.0129  1.2364  0.0223  0.0260  0.0455  0.0497  0.1212  ±0.80%    22375
-   · quick-lru@7.0.0.get()               16,261.07  0.0349  0.9033  0.0615  0.0820  0.1471  0.2089  0.4077  ±1.29%     8131   slowest
-   · lru-cache@11.0.2.get()              82,501.07  0.0079  0.7662  0.0121  0.0131  0.0275  0.0294  0.0715  ±0.68%    41251   fastest
-                                                                                                                                                                                                                                    
- BENCH  Summary                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                    
-  lru-cache@11.0.2.get() - bench/compare/lru-cache/get.bench.ts > LruCache.get() - 1000 items / maxSize: 500                                                                                                                        
-    1.72x faster than @httpx/lru.get() - ts files (dev)                                                                                                                                                                             
-    1.84x faster than @httpx/lru.get() - compiled (dist)                                                                                                                                                                            
-    5.07x faster than quick-lru@7.0.0.get()                                                                                                                                                                                         
+   · @httpx/lru.set() - ts files (dev)    7,501.07  0.1124  0.6659  0.1333  0.1339  0.2685  0.2851  0.3238  ±0.57%     3751
+   · @httpx/lru.set() - compiled (dist)   6,046.28  0.0985  1.1585  0.1654  0.1704  0.3403  0.5726  1.1126  ±1.40%     3024   slowest
+   · quick-lru@7.0.0.set()               18,669.09  0.0481  0.3913  0.0536  0.0533  0.0799  0.2346  0.2932  ±0.68%     9335   fastest
+   · lru-cache@11.0.2.set()               6,851.34  0.1061  1.1735  0.1460  0.1516  0.2604  0.3524  1.0892  ±1.04%     3426
 
-  @httpx/lru - forEach - ts files (dev) - bench/compare/lru-cache/iterate.bench.ts > LruCache iterator - 1000 items
-    1.04x faster than @httpx/lru - forEach - compiled (dist)
-    1.45x faster than quick-lru@7.0.0 - forEach
-    1.87x faster than lru-cache@11.0.2 - forEach
+ ✓ bench/compare/lru-cache/peek.bench.ts > LruCache.peek() - 1000 items / maxSize: 500 2471ms
+     name                                        hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · @httpx/lru.peek() - ts files (dev)   51,850.30  0.0178  0.0688  0.0193  0.0194  0.0349  0.0353  0.0371  ±0.15%    25926
+   · @httpx/lru.peek() - compiled (dist)  55,343.67  0.0167  0.3101  0.0181  0.0185  0.0249  0.0309  0.0329  ±0.15%    27672   fastest
+   · quick-lru@7.0.0.peek()               18,788.56  0.0475  0.3245  0.0532  0.0528  0.0698  0.0718  0.1290  ±0.28%     9395   slowest
+   · lru-cache@11.0.2.peek()              43,489.56  0.0208  0.1205  0.0230  0.0234  0.0374  0.0382  0.0651  ±0.18%    21745
+
+ BENCH  Summary
+
+  lru-cache@11.0.2.get() - bench/compare/lru-cache/get.bench.ts > LruCache.get() - 1000 items / maxSize: 500
+    1.06x faster than @httpx/lru.get() - compiled (dist)
+    1.14x faster than @httpx/lru.get() - ts files (dev)
+    2.10x faster than @httpx/time-lru.get() - ts files (dev)
+    4.05x faster than quick-lru@7.0.0.get()
+
+  @httpx/lru - forEach - compiled (dist) - bench/compare/lru-cache/iterate.bench.ts > LruCache iterator - 1000 items
+    1.61x faster than @httpx/lru - forEach - ts files (dev)
+    1.79x faster than lru-cache@11.0.2 - forEach
+    2.51x faster than quick-lru@7.0.0 - forEach
 
   @httpx/lru.peek() - compiled (dist) - bench/compare/lru-cache/peek.bench.ts > LruCache.peek() - 1000 items / maxSize: 500
-    1.11x faster than @httpx/lru.peek() - ts files (dev)
-    1.16x faster than lru-cache@11.0.2.peek()
-    2.50x faster than quick-lru@7.0.0.peek()
+    1.07x faster than @httpx/lru.peek() - ts files (dev)
+    1.27x faster than lru-cache@11.0.2.peek()
+    2.95x faster than quick-lru@7.0.0.peek()
 
   quick-lru@7.0.0.set() - bench/compare/lru-cache/set.bench.ts > LruCache.set() 1000 items / maxSize: 500
-    2.62x faster than lru-cache@11.0.2.set()
-    3.21x faster than @httpx/lru.set() - compiled (dist)
-    4.63x faster than @httpx/lru.set() - ts files (dev)
+    2.49x faster than @httpx/lru.set() - ts files (dev)
+    2.72x faster than lru-cache@11.0.2.set()
+    3.09x faster than @httpx/lru.set() - compiled (dist)
 
 ```
 
@@ -230,9 +232,10 @@ expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/lru/.size-limit.ts)
 
-| Scenario (esm)                                     | Size (compressed) |
-|----------------------------------------------------|------------------:|
-| `import { LruCache  } from '@httpx/lru`            |            ~ 538B |
+| Scenario (esm)                              | Size (compressed) |
+|---------------------------------------------|------------------:|
+| `import { LruCache  } from '@httpx/lru`     |            ~ 557B |
+| `import { TimeLruCache  } from '@httpx/lru` |            ~ 654B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
 
