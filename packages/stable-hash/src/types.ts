@@ -1,3 +1,5 @@
+import type { HashStrOptions } from './hash-str';
+
 export type SupportedDataTypes =
   | Record<string, unknown>
   | unknown[]
@@ -18,5 +20,14 @@ export type CreateStableKeyOptions = {
 };
 
 export type CreateStableHashOptions = CreateStableKeyOptions & {
-  algorithm?: 'SHA-256';
+  /**
+   * Hashing algorithm to use
+   * @default 'SHA-256'
+   */
+  algorithm?: HashStrOptions['algorithm'];
+  /**
+   * Encode the hash in hexadecimal or base64
+   * @default 'base64'
+   */
+  encoding?: HashStrOptions['encoding'];
 };

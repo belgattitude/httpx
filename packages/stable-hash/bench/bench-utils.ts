@@ -1,6 +1,6 @@
 import type {
-  createStableHashOrThrow as stableHash,
-  createStableKeyOrThrow as stableKey,
+  createStableHashOrThrow as srcCreateStableHashOrThrow,
+  createStableKeyOrThrow as srcCreateStableKeyOrThrow,
 } from '../src';
 
 export const loadCreateStableKeyOrThrow = async () =>
@@ -12,10 +12,11 @@ export const loadCreateStableKeyOrThrow = async () =>
   )
     .then((mod) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      return mod.createStableKeyOrThrow as unknown as typeof stableKey;
+      return mod.createStableKeyOrThrow as unknown as typeof srcCreateStableKeyOrThrow;
     })
     .catch((_e) => {
-      const msg = 'Requires httpx/stable-key to be built (yarn build)';
+      const msg =
+        'Bench createStableKeyOrThrow Requires httpx/stable-hash to be built (yarn build)';
       throw new Error(msg);
     });
 
@@ -28,9 +29,10 @@ export const loadCreateStableHashOrThrow = async () =>
   )
     .then((mod) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      return mod.createStableHashOrThrow as unknown as typeof stableHash;
+      return mod.createStableHashOrThrow as unknown as typeof srcCreateStableHashOrThrow;
     })
     .catch((_e) => {
-      const msg = 'Requires httpx/stable-key to be built (yarn build)';
+      const msg =
+        'Bench createStableHashOrThrow requires httpx/stable-hash to be built (yarn build)';
       throw new Error(msg);
     });
