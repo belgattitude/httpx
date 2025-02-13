@@ -5,18 +5,18 @@ module.exports = [
     name: 'import { LruCache } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ LruCache }',
-    limit: '560B',
+    limit: '570B',
   },
   {
     name: 'import { TimeLruCache } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ TimeLruCache }',
-    limit: '660B',
+    limit: '680B',
   },
   {
     name: 'require { LruCache } (CJS)',
     import: '{ LruCache }',
     path: ['dist/index.cjs'],
-    limit: '640B',
+    limit: '680B',
   },
 ] satisfies SizeLimitConfig;

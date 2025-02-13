@@ -1,7 +1,8 @@
-import { DoublyLinkedListNode } from './base';
+import { DoublyLinkedListNode } from './doubly-linked-list-node';
+import type { ILruCache } from './lru-cache.interface';
 import type {
-  BaseCache,
   BaseCacheKeyTypes,
+  LruCacheHasOptions,
   SupportedCacheValues,
 } from './types';
 
@@ -33,7 +34,7 @@ export type LruCacheParams<TValue, TKey extends BaseCacheKeyTypes = string> = {
 export class LruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
-> implements BaseCache<TValue, TKey>
+> implements ILruCache<TValue, TKey>
 {
   #maxSize: number;
   #touchOnHas: boolean;
@@ -73,16 +74,19 @@ export class LruCache<
     this.#cache = new Map();
   }
 
+  get params(): ILruCache['params'] {
+    return {
+      maxSize: this.#maxSize,
+    };
+  }
+
   /**
-   * Return the current size of the cache
+   * Return the current number of items in the cache
    */
   get size(): number {
     return this.#cache.size;
   }
 
-  /**
-   * Clear all entries from the cache
-   */
   clear(): number {
     const size = this.#cache.size;
     this.#cache.clear();
@@ -90,33 +94,7 @@ export class LruCache<
     return size;
   }
 
-  /**
-   * Checks whether an entry exist.
-   *
-   * ```typescript
-   * import { LruCache } from '@httpx/lru';
-   *
-   * const lru = new LruCache({ maxSize: 1 });
-   *
-   * lru.set('key0', 'value0');
-   * // 👇 Will evict key0 as maxSize is 1
-   * lru.set('key1', 'value1');
-   *
-   * lru.has('key0'); // 👈 false
-   * lru.has('key1'); // 👈 true  (item is present)
-   *
-   * ```
-   */
-  has(
-    key: TKey,
-    options?: {
-      /**
-       * If true, the item will be marked as recently used.
-       * @default option touchOnHas in the constructor
-       */
-      touch?: boolean;
-    }
-  ): boolean {
+  has(key: TKey, options?: LruCacheHasOptions): boolean {
     const hasEntry = this.#cache.has(key);
     if (hasEntry && (options?.touch ?? this.#touchOnHas)) {
       this.#moveToHead(this.#cache.get(key)!.node);
@@ -124,27 +102,6 @@ export class LruCache<
     return hasEntry;
   }
 
-  /**
-   * Add a new entry to the cache and overwrite value if the key was already
-   * present.It will move the item as the most recently used.
-   *
-   * Note that eviction will happen if maximum capacity is reached..
-   *
-   * ```typescript
-   * import { LruCache } from '@httpx/lru';
-   *
-   * const lru = new LruCache({
-   *   maxSize: 1,
-   *   onEviction: () => { console.log('evicted') }
-   * });
-   *
-   * lru.set('key0', 'value0'); // 👈 true (new key, size increase)
-   * lru.set('key0', 'valuex'); // 👈 false (existing key, no size increase)
-   *
-   *  // 👇 Will evict key0 as maxSize is 1 and trigger onEviction
-   * lru.set('key2', 'value2'); // 👈 true (existing key, no size increase)
-   * ```
-   */
   set(key: TKey, value: TValue): boolean {
     if (this.#cache.has(key)) {
       const data = this.#cache.get(key)!;
@@ -176,19 +133,6 @@ export class LruCache<
     return data.value;
   }
 
-  /**
-   * Get an item from the cache without overwriting it if it already exists.
-   * @see upcoming proposal https://github.com/tc39/proposal-upsert
-   *
-   * @example
-   * ```typescript
-   * const lru = new LruCache({ maxSize: 2 });
-   * lru.set('key1', 'value1');
-   * lru.getOrSet('key1', 'value2');    // 👈 will not overwrite the value
-   * lru.getOrSet('key2', () => true)); // 👈 with callback
-   * console.log(lru.get('key1')); // value1
-   * ```
-   */
   getOrSet(key: TKey, valueOrFn: TValue | (() => TValue)): TValue {
     if (this.#cache.has(key)) {
       return this.get(key)!;
@@ -198,17 +142,10 @@ export class LruCache<
     return value;
   }
 
-  /**
-   * Get an item without marking it as recently used.
-   */
   peek(key: TKey): TValue | undefined {
     return this.#cache.get(key)?.value;
   }
 
-  /**
-   * Delete an item from the cache and return a boolean indicating
-   * if the item was actually deleted in case it exist.
-   */
   delete(key: TKey): boolean {
     const node = this.#cache.get(key)?.node;
 
@@ -219,27 +156,6 @@ export class LruCache<
     return this.#cache.delete(key);
   }
 
-  /**
-   * Iterate over the cache from the least recently used to the most recently used.
-   *
-   * ```typescript
-   * const lru = new LruCache({ maxSize: 2 });
-   * lru.set('key1', 'value1');
-   * lru.set('key2', 'value2');
-   * lru.set('key3', 'value3');
-   * // trigger a get to move key2 to the head
-   * lru.get('key2');
-   * const results = [];
-   * // iterate over the cache entries
-   * for (const [key, value] of lru) {
-   *   results.push([key, value]);
-   * }
-   * expect(results).toStrictEqual([
-   *    ['key3', 'value3'], // Least recently used
-   *    ['key2', 'value2'], // Most recently used
-   * ]);
-   * ```
-   */
   *[Symbol.iterator](): IterableIterator<[TKey, TValue]> {
     let current = this.#tail;
 
