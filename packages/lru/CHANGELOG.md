@@ -1,5 +1,15 @@
 # @httpx/lru
 
+## 0.8.0
+
+### Minor Changes
+
+- [#1931](https://github.com/belgattitude/httpx/pull/1931) [`5d4f74c`](https://github.com/belgattitude/httpx/commit/5d4f74c89031e1900eaa29dd415d5b247a3a0fff) Thanks [@belgattitude](https://github.com/belgattitude)! - Add cache.params to get back the initial params
+
+- [#1931](https://github.com/belgattitude/httpx/pull/1931) [`5d4f74c`](https://github.com/belgattitude/httpx/commit/5d4f74c89031e1900eaa29dd415d5b247a3a0fff) Thanks [@belgattitude](https://github.com/belgattitude)! - Expose ILruCache and ITimeLruCache interfaces
+
+- [#1931](https://github.com/belgattitude/httpx/pull/1931) [`801602f`](https://github.com/belgattitude/httpx/commit/801602fddc19f298f254c2d55684afe3b7a6a8fb) Thanks [@belgattitude](https://github.com/belgattitude)! - Export NullLruCache and NullTimeLruCache
+
 ## 0.7.0
 
 ### Minor Changes
