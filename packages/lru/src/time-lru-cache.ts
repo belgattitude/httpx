@@ -1,9 +1,10 @@
-import { DoublyLinkedListNode } from './base';
+import { DoublyLinkedListNode } from './doubly-linked-list-node';
 import type { LruCacheParams } from './lru-cache';
+import type { ITimeLruCache } from './time-lru-cache.interface';
 import type {
-  BaseCache,
   BaseCacheKeyTypes,
   EpochTimeInMilliseconds,
+  LruCacheHasOptions,
   Milliseconds,
   SupportedCacheValues,
 } from './types';
@@ -14,7 +15,7 @@ type TimeLruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
   node: DoublyLinkedListNode<TValue, TKey>;
 };
 
-type TimeLruCacheParams<
+export type TimeLruCacheParams<
   TValue,
   TKey extends BaseCacheKeyTypes = string,
 > = LruCacheParams<TValue, TKey> & {
@@ -30,7 +31,7 @@ type TimeLruCacheParams<
 export class TimeLruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
-> implements BaseCache<TValue, TKey>
+> implements ITimeLruCache<TValue, TKey>
 {
   #maxSize: number;
   #touchOnHas: boolean;
@@ -83,13 +84,20 @@ export class TimeLruCache<
   /**
    * Return the current size of the cache
    */
+  get params(): ITimeLruCache['params'] {
+    return {
+      maxSize: this.#maxSize,
+      defaultTTL: this.#ttl,
+    };
+  }
+
+  /**
+   * Return the current number of entries in the cache
+   */
   get size(): number {
     return this.#cache.size;
   }
 
-  /**
-   * Clear all entries from the cache
-   */
   clear(): number {
     const size = this.#cache.size;
     this.#cache.clear();
@@ -97,47 +105,7 @@ export class TimeLruCache<
     return size;
   }
 
-  /**
-   * Checks whether an entry exist and hasn't expired. If the entry exists but has expired, it will be removed
-   * automatically and trigger the `onEviction` callback if present.
-   *
-   * ```typescript
-   * import { TimeLruCache } from '@httpx/lru';
-   *
-   * const oneSecondInMillis = 1000;
-   *
-   * const lru = new TimeLruCache({
-   *   maxSize: 1,
-   *   defaultTTL: oneSecondInMillis,
-   *   onEviction: () => { console.log('evicted') }
-   * });
-   *
-   * lru.set('key0', 'value0', 2 * oneSecondInMillis);
-   *
-   // 👇 Will evict key0 as maxSize is 1 and trigger onEviction
-   * lru.set('key1', 'value1', 2 * oneSecondInMillis);
-   *
-   * lru.has('key0'); // 👈 false (item does not exists)
-   * lru.has('key1'); // 👈 true  (item is present and is not expired)
-   *
-   * const value = lru.get('key1'); // 👈 'value1' (item is present and is not expired)
-   *
-   * // 🕛 wait 3 seconds, time for the item to expire
-   *
-   * lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction will be called)
-   * ```
-   *
-   */
-  has(
-    key: TKey,
-    options?: {
-      /**
-       * If true, the item will be marked as recently used.
-       * @default option touchOnHas in the constructor
-       */
-      touch?: boolean;
-    }
-  ): boolean {
+  has(key: TKey, options?: LruCacheHasOptions): boolean {
     const value = this.#cache.get(key);
     const hasEntry = value !== undefined;
     const hasExpired = hasEntry && value.expiry < Date.now();
@@ -156,28 +124,6 @@ export class TimeLruCache<
     return hasEntry;
   }
 
-  /**
-   * Add a new entry to the cache and overwrite value if the key was already
-   * present.It will move the item as the most recently used.
-   *
-   * Note that eviction will happen if maximum capacity is reached..
-   *
-   * ```typescript
-   * import { TimeLruCache } from '@httpx/lru';
-   *
-   * const lru = new TimeLruCache({
-   *   maxSize: 1,
-   *   defaultTTL: 30_000,
-   *   onEviction: () => { console.log('evicted') }
-   * });
-   *
-   * lru.set('key0', 'value0', 1000); // 👈 true (new key, size increase)
-   * lru.set('key0', 'valuex', 1000); // 👈 false (existing key, no size increase)
-   *
-   *  // 👇 Will evict key0 as maxSize is 1 and trigger onEviction
-   * lru.set('key2', 'value2', 1000); // 👈 true (existing key, no size increase)
-   * ```
-   */
   set(key: TKey, value: TValue, ttl?: Milliseconds): boolean {
     if (this.#cache.has(key)) {
       const data = this.#cache.get(key)!;
@@ -222,19 +168,6 @@ export class TimeLruCache<
     return data.value;
   }
 
-  /**
-   * Get an item from the cache without overwriting it if it already exists.
-   * @see upcoming proposal https://github.com/tc39/proposal-upsert
-   *
-   * @example
-   * ```typescript
-   * const lru = new TimeLruCache({ maxSize: 2, defaultTTL: 30000 });
-   * lru.set('key1', 'value1');
-   * lru.getOrSet('key1', 'value2'); // 👈 will not overwrite the value
-   * lru.getOrSet('key2', () => true)); // 👈 with callback
-   * console.log(lru.get('key1')); // value1
-   * ```
-   */
   getOrSet(
     key: TKey,
     valueOrFn: TValue | (() => TValue),
@@ -249,9 +182,6 @@ export class TimeLruCache<
     return val;
   }
 
-  /**
-   * Get an item without marking it as recently used.
-   */
   peek(key: TKey): TValue | undefined {
     const val = this.#cache.get(key);
     if (val === undefined) {
@@ -260,10 +190,6 @@ export class TimeLruCache<
     return val.expiry < Date.now() ? undefined : val.value;
   }
 
-  /**
-   * Delete an item from the cache and return a boolean indicating
-   * if the item was actually deleted in case it exist.
-   */
   delete(key: TKey): boolean {
     const node = this.#cache.get(key)?.node;
 
