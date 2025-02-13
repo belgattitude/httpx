@@ -1,32 +1,34 @@
-import type { LruCacheParams } from './lru-cache';
-import type { ILruCache } from './lru-cache.interface';
+import type { TimeLruCacheParams } from './time-lru-cache';
+import type { ITimeLruCache } from './time-lru-cache.interface';
 import type {
   BaseCacheKeyTypes,
   LruCacheHasOptions,
+  Milliseconds,
   SupportedCacheValues,
 } from './types';
 
-export class NullLruCache<
+export class NullTimeLruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
-> implements ILruCache<TValue, TKey>
+> implements ITimeLruCache<TValue, TKey>
 {
   /**
-   * Create a new NullLruCache (does cache nothing)
+   * Create a new NullTimeLruCache (does cache nothing)
    *
    * @example
    * ```typescript
-   * import { NullLruCache } from '@httpx/lru';
+   * import { NullTimeLruCache } from '@httpx/lru';
    *
-   * const lru = new NullLruCache({ maxSize: 1000 });
+   * const lru = new NullTimeLruCache({ maxSize: 1000 });
    * ```
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(_params: LruCacheParams<TValue, TKey>) {}
+  constructor(_params: TimeLruCacheParams<TValue, TKey>) {}
 
   readonly size = 0;
   readonly params = {
     maxSize: 0,
+    defaultTTL: 0,
   };
 
   clear(): number {
@@ -37,7 +39,7 @@ export class NullLruCache<
     return false;
   }
 
-  set(_key: TKey, _value: TValue): boolean {
+  set(_key: TKey, _value: TValue, _ttl?: Milliseconds): boolean {
     return false;
   }
 
@@ -45,7 +47,11 @@ export class NullLruCache<
     return undefined;
   }
 
-  getOrSet(_key: TKey, valueOrFn: TValue | (() => TValue)): TValue {
+  getOrSet(
+    _key: TKey,
+    valueOrFn: TValue | (() => TValue),
+    _ttl?: Milliseconds
+  ): TValue {
     return typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
   }
 

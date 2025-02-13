@@ -15,7 +15,7 @@ type TimeLruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
   node: DoublyLinkedListNode<TValue, TKey>;
 };
 
-type TimeLruCacheParams<
+export type TimeLruCacheParams<
   TValue,
   TKey extends BaseCacheKeyTypes = string,
 > = LruCacheParams<TValue, TKey> & {
