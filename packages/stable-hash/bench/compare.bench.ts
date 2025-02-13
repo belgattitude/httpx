@@ -2,7 +2,7 @@ import { hashKey } from '@tanstack/query-core';
 import hash from 'stable-hash';
 import { bench } from 'vitest';
 
-import { loadCreateStableKeyOrThrow } from './utils';
+import { loadCreateStableKeyOrThrow } from './bench-utils';
 
 describe(`Comparison`, async () => {
   const createStableKeyOrThrow = await loadCreateStableKeyOrThrow();

@@ -1,19 +1,6 @@
 import { createStableKeyOrThrow } from './create-stable-key-or-throw';
+import { hashStr } from './hash-str';
 import type { CreateStableHashOptions, SupportedDataTypesRW } from './types';
-
-async function digestMessage(
-  message: string,
-  algorithm: 'SHA-256' = 'SHA-256'
-) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(message);
-  const hashBuffer = await globalThis.crypto.subtle.digest(algorithm, data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
-  return hashHex;
-}
 
 /**
  * Create a stable hash (sha-256) from a given value useful for caching or memoization.
@@ -34,7 +21,12 @@ async function digestMessage(
  * };
  *
  * try {
- *   const hash = await createStableHashOrThrow(params);
+ *   const hash = await createStableHashOrThrow(params, {
+ *     // By default SHA-256 is used (SHA-512 available)
+ *     algorithm: 'SHA-256',
+ *     // By default the hash is encoded in hexadecimal
+ *     encoding: 'hexa',
+ *   });
  *   // -> 'fb17a6300efcf62ae80708e2a672aee581b7f0dd7c6a9a7a748218846c679394'
  * } catch (e) {
  *   // TypeError in case of an unserializable data type
@@ -45,8 +37,9 @@ export const createStableHashOrThrow = async <T extends SupportedDataTypesRW>(
   value: T,
   options?: CreateStableHashOptions
 ): Promise<string> => {
-  return digestMessage(
-    createStableKeyOrThrow(value, options),
-    options?.algorithm
-  );
+  const { encoding = 'hexa', algorithm = 'SHA-256' } = options ?? {};
+  return hashStr(createStableKeyOrThrow(value, options), {
+    encoding,
+    algorithm,
+  });
 };
