@@ -1,5 +1,13 @@
 # @httpx/stable-hash
 
+## 0.2.0
+
+### Minor Changes
+
+- [#1928](https://github.com/belgattitude/httpx/pull/1928) [`b7333bc`](https://github.com/belgattitude/httpx/commit/b7333bc46d90e16fe7a1c677cad9fbcaedf1ecdd) Thanks [@belgattitude](https://github.com/belgattitude)! - Refactor internal code
+
+- [#1928](https://github.com/belgattitude/httpx/pull/1928) [`b7333bc`](https://github.com/belgattitude/httpx/commit/b7333bc46d90e16fe7a1c677cad9fbcaedf1ecdd) Thanks [@belgattitude](https://github.com/belgattitude)! - Improve documentation
+
 ## 0.1.0
 
 ### Minor Changes
