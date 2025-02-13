@@ -16,7 +16,7 @@ type Result =
  * ```typescript
  * import { createStableHash } from '@httpx/stable-hash';
  *
- * const params = {
+ * const value = {
  *   key8: 'a string',
  *   key1: 1,
  *   key3: true,
@@ -27,7 +27,12 @@ type Result =
  *   },
  * };
  *
- * const result = await createStableHash(params);
+ * const result = await createStableHash(value, {
+ *   // By default SHA-256 is used (SHA-512 available)
+ *   algorithm: 'SHA-256',
+ *   // By default the hash is encoded in hexadecimal
+ *   encoding: 'hexa',
+ * });
  * if (!result.success) {
  *   throw result.error;
  * }
