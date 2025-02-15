@@ -1,24 +1,22 @@
 {
-  "name": "@httpx/plain-object",
-  "description": "Fast and lightweight utility functions to check if a value is a plain object.",
-  "version": "2.0.6",
+  "name": "@httpx/compress",
+  "description": "Compression utilities",
+  "version": "0.0.1",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://belgattitude.github.io/httpx/plain-object",
+  "homepage": "https://belgattitude.github.io/httpx/compress",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
-    "directory": "packages/plain-object"
+    "directory": "packages/compress"
   },
   "keywords": [
-    "plainObject",
-    "plain-object",
-    "is-plain-object",
-    "is-plain-obj",
-    "assert-plain-object"
+    "gzip",
+    "compress",
+    "stream"
   ],
   "sideEffects": false,
   "type": "module",
@@ -58,7 +56,7 @@
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/plain-object.eslintcache",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/compress.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
@@ -68,7 +66,10 @@
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-plain-object-unit --dir ./coverage"
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-compress-unit --dir ./coverage"
+  },
+  "dependencies": {
+    "uint8array-extras": "^1.4.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.17.3",
@@ -77,21 +78,16 @@
     "@sindresorhus/is": "7.0.1",
     "@size-limit/file": "11.1.6",
     "@size-limit/webpack": "11.1.6",
-    "@types/lodash-es": "4.17.12",
     "browserslist": "4.24.4",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "7.0.3",
     "es-check": "8.0.1",
-    "es-toolkit": "1.32.0",
     "esbuild": "0.25.0",
     "eslint": "8.57.1",
-    "is-plain-obj": "4.1.0",
-    "is-plain-object": "5.0.0",
-    "lodash-es": "4.17.21",
     "npm-run-all2": "7.0.2",
     "prettier": "3.5.1",
+    "pretty-bytes": "6.1.1",
     "publint": "0.3.5",
-    "redux": "5.0.1",
     "rimraf": "6.0.1",
     "rollup": "4.34.7",
     "size-limit": "11.1.6",
