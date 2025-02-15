@@ -1,28 +1,39 @@
 import { describe } from 'vitest';
 
+import type { SupportedCompressionAlgorithm } from './compression-algorithm';
 import { Compressor } from './compressor';
-import { DeCompressor } from './decompressor';
-import { supportedEncodings } from './encodings';
+import { Decompressor } from './decompressor';
 
-const testEncodings = [['gzip'], ['deflate']];
+const testAlgorithms = [
+  ['gzip'],
+  ['deflate'],
+] as const satisfies SupportedCompressionAlgorithm[][];
 
-describe.each(supportedEncodings)('Tests with encoding "%s"', (encoding) => {
-  const longString = `😊-abcdef-éàù-012345`.repeat(1000);
+describe.each(testAlgorithms)('Tests with algorithm "%s"', (algorithm) => {
+  const longString = `😊-abcdef-éàù-012345`.repeat(100);
   const longStringSize = longString.length;
 
-  describe('toString', () => {
+  describe('toEncodedString', () => {
     it('should compress the long string by at least 15 times', async () => {
-      const comp = new Compressor(encoding);
-      const compressed = await comp.toString(longString);
-      expect(compressed.length).toBeGreaterThan(100);
+      const comp = new Compressor(algorithm);
+      const compressed = await comp.toEncodedString(longString, 'base64');
+      expect(compressed.length).toBeGreaterThan(50);
       expect(compressed.length).toBeLessThan(longStringSize / 15);
+    });
+    it('should match snapshot', async () => {
+      const comp = new Compressor(algorithm);
+      const compressed = await comp.toEncodedString(longString, 'base64');
+      expect(compressed).toMatchSnapshot();
     });
   });
 
-  describe('fromString', async () => {
-    const comp = new Compressor('gzip');
-    const compressed = await comp.toString(longString);
-    const decomp = new DeCompressor('gzip');
-    const decompressed = await decomp.fromString(compressed);
+  describe('fromEncodedString', async () => {
+    it('should decompress a compressed string', async () => {
+      const comp = new Compressor(algorithm);
+      const compressed = await comp.toEncodedString(longString, 'base64');
+      const decomp = new Decompressor(algorithm);
+      const decompressed = await decomp.fromEncodedString(compressed);
+      expect(decompressed).toStrictEqual(longString);
+    });
   });
 });

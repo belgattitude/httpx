@@ -1,13 +1,16 @@
-import type { SupportedEncodings } from './types';
+import { uint8ArrayToBase64 } from 'uint8array-extras';
+
+import type { SupportedCompressionAlgorithm } from './compression-algorithm';
+import type { SupportedStringEncodings } from './string-encodings';
 
 export class Compressor {
-  #encoding: SupportedEncodings;
+  #algorithm: SupportedCompressionAlgorithm;
 
-  constructor(encoding: SupportedEncodings) {
-    this.#encoding = encoding;
+  constructor(compressionMethod: SupportedCompressionAlgorithm) {
+    this.#algorithm = compressionMethod;
   }
 
-  toReadableStream = <T extends string | Uint8Array>(
+  #toReadableStream = <T extends string | Uint8Array>(
     data: T
   ): ReadableStream<Uint8Array<ArrayBufferLike>> => {
     const readableStream = new ReadableStream({
@@ -18,11 +21,11 @@ export class Compressor {
         controller.close();
       },
     });
-    return readableStream.pipeThrough(new CompressionStream(this.#encoding));
+    return readableStream.pipeThrough(new CompressionStream(this.#algorithm));
   };
 
   toResponse = <T extends string | Uint8Array>(data: T): Response => {
-    return new Response(this.toReadableStream(data));
+    return new Response(this.#toReadableStream(data));
   };
 
   toUint8Array = async <T extends string | Uint8Array>(
@@ -31,9 +34,13 @@ export class Compressor {
     return new Uint8Array(await this.toResponse(data).arrayBuffer());
   };
 
-  toString = async <T extends string | Uint8Array>(
-    data: T
+  toEncodedString = async <T extends string | Uint8Array>(
+    data: T,
+    encoding: SupportedStringEncodings = 'base64'
   ): Promise<string> => {
-    return new TextDecoder().decode(await this.toUint8Array(data));
+    if (encoding !== 'base64') {
+      throw new TypeError(`Unsupported string encoding: ${encoding}`);
+    }
+    return uint8ArrayToBase64(await this.toUint8Array(data));
   };
 }

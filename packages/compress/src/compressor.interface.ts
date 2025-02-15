@@ -1,7 +1,7 @@
-import type { SupportedEncodings } from './types';
+import type { SupportedAlgorithms } from './types';
 
 export type CompressorOptions = {
-  encoding: SupportedEncodings;
+  encoding: SupportedAlgorithms;
 };
 
 export interface AsyncCompressor {

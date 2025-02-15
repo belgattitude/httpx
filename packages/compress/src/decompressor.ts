@@ -1,10 +1,12 @@
-import type { SupportedEncodings } from './types';
+import { base64ToUint8Array } from 'uint8array-extras';
 
-export class DeCompressor {
-  #encoding: SupportedEncodings;
+import type { SupportedCompressionAlgorithm } from './compression-algorithm';
 
-  constructor(encoding: SupportedEncodings) {
-    this.#encoding = encoding;
+export class Decompressor {
+  #algorithm: SupportedCompressionAlgorithm;
+
+  constructor(algorithm: SupportedCompressionAlgorithm) {
+    this.#algorithm = algorithm;
   }
   /*
   toReadableStream = <T extends string | Uint8Array>(
@@ -31,17 +33,16 @@ export class DeCompressor {
     return new Uint8Array(await this.toResponse(data).arrayBuffer());
   };
 */
-  fromString = async (data: string): Promise<string> => {
-    const encoded = new TextEncoder().encode(data);
+  fromEncodedString = async (data: string): Promise<string> => {
     const inputReadableStream = new ReadableStream({
       start(controller) {
-        controller.enqueue(new TextEncoder().encode(data));
+        controller.enqueue(base64ToUint8Array(data));
         controller.close();
       },
     });
 
     const decompressedStream = inputReadableStream.pipeThrough(
-      new DecompressionStream(this.#encoding)
+      new DecompressionStream(this.#algorithm)
     );
 
     // Convert the decompressed stream to a string
