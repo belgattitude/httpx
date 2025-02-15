@@ -8,7 +8,7 @@ const benchOptions = {
 };
 
 describe(`Compressor`, async () => {
-  const longString = `😊-abcdef-éàù-012345`.repeat(1_000_000);
+  const longString = `😊-abcdef-éàù-012345`.repeat(500_000);
 
   const size = prettyBytes(longString.length);
 
