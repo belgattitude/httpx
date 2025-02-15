@@ -20,9 +20,9 @@ $ pnpm add @httpx/compress
 
 ## Features
 
-- 📐&nbsp; Lightweight (starts at [~80B](#bundle-size)) 
+- 📐&nbsp; Lightweight (starts at [~500B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
-- 🙏&nbsp; Works cross-realms (node:vm runInNewContext,...)
+- 🙏&nbsp; Works cross-realms (browser, edge, node, cloudflare...)
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
@@ -38,6 +38,27 @@ $ pnpm add @httpx/compress
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
+ RUN  v3.0.5 /home/sebastien/github/httpx/packages/compress
+
+
+ ✓ bench/decompress.bench.ts > Decompressor 1888ms
+     name                                                              hz      min      max     mean      p75      p99     p995     p999      rme  samples
+   · fromUint8Array (compressed size: 30.4 kB / total: 10 MB)     23.8698  36.7362  49.7650  41.8939  44.8148  49.7650  49.7650  49.7650   ±6.38%       12   fastest
+   · fromEncodedString (compressed size: 40.5 kB / total: 10 MB)   9.3379  94.9871   119.48   107.09   112.04   119.48   119.48   119.48  ±11.19%        5
+
+ ✓ bench/compress.bench.ts > Compressor 2423ms
+     name                                        hz      min     max    mean     p75     p99    p995    p999      rme  samples
+   · toUint8Array (original size: 10 MB)     6.4323   132.59  167.97  155.47  166.92  167.97  167.97  167.97  ±16.84%        4
+   · toEncodedString (original size: 10 MB)  7.3741  88.8431  182.92  135.61  176.07  182.92  182.92  182.92  ±59.61%        4   fastest
+
+ BENCH  Summary
+
+  toEncodedString (original size: 10 MB) - bench/compress.bench.ts > Compressor
+    1.15x faster than toUint8Array (original size: 10 MB)
+
+  fromUint8Array (compressed size: 30.4 kB / total: 10 MB) - bench/decompress.bench.ts > Decompressor
+    2.56x faster than fromEncodedString (compressed size: 40.5 kB / total: 10 MB)
+
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/compress/bench/comparative.bench.ts) for details.
@@ -46,9 +67,9 @@ $ pnpm add @httpx/compress
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/compress/.size-limit.ts)
 
-| Scenario (esm)                                              | Size (compressed) |
-|-------------------------------------------------------------|------------------:|
-| `import { isPlainObject } from '@httpx/compress`        |             ~ 80B |
+| Scenario (esm)                                | Size (compressed) |
+|-----------------------------------------------|------------------:|
+| `import { Compressor } from '@httpx/compress` |            ~ 500B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/compress@latest).
 

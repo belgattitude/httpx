@@ -16,13 +16,17 @@ describe.each(testAlgorithms)('Tests with algorithm "%s"', (algorithm) => {
   describe('toEncodedString', () => {
     it('should compress the long string by at least 15 times', async () => {
       const comp = new Compressor(algorithm);
-      const compressed = await comp.toEncodedString(longString, 'base64');
+      const compressed = await comp.toEncodedString(longString, {
+        encoding: 'base64',
+      });
       expect(compressed.length).toBeGreaterThan(50);
       expect(compressed.length).toBeLessThan(longStringSize / 15);
     });
     it('should match snapshot', async () => {
       const comp = new Compressor(algorithm);
-      const compressed = await comp.toEncodedString(longString, 'base64');
+      const compressed = await comp.toEncodedString(longString, {
+        encoding: 'base64',
+      });
       expect(compressed).toMatchSnapshot();
     });
   });
@@ -30,7 +34,9 @@ describe.each(testAlgorithms)('Tests with algorithm "%s"', (algorithm) => {
   describe('fromEncodedString', async () => {
     it('should decompress a compressed string', async () => {
       const comp = new Compressor(algorithm);
-      const compressed = await comp.toEncodedString(longString, 'base64');
+      const compressed = await comp.toEncodedString(longString, {
+        encoding: 'base64',
+      });
       const decomp = new Decompressor(algorithm);
       const decompressed = await decomp.fromEncodedString(compressed);
       expect(decompressed).toStrictEqual(longString);

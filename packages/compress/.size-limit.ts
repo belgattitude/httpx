@@ -2,33 +2,15 @@ import type { SizeLimitConfig } from 'size-limit';
 
 module.exports = [
   {
-    name: 'Only { isPlainObject } (ESM)',
+    name: 'Only { Compressor } (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ isPlainObject }',
-    limit: '81B',
+    import: '{ Compressor }',
+    limit: '530B',
   },
   {
-    name: 'Only { assertPlainObject } (ESM)',
+    name: 'Only { Deompressor } (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ assertPlainObject }',
-    limit: '135B',
-  },
-  {
-    name: 'Only { isStaticBuiltInClass } (ESM)',
-    path: ['dist/index.mjs'],
-    import: '{ isStaticBuiltInClass }',
-    limit: '38B',
-  },
-  {
-    name: 'Import { assertPlainObject, isPlainObject } (ESM)',
-    path: ['dist/index.mjs'],
-    import: '{ assertPlainObject, isPlainObject }',
-    limit: '143B',
-  },
-  {
-    name: 'Require isPlainObject from CJS',
-    import: '{ isPlainObject }',
-    path: ['dist/index.cjs'],
-    limit: '158KB',
+    import: '{ Decompressor }',
+    limit: '530B',
   },
 ] satisfies SizeLimitConfig;

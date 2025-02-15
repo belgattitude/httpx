@@ -10,9 +10,13 @@ export class Compressor {
     this.#algorithm = compressionMethod;
   }
 
-  #toReadableStream = <T extends string | Uint8Array>(
+  /**
+   *
+   * @throws Error
+   */
+  toUint8Array = async <T extends string | Uint8Array>(
     data: T
-  ): ReadableStream<Uint8Array<ArrayBufferLike>> => {
+  ): Promise<Uint8Array> => {
     const readableStream = new ReadableStream({
       start(controller) {
         controller.enqueue(
@@ -21,23 +25,23 @@ export class Compressor {
         controller.close();
       },
     });
-    return readableStream.pipeThrough(new CompressionStream(this.#algorithm));
+    const compressedStream = readableStream.pipeThrough(
+      new CompressionStream(this.#algorithm)
+    );
+
+    return new Uint8Array(await new Response(compressedStream).arrayBuffer());
   };
 
-  toResponse = <T extends string | Uint8Array>(data: T): Response => {
-    return new Response(this.#toReadableStream(data));
-  };
-
-  toUint8Array = async <T extends string | Uint8Array>(
-    data: T
-  ): Promise<Uint8Array> => {
-    return new Uint8Array(await this.toResponse(data).arrayBuffer());
-  };
-
+  /**
+   * @throws Error
+   */
   toEncodedString = async <T extends string | Uint8Array>(
     data: T,
-    encoding: SupportedStringEncodings = 'base64'
+    options?: {
+      encoding?: SupportedStringEncodings;
+    }
   ): Promise<string> => {
+    const { encoding = 'base64' } = options ?? {};
     if (encoding !== 'base64') {
       throw new TypeError(`Unsupported string encoding: ${encoding}`);
     }
