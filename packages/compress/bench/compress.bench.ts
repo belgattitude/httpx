@@ -25,7 +25,9 @@ describe(`Compressor`, async () => {
   bench(
     `toEncodedString (original size: ${size})`,
     async () => {
-      await compressor.toEncodedString(longString, 'base64');
+      await compressor.toEncodedString(longString, {
+        encoding: 'base64',
+      });
     },
     benchOptions
   );
