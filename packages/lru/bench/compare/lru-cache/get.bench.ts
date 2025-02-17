@@ -3,7 +3,7 @@ import { bench, describe } from 'vitest';
 import { getLruCaches } from '../../get-lru-caches';
 
 const SEEDS_COUNT = 1000;
-const MAX_SIZE = 500;
+const MAX_SIZE = 1000;
 
 describe(`LruCache.get() - ${SEEDS_COUNT} items / maxSize: ${MAX_SIZE}`, async () => {
   const seeds = Array.from({ length: SEEDS_COUNT }).map((_, i) => ({
@@ -27,7 +27,13 @@ describe(`LruCache.get() - ${SEEDS_COUNT} items / maxSize: ${MAX_SIZE}`, async (
   });
 
   bench(`@httpx/time-lru.get() - ts files (dev)`, () => {
-    seeds.forEach(({ key }) => lrus['@httpx/lru-time'].cache.get(key));
+    seeds.forEach(({ key }) => lrus['@httpx/time-lru'].cache.get(key));
+  });
+
+  bench(`@httpx/time-lru.get() - compiled (dist)`, () => {
+    seeds.forEach(({ key }) =>
+      lrus['@httpx/time-lru(compiled)']!.cache.get(key)
+    );
   });
 
   bench(`quick-lru@${lrus['quick-lru'].version}.get()`, () => {

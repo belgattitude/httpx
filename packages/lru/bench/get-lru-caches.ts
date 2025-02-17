@@ -9,7 +9,7 @@ import { LruCache, TimeLruCache } from '../src';
 
 const versions = devDependencies;
 
-const asyncLoadCompiled = async (): Promise<typeof LruCache | null> => {
+const asyncLoadCompiledLruCache = async (): Promise<typeof LruCache | null> => {
   return await import(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore to apply benchmarks assert must be built
@@ -26,13 +26,33 @@ const asyncLoadCompiled = async (): Promise<typeof LruCache | null> => {
     });
 };
 
+const asyncLoadCompiledTimeLruCache = async (): Promise<
+  typeof TimeLruCache | null
+> => {
+  return await import(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore to apply benchmarks assert must be built
+    // eslint-disable-next-line import-x/no-unresolved
+    '@httpx/lru'
+  )
+    .then((mod) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
+      return mod.LruCache as unknown as typeof TimeLruCache;
+    })
+    .catch((_e) => {
+      console.warn('Requires httpx/lru to be built (yarn build)');
+      return null;
+    });
+};
+
 const EIGHT_SECONDS = 8000;
 
 export const getLruCaches = async (params: {
   maxSize: number;
   prepopulate?: { key: string; value: string }[];
 }) => {
-  const LruCacheCompiled = await asyncLoadCompiled();
+  const LruCacheCompiled = await asyncLoadCompiledLruCache();
+  const TimeLruCacheCompiled = await asyncLoadCompiledTimeLruCache();
 
   const { maxSize, prepopulate } = params;
   const caches = {
@@ -40,7 +60,7 @@ export const getLruCaches = async (params: {
       cache: new LruCache({ maxSize }),
       version: version,
     },
-    '@httpx/lru-time': {
+    '@httpx/time-lru': {
       cache: new TimeLruCache({ maxSize, defaultTTL: EIGHT_SECONDS }),
       version: version,
     },
@@ -48,6 +68,17 @@ export const getLruCaches = async (params: {
       ? {
           '@httpx/lru(compiled)': {
             cache: new LruCacheCompiled({ maxSize }),
+            version: version,
+          },
+        }
+      : {}),
+    ...(TimeLruCacheCompiled
+      ? {
+          '@httpx/time-lru(compiled)': {
+            cache: new TimeLruCacheCompiled({
+              maxSize,
+              defaultTTL: EIGHT_SECONDS,
+            }),
             version: version,
           },
         }
@@ -64,9 +95,12 @@ export const getLruCaches = async (params: {
   if (Array.isArray(prepopulate)) {
     prepopulate.forEach(({ key, value }) => {
       caches['@httpx/lru'].cache.set(key, value);
-      caches['@httpx/lru-time'].cache.set(key, value);
+      caches['@httpx/time-lru'].cache.set(key, value);
       if ('@httpx/lru(compiled)' in caches) {
         caches['@httpx/lru(compiled)'].cache.set(key, value);
+      }
+      if ('@httpx/time-lru(compiled)' in caches) {
+        caches['@httpx/time-lru(compiled)'].cache.set(key, value);
       }
       caches['quick-lru'].cache.set(key, value, {
         maxAge: EIGHT_SECONDS,
