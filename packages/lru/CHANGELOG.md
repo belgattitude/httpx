@@ -1,5 +1,11 @@
 # @httpx/lru
 
+## 0.8.1
+
+### Patch Changes
+
+- [#1946](https://github.com/belgattitude/httpx/pull/1946) [`14896bd`](https://github.com/belgattitude/httpx/commit/14896bd805c35dbb37e0fd61ff5c30cfabdb22b4) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix jsdoc
+
 ## 0.8.0
 
 ### Minor Changes

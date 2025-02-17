@@ -1,5 +1,13 @@
 # @examples/nextjs-app
 
+## 0.1.106
+
+### Patch Changes
+
+- Updated dependencies [[`14896bd`](https://github.com/belgattitude/httpx/commit/14896bd805c35dbb37e0fd61ff5c30cfabdb22b4)]:
+  - @httpx/lru@0.8.1
+  - @httpx/memo-intl@1.2.6
+
 ## 0.1.105
 
 ### Patch Changes
