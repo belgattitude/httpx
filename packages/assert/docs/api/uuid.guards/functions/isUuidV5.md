@@ -8,7 +8,7 @@
 
 > **isUuidV5**(`v`): `v is UuidV5`
 
-Defined in: [uuid.guards.ts:36](https://github.com/belgattitude/httpx/blob/68e7ebef40f7182365676b3a21f99e398b93dd78/packages/assert/src/uuid.guards.ts#L36)
+Defined in: [uuid.guards.ts:36](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/packages/assert/src/uuid.guards.ts#L36)
 
 ## Parameters
 
