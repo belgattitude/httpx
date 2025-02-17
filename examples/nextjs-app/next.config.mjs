@@ -29,7 +29,6 @@ const nextConfig = {
   },
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
-  swcMinify: true,
   typescript: {
     ignoreBuildErrors: NEXTJS_IGNORE_TYPECHECK,
     tsconfigPath: TYPESCRIPT_CONFIG,
