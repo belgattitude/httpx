@@ -2,11 +2,9 @@
 
 ***
 
-[@httpx/lru](../README.md) / LruCache
+[@httpx/lru](../README.md) / NullLruCache
 
-# Class: LruCache\<TValue, TKey\>
-
-Double linked list based lru cache that supports get in O(1)
+# Class: NullLruCache\<TValue, TKey\>
 
 ## Type Parameters
 
@@ -20,58 +18,41 @@ Double linked list based lru cache that supports get in O(1)
 
 ## Constructors
 
-### new LruCache()
+### new NullLruCache()
 
-> **new LruCache**\<`TValue`, `TKey`\>(`params`): [`LruCache`](LruCache.md)\<`TValue`, `TKey`\>
+> **new NullLruCache**\<`TValue`, `TKey`\>(`_params`): [`NullLruCache`](NullLruCache.md)\<`TValue`, `TKey`\>
 
-Create a new LruCache instance
+Create a new NullLruCache (does cache nothing)
 
 #### Parameters
 
-##### params
+##### \_params
 
 `LruCacheParams`\<`TValue`, `TKey`\>
 
 #### Returns
 
-[`LruCache`](LruCache.md)\<`TValue`, `TKey`\>
+[`NullLruCache`](NullLruCache.md)\<`TValue`, `TKey`\>
 
 #### Example
 
 ```typescript
-import { LruCache } from '@httpx/lru';
+import { NullLruCache } from '@httpx/lru';
 
-const lru = new LruCache({ maxSize: 1000 });
-lru.set('🦄', ['cool', 'stuff']);
-if (lru.has('🦄')) {;
- console.log(lru.get('🦄'));
- // ['cool', 'stuff']
-}
-console.log(lru.size); // 1
-lru.delete('🦄');
-console.log(lru.size); // 0
-lru.clear();
+const lru = new NullLruCache({ maxSize: 1000 });
 ```
 
-## Accessors
+## Properties
 
 ### params
 
-#### Get Signature
-
-> **get** **params**(): `object`
+> `readonly` **params**: `object`
 
 Return the params
 
-##### Returns
+#### maxSize
 
-`object`
-
-###### maxSize
-
-> **maxSize**: `number`
-
-Return the params
+> **maxSize**: `number` = `0`
 
 #### Implementation of
 
@@ -81,15 +62,7 @@ Return the params
 
 ### size
 
-#### Get Signature
-
-> **get** **size**(): `number`
-
-Return the current number of items in the cache
-
-##### Returns
-
-`number`
+> `readonly` **size**: `0` = `0`
 
 Return the current number of items in the cache
 
@@ -151,14 +124,14 @@ Clear all entries from the cache and return the number of deleted items
 
 ### delete()
 
-> **delete**(`key`): `boolean`
+> **delete**(`_key`): `boolean`
 
 Delete an item from the cache and return a boolean indicating
 if the item was actually deleted in case it exist.
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
@@ -174,7 +147,7 @@ if the item was actually deleted in case it exist.
 
 ### get()
 
-> **get**(`key`): `undefined` \| `TValue`
+> **get**(`_key`): `undefined`
 
 Get an item from the cache or return undefined if it doesn't exist.
 Item will be marked as most recently used.
@@ -191,13 +164,13 @@ lru.get('key1');   // 👈 undefined
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
 #### Returns
 
-`undefined` \| `TValue`
+`undefined`
 
 #### Implementation of
 
@@ -207,7 +180,7 @@ lru.get('key1');   // 👈 undefined
 
 ### getOrSet()
 
-> **getOrSet**(`key`, `valueOrFn`): `TValue`
+> **getOrSet**(`_key`, `valueOrFn`): `TValue`
 
 Get an item from the cache, if the item doesn't exist it will
 create a new entry with the provided value and returns it.
@@ -218,7 +191,7 @@ In case of a new entry:
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
@@ -268,7 +241,7 @@ lru.get('key1');                       // 👈 undefined (first entry was evicte
 
 ### has()
 
-> **has**(`key`, `options`?): `boolean`
+> **has**(`_key`, `_options`?): `boolean`
 
 Checks whether an entry exist.
 
@@ -279,11 +252,11 @@ The item will be marked as recently used only if either
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
-##### options?
+##### \_options?
 
 [`LruCacheHasOptions`](../interfaces/LruCacheHasOptions.md)
 
@@ -343,19 +316,19 @@ lru.has('key1', {
 
 ### peek()
 
-> **peek**(`key`): `undefined` \| `TValue`
+> **peek**(`_key`): `undefined`
 
 Get an item without marking it as recently used or undefined if item doesn't exist.
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
 #### Returns
 
-`undefined` \| `TValue`
+`undefined`
 
 #### Implementation of
 
@@ -365,7 +338,7 @@ Get an item without marking it as recently used or undefined if item doesn't exi
 
 ### set()
 
-> **set**(`key`, `value`): `boolean`
+> **set**(`_key`, `_value`): `boolean`
 
 Add a new entry to the cache and overwrite value if the key was already
 present.It will move the item as the most recently used.
@@ -389,11 +362,11 @@ lru.set('key2', 'value2'); // 👈 true (existing key, no size increase)
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
-##### value
+##### \_value
 
 `TValue`
 

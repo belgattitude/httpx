@@ -68,13 +68,18 @@ export interface ITimeLruCache<
   has: (key: TKey, options?: LruCacheHasOptions) => boolean;
 
   /**
-   * Get an item from the cache or return undefined if it doesn't exist.
+   * Get an item from the cache or return undefined if it doesn't exist or
+   * has expired.
+   *
    * Item will be marked as most recently used.
    *
    * ```typescript
-   * import { LruCache } from '@httpx/lru';
+   * import { TimeLruCache } from '@httpx/lru';
    *
-   * const lru = new LruCache({ maxSize: 1 });
+   * const lru = new TimeLruCache({
+   *   maxSize: 1,
+   *   defaultTTL: 30_000, // 30 seconds
+   * });
    *
    * lru.set('key0', 'value0');
    * lru.get('key0');   // 👈 'value0'
