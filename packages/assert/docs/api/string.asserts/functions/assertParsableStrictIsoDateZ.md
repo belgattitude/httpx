@@ -8,7 +8,7 @@
 
 > **assertParsableStrictIsoDateZ**(`v`, `msgOrErrorFactory`?): `asserts v is ParsableStrictIsoDateZ`
 
-Defined in: [string.asserts.ts:64](https://github.com/belgattitude/httpx/blob/68e7ebef40f7182365676b3a21f99e398b93dd78/packages/assert/src/string.asserts.ts#L64)
+Defined in: [string.asserts.ts:64](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/packages/assert/src/string.asserts.ts#L64)
 
 Ensure a string that contains an ISO-8601 date time in 'YYYY-MM-DDTHH:mm:ss.sssZ'
 format (UTC+0 / time). This check allow the value to be safely passed to `new Date()`or `Date.parse()`

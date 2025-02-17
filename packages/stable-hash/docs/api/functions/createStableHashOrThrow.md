@@ -1,4 +1,4 @@
-[**@httpx/stable-hash v0.1.0**](../README.md)
+[**@httpx/stable-hash v0.2.0**](../README.md)
 
 ***
 
@@ -45,7 +45,12 @@ const params = {
 };
 
 try {
-  const hash = await createStableHashOrThrow(params);
+  const hash = await createStableHashOrThrow(params, {
+    // By default SHA-256 is used (SHA-512 available)
+    algorithm: 'SHA-256',
+    // By default the hash is encoded in hexadecimal
+    encoding: 'hexa',
+  });
   // -> 'fb17a6300efcf62ae80708e2a672aee581b7f0dd7c6a9a7a748218846c679394'
 } catch (e) {
   // TypeError in case of an unserializable data type

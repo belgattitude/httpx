@@ -8,7 +8,7 @@
 
 > **assertUuidV3**(`v`, `msgOrErrorFactory`?): `asserts v is UuidV3`
 
-Defined in: [uuid.asserts.ts:58](https://github.com/belgattitude/httpx/blob/68e7ebef40f7182365676b3a21f99e398b93dd78/packages/assert/src/uuid.asserts.ts#L58)
+Defined in: [uuid.asserts.ts:58](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/packages/assert/src/uuid.asserts.ts#L58)
 
 Asserts a value is a valid uuid v3
 

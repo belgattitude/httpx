@@ -1,18 +1,21 @@
-**@httpx/lru v0.6.0**
+**@httpx/lru v0.8.0**
 
 ***
 
-# @httpx/lru v0.6.0
+# @httpx/lru v0.8.0
 
 ## Classes
 
 - [LruCache](classes/LruCache.md)
+- [NullLruCache](classes/NullLruCache.md)
+- [NullTimeLruCache](classes/NullTimeLruCache.md)
 - [TimeLruCache](classes/TimeLruCache.md)
 
 ## Interfaces
 
-- [BaseCache](interfaces/BaseCache.md)
-- [BaseLruHasOptions](interfaces/BaseLruHasOptions.md)
+- [ILruCache](interfaces/ILruCache.md)
+- [ITimeLruCache](interfaces/ITimeLruCache.md)
+- [LruCacheHasOptions](interfaces/LruCacheHasOptions.md)
 
 ## Type Aliases
 

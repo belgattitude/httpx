@@ -2,11 +2,13 @@
 
 ***
 
-[@httpx/lru](../README.md) / TimeLruCache
+[@httpx/lru](../README.md) / ITimeLruCache
 
-# Class: TimeLruCache\<TValue, TKey\>
+# Interface: ITimeLruCache\<TValue, TKey\>
 
-Double linked list based lru cache that supports get in O(1) and time to live for each entry
+## Extends
+
+- [`ILruCache`](ILruCache.md)\<`TValue`, `TKey`\>
 
 ## Type Parameters
 
@@ -14,100 +16,11 @@ Double linked list based lru cache that supports get in O(1) and time to live fo
 
 • **TKey** *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
 
-## Implements
-
-- [`ITimeLruCache`](../interfaces/ITimeLruCache.md)\<`TValue`, `TKey`\>
-
-## Constructors
-
-### new TimeLruCache()
-
-> **new TimeLruCache**\<`TValue`, `TKey`\>(`params`): [`TimeLruCache`](TimeLruCache.md)\<`TValue`, `TKey`\>
-
-Create a new LruCache instance
-
-#### Parameters
-
-##### params
-
-`TimeLruCacheParams`\<`TValue`, `TKey`\>
-
-#### Returns
-
-[`TimeLruCache`](TimeLruCache.md)\<`TValue`, `TKey`\>
-
-#### Example
-
-```typescript
-import { TimeLruCache } from '@httpx/lru';
-
-const THIRTY_SECONDS_IN_MILLIS = 30_000
-
-const lru = new TimeLruCache({ maxSize: 1000, defaultTTL: THIRTY_SECONDS_IN_MILLIS});
-lru.set('🦄', ['cool', 'stuff'], THIRTY_SECONDS_IN_MILLIS);
-if (lru.has('🦄')) {;
- console.log(lru.get('🦄'));
- // ['cool', 'stuff']
-}
-console.log(lru.size); // 1
-lru.delete('🦄');
-console.log(lru.size); // 0
-lru.clear();
-```
-
-## Accessors
-
-### params
-
-#### Get Signature
-
-> **get** **params**(): `object`
-
-Return the current size of the cache
-
-##### Returns
-
-`object`
-
-###### defaultTTL
-
-> **defaultTTL**: `number`
-
-###### maxSize
-
-> **maxSize**: `number`
-
-Return the params
-
-#### Implementation of
-
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`params`](../interfaces/ITimeLruCache.md#params)
-
-***
-
-### size
-
-#### Get Signature
-
-> **get** **size**(): `number`
-
-Return the current number of entries in the cache
-
-##### Returns
-
-`number`
-
-Return the current number of items in the cache
-
-#### Implementation of
-
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`size`](../interfaces/ITimeLruCache.md#size)
-
-## Methods
+## Properties
 
 ### \[iterator\]()
 
-> **\[iterator\]**(): `IterableIterator`\<\[`TKey`, `TValue`\]\>
+> **\[iterator\]**: () => `IterableIterator`\<\[`TKey`, `TValue`\]\>
 
 Iterate over the cache from the least recently used to the most recently used.
 
@@ -115,31 +28,31 @@ Iterate over the cache from the least recently used to the most recently used.
 
 `IterableIterator`\<\[`TKey`, `TValue`\]\>
 
-#### Implementation of
+#### Overrides
 
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`[iterator]`](../interfaces/ITimeLruCache.md#iterator)
+[`ILruCache`](ILruCache.md).[`[iterator]`](ILruCache.md#iterator)
 
 ***
 
 ### clear()
 
-> **clear**(): `number`
+> **clear**: () => `void`
 
 Clear all entries from the cache and return the number of deleted items
 
 #### Returns
 
-`number`
+`void`
 
-#### Implementation of
+#### Inherited from
 
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`clear`](../interfaces/ITimeLruCache.md#clear)
+[`ILruCache`](ILruCache.md).[`clear`](ILruCache.md#clear)
 
 ***
 
 ### delete()
 
-> **delete**(`key`): `boolean`
+> **delete**: (`key`) => `boolean`
 
 Delete an item from the cache and return a boolean indicating
 if the item was actually deleted in case it exist.
@@ -154,15 +67,15 @@ if the item was actually deleted in case it exist.
 
 `boolean`
 
-#### Implementation of
+#### Overrides
 
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`delete`](../interfaces/ITimeLruCache.md#delete)
+[`ILruCache`](ILruCache.md).[`delete`](ILruCache.md#delete)
 
 ***
 
 ### get()
 
-> **get**(`key`): `undefined` \| `TValue`
+> **get**: (`key`) => `undefined` \| `TValue`
 
 Get an item from the cache or return undefined if it doesn't exist or
 has expired.
@@ -192,15 +105,15 @@ lru.get('key1');   // 👈 undefined
 
 `undefined` \| `TValue`
 
-#### Implementation of
+#### Overrides
 
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`get`](../interfaces/ITimeLruCache.md#get)
+[`ILruCache`](ILruCache.md).[`get`](ILruCache.md#get)
 
 ***
 
 ### getOrSet()
 
-> **getOrSet**(`key`, `valueOrFn`, `ttl`?): `TValue`
+> **getOrSet**: (`key`, `valueOrFn`, `ttl`?) => `TValue`
 
 Get an item from the cache, if the item doesn't exist or has expired
 it will create a new entry with the provided value and returns it.
@@ -228,7 +141,7 @@ In case of a new entry:
 
 `TValue`
 
-#### Examples
+#### Example
 
 ```typescript
 const lru = new TimeLruCache({ maxSize: 2 });
@@ -244,29 +157,15 @@ lru.getOrSet('key3', () => 'value3');
 lru.get('key1');                       // 👈 undefined (first entry was evicted)
 ```
 
-```typescript
-const lru = new TimeLruCache({ maxSize: 2 });
-lru.set('key1', 'value1');
-lru.getOrSet('key1', () => 'value2');  // 👈 'value1' (entry exists)
-lru.getOrSet('key2', () => 'value2');  // 👈 'value2' (new entry)
-lru.has('key2');                       // 👈 true (it was added)
-lru.get('key1');                       // 👈 'value1'
+#### Overrides
 
-// Will trigger an eviction as capacity (2) is reached.
-lru.getOrSet('key3', () => 'value3');
-
-lru.get('key1');                       // 👈 undefined (first entry was evicted)
-```
-
-#### Implementation of
-
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`getOrSet`](../interfaces/ITimeLruCache.md#getorset)
+[`ILruCache`](ILruCache.md).[`getOrSet`](ILruCache.md#getorset)
 
 ***
 
 ### has()
 
-> **has**(`key`, `options`?): `boolean`
+> **has**: (`key`, `options`?) => `boolean`
 
 Checks whether an entry exist and hasn't expired.
 
@@ -286,13 +185,13 @@ The item will be marked as recently used only if either
 
 ##### options?
 
-[`LruCacheHasOptions`](../interfaces/LruCacheHasOptions.md)
+[`LruCacheHasOptions`](LruCacheHasOptions.md)
 
 #### Returns
 
 `boolean`
 
-#### Examples
+#### Example
 
 ```typescript
 import { TimeLruCache } from '@httpx/lru';
@@ -329,50 +228,35 @@ lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction wi
 
 ```
 
-```typescript
-import { TimeLruCache } from '@httpx/lru';
+#### Overrides
 
-const oneSecondInMillis = 1000;
+[`ILruCache`](ILruCache.md).[`has`](ILruCache.md#has)
 
-const lru = new TimeLruCache({
-  maxSize: 1,
-  defaultTTL: oneSecondInMillis,
-  // 👇 Optional, default to noop
-  onEviction: () => { console.log('evicted') }
-  // 👇 Optional, default to false
-  touchOnHas: false,
-});
+***
 
-lru.set('key0', 'value0', 2 * oneSecondInMillis);
+### params
 
-// 👇 Will evict key0 as maxSize is 1 and trigger onEviction
-lru.set('key1', 'value1', 2 * oneSecondInMillis);
+> `readonly` **params**: `object`
 
-lru.has('key0'); // 👈 false (item does not exist)
-lru.has('key1'); // 👈 true  (item is present and is not expired)
+Return the params
 
-lru.has('key1', {
-  // 👇 Optional, default to global touchOnHas
-  touch: false
-}); // 👈 true  (item is present)
+#### defaultTTL
 
-const value = lru.get('key1'); // 👈 'value1' (item is present and is not expired)
+> **defaultTTL**: `number`
 
-// 🕛 wait 3 seconds, time for the item to expire
+#### maxSize
 
-lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction will be called)
+> **maxSize**: `number`
 
-```
+#### Overrides
 
-#### Implementation of
-
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`has`](../interfaces/ITimeLruCache.md#has)
+[`ILruCache`](ILruCache.md).[`params`](ILruCache.md#params)
 
 ***
 
 ### peek()
 
-> **peek**(`key`): `undefined` \| `TValue`
+> **peek**: (`key`) => `undefined` \| `TValue`
 
 Get an item without marking it as recently used. Will return undefined if
 the item doesn't exist or has expired (ttl).
@@ -390,15 +274,15 @@ return undefined if they have.
 
 `undefined` \| `TValue`
 
-#### Implementation of
+#### Overrides
 
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`peek`](../interfaces/ITimeLruCache.md#peek)
+[`ILruCache`](ILruCache.md).[`peek`](ILruCache.md#peek)
 
 ***
 
 ### set()
 
-> **set**(`key`, `value`, `ttl`?): `boolean`
+> **set**: (`key`, `value`, `ttl`?) => `boolean`
 
 Add a new entry to the cache and overwrite value if the key was already
 present. It will move the item as the most recently used.
@@ -441,6 +325,18 @@ lru.set('key1', 'value1', 1000);
 
 `boolean`
 
-#### Implementation of
+#### Overrides
 
-[`ITimeLruCache`](../interfaces/ITimeLruCache.md).[`set`](../interfaces/ITimeLruCache.md#set)
+[`ILruCache`](ILruCache.md).[`set`](ILruCache.md#set)
+
+***
+
+### size
+
+> `readonly` **size**: `number`
+
+Return the current number of items in the cache
+
+#### Inherited from
+
+[`ILruCache`](ILruCache.md).[`size`](ILruCache.md#size)

@@ -8,7 +8,7 @@
 
 > **export=**: `object`
 
-Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/68e7ebef40f7182365676b3a21f99e398b93dd78/integrations/prisma-exception/package.json#L1)
+Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/integrations/prisma-exception/package.json#L1)
 
 ## Type declaration
 
@@ -46,7 +46,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/68e7ebef
 
 #### devDependencies.@belgattitude/eslint-config-bases
 
-> **@belgattitude/eslint-config-bases**: `string` = `"6.22.0"`
+> **@belgattitude/eslint-config-bases**: `string` = `"6.23.0"`
 
 #### devDependencies.@size-limit/file
 
@@ -62,7 +62,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/68e7ebef
 
 #### devDependencies.@types/node
 
-> **@types/node**: `string` = `"22.13.1"`
+> **@types/node**: `string` = `"22.13.4"`
 
 #### devDependencies.@vitest/coverage-istanbul
 
@@ -102,11 +102,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/68e7ebef
 
 #### devDependencies.prettier
 
-> **prettier**: `string` = `"3.5.0"`
+> **prettier**: `string` = `"3.5.1"`
 
 #### devDependencies.publint
 
-> **publint**: `string` = `"0.3.4"`
+> **publint**: `string` = `"0.3.5"`
 
 #### devDependencies.rimraf
 
@@ -142,7 +142,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/68e7ebef
 
 #### devDependencies.webpack
 
-> **webpack**: `string` = `"5.97.1"`
+> **webpack**: `string` = `"5.98.0"`
 
 ### engines
 

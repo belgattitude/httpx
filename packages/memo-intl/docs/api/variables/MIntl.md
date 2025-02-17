@@ -1,4 +1,4 @@
-[**@httpx/memo-intl v1.2.3**](../README.md)
+[**@httpx/memo-intl v1.2.5**](../README.md)
 
 ***
 

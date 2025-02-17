@@ -2,11 +2,9 @@
 
 ***
 
-[@httpx/lru](../README.md) / TimeLruCache
+[@httpx/lru](../README.md) / NullTimeLruCache
 
-# Class: TimeLruCache\<TValue, TKey\>
-
-Double linked list based lru cache that supports get in O(1) and time to live for each entry
+# Class: NullTimeLruCache\<TValue, TKey\>
 
 ## Type Parameters
 
@@ -20,64 +18,45 @@ Double linked list based lru cache that supports get in O(1) and time to live fo
 
 ## Constructors
 
-### new TimeLruCache()
+### new NullTimeLruCache()
 
-> **new TimeLruCache**\<`TValue`, `TKey`\>(`params`): [`TimeLruCache`](TimeLruCache.md)\<`TValue`, `TKey`\>
+> **new NullTimeLruCache**\<`TValue`, `TKey`\>(`_params`): [`NullTimeLruCache`](NullTimeLruCache.md)\<`TValue`, `TKey`\>
 
-Create a new LruCache instance
+Create a new NullTimeLruCache (does cache nothing)
 
 #### Parameters
 
-##### params
+##### \_params
 
 `TimeLruCacheParams`\<`TValue`, `TKey`\>
 
 #### Returns
 
-[`TimeLruCache`](TimeLruCache.md)\<`TValue`, `TKey`\>
+[`NullTimeLruCache`](NullTimeLruCache.md)\<`TValue`, `TKey`\>
 
 #### Example
 
 ```typescript
-import { TimeLruCache } from '@httpx/lru';
+import { NullTimeLruCache } from '@httpx/lru';
 
-const THIRTY_SECONDS_IN_MILLIS = 30_000
-
-const lru = new TimeLruCache({ maxSize: 1000, defaultTTL: THIRTY_SECONDS_IN_MILLIS});
-lru.set('🦄', ['cool', 'stuff'], THIRTY_SECONDS_IN_MILLIS);
-if (lru.has('🦄')) {;
- console.log(lru.get('🦄'));
- // ['cool', 'stuff']
-}
-console.log(lru.size); // 1
-lru.delete('🦄');
-console.log(lru.size); // 0
-lru.clear();
+const lru = new NullTimeLruCache({ maxSize: 1000 });
 ```
 
-## Accessors
+## Properties
 
 ### params
 
-#### Get Signature
-
-> **get** **params**(): `object`
-
-Return the current size of the cache
-
-##### Returns
-
-`object`
-
-###### defaultTTL
-
-> **defaultTTL**: `number`
-
-###### maxSize
-
-> **maxSize**: `number`
+> `readonly` **params**: `object`
 
 Return the params
+
+#### defaultTTL
+
+> **defaultTTL**: `number` = `0`
+
+#### maxSize
+
+> **maxSize**: `number` = `0`
 
 #### Implementation of
 
@@ -87,15 +66,7 @@ Return the params
 
 ### size
 
-#### Get Signature
-
-> **get** **size**(): `number`
-
-Return the current number of entries in the cache
-
-##### Returns
-
-`number`
+> `readonly` **size**: `0` = `0`
 
 Return the current number of items in the cache
 
@@ -139,14 +110,14 @@ Clear all entries from the cache and return the number of deleted items
 
 ### delete()
 
-> **delete**(`key`): `boolean`
+> **delete**(`_key`): `boolean`
 
 Delete an item from the cache and return a boolean indicating
 if the item was actually deleted in case it exist.
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
@@ -162,7 +133,7 @@ if the item was actually deleted in case it exist.
 
 ### get()
 
-> **get**(`key`): `undefined` \| `TValue`
+> **get**(`_key`): `undefined`
 
 Get an item from the cache or return undefined if it doesn't exist or
 has expired.
@@ -184,13 +155,13 @@ lru.get('key1');   // 👈 undefined
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
 #### Returns
 
-`undefined` \| `TValue`
+`undefined`
 
 #### Implementation of
 
@@ -200,7 +171,7 @@ lru.get('key1');   // 👈 undefined
 
 ### getOrSet()
 
-> **getOrSet**(`key`, `valueOrFn`, `ttl`?): `TValue`
+> **getOrSet**(`_key`, `valueOrFn`, `_ttl`?): `TValue`
 
 Get an item from the cache, if the item doesn't exist or has expired
 it will create a new entry with the provided value and returns it.
@@ -212,7 +183,7 @@ In case of a new entry:
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
@@ -220,7 +191,7 @@ In case of a new entry:
 
 `TValue` | () => `TValue`
 
-##### ttl?
+##### \_ttl?
 
 `number`
 
@@ -266,7 +237,7 @@ lru.get('key1');                       // 👈 undefined (first entry was evicte
 
 ### has()
 
-> **has**(`key`, `options`?): `boolean`
+> **has**(`_key`, `_options`?): `boolean`
 
 Checks whether an entry exist and hasn't expired.
 
@@ -280,11 +251,11 @@ The item will be marked as recently used only if either
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
-##### options?
+##### \_options?
 
 [`LruCacheHasOptions`](../interfaces/LruCacheHasOptions.md)
 
@@ -372,7 +343,7 @@ lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction wi
 
 ### peek()
 
-> **peek**(`key`): `undefined` \| `TValue`
+> **peek**(`_key`): `undefined`
 
 Get an item without marking it as recently used. Will return undefined if
 the item doesn't exist or has expired (ttl).
@@ -382,13 +353,13 @@ return undefined if they have.
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
 #### Returns
 
-`undefined` \| `TValue`
+`undefined`
 
 #### Implementation of
 
@@ -398,7 +369,7 @@ return undefined if they have.
 
 ### set()
 
-> **set**(`key`, `value`, `ttl`?): `boolean`
+> **set**(`_key`, `_value`, `_ttl`?): `boolean`
 
 Add a new entry to the cache and overwrite value if the key was already
 present. It will move the item as the most recently used.
@@ -425,15 +396,15 @@ lru.set('key1', 'value1', 1000);
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 
-##### value
+##### \_value
 
 `TValue`
 
-##### ttl?
+##### \_ttl?
 
 `number`
 
