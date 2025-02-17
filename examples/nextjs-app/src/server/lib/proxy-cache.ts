@@ -7,7 +7,7 @@ import { proxy } from 'hono/proxy';
 
 export type ProxyCacheConfig = {
   cache: ITimeLruCache<ProxyCacheItem>;
-  compressionAlgo: 'gzip';
+  compressionAlgo: 'gzip' | 'identity';
   proxy: {
     basePath: string;
     targetBaseUrl: string;
@@ -34,26 +34,18 @@ type CacheKeyParams = ProxyCacheItem['requestParams'] & {
 
 export class ProxyCache {
   #config: ProxyCacheConfig;
-  #compressor: Compressor;
-  #decompressor: Decompressor;
+  #compressor: Compressor | null;
+  #decompressor: Decompressor | null;
+
   constructor(config: ProxyCacheConfig) {
     this.#config = config;
-    this.#compressor = new Compressor(config.compressionAlgo);
-    this.#decompressor = new Decompressor(config.compressionAlgo);
+    const algo = config.compressionAlgo;
+    this.#compressor = algo === 'identity' ? null : new Compressor(algo);
+    this.#decompressor = algo === 'identity' ? null : new Decompressor(algo);
   }
 
-  getTargetUrl = (c: Context) => {
-    const { basePath, targetBaseUrl } = this.#config.proxy;
-    const path = c.req.path
-      .replace(basePath, '')
-      .split('/')
-      .filter(Boolean)
-      .join('/');
-    return `${targetBaseUrl}/${path}`;
-  };
-
   getResponse = async (c: Context): Promise<Response> => {
-    const targetUrl = this.getTargetUrl(c);
+    const targetUrl = this.#getTargetUrl(c);
     const contentType = c.req.header('Content-Type');
 
     const cacheKeyParams: CacheKeyParams = {
@@ -71,9 +63,7 @@ export class ProxyCache {
     const { cache } = this.#config;
     if (cache.has(key)) {
       const data = cache.get(key)!;
-      const text = await this.#decompressor.fromEncodedString(
-        data.responseText
-      );
+      const text = await this.#decompress(data.responseText);
       return c.body(text, {
         headers: {
           'X-Proxy-Cached': '1',
@@ -92,9 +82,28 @@ export class ProxyCache {
     const data: ProxyCacheItem = {
       requestHeaders: Object.fromEntries(res.headers),
       requestParams: cacheKeyParams,
-      responseText: await this.#compressor.toEncodedString(responseText),
+      responseText: await this.#compress(responseText),
     };
     cache.set(key, data);
     return res;
+  };
+
+  #getTargetUrl = (c: Context) => {
+    const { basePath, targetBaseUrl } = this.#config.proxy;
+    const path = c.req.path
+      .replace(basePath, '')
+      .split('/')
+      .filter(Boolean)
+      .join('/');
+    return `${targetBaseUrl}/${path}`;
+  };
+
+  #decompress = async (text: string): Promise<string> => {
+    return this.#decompressor
+      ? this.#decompressor.fromEncodedString(text)
+      : text;
+  };
+  #compress = async (text: string): Promise<string> => {
+    return this.#compressor ? this.#compressor.toEncodedString(text) : text;
   };
 }
