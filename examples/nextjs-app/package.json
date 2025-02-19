@@ -19,6 +19,7 @@
     "fix-staged": "lint-staged --allow-empty"
   },
   "dependencies": {
+    "@hono/node-server": "1.13.8",
     "@httpx/assert": "workspace:^",
     "@httpx/compress": "workspace:^",
     "@httpx/dsn-parser": "workspace:^",
@@ -30,6 +31,7 @@
     "@httpx/treeu": "workspace:^",
     "axios": "1.7.9",
     "clsx": "2.1.1",
+    "hono": "4.7.2",
     "ky": "1.7.5",
     "next": "15.1.7",
     "pino": "9.6.0",
