@@ -8,7 +8,7 @@
 
 > **assertHttpValidMethod**(`v`, `msgOrErrorFactory`?): `asserts v is HttpMethod`
 
-Defined in: [http.asserts.ts:10](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/packages/assert/src/http.asserts.ts#L10)
+Defined in: [http.asserts.ts:10](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/http.asserts.ts#L10)
 
 Assert the value is a valid http method (case-insensitive)
 
