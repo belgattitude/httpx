@@ -235,10 +235,10 @@ expect(fn).toHaveBeenCalledExactlyOnceWith('key1', 'value1');
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/lru/.size-limit.ts)
 
-| Scenario (esm)                              | Size (compressed) |
-|---------------------------------------------|------------------:|
-| `import { LruCache  } from '@httpx/lru`     |            ~ 557B |
-| `import { TimeLruCache  } from '@httpx/lru` |            ~ 654B |
+| Scenario (esm)                             | Size (compressed) |
+|--------------------------------------------|------------------:|
+| `import { LruCache  } from '@httpx/lru`    |            ~ 557B |
+| `import { TimeLruCache } from '@httpx/lru` |            ~ 654B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
 
