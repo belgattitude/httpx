@@ -1,1 +1,5 @@
-export const a = 1;
+export class MCache {
+  constructor() {
+    throw new Error('Not yet implemented');
+  }
+}

@@ -2,9 +2,9 @@ import type { SizeLimitConfig } from 'size-limit';
 
 module.exports = [
   {
-    name: 'import { LruCache } (ESM)',
+    name: 'import { MCache } (ESM)',
     path: ['dist/index.mjs'],
-    //import: '{ LruCache }',
+    import: '{ MCache }',
     limit: '570B',
   },
 ] satisfies SizeLimitConfig;
