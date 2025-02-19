@@ -1,5 +1,11 @@
 # @httpx/lru
 
+## 0.9.0
+
+### Minor Changes
+
+- [#1965](https://github.com/belgattitude/httpx/pull/1965) [`065fdeb`](https://github.com/belgattitude/httpx/commit/065fdeb1e34c40aedeb1570dec90a54f8c2e77c5) Thanks [@belgattitude](https://github.com/belgattitude)! - Export LruCacheParams and TimeLruCacheParams types
+
 ## 0.8.1
 
 ### Patch Changes
