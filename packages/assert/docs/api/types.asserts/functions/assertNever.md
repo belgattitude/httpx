@@ -8,7 +8,7 @@
 
 > **assertNever**(`v`, `msgOrErrorFactory`?): `never`
 
-Defined in: [types.asserts.ts:8](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/packages/assert/src/types.asserts.ts#L8)
+Defined in: [types.asserts.ts:8](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/types.asserts.ts#L8)
 
 ## Parameters
 

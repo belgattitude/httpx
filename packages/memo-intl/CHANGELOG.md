@@ -1,5 +1,12 @@
 # @httpx/memo-intl
 
+## 1.2.7
+
+### Patch Changes
+
+- Updated dependencies [[`065fdeb`](https://github.com/belgattitude/httpx/commit/065fdeb1e34c40aedeb1570dec90a54f8c2e77c5)]:
+  - @httpx/lru@0.9.0
+
 ## 1.2.6
 
 ### Patch Changes

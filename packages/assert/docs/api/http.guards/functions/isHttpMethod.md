@@ -8,7 +8,7 @@
 
 > **isHttpMethod**\<`T`\>(`method`, `v`): `v is T`
 
-Defined in: [http.guards.ts:15](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/packages/assert/src/http.guards.ts#L15)
+Defined in: [http.guards.ts:15](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/http.guards.ts#L15)
 
 ## Type Parameters
 

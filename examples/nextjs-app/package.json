@@ -1,6 +1,6 @@
 {
   "name": "@examples/nextjs-app",
-  "version": "0.1.106",
+  "version": "0.1.107",
   "type": "module",
   "private": true,
   "scripts": {
@@ -19,7 +19,6 @@
     "fix-staged": "lint-staged --allow-empty"
   },
   "dependencies": {
-    "@hono/node-server": "1.13.8",
     "@httpx/assert": "workspace:^",
     "@httpx/compress": "workspace:^",
     "@httpx/dsn-parser": "workspace:^",
@@ -31,7 +30,6 @@
     "@httpx/treeu": "workspace:^",
     "axios": "1.7.9",
     "clsx": "2.1.1",
-    "hono": "4.7.2",
     "ky": "1.7.5",
     "next": "15.1.7",
     "pino": "9.6.0",
@@ -43,7 +41,7 @@
     "zod": "3.24.2"
   },
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "6.24.0",
+    "@belgattitude/eslint-config-bases": "6.23.0",
     "@tailwindcss/postcss": "4.0.7",
     "@types/node": "22.13.4",
     "@types/react": "19.0.10",
@@ -55,11 +53,10 @@
     "eslint": "8.57.1",
     "eslint-config-next": "15.1.7",
     "happy-dom": "17.1.1",
-    "postcss": "8.5.3",
+    "postcss": "8.5.2",
     "prettier": "3.5.1",
     "rimraf": "6.0.1",
     "tailwindcss": "4.0.7",
-    "type-fest": "4.35.0",
     "typescript": "5.7.3",
     "vite": "6.1.1",
     "vite-plugin-svgr": "4.3.0",

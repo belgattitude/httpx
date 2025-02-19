@@ -1,8 +1,8 @@
-**@httpx/lru v0.8.0**
+**@httpx/lru v0.8.1**
 
 ***
 
-# @httpx/lru v0.8.0
+# @httpx/lru v0.8.1
 
 ## Classes
 
@@ -20,4 +20,6 @@
 ## Type Aliases
 
 - [BaseCacheKeyTypes](type-aliases/BaseCacheKeyTypes.md)
+- [LruCacheParams](type-aliases/LruCacheParams.md)
 - [SupportedCacheValues](type-aliases/SupportedCacheValues.md)
+- [TimeLruCacheParams](type-aliases/TimeLruCacheParams.md)

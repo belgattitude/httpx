@@ -1,4 +1,4 @@
-[**@httpx/lru v0.8.0**](../README.md)
+[**@httpx/lru v0.8.1**](../README.md)
 
 ***
 
@@ -28,7 +28,7 @@ Create a new NullLruCache (does cache nothing)
 
 ##### \_params
 
-`LruCacheParams`\<`TValue`, `TKey`\>
+[`LruCacheParams`](../type-aliases/LruCacheParams.md)\<`TValue`, `TKey`\>
 
 #### Returns
 

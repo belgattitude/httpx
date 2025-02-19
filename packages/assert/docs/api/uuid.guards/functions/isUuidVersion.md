@@ -8,7 +8,7 @@
 
 > **isUuidVersion**(`v`): `v is UuidVersion`
 
-Defined in: [uuid.guards.ts:16](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/packages/assert/src/uuid.guards.ts#L16)
+Defined in: [uuid.guards.ts:16](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/uuid.guards.ts#L16)
 
 Check if a value is a valid uuid version: 1, 3, 4 or 5
 
