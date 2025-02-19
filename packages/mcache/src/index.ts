@@ -1,1 +1,1 @@
-export {} from './m-cache';
+export { MCache } from './m-cache';
