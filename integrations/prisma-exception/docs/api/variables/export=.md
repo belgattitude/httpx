@@ -8,7 +8,7 @@
 
 > **export=**: `object`
 
-Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/integrations/prisma-exception/package.json#L1)
+Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/integrations/prisma-exception/package.json#L1)
 
 ## Type declaration
 
@@ -50,15 +50,15 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/8fd1b2a1
 
 #### devDependencies.@size-limit/file
 
-> **@size-limit/file**: `string` = `"11.1.6"`
+> **@size-limit/file**: `string` = `"11.2.0"`
 
 #### devDependencies.@size-limit/webpack
 
-> **@size-limit/webpack**: `string` = `"11.1.6"`
+> **@size-limit/webpack**: `string` = `"11.2.0"`
 
 #### devDependencies.@size-limit/webpack-why
 
-> **@size-limit/webpack-why**: `string` = `"11.1.6"`
+> **@size-limit/webpack-why**: `string` = `"11.2.0"`
 
 #### devDependencies.@types/node
 
@@ -66,11 +66,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/8fd1b2a1
 
 #### devDependencies.@vitest/coverage-istanbul
 
-> **@vitest/coverage-istanbul**: `string` = `"3.0.5"`
+> **@vitest/coverage-istanbul**: `string` = `"3.0.6"`
 
 #### devDependencies.@vitest/ui
 
-> **@vitest/ui**: `string` = `"3.0.5"`
+> **@vitest/ui**: `string` = `"3.0.6"`
 
 #### devDependencies.browserslist
 
@@ -114,7 +114,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/8fd1b2a1
 
 #### devDependencies.size-limit
 
-> **size-limit**: `string` = `"11.1.6"`
+> **size-limit**: `string` = `"11.2.0"`
 
 #### devDependencies.tsup
 
@@ -138,7 +138,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/8fd1b2a1
 
 #### devDependencies.vitest
 
-> **vitest**: `string` = `"3.0.5"`
+> **vitest**: `string` = `"3.0.6"`
 
 #### devDependencies.webpack
 

@@ -8,4 +8,4 @@
 
 > **UuidV1**: `string` & `WeakOpaqueContainer`\<`"UuidV1"`\>
 
-Defined in: [uuid.types.ts:5](https://github.com/belgattitude/httpx/blob/8fd1b2a11c89b6d4d436a81e516da107a812f824/packages/assert/src/uuid.types.ts#L5)
+Defined in: [uuid.types.ts:5](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/uuid.types.ts#L5)
