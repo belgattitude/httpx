@@ -3,7 +3,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@/server": ["./server/index"],
+      "@/server/*": ["./server/*"],
       "@/lib": ["./lib/index"]
     },
     "allowJs": true,
