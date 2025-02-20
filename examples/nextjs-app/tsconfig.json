@@ -12,7 +12,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "preserve",
     "paths": {
-      "@/server": ["./server/index"],
+      "@/server/*": ["./server/*"],
       "@/lib": ["./lib/index"],
       "@httpx/assert": ["../../../packages/assert/src/index"],
       "@httpx/compress": ["../../../packages/compress/src/index"],

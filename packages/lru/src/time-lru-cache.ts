@@ -1,4 +1,4 @@
-import { DoublyLinkedListNode } from './doubly-linked-list-node';
+import { DoublyLinkedNode } from './doubly-linked-node';
 import type { LruCacheParams } from './lru-cache';
 import type { ITimeLruCache } from './time-lru-cache.interface';
 import type {
@@ -12,7 +12,7 @@ import type {
 type TimeLruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
   value: TValue;
   expiry: EpochTimeInMilliseconds;
-  node: DoublyLinkedListNode<TValue, TKey>;
+  node: DoublyLinkedNode<TValue, TKey>;
 };
 
 export type TimeLruCacheParams<
@@ -41,8 +41,8 @@ export class TimeLruCache<
   #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
   #cache: Map<TKey, TimeLruCacheEntry<TValue, TKey>>;
-  #head: DoublyLinkedListNode<TValue, TKey> | null = null;
-  #tail: DoublyLinkedListNode<TValue, TKey> | null = null;
+  #head: DoublyLinkedNode<TValue, TKey> | null = null;
+  #tail: DoublyLinkedNode<TValue, TKey> | null = null;
 
   /**
    * Create a new LruCache instance
@@ -133,7 +133,7 @@ export class TimeLruCache<
       return false;
     }
 
-    const newNode = new DoublyLinkedListNode(key);
+    const newNode = new DoublyLinkedNode(key);
     const data: TimeLruCacheEntry<TValue, TKey> = {
       value,
       expiry: Date.now() + (ttl ?? this.#ttl),
@@ -231,7 +231,7 @@ export class TimeLruCache<
     }
   }
 
-  #moveToHead(node: DoublyLinkedListNode<TValue, TKey>): void {
+  #moveToHead(node: DoublyLinkedNode<TValue, TKey>): void {
     if (node === this.#head) {
       return;
     }
@@ -247,7 +247,7 @@ export class TimeLruCache<
     }
   }
 
-  #removeNode(node: DoublyLinkedListNode<TValue, TKey>): void {
+  #removeNode(node: DoublyLinkedNode<TValue, TKey>): void {
     if (node.prev) {
       node.prev.next = node.next;
     }
