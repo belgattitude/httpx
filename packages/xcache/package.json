@@ -1,5 +1,5 @@
 {
-  "name": "@httpx/mcache",
+  "name": "@httpx/xcache",
   "description": "Memory cache for node and browsers",
   "version": "0.0.1",
   "license": "MIT",
@@ -7,11 +7,11 @@
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://belgattitude.github.io/httpx/mcache",
+  "homepage": "https://belgattitude.github.io/httpx/xcache",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
-    "directory": "packages/mcache"
+    "directory": "packages/xcache"
   },
   "keywords": [
     "cache"
@@ -54,7 +54,7 @@
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/mcache.eslintcache",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/xcache.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
@@ -64,7 +64,7 @@
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-mcache --dir ./coverage"
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-xcache --dir ./coverage"
   },
   "dependencies": {
     "@httpx/lru": "workspace:^"

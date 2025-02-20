@@ -12,7 +12,7 @@ export default defineConfig({
     target: ['node18'],
   },
   plugins: [tsconfigPaths(), ...[cspeed].filter(Boolean)],
-  cacheDir: '../../.cache/vite/mcache',
+  cacheDir: '../../.cache/vite/xcache',
   test: {
     browser: {
       provider: 'playwright', // or 'webdriverio'

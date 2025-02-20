@@ -8,7 +8,7 @@ export default defineWorkersConfig({
     target: ['node18'],
   },
   plugins: [tsconfigPaths()],
-  cacheDir: '../../.cache/vite/mcache',
+  cacheDir: '../../.cache/vite/xcache',
   test: {
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,

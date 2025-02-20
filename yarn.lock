@@ -1684,37 +1684,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@httpx/mcache@workspace:packages/mcache":
-  version: 0.0.0-use.local
-  resolution: "@httpx/mcache@workspace:packages/mcache"
-  dependencies:
-    "@arethetypeswrong/cli": "npm:0.17.3"
-    "@belgattitude/eslint-config-bases": "npm:6.24.0"
-    "@httpx/devtools-vitest": "workspace:^"
-    "@httpx/lru": "workspace:^"
-    "@size-limit/file": "npm:11.2.0"
-    "@size-limit/webpack": "npm:11.2.0"
-    browserslist: "npm:4.24.4"
-    browserslist-to-esbuild: "npm:2.1.1"
-    cross-env: "npm:7.0.3"
-    es-check: "npm:8.0.1"
-    esbuild: "npm:0.25.0"
-    eslint: "npm:8.57.1"
-    npm-run-all2: "npm:7.0.2"
-    prettier: "npm:3.5.1"
-    publint: "npm:0.3.6"
-    rimraf: "npm:6.0.1"
-    rollup: "npm:4.34.8"
-    size-limit: "npm:11.2.0"
-    tsup: "npm:8.3.6"
-    typedoc: "npm:0.27.7"
-    typedoc-plugin-markdown: "npm:4.4.2"
-    typescript: "npm:5.7.3"
-    vitest: "npm:3.0.6"
-    webpack: "npm:5.98.0"
-  languageName: unknown
-  linkType: soft
-
 "@httpx/memo-intl@workspace:^, @httpx/memo-intl@workspace:packages/memo-intl":
   version: 0.0.0-use.local
   resolution: "@httpx/memo-intl@workspace:packages/memo-intl"
@@ -1843,6 +1812,37 @@ __metadata:
     size-limit: "npm:11.2.0"
     tsup: "npm:8.3.6"
     tsx: "npm:4.19.3"
+    typedoc: "npm:0.27.7"
+    typedoc-plugin-markdown: "npm:4.4.2"
+    typescript: "npm:5.7.3"
+    vitest: "npm:3.0.6"
+    webpack: "npm:5.98.0"
+  languageName: unknown
+  linkType: soft
+
+"@httpx/xcache@workspace:packages/xcache":
+  version: 0.0.0-use.local
+  resolution: "@httpx/xcache@workspace:packages/xcache"
+  dependencies:
+    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@belgattitude/eslint-config-bases": "npm:6.24.0"
+    "@httpx/devtools-vitest": "workspace:^"
+    "@httpx/lru": "workspace:^"
+    "@size-limit/file": "npm:11.2.0"
+    "@size-limit/webpack": "npm:11.2.0"
+    browserslist: "npm:4.24.4"
+    browserslist-to-esbuild: "npm:2.1.1"
+    cross-env: "npm:7.0.3"
+    es-check: "npm:8.0.1"
+    esbuild: "npm:0.25.0"
+    eslint: "npm:8.57.1"
+    npm-run-all2: "npm:7.0.2"
+    prettier: "npm:3.5.1"
+    publint: "npm:0.3.6"
+    rimraf: "npm:6.0.1"
+    rollup: "npm:4.34.8"
+    size-limit: "npm:11.2.0"
+    tsup: "npm:8.3.6"
     typedoc: "npm:0.27.7"
     typedoc-plugin-markdown: "npm:4.4.2"
     typescript: "npm:5.7.3"
