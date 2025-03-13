@@ -20,7 +20,7 @@ type Props = {
 };
 export const CityMultiSelect: FC<Props> = (props) => {
   const { className } = props;
-  const [selectedCities, setSelectedCities] = useState<City[]>();
+  const [selectedCities, setSelectedCities] = useState<City[]>([]);
 
   return (
     <div className={cn('', className)}>
