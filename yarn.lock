@@ -327,6 +327,70 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@belgattitude/eslint-config-bases@npm:6.30.0":
+  version: 6.30.0
+  resolution: "@belgattitude/eslint-config-bases@npm:6.30.0"
+  dependencies:
+    "@rushstack/eslint-patch": "npm:^1.11.0"
+    "@tanstack/eslint-plugin-query": "npm:^5.68.0"
+    "@typescript-eslint/eslint-plugin": "npm:^8.27.0"
+    "@typescript-eslint/parser": "npm:^8.27.0"
+    "@typescript-eslint/typescript-estree": "npm:^8.27.0"
+    "@typescript-eslint/utils": "npm:^8.27.0"
+    "@vitest/eslint-plugin": "npm:^1.1.38"
+    eslint-config-prettier: "npm:^10.1.1"
+    eslint-plugin-import-x: "npm:^4.9.1"
+    eslint-plugin-jest: "npm:^28.11.0"
+    eslint-plugin-jest-formatting: "npm:^3.1.0"
+    eslint-plugin-jsx-a11y: "npm:^6.10.2"
+    eslint-plugin-perfectionist: "npm:^4.10.1"
+    eslint-plugin-playwright: "npm:^2.2.0"
+    eslint-plugin-prettier: "npm:^5.2.4"
+    eslint-plugin-react: "npm:^7.37.4"
+    eslint-plugin-react-hooks: "npm:^4.6.2 || ^5.2.0 || 5.0.0-canary-7118f5dd7-20230705"
+    eslint-plugin-regexp: "npm:^2.7.0"
+    eslint-plugin-simple-import-sort: "npm:^12.1.1"
+    eslint-plugin-sonarjs: "npm:^3.0.2"
+    eslint-plugin-storybook: "npm:^0.11.6"
+    eslint-plugin-testing-library: "npm:^7.1.1"
+    eslint-plugin-unicorn: "npm:^56.0.1"
+    eslint-plugin-unused-imports: "npm:^4.1.4"
+  peerDependencies:
+    "@graphql-eslint/eslint-plugin": ^4.3.0
+    "@testing-library/dom": ^10.4.0
+    eslint: ^8.57.1
+    eslint-plugin-mdx: ^3.1.5
+    eslint-plugin-tailwindcss: ^3.18.0
+    graphql: ^16.9.0
+    prettier: ">=3.2.0 <5.0.0"
+    react: ">=18.2.0"
+    react-dom: ">=18.2.0"
+    typescript: ^5.3.1
+  peerDependenciesMeta:
+    "@graphql-eslint/eslint-plugin":
+      optional: true
+    "@testing-library/dom":
+      optional: true
+    eslint-plugin-mdx:
+      optional: true
+    eslint-plugin-tailwindcss:
+      optional: true
+    graphql:
+      optional: true
+    prettier:
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    tailwindcss:
+      optional: true
+    typescript:
+      optional: true
+  checksum: 10c0/c0553952d1b0402ca3264da623459fc60aa383d97b9034191d436bc555746971b5659c249b533a971cdbaa31f23fe81393e55a9a178048e4a5fa8df56f34140a
+  languageName: node
+  linkType: hard
+
 "@braidai/lang@npm:^1.0.0":
   version: 1.1.0
   resolution: "@braidai/lang@npm:1.1.0"
@@ -1455,7 +1519,7 @@ __metadata:
   resolution: "@httpx/assert@workspace:packages/assert"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@sinclair/typebox": "npm:0.34.31"
     "@sindresorhus/is": "npm:7.0.1"
@@ -1495,7 +1559,7 @@ __metadata:
   resolution: "@httpx/compress@workspace:packages/compress"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@sindresorhus/is": "npm:7.0.1"
     "@size-limit/file": "npm:11.2.0"
@@ -1527,7 +1591,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/devtools-vitest@workspace:devtools/vitest"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@cloudflare/vitest-pool-workers": "npm:0.8.4"
     "@codspeed/vitest-plugin": "npm:4.0.0"
     "@edge-runtime/vm": "npm:5.0.0"
@@ -1561,7 +1625,7 @@ __metadata:
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@size-limit/file": "npm:11.2.0"
     "@size-limit/webpack": "npm:11.2.0"
@@ -1591,7 +1655,7 @@ __metadata:
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@size-limit/file": "npm:11.2.0"
     "@size-limit/webpack": "npm:11.2.0"
@@ -1627,7 +1691,7 @@ __metadata:
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:11.2.0"
@@ -1658,7 +1722,7 @@ __metadata:
   resolution: "@httpx/lru@workspace:packages/lru"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@size-limit/file": "npm:11.2.0"
     "@size-limit/webpack": "npm:11.2.0"
@@ -1691,7 +1755,7 @@ __metadata:
   resolution: "@httpx/memo-intl@workspace:packages/memo-intl"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/lru": "workspace:^"
     "@size-limit/file": "npm:11.2.0"
@@ -1722,7 +1786,7 @@ __metadata:
   resolution: "@httpx/plain-object@workspace:packages/plain-object"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@sindresorhus/is": "npm:7.0.1"
     "@size-limit/file": "npm:11.2.0"
@@ -1759,7 +1823,7 @@ __metadata:
   resolution: "@httpx/stable-hash@workspace:packages/stable-hash"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/plain-object": "workspace:^"
     "@size-limit/file": "npm:11.2.0"
@@ -1792,7 +1856,7 @@ __metadata:
   resolution: "@httpx/treeu@workspace:packages/treeu"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/plain-object": "workspace:^"
     "@sindresorhus/is": "npm:7.0.1"
@@ -1827,7 +1891,7 @@ __metadata:
   resolution: "@httpx/xcache@workspace:packages/xcache"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/compress": "workspace:^"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/lru": "workspace:^"
@@ -2736,10 +2800,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pkgr/core@npm:^0.1.0":
-  version: 0.1.1
-  resolution: "@pkgr/core@npm:0.1.1"
-  checksum: 10c0/3f7536bc7f57320ab2cf96f8973664bef624710c403357429fbf680a5c3b4843c1dbd389bb43daa6b1f6f1f007bb082f5abcb76bb2b5dc9f421647743b71d3d8
+"@pkgr/core@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@pkgr/core@npm:0.2.0"
+  checksum: 10c0/29cb9c15f4788096b8b8b786b19c75b6398b6afe814a97189922c3046d8acb5d24f1217fd2537c3f8e42c04e48d572295e7ee56d77964ddc932c44eb5a615931
   languageName: node
   linkType: hard
 
@@ -4469,7 +4533,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:8.27.0, @typescript-eslint/eslint-plugin@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0, @typescript-eslint/eslint-plugin@npm:^8.26.1":
+"@typescript-eslint/eslint-plugin@npm:8.27.0, @typescript-eslint/eslint-plugin@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0, @typescript-eslint/eslint-plugin@npm:^8.26.1, @typescript-eslint/eslint-plugin@npm:^8.27.0":
   version: 8.27.0
   resolution: "@typescript-eslint/eslint-plugin@npm:8.27.0"
   dependencies:
@@ -4490,7 +4554,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.27.0, @typescript-eslint/parser@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0, @typescript-eslint/parser@npm:^8.26.1":
+"@typescript-eslint/parser@npm:8.27.0, @typescript-eslint/parser@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0, @typescript-eslint/parser@npm:^8.26.1, @typescript-eslint/parser@npm:^8.27.0":
   version: 8.27.0
   resolution: "@typescript-eslint/parser@npm:8.27.0"
   dependencies:
@@ -4538,7 +4602,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:8.27.0, @typescript-eslint/typescript-estree@npm:^8.26.1":
+"@typescript-eslint/typescript-estree@npm:8.27.0, @typescript-eslint/typescript-estree@npm:^8.26.1, @typescript-eslint/typescript-estree@npm:^8.27.0":
   version: 8.27.0
   resolution: "@typescript-eslint/typescript-estree@npm:8.27.0"
   dependencies:
@@ -4556,7 +4620,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:8.27.0, @typescript-eslint/utils@npm:^6.0.0 || ^7.0.0 || ^8.0.0, @typescript-eslint/utils@npm:^8.15.0, @typescript-eslint/utils@npm:^8.18.1, @typescript-eslint/utils@npm:^8.26.0, @typescript-eslint/utils@npm:^8.26.1, @typescript-eslint/utils@npm:^8.8.1":
+"@typescript-eslint/utils@npm:8.27.0, @typescript-eslint/utils@npm:^6.0.0 || ^7.0.0 || ^8.0.0, @typescript-eslint/utils@npm:^8.15.0, @typescript-eslint/utils@npm:^8.18.1, @typescript-eslint/utils@npm:^8.26.0, @typescript-eslint/utils@npm:^8.26.1, @typescript-eslint/utils@npm:^8.27.0, @typescript-eslint/utils@npm:^8.8.1":
   version: 8.27.0
   resolution: "@typescript-eslint/utils@npm:8.27.0"
   dependencies:
@@ -4599,81 +4663,81 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-darwin-arm64@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-darwin-arm64@npm:1.2.1"
+"@unrs/rspack-resolver-binding-darwin-arm64@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-darwin-arm64@npm:1.2.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-darwin-x64@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-darwin-x64@npm:1.2.1"
+"@unrs/rspack-resolver-binding-darwin-x64@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-darwin-x64@npm:1.2.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-freebsd-x64@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-freebsd-x64@npm:1.2.1"
+"@unrs/rspack-resolver-binding-freebsd-x64@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-freebsd-x64@npm:1.2.2"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-linux-arm-gnueabihf@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-linux-arm-gnueabihf@npm:1.2.1"
+"@unrs/rspack-resolver-binding-linux-arm-gnueabihf@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-linux-arm-gnueabihf@npm:1.2.2"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-linux-arm64-gnu@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-linux-arm64-gnu@npm:1.2.1"
+"@unrs/rspack-resolver-binding-linux-arm64-gnu@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-linux-arm64-gnu@npm:1.2.2"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-linux-arm64-musl@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-linux-arm64-musl@npm:1.2.1"
+"@unrs/rspack-resolver-binding-linux-arm64-musl@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-linux-arm64-musl@npm:1.2.2"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-linux-x64-gnu@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-linux-x64-gnu@npm:1.2.1"
+"@unrs/rspack-resolver-binding-linux-x64-gnu@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-linux-x64-gnu@npm:1.2.2"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-linux-x64-musl@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-linux-x64-musl@npm:1.2.1"
+"@unrs/rspack-resolver-binding-linux-x64-musl@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-linux-x64-musl@npm:1.2.2"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-wasm32-wasi@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-wasm32-wasi@npm:1.2.1"
+"@unrs/rspack-resolver-binding-wasm32-wasi@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-wasm32-wasi@npm:1.2.2"
   dependencies:
     "@napi-rs/wasm-runtime": "npm:^0.2.7"
   conditions: cpu=wasm32
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-win32-arm64-msvc@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-win32-arm64-msvc@npm:1.2.1"
+"@unrs/rspack-resolver-binding-win32-arm64-msvc@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-win32-arm64-msvc@npm:1.2.2"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@unrs/rspack-resolver-binding-win32-x64-msvc@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@unrs/rspack-resolver-binding-win32-x64-msvc@npm:1.2.1"
+"@unrs/rspack-resolver-binding-win32-x64-msvc@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@unrs/rspack-resolver-binding-win32-x64-msvc@npm:1.2.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -7775,24 +7839,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import-x@npm:^4.8.1":
-  version: 4.8.1
-  resolution: "eslint-plugin-import-x@npm:4.8.1"
+"eslint-plugin-import-x@npm:^4.8.1, eslint-plugin-import-x@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "eslint-plugin-import-x@npm:4.9.1"
   dependencies:
     "@types/doctrine": "npm:^0.0.9"
-    "@typescript-eslint/utils": "npm:^8.26.1"
+    "@typescript-eslint/utils": "npm:^8.27.0"
     debug: "npm:^4.4.0"
     doctrine: "npm:^3.0.0"
     eslint-import-resolver-node: "npm:^0.3.9"
     get-tsconfig: "npm:^4.10.0"
-    picomatch: "npm:^4.0.2"
-    rspack-resolver: "npm:^1.2.1"
+    is-glob: "npm:^4.0.3"
+    minimatch: "npm:^10.0.1"
+    rspack-resolver: "npm:^1.2.2"
     semver: "npm:^7.7.1"
     stable-hash: "npm:^0.0.5"
     tslib: "npm:^2.8.1"
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
-  checksum: 10c0/53de7c1ac0ade79473f46506b9175e652d552c52df2a36df255518853ad44b8786f568613f3a7b60549a67dcf497543b38a813d7be70c7518ba00e5f28d9ebc6
+  checksum: 10c0/07c433b70d264c757c1b8b337bd6c3146df61095bd3e290b07e3feb5b38e2f11aa0ecbe9633229cd942998b2bdeb40a47736128c017682befc030d4b5367c6ff
   languageName: node
   linkType: hard
 
@@ -7901,12 +7966,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^5.2.3":
-  version: 5.2.3
-  resolution: "eslint-plugin-prettier@npm:5.2.3"
+"eslint-plugin-prettier@npm:^5.2.3, eslint-plugin-prettier@npm:^5.2.4":
+  version: 5.2.4
+  resolution: "eslint-plugin-prettier@npm:5.2.4"
   dependencies:
     prettier-linter-helpers: "npm:^1.0.0"
-    synckit: "npm:^0.9.1"
+    synckit: "npm:^0.10.2"
   peerDependencies:
     "@types/eslint": ">=8.0.0"
     eslint: ">=8.0.0"
@@ -7917,7 +7982,7 @@ __metadata:
       optional: true
     eslint-config-prettier:
       optional: true
-  checksum: 10c0/60d9c03491ec6080ac1d71d0bee1361539ff6beb9b91ac98cfa7176c9ed52b7dbe7119ebee5b441b479d447d17d802a4a492ee06095ef2f22c460e3dd6459302
+  checksum: 10c0/054cff3e4e94f1972e77dbac14052c2e7dba1cb907d08c773b3b08a281c608c48f9f9692c8dcbcbb8bcef0c680b54ff70fcc76c68212f97f3b60b60717796764
   languageName: node
   linkType: hard
 
@@ -9566,7 +9631,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-docs@workspace:docs"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@tailwindcss/postcss": "npm:4.0.15"
     "@types/react": "npm:19.0.12"
     "@types/react-dom": "npm:19.0.4"
@@ -9593,7 +9658,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-monorepo@workspace:."
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@changesets/changelog-github": "npm:0.5.1"
     "@changesets/cli": "npm:2.28.1"
     "@commitlint/cli": "npm:19.8.0"
@@ -12242,7 +12307,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^10.0.0":
+"minimatch@npm:^10.0.0, minimatch@npm:^10.0.1":
   version: 10.0.1
   resolution: "minimatch@npm:10.0.1"
   dependencies:
@@ -13789,7 +13854,7 @@ __metadata:
   resolution: "prisma-exception@workspace:integrations/prisma-exception"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.17.4"
-    "@belgattitude/eslint-config-bases": "npm:6.29.0"
+    "@belgattitude/eslint-config-bases": "npm:6.30.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:11.2.0"
     "@size-limit/webpack": "npm:11.2.0"
@@ -14767,21 +14832,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rspack-resolver@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "rspack-resolver@npm:1.2.1"
+"rspack-resolver@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "rspack-resolver@npm:1.2.2"
   dependencies:
-    "@unrs/rspack-resolver-binding-darwin-arm64": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-darwin-x64": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-freebsd-x64": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-linux-arm-gnueabihf": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-linux-arm64-gnu": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-linux-arm64-musl": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-linux-x64-gnu": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-linux-x64-musl": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-wasm32-wasi": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-win32-arm64-msvc": "npm:1.2.1"
-    "@unrs/rspack-resolver-binding-win32-x64-msvc": "npm:1.2.1"
+    "@unrs/rspack-resolver-binding-darwin-arm64": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-darwin-x64": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-freebsd-x64": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-linux-arm-gnueabihf": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-linux-arm64-gnu": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-linux-arm64-musl": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-linux-x64-gnu": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-linux-x64-musl": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-wasm32-wasi": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-win32-arm64-msvc": "npm:1.2.2"
+    "@unrs/rspack-resolver-binding-win32-x64-msvc": "npm:1.2.2"
   dependenciesMeta:
     "@unrs/rspack-resolver-binding-darwin-arm64":
       optional: true
@@ -14805,7 +14870,7 @@ __metadata:
       optional: true
     "@unrs/rspack-resolver-binding-win32-x64-msvc":
       optional: true
-  checksum: 10c0/9889d8a05ab3fcd546c2356a76bb5076b26ccb154c73d5427d3e78512704b7804273bd54b8694b152ad40de92c3b6667d02ad798d1b8baf855497ac67ea777f1
+  checksum: 10c0/897343b6e0934b54570722f1d21ca0239eaf0bdbad9b3357cc636a9cfc775f2b28f5fea477caf800978c22efed0f312ef2893d71c7b5e84447ac1ef9c5d80f22
   languageName: node
   linkType: hard
 
@@ -15881,13 +15946,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synckit@npm:^0.9.1":
-  version: 0.9.2
-  resolution: "synckit@npm:0.9.2"
+"synckit@npm:^0.10.2":
+  version: 0.10.3
+  resolution: "synckit@npm:0.10.3"
   dependencies:
-    "@pkgr/core": "npm:^0.1.0"
-    tslib: "npm:^2.6.2"
-  checksum: 10c0/e0c262817444e5b872708adb6f5ad37951ba33f6b2d1d4477d45db1f57573a784618ceed5e6614e0225db330632b1f6b95bb74d21e4d013e45ad4bde03d0cb59
+    "@pkgr/core": "npm:^0.2.0"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/9855d10231ae9b69c3aa08d46c96bd4befdcac33da44e29fb80e5c1430e453b5a33b8c073cdd25cfe9578f1d625c7d60c394ece1e202237116c1484def614041
   languageName: node
   linkType: hard
 
@@ -16344,7 +16409,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2, tslib@npm:^2.0.3, tslib@npm:^2.3.0, tslib@npm:^2.4.0, tslib@npm:^2.6.2, tslib@npm:^2.8.0, tslib@npm:^2.8.1":
+"tslib@npm:2, tslib@npm:^2.0.3, tslib@npm:^2.3.0, tslib@npm:^2.4.0, tslib@npm:^2.8.0, tslib@npm:^2.8.1":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
