@@ -58,7 +58,7 @@ const originalStr = await decompressor.fromEncodedString(gzippedStr);
 
 | Method                | Description                                                                                                                                              | 
 |-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `fromUint8Array()`    | Compress a string or a Uint8Array to a binary [Uint8Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array). |
+| `fromUint8Array()`    | Decompresses a compressed Uint8Array to its original binary form.                                                                                       |
 | `fromEncodedString()` | Compress a string or a Uint8Array to a encoded string.                                                                                                   |
 
 
