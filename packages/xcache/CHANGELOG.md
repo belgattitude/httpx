@@ -1,5 +1,12 @@
 # @httpx/xcache
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`58ea168`](https://github.com/belgattitude/httpx/commit/58ea168357ac6cd80ba07fbf4b6afee85a7e8052), [`58ea168`](https://github.com/belgattitude/httpx/commit/58ea168357ac6cd80ba07fbf4b6afee85a7e8052), [`58ea168`](https://github.com/belgattitude/httpx/commit/58ea168357ac6cd80ba07fbf4b6afee85a7e8052)]:
+  - @httpx/compress@0.1.0
+
 ## 0.0.3
 
 ### Patch Changes
