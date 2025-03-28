@@ -688,9 +688,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/vitest-pool-workers@npm:0.8.7":
-  version: 0.8.7
-  resolution: "@cloudflare/vitest-pool-workers@npm:0.8.7"
+"@cloudflare/vitest-pool-workers@npm:0.8.8":
+  version: 0.8.8
+  resolution: "@cloudflare/vitest-pool-workers@npm:0.8.8"
   dependencies:
     birpc: "npm:0.2.14"
     cjs-module-lexer: "npm:^1.2.3"
@@ -698,13 +698,13 @@ __metadata:
     esbuild: "npm:0.24.2"
     miniflare: "npm:4.20250321.1"
     semver: "npm:^7.7.1"
-    wrangler: "npm:4.5.1"
+    wrangler: "npm:4.6.0"
     zod: "npm:^3.22.3"
   peerDependencies:
     "@vitest/runner": 2.0.x - 3.0.x
     "@vitest/snapshot": 2.0.x - 3.0.x
     vitest: 2.0.x - 3.0.x
-  checksum: 10c0/38ab77454d3a421f3cba9358aeb0f55196c9354bf955c73174eac67d55039fc12845dddcd272bae98c3e5e5c53baa385a0ba94e91f6bcfcdb7daab6787786741
+  checksum: 10c0/ed49994ac394d07b4a4f716b7d9a5a52c9fe7b7ea68d90449a57c366914c45e679b1644fd266e283c5e893e3d873c099a05a65b3b936bb7d38e6842651848bd7
   languageName: node
   linkType: hard
 
@@ -1528,7 +1528,7 @@ __metadata:
   resolution: "@httpx/devtools-vitest@workspace:devtools/vitest"
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:6.30.0"
-    "@cloudflare/vitest-pool-workers": "npm:0.8.7"
+    "@cloudflare/vitest-pool-workers": "npm:0.8.8"
     "@codspeed/vitest-plugin": "npm:4.0.1"
     "@edge-runtime/vm": "npm:5.0.0"
     "@testing-library/dom": "npm:10.4.0"
@@ -17532,9 +17532,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:4.5.1":
-  version: 4.5.1
-  resolution: "wrangler@npm:4.5.1"
+"wrangler@npm:4.6.0":
+  version: 4.6.0
+  resolution: "wrangler@npm:4.6.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.4.0"
     "@cloudflare/unenv-preset": "npm:2.3.1"
@@ -17559,7 +17559,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/3cf8d856275dd2601d6cb84eacdbb79440c1cd3118a8f52a4ee79ae6d7aabd047a2181fe5a8f997f6582f427edffbfeb8439cdcf371e13e14c80bac0f8238af6
+  checksum: 10c0/9ff894e50ed4a20982322e0011895cd26d3c3da322281bb3890d2ec76eb4107719eb2773ecd39437ca17f92ded604841c1bdc32806da8e3ee1f3c08a63f73a0d
   languageName: node
   linkType: hard
 
