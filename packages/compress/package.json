@@ -41,7 +41,7 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsup",
+    "build": "run clean && yarn run tsup --external uint8array-extras",
     "build-release": "run build",
     "bench": "vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
@@ -68,9 +68,6 @@
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-compress-unit --dir ./coverage"
   },
-  "dependencies": {
-    "uint8array-extras": "^1.4.0"
-  },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.17.4",
     "@belgattitude/eslint-config-bases": "6.31.0",
@@ -95,6 +92,7 @@
     "typedoc": "0.28.1",
     "typedoc-plugin-markdown": "4.6.0",
     "typescript": "5.8.2",
+    "uint8array-extras": "1.4.0",
     "vitest": "3.0.9",
     "webpack": "5.98.0"
   },
