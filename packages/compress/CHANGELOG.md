@@ -1,5 +1,11 @@
 # @httpx/compress
 
+## 0.2.0
+
+### Minor Changes
+
+- [#2101](https://github.com/belgattitude/httpx/pull/2101) [`e774441`](https://github.com/belgattitude/httpx/commit/e77444125a62954a779aca6b9797a4ecf56e716f) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix cjs imports by externalizing uint8array-extras
+
 ## 0.1.0
 
 ### Minor Changes
