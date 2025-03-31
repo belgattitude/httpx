@@ -1,5 +1,11 @@
 # @httpx/compress
 
+## 0.2.1
+
+### Patch Changes
+
+- [#2103](https://github.com/belgattitude/httpx/pull/2103) [`e4d256d`](https://github.com/belgattitude/httpx/commit/e4d256d5511c007cba6c12bdb153ed5c52f151d1) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix cjs inlining
+
 ## 0.2.0
 
 ### Minor Changes
