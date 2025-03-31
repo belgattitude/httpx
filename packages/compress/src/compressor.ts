@@ -87,4 +87,12 @@ export class Compressor {
       urlSafe: encoding === 'base64_urlsafe',
     });
   };
+
+  toJsonEncodedString = async <T extends Record<string, unknown>>(
+    data: T,
+    options?: EncodeStringOptions
+  ): Promise<string> => {
+    const jsonString = JSON.stringify(data);
+    return this.toEncodedString(jsonString, options);
+  };
 }
