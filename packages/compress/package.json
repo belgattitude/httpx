@@ -41,7 +41,7 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsup --external uint8array-extras",
+    "build": "run clean && yarn run tsup",
     "build-release": "run build",
     "bench": "vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
