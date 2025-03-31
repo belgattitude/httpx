@@ -1299,6 +1299,8 @@ __metadata:
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:6.31.0"
     "@hono/node-server": "npm:1.14.0"
+    "@hono/valibot-validator": "npm:0.5.2"
+    "@hono/zod-validator": "npm:0.4.3"
     "@httpx/assert": "workspace:^"
     "@httpx/compress": "workspace:^"
     "@httpx/dsn-parser": "workspace:^"
@@ -1335,6 +1337,7 @@ __metadata:
     tailwind-merge: "npm:3.0.2"
     tailwindcss: "npm:4.0.17"
     typescript: "npm:5.8.2"
+    valibot: "npm:1.0.0"
     vite: "npm:6.2.4"
     vite-plugin-svgr: "npm:4.3.0"
     vite-tsconfig-paths: "npm:5.1.4"
@@ -1444,6 +1447,26 @@ __metadata:
   peerDependencies:
     hono: ^4
   checksum: 10c0/8a012f07afd17afa40b48dc2684e6023233cd84c89cd862b97bae284a979471ce442ccd5709f06a76115e29cee1665b349984b9aa3321bde8be3081a4b043e4f
+  languageName: node
+  linkType: hard
+
+"@hono/valibot-validator@npm:0.5.2":
+  version: 0.5.2
+  resolution: "@hono/valibot-validator@npm:0.5.2"
+  peerDependencies:
+    hono: ">=3.9.0"
+    valibot: ^1.0.0 || ^1.0.0-beta.4 || ^1.0.0-rc
+  checksum: 10c0/7bb3333cbcab5013e12abee44f62e1d71ae71de8d6de7a9470709c154af8f043ad6adc1d934d96b22182b8693ead1164b3da51611b6165b98c850f8750dbc76f
+  languageName: node
+  linkType: hard
+
+"@hono/zod-validator@npm:0.4.3":
+  version: 0.4.3
+  resolution: "@hono/zod-validator@npm:0.4.3"
+  peerDependencies:
+    hono: ">=3.9.0"
+    zod: ^3.19.1
+  checksum: 10c0/ad783cff6de379cee11f7b1fd54506b658a8e6e9f6066ba3656f340b0d75ab9a82aad7e67290df6f68fd0242244360215df0c8784fbeb18b60c9f6e1c2ca0807
   languageName: node
   linkType: hard
 
