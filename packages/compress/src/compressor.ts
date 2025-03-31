@@ -1,3 +1,4 @@
+// eslint-disable-next-line import-x/no-extraneous-dependencies
 import { uint8ArrayToBase64 } from 'uint8array-extras';
 
 import type { SupportedCompressionAlgorithm } from './compression-algorithm';
