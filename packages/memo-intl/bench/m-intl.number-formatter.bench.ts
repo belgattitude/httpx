@@ -3,7 +3,7 @@ import { bench } from 'vitest';
 import { MIntl } from '../src';
 
 describe('MIntl NumberFormatter benchmarks', () => {
-  const nbRows = 10_000;
+  const nbRows = 1000;
   const arrayMapperScenario = Array.from({ length: nbRows }).map((_v, idx) => ({
     productId: idx,
     price: idx + 0.99,
