@@ -79,26 +79,26 @@ Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/htt
 See [bench](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/bench) for details. 
 
 ```
- RUN  v3.0.4 /home/sebastien/github/httpx/packages/memo-intl
+ RUN  v3.1.1 /home/sebastien/github/httpx/packages/memo-intl
 
 
- ✓ bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks 9266ms
-     name                                                   hz      min      max     mean      p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.NumberFormatter()`        61.4100  16.2165  16.3436  16.2840  16.2996  16.3436  16.3436  16.3436  ±0.18%       10   fastest
-   · Without memoization `new Intl.NumberFormatter()`   1.9086   495.64   548.86   523.95   534.82   548.86   548.86   548.86  ±2.22%       10
+ ✓ bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks 476ms
+     name                                                    hz      min      max     mean      p75      p99     p995     p999     rme  samples
+   · With memoization `MIntl.NumberFormatter()`        1,192.91   0.7899   1.0335   0.8383   0.8329   1.0335   1.0335   1.0335  ±6.37%       10   fastest
+   · Without memoization `new Intl.NumberFormatter()`   48.8338  19.1252  23.0899  20.4776  20.9089  23.0899  23.0899  23.0899  ±3.79%       10
 
- ✓ bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks 2002ms
-     name                                                hz      min     max    mean     p75     p99    p995    p999      rme  samples
-   · With memoization `MIntl.DateFormatter()`        336.49   2.9111  3.1260  2.9718  2.9825  3.1260  3.1260  3.1260   ±1.57%       10   fastest
-   · Without memoization `new Intl.DateFormatter()`  9.4553  91.5618  159.43  105.76  107.41  159.43  159.43  159.43  ±13.45%       10
+ ✓ bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks 920ms
+     name                                                 hz      min      max     mean      p75      p99     p995     p999      rme  samples
+   · With memoization `MIntl.DateFormatter()`         658.38   1.2724   1.9304   1.5189   1.7157   1.9304   1.9304   1.9304  ±10.62%       10   fastest
+   · Without memoization `new Intl.DateFormatter()`  21.3851  38.7952  81.5738  46.7616  45.0433  81.5738  81.5738  81.5738  ±19.00%       10
 
  BENCH  Summary
 
   With memoization `MIntl.DateFormatter()` - bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks
-    35.59x faster than Without memoization `new Intl.DateFormatter()`
+    30.79x faster than Without memoization `new Intl.DateFormatter()`
 
   With memoization `MIntl.NumberFormatter()` - bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks
-    32.18x faster than Without memoization `new Intl.NumberFormatter()`
+    24.43x faster than Without memoization `new Intl.NumberFormatter()`
 
 ```
 
