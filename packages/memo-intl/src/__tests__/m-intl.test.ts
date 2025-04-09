@@ -4,7 +4,7 @@ import { MIntl } from '../index';
 
 describe('MIntl tests', () => {
   describe('Intl methods', () => {
-    it('should return a Intl.NumberFormatter', () => {
+    it('Intl.NumberFormatter', () => {
       const formatter = MIntl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -15,7 +15,7 @@ describe('MIntl tests', () => {
       expect(formatter.format(10.1345)).toBe('10,13 €');
       expectTypeOf(formatter).toEqualTypeOf<Intl.NumberFormat>();
     });
-    it('should return a Intl.DateTimeFormatter', () => {
+    it('Intl.DateTimeFormatter', () => {
       const formatter = MIntl.DateTimeFormat('fr-FR', {
         dateStyle: 'full',
         timeStyle: 'full',
@@ -27,7 +27,32 @@ describe('MIntl tests', () => {
       );
       expectTypeOf(formatter).toEqualTypeOf<Intl.DateTimeFormat>();
     });
+    it('Intl.Locale', () => {
+      const locale = MIntl.Locale('fr-FR', {
+        caseFirst: 'lower',
+      });
+      expect(locale.language).toBe('fr');
+      expectTypeOf(locale).toEqualTypeOf<Intl.Locale>();
+    });
+
+    it('Intl.Collator', () => {
+      const collator = MIntl.Collator('de', { caseFirst: 'upper' });
+      const sorted = ['Z', 'a', 'z', 'ä'].sort(collator.compare);
+      expect(sorted).toStrictEqual(['a', 'ä', 'Z', 'z']);
+      expectTypeOf(collator).toEqualTypeOf<Intl.Collator>();
+    });
+
+    it('Intl.ListFormat', () => {
+      const listFormat = MIntl.ListFormat('en', {
+        style: 'long',
+        type: 'conjunction',
+      });
+      const joined = listFormat.format(['Motorcycle', 'Bus', 'Car']);
+      expect(joined).toStrictEqual('Motorcycle, Bus, and Car');
+      expectTypeOf(listFormat).toEqualTypeOf<Intl.ListFormat>();
+    });
   });
+
   describe('Cache access', () => {
     it('should return a Intl.NumberFormatter', () => {
       MIntl.cache.clear();
