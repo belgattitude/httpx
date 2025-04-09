@@ -51,6 +51,27 @@ describe('MIntl tests', () => {
       expect(joined).toStrictEqual('Motorcycle, Bus, and Car');
       expectTypeOf(listFormat).toEqualTypeOf<Intl.ListFormat>();
     });
+
+    it('Intl.PluralRules', () => {
+      const pluralRules = MIntl.PluralRules('en-US', { type: 'ordinal' });
+      const num = pluralRules.select(2);
+      expect(num).toStrictEqual('two');
+      expectTypeOf(pluralRules).toEqualTypeOf<Intl.PluralRules>();
+    });
+
+    it('Intl.Segmenter', () => {
+      const segmenter = MIntl.Segmenter('fr', { granularity: 'word' });
+      const string1 = 'Que ma joie demeure';
+      const iterator1 = segmenter.segment(string1)[Symbol.iterator]();
+      expect(iterator1.next().value!.segment).toStrictEqual('Que');
+      expectTypeOf(segmenter).toEqualTypeOf<Intl.Segmenter>();
+    });
+
+    it('Intl.RelativeTimeFormat', () => {
+      const rtf = MIntl.RelativeTimeFormat('es', { numeric: 'auto' });
+      expect(rtf.format(2, 'day')).toStrictEqual('pasado mañana');
+      expectTypeOf(rtf).toEqualTypeOf<Intl.RelativeTimeFormat>();
+    });
   });
 
   describe('Cache access', () => {
