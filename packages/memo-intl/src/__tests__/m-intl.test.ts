@@ -61,9 +61,9 @@ describe('MIntl tests', () => {
 
     it('Intl.Segmenter', () => {
       const segmenter = MIntl.Segmenter('fr', { granularity: 'word' });
-      const string1 = 'Que ma joie demeure';
-      const iterator1 = segmenter.segment(string1)[Symbol.iterator]();
-      expect(iterator1.next().value!.segment).toStrictEqual('Que');
+      const string = 'Que ma joie demeure';
+      const iterator = segmenter.segment(string)[Symbol.iterator]();
+      expect(iterator.next().value!.segment).toStrictEqual('Que');
       expectTypeOf(segmenter).toEqualTypeOf<Intl.Segmenter>();
     });
 

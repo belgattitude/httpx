@@ -3,7 +3,7 @@ import { bench } from 'vitest';
 import { MIntl } from '../src';
 
 describe('MIntl DateFormatter benchmarks', () => {
-  const nbRows = 1000;
+  const nbRows = 100;
   const dates = Array.from({ length: nbRows }).map((_v, idx) => ({
     date: 10_000 + idx,
   }));

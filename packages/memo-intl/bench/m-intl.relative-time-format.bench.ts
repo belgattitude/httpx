@@ -3,7 +3,7 @@ import { bench } from 'vitest';
 import { MIntl } from '../src';
 
 describe('MIntl RelativeTimeFormat benchmarks', () => {
-  const nbRows = 10_000;
+  const nbRows = 100;
   const dates = Array.from({ length: nbRows }).map((_v, idx) => ({
     idx: idx,
   }));

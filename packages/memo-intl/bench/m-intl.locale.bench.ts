@@ -3,13 +3,18 @@ import { bench } from 'vitest';
 import { MIntl } from '../src';
 
 describe('MIntl Locale benchmarks', () => {
-  const nbRows = 10_000;
+  const nbRows = 100;
+  const arr = Array.from({ length: nbRows }).map((_v, idx) => ({
+    idx: idx,
+  }));
 
   bench(
-    'With memoization `MIntl.Locale()`',
+    'With memoization `MIntl.Loclae()`',
     () => {
-      for (let i = 0; i < nbRows; i++) {
-        const _locale = MIntl.Locale('en');
+      for (const row of arr) {
+        const _locale = MIntl.Locale('fr-FR', {
+          caseFirst: 'lower',
+        });
       }
     },
     { time: 1 }
@@ -18,8 +23,10 @@ describe('MIntl Locale benchmarks', () => {
   bench(
     'Without memoization `new Intl.Locale()`',
     () => {
-      for (let i = 0; i < nbRows; i++) {
-        const _locale = new Intl.Locale('en');
+      for (const row of arr) {
+        const rtf = new Intl.Locale('fr_FR', {
+          caseFirst: 'lower',
+        });
       }
     },
     { time: 1 }
