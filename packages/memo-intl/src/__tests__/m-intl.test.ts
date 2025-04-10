@@ -4,7 +4,7 @@ import { MIntl } from '../index';
 
 describe('MIntl tests', () => {
   describe('Intl methods', () => {
-    it('should return a Intl.NumberFormatter', () => {
+    it('Intl.NumberFormatter', () => {
       const formatter = MIntl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -15,7 +15,7 @@ describe('MIntl tests', () => {
       expect(formatter.format(10.1345)).toBe('10,13 €');
       expectTypeOf(formatter).toEqualTypeOf<Intl.NumberFormat>();
     });
-    it('should return a Intl.DateTimeFormatter', () => {
+    it('Intl.DateTimeFormatter', () => {
       const formatter = MIntl.DateTimeFormat('fr-FR', {
         dateStyle: 'full',
         timeStyle: 'full',
@@ -27,7 +27,53 @@ describe('MIntl tests', () => {
       );
       expectTypeOf(formatter).toEqualTypeOf<Intl.DateTimeFormat>();
     });
+    it('Intl.Locale', () => {
+      const locale = MIntl.Locale('fr-FR', {
+        caseFirst: 'lower',
+      });
+      expect(locale.language).toBe('fr');
+      expectTypeOf(locale).toEqualTypeOf<Intl.Locale>();
+    });
+
+    it('Intl.Collator', () => {
+      const collator = MIntl.Collator('de', { caseFirst: 'upper' });
+      const sorted = ['Z', 'a', 'z', 'ä'].sort(collator.compare);
+      expect(sorted).toStrictEqual(['a', 'ä', 'Z', 'z']);
+      expectTypeOf(collator).toEqualTypeOf<Intl.Collator>();
+    });
+
+    it('Intl.ListFormat', () => {
+      const listFormat = MIntl.ListFormat('en', {
+        style: 'long',
+        type: 'conjunction',
+      });
+      const joined = listFormat.format(['Motorcycle', 'Bus', 'Car']);
+      expect(joined).toStrictEqual('Motorcycle, Bus, and Car');
+      expectTypeOf(listFormat).toEqualTypeOf<Intl.ListFormat>();
+    });
+
+    it('Intl.PluralRules', () => {
+      const pluralRules = MIntl.PluralRules('en-US', { type: 'ordinal' });
+      const num = pluralRules.select(2);
+      expect(num).toStrictEqual('two');
+      expectTypeOf(pluralRules).toEqualTypeOf<Intl.PluralRules>();
+    });
+
+    it('Intl.Segmenter', () => {
+      const segmenter = MIntl.Segmenter('fr', { granularity: 'word' });
+      const string = 'Que ma joie demeure';
+      const iterator = segmenter.segment(string)[Symbol.iterator]();
+      expect(iterator.next().value!.segment).toStrictEqual('Que');
+      expectTypeOf(segmenter).toEqualTypeOf<Intl.Segmenter>();
+    });
+
+    it('Intl.RelativeTimeFormat', () => {
+      const rtf = MIntl.RelativeTimeFormat('es', { numeric: 'auto' });
+      expect(rtf.format(2, 'day')).toStrictEqual('pasado mañana');
+      expectTypeOf(rtf).toEqualTypeOf<Intl.RelativeTimeFormat>();
+    });
   });
+
   describe('Cache access', () => {
     it('should return a Intl.NumberFormatter', () => {
       MIntl.cache.clear();

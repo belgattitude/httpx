@@ -10,7 +10,9 @@
 
 ## Type Parameters
 
-• **T** = `unknown`
+### T
+
+`T` = `unknown`
 
 ## Parameters
 

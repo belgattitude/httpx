@@ -6,6 +6,6 @@
 
 # Type Alias: ParsableStrictIsoDateZ
 
-> **ParsableStrictIsoDateZ**: `string` & `WeakOpaqueContainer`\<`"ParsableStrictIsoDateZ"`\>
+> **ParsableStrictIsoDateZ** = `string` & `WeakOpaqueContainer`\<`"ParsableStrictIsoDateZ"`\>
 
-Defined in: [string.types.ts:5](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/string.types.ts#L5)
+Defined in: [string.types.ts:5](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/string.types.ts#L5)

@@ -6,8 +6,10 @@
 
 # Type Alias: JsonApiResponse\<T\>
 
-> **JsonApiResponse**\<`T`\>: [`JsonApiErrorResponse`](JsonApiErrorResponse.md) \| [`JsonApiSuccessResponse`](JsonApiSuccessResponse.md)\<`T`\>
+> **JsonApiResponse**\<`T`\> = [`JsonApiErrorResponse`](JsonApiErrorResponse.md) \| [`JsonApiSuccessResponse`](JsonApiSuccessResponse.md)\<`T`\>
 
 ## Type Parameters
 
-• **T**
+### T
+
+`T`

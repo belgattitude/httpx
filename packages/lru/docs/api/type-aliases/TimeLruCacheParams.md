@@ -1,4 +1,4 @@
-[**@httpx/lru v0.8.1**](../README.md)
+[**@httpx/lru v0.9.0**](../README.md)
 
 ***
 
@@ -6,7 +6,7 @@
 
 # Type Alias: TimeLruCacheParams\<TValue, TKey\>
 
-> **TimeLruCacheParams**\<`TValue`, `TKey`\>: [`LruCacheParams`](LruCacheParams.md)\<`TValue`, `TKey`\> & `object`
+> **TimeLruCacheParams**\<`TValue`, `TKey`\> = [`LruCacheParams`](LruCacheParams.md)\<`TValue`, `TKey`\> & `object`
 
 ## Type declaration
 
@@ -18,6 +18,10 @@ Default time to live for each entry in milliseconds
 
 ## Type Parameters
 
-• **TValue**
+### TValue
 
-• **TKey** *extends* [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`
+`TValue`
+
+### TKey
+
+`TKey` *extends* [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`

@@ -6,13 +6,15 @@
 
 # Function: createStableHashOrThrow()
 
-> **createStableHashOrThrow**\<`T`\>(`value`, `options`?): `Promise`\<`string`\>
+> **createStableHashOrThrow**\<`T`\>(`value`, `options?`): `Promise`\<`string`\>
 
 Create a stable hash (sha-256) from a given value useful for caching or memoization.
 
 ## Type Parameters
 
-• **T** *extends* `SupportedDataTypesRW`
+### T
+
+`T` *extends* `SupportedDataTypesRW`
 
 ## Parameters
 

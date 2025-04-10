@@ -6,6 +6,6 @@
 
 # Type Alias: UuidVersionOrNumber
 
-> **UuidVersionOrNumber**: `number` & `WeakOpaqueContainer`\<`"UuidVersionOrNumber"`\>
+> **UuidVersionOrNumber** = `number` & `WeakOpaqueContainer`\<`"UuidVersionOrNumber"`\>
 
-Defined in: [uuid.types.ts:12](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/uuid.types.ts#L12)
+Defined in: [uuid.types.ts:12](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/uuid.types.ts#L12)

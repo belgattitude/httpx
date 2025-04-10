@@ -6,9 +6,9 @@
 
 # Type Alias: HttpExceptionParams
 
-> **HttpExceptionParams**: `object`
+> **HttpExceptionParams** = `object`
 
-## Type declaration
+## Properties
 
 ### cause?
 
@@ -22,6 +22,8 @@ or there's no polyfill
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
 
+***
+
 ### code?
 
 > `optional` **code**: `string`
@@ -29,11 +31,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
 Do not use this to indicate http status code, the `statusCode` is built-in.
 
+***
+
 ### errorId?
 
 > `optional` **errorId**: `string`
 
 Inform about an unique error identifier (ie: nanoid, cuid, sentry...)
+
+***
 
 ### message?
 
@@ -42,11 +48,15 @@ Inform about an unique error identifier (ie: nanoid, cuid, sentry...)
 Exception message, if not provided the default is the exception
 name in natural language (ie: "HttpNotFound" -> "Not found")
 
+***
+
 ### method?
 
 > `optional` **method**: `HttpMethod`
 
 Inform about http method
+
+***
 
 ### url?
 

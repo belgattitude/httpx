@@ -6,7 +6,7 @@
 
 # Type Alias: JsonApiSuccessResponse\<T\>
 
-> **JsonApiSuccessResponse**\<`T`\>: `object` & [`JsonApiResponseMeta`](JsonApiResponseMeta.md)
+> **JsonApiSuccessResponse**\<`T`\> = `object` & [`JsonApiResponseMeta`](JsonApiResponseMeta.md)
 
 ## Type declaration
 
@@ -20,4 +20,6 @@
 
 ## Type Parameters
 
-• **T**
+### T
+
+`T`

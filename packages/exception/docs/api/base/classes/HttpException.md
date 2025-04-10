@@ -21,9 +21,9 @@
 
 ## Constructors
 
-### new HttpException()
+### Constructor
 
-> **new HttpException**(`statusCode`, `msgOrParams`?): [`HttpException`](HttpException.md)
+> **new HttpException**(`statusCode`, `msgOrParams?`): `HttpException`
 
 Construct a new HttpException class
 
@@ -43,7 +43,7 @@ either a message or an object containing HttpExceptionParams
 
 #### Returns
 
-[`HttpException`](HttpException.md)
+`HttpException`
 
 #### Overrides
 
@@ -53,7 +53,7 @@ either a message or an object containing HttpExceptionParams
 
 ### cause?
 
-> `readonly` `optional` **cause**: `Error` \| [`HttpException`](HttpException.md)
+> `readonly` `optional` **cause**: `Error` \| `HttpException`
 
 If set and the runtime (browser or node) supports it
 you can get back the error cause
@@ -204,7 +204,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace()
 
-> `static` **captureStackTrace**(`targetObject`, `constructorOpt`?): `void`
+> `static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

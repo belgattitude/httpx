@@ -8,9 +8,13 @@
 
 ## Type Parameters
 
-• **TValue** *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined` = `undefined`
+### TValue
 
-• **TId** *extends* `TreeNodeValidId` = `string`
+`TValue` *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined` = `undefined`
+
+### TId
+
+`TId` *extends* `TreeNodeValidId` = `string`
 
 ## Properties
 

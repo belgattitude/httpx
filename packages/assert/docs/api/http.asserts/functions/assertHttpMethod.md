@@ -6,13 +6,15 @@
 
 # Function: assertHttpMethod()
 
-> **assertHttpMethod**\<`T`\>(`method`, `v`, `msgOrErrorFactory`?): `asserts v is T`
+> **assertHttpMethod**\<`T`\>(`method`, `v`, `msgOrErrorFactory?`): `asserts v is T`
 
-Defined in: [http.asserts.ts:25](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/http.asserts.ts#L25)
+Defined in: [http.asserts.ts:25](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/http.asserts.ts#L25)
 
 ## Type Parameters
 
-• **T** *extends* [`HttpMethod`](../../http.types/type-aliases/HttpMethod.md)
+### T
+
+`T` *extends* [`HttpMethod`](../../http.types/type-aliases/HttpMethod.md)
 
 ## Parameters
 

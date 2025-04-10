@@ -8,19 +8,23 @@
 
 ## Type Parameters
 
-• **TValue** *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md)
+### TValue
 
-• **TKey** *extends* `string` = `string`
+`TValue` *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md)
+
+### TKey
+
+`TKey` *extends* `string` = `string`
 
 ## Constructors
 
-### new FlatTreeWsMapper()
+### Constructor
 
-> **new FlatTreeWsMapper**\<`TValue`, `TKey`\>(): [`FlatTreeWsMapper`](FlatTreeWsMapper.md)\<`TValue`, `TKey`\>
+> **new FlatTreeWsMapper**\<`TValue`, `TKey`\>(): `FlatTreeWsMapper`\<`TValue`, `TKey`\>
 
 #### Returns
 
-[`FlatTreeWsMapper`](FlatTreeWsMapper.md)\<`TValue`, `TKey`\>
+`FlatTreeWsMapper`\<`TValue`, `TKey`\>
 
 ## Methods
 
@@ -32,7 +36,9 @@ Will convert a tree of nodes to a flat tree.
 
 #### Type Parameters
 
-• **TId** *extends* `string` = `string`
+##### TId
+
+`TId` *extends* `string` = `string`
 
 #### Parameters
 

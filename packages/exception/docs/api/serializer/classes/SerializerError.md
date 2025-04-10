@@ -12,9 +12,9 @@
 
 ## Constructors
 
-### new SerializerError()
+### Constructor
 
-> **new SerializerError**(`message`, `params`?): [`SerializerError`](SerializerError.md)
+> **new SerializerError**(`message`, `params?`): `SerializerError`
 
 #### Parameters
 
@@ -30,7 +30,7 @@
 
 #### Returns
 
-[`SerializerError`](SerializerError.md)
+`SerializerError`
 
 #### Overrides
 
@@ -120,7 +120,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace()
 
-> `static` **captureStackTrace**(`targetObject`, `constructorOpt`?): `void`
+> `static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

@@ -6,9 +6,9 @@
 
 # Function: assertUuidV3()
 
-> **assertUuidV3**(`v`, `msgOrErrorFactory`?): `asserts v is UuidV3`
+> **assertUuidV3**(`v`, `msgOrErrorFactory?`): `asserts v is UuidV3`
 
-Defined in: [uuid.asserts.ts:58](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/uuid.asserts.ts#L58)
+Defined in: [uuid.asserts.ts:58](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/uuid.asserts.ts#L58)
 
 Asserts a value is a valid uuid v3
 

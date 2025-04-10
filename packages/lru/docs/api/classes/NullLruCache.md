@@ -1,4 +1,4 @@
-[**@httpx/lru v0.8.1**](../README.md)
+[**@httpx/lru v0.9.0**](../README.md)
 
 ***
 
@@ -8,9 +8,13 @@
 
 ## Type Parameters
 
-• **TValue** *extends* [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
+### TValue
 
-• **TKey** *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
+`TValue` *extends* [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
+
+### TKey
+
+`TKey` *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
 
 ## Implements
 
@@ -18,9 +22,9 @@
 
 ## Constructors
 
-### new NullLruCache()
+### Constructor
 
-> **new NullLruCache**\<`TValue`, `TKey`\>(`_params`): [`NullLruCache`](NullLruCache.md)\<`TValue`, `TKey`\>
+> **new NullLruCache**\<`TValue`, `TKey`\>(`_params`): `NullLruCache`\<`TValue`, `TKey`\>
 
 Create a new NullLruCache (does cache nothing)
 
@@ -32,7 +36,7 @@ Create a new NullLruCache (does cache nothing)
 
 #### Returns
 
-[`NullLruCache`](NullLruCache.md)\<`TValue`, `TKey`\>
+`NullLruCache`\<`TValue`, `TKey`\>
 
 #### Example
 
@@ -241,7 +245,7 @@ lru.get('key1');                       // 👈 undefined (first entry was evicte
 
 ### has()
 
-> **has**(`_key`, `_options`?): `boolean`
+> **has**(`_key`, `_options?`): `boolean`
 
 Checks whether an entry exist.
 

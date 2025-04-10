@@ -6,7 +6,7 @@
 
 # Function: createStableHash()
 
-> **createStableHash**\<`T`\>(`value`, `options`?): `Promise`\<`Result`\>
+> **createStableHash**\<`T`\>(`value`, `options?`): `Promise`\<`Result`\>
 
 Create a stable sha-256/hexadecimal hash from a value. Useful for caching
 or memoization.
@@ -16,7 +16,9 @@ the same keys but in different order.
 
 ## Type Parameters
 
-• **T** *extends* `SupportedDataTypesRW`
+### T
+
+`T` *extends* `SupportedDataTypesRW`
 
 ## Parameters
 

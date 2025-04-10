@@ -6,13 +6,15 @@
 
 # Type Alias: JsonApiErrorResponse
 
-> **JsonApiErrorResponse**: `object`
+> **JsonApiErrorResponse** = `object`
 
-## Type declaration
+## Properties
 
 ### errors
 
 > **errors**: [`JsonApiError`](JsonApiError.md)[]
+
+***
 
 ### success
 

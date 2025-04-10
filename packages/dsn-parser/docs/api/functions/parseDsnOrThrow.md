@@ -6,7 +6,7 @@
 
 # Function: parseDsnOrThrow()
 
-> **parseDsnOrThrow**(`dsn`, `options`?): [`ParsedDsn`](../type-aliases/ParsedDsn.md)
+> **parseDsnOrThrow**(`dsn`, `options?`): [`ParsedDsn`](../type-aliases/ParsedDsn.md)
 
 ## Parameters
 

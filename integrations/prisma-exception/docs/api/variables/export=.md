@@ -8,7 +8,7 @@
 
 > **export=**: `object`
 
-Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/integrations/prisma-exception/package.json#L1)
+Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/integrations/prisma-exception/package.json#L1)
 
 ## Type declaration
 
@@ -42,11 +42,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/d975bb2c
 
 #### devDependencies.@arethetypeswrong/cli
 
-> **@arethetypeswrong/cli**: `string` = `"0.17.3"`
+> **@arethetypeswrong/cli**: `string` = `"0.17.4"`
 
 #### devDependencies.@belgattitude/eslint-config-bases
 
-> **@belgattitude/eslint-config-bases**: `string` = `"6.23.0"`
+> **@belgattitude/eslint-config-bases**: `string` = `"6.33.0"`
 
 #### devDependencies.@size-limit/file
 
@@ -62,15 +62,15 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/d975bb2c
 
 #### devDependencies.@types/node
 
-> **@types/node**: `string` = `"22.13.4"`
+> **@types/node**: `string` = `"22.14.0"`
 
 #### devDependencies.@vitest/coverage-istanbul
 
-> **@vitest/coverage-istanbul**: `string` = `"3.0.6"`
+> **@vitest/coverage-istanbul**: `string` = `"3.1.1"`
 
 #### devDependencies.@vitest/ui
 
-> **@vitest/ui**: `string` = `"3.0.6"`
+> **@vitest/ui**: `string` = `"3.1.1"`
 
 #### devDependencies.browserslist
 
@@ -86,11 +86,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/d975bb2c
 
 #### devDependencies.es-check
 
-> **es-check**: `string` = `"8.0.1"`
+> **es-check**: `string` = `"8.0.2"`
 
 #### devDependencies.esbuild
 
-> **esbuild**: `string` = `"0.25.0"`
+> **esbuild**: `string` = `"0.25.2"`
 
 #### devDependencies.eslint
 
@@ -102,11 +102,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/d975bb2c
 
 #### devDependencies.prettier
 
-> **prettier**: `string` = `"3.5.1"`
+> **prettier**: `string` = `"3.5.3"`
 
 #### devDependencies.publint
 
-> **publint**: `string` = `"0.3.5"`
+> **publint**: `string` = `"0.3.11"`
 
 #### devDependencies.rimraf
 
@@ -118,19 +118,19 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/d975bb2c
 
 #### devDependencies.tsup
 
-> **tsup**: `string` = `"8.3.6"`
+> **tsup**: `string` = `"8.4.0"`
 
 #### devDependencies.typedoc
 
-> **typedoc**: `string` = `"0.27.7"`
+> **typedoc**: `string` = `"0.28.2"`
 
 #### devDependencies.typedoc-plugin-markdown
 
-> **typedoc-plugin-markdown**: `string` = `"4.4.2"`
+> **typedoc-plugin-markdown**: `string` = `"4.6.2"`
 
 #### devDependencies.typescript
 
-> **typescript**: `string` = `"5.7.3"`
+> **typescript**: `string` = `"5.8.3"`
 
 #### devDependencies.vite-tsconfig-paths
 
@@ -138,11 +138,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/d975bb2c
 
 #### devDependencies.vitest
 
-> **vitest**: `string` = `"3.0.6"`
+> **vitest**: `string` = `"3.1.1"`
 
 #### devDependencies.webpack
 
-> **webpack**: `string` = `"5.98.0"`
+> **webpack**: `string` = `"5.99.5"`
 
 ### engines
 

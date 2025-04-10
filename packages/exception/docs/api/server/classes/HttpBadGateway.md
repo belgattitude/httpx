@@ -22,9 +22,9 @@ either a message or an object containing HttpExceptionParams
 
 ## Constructors
 
-### new HttpBadGateway()
+### Constructor
 
-> **new HttpBadGateway**(`msgOrParams`?): [`HttpBadGateway`](HttpBadGateway.md)
+> **new HttpBadGateway**(`msgOrParams?`): `HttpBadGateway`
 
 #### Parameters
 
@@ -34,11 +34,11 @@ either a message or an object containing HttpExceptionParams
 
 #### Returns
 
-[`HttpBadGateway`](HttpBadGateway.md)
+`HttpBadGateway`
 
 #### Overrides
 
-[`HttpServerException`](../../base/classes/HttpServerException.md).[`constructor`](../../base/classes/HttpServerException.md#constructors)
+[`HttpServerException`](../../base/classes/HttpServerException.md).[`constructor`](../../base/classes/HttpServerException.md#constructor)
 
 ## Properties
 
@@ -133,7 +133,7 @@ Http error status code (400-599)
 
 #### Inherited from
 
-[`HttpServerException`](../../base/classes/HttpServerException.md).[`statusCode`](../../base/classes/HttpServerException.md#statuscode-1)
+[`HttpServerException`](../../base/classes/HttpServerException.md).[`statusCode`](../../base/classes/HttpServerException.md#statuscode)
 
 ***
 
@@ -197,7 +197,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace()
 
-> `static` **captureStackTrace**(`targetObject`, `constructorOpt`?): `void`
+> `static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

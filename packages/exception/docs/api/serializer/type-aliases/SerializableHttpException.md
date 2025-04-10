@@ -6,4 +6,4 @@
 
 # Type Alias: SerializableHttpException
 
-> **SerializableHttpException**: `DiscriminateSerializable`\<`"HttpException"`\>
+> **SerializableHttpException** = `DiscriminateSerializable`\<`"HttpException"`\>

@@ -6,4 +6,4 @@
 
 # Type Alias: HttpErrorStatusCode
 
-> **HttpErrorStatusCode**: keyof *typeof* `statusMap`
+> **HttpErrorStatusCode** = keyof *typeof* `statusMap`

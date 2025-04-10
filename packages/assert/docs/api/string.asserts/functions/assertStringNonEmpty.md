@@ -6,9 +6,9 @@
 
 # Function: assertStringNonEmpty()
 
-> **assertStringNonEmpty**(`v`, `msgOrErrorFactory`?): `asserts v is StringNonEmpty`
+> **assertStringNonEmpty**(`v`, `msgOrErrorFactory?`): `asserts v is StringNonEmpty`
 
-Defined in: [string.asserts.ts:16](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/string.asserts.ts#L16)
+Defined in: [string.asserts.ts:16](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/string.asserts.ts#L16)
 
 Assert a value is a non-empty string (trims the string by default)
 

@@ -1,4 +1,4 @@
-[**@httpx/lru v0.8.1**](../README.md)
+[**@httpx/lru v0.9.0**](../README.md)
 
 ***
 
@@ -8,9 +8,13 @@
 
 ## Type Parameters
 
-• **TValue** *extends* [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
+### TValue
 
-• **TKey** *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
+`TValue` *extends* [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
+
+### TKey
+
+`TKey` *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
 
 ## Implements
 
@@ -18,9 +22,9 @@
 
 ## Constructors
 
-### new NullTimeLruCache()
+### Constructor
 
-> **new NullTimeLruCache**\<`TValue`, `TKey`\>(`_params`): [`NullTimeLruCache`](NullTimeLruCache.md)\<`TValue`, `TKey`\>
+> **new NullTimeLruCache**\<`TValue`, `TKey`\>(`_params`): `NullTimeLruCache`\<`TValue`, `TKey`\>
 
 Create a new NullTimeLruCache (does cache nothing)
 
@@ -32,7 +36,7 @@ Create a new NullTimeLruCache (does cache nothing)
 
 #### Returns
 
-[`NullTimeLruCache`](NullTimeLruCache.md)\<`TValue`, `TKey`\>
+`NullTimeLruCache`\<`TValue`, `TKey`\>
 
 #### Example
 
@@ -171,7 +175,7 @@ lru.get('key1');   // 👈 undefined
 
 ### getOrSet()
 
-> **getOrSet**(`_key`, `valueOrFn`, `_ttl`?): `TValue`
+> **getOrSet**(`_key`, `valueOrFn`, `_ttl?`): `TValue`
 
 Get an item from the cache, if the item doesn't exist or has expired
 it will create a new entry with the provided value and returns it.
@@ -237,7 +241,7 @@ lru.get('key1');                       // 👈 undefined (first entry was evicte
 
 ### has()
 
-> **has**(`_key`, `_options`?): `boolean`
+> **has**(`_key`, `_options?`): `boolean`
 
 Checks whether an entry exist and hasn't expired.
 
@@ -369,7 +373,7 @@ return undefined if they have.
 
 ### set()
 
-> **set**(`_key`, `_value`, `_ttl`?): `boolean`
+> **set**(`_key`, `_value`, `_ttl?`): `boolean`
 
 Add a new entry to the cache and overwrite value if the key was already
 present. It will move the item as the most recently used.

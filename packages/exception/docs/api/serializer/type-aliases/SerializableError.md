@@ -6,4 +6,4 @@
 
 # Type Alias: SerializableError
 
-> **SerializableError**: `DiscriminateSerializable`\<`"NativeError"`\>
+> **SerializableError** = `DiscriminateSerializable`\<`"NativeError"`\>

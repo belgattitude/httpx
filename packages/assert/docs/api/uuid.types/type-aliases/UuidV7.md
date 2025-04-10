@@ -6,6 +6,6 @@
 
 # Type Alias: UuidV7
 
-> **UuidV7**: `string` & `WeakOpaqueContainer`\<`"UuidV7"`\>
+> **UuidV7** = `string` & `WeakOpaqueContainer`\<`"UuidV7"`\>
 
-Defined in: [uuid.types.ts:9](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/uuid.types.ts#L9)
+Defined in: [uuid.types.ts:9](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/uuid.types.ts#L9)

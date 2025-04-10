@@ -6,15 +6,17 @@
 
 # Function: assertArrayNonEmpty()
 
-> **assertArrayNonEmpty**\<`T`\>(`v`, `msgOrErrorFactory`?): `asserts v is ArrayNonEmpty<T>`
+> **assertArrayNonEmpty**\<`T`\>(`v`, `msgOrErrorFactory?`): `asserts v is ArrayNonEmpty<T>`
 
-Defined in: [array.asserts.ts:10](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/array.asserts.ts#L10)
+Defined in: [array.asserts.ts:10](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/array.asserts.ts#L10)
 
 Assert string is not empty (trims the string by default)
 
 ## Type Parameters
 
-• **T** = `unknown`
+### T
+
+`T` = `unknown`
 
 ## Parameters
 

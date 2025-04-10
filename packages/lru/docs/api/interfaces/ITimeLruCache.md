@@ -1,4 +1,4 @@
-[**@httpx/lru v0.8.1**](../README.md)
+[**@httpx/lru v0.9.0**](../README.md)
 
 ***
 
@@ -12,9 +12,13 @@
 
 ## Type Parameters
 
-• **TValue** *extends* [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
+### TValue
 
-• **TKey** *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
+`TValue` *extends* [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
+
+### TKey
+
+`TKey` *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
 
 ## Properties
 
@@ -113,7 +117,7 @@ lru.get('key1');   // 👈 undefined
 
 ### getOrSet()
 
-> **getOrSet**: (`key`, `valueOrFn`, `ttl`?) => `TValue`
+> **getOrSet**: (`key`, `valueOrFn`, `ttl?`) => `TValue`
 
 Get an item from the cache, if the item doesn't exist or has expired
 it will create a new entry with the provided value and returns it.
@@ -165,7 +169,7 @@ lru.get('key1');                       // 👈 undefined (first entry was evicte
 
 ### has()
 
-> **has**: (`key`, `options`?) => `boolean`
+> **has**: (`key`, `options?`) => `boolean`
 
 Checks whether an entry exist and hasn't expired.
 
@@ -282,7 +286,7 @@ return undefined if they have.
 
 ### set()
 
-> **set**: (`key`, `value`, `ttl`?) => `boolean`
+> **set**: (`key`, `value`, `ttl?`) => `boolean`
 
 Add a new entry to the cache and overwrite value if the key was already
 present. It will move the item as the most recently used.

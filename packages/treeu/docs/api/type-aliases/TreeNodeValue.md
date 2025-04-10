@@ -6,4 +6,4 @@
 
 # Type Alias: TreeNodeValue
 
-> **TreeNodeValue**: `Record`\<`string`, `unknown`\> \| `string` \| `number` \| `boolean` \| `null`
+> **TreeNodeValue** = `Record`\<`string`, `unknown`\> \| `string` \| `number` \| `boolean` \| `null`
