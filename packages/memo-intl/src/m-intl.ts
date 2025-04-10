@@ -23,7 +23,7 @@ export const MIntl = {
   /**
    * Return a memoized Intl.NumberFormatter instance
    *
-   * @example Usage
+   * @example
    * ```typescript
    * const formatter = MIntl.NumberFormat('fr-FR', {
    *   style: 'currency',
@@ -49,7 +49,7 @@ export const MIntl = {
   /**
    * Return a memoized Intl.DateTimeFormatter instance
    *
-   * @example Usage
+   * @example
    * <code>
    * ```typescript
    * const formatter = MIntl.DateTimeFormat('fr-FR', {
@@ -77,7 +77,7 @@ export const MIntl = {
   /**
    * Return a memoized Intl.Locale instance
    *
-   * @example Usage
+   * @example
    * ```typescript
    * const enLocale = MIntl.Locale('en');
    * const koLocale = new Intl.Locale("ko", {
@@ -101,7 +101,7 @@ export const MIntl = {
   /**
    * Return a memoized Intl.Collator instance
    *
-   * @example Usage
+   * @example
    * ```typescript
    * const collator = MIntl.Collator('de', {
    *   sensitivity: "base",
@@ -126,7 +126,7 @@ export const MIntl = {
   /**
    * Return a memoized Intl.RelativeTimeFormat instance
    *
-   * @example Usage
+   * @example
    * ```typescript
    * const rtf1 = MIntl.RelativeTimeFormat("en", { style: "short" });
    * const value = rtf1.format(3, "quarter") // // 👈 'in 3 qtrs.'
@@ -147,7 +147,7 @@ export const MIntl = {
   /**
    * Return a memoized Intl.ListFormat instance
    *
-   * @example Usage
+   * @example
    * ```typescript
    * const vehicles = ["Motorcycle", "Bus", "Car"];
    * const formatter = new Intl.ListFormat("en", {
@@ -169,6 +169,18 @@ export const MIntl = {
     }
     return _cacheIntl.get(key)! as Intl.ListFormat;
   },
+
+  /**
+   * Return a memoized Intl.PluralRules instance
+   *
+   * @example
+   * ```typescript
+   * const pluralRules = MIntl.PluralRules('en-US', { type: 'ordinal' });
+   * const num = pluralRules.select(2); // 👈 'two'
+   * ```
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules
+   */
   PluralRules: (
     locale: IntlLocale,
     options?: Intl.PluralRulesOptions
@@ -179,6 +191,20 @@ export const MIntl = {
     }
     return _cacheIntl.get(key)! as Intl.PluralRules;
   },
+
+  /**
+   * Return a memoized Intl.Segmenter instance
+   *
+   * @example
+   * ```typescript
+   * const segmenter = MIntl.Segmenter('fr', { granularity: 'word' });
+   * const string = 'Que ma joie demeure';
+   * const iterator = segmenter.segment(string)[Symbol.iterator]();
+   * iterator1.next().value!.segment // 👈 'Que'
+   * ```
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter
+   */
   Segmenter: (
     locale: IntlLocale,
     options?: Intl.SegmenterOptions
