@@ -11,7 +11,7 @@ describe('MIntl Locale benchmarks', () => {
   bench(
     'With memoization `MIntl.Loclae()`',
     () => {
-      for (const row of arr) {
+      for (const _row of arr) {
         const _locale = MIntl.Locale('fr-FR', {
           caseFirst: 'lower',
         });
@@ -23,8 +23,8 @@ describe('MIntl Locale benchmarks', () => {
   bench(
     'Without memoization `new Intl.Locale()`',
     () => {
-      for (const row of arr) {
-        const rtf = new Intl.Locale('fr_FR', {
+      for (const _row of arr) {
+        const _rtf = new Intl.Locale('fr_FR', {
           caseFirst: 'lower',
         });
       }
