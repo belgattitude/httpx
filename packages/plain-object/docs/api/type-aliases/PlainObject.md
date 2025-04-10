@@ -6,8 +6,10 @@
 
 # Type Alias: PlainObject\<TValue\>
 
-> **PlainObject**\<`TValue`\>: `TValue` *extends* `DefaultBasePlainObject` ? `Record`\<`PlainObjectKey`, `unknown`\> : `Simplify`\<`PlainObjectDeepPartialUnknown`\<`TValue`\>\>
+> **PlainObject**\<`TValue`\> = `TValue` *extends* `DefaultBasePlainObject` ? `Record`\<`PlainObjectKey`, `unknown`\> : `Simplify`\<`PlainObjectDeepPartialUnknown`\<`TValue`\>\>
 
 ## Type Parameters
 
-• **TValue** *extends* `BasePlainObject` = `DefaultBasePlainObject`
+### TValue
+
+`TValue` *extends* `BasePlainObject` = `DefaultBasePlainObject`

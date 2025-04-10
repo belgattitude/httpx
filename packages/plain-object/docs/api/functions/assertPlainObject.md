@@ -6,13 +6,15 @@
 
 # Function: assertPlainObject()
 
-> **assertPlainObject**\<`TValue`\>(`v`, `msgOrErrorFactory`?): `asserts v is TValue extends DefaultBasePlainObject ? BasePlainObject : PlainObject<TValue>`
+> **assertPlainObject**\<`TValue`\>(`v`, `msgOrErrorFactory?`): `asserts v is TValue extends DefaultBasePlainObject ? BasePlainObject : PlainObject<TValue>`
 
 Assert a value is a plain object
 
 ## Type Parameters
 
-• **TValue** *extends* `BasePlainObject` = `DefaultBasePlainObject`
+### TValue
+
+`TValue` *extends* `BasePlainObject` = `DefaultBasePlainObject`
 
 ## Parameters
 

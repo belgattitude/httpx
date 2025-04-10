@@ -6,7 +6,7 @@
 
 # Function: createStableKey()
 
-> **createStableKey**\<`T`\>(`value`, `options`?): `Result`
+> **createStableKey**\<`T`\>(`value`, `options?`): `Result`
 
 Create a stable key from a given value useful for caching or memoization.
 
@@ -17,7 +17,9 @@ This function is
 
 ## Type Parameters
 
-• **T** *extends* `SupportedDataTypesRW`
+### T
+
+`T` *extends* `SupportedDataTypesRW`
 
 ## Parameters
 

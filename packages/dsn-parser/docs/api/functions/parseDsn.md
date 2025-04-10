@@ -6,7 +6,7 @@
 
 # Function: parseDsn()
 
-> **parseDsn**(`dsn`, `options`?): `ParserResult`
+> **parseDsn**(`dsn`, `options?`): `ParserResult`
 
 ## Parameters
 

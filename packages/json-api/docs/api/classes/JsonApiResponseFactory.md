@@ -8,19 +8,19 @@
 
 ## Constructors
 
-### new JsonApiResponseFactory()
+### Constructor
 
-> **new JsonApiResponseFactory**(): [`JsonApiResponseFactory`](JsonApiResponseFactory.md)
+> **new JsonApiResponseFactory**(): `JsonApiResponseFactory`
 
 #### Returns
 
-[`JsonApiResponseFactory`](JsonApiResponseFactory.md)
+`JsonApiResponseFactory`
 
 ## Methods
 
 ### fromError()
 
-> `readonly` `static` **fromError**(`errors`, `httpStatus`?): [`JsonApiErrorResponse`](../type-aliases/JsonApiErrorResponse.md)
+> `readonly` `static` **fromError**(`errors`, `httpStatus?`): [`JsonApiErrorResponse`](../type-aliases/JsonApiErrorResponse.md)
 
 #### Parameters
 
@@ -42,11 +42,13 @@ fallback http status if not present in JsonApiError
 
 ### fromSuccess()
 
-> `readonly` `static` **fromSuccess**\<`T`\>(`data`, `metadata`?): [`JsonApiSuccessResponse`](../type-aliases/JsonApiSuccessResponse.md)\<`T`\>
+> `readonly` `static` **fromSuccess**\<`T`\>(`data`, `metadata?`): [`JsonApiSuccessResponse`](../type-aliases/JsonApiSuccessResponse.md)\<`T`\>
 
 #### Type Parameters
 
-• **T**
+##### T
+
+`T`
 
 #### Parameters
 

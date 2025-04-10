@@ -1,4 +1,4 @@
-[**@httpx/lru v0.8.1**](../README.md)
+[**@httpx/lru v0.9.0**](../README.md)
 
 ***
 
@@ -6,21 +6,27 @@
 
 # Type Alias: LruCacheParams\<TValue, TKey\>
 
-> **LruCacheParams**\<`TValue`, `TKey`\>: `object`
+> **LruCacheParams**\<`TValue`, `TKey`\> = `object`
 
 ## Type Parameters
 
-• **TValue**
+### TValue
 
-• **TKey** *extends* [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`
+`TValue`
 
-## Type declaration
+### TKey
+
+`TKey` *extends* [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`
+
+## Properties
 
 ### maxSize
 
 > **maxSize**: `number`
 
 The maximum number of items that the cache can hold.
+
+***
 
 ### onEviction()?
 
@@ -42,6 +48,8 @@ Useful for side effects or for items like object URLs that need explicit cleanup
 #### Returns
 
 `void`
+
+***
 
 ### touchOnHas?
 

@@ -18,15 +18,19 @@ https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
 
 ## Type Parameters
 
-• **TValue** *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
+### TValue
 
-• **TKey** *extends* `string` \| `number` = `string`
+`TValue` *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
+
+### TKey
+
+`TKey` *extends* `string` \| `number` = `string`
 
 ## Constructors
 
-### new DfsTreeSearch()
+### Constructor
 
-> **new DfsTreeSearch**\<`TValue`, `TKey`\>(`treeNodes`): [`DfsTreeSearch`](DfsTreeSearch.md)\<`TValue`, `TKey`\>
+> **new DfsTreeSearch**\<`TValue`, `TKey`\>(`treeNodes`): `DfsTreeSearch`\<`TValue`, `TKey`\>
 
 #### Parameters
 
@@ -36,13 +40,13 @@ https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
 
 #### Returns
 
-[`DfsTreeSearch`](DfsTreeSearch.md)\<`TValue`, `TKey`\>
+`DfsTreeSearch`\<`TValue`, `TKey`\>
 
 ## Methods
 
 ### findOne()
 
-> **findOne**(`idOrConditionOrFn`, `params`?): `undefined` \| `TreeNodeOptionalChildren`\<`TValue`, `TKey`\>
+> **findOne**(`idOrConditionOrFn`, `params?`): `undefined` \| `TreeNodeOptionalChildren`\<`TValue`, `TKey`\>
 
 Find first matching node in the tree. The `reverse` parameter can be used
 to traverse the tree in reverse order.

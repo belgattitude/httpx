@@ -10,7 +10,9 @@
 
 ## Type Parameters
 
-• **T** *extends* `AsyncFn`\<`unknown`[], `unknown`\>
+### T
+
+`T` *extends* `AsyncFn`\<`unknown`[], `unknown`\>
 
 ## Parameters
 

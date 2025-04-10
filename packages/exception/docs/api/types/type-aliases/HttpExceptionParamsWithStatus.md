@@ -6,7 +6,7 @@
 
 # Type Alias: HttpExceptionParamsWithStatus
 
-> **HttpExceptionParamsWithStatus**: [`HttpExceptionParams`](HttpExceptionParams.md) & `object`
+> **HttpExceptionParamsWithStatus** = [`HttpExceptionParams`](HttpExceptionParams.md) & `object`
 
 ## Type declaration
 

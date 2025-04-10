@@ -6,7 +6,7 @@
 
 # Function: assertParsableDsn()
 
-> **assertParsableDsn**(`dsn`, `msg`?): `asserts dsn is ParsableDsn`
+> **assertParsableDsn**(`dsn`, `msg?`): `asserts dsn is ParsableDsn`
 
 ## Parameters
 

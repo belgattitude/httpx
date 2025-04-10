@@ -8,13 +8,13 @@
 
 ## Constructors
 
-### new JsonApiErrorFactory()
+### Constructor
 
-> **new JsonApiErrorFactory**(): [`JsonApiErrorFactory`](JsonApiErrorFactory.md)
+> **new JsonApiErrorFactory**(): `JsonApiErrorFactory`
 
 #### Returns
 
-[`JsonApiErrorFactory`](JsonApiErrorFactory.md)
+`JsonApiErrorFactory`
 
 ## Methods
 

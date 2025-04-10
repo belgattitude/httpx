@@ -8,15 +8,19 @@
 
 ## Type Parameters
 
-• **TValue** *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
+### TValue
 
-• **TKey** *extends* `string` = `string`
+`TValue` *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
+
+### TKey
+
+`TKey` *extends* `string` = `string`
 
 ## Constructors
 
-### new Tree()
+### Constructor
 
-> **new Tree**\<`TValue`, `TKey`\>(`treeNodes`): [`Tree`](Tree.md)\<`TValue`, `TKey`\>
+> **new Tree**\<`TValue`, `TKey`\>(`treeNodes`): `Tree`\<`TValue`, `TKey`\>
 
 #### Parameters
 
@@ -26,7 +30,7 @@
 
 #### Returns
 
-[`Tree`](Tree.md)\<`TValue`, `TKey`\>
+`Tree`\<`TValue`, `TKey`\>
 
 ## Methods
 

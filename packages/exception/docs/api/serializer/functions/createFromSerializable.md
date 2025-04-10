@@ -6,7 +6,7 @@
 
 # Function: createFromSerializable()
 
-> **createFromSerializable**(`payload`, `params`?): [`HttpException`](../../base/classes/HttpException.md) \| [`NativeError`](../type-aliases/NativeError.md)
+> **createFromSerializable**(`payload`, `params?`): [`HttpException`](../../base/classes/HttpException.md) \| [`NativeError`](../type-aliases/NativeError.md)
 
 create an Error, NativeError or any HttpException from a
 serializable representation

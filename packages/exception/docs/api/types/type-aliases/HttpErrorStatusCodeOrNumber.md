@@ -6,4 +6,4 @@
 
 # Type Alias: HttpErrorStatusCodeOrNumber
 
-> **HttpErrorStatusCodeOrNumber**: [`HttpErrorStatusCode`](HttpErrorStatusCode.md) \| `number` & `object`
+> **HttpErrorStatusCodeOrNumber** = [`HttpErrorStatusCode`](HttpErrorStatusCode.md) \| `number` & `object`

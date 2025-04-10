@@ -6,9 +6,9 @@
 
 # Type Alias: JsonApiResponseMeta
 
-> **JsonApiResponseMeta**: `object`
+> **JsonApiResponseMeta** = `object`
 
-## Type declaration
+## Properties
 
 ### meta?
 

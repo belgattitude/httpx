@@ -1,4 +1,4 @@
-[**@httpx/lru v0.8.1**](../README.md)
+[**@httpx/lru v0.9.0**](../README.md)
 
 ***
 
@@ -10,9 +10,13 @@ Double linked list based lru cache that supports get in O(1)
 
 ## Type Parameters
 
-• **TValue** *extends* [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
+### TValue
 
-• **TKey** *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
+`TValue` *extends* [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
+
+### TKey
+
+`TKey` *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
 
 ## Implements
 
@@ -20,9 +24,9 @@ Double linked list based lru cache that supports get in O(1)
 
 ## Constructors
 
-### new LruCache()
+### Constructor
 
-> **new LruCache**\<`TValue`, `TKey`\>(`params`): [`LruCache`](LruCache.md)\<`TValue`, `TKey`\>
+> **new LruCache**\<`TValue`, `TKey`\>(`params`): `LruCache`\<`TValue`, `TKey`\>
 
 Create a new LruCache instance
 
@@ -34,7 +38,7 @@ Create a new LruCache instance
 
 #### Returns
 
-[`LruCache`](LruCache.md)\<`TValue`, `TKey`\>
+`LruCache`\<`TValue`, `TKey`\>
 
 #### Example
 
@@ -268,7 +272,7 @@ lru.get('key1');                       // 👈 undefined (first entry was evicte
 
 ### has()
 
-> **has**(`key`, `options`?): `boolean`
+> **has**(`key`, `options?`): `boolean`
 
 Checks whether an entry exist.
 

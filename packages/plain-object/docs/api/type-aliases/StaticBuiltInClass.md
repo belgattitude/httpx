@@ -6,4 +6,4 @@
 
 # Type Alias: StaticBuiltInClass
 
-> **StaticBuiltInClass**: `Math` \| `JSON` \| `Atomics`
+> **StaticBuiltInClass** = `Math` \| `JSON` \| `Atomics`

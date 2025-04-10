@@ -6,13 +6,13 @@
 
 # Type Alias: HttpValidationIssue
 
-> **HttpValidationIssue**: `object`
+> **HttpValidationIssue** = `object`
 
 Related to HttpBadRequest, HttpValidationIssue contains additional validation info.
 Slightly inspired from https://jsonapi.org/format/1.2/#error-objects
 and zod (path).
 
-## Type declaration
+## Properties
 
 ### code?
 
@@ -20,11 +20,15 @@ and zod (path).
 
 An application-specific error code, expressed as a string value.
 
+***
+
 ### message
 
 > **message**: `string`
 
 A short, human-readable summary of the problem
+
+***
 
 ### path
 

@@ -36,9 +36,9 @@ either a message or an object containing HttpExceptionParams
 
 ## Constructors
 
-### new HttpServerException()
+### Constructor
 
-> **new HttpServerException**(`statusCode`, `msgOrParams`?): [`HttpServerException`](HttpServerException.md)
+> **new HttpServerException**(`statusCode`, `msgOrParams?`): `HttpServerException`
 
 #### Parameters
 
@@ -52,11 +52,11 @@ either a message or an object containing HttpExceptionParams
 
 #### Returns
 
-[`HttpServerException`](HttpServerException.md)
+`HttpServerException`
 
 #### Overrides
 
-[`HttpException`](HttpException.md).[`constructor`](HttpException.md#constructors)
+[`HttpException`](HttpException.md).[`constructor`](HttpException.md#constructor)
 
 ## Properties
 
@@ -151,7 +151,7 @@ Http error status code (400-599)
 
 #### Inherited from
 
-[`HttpException`](HttpException.md).[`statusCode`](HttpException.md#statuscode-1)
+[`HttpException`](HttpException.md).[`statusCode`](HttpException.md#statuscode)
 
 ***
 
@@ -209,7 +209,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace()
 
-> `static` **captureStackTrace**(`targetObject`, `constructorOpt`?): `void`
+> `static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

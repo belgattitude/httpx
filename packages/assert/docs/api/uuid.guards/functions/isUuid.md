@@ -6,9 +6,9 @@
 
 # Function: isUuid()
 
-> **isUuid**(`v`, `version`?): `v is Uuid`
+> **isUuid**(`v`, `version?`): `v is Uuid`
 
-Defined in: [uuid.guards.ts:24](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/uuid.guards.ts#L24)
+Defined in: [uuid.guards.ts:24](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/uuid.guards.ts#L24)
 
 Check whether a value is string and passes uuid validation with
 optional given version

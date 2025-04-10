@@ -22,9 +22,9 @@ either a message or an object containing HttpExceptionParams
 
 ## Constructors
 
-### new HttpForbidden()
+### Constructor
 
-> **new HttpForbidden**(`msgOrParams`?): [`HttpForbidden`](HttpForbidden.md)
+> **new HttpForbidden**(`msgOrParams?`): `HttpForbidden`
 
 #### Parameters
 
@@ -34,11 +34,11 @@ either a message or an object containing HttpExceptionParams
 
 #### Returns
 
-[`HttpForbidden`](HttpForbidden.md)
+`HttpForbidden`
 
 #### Overrides
 
-[`HttpClientException`](../../base/classes/HttpClientException.md).[`constructor`](../../base/classes/HttpClientException.md#constructors)
+[`HttpClientException`](../../base/classes/HttpClientException.md).[`constructor`](../../base/classes/HttpClientException.md#constructor)
 
 ## Properties
 
@@ -133,7 +133,7 @@ Http error status code (400-599)
 
 #### Inherited from
 
-[`HttpClientException`](../../base/classes/HttpClientException.md).[`statusCode`](../../base/classes/HttpClientException.md#statuscode-1)
+[`HttpClientException`](../../base/classes/HttpClientException.md).[`statusCode`](../../base/classes/HttpClientException.md#statuscode)
 
 ***
 
@@ -197,7 +197,7 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ### captureStackTrace()
 
-> `static` **captureStackTrace**(`targetObject`, `constructorOpt`?): `void`
+> `static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
 Create .stack property on a target object
 

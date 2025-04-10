@@ -1,4 +1,4 @@
-[**@httpx/lru v0.8.1**](../README.md)
+[**@httpx/lru v0.9.0**](../README.md)
 
 ***
 
@@ -6,4 +6,4 @@
 
 # Type Alias: SupportedCacheValues
 
-> **SupportedCacheValues**: `Readonly`\<`BaseCacheValueTypes`\> \| `BaseCacheValueTypes`
+> **SupportedCacheValues** = `Readonly`\<`BaseCacheValueTypes`\> \| `BaseCacheValueTypes`

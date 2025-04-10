@@ -6,7 +6,7 @@
 
 # Function: convertToSerializable()
 
-> **convertToSerializable**(`e`, `params`?): `Serializable`
+> **convertToSerializable**(`e`, `params?`): `Serializable`
 
 Convert an Error, NativeError or any HttpException to
 an object suitable for serialization (a serializable version).

@@ -6,10 +6,14 @@
 
 # Type Alias: FlatTreeWs\<TValue, TKey\>
 
-> **FlatTreeWs**\<`TValue`, `TKey`\>: `FlatTreeWsMap`\<`TValue`, `TKey`\> \| `FlatTreeWsRecord`\<`TValue`, `TKey`\>
+> **FlatTreeWs**\<`TValue`, `TKey`\> = `FlatTreeWsMap`\<`TValue`, `TKey`\> \| `FlatTreeWsRecord`\<`TValue`, `TKey`\>
 
 ## Type Parameters
 
-• **TValue** *extends* [`TreeNodeValue`](TreeNodeValue.md) \| `undefined`
+### TValue
 
-• **TKey** *extends* `FlatTreeWsUniqueKey` = `string`
+`TValue` *extends* [`TreeNodeValue`](TreeNodeValue.md) \| `undefined`
+
+### TKey
+
+`TKey` *extends* `FlatTreeWsUniqueKey` = `string`

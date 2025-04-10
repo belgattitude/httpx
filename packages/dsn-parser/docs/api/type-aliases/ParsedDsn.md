@@ -6,21 +6,27 @@
 
 # Type Alias: ParsedDsn
 
-> **ParsedDsn**: `object`
+> **ParsedDsn** = `object`
 
-## Type declaration
+## Properties
 
 ### db?
 
 > `optional` **db**: `string`
 
+***
+
 ### driver
 
 > **driver**: `string`
 
+***
+
 ### host
 
 > **host**: `string`
+
+***
 
 ### params?
 
@@ -28,13 +34,19 @@
 
 Query params
 
+***
+
 ### pass?
 
 > `optional` **pass**: `string`
 
+***
+
 ### port?
 
 > `optional` **port**: `number`
+
+***
 
 ### user?
 

@@ -6,15 +6,17 @@
 
 # Type Alias: ParseDsnOptions
 
-> **ParseDsnOptions**: `object`
+> **ParseDsnOptions** = `object`
 
-## Type declaration
+## Properties
 
 ### lowercaseDriver?
 
 > `optional` **lowercaseDriver**: `boolean`
 
 Whether to lowercase parsed driver name, default: false
+
+***
 
 ### overrides?
 

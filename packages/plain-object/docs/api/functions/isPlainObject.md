@@ -14,7 +14,9 @@ A plain object is a basic JavaScript object, such as {}, { data: [] }, new Objec
 
 ## Type Parameters
 
-• **TValue** *extends* `BasePlainObject` = `DefaultBasePlainObject`
+### TValue
+
+`TValue` *extends* `BasePlainObject` = `DefaultBasePlainObject`
 
 ## Parameters
 

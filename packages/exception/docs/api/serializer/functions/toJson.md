@@ -6,7 +6,7 @@
 
 # Function: toJson()
 
-> **toJson**(`exception`, `params`?): `string`
+> **toJson**(`exception`, `params?`): `string`
 
 ## Parameters
 

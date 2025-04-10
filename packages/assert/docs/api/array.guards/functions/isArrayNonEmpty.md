@@ -8,11 +8,13 @@
 
 > **isArrayNonEmpty**\<`T`\>(`v`): `v is ArrayNonEmpty<T>`
 
-Defined in: [array.guards.ts:3](https://github.com/belgattitude/httpx/blob/d975bb2c60098569db690fb567053dfa3514ae29/packages/assert/src/array.guards.ts#L3)
+Defined in: [array.guards.ts:3](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/array.guards.ts#L3)
 
 ## Type Parameters
 
-• **T** = `unknown`
+### T
+
+`T` = `unknown`
 
 ## Parameters
 
