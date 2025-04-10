@@ -1,9 +1,9 @@
 import { bench } from 'vitest';
 
 import { MIntl } from '../src';
-
-describe('MIntl DateFormatter benchmarks', () => {
-  const nbRows = 100;
+import { benchConfig } from './bench.config';
+const nbRows = benchConfig.samples;
+describe(`MIntl DateFormatter benchmarks (${nbRows} instances)`, () => {
   const dates = Array.from({ length: nbRows }).map((_v, idx) => ({
     date: 10_000 + idx,
   }));

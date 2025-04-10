@@ -1,20 +1,21 @@
 import { bench } from 'vitest';
 
 import { MIntl } from '../src';
-
-describe('MIntl Locale benchmarks', () => {
-  const nbRows = 100;
+import { benchConfig } from './bench.config';
+const nbRows = benchConfig.samples;
+describe(`MIntl Locale benchmarks (${nbRows} instances)`, () => {
   const arr = Array.from({ length: nbRows }).map((_v, idx) => ({
     idx: idx,
   }));
 
   bench(
-    'With memoization `MIntl.Loclae()`',
+    'With memoization `MIntl.Locale()`',
     () => {
       for (const _row of arr) {
-        const _locale = MIntl.Locale('fr-FR', {
+        const locale = MIntl.Locale('fr-FR', {
           caseFirst: 'lower',
         });
+        const _language = locale.language;
       }
     },
     { time: 1 }
@@ -24,9 +25,10 @@ describe('MIntl Locale benchmarks', () => {
     'Without memoization `new Intl.Locale()`',
     () => {
       for (const _row of arr) {
-        const _rtf = new Intl.Locale('fr_FR', {
+        const locale = new Intl.Locale('fr-FR', {
           caseFirst: 'lower',
         });
+        const _language = locale.language;
       }
     },
     { time: 1 }

@@ -1,9 +1,10 @@
 import { bench } from 'vitest';
 
 import { MIntl } from '../src';
+import { benchConfig } from './bench.config';
 
-describe('MIntl NumberFormatter benchmarks', () => {
-  const nbRows = 100;
+const nbRows = benchConfig.samples;
+describe(`MIntl NumberFormatter benchmarks (${nbRows} instances)`, () => {
   const arrayMapperScenario = Array.from({ length: nbRows }).map((_v, idx) => ({
     productId: idx,
     price: idx + 0.99,

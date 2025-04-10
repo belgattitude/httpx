@@ -1,9 +1,11 @@
 import { bench } from 'vitest';
 
 import { MIntl } from '../src';
+import { benchConfig } from './bench.config';
 
-describe('MIntl RelativeTimeFormat benchmarks', () => {
-  const nbRows = 100;
+const nbRows = benchConfig.samples;
+
+describe(`MIntl RelativeTimeFormat benchmarks (${nbRows} instances)`, () => {
   const dates = Array.from({ length: nbRows }).map((_v, idx) => ({
     idx: idx,
   }));
