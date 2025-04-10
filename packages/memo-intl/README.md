@@ -208,7 +208,7 @@ See [bench](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/b
 
 ## Bundle size
 
-Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.size-limit.cjs)
+Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.size-limit.ts)
 
 | Scenario                                       | Size with deps (compressed) |
 |------------------------------------------------|----------------------------:|
