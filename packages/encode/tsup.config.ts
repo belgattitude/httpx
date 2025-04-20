@@ -17,7 +17,7 @@ export default defineConfig((options) => {
         js: `.${format === 'cjs' ? 'cjs' : 'mjs'}`,
       };
     },
-    platform: 'browser',
+    platform: 'node',
     sourcemap: !options.watch,
     splitting: true,
     bundle: true,

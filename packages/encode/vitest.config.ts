@@ -12,10 +12,10 @@ export default defineConfig({
     target: ['node18'],
   },
   plugins: [tsconfigPaths(), ...[cspeed].filter(Boolean)],
-  cacheDir: '../../.cache/vite/compress',
+  cacheDir: '../../.cache/vite/encode',
   test: {
     browser: {
-      provider: 'playwright', // or 'webdriverio'
+      provider: 'playwright',
       enabled: false,
       // at least one instance is required
       instances: [{ browser: 'chromium' }],

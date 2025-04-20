@@ -2,7 +2,8 @@ import { encode as jsBase64Encode } from 'js-base64';
 import prettyBytes from 'pretty-bytes';
 import { bench, describe } from 'vitest';
 
-import { Base64 } from '../src/base64';
+import { Base64Nodejs } from '../src/base64/base64.nodejs';
+import { Base64Purejs } from '../src/base64/base64.purejs';
 import { benchConfig } from './bench-config';
 
 describe(`Compare`, async () => {
@@ -11,17 +12,17 @@ describe(`Compare`, async () => {
   const size = prettyBytes(longString.length);
 
   bench(
-    `@httpx/base64.encode (original size: ${size})`,
+    `@httpx/base64.encode (Node.Buffer - original size: ${size})`,
     () => {
-      Base64.encode(longString);
+      Base64Nodejs.encode(longString);
     },
     benchOptions
   );
 
   bench(
-    `@httpx/encode.encodeNodeJs (original size: ${size})`,
+    `@httpx/base64.encode (PureJs - original size: ${size})`,
     () => {
-      Base64.encodeNodeJs(longString);
+      Base64Purejs.encode(longString);
     },
     benchOptions
   );

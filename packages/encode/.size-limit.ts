@@ -2,15 +2,9 @@ import type { SizeLimitConfig } from 'size-limit';
 
 module.exports = [
   {
-    name: 'Only { Compressor } (ESM)',
+    name: 'Only { Base64 } (ESM)',
     path: ['dist/index.mjs'],
-    import: '{ Encoder }',
+    import: '{ Base64 }',
     limit: '564B',
-  },
-  {
-    name: '{ Decompressor, Compressor } (ESM)',
-    path: ['dist/index.mjs'],
-    import: '{ Decompressor, Compressor }',
-    limit: '670B',
   },
 ] satisfies SizeLimitConfig;
