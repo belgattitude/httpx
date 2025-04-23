@@ -7,9 +7,14 @@ import type { Base64Encoder } from './base64.types';
 
 const cb = (m: string): number => m.codePointAt(0)!;
 function base64ToBytes(base64: string) {
-  const binString = globalThis.atob(base64);
-
-  return Uint8Array.from(binString, cb);
+  try {
+    const binString = globalThis.atob(base64);
+    return Uint8Array.from(binString, cb);
+  } catch (error) {
+    throw new Error(
+      `Invalid Base64 input: ${error instanceof Error ? error.message : String(error)}`
+    );
+  }
 }
 
 function bytesToBase64(bytes: Uint8Array) {
