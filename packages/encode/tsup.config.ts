@@ -1,7 +1,9 @@
 import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { esbuildPluginFilePathExtensions } from 'esbuild-plugin-file-path-extensions';
+import {
+  fixExtensionsPlugin,
+  fixImportsPlugin,
+} from 'esbuild-fix-imports-plugin';
 import { defineConfig, type Options } from 'tsup';
-
 const getStandardOptions = (
   options: Options,
   params: {
@@ -11,7 +13,7 @@ const getStandardOptions = (
     format?: ('cjs' | 'esm')[];
   }
 ): Options => {
-  const { entry, platform, bundle, format = ['esm', 'cjs'] } = params;
+  const { entry, platform, bundle, format = ['esm'] } = params;
   return {
     cjsInterop: true,
     clean: true,
@@ -22,11 +24,6 @@ const getStandardOptions = (
     minifyIdentifiers: true,
     minifySyntax: true,
     minifyWhitespace: true,
-    outExtension({ format }) {
-      return {
-        js: `.${format === 'cjs' ? 'cjs' : 'mjs'}`,
-      };
-    },
     platform: platform,
     sourcemap: !options.watch,
     splitting: true,
@@ -34,24 +31,41 @@ const getStandardOptions = (
     target: ['es2022', ...browserslistToEsbuild()],
     treeshake: true,
     tsconfig: './tsconfig.build.json',
-    esbuildPlugins: [esbuildPluginFilePathExtensions({ esmExtension: 'mjs' })],
+    esbuildPlugins: [
+      // esbuildPluginFilePathExtensions({ esmExtension: 'mjs' }),
+      fixExtensionsPlugin(),
+      fixImportsPlugin(),
+    ],
   };
 };
 
 export default defineConfig((options) => {
   return [
     getStandardOptions(options, {
-      entry: ['src/index.ts', 'src/base64/*.ts', 'src/cache/*.ts'],
-      platform: 'neutral',
-      bundle: true,
+      entry: ['src/index.nodejs.ts', 'src/base64/*.ts', 'src/cache/*.ts'],
+      platform: 'node',
+      bundle: false,
       format: ['esm'],
     }),
     getStandardOptions(options, {
-      entry: ['src/index.cts', 'src/base64/*.ts', 'src/cache/*.ts'],
-      platform: 'neutral',
-      bundle: true,
-      format: ['cjs'],
+      entry: ['src/index.browser.ts', 'src/base64/*.ts', 'src/cache/*.ts'],
+      platform: 'node',
+      bundle: false,
+      format: ['esm'],
     }),
+    getStandardOptions(options, {
+      entry: ['src/index.purejs.ts', 'src/base64/*.ts', 'src/cache/*.ts'],
+      platform: 'neutral',
+      bundle: false,
+      format: ['esm'],
+    }),
+    getStandardOptions(options, {
+      entry: ['src/index.ts', 'src/base64/*.ts', 'src/cache/*.ts'],
+      platform: 'neutral',
+      bundle: false,
+      format: ['esm'],
+    }),
+
     /*
     getStandardOptions(options, {
       entry: ['src/base64/base64.browser.ts'],

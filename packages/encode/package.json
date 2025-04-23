@@ -20,48 +20,32 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
+        "node": "./dist/index.nodejs.js",
+        "deno": "./dist/index.nodejs.js",
+        "browser": "./dist/index.browser.js",
+        "default": "./dist/index.purejs.js"
       }
     },
     "./base64/base64.purejs": {
       "import": {
         "types": "./dist/base64/base64.purejs.d.ts",
-        "default": "./dist/base64/base64.purejs.mjs"
-      },
-      "require": {
-        "types": "./dist/base64/base64.purejs.d.cts",
-        "default": "./dist/base64/base64.purejs.cjs"
+        "default": "./dist/base64/base64.purejs.js"
       }
     },
     "./base64/base64.browser": {
       "import": {
         "types": "./dist/base64/base64.browser.d.ts",
-        "default": "./dist/base64/base64.browser.mjs"
-      },
-      "require": {
-        "types": "./dist/base64/base64.browser.d.cts",
-        "default": "./dist/base64/base64.browser.cjs"
+        "default": "./dist/base64/base64.browser.js"
       }
     },
     "./base64/base64.nodejs": {
       "import": {
         "types": "./dist/base64/base64.nodejs.d.ts",
-        "default": "./dist/base64/base64.nodejs.mjs"
-      },
-      "require": {
-        "types": "./dist/base64/base64.nodejs.d.cts",
-        "default": "./dist/base64/base64.nodejs.cjs"
+        "default": "./dist/base64/base64.nodejs.js"
       }
     },
     "./package.json": "./package.json"
@@ -81,7 +65,7 @@
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2022 './dist/**/*.cjs'",
     "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
-    "check-pub": "attw --pack --profile node16 && publint",
+    "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
@@ -110,6 +94,7 @@
     "cross-env": "7.0.3",
     "es-check": "8.0.2",
     "esbuild": "0.25.2",
+    "esbuild-fix-imports-plugin": "1.0.19",
     "esbuild-plugin-file-path-extensions": "2.1.4",
     "eslint": "8.57.1",
     "js-base64": "3.7.7",

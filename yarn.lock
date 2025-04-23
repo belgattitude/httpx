@@ -1334,6 +1334,7 @@ __metadata:
     "@httpx/assert": "workspace:^"
     "@httpx/compress": "workspace:^"
     "@httpx/dsn-parser": "workspace:^"
+    "@httpx/encode": "workspace:^"
     "@httpx/exception": "workspace:^"
     "@httpx/lru": "workspace:^"
     "@httpx/memo-intl": "workspace:^"
@@ -1617,7 +1618,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@httpx/encode@workspace:packages/encode":
+"@httpx/encode@workspace:^, @httpx/encode@workspace:packages/encode":
   version: 0.0.0-use.local
   resolution: "@httpx/encode@workspace:packages/encode"
   dependencies:
@@ -1632,6 +1633,7 @@ __metadata:
     cross-env: "npm:7.0.3"
     es-check: "npm:8.0.2"
     esbuild: "npm:0.25.2"
+    esbuild-fix-imports-plugin: "npm:1.0.19"
     esbuild-plugin-file-path-extensions: "npm:2.1.4"
     eslint: "npm:8.57.1"
     js-base64: "npm:3.7.7"
@@ -8131,6 +8133,13 @@ __metadata:
     esast-util-from-estree: "npm:^2.0.0"
     vfile-message: "npm:^4.0.0"
   checksum: 10c0/3a446fb0b0d7bcd7e0157aa44b3b692802a08c93edbea81cc0f7fe4437bfdfb4b72e4563fe63b4e36d390086b71185dba4ac921f4180cc6349985c263cc74421
+  languageName: node
+  linkType: hard
+
+"esbuild-fix-imports-plugin@npm:1.0.19":
+  version: 1.0.19
+  resolution: "esbuild-fix-imports-plugin@npm:1.0.19"
+  checksum: 10c0/579974f5805d2012150e215964c4a093fc730967c015011018b81e88b372cd2a17d2f60dcf7cd1e0df7508650c4ebe54a7f7c8341558e3ec14790eade9a45ce4
   languageName: node
   linkType: hard
 

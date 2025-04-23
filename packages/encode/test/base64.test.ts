@@ -24,12 +24,20 @@ const testRealms = [
 ].filter(Boolean) as [string, Base64Encoder][];
 
 describe('Base64', () => {
-  const string = getEncodingTestData().repeat(50_000);
+  const string = getEncodingTestData().repeat(1000);
   const size = prettyBytes(string.length);
   describe.each(testRealms)('Base64.encode (%s)', (realm, encoder) => {
     it(`should encode a string of ${size}`, () => {
       const encoded = encoder.encode(string);
       expect(encoded).toMatchSnapshot('base64-encoded');
+    });
+  });
+
+  describe.each(testRealms)('Base64.encode (%s)', (realm, encoder) => {
+    it(`should encode a string of ${size}`, () => {
+      const encoded = encoder.encode(string);
+      const decoded = encoder.decode(encoded);
+      expect(decoded).toStrictEqual(string);
     });
   });
 
