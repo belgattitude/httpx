@@ -1,37 +1,51 @@
 {
-  "name": "@httpx/compress",
-  "description": "Compression utilities",
-  "version": "0.2.1",
+  "name": "@httpx/encode",
+  "description": "Base encodings, ie base64...",
+  "version": "0.0.1",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://belgattitude.github.io/httpx/compress",
+  "homepage": "https://belgattitude.github.io/httpx/encode",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
-    "directory": "packages/compress"
+    "directory": "packages/encode"
   },
   "keywords": [
-    "gzip",
-    "compress",
-    "stream"
+    "encoding",
+    "base convert",
+    "base64"
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
+        "node": "./dist/index.nodejs.js",
+        "deno": "./dist/index.nodejs.js",
+        "browser": "./dist/index.browser.js",
+        "default": "./dist/index.purejs.js"
+      }
+    },
+    "./base64/base64.purejs": {
+      "import": {
+        "types": "./dist/base64/base64.purejs.d.ts",
+        "default": "./dist/base64/base64.purejs.js"
+      }
+    },
+    "./base64/base64.browser": {
+      "import": {
+        "types": "./dist/base64/base64.browser.d.ts",
+        "default": "./dist/base64/base64.browser.js"
+      }
+    },
+    "./base64/base64.nodejs": {
+      "import": {
+        "types": "./dist/base64/base64.nodejs.d.ts",
+        "default": "./dist/base64/base64.nodejs.js"
       }
     },
     "./package.json": "./package.json"
@@ -41,22 +55,21 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsup",
-    "build-release": "run build",
+    "build": "yarn run clean && yarn run tsup",
+    "build-release": "yarn run build",
     "bench": "vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
-    "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2022 './dist/**/*.cjs'",
-    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
-    "check-pub": "attw --pack && publint",
+    "check-dist": "run-s check-dist-esm",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.js'",
+    "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/compress.eslintcache",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/encode.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
@@ -66,7 +79,7 @@
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-compress-unit --dir ./coverage"
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-encode-unit --dir ./coverage"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.17.4",
@@ -80,7 +93,11 @@
     "cross-env": "7.0.3",
     "es-check": "8.0.2",
     "esbuild": "0.25.3",
+    "esbuild-fix-imports-plugin": "1.0.19",
+    "esbuild-plugin-file-path-extensions": "2.1.4",
     "eslint": "8.57.1",
+    "is-ci": "4.1.0",
+    "js-base64": "3.7.7",
     "npm-run-all2": "7.0.2",
     "prettier": "3.5.3",
     "pretty-bytes": "6.1.1",

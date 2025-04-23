@@ -88,7 +88,7 @@ LRU-based memoizer for Intl.NumberFormatter and Intl.DateFormatter constructors.
 [![downloads](https://img.shields.io/npm/dm/@httpx/memo-intl?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/memo-intl)
 
 
-### [@httpx/compress](https://github.com/belgattitude/httpx/tree/main/packages/stable-hash#readme)
+### [@httpx/compress](https://github.com/belgattitude/httpx/tree/main/packages/compress#readme)
 
 String and Uint8Array compression utilities (gzip) 
 
@@ -97,6 +97,17 @@ String and Uint8Array compression utilities (gzip)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-compress-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fcompress)
 [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/compress/.size-limit.cjs)
 [![downloads](https://img.shields.io/npm/dm/@httpx/compress?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/compress)
+
+
+### [@httpx/encode](https://github.com/belgattitude/httpx/tree/main/packages/encode#readme)
+
+Base encoding
+
+[![npm](https://img.shields.io/npm/v/@httpx/encode?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/encode)
+[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/encode/CHANGELOG.md)
+[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-encode-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fencode)
+[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/encode/.size-limit.cjs)
+[![downloads](https://img.shields.io/npm/dm/@httpx/encode?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/encode)
 
 
 ## Contributors
