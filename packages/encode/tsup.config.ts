@@ -49,7 +49,7 @@ export default defineConfig((options) => {
     }),
     getStandardOptions(options, {
       entry: ['src/index.browser.ts', 'src/base64/*.ts', 'src/cache/*.ts'],
-      platform: 'node',
+      platform: 'browser',
       bundle: false,
       format: ['esm'],
     }),
