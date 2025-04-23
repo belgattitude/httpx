@@ -1,9 +1,9 @@
-import { encode as jsBase64Encode } from 'js-base64';
+import { Base64NodeJs } from '@httpx/encode/base64/base64.nodejs';
+import { Base64Purejs } from '@httpx/encode/base64/base64.purejs';
+import * as jsBase64 from 'js-base64';
 import prettyBytes from 'pretty-bytes';
 import { bench, describe } from 'vitest';
 
-import { Base64NodeJs } from '../src/base64/base64.nodejs';
-import { Base64Purejs } from '../src/base64/base64.purejs';
 import { benchConfig } from './bench-config';
 
 describe(`Compare`, async () => {
@@ -30,7 +30,7 @@ describe(`Compare`, async () => {
   bench(
     `js-base64.encode (original size: ${size})`,
     () => {
-      jsBase64Encode(longString);
+      jsBase64.encode(longString);
     },
     benchOptions
   );
