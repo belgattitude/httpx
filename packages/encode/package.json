@@ -79,7 +79,7 @@
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-base-unit --dir ./coverage"
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-encode-unit --dir ./coverage"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.17.4",
