@@ -23,8 +23,7 @@ export const Base64Browser = {
   encode: (input: string): string => {
     return bytesToBase64(globalCache.utf8TextEncoder.encode(input));
   },
-
   decode: (input: string): string => {
-    return new TextDecoder().decode(base64ToBytes(input));
+    return globalCache.utf8TextDecoder.decode(base64ToBytes(input));
   },
 } as const satisfies Base64Encoder;
