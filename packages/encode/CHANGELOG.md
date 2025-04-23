@@ -1,5 +1,11 @@
 # @httpx/compress
 
+## 0.0.2
+
+### Patch Changes
+
+- [#2127](https://github.com/belgattitude/httpx/pull/2127) [`5b2d5a4`](https://github.com/belgattitude/httpx/commit/5b2d5a439e348591a41958fa7169907e86a65e2d) Thanks [@belgattitude](https://github.com/belgattitude)! - Initial base64
+
 ## 0.2.1
 
 ### Patch Changes
