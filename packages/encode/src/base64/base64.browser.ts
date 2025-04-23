@@ -1,6 +1,6 @@
 // eslint-disable-next-line import-x/no-nodejs-modules,no-restricted-imports
 
-import { globalCache } from '../global-cache';
+import { globalCache } from '../cache/global-cache';
 import type { Base64Encoder } from './base64.types';
 
 // https://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings/77383580#77383580
@@ -20,12 +20,6 @@ function bytesToBase64(bytes: Uint8Array) {
 }
 
 export const Base64Browser = {
-  /*
-  encode: (input: string): string =>
-    Array.from(globalCache.utf8TextEncoder.encode(input), (byte) =>
-      String.fromCodePoint(byte)
-    ).join(''),
-  */
   encode: (input: string): string => {
     return bytesToBase64(globalCache.utf8TextEncoder.encode(input));
   },

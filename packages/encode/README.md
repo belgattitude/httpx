@@ -22,8 +22,6 @@ $ pnpm add @httpx/encode
 
 ## Features
 
-- 👉&nbsp; base and debase strings or Uint8Array.
-- 🦄&nbsp; Support base64 encoding for strings (and base64-urlsafe).
 - 📐&nbsp; Lightweight (starts at [~600B](#bundle-size))
 - 🛡️&nbsp; Tested on [node 18-22, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🙏&nbsp; Works cross-realms (browser, edge, node, cloudflare...)

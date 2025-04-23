@@ -1,6 +1,6 @@
 import prettyBytes from 'pretty-bytes';
 
-import { Base64Purejs } from '../src/base64/base64.purejs';
+import { Base64Purejs } from '../src/base64/base64.purejs.js';
 import type { Base64Encoder } from '../src/base64/base64.types';
 import { getEncodingTestData } from './data/encoding-test.data';
 
@@ -8,7 +8,7 @@ const isNodeLike = !('window' in globalThis);
 const isBrowserLike = 'window' in globalThis;
 
 const base64Node = isNodeLike
-  ? await import('../src/base64/base64.nodejs').then((mod) => mod.Base64Node)
+  ? await import('../src/base64/base64.nodejs').then((mod) => mod.Base64NodeJs)
   : null;
 
 const base64Browser = isBrowserLike

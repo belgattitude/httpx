@@ -1,6 +1,6 @@
 {
   "name": "@httpx/encode",
-  "description": "Base conversion, ie base64...",
+  "description": "Base encodings, ie base64...",
   "version": "0.0.1",
   "license": "MIT",
   "author": {
@@ -34,6 +34,36 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./base64/base64.purejs": {
+      "import": {
+        "types": "./dist/base64/base64.purejs.d.ts",
+        "default": "./dist/base64/base64.purejs.mjs"
+      },
+      "require": {
+        "types": "./dist/base64/base64.purejs.d.cts",
+        "default": "./dist/base64/base64.purejs.cjs"
+      }
+    },
+    "./base64/base64.browser": {
+      "import": {
+        "types": "./dist/base64/base64.browser.d.ts",
+        "default": "./dist/base64/base64.browser.mjs"
+      },
+      "require": {
+        "types": "./dist/base64/base64.browser.d.cts",
+        "default": "./dist/base64/base64.browser.cjs"
+      }
+    },
+    "./base64/base64.nodejs": {
+      "import": {
+        "types": "./dist/base64/base64.nodejs.d.ts",
+        "default": "./dist/base64/base64.nodejs.mjs"
+      },
+      "require": {
+        "types": "./dist/base64/base64.nodejs.d.cts",
+        "default": "./dist/base64/base64.nodejs.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -41,8 +71,8 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsup",
-    "build-release": "run build",
+    "build": "yarn run clean && yarn run tsup",
+    "build-release": "yarn run build",
     "bench": "vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
@@ -51,7 +81,7 @@
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2022 './dist/**/*.cjs'",
     "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.mjs'",
-    "check-pub": "attw --pack && publint",
+    "check-pub": "attw --pack --profile node16 && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
@@ -80,6 +110,7 @@
     "cross-env": "7.0.3",
     "es-check": "8.0.2",
     "esbuild": "0.25.2",
+    "esbuild-plugin-file-path-extensions": "2.1.4",
     "eslint": "8.57.1",
     "js-base64": "3.7.7",
     "npm-run-all2": "7.0.2",

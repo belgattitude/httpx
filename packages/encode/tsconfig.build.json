@@ -8,7 +8,10 @@
     "declaration": true,
     "declarationMap": false,
     "declarationDir": "./dist",
+    "verbatimModuleSyntax": false,
+    "allowImportingTsExtensions": true,
     "tsBuildInfoFile": "./tsconfig.build.tsbuildinfo" // for tsup rollup dts tsBuildInfoFile is required when using incremental
   },
+  "include": ["src"],
   "exclude": ["*.test.ts"]
 }

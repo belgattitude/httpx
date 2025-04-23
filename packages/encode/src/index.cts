@@ -6,13 +6,11 @@ const isBrowser = globalThis.window !== undefined;
 let b64: Base64Encoder;
 
 if (isBrowser) {
-  b64 = await import('./base64/base64.browser').then(
-    (mod) => mod.Base64Browser
-  );
+  b64 = require('./base64/base64.browser');
 } else if (isNodeJs) {
-  b64 = await import('./base64/base64.nodejs').then((mod) => mod.Base64NodeJs);
+  b64 = require('./base64/base64.nodejs');
 } else {
-  b64 = await import('./base64/base64.purejs').then((mod) => mod.Base64Purejs);
+  b64 = require('./base64/base64.purejs');
 }
 
 export const Base64 = b64;

@@ -3,7 +3,7 @@ import { Buffer } from 'node:buffer';
 
 import type { Base64Encoder } from './base64.types';
 
-export const Base64Node = {
+export const Base64NodeJs = {
   encode: (input: string): string =>
     Buffer.from(input, 'utf8').toString('base64'),
 

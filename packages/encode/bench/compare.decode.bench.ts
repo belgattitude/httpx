@@ -1,7 +1,7 @@
 import prettyBytes from 'pretty-bytes';
 import { bench, describe } from 'vitest';
 
-import { Base64Node } from '../src/base64/base64.nodejs';
+import { Base64NodeJs } from '../src/base64/base64.nodejs';
 import { benchConfig } from './bench-config';
 
 describe(`Compare`, async () => {
@@ -9,11 +9,11 @@ describe(`Compare`, async () => {
 
   const size = prettyBytes(longString.length);
 
-  const encoded = Base64Node.encode(longString);
+  const encoded = Base64NodeJs.encode(longString);
   bench(
     `decode (original size: ${size})`,
     () => {
-      Base64Node.decode(encoded);
+      Base64NodeJs.decode(encoded);
     },
     benchOptions
   );

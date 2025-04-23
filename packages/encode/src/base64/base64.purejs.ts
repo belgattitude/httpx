@@ -1,6 +1,6 @@
-import { base64Alphabet } from '../base64-alphabet';
-import { globalCache } from '../global-cache';
+import { globalCache } from '../cache/global-cache';
 import type { Base64Encoder } from './base64.types';
+import { base64Alphabet } from './base64-alphabet';
 
 export const Base64Purejs = {
   encode: (input: string): string => {
