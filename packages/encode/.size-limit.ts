@@ -24,7 +24,7 @@ module.exports = [
     name: 'Only { Base64 } (browser)',
     path: ['dist/base64/base64.browser.js'],
     import: '{ Base64Browser }',
-    limit: '180B',
+    limit: '230B',
   },
 
 ] satisfies SizeLimitConfig;

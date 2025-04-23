@@ -6,7 +6,7 @@ import { Base64NodeJs } from '../src/base64/base64.nodejs';
 import { Base64Purejs } from '../src/base64/base64.purejs';
 import { benchConfig } from './bench-config';
 
-describe(`Compare`, async () => {
+describe(`Compare base64 encode`, async () => {
   const { benchOptions, longString } = benchConfig;
 
   const size = prettyBytes(longString.length);
