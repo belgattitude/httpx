@@ -1008,17 +1008,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@effect/schema@npm:^0.75.5":
-  version: 0.75.5
-  resolution: "@effect/schema@npm:0.75.5"
-  dependencies:
-    fast-check: "npm:^3.21.0"
-  peerDependencies:
-    effect: ^3.9.2
-  checksum: 10c0/287a860f67eb41d54d0b46f2303eba273b35a9db41f1c2c352fc94023e88574969e03c6284d5dcefdda953f56eabdd98d2cdd268fa872f5966108f540c9e3f44
-  languageName: node
-  linkType: hard
-
 "@emnapi/core@npm:^1.1.0, @emnapi/core@npm:^1.4.0":
   version: 1.4.0
   resolution: "@emnapi/core@npm:1.4.0"
@@ -8564,7 +8553,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-check@npm:^3.21.0, fast-check@npm:^3.23.1, fast-check@npm:^3.23.2":
+"fast-check@npm:^3.23.1, fast-check@npm:^3.23.2":
   version: 3.23.2
   resolution: "fast-check@npm:3.23.2"
   dependencies:
@@ -9743,7 +9732,7 @@ __metadata:
     rimraf: "npm:6.0.1"
     rollup: "npm:4.40.0"
     shell-quote: "npm:1.8.2"
-    syncpack: "npm:13.0.3"
+    syncpack: "npm:13.0.4"
     typescript: "npm:5.8.3"
   languageName: unknown
   linkType: soft
@@ -15969,11 +15958,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"syncpack@npm:13.0.3":
-  version: 13.0.3
-  resolution: "syncpack@npm:13.0.3"
+"syncpack@npm:13.0.4":
+  version: 13.0.4
+  resolution: "syncpack@npm:13.0.4"
   dependencies:
-    "@effect/schema": "npm:^0.75.5"
     chalk: "npm:^5.4.1"
     chalk-template: "npm:^1.1.0"
     commander: "npm:^13.1.0"
@@ -16002,7 +15990,7 @@ __metadata:
     syncpack-prompt: dist/bin-prompt/index.js
     syncpack-set-semver-ranges: dist/bin-set-semver-ranges/index.js
     syncpack-update: dist/bin-update/index.js
-  checksum: 10c0/31f44d052270cdb041bbb3da427fafbb3e6fc1ad5a368100a93465a2c36197e64b87e4c1a7d9d10ee06df884753eb9d6eb6d2153f8e1d96d2f3538df0f3608ea
+  checksum: 10c0/64dfd1e9017e899f949371b3b261f9356e4e7da4ccad139e8bbdb21302a9615081e24835ee6aef65c67c66777d98f0a142f4324674a6fb25331ba01ad4fcd29c
   languageName: node
   linkType: hard
 
