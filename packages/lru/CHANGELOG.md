@@ -1,5 +1,13 @@
 # @httpx/lru
 
+## 0.9.1
+
+### Patch Changes
+
+- [#2182](https://github.com/belgattitude/httpx/pull/2182) [`7169124`](https://github.com/belgattitude/httpx/commit/71691247feb901db5912353de54d23bd3362d0e9) Thanks [@belgattitude](https://github.com/belgattitude)! - Tests added tests for delete and regroup common operations
+
+- [#2182](https://github.com/belgattitude/httpx/pull/2182) [`7169124`](https://github.com/belgattitude/httpx/commit/71691247feb901db5912353de54d23bd3362d0e9) Thanks [@belgattitude](https://github.com/belgattitude)! - Perf micro optimizations
+
 ## 0.9.0
 
 ### Minor Changes
