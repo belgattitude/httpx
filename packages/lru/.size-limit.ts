@@ -5,13 +5,13 @@ module.exports = [
     name: 'import { LruCache } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ LruCache }',
-    limit: '570B',
+    limit: '572B',
   },
   {
     name: 'import { TimeLruCache } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ TimeLruCache }',
-    limit: '680B',
+    limit: '677B',
   },
   {
     name: 'require { LruCache } (CJS)',

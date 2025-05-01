@@ -1,6 +1,6 @@
 import { expectTypeOf } from 'vitest';
 
-import type { SupportedCacheValues } from './types';
+import type { SupportedCacheValues } from '../types';
 
 describe('Types tests', () => {
   describe('SupportedCacheValues', () => {

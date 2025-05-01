@@ -16,7 +16,7 @@ type TimeLruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
 };
 
 export type TimeLruCacheParams<
-  TValue,
+  TValue = unknown,
   TKey extends BaseCacheKeyTypes = string,
 > = LruCacheParams<TValue, TKey> & {
   /**
@@ -150,7 +150,7 @@ export class TimeLruCache<
   }
 
   get(key: TKey): TValue | undefined {
-    if (!this.#cache.has(key)) {
+    if (this.#cache.has(key) === false) {
       return;
     }
 
@@ -192,8 +192,7 @@ export class TimeLruCache<
 
   delete(key: TKey): boolean {
     const node = this.#cache.get(key)?.node;
-
-    if (!node) {
+    if (node === undefined) {
       return false;
     }
     this.#removeNode(node);
@@ -242,9 +241,7 @@ export class TimeLruCache<
       this.#head.prev = node;
     }
     this.#head = node;
-    if (!this.#tail) {
-      this.#tail = node;
-    }
+    this.#tail ??= node;
   }
 
   #removeNode(node: DoublyLinkedNode<TValue, TKey>): void {
@@ -263,7 +260,7 @@ export class TimeLruCache<
   }
 
   #removeTail(): void {
-    if (!this.#tail) {
+    if (this.#tail === null) {
       return;
     }
     const tailKey = this.#tail.key;

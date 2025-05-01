@@ -8,7 +8,6 @@ export default defineWorkersConfig({
     target: ['node18'],
   },
   plugins: [tsconfigPaths()],
-  cacheDir: '../../.cache/vite/httpx-dsn-parser-cloudflare',
   test: {
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,

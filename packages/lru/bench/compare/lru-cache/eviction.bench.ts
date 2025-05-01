@@ -3,11 +3,13 @@ import { bench, describe } from 'vitest';
 import { benchOptions, benchSeeds } from '../../bench-options';
 import { getLruCaches } from '../../get-lru-caches';
 
+const { lruMaxSizeHalf } = benchSeeds;
+
 const seeds = benchSeeds.getSeeds();
 
-describe(`LruCache.set() ${seeds.length} items / maxSize: ${seeds.length}`, async () => {
+describe(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, async () => {
   const lrus = await getLruCaches({
-    maxSize: seeds.length,
+    maxSize: lruMaxSizeHalf,
   });
 
   bench(
