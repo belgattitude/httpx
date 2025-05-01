@@ -67,6 +67,5 @@ module.exports = {
   rules: {
     'sonarjs/cognitive-complexity': ['error', 17],
     'unicorn/no-array-reduce': 'off',
-    'jest/no-standalone-expect': 'off',
   },
 };

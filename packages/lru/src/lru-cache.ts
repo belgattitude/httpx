@@ -11,7 +11,10 @@ type LruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
   node: DoublyLinkedNode<TValue, TKey>;
 };
 
-export type LruCacheParams<TValue, TKey extends BaseCacheKeyTypes = string> = {
+export type LruCacheParams<
+  TValue = unknown,
+  TKey extends BaseCacheKeyTypes = string,
+> = {
   /**
    * The maximum number of items that the cache can hold.
    */
@@ -123,7 +126,7 @@ export class LruCache<
   }
 
   get(key: TKey): TValue | undefined {
-    if (!this.#cache.has(key)) {
+    if (this.#cache.has(key) === false) {
       return;
     }
 
@@ -148,8 +151,7 @@ export class LruCache<
 
   delete(key: TKey): boolean {
     const node = this.#cache.get(key)?.node;
-
-    if (!node) {
+    if (node === undefined) {
       return false;
     }
     this.#removeNode(node);
@@ -177,9 +179,7 @@ export class LruCache<
       this.#head.prev = node;
     }
     this.#head = node;
-    if (!this.#tail) {
-      this.#tail = node;
-    }
+    this.#tail ??= node;
   }
 
   #removeNode(node: DoublyLinkedNode<TValue, TKey>): void {
@@ -198,7 +198,7 @@ export class LruCache<
   }
 
   #removeTail(): void {
-    if (!this.#tail) {
+    if (this.#tail === null) {
       return;
     }
     const tailKey = this.#tail.key;
