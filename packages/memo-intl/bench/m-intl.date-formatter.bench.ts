@@ -20,7 +20,7 @@ describe(`MIntl DateFormatter benchmarks (${nbRows} instances)`, () => {
         formatter.format(new Date(row.date));
       }
     },
-    { time: 1 }
+    benchConfig.benchOptions
   );
 
   bench(
@@ -35,6 +35,6 @@ describe(`MIntl DateFormatter benchmarks (${nbRows} instances)`, () => {
         formatter.format(new Date(row.date));
       }
     },
-    { time: 1 }
+    benchConfig.benchOptions
   );
 });
