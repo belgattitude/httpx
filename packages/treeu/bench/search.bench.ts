@@ -12,6 +12,13 @@ describe(`Bench search (10_000 entries)`, async () => {
     key,
     value,
   }));
+  const ranges = {
+    first: 0,
+    '1/4': Math.floor(arrData.length / 4),
+    '1/2': Math.floor(arrData.length / 2),
+    '3/4': Math.floor((arrData.length / 4) * 3),
+    last: arrData.length - 1,
+  };
   const result = new FlatTreeWsMapper().toTreeNodes(wsData, {
     separator: '/',
   });
@@ -23,28 +30,28 @@ describe(`Bench search (10_000 entries)`, async () => {
 
   const search = new DfsTreeSearch(treeNodes);
   bench(
-    'DfsTreeSearch.findOne(id_0) over 10_000',
+    `DfsTreeSearch.findOne(id_${ranges.first}) over ${arrData.length}`,
     () => {
-      search.findOne(arrData[0]!.key);
+      search.findOne(arrData[ranges.first]!.key);
     },
     benchConfig.benchOptions
   );
   bench(
-    'DfsTreeSearch.findOne(id_1000) over 10_000',
+    `DfsTreeSearch.findOne(id_${ranges['1/2']}) over ${arrData.length}`,
     () => {
-      search.findOne(arrData[1000]!.key);
+      search.findOne(arrData[ranges['1/2']]!.key);
     },
     benchConfig.benchOptions
   );
   bench(
-    'DfsTreeSearch.findOne(id_5000) over 10_000',
+    `DfsTreeSearch.findOne(id_${ranges['3/4']}) over ${arrData.length}`,
     () => {
-      search.findOne(arrData[5000]!.key);
+      search.findOne(arrData[ranges['3/4']]!.key);
     },
     benchConfig.benchOptions
   );
   bench(
-    'DfsTreeSearch.findOne(id_NotExists) over 10_000',
+    `DfsTreeSearch.findOne(id_NotExists) over ${arrData.length}`,
     () => {
       search.findOne('not-exists');
     },
