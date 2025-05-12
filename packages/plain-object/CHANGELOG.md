@@ -1,5 +1,11 @@
 # @httpx/plain-object
 
+## 2.0.7
+
+### Patch Changes
+
+- [#2226](https://github.com/belgattitude/httpx/pull/2226) [`8548046`](https://github.com/belgattitude/httpx/commit/8548046e58bed76f2e54c709acf92817316783a4) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest tsup, esbuild 0.25.4
+
 ## 2.0.6
 
 ### Patch Changes

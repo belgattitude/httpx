@@ -1,5 +1,14 @@
 # @httpx/memo-intl
 
+## 1.3.2
+
+### Patch Changes
+
+- [#2226](https://github.com/belgattitude/httpx/pull/2226) [`8548046`](https://github.com/belgattitude/httpx/commit/8548046e58bed76f2e54c709acf92817316783a4) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest tsup, esbuild 0.25.4
+
+- Updated dependencies [[`8548046`](https://github.com/belgattitude/httpx/commit/8548046e58bed76f2e54c709acf92817316783a4)]:
+  - @httpx/lru@0.9.2
+
 ## 1.3.1
 
 ### Patch Changes
