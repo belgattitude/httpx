@@ -18,7 +18,7 @@ describe(`MIntl Locale benchmarks (${nbRows} instances)`, () => {
         const _language = locale.language;
       }
     },
-    { time: 1 }
+    benchConfig.benchOptions
   );
 
   bench(
@@ -31,6 +31,6 @@ describe(`MIntl Locale benchmarks (${nbRows} instances)`, () => {
         const _language = locale.language;
       }
     },
-    { time: 1 }
+    benchConfig.benchOptions
   );
 });

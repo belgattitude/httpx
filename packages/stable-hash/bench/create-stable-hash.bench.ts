@@ -1,6 +1,7 @@
 import { bench } from 'vitest';
 
 import { createStableHashOrThrow } from '../src/create-stable-hash-or-throw';
+import { benchConfig } from './bench-config';
 
 describe(`createStableHashOrThrow`, async () => {
   const params = {
@@ -16,7 +17,7 @@ describe(`createStableHashOrThrow`, async () => {
     async () => {
       await createStableHashOrThrow(params);
     },
-    { iterations: 10 }
+    benchConfig.benchOptions
   );
   bench(
     'createStableHashOrThrow without array sorting',
@@ -25,6 +26,6 @@ describe(`createStableHashOrThrow`, async () => {
         sortArrayValues: false,
       });
     },
-    { iterations: 10 }
+    benchConfig.benchOptions
   );
 });

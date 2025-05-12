@@ -24,7 +24,7 @@ describe(`MIntl NumberFormatter benchmarks (${nbRows} instances)`, () => {
         }).format(row.price);
       }
     },
-    { time: 1 }
+    benchConfig.benchOptions
   );
 
   bench(
@@ -39,6 +39,6 @@ describe(`MIntl NumberFormatter benchmarks (${nbRows} instances)`, () => {
         }).format(row.price);
       }
     },
-    { time: 1 }
+    benchConfig.benchOptions
   );
 });

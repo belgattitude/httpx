@@ -22,7 +22,7 @@ describe(`MIntl RelativeTimeFormat benchmarks (${nbRows} instances)`, () => {
         rtf.format(row.idx, 'day');
       }
     },
-    { time: 1 }
+    benchConfig.benchOptions
   );
 
   bench(
@@ -37,6 +37,6 @@ describe(`MIntl RelativeTimeFormat benchmarks (${nbRows} instances)`, () => {
         rtf.format(row.idx, 'day');
       }
     },
-    { time: 1 }
+    benchConfig.benchOptions
   );
 });

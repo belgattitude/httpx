@@ -1,6 +1,10 @@
-import isCi from 'is-ci';
+import { vitestBenchOptionsConfig } from '@httpx/devtools-vitest';
+
+const isCiOrCodSpeed = vitestBenchOptionsConfig.isCiOrCodSpeed;
 
 export const benchConfig = {
-  samples: isCi ? 100 : 1000,
-  iterations: 1,
+  samples: isCiOrCodSpeed ? 1 : 1000,
+  benchOptions: {
+    iterations: isCiOrCodSpeed ? 1 : 4,
+  },
 } as const;

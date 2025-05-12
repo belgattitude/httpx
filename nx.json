@@ -56,7 +56,7 @@
     "bench": {
       "dependsOn": ["build", "^bench"],
       "inputs": ["default", "^public"],
-      "outputs": [],
+      "outputs": ["{projectRoot}/bench/output/*"],
       "cache": false
     },
     "check-size": {
@@ -86,7 +86,7 @@
       "cache": true
     },
     "bench-codspeed": {
-      "dependsOn": ["build", "^bench-codspeed"],
+      "dependsOn": ["^bench-codspeed"],
       "inputs": [
         "default",
         "^public",
