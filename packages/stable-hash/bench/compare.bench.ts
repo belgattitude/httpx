@@ -2,6 +2,7 @@ import { hashKey } from '@tanstack/query-core';
 import hash from 'stable-hash';
 import { bench } from 'vitest';
 
+import { benchConfig } from './bench-config';
 import { loadCreateStableKeyOrThrow } from './bench-utils';
 
 describe(`Comparison`, async () => {
@@ -21,20 +22,20 @@ describe(`Comparison`, async () => {
         sortArrayValues: false,
       });
     },
-    { iterations: 10 }
+    benchConfig.benchOptions
   );
   bench(
     'stable-hash',
     () => {
       hash(params);
     },
-    { iterations: 10 }
+    benchConfig.benchOptions
   );
   bench(
     '@tanstack/query-core (hashKey)',
     () => {
       hashKey([params]);
     },
-    { iterations: 10 }
+    benchConfig.benchOptions
   );
 });

@@ -1,6 +1,7 @@
 import { bench } from 'vitest';
 
 import { createStableKeyOrThrow } from '../src';
+import { benchConfig } from './bench-config';
 
 describe(`createStableKeyOrThrow`, async () => {
   const params = {
@@ -16,7 +17,7 @@ describe(`createStableKeyOrThrow`, async () => {
     () => {
       createStableKeyOrThrow(params);
     },
-    { iterations: 10 }
+    benchConfig.benchOptions
   );
   bench(
     'createStableKeyOrThrow without array sorting',
@@ -25,6 +26,6 @@ describe(`createStableKeyOrThrow`, async () => {
         sortArrayValues: false,
       });
     },
-    { iterations: 10 }
+    benchConfig.benchOptions
   );
 });

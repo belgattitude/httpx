@@ -1,7 +1,8 @@
-import isCI from 'is-ci';
+import { vitestBenchOptionsConfig } from '@httpx/devtools-vitest';
+const isCiOrCodSpeed = vitestBenchOptionsConfig.isCiOrCodSpeed;
 export const benchConfig = {
-  longString: `😊-abcdef-éàù-012345a Ā 文 🦄`.repeat(500),
+  longString: `😊-abcdef-éàù-012345a Ā 文 🦄`.repeat(isCiOrCodSpeed ? 50 : 400),
   benchOptions: {
-    iterations: isCI ? 3 : 10,
+    iterations: isCiOrCodSpeed ? 2 : 10,
   },
 } as const;
