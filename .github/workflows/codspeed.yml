@@ -29,7 +29,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-
       - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
         id: nx-set-shas
         uses: nrwl/nx-set-shas@v4
@@ -40,6 +39,10 @@ jobs:
 
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
+
+      # this step avoids building inside of the codespeed action which throttles the CPU
+      - name: 🏗 Pre-build packages
+        run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
 
       - name: 🌠 Run benchmarks
         uses: CodSpeedHQ/action@v3
