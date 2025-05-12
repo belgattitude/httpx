@@ -86,7 +86,7 @@
       "cache": true
     },
     "bench-codspeed": {
-      "dependsOn": ["build", "^bench-codspeed"],
+      "dependsOn": ["^bench-codspeed"],
       "inputs": [
         "default",
         "^public",
