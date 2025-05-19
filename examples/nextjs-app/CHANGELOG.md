@@ -1,5 +1,19 @@
 # @examples/nextjs-app
 
+## 0.1.115
+
+### Patch Changes
+
+- Updated dependencies [[`54a79d9`](https://github.com/belgattitude/httpx/commit/54a79d9c530da590f634011ece54e83755ca6d6a)]:
+  - @httpx/plain-object@2.0.8
+  - @httpx/stable-hash@0.2.2
+  - @httpx/exception@3.0.14
+  - @httpx/memo-intl@1.3.3
+  - @httpx/compress@0.2.3
+  - @httpx/assert@0.15.4
+  - @httpx/encode@0.0.4
+  - @httpx/treeu@0.4.14
+
 ## 0.1.114
 
 ### Patch Changes

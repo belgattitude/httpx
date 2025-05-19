@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.15.4
+
+### Patch Changes
+
+- [#2243](https://github.com/belgattitude/httpx/pull/2243) [`54a79d9`](https://github.com/belgattitude/httpx/commit/54a79d9c530da590f634011ece54e83755ca6d6a) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with tsup 8.5.0, includes a fix for cjs in certain usages
+
 ## 0.15.3
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @httpx/json-api
 
+## 0.5.27
+
+### Patch Changes
+
+- [#2243](https://github.com/belgattitude/httpx/pull/2243) [`54a79d9`](https://github.com/belgattitude/httpx/commit/54a79d9c530da590f634011ece54e83755ca6d6a) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with tsup 8.5.0, includes a fix for cjs in certain usages
+
+- Updated dependencies [[`54a79d9`](https://github.com/belgattitude/httpx/commit/54a79d9c530da590f634011ece54e83755ca6d6a)]:
+  - @httpx/exception@3.0.14
+
 ## 0.5.26
 
 ### Patch Changes
