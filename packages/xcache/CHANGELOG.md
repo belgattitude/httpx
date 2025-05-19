@@ -1,5 +1,15 @@
 # @httpx/xcache
 
+## 0.0.9
+
+### Patch Changes
+
+- [#2243](https://github.com/belgattitude/httpx/pull/2243) [`54a79d9`](https://github.com/belgattitude/httpx/commit/54a79d9c530da590f634011ece54e83755ca6d6a) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with tsup 8.5.0, includes a fix for cjs in certain usages
+
+- Updated dependencies [[`54a79d9`](https://github.com/belgattitude/httpx/commit/54a79d9c530da590f634011ece54e83755ca6d6a)]:
+  - @httpx/stable-hash@0.2.2
+  - @httpx/compress@0.2.3
+
 ## 0.0.8
 
 ### Patch Changes
