@@ -126,13 +126,11 @@ export class LruCache<
   }
 
   get(key: TKey): TValue | undefined {
-    if (this.#cache.has(key) === false) {
+    const data = this.#cache.get(key);
+    if (data === undefined) {
       return;
     }
-
-    const data = this.#cache.get(key)!;
     this.#moveToHead(data.node);
-
     return data.value;
   }
 
