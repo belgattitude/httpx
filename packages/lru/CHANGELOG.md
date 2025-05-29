@@ -1,5 +1,11 @@
 # @httpx/lru
 
+## 0.10.0
+
+### Minor Changes
+
+- [#2284](https://github.com/belgattitude/httpx/pull/2284) [`31dd527`](https://github.com/belgattitude/httpx/commit/31dd527a6139a555951278060c3c8c38fffbc157) Thanks [@belgattitude](https://github.com/belgattitude)! - Performance improvement on get operations
+
 ## 0.9.2
 
 ### Patch Changes

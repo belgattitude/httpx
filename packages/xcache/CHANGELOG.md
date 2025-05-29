@@ -1,5 +1,12 @@
 # @httpx/xcache
 
+## 0.0.10
+
+### Patch Changes
+
+- Updated dependencies [[`31dd527`](https://github.com/belgattitude/httpx/commit/31dd527a6139a555951278060c3c8c38fffbc157)]:
+  - @httpx/lru@0.10.0
+
 ## 0.0.9
 
 ### Patch Changes
