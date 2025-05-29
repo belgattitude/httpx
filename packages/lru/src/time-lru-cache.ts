@@ -150,14 +150,13 @@ export class TimeLruCache<
   }
 
   get(key: TKey): TValue | undefined {
-    if (this.#cache.has(key) === false) {
+    const data = this.#cache.get(key);
+    if (data === undefined) {
       return;
     }
-
-    const data = this.#cache.get(key)!;
     if (data.expiry < Date.now()) {
       if (this.#onEviction) {
-        this.#onEviction(key, this.#cache.get(key)!.value);
+        this.#onEviction(key, data.value);
       }
       this.#removeNode(data.node);
       return;
