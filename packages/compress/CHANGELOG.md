@@ -1,5 +1,11 @@
 # @httpx/compress
 
+## 0.2.4
+
+### Patch Changes
+
+- [#2290](https://github.com/belgattitude/httpx/pull/2290) [`a795daa`](https://github.com/belgattitude/httpx/commit/a795daa611f33942410777ddf7f561cf5e122028) Thanks [@belgattitude](https://github.com/belgattitude)! - Update esbuild to 0.25.5
+
 ## 0.2.3
 
 ### Patch Changes
