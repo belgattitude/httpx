@@ -1562,7 +1562,7 @@ __metadata:
     vite: "npm:6.3.5"
     vite-tsconfig-paths: "npm:5.1.4"
     vitest: "npm:3.1.4"
-    vitest-browser-react: "npm:0.2.0"
+    vitest-browser-react: "npm:0.3.0"
   peerDependencies:
     vitest: ^3.0.8
   languageName: unknown
@@ -17548,22 +17548,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest-browser-react@npm:0.2.0":
-  version: 0.2.0
-  resolution: "vitest-browser-react@npm:0.2.0"
+"vitest-browser-react@npm:0.3.0":
+  version: 0.3.0
+  resolution: "vitest-browser-react@npm:0.3.0"
   peerDependencies:
-    "@types/react": ">18.0.0"
-    "@types/react-dom": ">18.0.0"
-    "@vitest/browser": ">=2.1.0"
-    react: ">18.0.0"
-    react-dom: ">18.0.0"
-    vitest: ">=2.1.0"
+    "@types/react": ^18.0.0 || ^19.0.0
+    "@types/react-dom": ^18.0.0 || ^19.0.0
+    "@vitest/browser": ^2.1.0 || ^3.0.0
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+    vitest: ^2.1.0 || ^3.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10c0/873a786a863d98a347750430dac8392e3defa311b906b0c36a93355814c111fdd5c7b928781b7b4e8c0d2e0777deabdb4f9b0549097edf2865be11e892d4a6f0
+  checksum: 10c0/c009b254c5d68646a2cd45274f494ac9bd22f3bf7aea0dd533745f070957c161e9a4f713f0f86824157eb225e3c67298e5e003cee7ec027d8e0a62f14abe96a6
   languageName: node
   linkType: hard
 
