@@ -86,9 +86,11 @@
     "node": ">=18.18"
   },
   "resolutions": {
-    "esbuild": "^0.25.5"
+    "esbuild": "^0.25.5",
+    "vite": "^6.3.5"
   },
   "resolutionsHelp": {
-    "esbuild": "To prevent multiple versions"
+    "esbuild": "To prevent multiple versions",
+    "vite": "Because of vitest currently allows v7 beta and it makes things fail"
   }
 }
