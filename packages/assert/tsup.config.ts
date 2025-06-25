@@ -22,7 +22,7 @@ export default defineConfig((options) => {
     platform: 'browser',
     sourcemap: !options.watch,
     // splitting: true,
-    target: ['es2022', ...browserslistToEsbuild()],
+    target: ['node20', ...browserslistToEsbuild()],
     treeshake: true,
     tsconfig: './tsconfig.build.json',
     esbuildPlugins: [esbuildPluginFilePathExtensions({ esmExtension: 'mjs' })],
