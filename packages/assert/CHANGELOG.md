@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.16.0
+
+### Minor Changes
+
+- [#2371](https://github.com/belgattitude/httpx/pull/2371) [`8bc68fd`](https://github.com/belgattitude/httpx/commit/8bc68fd67eac8f1335ee61907562399818e23b3b) Thanks [@belgattitude](https://github.com/belgattitude)! - Drop node 18.x, require node 20.x, add node 24.x to CI
+
 ## 0.15.5
 
 ### Patch Changes
@@ -49,7 +55,6 @@
 ### Minor Changes
 
 - [#1537](https://github.com/belgattitude/httpx/pull/1537) [`dfb209f`](https://github.com/belgattitude/httpx/commit/dfb209f9b0184ec26d437471cb9d731f40e17b1f) Thanks [@belgattitude](https://github.com/belgattitude)! - isPlainObject inline behaviour with @httpx/plain-object v2.
-
   - [#1530](https://github.com/belgattitude/httpx/pull/1530) [`4e1ecf4`](https://github.com/belgattitude/httpx/commit/4e1ecf4088664896e0d43ee765efa6f6b270054b) Thanks [@belgattitude](https://github.com/belgattitude)! - Not 100% compatible with sindreshorsus/is-plain-obj anymore
 
     The changes shouldn't affect most users, but it's worth noting that the `isPlainObject`

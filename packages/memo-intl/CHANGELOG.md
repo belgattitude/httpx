@@ -1,5 +1,16 @@
 # @httpx/memo-intl
 
+## 1.4.0
+
+### Minor Changes
+
+- [#2371](https://github.com/belgattitude/httpx/pull/2371) [`8bc68fd`](https://github.com/belgattitude/httpx/commit/8bc68fd67eac8f1335ee61907562399818e23b3b) Thanks [@belgattitude](https://github.com/belgattitude)! - Drop node 18.x, require node 20.x, add node 24.x to CI
+
+### Patch Changes
+
+- Updated dependencies [[`8bc68fd`](https://github.com/belgattitude/httpx/commit/8bc68fd67eac8f1335ee61907562399818e23b3b)]:
+  - @httpx/lru@0.11.0
+
 ## 1.3.5
 
 ### Patch Changes

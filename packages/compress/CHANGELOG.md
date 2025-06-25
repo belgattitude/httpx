@@ -1,5 +1,11 @@
 # @httpx/compress
 
+## 0.3.0
+
+### Minor Changes
+
+- [#2371](https://github.com/belgattitude/httpx/pull/2371) [`8bc68fd`](https://github.com/belgattitude/httpx/commit/8bc68fd67eac8f1335ee61907562399818e23b3b) Thanks [@belgattitude](https://github.com/belgattitude)! - Drop node 18.x, require node 20.x, add node 24.x to CI
+
 ## 0.2.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 3.1.0
+
+### Minor Changes
+
+- [#2371](https://github.com/belgattitude/httpx/pull/2371) [`8bc68fd`](https://github.com/belgattitude/httpx/commit/8bc68fd67eac8f1335ee61907562399818e23b3b) Thanks [@belgattitude](https://github.com/belgattitude)! - Drop node 18.x, require node 20.x, add node 24.x to CI
+
 ## 3.0.15
 
 ### Patch Changes
@@ -711,7 +717,6 @@
 ### Patch Changes
 
 - [#51](https://github.com/belgattitude/http-exception/pull/51) [`421b36d`](https://github.com/belgattitude/http-exception/commit/421b36d949f06aa43daa9b3d77da2429a6bb5e1e) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix `Error.cause` on node < 16.9 and browsers that don't support for it.
-
   - **Browser** currently 89% support: [caniuse#error.cause](https://caniuse.com/mdn-javascript_builtins_error_error_options_cause_parameter) - (89% supports it as of sept 2022)
   - **Node** from 16.9.0 as per [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause#browser_compatibility).
 
@@ -729,7 +734,6 @@
 
   To enable older browser or previous node versions, there's 2 polyfills that should
   do the job
-
   - [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill)
   - [error-cause](https://github.com/es-shims/error-cause)
 
