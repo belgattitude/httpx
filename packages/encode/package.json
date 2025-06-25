@@ -63,7 +63,7 @@
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "check-dist": "run-s check-dist-esm",
-    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2022 --module './dist/**/*.js'",
+    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2023 --module './dist/**/*.js'",
     "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
@@ -83,12 +83,12 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@belgattitude/eslint-config-bases": "7.2.0",
+    "@belgattitude/eslint-config-bases": "7.3.0",
     "@httpx/devtools-vitest": "workspace:^",
     "@sindresorhus/is": "7.0.2",
     "@size-limit/file": "11.2.0",
     "@size-limit/webpack": "11.2.0",
-    "browserslist": "4.25.0",
+    "browserslist": "4.25.1",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "7.0.3",
     "es-check": "9.1.4",
@@ -99,20 +99,20 @@
     "is-ci": "4.1.0",
     "js-base64": "3.7.7",
     "npm-run-all2": "8.0.4",
-    "prettier": "3.5.3",
+    "prettier": "3.6.1",
     "pretty-bytes": "7.0.0",
     "publint": "0.3.12",
     "rimraf": "6.0.1",
     "size-limit": "11.2.0",
     "tsup": "8.5.0",
     "typedoc": "0.28.5",
-    "typedoc-plugin-markdown": "4.6.4",
+    "typedoc-plugin-markdown": "4.7.0",
     "typescript": "5.8.3",
     "uint8array-extras": "1.4.0",
     "vitest": "3.2.4",
     "webpack": "5.99.9"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }

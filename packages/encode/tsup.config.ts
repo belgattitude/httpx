@@ -28,7 +28,7 @@ const getStandardOptions = (
     sourcemap: !options.watch,
     splitting: true,
     bundle: bundle,
-    target: ['es2022', ...browserslistToEsbuild()],
+    target: ['node20', ...browserslistToEsbuild()],
     treeshake: true,
     tsconfig: './tsconfig.build.json',
     esbuildPlugins: [

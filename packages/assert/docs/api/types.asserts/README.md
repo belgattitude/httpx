@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.2**](../README.md)
+[**@httpx/assert v0.15.5**](../README.md)
 
 ***
 

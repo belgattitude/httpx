@@ -8,7 +8,7 @@
 
 > **export=**: `object`
 
-Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/integrations/prisma-exception/package.json#L1)
+Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/7903e9ebf18607df55b9a2972c85cfc54f82587a/integrations/prisma-exception/package.json#L1)
 
 ## Type declaration
 
@@ -42,11 +42,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279c
 
 #### devDependencies.@arethetypeswrong/cli
 
-> **@arethetypeswrong/cli**: `string` = `"0.17.4"`
+> **@arethetypeswrong/cli**: `string` = `"0.18.2"`
 
 #### devDependencies.@belgattitude/eslint-config-bases
 
-> **@belgattitude/eslint-config-bases**: `string` = `"6.33.0"`
+> **@belgattitude/eslint-config-bases**: `string` = `"7.3.0"`
 
 #### devDependencies.@size-limit/file
 
@@ -62,19 +62,19 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279c
 
 #### devDependencies.@types/node
 
-> **@types/node**: `string` = `"22.14.0"`
+> **@types/node**: `string` = `"24.0.4"`
 
 #### devDependencies.@vitest/coverage-istanbul
 
-> **@vitest/coverage-istanbul**: `string` = `"3.1.1"`
+> **@vitest/coverage-istanbul**: `string` = `"3.2.4"`
 
 #### devDependencies.@vitest/ui
 
-> **@vitest/ui**: `string` = `"3.1.1"`
+> **@vitest/ui**: `string` = `"3.2.4"`
 
 #### devDependencies.browserslist
 
-> **browserslist**: `string` = `"4.24.4"`
+> **browserslist**: `string` = `"4.25.1"`
 
 #### devDependencies.browserslist-to-esbuild
 
@@ -86,11 +86,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279c
 
 #### devDependencies.es-check
 
-> **es-check**: `string` = `"8.0.2"`
+> **es-check**: `string` = `"9.1.4"`
 
 #### devDependencies.esbuild
 
-> **esbuild**: `string` = `"0.25.2"`
+> **esbuild**: `string` = `"0.25.5"`
 
 #### devDependencies.eslint
 
@@ -98,15 +98,15 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279c
 
 #### devDependencies.npm-run-all2
 
-> **npm-run-all2**: `string` = `"7.0.2"`
+> **npm-run-all2**: `string` = `"8.0.4"`
 
 #### devDependencies.prettier
 
-> **prettier**: `string` = `"3.5.3"`
+> **prettier**: `string` = `"3.6.1"`
 
 #### devDependencies.publint
 
-> **publint**: `string` = `"0.3.11"`
+> **publint**: `string` = `"0.3.12"`
 
 #### devDependencies.rimraf
 
@@ -118,15 +118,15 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279c
 
 #### devDependencies.tsup
 
-> **tsup**: `string` = `"8.4.0"`
+> **tsup**: `string` = `"8.5.0"`
 
 #### devDependencies.typedoc
 
-> **typedoc**: `string` = `"0.28.2"`
+> **typedoc**: `string` = `"0.28.5"`
 
 #### devDependencies.typedoc-plugin-markdown
 
-> **typedoc-plugin-markdown**: `string` = `"4.6.2"`
+> **typedoc-plugin-markdown**: `string` = `"4.7.0"`
 
 #### devDependencies.typescript
 
@@ -138,11 +138,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279c
 
 #### devDependencies.vitest
 
-> **vitest**: `string` = `"3.1.1"`
+> **vitest**: `string` = `"3.2.4"`
 
 #### devDependencies.webpack
 
-> **webpack**: `string` = `"5.99.5"`
+> **webpack**: `string` = `"5.99.9"`
 
 ### engines
 
@@ -250,7 +250,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279c
 
 #### scripts.check-dist
 
-> **check-dist**: `string` = `"es-check --not './dist/esm/*.map.js' -v es2022 --module './dist/**/*.mjs'"`
+> **check-dist**: `string` = `"es-check --not './dist/esm/*.map.js' -v es2023 --module './dist/**/*.mjs'"`
 
 #### scripts.check-pub
 
@@ -330,4 +330,4 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/b6bd279c
 
 ### version
 
-> **version**: `string` = `"0.0.18"`
+> **version**: `string` = `"0.0.21"`

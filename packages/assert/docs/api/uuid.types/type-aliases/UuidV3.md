@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.2**](../../README.md)
+[**@httpx/assert v0.15.5**](../../README.md)
 
 ***
 
@@ -8,4 +8,4 @@
 
 > **UuidV3** = `string` & `WeakOpaqueContainer`\<`"UuidV3"`\>
 
-Defined in: [uuid.types.ts:6](https://github.com/belgattitude/httpx/blob/b6bd279cf69f2d17f3ec46e9618a31cb72744279/packages/assert/src/uuid.types.ts#L6)
+Defined in: [uuid.types.ts:6](https://github.com/belgattitude/httpx/blob/7903e9ebf18607df55b9a2972c85cfc54f82587a/packages/assert/src/uuid.types.ts#L6)

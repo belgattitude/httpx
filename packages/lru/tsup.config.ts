@@ -21,7 +21,7 @@ export default defineConfig((options) => {
     sourcemap: !options.watch,
     splitting: true,
     bundle: true,
-    target: ['es2022', ...browserslistToEsbuild()],
+    target: ['node20', ...browserslistToEsbuild()],
     // target: ['es2022'],
     treeshake: true,
     tsconfig: './tsconfig.build.json',
