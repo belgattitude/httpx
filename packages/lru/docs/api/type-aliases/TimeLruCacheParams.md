@@ -1,4 +1,4 @@
-[**@httpx/lru v0.9.0**](../README.md)
+[**@httpx/lru v0.10.1**](../README.md)
 
 ***
 
@@ -20,7 +20,7 @@ Default time to live for each entry in milliseconds
 
 ### TValue
 
-`TValue`
+`TValue` = `unknown`
 
 ### TKey
 

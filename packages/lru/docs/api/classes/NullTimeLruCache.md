@@ -1,4 +1,4 @@
-[**@httpx/lru v0.9.0**](../README.md)
+[**@httpx/lru v0.10.1**](../README.md)
 
 ***
 
@@ -203,21 +203,7 @@ In case of a new entry:
 
 `TValue`
 
-#### Examples
-
-```typescript
-const lru = new TimeLruCache({ maxSize: 2 });
-lru.set('key1', 'value1');
-lru.getOrSet('key1', () => 'value2');  // 👈 'value1' (entry exists)
-lru.getOrSet('key2', () => 'value2');  // 👈 'value2' (new entry)
-lru.has('key2');                       // 👈 true (it was added)
-lru.get('key1');                       // 👈 'value1'
-
-// Will trigger an eviction as capacity (2) is reached.
-lru.getOrSet('key3', () => 'value3');
-
-lru.get('key1');                       // 👈 undefined (first entry was evicted)
-```
+#### Example
 
 ```typescript
 const lru = new TimeLruCache({ maxSize: 2 });
@@ -267,42 +253,7 @@ The item will be marked as recently used only if either
 
 `boolean`
 
-#### Examples
-
-```typescript
-import { TimeLruCache } from '@httpx/lru';
-
-const oneSecondInMillis = 1000;
-
-const lru = new TimeLruCache({
-  maxSize: 1,
-  defaultTTL: oneSecondInMillis,
-  // 👇 Optional, default to noop
-  onEviction: () => { console.log('evicted') }
-  // 👇 Optional, default to false
-  touchOnHas: false,
-});
-
-lru.set('key0', 'value0', 2 * oneSecondInMillis);
-
-// 👇 Will evict key0 as maxSize is 1 and trigger onEviction
-lru.set('key1', 'value1', 2 * oneSecondInMillis);
-
-lru.has('key0'); // 👈 false (item does not exist)
-lru.has('key1'); // 👈 true  (item is present and is not expired)
-
-lru.has('key1', {
-  // 👇 Optional, default to global touchOnHas
-  touch: false
-}); // 👈 true  (item is present)
-
-const value = lru.get('key1'); // 👈 'value1' (item is present and is not expired)
-
-// 🕛 wait 3 seconds, time for the item to expire
-
-lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction will be called)
-
-```
+#### Example
 
 ```typescript
 import { TimeLruCache } from '@httpx/lru';

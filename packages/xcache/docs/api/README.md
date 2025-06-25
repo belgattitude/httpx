@@ -1,8 +1,8 @@
-**@httpx/xcache v0.0.6**
+**@httpx/xcache v0.0.11**
 
 ***
 
-# @httpx/xcache v0.0.6
+# @httpx/xcache v0.0.11
 
 ## Classes
 

@@ -1,8 +1,8 @@
-**@httpx/assert v0.15.2**
+**@httpx/assert v0.15.5**
 
 ***
 
-# @httpx/assert v0.15.2
+# @httpx/assert v0.15.5
 
 ## Modules
 
