@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 3.1.1
+
+### Patch Changes
+
+- [#2391](https://github.com/belgattitude/httpx/pull/2391) [`d67652c`](https://github.com/belgattitude/httpx/commit/d67652c6bc1c5cee3ccc8ef6c3d70fcd3f9877c4) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest esbuild 0.25.6
+
 ## 3.1.0
 
 ### Minor Changes
