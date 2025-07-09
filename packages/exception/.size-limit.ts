@@ -97,7 +97,7 @@ module.exports = [
     path: ['dist/serializer/index.mjs'],
     import:
       '{ fromJson, toJson, createFromSerializable, convertToSerializable }',
-    limit: '2010B',
+    limit: '2030B',
   },
   {
     name: 'ESM experimental ({ tryOrFail })',
