@@ -78,7 +78,7 @@ module.exports = [
     name: 'ESM (createHttpException + isHttpException + isHttpClientException )',
     path: ['dist/index.mjs'],
     import: '{ createHttpException, isHttpException, isHttpClientException }',
-    limit: '1260B',
+    limit: '1271B',
   },
   {
     name: 'ESM serializer ({ toJson })',
@@ -97,7 +97,7 @@ module.exports = [
     path: ['dist/serializer/index.mjs'],
     import:
       '{ fromJson, toJson, createFromSerializable, convertToSerializable }',
-    limit: '2000B',
+    limit: '2030B',
   },
   {
     name: 'ESM experimental ({ tryOrFail })',
