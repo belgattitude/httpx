@@ -167,18 +167,19 @@ export class TimeLruCache<
     return data.value;
   }
 
-  getOrSet(
+  getOrSet<T extends TValue>(
     key: TKey,
-    valueOrFn: TValue | (() => TValue),
+    valueOrFn: T | (() => T),
     ttl?: Milliseconds
-  ): TValue {
+  ): T {
     const val = this.get(key);
     if (val === undefined) {
-      const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
-      this.set(key, value, ttl);
+      const value =
+        typeof valueOrFn === 'function' ? (valueOrFn as () => T)() : valueOrFn;
+      this.set(key, value as unknown as TValue, ttl);
       return value;
     }
-    return val;
+    return val as unknown as T;
   }
 
   peek(key: TKey): TValue | undefined {

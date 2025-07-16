@@ -135,14 +135,14 @@ export interface ITimeLruCache<
    * // Will trigger an eviction as capacity (2) is reached.
    * lru.getOrSet('key3', () => 'value3');
    *
-   * lru.get('key1');                       // 👈 undefined (first entry was evicted)
+   * lru.get('key1'); // 👈 undefined (first entry was evicted)
    * ```
    */
-  getOrSet: (
+  getOrSet: <T extends TValue>(
     key: TKey,
-    valueOrFn: TValue | (() => TValue),
+    valueOrFn: T | (() => T),
     ttl?: Milliseconds
-  ) => TValue;
+  ) => T;
 
   /**
    * Get an item without marking it as recently used. Will return undefined if

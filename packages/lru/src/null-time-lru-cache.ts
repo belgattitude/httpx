@@ -47,12 +47,14 @@ export class NullTimeLruCache<
     return undefined;
   }
 
-  getOrSet(
+  getOrSet<T = TValue>(
     _key: TKey,
-    valueOrFn: TValue | (() => TValue),
+    valueOrFn: T | (() => T),
     _ttl?: Milliseconds
-  ): TValue {
-    return typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
+  ): T {
+    return typeof valueOrFn === 'function'
+      ? (valueOrFn as () => T)()
+      : valueOrFn;
   }
 
   peek(_key: TKey): undefined {

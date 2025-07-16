@@ -1,8 +1,8 @@
-**@httpx/lru v0.10.1**
+**@httpx/lru v0.11.0**
 
 ***
 
-# @httpx/lru v0.10.1
+# @httpx/lru v0.11.0
 
 ## Classes
 

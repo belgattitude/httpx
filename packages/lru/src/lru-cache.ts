@@ -134,13 +134,15 @@ export class LruCache<
     return data.value;
   }
 
-  getOrSet(key: TKey, valueOrFn: TValue | (() => TValue)): TValue {
-    if (this.#cache.has(key)) {
-      return this.get(key)!;
+  getOrSet<T extends TValue>(key: TKey, valueOrFn: T | (() => T)): T {
+    const val = this.get(key);
+    if (val === undefined) {
+      const value =
+        typeof valueOrFn === 'function' ? (valueOrFn as () => T)() : valueOrFn;
+      this.set(key, value as unknown as TValue);
+      return value;
     }
-    const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
-    this.set(key, value);
-    return value;
+    return val as unknown as T;
   }
 
   peek(key: TKey): TValue | undefined {

@@ -1,3 +1,5 @@
+import { expectTypeOf } from 'vitest';
+
 import { LruCache, type LruCacheParams } from '../lru-cache';
 import { TimeLruCache } from '../time-lru-cache';
 
@@ -141,6 +143,27 @@ describe.each(lruCaches)('Common operations', (cacheType, createCache) => {
       expect(value2).toBe('value2');
       expect(value3).toBe('value3');
       expect(lru.size).toBe(3);
+    });
+    it('should automatically infer the type', () => {
+      const lru = createCache({ maxSize: 1 });
+      const str = 'string_not_inferred_as_const' as string;
+      const fromValue = lru.getOrSet('key', str);
+      expectTypeOf(fromValue).toEqualTypeOf<string>();
+      const fromValueFn = lru.getOrSet('key', () => str);
+      expectTypeOf(fromValueFn).toEqualTypeOf<string>();
+    });
+    it('should allow to type with a generic', () => {
+      const lru = createCache({ maxSize: 1 });
+      const withTypedString = lru.getOrSet<string>('test', 'string');
+      expectTypeOf(withTypedString).toEqualTypeOf<string>();
+      const withTypedFnString = lru.getOrSet<string>('test', () => 'string');
+      expectTypeOf(withTypedFnString).toEqualTypeOf<string>();
+    });
+    // eslint-disable-next-line @vitest/expect-expect
+    it('should not allow to type with a unsupported type', () => {
+      const lru = createCache({ maxSize: 1 });
+      // @ts-expect-error - Unsupported type
+      lru.getOrSet('key', new Promise(() => {}));
     });
   });
   describe(`${cacheType}.[Symbol.iterator]`, () => {
