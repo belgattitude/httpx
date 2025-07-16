@@ -1,5 +1,11 @@
 # @httpx/lru
 
+## 0.11.1
+
+### Patch Changes
+
+- [#2408](https://github.com/belgattitude/httpx/pull/2408) [`f160287`](https://github.com/belgattitude/httpx/commit/f160287771149e97823470f0b7fb6816371bcccc) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix return type inference for lru.getOrSet()
+
 ## 0.11.0
 
 ### Minor Changes
