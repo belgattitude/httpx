@@ -1,4 +1,4 @@
-[**@httpx/lru v0.10.1**](../README.md)
+[**@httpx/lru v0.11.0**](../README.md)
 
 ***
 
@@ -175,7 +175,7 @@ lru.get('key1');   // 👈 undefined
 
 ### getOrSet()
 
-> **getOrSet**(`_key`, `valueOrFn`, `_ttl?`): `TValue`
+> **getOrSet**\<`T`\>(`_key`, `valueOrFn`, `_ttl?`): `T`
 
 Get an item from the cache, if the item doesn't exist or has expired
 it will create a new entry with the provided value and returns it.
@@ -185,6 +185,12 @@ In case of a new entry:
  - an eviction will be triggered if the maximum capacity is reached
    or the item has expired.
 
+#### Type Parameters
+
+##### T
+
+`T` = `TValue`
+
 #### Parameters
 
 ##### \_key
@@ -193,7 +199,7 @@ In case of a new entry:
 
 ##### valueOrFn
 
-`TValue` | () => `TValue`
+`T` | () => `T`
 
 ##### \_ttl?
 
@@ -201,7 +207,7 @@ In case of a new entry:
 
 #### Returns
 
-`TValue`
+`T`
 
 #### Example
 
@@ -216,7 +222,7 @@ lru.get('key1');                       // 👈 'value1'
 // Will trigger an eviction as capacity (2) is reached.
 lru.getOrSet('key3', () => 'value3');
 
-lru.get('key1');                       // 👈 undefined (first entry was evicted)
+lru.get('key1'); // 👈 undefined (first entry was evicted)
 ```
 
 #### Implementation of

@@ -17,6 +17,6 @@ module.exports = [
     name: 'require { LruCache } (CJS)',
     import: '{ LruCache }',
     path: ['dist/index.cjs'],
-    limit: '680B',
+    limit: '650B',
   },
 ] satisfies SizeLimitConfig;

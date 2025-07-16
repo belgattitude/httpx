@@ -116,10 +116,10 @@ export interface ILruCache<
    * // Will trigger an eviction as capacity (2) is reached.
    * lru.getOrSet('key3', () => 'value3');
    *
-   * lru.get('key1');                       // 👈 undefined (first entry was evicted)
+   * lru.get('key1'); // 👈 undefined (first entry was evicted)
    * ```
    */
-  getOrSet: (key: TKey, valueOrFn: TValue | (() => TValue)) => TValue;
+  getOrSet: <T extends TValue>(key: TKey, valueOrFn: T | (() => T)) => T;
 
   /**
    * Get an item without marking it as recently used or undefined if item doesn't exist.
