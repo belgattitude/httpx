@@ -1258,6 +1258,7 @@ __metadata:
     "@httpx/plain-object": "workspace:^"
     "@httpx/stable-hash": "workspace:^"
     "@httpx/treeu": "workspace:^"
+    "@httpx/xcache": "workspace:^"
     "@tailwindcss/postcss": "npm:4.1.11"
     "@types/node": "npm:24.0.14"
     "@types/react": "npm:19.1.8"
@@ -1793,7 +1794,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@httpx/xcache@workspace:packages/xcache":
+"@httpx/xcache@workspace:^, @httpx/xcache@workspace:packages/xcache":
   version: 0.0.0-use.local
   resolution: "@httpx/xcache@workspace:packages/xcache"
   dependencies:
