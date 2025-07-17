@@ -45,7 +45,7 @@ export class NullLruCache<
     return undefined;
   }
 
-  getOrSet<T extends TValue>(key: TKey, valueOrFn: T | (() => T)): T {
+  getOrSet<T extends TValue>(_key: TKey, valueOrFn: T | (() => T)): T {
     return typeof valueOrFn === 'function'
       ? (valueOrFn as () => T)()
       : valueOrFn;
