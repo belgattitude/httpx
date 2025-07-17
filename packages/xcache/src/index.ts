@@ -1,1 +1,1 @@
-export { XCache } from './x-cache';
+export { XMemCache } from './x-mem-cache';
