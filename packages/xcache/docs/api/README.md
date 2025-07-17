@@ -7,3 +7,8 @@
 ## Classes
 
 - [XMemCache](classes/XMemCache.md)
+
+## Type Aliases
+
+- [CacheableAsyncFunction](type-aliases/CacheableAsyncFunction.md)
+- [XCacheRunAsyncParams](type-aliases/XCacheRunAsyncParams.md)

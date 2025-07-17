@@ -1,51 +1,10 @@
-import type { ITimeLruCache, SupportedCacheValues } from '@httpx/lru';
+import type { ITimeLruCache } from '@httpx/lru';
 import { createStableKeyOrThrow } from '@httpx/stable-hash';
 
-/*
-type CacheKey = Record<string, unknown> | string | unknown[];
-
-type ArgumentsTuple = readonly [any, ...unknown[]];
-type Arguments =
-  | string
-  | ArgumentsTuple
-  | Record<any, any>
-  | null
-  | undefined
-  | false;
-type Key = Arguments | (() => Arguments);
-type StrictTupleKey = ArgumentsTuple | null | undefined | false;
-type StrictKey = StrictTupleKey | (() => StrictTupleKey);
-
-type FetcherResponse<Data = unknown> = Data | Promise<Data>;
-type BareFetcher<Data = unknown> = (...args: any[]) => FetcherResponse<Data>;
-type Fetcher<Data = unknown, SWRKey extends Key = Key> = SWRKey extends () =>
-  | infer Arg
-  | null
-  | undefined
-  | false
-  ? (arg: Arg) => FetcherResponse<Data>
-  : SWRKey extends null | undefined | false
-    ? never
-    : SWRKey extends infer Arg
-      ? (arg: Arg) => FetcherResponse<Data>
-      : never;
-
-const lru = new TimeLruCache({
-  maxSize: 50,
-  defaultTTL: 1000,
-});
-*/
-
-type CacheableValues = SupportedCacheValues;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type CacheableAsyncFunction = (...args: any[]) => Promise<CacheableValues>;
-
-type WithCacheParams<TFunction extends CacheableAsyncFunction> = {
-  key: unknown[];
-  fn: TFunction;
-  ttl?: number;
-};
+import type {
+  CacheableAsyncFunction,
+  XCacheRunAsyncParams,
+} from './x-cache.types';
 
 export class XMemCache {
   #lru: ITimeLruCache;
@@ -60,10 +19,27 @@ export class XMemCache {
    * Execute the provided async function if it's not in the cache, otherwise
    * return the cached value.
    *
-   * @throw Error if the key is not a valid stable key.
+   * @example
+   * ```typescript
+   * const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 5000 });
+   * const xMemCache = new XMemCache({ lru, keyPrefix: 'namespace1' });
+   *
+   * const asyncDataFetcher = async (params: { id: number }) => {
+   *   return { id: params.id, data: `Data for ${params.id}` };
+   * }
+   *
+   * const params: { id: number } = { id: 1 };
+   *
+   * const { data } = await xMemCache.runAsync({
+   *  key: ['/api/data', params],
+   *  fn: () => asyncDataFetcher(params),
+   * })
+   * ```
+   *
+   * @throws TypeError if the key is not a valid stable key.
    */
-  withCache = async <TFunction extends CacheableAsyncFunction>(
-    params: WithCacheParams<TFunction>
+  runAsync = async <TFunction extends CacheableAsyncFunction>(
+    params: XCacheRunAsyncParams<TFunction>
   ): Promise<{
     data: Awaited<ReturnType<TFunction>>;
   }> => {

@@ -7,7 +7,7 @@ describe('XMemCache', () => {
   type TestFnParams = {
     name: string;
   };
-  const testFn = async (params: TestFnParams) => {
+  const fetchDataFn = async (params: TestFnParams) => {
     return {
       message: `Hello ${params.name}`,
     };
@@ -26,11 +26,9 @@ describe('XMemCache', () => {
 
     it('should execute the function and cache the result', async () => {
       const runCached = async (params: TestFnParams) => {
-        return xMemCache.withCache({
+        return xMemCache.runAsync({
           key: ['/api/test', params],
-          fn: () => {
-            return testFn(params);
-          },
+          fn: () => fetchDataFn(params),
         });
       };
 

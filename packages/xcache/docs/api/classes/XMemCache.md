@@ -42,9 +42,9 @@ Clear the cache and return the number of items removed.
 
 ***
 
-### withCache()
+### runAsync()
 
-> **withCache**\<`TFunction`\>(`params`): `Promise`\<\{ `data`: `Awaited`\<`ReturnType`\<`TFunction`\>\>; \}\>
+> **runAsync**\<`TFunction`\>(`params`): `Promise`\<\{ `data`: `Awaited`\<`ReturnType`\<`TFunction`\>\>; \}\>
 
 Execute the provided async function if it's not in the cache, otherwise
 return the cached value.
@@ -53,18 +53,36 @@ return the cached value.
 
 ##### TFunction
 
-`TFunction` *extends* `CacheableAsyncFunction`
+`TFunction` *extends* [`CacheableAsyncFunction`](../type-aliases/CacheableAsyncFunction.md)
 
 #### Parameters
 
 ##### params
 
-`WithCacheParams`\<`TFunction`\>
+[`XCacheRunAsyncParams`](../type-aliases/XCacheRunAsyncParams.md)\<`TFunction`\>
 
 #### Returns
 
 `Promise`\<\{ `data`: `Awaited`\<`ReturnType`\<`TFunction`\>\>; \}\>
 
-#### Throw
+#### Example
 
-Error if the key is not a valid stable key.
+```typescript
+const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 5000 });
+const xMemCache = new XMemCache({ lru, keyPrefix: 'namespace1' });
+
+const asyncDataFetcher = async (params: { id: number }) => {
+  return { id: params.id, data: `Data for ${params.id}` };
+}
+
+const params: { id: number } = { id: 1 };
+
+const { data } = await xMemCache.runAsync({
+ key: ['/api/data', params],
+ fn: () => asyncDataFetcher(params),
+})
+```
+
+#### Throws
+
+TypeError if the key is not a valid stable key.
