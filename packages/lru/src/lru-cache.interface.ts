@@ -23,7 +23,7 @@ export interface ILruCache<
   /**
    * Clear all entries from the cache and return the number of deleted items
    */
-  clear: () => void;
+  clear: () => number;
 
   /**
    * Checks whether an entry exist.

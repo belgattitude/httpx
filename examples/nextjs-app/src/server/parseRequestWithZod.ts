@@ -1,6 +1,6 @@
 import { HttpBadRequest, type HttpException } from '@httpx/exception';
 import type { NextRequest } from 'next/server';
-import type { z, ZodSchema } from 'zod';
+import type { z, ZodSchema } from 'zod/v3';
 
 type Params<T> = {
   onError?: (error: z.ZodError<T>) => HttpException;
@@ -27,7 +27,7 @@ export const parseRequestWithZod = <
     if (onError) {
       throw onError(error);
     }
-    const msg = error.errors
+    const msg = error.issues
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       .map((err) => `${err.path} - ${err.code}`)
       .join(', ');
