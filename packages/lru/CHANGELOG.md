@@ -1,5 +1,11 @@
 # @httpx/lru
 
+## 0.11.2
+
+### Patch Changes
+
+- [#2413](https://github.com/belgattitude/httpx/pull/2413) [`15c8850`](https://github.com/belgattitude/httpx/commit/15c88502d03ee5c49d4debe8d374e76c4cf414ce) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix ILruCache.clear() signature to properly inform it return the number of cleared items
+
 ## 0.11.1
 
 ### Patch Changes

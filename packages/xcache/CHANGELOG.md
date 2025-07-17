@@ -1,5 +1,16 @@
 # @httpx/xcache
 
+## 0.2.0
+
+### Minor Changes
+
+- [#2413](https://github.com/belgattitude/httpx/pull/2413) [`15c8850`](https://github.com/belgattitude/httpx/commit/15c88502d03ee5c49d4debe8d374e76c4cf414ce) Thanks [@belgattitude](https://github.com/belgattitude)! - Add initial alpha support for XMemCache
+
+### Patch Changes
+
+- Updated dependencies [[`15c8850`](https://github.com/belgattitude/httpx/commit/15c88502d03ee5c49d4debe8d374e76c4cf414ce)]:
+  - @httpx/lru@0.11.2
+
 ## 0.1.0
 
 ### Minor Changes
