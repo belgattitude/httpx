@@ -1,9 +1,9 @@
-**@httpx/xcache v0.0.11**
+**@httpx/xcache v0.1.0**
 
 ***
 
-# @httpx/xcache v0.0.11
+# @httpx/xcache v0.1.0
 
 ## Classes
 
-- [XCache](classes/XCache.md)
+- [XMemCache](classes/XMemCache.md)

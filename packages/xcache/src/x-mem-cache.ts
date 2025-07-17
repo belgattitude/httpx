@@ -50,7 +50,7 @@ type WithCacheParams<TFunction extends CacheableAsyncFunction> = {
 export class XMemCache {
   #lru: ITimeLruCache;
   #keyPrefix?: string;
-  constructor(options: { lru: ITimeLruCache; keyPrefix: string }) {
+  constructor(options: { lru: ITimeLruCache; keyPrefix?: string }) {
     const { lru, keyPrefix = '' } = options;
     this.#lru = lru;
     this.#keyPrefix = keyPrefix;

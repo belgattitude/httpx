@@ -44,6 +44,9 @@ describe('XMemCache', () => {
 
       const { data: secondRunData } = await runCached({ name: 'test' });
       expect(secondRunData).toStrictEqual({ message: 'Hello test' });
+
+      const removed = lru.clear();
+      expect(removed).toBe(1); // One item should be removed from the cache
     });
   });
 });
