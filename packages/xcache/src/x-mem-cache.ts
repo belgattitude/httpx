@@ -56,6 +56,12 @@ export class XMemCache {
     this.#keyPrefix = keyPrefix;
   }
 
+  /**
+   * Execute the provided async function if it's not in the cache, otherwise
+   * return the cached value.
+   *
+   * @throw Error if the key is not a valid stable key.
+   */
   withCache = async <TFunction extends CacheableAsyncFunction>(
     params: WithCacheParams<TFunction>
   ): Promise<{
@@ -71,5 +77,12 @@ export class XMemCache {
     return {
       data: data as Awaited<ReturnType<TFunction>>,
     };
+  };
+
+  /**
+   * Clear the cache and return the number of items removed.
+   */
+  clear = (): number => {
+    return this.#lru.clear();
   };
 }

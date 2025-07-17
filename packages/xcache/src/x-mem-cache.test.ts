@@ -3,23 +3,20 @@ import { expectTypeOf } from 'vitest';
 
 import { XMemCache } from './x-mem-cache';
 
-it('should work', () => {
-  type Params = {
+describe('XMemCache', () => {
+  type TestFnParams = {
     name: string;
   };
-  const testFn = async (params: Params) => {
+  const testFn = async (params: TestFnParams) => {
     return {
       message: `Hello ${params.name}`,
     };
   };
-  const params: Params = {
-    name: 'test',
-  };
 
-  describe('new api', async () => {
+  describe('XMemCache.withCache', () => {
     const lru = new TimeLruCache({
       maxSize: 50,
-      defaultTTL: 1000,
+      defaultTTL: 5000,
     });
 
     const xMemCache = new XMemCache({
@@ -27,16 +24,26 @@ it('should work', () => {
       keyPrefix: 'test',
     });
 
-    const cached = await xMemCache.withCache({
-      key: ['/api/test', params],
-      fn: () => {
-        return testFn(params);
-      },
-    });
+    it('should execute the function and cache the result', async () => {
+      const runCached = async (params: TestFnParams) => {
+        return xMemCache.withCache({
+          key: ['/api/test', params],
+          fn: () => {
+            return testFn(params);
+          },
+        });
+      };
 
-    const { data } = cached;
-    expectTypeOf(data).toEqualTypeOf<{
-      message: string;
-    }>();
+      const { data: firstRunData } = await runCached({
+        name: 'test',
+      });
+      expect(firstRunData).toStrictEqual({ message: 'Hello test' });
+      expectTypeOf(firstRunData).toEqualTypeOf<{
+        message: string;
+      }>();
+
+      const { data: secondRunData } = await runCached({ name: 'test' });
+      expect(secondRunData).toStrictEqual({ message: 'Hello test' });
+    });
   });
 });
