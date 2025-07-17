@@ -11,8 +11,6 @@
 
 In memory cache utility 
 
-```typescript
-
 ## Install
 
 ```bash
@@ -23,12 +21,32 @@ $ pnpm add @httpx/xcache
 
 ## Features
 
-- 📐&nbsp; Lightweight (starts at [~550B](#bundle-size)) 
+- 📐&nbsp; Lightweight (starts at [~800B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 20-24, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
 
+### XMemCache
+
+```typescript
+const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+const xMemCache = new XMemCache({ lru, keyPrefix: 'namespace1' });
+
+const asyncDataFetcher = async (params: { id: number }) => {
+  return { id: params.id, data: `Data for ${params.id}` };
+}
+
+const params: { id: number } = { id: 1 };
+
+const { data } = await xMemCache.runAsync({
+ key: ['/api/data', params],
+ fn: () => asyncDataFetcher(params),
+})
+
+// data: { id: 1, data: 'Data for 1' }
+
+```
 
 ## Benchmarks
 
@@ -46,9 +64,9 @@ $ pnpm add @httpx/xcache
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/xcache/.size-limit.ts)
 
-| Scenario (esm)                                    | Size (compressed) |
-|---------------------------------------------------|------------------:|
-| `import { xcache  } from '@httpx/xcache`          |            ~ 557B |
+| Scenario (esm)                              | Size (compressed) |
+|---------------------------------------------|------------------:|
+| `import { XMemCache } from '@httpx/xcache`  |            ~ 800B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/xcache@latest).
 
@@ -66,8 +84,6 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | Performance  | ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                        |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
-
-## Comparison with other libraries
 
 ## Contributors
 
