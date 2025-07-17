@@ -5,7 +5,7 @@ import {
 } from '@httpx/exception';
 import { toJson } from '@httpx/exception/serializer';
 import { type NextRequest, NextResponse } from 'next/server';
-import { z, type ZodSchema } from 'zod';
+import { z, type ZodSchema } from 'zod/v3';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,7 +34,7 @@ const validateNextRequest = <
   console.log('parsed', parsed);
   if (!parsed.success) {
     const error = parsed.error as unknown as z.ZodError<T>;
-    const msg = error.errors
+    const msg = error.issues
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       .map((err) => `${err.path} - ${err.code}`)
       .join(', ');
