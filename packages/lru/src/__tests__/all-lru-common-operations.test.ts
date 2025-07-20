@@ -25,9 +25,12 @@ describe.each(lruCaches)('Common operations', (cacheType, createCache) => {
       const lru = createCache({
         maxSize: 1,
       });
-      const newEntryWasCreated = lru.set('key', 'value');
+      const key =
+        '{"limit":1000,"onlyData":false,"requestUrl":"http://localhost:3000/api/referential/product-v1?limit=1000"}';
+
+      const newEntryWasCreated = lru.set(key, 'value');
       expect(newEntryWasCreated).toBe(true);
-      expect(lru.get('key')).toBe('value');
+      expect(lru.get(key)).toBe('value');
       expect(lru.size).toBe(1);
     });
     it('should overwrite a value if exists and return false', () => {
