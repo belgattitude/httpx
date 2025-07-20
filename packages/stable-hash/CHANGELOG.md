@@ -1,5 +1,14 @@
 # @httpx/stable-hash
 
+## 0.3.1
+
+### Patch Changes
+
+- [#2418](https://github.com/belgattitude/httpx/pull/2418) [`6915894`](https://github.com/belgattitude/httpx/commit/691589482047c4ffb48a3e66c5d4a18a15b4d0d2) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest esbuild 0.28.8
+
+- Updated dependencies [[`6915894`](https://github.com/belgattitude/httpx/commit/691589482047c4ffb48a3e66c5d4a18a15b4d0d2)]:
+  - @httpx/plain-object@2.1.1
+
 ## 0.3.0
 
 ### Minor Changes
