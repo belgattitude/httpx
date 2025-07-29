@@ -46,37 +46,12 @@ export class XMemCache {
    *
    * const { data } = await xMemCache.runAsync({
    *  key: ['/api/data', params],
-   *  fn: () => asyncDataFetcher(params),
+   *  fn: ({ key }) => asyncDataFetcher(params),
    * })
    * ```
    *
    * @throws TypeError if the key is not a valid stable key.
    */
-  /*
-  runAsync = async <TFunction extends CacheableAsyncFunction>(
-    params: XCacheRunAsyncParams<TFunction>
-  ): Promise<XCacheRunAsyncResult<TFunction>> => {
-    const { key, fn, ttl, namespace } = params;
-    const cacheKey = genCacheKeyString({
-      key,
-      namespace: namespace ?? this.#defaultNs,
-    });
-    let cached = true;
-    let data = this.#lru.get(cacheKey);
-    if (data === undefined) {
-      cached = false;
-      data = await fn();
-      this.#lru.set(cacheKey, data, ttl);
-    }
-    return {
-      data: data as Awaited<ReturnType<TFunction>>,
-      meta: {
-        cached,
-        cacheKey,
-      },
-    };
-  };
-  */
   runAsync = async <
     TResult extends SupportedCacheValues,
     TKey extends CacheKeyTuple,
