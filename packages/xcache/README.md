@@ -31,7 +31,7 @@ $ pnpm add @httpx/xcache
 
 ```typescript
 const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
-const xMemCache = new XMemCache({ lru, keyPrefix: 'namespace1' });
+const xMemCache = new XMemCache({ lru, namespace: 'default' });
 
 const asyncDataFetcher = async (params: { id: number }) => {
   return { id: params.id, data: `Data for ${params.id}` };
