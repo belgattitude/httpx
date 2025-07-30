@@ -1,5 +1,11 @@
 # @httpx/xcache
 
+## 0.3.0
+
+### Minor Changes
+
+- [#2426](https://github.com/belgattitude/httpx/pull/2426) [`714b5d1`](https://github.com/belgattitude/httpx/commit/714b5d11e09990d8e4e8eb4e5018969d7a662b1a) Thanks [@belgattitude](https://github.com/belgattitude)! - Rework internal and improve cache key handling.
+
 ## 0.2.1
 
 ### Patch Changes
