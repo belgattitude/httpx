@@ -58,7 +58,7 @@ describe('XMemCache compression', () => {
 
       expect(firstRunMeta.cached).toStrictEqual(false);
       expect(firstRunMeta.generatedKey).toStrictEqual(
-        '{"key":["/api/test",{"name":"test"}],"ns":"default"}'
+        '{"compressorId":"cache-gzip:devalue","key":["/api/test",{"name":"test"}],"ns":"default"}'
       );
       expect(lru.size).toStrictEqual(1);
 

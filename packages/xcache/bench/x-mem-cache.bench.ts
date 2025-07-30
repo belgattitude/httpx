@@ -37,7 +37,7 @@ const defaultParams = {
   waitMs: 200,
 } as const;
 
-describe.skip(`XMemCache benchmarks with ${payloadSize}`, () => {
+describe(`XMemCache benchmarks with ${payloadSize}`, () => {
   const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 20_000 });
   const xMemCache = new XMemCache({
     lru,

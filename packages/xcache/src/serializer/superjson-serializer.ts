@@ -5,6 +5,9 @@ import { parse, stringify } from 'superjson';
 import type { ICacheSerializer } from './types';
 
 export class SuperjsonSerializer implements ICacheSerializer {
+  getIdentifier = (): string => {
+    return 'superjson';
+  };
   serialize = <T>(data: T): string => {
     return stringify(data);
   };

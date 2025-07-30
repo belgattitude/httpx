@@ -19,6 +19,15 @@ export type XMemCacheOptions = {
   compressor?: ICacheCompressor;
 };
 
+type Result<TResult> = {
+  data: TResult;
+  meta: {
+    cached: boolean;
+    generatedKey: CacheStringKey;
+    compressorId?: string;
+  };
+};
+
 export class XMemCache {
   #lru: ITimeLruCache;
   /**
@@ -26,12 +35,14 @@ export class XMemCache {
    */
   #defaultNs?: string;
   #compressor?: ICacheCompressor | undefined;
+  #compressorId?: string | undefined;
 
   constructor(options: XMemCacheOptions) {
     const { lru, compressor, namespace = 'default' } = options;
     this.#lru = lru;
     this.#defaultNs = namespace;
     this.#compressor = compressor;
+    this.#compressorId = compressor?.getIdentifier() ?? undefined;
   }
 
   /**
@@ -65,15 +76,13 @@ export class XMemCache {
     fn: (params: { key: TKey }) => Promise<TResult>;
     namespace?: string;
     ttl?: number;
-  }): Promise<{
-    data: TResult;
-    meta: { cached: boolean; generatedKey: CacheStringKey };
-  }> => {
+  }): Promise<Result<TResult>> => {
     const { fn, key, ttl, namespace } = params;
 
     const cacheKey = genCacheKeyString({
       key,
       namespace: namespace ?? this.#defaultNs,
+      compressorId: this.#compressorId,
     });
     let cached = true;
     let data = this.#lru.get(cacheKey) as TResult | undefined;
@@ -98,6 +107,9 @@ export class XMemCache {
       meta: {
         cached,
         generatedKey: cacheKey,
+        ...(this.#compressorId === undefined
+          ? {}
+          : { compressorId: this.#compressorId }),
       },
     };
   };

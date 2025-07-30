@@ -19,12 +19,14 @@ export type CacheKeyTuple<T = unknown> = [string, ...T[]];
 export const genCacheKeyString = <TKey extends CacheKeyTuple>(params: {
   key: TKey;
   namespace?: string | undefined;
+  compressorId?: string | undefined;
 }): CacheStringKey => {
-  const { key, namespace } = params;
+  const { key, namespace, compressorId } = params;
   assertValidCacheKeyTuple(key);
   return createStableKeyOrThrow(
     {
       ...(namespace ? { ns: namespace } : {}),
+      ...(compressorId ? { compressorId } : {}),
       key,
     },
     {

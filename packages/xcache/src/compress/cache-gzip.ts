@@ -13,6 +13,10 @@ export class CacheGzip implements ICacheCompressor {
     this.#gunzip = new Decompressor('gzip');
     this.#serializer = serializer;
   }
+  getIdentifier = (): string => {
+    return `cache-gzip:${this.#serializer.getIdentifier()}`;
+  };
+
   compress = async <T>(data: T): Promise<string> => {
     const serialized = this.#serializer.serialize(data);
     return this.#gzip.toEncodedString(serialized);
