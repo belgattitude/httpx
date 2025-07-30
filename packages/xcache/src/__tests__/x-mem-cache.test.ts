@@ -16,7 +16,7 @@ describe('XMemCache', () => {
   describe('XMemCache.runAsync', () => {
     const lru = new TimeLruCache({
       maxSize: 50,
-      defaultTTL: 5000,
+      defaultTTL: 50_000,
     });
 
     const xMemCache = new XMemCache({ lru });

@@ -5,7 +5,10 @@ import {
   type CacheStringKey,
   genCacheKeyString,
 } from './cache-key';
-import type { ICacheCompressor } from './compress/types';
+import type {
+  CacheCompressSuccessMeta,
+  ICacheCompressor,
+} from './compress/types';
 
 export type XMemCacheOptions = {
   lru: ITimeLruCache;
@@ -27,6 +30,18 @@ type Result<TResult> = {
     compressorId?: string;
   };
 };
+
+type LRUCacheValue<T> =
+  | {
+      format: 'compressed';
+      data: string;
+      meta: CacheCompressSuccessMeta;
+    }
+  | {
+      format: 'native';
+      data: T;
+      meta: never;
+    };
 
 export class XMemCache {
   #lru: ITimeLruCache;
@@ -85,8 +100,13 @@ export class XMemCache {
       compressorId: this.#compressorId,
     });
     let cached = true;
-    let data = this.#lru.get(cacheKey) as TResult | undefined;
-    if (data === undefined) {
+    const result = this.#lru.get(cacheKey) as
+      | LRUCacheValue<TResult>
+      | undefined;
+
+    let data = result?.data as TResult | undefined;
+
+    if (result === undefined) {
       cached = false;
       data = await fn({ key });
       if (
@@ -95,15 +115,44 @@ export class XMemCache {
         data !== undefined
       ) {
         const compressed = await this.#compressor.compress(data);
-        this.#lru.set(cacheKey, compressed, ttl);
-      } else if (data !== undefined) {
-        this.#lru.set(cacheKey, data, ttl);
+        switch (compressed.status) {
+          case 'success':
+            this.#lru.set(
+              cacheKey,
+              {
+                format: 'compressed',
+                data: compressed.data,
+                meta: compressed.meta,
+              },
+              ttl
+            );
+            break;
+          default:
+            this.#lru.set('cacheKey', { format: 'native', data }, ttl);
+        }
+      } else if (result !== undefined) {
+        this.#lru.set(
+          cacheKey,
+          {
+            format: 'native',
+            data,
+          },
+          ttl
+        );
+        const size = this.#lru.size;
       }
-    } else if (this.#compressor !== undefined && typeof data === 'string') {
-      data = await this.#compressor.decompress<TResult>(data);
+    } else if (
+      this.#compressor !== undefined &&
+      result.format === 'compressed'
+    ) {
+      data = await this.#compressor.decompress<TResult>({
+        status: 'success',
+        data: result.data,
+        meta: result.meta,
+      });
     }
     return {
-      data,
+      data: data!,
       meta: {
         cached,
         generatedKey: cacheKey,

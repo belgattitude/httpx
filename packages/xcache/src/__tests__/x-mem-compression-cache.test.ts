@@ -6,19 +6,15 @@ import { DevalueSerializer } from '../serializer/devalue-serializer';
 import { XMemCache } from '../x-mem-cache';
 
 describe('XMemCache compression', () => {
-  type TestFnParams = {
-    name: string;
+  const payload = {
+    message: `Hello world &à`.repeat(50),
+    bigint: BigInt('1234567890123456789012345678901234567890'),
+    date: new Date(),
+    test: ['10', 1, true, null, undefined],
   };
 
-  const today = new Date();
-  const myBigInt = BigInt('1234567890123456789012345678901234567890');
-
-  const fetchDataFn = async (params: TestFnParams) => {
-    return {
-      message: `Hello ${params.name}`,
-      bigint: myBigInt,
-      date: today,
-    };
+  const fetchDataFn = async () => {
+    return payload;
   };
 
   describe('XMemCache.runAsync', () => {
@@ -35,39 +31,25 @@ describe('XMemCache compression', () => {
     });
 
     it('should execute the function and cache the result', async () => {
-      const runCached = async (params: TestFnParams) => {
+      const runCached = async () => {
         return xMemCache.runAsync({
-          key: ['/api/test', params],
-          fn: () => fetchDataFn(params),
+          key: ['/api/compression-test'],
+          fn: () => fetchDataFn(),
         });
       };
 
-      const { data: firstRunData, meta: firstRunMeta } = await runCached({
-        name: 'test',
-      });
-      expect(firstRunData).toStrictEqual({
-        message: 'Hello test',
-        bigint: myBigInt,
-        date: today,
-      });
-      expectTypeOf(firstRunData).toEqualTypeOf<{
-        message: string;
-        bigint: bigint;
-        date: Date;
-      }>();
+      const { data: firstRunData, meta: firstRunMeta } = await runCached();
+      expect(firstRunData).toStrictEqual(payload);
+      expectTypeOf(firstRunData).toEqualTypeOf<typeof payload>();
 
       expect(firstRunMeta.cached).toStrictEqual(false);
       expect(firstRunMeta.generatedKey).toStrictEqual(
-        '{"compressorId":"cache-gzip:devalue","key":["/api/test",{"name":"test"}],"ns":"default"}'
+        '{"compressorId":"cache-gzip:devalue","key":["/api/compression-test"],"ns":"default"}'
       );
       expect(lru.size).toStrictEqual(1);
 
-      const { data: secondRunData } = await runCached({ name: 'test' });
-      expect(secondRunData).toStrictEqual({
-        message: 'Hello test',
-        bigint: myBigInt,
-        date: today,
-      });
+      const { data: secondRunData } = await runCached();
+      expect(secondRunData).toStrictEqual(payload);
       expect(lru.size).toStrictEqual(1);
 
       const removed = lru.clear();
