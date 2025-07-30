@@ -33,7 +33,12 @@ export const genCacheKeyString = <TKey extends CacheKeyTuple>(params: {
 };
 
 export const isValidCacheKeyTuple = (v: unknown): v is CacheKeyTuple => {
-  if (Array.isArray(v) && v.length > 0) {
+  if (
+    Array.isArray(v) &&
+    v.length > 0 &&
+    typeof v[0] === 'string' &&
+    v[0].length > 0
+  ) {
     return true;
   }
   return false;

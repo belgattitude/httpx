@@ -5,3 +5,4 @@ export type {
 } from './x-cache.types';
 export type { XMemCacheOptions } from './x-mem-cache';
 export { XMemCache } from './x-mem-cache';
+export { TimeLruCache } from '@httpx/lru';

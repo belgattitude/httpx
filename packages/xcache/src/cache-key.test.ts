@@ -19,4 +19,8 @@ describe('genCacheKeyString', () => {
     // @ts-expect-error: invalid key type
     expect(() => genCacheKeyString({ key: null })).toThrow(TypeError);
   });
+
+  it('should throw TypeError for invalid key, empty string', () => {
+    expect(() => genCacheKeyString({ key: [''] })).toThrow(TypeError);
+  });
 });
