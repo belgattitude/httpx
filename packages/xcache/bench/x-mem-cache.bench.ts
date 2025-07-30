@@ -7,13 +7,13 @@ const options: Parameters<typeof bench>[2] = {
   time: 10,
 };
 
+const asyncDataFetcher = async (params: { id: number }) => {
+  return { id: params.id, data: `Data for ${params.id}` };
+};
+
 describe('XMemCache benchmarks', () => {
   const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 5000 });
   const xMemCache = new XMemCache({ lru });
-
-  const asyncDataFetcher = async (params: { id: number }) => {
-    return { id: params.id, data: `Data for ${params.id}` };
-  };
 
   const params = { id: 1 };
 
