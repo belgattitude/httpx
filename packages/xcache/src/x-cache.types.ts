@@ -1,5 +1,7 @@
 import type { SupportedCacheValues } from '@httpx/lru';
 
+import type { CacheKeyTuple } from './cache-key';
+
 type CacheableValues = SupportedCacheValues;
 
 export type CacheableAsyncFunction = (
@@ -7,8 +9,11 @@ export type CacheableAsyncFunction = (
   ...args: any[]
 ) => Promise<CacheableValues>;
 
-export type XCacheRunAsyncParams<TFunction extends CacheableAsyncFunction> = {
-  key: unknown[];
-  fn: TFunction;
+export interface XCacheRunAsyncParams<
+  TFunction extends CacheableAsyncFunction,
+> {
+  key: CacheKeyTuple;
+  fn: (key: CacheKeyTuple) => Awaited<ReturnType<TFunction>>;
+  namespace?: string;
   ttl?: number;
-};
+}

@@ -7,4 +7,10 @@ module.exports = [
     import: '{ XMemCache }',
     limit: '800B',
   },
+  {
+    name: 'import { TimeLruCache } (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ TimeLruCache }',
+    limit: '800B',
+  },
 ] satisfies SizeLimitConfig;

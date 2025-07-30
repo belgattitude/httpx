@@ -1,18 +1,32 @@
-import type { ITimeLruCache } from '@httpx/lru';
-import { createStableKeyOrThrow } from '@httpx/stable-hash';
+import type { ITimeLruCache, SupportedCacheValues } from '@httpx/lru';
 
-import type {
-  CacheableAsyncFunction,
-  XCacheRunAsyncParams,
-} from './x-cache.types';
+import {
+  type CacheKeyTuple,
+  type CacheStringKey,
+  genCacheKeyString,
+} from './cache-key';
+
+export type XMemCacheOptions = {
+  lru: ITimeLruCache;
+  /**
+   * The default namespace is used to prefix the cache key,
+   * allowing for separation of cache entries. If not provided,
+   * it will use 'default'. The default namespace can be overridden
+   * when calling `runAsync`.
+   */
+  namespace?: string;
+};
 
 export class XMemCache {
   #lru: ITimeLruCache;
-  #keyPrefix?: string;
-  constructor(options: { lru: ITimeLruCache; keyPrefix?: string }) {
-    const { lru, keyPrefix = '' } = options;
+  /**
+   * Default namespace for the cache key.
+   */
+  #defaultNs?: string;
+  constructor(options: XMemCacheOptions) {
+    const { lru, namespace = 'default' } = options;
     this.#lru = lru;
-    this.#keyPrefix = keyPrefix;
+    this.#defaultNs = namespace;
   }
 
   /**
@@ -22,7 +36,7 @@ export class XMemCache {
    * @example
    * ```typescript
    * const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 5000 });
-   * const xMemCache = new XMemCache({ lru, keyPrefix: 'namespace1' });
+   * const xMemCache = new XMemCache({ lru });
    *
    * const asyncDataFetcher = async (params: { id: number }) => {
    *   return { id: params.id, data: `Data for ${params.id}` };
@@ -32,26 +46,43 @@ export class XMemCache {
    *
    * const { data } = await xMemCache.runAsync({
    *  key: ['/api/data', params],
-   *  fn: () => asyncDataFetcher(params),
+   *  fn: ({ key }) => asyncDataFetcher(params),
    * })
    * ```
    *
    * @throws TypeError if the key is not a valid stable key.
    */
-  runAsync = async <TFunction extends CacheableAsyncFunction>(
-    params: XCacheRunAsyncParams<TFunction>
-  ): Promise<{
-    data: Awaited<ReturnType<TFunction>>;
+  runAsync = async <
+    TResult extends SupportedCacheValues,
+    TKey extends CacheKeyTuple,
+  >(params: {
+    key: TKey;
+    fn: (params: { key: TKey }) => Promise<TResult>;
+    namespace?: string;
+    ttl?: number;
+  }): Promise<{
+    data: TResult;
+    meta: { cached: boolean; generatedKey: CacheStringKey };
   }> => {
-    const { key, fn, ttl } = params;
-    const cacheKey = `${this.#keyPrefix}${createStableKeyOrThrow(key)}`;
-    let data = this.#lru.get(cacheKey);
+    const { fn, key, ttl, namespace } = params;
+
+    const cacheKey = genCacheKeyString({
+      key,
+      namespace: namespace ?? this.#defaultNs,
+    });
+    let cached = true;
+    let data = this.#lru.get(cacheKey) as TResult | undefined;
     if (data === undefined) {
-      data = await fn();
+      cached = false;
+      data = await fn({ key });
       this.#lru.set(cacheKey, data, ttl);
     }
     return {
-      data: data as Awaited<ReturnType<TFunction>>,
+      data,
+      meta: {
+        cached,
+        generatedKey: cacheKey,
+      },
     };
   };
 

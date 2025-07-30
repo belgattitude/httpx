@@ -1,5 +1,5 @@
 import { TimeLruCache } from '@httpx/lru';
-import { expectTypeOf } from 'vitest';
+import { expect, expectTypeOf } from 'vitest';
 
 import { XMemCache } from './x-mem-cache';
 
@@ -13,16 +13,13 @@ describe('XMemCache', () => {
     };
   };
 
-  describe('XMemCache.withCache', () => {
+  describe('XMemCache.runAsync', () => {
     const lru = new TimeLruCache({
       maxSize: 50,
       defaultTTL: 5000,
     });
 
-    const xMemCache = new XMemCache({
-      lru,
-      keyPrefix: 'test',
-    });
+    const xMemCache = new XMemCache({ lru });
 
     it('should execute the function and cache the result', async () => {
       const runCached = async (params: TestFnParams) => {
@@ -32,7 +29,7 @@ describe('XMemCache', () => {
         });
       };
 
-      const { data: firstRunData } = await runCached({
+      const { data: firstRunData, meta: firstRunMeta } = await runCached({
         name: 'test',
       });
       expect(firstRunData).toStrictEqual({ message: 'Hello test' });
@@ -40,8 +37,15 @@ describe('XMemCache', () => {
         message: string;
       }>();
 
+      expect(firstRunMeta.cached).toStrictEqual(false);
+      expect(firstRunMeta.generatedKey).toStrictEqual(
+        '{"key":["/api/test",{"name":"test"}],"ns":"default"}'
+      );
+      expect(lru.size).toStrictEqual(1);
+
       const { data: secondRunData } = await runCached({ name: 'test' });
       expect(secondRunData).toStrictEqual({ message: 'Hello test' });
+      expect(lru.size).toStrictEqual(1);
 
       const removed = lru.clear();
       expect(removed).toBe(1); // One item should be removed from the cache

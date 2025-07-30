@@ -4,6 +4,6 @@ const isCiOrCodSpeed = vitestBenchOptionsConfig.isCiOrCodSpeed;
 
 export const benchConfig = {
   benchOptions: {
-    iterations: isCiOrCodSpeed ? 3 : 10,
+    iterations: isCiOrCodSpeed ? 3 : 100,
   },
 } as const;
