@@ -1,4 +1,5 @@
 import { createStableKeyOrThrow } from '@httpx/stable-hash';
+
 export type CacheStringKey = string & {
   _brand: 'x-mem-cache-string-key';
 };
