@@ -1,12 +1,12 @@
-## @httpx/mcache 
+## @httpx/xcache 
 
-Benchmarks to measure [@httpx/mcache](../README.md) performance.
+Benchmarks to measure [@httpx/xcache](../README.md) performance.
 
 ### Run
 
 ```bash
 yarn install
-cd packages/mcache
+cd packages/xcache
 yarn build
 yarn bench
 ```

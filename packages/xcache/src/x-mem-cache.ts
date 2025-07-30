@@ -5,6 +5,7 @@ import {
   type CacheStringKey,
   genCacheKeyString,
 } from './cache-key';
+import type { ICacheCompressor } from './compress/types';
 
 export type XMemCacheOptions = {
   lru: ITimeLruCache;
@@ -15,6 +16,7 @@ export type XMemCacheOptions = {
    * when calling `runAsync`.
    */
   namespace?: string;
+  compressor?: ICacheCompressor;
 };
 
 export class XMemCache {
@@ -23,10 +25,13 @@ export class XMemCache {
    * Default namespace for the cache key.
    */
   #defaultNs?: string;
+  #compressor?: ICacheCompressor | undefined;
+
   constructor(options: XMemCacheOptions) {
-    const { lru, namespace = 'default' } = options;
+    const { lru, compressor, namespace = 'default' } = options;
     this.#lru = lru;
     this.#defaultNs = namespace;
+    this.#compressor = compressor;
   }
 
   /**
@@ -75,7 +80,18 @@ export class XMemCache {
     if (data === undefined) {
       cached = false;
       data = await fn({ key });
-      this.#lru.set(cacheKey, data, ttl);
+      if (
+        this.#compressor !== undefined &&
+        data !== null &&
+        data !== undefined
+      ) {
+        const compressed = await this.#compressor.compress(data);
+        this.#lru.set(cacheKey, compressed, ttl);
+      } else if (data !== undefined) {
+        this.#lru.set(cacheKey, data, ttl);
+      }
+    } else if (this.#compressor !== undefined && typeof data === 'string') {
+      data = await this.#compressor.decompress<TResult>(data);
     }
     return {
       data,
