@@ -4,6 +4,13 @@ export type CacheCompressSuccessMeta = {
   ratio: number;
 };
 
+export type CacheCompressSkippedReason =
+  | 'trivial_value'
+  | 'uncompressible_value'
+  | 'minimum_ratio_not_met'
+  | 'minimum_byte_saving_not_met'
+  | 'minimum_string_length_not_met';
+
 export type CacheCompressResult<T = unknown> =
   | {
       status: 'success';
@@ -20,7 +27,7 @@ export type CacheCompressResult<T = unknown> =
   | {
       status: 'skipped';
       meta: {
-        reason?: string;
+        reason: CacheCompressSkippedReason;
       };
       data: T;
     };

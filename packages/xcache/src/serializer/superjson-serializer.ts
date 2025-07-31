@@ -14,4 +14,7 @@ export class SuperjsonSerializer implements ICacheSerializer {
   deserialize = <T = unknown>(serializedData: string): T => {
     return parse<T>(serializedData);
   };
+  toString = (): string => {
+    return this.getIdentifier();
+  };
 }

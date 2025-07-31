@@ -13,4 +13,7 @@ export class JsonSerializer implements ICacheSerializer {
   deserialize = <T = unknown>(serializedData: string): T => {
     return JSON.parse(serializedData) as T;
   };
+  toString = (): string => {
+    return this.getIdentifier();
+  };
 }

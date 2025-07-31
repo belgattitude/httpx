@@ -14,4 +14,7 @@ export class DevalueSerializer implements ICacheSerializer {
   deserialize = <T = unknown>(serializedData: string): T => {
     return parse(serializedData) as T;
   };
+  toString = (): string => {
+    return this.getIdentifier();
+  };
 }
