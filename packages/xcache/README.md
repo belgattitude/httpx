@@ -69,7 +69,7 @@ const xMemCache = new XMemCache({
     }),
 });
 
-const fetchDataFn = async (params: { name: string }) => {
+const fetchThings = async (params: { name: string }) => {
     return {
         message: `Hello ${params.name}`,
         bigint: BigInt('1234567890123456789012345678901234567890'),
@@ -79,7 +79,7 @@ const fetchDataFn = async (params: { name: string }) => {
 
 const { data } = await xMemCache.runAsync({
  key: ['/api/data', { name: 'cool' }],
- fn: () => fetchSmth({ name: 'cool'}),
+ fn: () => fetchThings({ name: 'cool'}),
 })
 
 ```
