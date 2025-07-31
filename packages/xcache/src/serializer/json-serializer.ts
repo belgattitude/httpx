@@ -1,5 +1,8 @@
 import type { ICacheSerializer } from './types';
 
+/**
+ * Native JSON serializer. Does not support BigInt, ... serialization.
+ */
 export class JsonSerializer implements ICacheSerializer {
   getIdentifier = (): string => {
     return 'json';

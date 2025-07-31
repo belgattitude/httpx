@@ -128,9 +128,9 @@ export class XMemCache {
             );
             break;
           default:
-            this.#lru.set('cacheKey', { format: 'native', data }, ttl);
+            this.#lru.set(cacheKey, { format: 'native', data }, ttl);
         }
-      } else if (result !== undefined) {
+      } else {
         this.#lru.set(
           cacheKey,
           {
@@ -139,7 +139,6 @@ export class XMemCache {
           },
           ttl
         );
-        const size = this.#lru.size;
       }
     } else if (
       this.#compressor !== undefined &&
