@@ -60,12 +60,13 @@ To be able to serialize and deserialize the data, you can use adapters like `Dev
 `SuperjsonSerializer` or `JsonSerializer`.
 
 ```typescript
-import { XMemCache, TimeLruCache, CacheGzip, DevalueSerializer  } from '@httpx/xcache';
+import { XMemCache, TimeLruCache, CacheCompress, DevalueSerializer  } from '@httpx/xcache';
 
 const xMemCache = new XMemCache({ 
     lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
-    compressor: new CacheGzip({
-        serializer: new DevalueSerializer(),
+    compressor: new CacheCompress({
+      algorithm: 'deflate', // 'gzip' or 'deflate'
+      serializer: new DevalueSerializer(),
     }),
 });
 

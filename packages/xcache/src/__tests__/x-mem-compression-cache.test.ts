@@ -1,11 +1,11 @@
 import { TimeLruCache } from '@httpx/lru';
 import { expect, expectTypeOf } from 'vitest';
 
-import { CacheGzip } from '../compress/cache-gzip';
+import { CacheCompress } from '../compress/cache-compress';
 import { DevalueSerializer } from '../serializer/devalue-serializer';
 import { XMemCache } from '../x-mem-cache';
 
-describe('XMemCache compression', () => {
+describe.each([['gzip', 'deflate']])('XMemCache compression', () => {
   const payload = {
     message: `Hello world &à`.repeat(50),
     bigint: BigInt('1234567890123456789012345678901234567890'),
@@ -25,7 +25,8 @@ describe('XMemCache compression', () => {
 
     const xMemCache = new XMemCache({
       lru,
-      compressor: new CacheGzip({
+      compressor: new CacheCompress({
+        algorithm: 'gzip',
         serializer: new DevalueSerializer(),
       }),
     });
@@ -44,7 +45,7 @@ describe('XMemCache compression', () => {
 
       expect(firstRunMeta.cached).toStrictEqual(false);
       expect(firstRunMeta.generatedKey).toStrictEqual(
-        '{"compressorId":"cache-gzip:devalue","key":["/api/compression-test"],"ns":"default"}'
+        '{"compressorId":"cache-compress:devalue","key":["/api/compression-test"],"ns":"default"}'
       );
       expect(lru.size).toStrictEqual(1);
 

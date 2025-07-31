@@ -1,4 +1,4 @@
-export { CacheGzip } from './compress/cache-gzip';
+export { CacheCompress } from './compress/cache-compress';
 export type { ICacheCompressor } from './compress/types';
 export { createCacheFn } from './create-cache-fn';
 export { DevalueSerializer } from './serializer/devalue-serializer';

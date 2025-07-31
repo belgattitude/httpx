@@ -4,8 +4,11 @@ import type { ICacheSerializer } from '../serializer/types';
 import { isTrivialValue } from './is-trivial-value';
 import type { CacheCompressResult, ICacheCompressor } from './types';
 
-export type CacheGzipOptions = {
+export type CacheCompressOptions = {
   serializer: ICacheSerializer;
+
+  algorithm: 'gzip' | 'deflate';
+
   /**
    * Minimum achieved compression ratio to consider compression effective
    * If not reached, compression will be skipped.
@@ -23,20 +26,22 @@ export type CacheGzipOptions = {
    * @default 16384 (16 KB)
    */
   minimumByteSaving?: number;
+  encoding?: 'base64' | 'base64_urlsafe';
 };
 
 const defaultOptions: Required<
   Pick<
-    CacheGzipOptions,
-    'minimumRatio' | 'minimumStringLength' | 'minimumByteSaving'
+    CacheCompressOptions,
+    'minimumRatio' | 'minimumStringLength' | 'minimumByteSaving' | 'encoding'
   >
 > = {
   minimumRatio: 1.3,
   minimumStringLength: 1000,
   minimumByteSaving: 16_384, // 16 KB
+  encoding: 'base64',
 } as const;
 
-export class CacheGzip implements ICacheCompressor {
+export class CacheCompress implements ICacheCompressor {
   #gzip: Compressor;
   #gunzip: Decompressor;
   #serializer: ICacheSerializer;
@@ -44,6 +49,7 @@ export class CacheGzip implements ICacheCompressor {
     minimumRatio: number;
     minimumStringLength: number;
     minimumByteSaving: number;
+    encoding: 'base64' | 'base64_urlsafe';
   };
 
   /**
@@ -51,6 +57,7 @@ export class CacheGzip implements ICacheCompressor {
    * ```typescript
    * const cacheGzip = new CacheGzip({
    *   serializer: new DevalueSerializer(),
+   *   algorithm: 'deflate', // or 'gzip'
    *   // Skip compression if the achieved compression ratio is less than
    *   // the provided ratio. 1.3 means that the compression will be skipped
    *   // if the ratio does not give at least 30 memory reduction
@@ -63,18 +70,18 @@ export class CacheGzip implements ICacheCompressor {
    * });
    * ```
    */
-  constructor(options: CacheGzipOptions) {
-    const { serializer, ...restOptions } = {
+  constructor(options: CacheCompressOptions) {
+    const { serializer, algorithm, ...restOptions } = {
       ...defaultOptions,
       ...options,
     };
-    this.#gzip = new Compressor('gzip');
-    this.#gunzip = new Decompressor('gzip');
+    this.#gzip = new Compressor(algorithm);
+    this.#gunzip = new Decompressor(algorithm);
     this.#serializer = serializer;
     this.#options = restOptions;
   }
   getIdentifier = (): string => {
-    return `cache-gzip:${this.#serializer.getIdentifier()}`;
+    return `cache-compress:${this.#serializer.getIdentifier()}`;
   };
 
   compress = async <T>(data: T): Promise<CacheCompressResult> => {
@@ -100,7 +107,9 @@ export class CacheGzip implements ICacheCompressor {
     }
 
     const serialized = this.#serializer.serialize(data);
-    const compressed = await this.#gzip.toEncodedString(serialized);
+    const compressed = await this.#gzip.toEncodedString(serialized, {
+      encoding: this.#options.encoding,
+    });
     if (
       Math.max(serialized.length - compressed.length, 0) < minimumByteSaving
     ) {
@@ -142,7 +151,9 @@ export class CacheGzip implements ICacheCompressor {
     if (data.status !== 'success') {
       return data.data as T;
     }
-    const serialized = await this.#gunzip.fromEncodedString(data.data);
+    const serialized = await this.#gunzip.fromEncodedString(data.data, {
+      encoding: this.#options.encoding,
+    });
     return this.#serializer.deserialize<T>(serialized);
   };
 }
