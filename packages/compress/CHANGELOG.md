@@ -1,5 +1,11 @@
 # @httpx/compress
 
+## 0.3.2
+
+### Patch Changes
+
+- [#2434](https://github.com/belgattitude/httpx/pull/2434) [`eb09668`](https://github.com/belgattitude/httpx/commit/eb0966865e27885ade11d46bb533be3223eb4176) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix missing dep on uint8_array_extras
+
 ## 0.3.1
 
 ### Patch Changes

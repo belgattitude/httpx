@@ -1,5 +1,18 @@
 # @httpx/xcache
 
+## 0.4.0
+
+### Minor Changes
+
+- [#2432](https://github.com/belgattitude/httpx/pull/2432) [`27c391a`](https://github.com/belgattitude/httpx/commit/27c391abcd562888a7b615f342353fa02a0f0383) Thanks [@belgattitude](https://github.com/belgattitude)! - Add compression utilities
+
+### Patch Changes
+
+- [#2434](https://github.com/belgattitude/httpx/pull/2434) [`eb09668`](https://github.com/belgattitude/httpx/commit/eb0966865e27885ade11d46bb533be3223eb4176) Thanks [@belgattitude](https://github.com/belgattitude)! - Cache compression: add support deflate (slightly faster than gzip).
+
+- Updated dependencies [[`eb09668`](https://github.com/belgattitude/httpx/commit/eb0966865e27885ade11d46bb533be3223eb4176)]:
+  - @httpx/compress@0.3.2
+
 ## 0.3.0
 
 ### Minor Changes
