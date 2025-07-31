@@ -2,7 +2,7 @@ import { DevalueSerializer } from '../serializer/devalue-serializer';
 import { JsonSerializer } from '../serializer/json-serializer';
 import { SuperjsonSerializer } from '../serializer/superjson-serializer';
 import type { ICacheSerializer } from '../serializer/types';
-import { CacheGzip } from './cache-gzip';
+import { CacheCompress } from './cache-compress';
 import type {
   CacheCompressSkippedReason,
   CacheCompressSuccessMeta,
@@ -31,14 +31,22 @@ const generateArrayOfRecords = (rows: number, extendedTypeSupport: boolean) => {
 };
 
 describe.each([
-  [new DevalueSerializer(), true],
-  [new JsonSerializer(), false],
-  [new SuperjsonSerializer(), true],
-] satisfies [serializer: ICacheSerializer, extendedTypeSupport: boolean][])(
-  'CacheGzip tests with %s serializer',
-  (serializer, extendedTypeSupport) => {
+  [new DevalueSerializer(), 'gzip', true],
+  [new JsonSerializer(), 'gzip', false],
+  [new SuperjsonSerializer(), 'gzip', true],
+  [new DevalueSerializer(), 'deflate', true],
+  [new JsonSerializer(), 'deflate', false],
+  [new SuperjsonSerializer(), 'deflate', true],
+] satisfies [
+  serializer: ICacheSerializer,
+  algo: 'gzip' | 'deflate',
+  extendedTypeSupport: boolean,
+][])(
+  'CacheCompress tests with %s serializer',
+  (serializer, algorithm, extendedTypeSupport) => {
     it(`should compress and decompress data correctly (${extendedTypeSupport ? 'extendedTypeSupport' : 'nativeTypes'}))`, async () => {
-      const cacheGzip = new CacheGzip({
+      const cacheGzip = new CacheCompress({
+        algorithm,
         minimumRatio: 1,
         minimumByteSaving: 4096,
         serializer: serializer,
@@ -56,7 +64,8 @@ describe.each([
     });
 
     it('should skip compression for strings not meeting minimum length', async () => {
-      const cacheGzip = new CacheGzip({
+      const cacheGzip = new CacheCompress({
+        algorithm,
         serializer: serializer,
         minimumStringLength: 3,
       });
@@ -68,7 +77,8 @@ describe.each([
     });
 
     it('should not skip compression for strings meeting minimum length', async () => {
-      const cacheGzip = new CacheGzip({
+      const cacheGzip = new CacheCompress({
+        algorithm,
         serializer: serializer,
         minimumStringLength: 1,
         minimumRatio: 0.1,
@@ -88,7 +98,7 @@ describe.each([
     ] satisfies [string, unknown, CacheCompressSkippedReason][])(
       'should not compress "%s" values',
       async (_label, val, reason) => {
-        const cacheGzip = new CacheGzip({ serializer });
+        const cacheGzip = new CacheCompress({ serializer, algorithm });
 
         const result = await cacheGzip.compress(val);
         expect(result.status).toBe('skipped');
@@ -101,8 +111,9 @@ describe.each([
       }
     );
     it('should skip compression when minimum ratio is not met', async () => {
-      const cacheGzip = new CacheGzip({
+      const cacheGzip = new CacheCompress({
         serializer,
+        algorithm,
         minimumRatio: 2,
         minimumStringLength: 1,
         minimumByteSaving: 0,
@@ -115,8 +126,9 @@ describe.each([
     });
 
     it('should not skip compression when minimum ratio is met', async () => {
-      const cacheGzip = new CacheGzip({
+      const cacheGzip = new CacheCompress({
         serializer,
+        algorithm,
         minimumRatio: 1.5,
         minimumStringLength: 1,
         minimumByteSaving: 128,
@@ -126,8 +138,9 @@ describe.each([
     });
 
     it('should skip compression when minimum byte saving is not met', async () => {
-      const cacheGzip = new CacheGzip({
+      const cacheGzip = new CacheCompress({
         serializer,
+        algorithm,
         minimumRatio: 1.5,
         minimumStringLength: 1,
         minimumByteSaving: 256,

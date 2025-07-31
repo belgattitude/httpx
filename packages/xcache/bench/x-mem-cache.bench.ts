@@ -3,7 +3,7 @@ import prettyBytes from 'pretty-bytes';
 import { bench } from 'vitest';
 
 import {
-  CacheGzip,
+  CacheCompress,
   DevalueSerializer,
   JsonSerializer,
   SuperjsonSerializer,
@@ -14,7 +14,7 @@ import { generateArrayOfData } from './data-generator';
 
 const options = benchConfig.benchOptions;
 const { isCiOrCodSpeed } = benchConfig;
-const rows = isCiOrCodSpeed ? 1000 : 100_000; // Adjust rows based on environment
+const rows = isCiOrCodSpeed ? 1000 : 500_000; // Adjust rows based on environment
 
 function waitMs(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -40,7 +40,8 @@ const defaultParams = {
 } as const;
 
 describe(`XMemCache benchmarks with ${payloadSize}`, async () => {
-  const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 20_000 });
+  const algorithm = 'deflate';
+  const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 });
   const xMemCache = new XMemCache({
     lru,
   });
@@ -76,8 +77,9 @@ describe(`XMemCache benchmarks with ${payloadSize}`, async () => {
   );
 
   const cacheJsonGzip = new XMemCache({
-    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 5000 }),
-    compressor: new CacheGzip({
+    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 }),
+    compressor: new CacheCompress({
+      algorithm,
       serializer: new JsonSerializer(),
     }),
   });
@@ -99,8 +101,9 @@ describe(`XMemCache benchmarks with ${payloadSize}`, async () => {
   );
 
   const cacheSuperjsonGzip = new XMemCache({
-    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 5000 }),
-    compressor: new CacheGzip({
+    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 }),
+    compressor: new CacheCompress({
+      algorithm,
       serializer: new SuperjsonSerializer(),
     }),
   });
@@ -116,8 +119,9 @@ describe(`XMemCache benchmarks with ${payloadSize}`, async () => {
     options
   );
   const cacheDevalueGzip = new XMemCache({
-    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 5000 }),
-    compressor: new CacheGzip({
+    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 }),
+    compressor: new CacheCompress({
+      algorithm,
       serializer: new DevalueSerializer(),
     }),
   });
