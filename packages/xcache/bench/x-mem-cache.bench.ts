@@ -13,12 +13,14 @@ import { benchConfig } from './bench-config';
 import { generateArrayOfData } from './data-generator';
 
 const options = benchConfig.benchOptions;
+const { isCiOrCodSpeed } = benchConfig;
+const rows = isCiOrCodSpeed ? 1000 : 100_000; // Adjust rows based on environment
 
 function waitMs(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const data = generateArrayOfData(50_000, false);
+const data = generateArrayOfData(rows, false);
 
 const asyncDataFetcher = async (params: { waitMs?: number }) => {
   if (params.waitMs && params.waitMs > 0) {
@@ -34,7 +36,7 @@ const payloadSize = prettyBytes(
 );
 
 const defaultParams = {
-  waitMs: 400,
+  waitMs: isCiOrCodSpeed ? 100 : 400,
 } as const;
 
 describe(`XMemCache benchmarks with ${payloadSize}`, () => {
@@ -125,23 +127,4 @@ describe(`XMemCache benchmarks with ${payloadSize}`, () => {
     },
     options
   );
-
-  /*
-  const cacheDevalueFFlate = new XMemCache({
-    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 5000 }),
-    compressor: new CacheFFlate({
-      serializer: new DevalueSerializer(),
-    }),
-  });
-
-  bench(
-    'cache with devalue + fflate',
-    async () => {
-      const { data: _data } = await cacheDevalueFFlate.runAsync({
-        key: ['/bench/cache-devalue-fflate', dataFetcherParams],
-        fn: () => asyncDataFetcher(dataFetcherParams),
-      });
-    },
-    options
-  ); */
 });
