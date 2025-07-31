@@ -105,6 +105,7 @@ describe.each([
         serializer,
         minimumRatio: 2,
         minimumStringLength: 1,
+        minimumByteSaving: 0,
       });
       const result = await cacheGzip.compress('ab');
       expect(result.status).toBe('skipped');

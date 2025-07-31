@@ -101,6 +101,17 @@ export class CacheGzip implements ICacheCompressor {
 
     const serialized = this.#serializer.serialize(data);
     const compressed = await this.#gzip.toEncodedString(serialized);
+    if (
+      Math.max(serialized.length - compressed.length, 0) < minimumByteSaving
+    ) {
+      return {
+        status: 'skipped',
+        meta: {
+          reason: 'minimum_byte_saving_not_met',
+        },
+        data,
+      };
+    }
     const ratio =
       compressed.length > 0
         ? Math.floor((serialized.length / compressed.length) * 100) / 100
@@ -111,17 +122,6 @@ export class CacheGzip implements ICacheCompressor {
         status: 'skipped',
         meta: {
           reason: 'minimum_ratio_not_met',
-        },
-        data,
-      };
-    }
-    if (
-      Math.max(serialized.length - compressed.length, 0) < minimumByteSaving
-    ) {
-      return {
-        status: 'skipped',
-        meta: {
-          reason: 'minimum_byte_saving_not_met',
         },
         data,
       };
