@@ -39,7 +39,7 @@ const defaultParams = {
   waitMs: isCiOrCodSpeed ? 100 : 400,
 } as const;
 
-describe(`XMemCache benchmarks with ${payloadSize}`, () => {
+describe(`XMemCache benchmarks with ${payloadSize}`, async () => {
   const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 20_000 });
   const xMemCache = new XMemCache({
     lru,
@@ -82,8 +82,13 @@ describe(`XMemCache benchmarks with ${payloadSize}`, () => {
     }),
   });
 
+  const { meta } = await cacheJsonGzip.runAsync({
+    key: ['/bench/cache-json-gzip-meta'],
+    fn: () => asyncDataFetcher(defaultParams),
+  });
+
   bench(
-    'cache with json + gzip',
+    `cache with json + gzip`,
     async () => {
       const { data: _data } = await cacheJsonGzip.runAsync({
         key: ['/bench/cache-json-gzip'],
