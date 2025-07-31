@@ -71,6 +71,18 @@
     "@httpx/lru": "workspace:^",
     "@httpx/stable-hash": "workspace:^"
   },
+  "peerDependencies": {
+    "devalue": "^5.1.1",
+    "superjson": "^2.2.2"
+  },
+  "peerDependenciesMeta": {
+    "devalue": {
+      "optional": true
+    },
+    "superjson": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
     "@belgattitude/eslint-config-bases": "7.5.0",
@@ -80,17 +92,21 @@
     "browserslist": "4.25.1",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.0.0",
+    "devalue": "5.1.1",
     "es-check": "9.1.4",
     "esbuild": "0.25.8",
     "eslint": "8.57.1",
+    "fflate": "0.8.2",
     "npm-run-all2": "8.0.4",
     "prettier": "3.6.2",
+    "pretty-bytes": "7.0.0",
     "publint": "0.3.12",
     "rimraf": "6.0.1",
     "size-limit": "11.2.0",
+    "superjson": "2.2.2",
     "tsup": "8.5.0",
     "typedoc": "0.28.8",
-    "typedoc-plugin-markdown": "4.7.1",
+    "typedoc-plugin-markdown": "4.8.0",
     "typescript": "5.8.3",
     "vitest": "3.2.4",
     "webpack": "5.101.0"

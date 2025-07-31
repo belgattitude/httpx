@@ -5,6 +5,10 @@ import {
   type CacheStringKey,
   genCacheKeyString,
 } from './cache-key';
+import type {
+  CacheCompressSuccessMeta,
+  ICacheCompressor,
+} from './compress/types';
 
 export type XMemCacheOptions = {
   lru: ITimeLruCache;
@@ -15,7 +19,29 @@ export type XMemCacheOptions = {
    * when calling `runAsync`.
    */
   namespace?: string;
+  compressor?: ICacheCompressor;
 };
+
+type Result<TResult> = {
+  data: TResult;
+  meta: {
+    cached: boolean;
+    generatedKey: CacheStringKey;
+    compressorId?: string;
+  };
+};
+
+type LRUCacheValue<T> =
+  | {
+      format: 'compressed';
+      data: string;
+      meta: CacheCompressSuccessMeta;
+    }
+  | {
+      format: 'native';
+      data: T;
+      meta: never;
+    };
 
 export class XMemCache {
   #lru: ITimeLruCache;
@@ -23,10 +49,15 @@ export class XMemCache {
    * Default namespace for the cache key.
    */
   #defaultNs?: string;
+  #compressor?: ICacheCompressor | undefined;
+  #compressorId?: string | undefined;
+
   constructor(options: XMemCacheOptions) {
-    const { lru, namespace = 'default' } = options;
+    const { lru, compressor, namespace = 'default' } = options;
     this.#lru = lru;
     this.#defaultNs = namespace;
+    this.#compressor = compressor;
+    this.#compressorId = compressor?.getIdentifier() ?? undefined;
   }
 
   /**
@@ -60,28 +91,73 @@ export class XMemCache {
     fn: (params: { key: TKey }) => Promise<TResult>;
     namespace?: string;
     ttl?: number;
-  }): Promise<{
-    data: TResult;
-    meta: { cached: boolean; generatedKey: CacheStringKey };
-  }> => {
+  }): Promise<Result<TResult>> => {
     const { fn, key, ttl, namespace } = params;
 
     const cacheKey = genCacheKeyString({
       key,
       namespace: namespace ?? this.#defaultNs,
+      compressorId: this.#compressorId,
     });
     let cached = true;
-    let data = this.#lru.get(cacheKey) as TResult | undefined;
-    if (data === undefined) {
+    const result = this.#lru.get(cacheKey) as
+      | LRUCacheValue<TResult>
+      | undefined;
+
+    let data = result?.data as TResult | undefined;
+
+    if (result === undefined) {
       cached = false;
       data = await fn({ key });
-      this.#lru.set(cacheKey, data, ttl);
+      if (
+        this.#compressor !== undefined &&
+        data !== null &&
+        data !== undefined
+      ) {
+        const compressed = await this.#compressor.compress(data);
+        switch (compressed.status) {
+          case 'success':
+            this.#lru.set(
+              cacheKey,
+              {
+                format: 'compressed',
+                data: compressed.data,
+                meta: compressed.meta,
+              },
+              ttl
+            );
+            break;
+          default:
+            this.#lru.set(cacheKey, { format: 'native', data }, ttl);
+        }
+      } else {
+        this.#lru.set(
+          cacheKey,
+          {
+            format: 'native',
+            data,
+          },
+          ttl
+        );
+      }
+    } else if (
+      this.#compressor !== undefined &&
+      result.format === 'compressed'
+    ) {
+      data = await this.#compressor.decompress<TResult>({
+        status: 'success',
+        data: result.data,
+        meta: result.meta,
+      });
     }
     return {
-      data,
+      data: data!,
       meta: {
         cached,
         generatedKey: cacheKey,
+        ...(this.#compressorId === undefined
+          ? {}
+          : { compressorId: this.#compressorId }),
       },
     };
   };

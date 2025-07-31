@@ -1,7 +1,7 @@
 import { TimeLruCache } from '@httpx/lru';
 import { expect, expectTypeOf } from 'vitest';
 
-import { XMemCache } from './x-mem-cache';
+import { XMemCache } from '../x-mem-cache';
 
 describe('XMemCache', () => {
   type TestFnParams = {
@@ -16,16 +16,20 @@ describe('XMemCache', () => {
   describe('XMemCache.runAsync', () => {
     const lru = new TimeLruCache({
       maxSize: 50,
-      defaultTTL: 5000,
+      defaultTTL: 50_000,
     });
 
     const xMemCache = new XMemCache({ lru });
 
     it('should execute the function and cache the result', async () => {
+      const fn = vi.fn();
       const runCached = async (params: TestFnParams) => {
         return xMemCache.runAsync({
           key: ['/api/test', params],
-          fn: () => fetchDataFn(params),
+          fn: () => {
+            fn();
+            return fetchDataFn(params);
+          },
         });
       };
 
@@ -49,6 +53,7 @@ describe('XMemCache', () => {
 
       const removed = lru.clear();
       expect(removed).toBe(1); // One item should be removed from the cache
+      expect(fn).toHaveBeenCalledOnce();
     });
   });
 });

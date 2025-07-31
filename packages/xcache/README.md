@@ -27,26 +27,64 @@ $ pnpm add @httpx/xcache
 
 ## Documentation
 
-### XMemCache
+## Simple usage
+
 
 ```typescript
-const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
-const xMemCache = new XMemCache({ lru, namespace: 'default' });
+import { XMemCache, TimeLruCache } from '@httpx/xcache';
 
-const asyncDataFetcher = async (params: { id: number }) => {
+const xMemCache = new XMemCache({ 
+    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }), 
+    namespace: 'default' 
+});
+
+const fetchSmth = async (params: { id: number }) => {
   return { id: params.id, data: `Data for ${params.id}` };
 }
 
-const params: { id: number } = { id: 1 };
+const params = { id: 1 };
 
 const { data } = await xMemCache.runAsync({
  key: ['/api/data', params],
- fn: () => asyncDataFetcher(params),
+ fn: () => fetchSmth(params),
 })
 
 // data: { id: 1, data: 'Data for 1' }
 
 ```
+
+## With compression
+
+You can use compression to reduce the size of the cached data. The library supports `gzip` compression algorithm
+To be able to serialize and deserialize the data, you can use adapters like `DevalueSerializer` (fastest), 
+`SuperjsonSerializer` or `JsonSerializer`.
+
+```typescript
+import { XMemCache, TimeLruCache, CacheGzip, DevalueSerializer  } from '@httpx/xcache';
+
+const xMemCache = new XMemCache({ 
+    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+    compressor: new CacheGzip({
+        serializer: new DevalueSerializer(),
+    }),
+});
+
+const fetchThings = async (params: { name: string }) => {
+    return {
+        message: `Hello ${params.name}`,
+        bigint: BigInt('1234567890123456789012345678901234567890'),
+        date: new Date(),
+    };
+};
+
+const { data } = await xMemCache.runAsync({
+ key: ['/api/data', { name: 'cool' }],
+ fn: () => fetchThings({ name: 'cool'}),
+})
+
+```
+
+
 
 ## Benchmarks
 
@@ -55,6 +93,26 @@ const { data } = await xMemCache.runAsync({
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
+ RUN  v3.2.4 /home/sebastien/github/httpx/packages/xcache
+
+
+ ✓ bench/x-mem-cache.bench.ts > XMemCache benchmarks 11265ms
+     name                                 hz      min      max     mean      p75      p99     p995     p999       rme  samples
+   · original function                4.9853   200.40   200.79   200.59   200.70   200.79   200.79   200.79    ±0.04%       10
+   · with cache (just lru)        195,597.22   0.0008   7.2864   0.0051   0.0012   0.0060   0.0164   0.0758  ±129.55%     2157
+   · with cache                    79,325.05   0.0077   0.3733   0.0126   0.0116   0.0543   0.0874   0.3733    ±8.69%      807
+   · cache with json + gzip           5.0865   180.60   216.52   196.60   202.09   216.52   216.52   216.52    ±4.10%       10
+   · cache with superjson + gzip      4.0502   216.29   295.91   246.90   275.94   295.91   295.91   295.91    ±8.53%       10
+   · cache with devalue + gzip       76.3087  11.9873  14.6038  13.1047  14.0491  14.6038  14.6038  14.6038    ±5.08%       10
+
+ BENCH  Summary
+
+  with cache (just lru) - bench/x-mem-cache.bench.ts > XMemCache benchmarks
+    2.47x faster than with cache
+    2563.24x faster than cache with devalue + gzip
+    38454.46x faster than cache with json + gzip
+    39235.15x faster than original function
+    48292.71x faster than cache with superjson + gzip
 
 ```
 
