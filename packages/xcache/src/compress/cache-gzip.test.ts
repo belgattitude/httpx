@@ -15,7 +15,7 @@ const generateRandomData = (rows: number, extendedTypeSupport: boolean) => {
       return {
         id: 1000 + i,
         name: `Item ${1000 + i}`,
-        description: `Long description ${1000 + i}`,
+        description: `Long description ${1000 + i} 🦆`,
         ...(extendedTypeSupport
           ? {
               date: new Date(Date.now() - i * 1000),
