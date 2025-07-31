@@ -10,7 +10,7 @@ import {
   XMemCache,
 } from '../src';
 import { benchConfig } from './bench-config';
-import json from './data/5MB.json';
+import { generateArrayOfData } from './data-generator';
 
 const options = benchConfig.benchOptions;
 
@@ -18,14 +18,14 @@ function waitMs(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+const data = generateArrayOfData(50_000, false);
+
 const asyncDataFetcher = async (params: { waitMs?: number }) => {
   if (params.waitMs && params.waitMs > 0) {
     await waitMs(params.waitMs);
   }
   return {
-    rows1: json,
-    rows2: json,
-    rows3: json,
+    rows: data,
   };
 };
 
@@ -34,7 +34,7 @@ const payloadSize = prettyBytes(
 );
 
 const defaultParams = {
-  waitMs: 200,
+  waitMs: 400,
 } as const;
 
 describe(`XMemCache benchmarks with ${payloadSize}`, () => {

@@ -8,7 +8,7 @@ import type {
   CacheCompressSuccessMeta,
 } from './types';
 
-const generateRandomData = (rows: number, extendedTypeSupport: boolean) => {
+const generateArrayOfRecords = (rows: number, extendedTypeSupport: boolean) => {
   return {
     success: true,
     rows: Array.from({ length: rows }, (_, i) => {
@@ -16,11 +16,11 @@ const generateRandomData = (rows: number, extendedTypeSupport: boolean) => {
         id: 1000 + i,
         name: `Item ${1000 + i}`,
         description: `Long description ${1000 + i} 🦆`,
+        testNull: null,
         ...(extendedTypeSupport
           ? {
               date: new Date(Date.now() - i * 1000),
               bigint: BigInt(1000 + i),
-              testNull: null,
               testUndefined: undefined,
               notNumber: Number.NaN,
             }
@@ -44,7 +44,7 @@ describe.each([
         serializer: serializer,
       });
 
-      const generatedData = generateRandomData(1000, extendedTypeSupport);
+      const generatedData = generateArrayOfRecords(1000, extendedTypeSupport);
 
       const result = await cacheGzip.compress(generatedData);
       const { meta, status } = result;
