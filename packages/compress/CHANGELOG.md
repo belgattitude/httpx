@@ -1,5 +1,11 @@
 # @httpx/compress
 
+## 0.3.3
+
+### Patch Changes
+
+- [#2455](https://github.com/belgattitude/httpx/pull/2455) [`bef8cfa`](https://github.com/belgattitude/httpx/commit/bef8cfa6c0b3110ab28244119f439dfc086b9458) Thanks [@belgattitude](https://github.com/belgattitude)! - Update uint8-array-extras to latest
+
 ## 0.3.2
 
 ### Patch Changes
