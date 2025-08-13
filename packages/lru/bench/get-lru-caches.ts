@@ -37,7 +37,7 @@ const asyncLoadCompiledTimeLruCache = async (): Promise<
   )
     .then((mod) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      return mod.LruCache as unknown as typeof TimeLruCache;
+      return mod.TimeLruCache as unknown as typeof TimeLruCache;
     })
     .catch((_e) => {
       console.warn('Requires httpx/lru to be built (yarn build)');
