@@ -13,4 +13,4 @@
 "@httpx/lru": patch
 ---
 
-Rebuild with latest esbuild 0.28.9 (no code change)
+Rebuild with latest esbuild 0.25.9 (no code change)
