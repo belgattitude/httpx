@@ -1,5 +1,11 @@
 # @httpx/lru
 
+## 0.11.4
+
+### Patch Changes
+
+- [#2463](https://github.com/belgattitude/httpx/pull/2463) [`1a75006`](https://github.com/belgattitude/httpx/commit/1a75006e9a544360299320ce84ca5ce5e68caf22) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest esbuild 0.25.9 (no code change)
+
 ## 0.11.3
 
 ### Patch Changes
