@@ -6,7 +6,7 @@ import { getLruCaches } from '../../get-lru-caches';
 const { lruMaxSizeHalf } = benchSeeds;
 
 const seeds = benchSeeds.getSeeds();
-
+const benchTtl = 6000; // 6 seconds
 describe(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, async () => {
   const lrus = await getLruCaches({
     maxSize: lruMaxSizeHalf,
@@ -38,7 +38,7 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, as
     `@httpx/time-lru.set() - compiled (dist)`,
     () => {
       seeds.forEach(({ key, value }) =>
-        lrus['@httpx/time-lru(compiled)']!.cache.set(key, value)
+        lrus['@httpx/time-lru(compiled)']!.cache.set(key, value, benchTtl)
       );
     },
     benchOptions
@@ -48,7 +48,9 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, as
     `quick-lru@${lrus['quick-lru'].version}.set()`,
     () => {
       seeds.forEach(({ key, value }) =>
-        lrus['quick-lru'].cache.set(key, value)
+        lrus['quick-lru'].cache.set(key, value, {
+          maxAge: benchTtl,
+        })
       );
     },
     benchOptions
@@ -59,6 +61,18 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, as
     () => {
       seeds.forEach(({ key, value }) =>
         lrus['lru-cache'].cache.set(key, value)
+      );
+    },
+    benchOptions
+  );
+
+  bench(
+    `lru-cache@${lrus['lru-cache'].version}.set(/with ttl/)`,
+    () => {
+      seeds.forEach(({ key, value }) =>
+        lrus['lru-cache'].cache.set(key, value, {
+          ttl: benchTtl,
+        })
       );
     },
     benchOptions
