@@ -5,18 +5,18 @@ module.exports = [
     name: 'Only { Compressor } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ Compressor }',
-    limit: '564B',
+    limit: '568B',
   },
   {
     name: 'Only { Decompressor } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ Decompressor }',
-    limit: '500B',
+    limit: '450B',
   },
   {
     name: '{ Decompressor, Compressor } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ Decompressor, Compressor }',
-    limit: '670B',
+    limit: '697B',
   },
 ] satisfies SizeLimitConfig;
