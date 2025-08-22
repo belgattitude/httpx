@@ -1,5 +1,13 @@
 # @httpx/compress
 
+## 0.3.5
+
+### Patch Changes
+
+- [#2482](https://github.com/belgattitude/httpx/pull/2482) [`e4eae87`](https://github.com/belgattitude/httpx/commit/e4eae87f118ea6f0fbd46611e4dd2697b8adf9a1) Thanks [@belgattitude](https://github.com/belgattitude)! - Base64 perf improvements by using "uint8array-extras:^1.5.0"
+
+  See: https://github.com/sindresorhus/uint8array-extras/releases/tag/v1.5.0
+
 ## 0.3.4
 
 ### Patch Changes
