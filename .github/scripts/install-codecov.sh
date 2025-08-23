@@ -3,7 +3,7 @@
 VERSION=0.8.0
 PLATFORM=linux
 CODECOV_BINARY_URL=https://github.com/codecov/uploader/releases/download/v${VERSION}/codecov-${PLATFORM}
-OUTPUT_DIR="$(cd $(dirname $0); pwd)/download"
+OUTPUT_DIR="$(cd '$(dirname $0)'; pwd)/download"
 CACHE_FILE="${OUTPUT_DIR}/codecov-${PLATFORM}-${VERSION}"
 
 if [ ! -f "${CACHE_FILE}" ]; then
