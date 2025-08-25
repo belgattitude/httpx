@@ -1,4 +1,4 @@
-[**@httpx/memo-intl v1.3.5**](../README.md)
+[**@httpx/memo-intl v1.4.2**](../README.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > `const` **MIntl**: `object`
 
-## Type declaration
+## Type Declaration
 
 ### cache
 

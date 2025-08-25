@@ -1,4 +1,4 @@
-[**@httpx/encode v0.0.5**](../README.md)
+[**@httpx/encode v0.1.2**](../README.md)
 
 ***
 

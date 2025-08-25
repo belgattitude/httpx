@@ -1,4 +1,4 @@
-[**@httpx/compress v0.2.4**](../README.md)
+[**@httpx/compress v0.3.5**](../README.md)
 
 ***
 

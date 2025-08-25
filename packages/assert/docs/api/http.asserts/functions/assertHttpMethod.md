@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.5**](../../README.md)
+[**@httpx/assert v0.16.2**](../../README.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **assertHttpMethod**\<`T`\>(`method`, `v`, `msgOrErrorFactory?`): `asserts v is T`
 
-Defined in: [http.asserts.ts:25](https://github.com/belgattitude/httpx/blob/7903e9ebf18607df55b9a2972c85cfc54f82587a/packages/assert/src/http.asserts.ts#L25)
+Defined in: [http.asserts.ts:25](https://github.com/belgattitude/httpx/blob/7682ae8e8bf25ac4dbe7ea6b3b3dbe40b897e70c/packages/assert/src/http.asserts.ts#L25)
 
 ## Type Parameters
 

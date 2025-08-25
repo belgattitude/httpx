@@ -1,4 +1,4 @@
-[**@httpx/lru v0.11.0**](../README.md)
+[**@httpx/lru v0.11.4**](../README.md)
 
 ***
 
@@ -40,13 +40,13 @@ Iterate over the cache from the least recently used to the most recently used.
 
 ### clear()
 
-> **clear**: () => `void`
+> **clear**: () => `number`
 
 Clear all entries from the cache and return the number of deleted items
 
 #### Returns
 
-`void`
+`number`
 
 #### Inherited from
 

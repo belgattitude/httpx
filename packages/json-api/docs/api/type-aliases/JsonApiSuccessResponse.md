@@ -1,4 +1,4 @@
-[**@httpx/json-api v0.5.28**](../README.md)
+[**@httpx/json-api v0.6.2**](../README.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **JsonApiSuccessResponse**\<`T`\> = `object` & [`JsonApiResponseMeta`](JsonApiResponseMeta.md)
 
-## Type declaration
+## Type Declaration
 
 ### data
 

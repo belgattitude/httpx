@@ -8,7 +8,7 @@ import type { NativeError, Serializable, SerializerParams } from '../types';
  * Convert an Error, NativeError or any HttpException to
  * an object suitable for serialization (a serializable version).
  *
- * @link {createFromSerializable}
+ * @see {createFromSerializable}
  */
 export const convertToSerializable = (
   e: Error | HttpException | NativeError,

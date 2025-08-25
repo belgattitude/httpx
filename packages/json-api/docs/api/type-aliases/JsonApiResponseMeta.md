@@ -1,4 +1,4 @@
-[**@httpx/json-api v0.5.28**](../README.md)
+[**@httpx/json-api v0.6.2**](../README.md)
 
 ***
 
@@ -14,7 +14,7 @@
 
 > `optional` **meta**: `object` & `Record`\<`string`, `Record`\<`string`, `unknown`\> \| `boolean` \| `number` \| `string`\>
 
-#### Type declaration
+#### Type Declaration
 
 ##### cacheHit?
 

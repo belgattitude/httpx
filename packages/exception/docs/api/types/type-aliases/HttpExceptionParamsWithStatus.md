@@ -8,7 +8,7 @@
 
 > **HttpExceptionParamsWithStatus** = [`HttpExceptionParams`](HttpExceptionParams.md) & `object`
 
-## Type declaration
+## Type Declaration
 
 ### statusCode
 

@@ -243,6 +243,28 @@ a();
 
 ***
 
+### isError()
+
+> `static` **isError**(`error`): `error is Error`
+
+Indicates whether the argument provided is a built-in Error instance or not.
+
+#### Parameters
+
+##### error
+
+`unknown`
+
+#### Returns
+
+`error is Error`
+
+#### Inherited from
+
+[`HttpClientException`](../../base/classes/HttpClientException.md).[`isError`](../../base/classes/HttpClientException.md#iserror)
+
+***
+
 ### prepareStackTrace()
 
 > `static` **prepareStackTrace**(`err`, `stackTraces`): `any`

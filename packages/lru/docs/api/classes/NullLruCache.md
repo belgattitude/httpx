@@ -1,4 +1,4 @@
-[**@httpx/lru v0.11.0**](../README.md)
+[**@httpx/lru v0.11.4**](../README.md)
 
 ***
 
@@ -184,7 +184,7 @@ lru.get('key1');   // 👈 undefined
 
 ### getOrSet()
 
-> **getOrSet**\<`T`\>(`key`, `valueOrFn`): `T`
+> **getOrSet**\<`T`\>(`_key`, `valueOrFn`): `T`
 
 Get an item from the cache, if the item doesn't exist it will
 create a new entry with the provided value and returns it.
@@ -201,7 +201,7 @@ In case of a new entry:
 
 #### Parameters
 
-##### key
+##### \_key
 
 `TKey`
 

@@ -99,7 +99,7 @@ const createHttpExceptionError = (
  * create an Error, NativeError or any HttpException from a
  * serializable representation
  *
- * @link {convertToSerializable}
+ * @see {convertToSerializable}
  */
 export const createFromSerializable = (
   payload: Serializable,
