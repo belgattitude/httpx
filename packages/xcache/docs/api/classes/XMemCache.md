@@ -1,4 +1,4 @@
-[**@httpx/xcache v0.1.0**](../README.md)
+[**@httpx/xcache v0.4.2**](../README.md)
 
 ***
 
@@ -16,13 +16,7 @@
 
 ##### options
 
-###### keyPrefix?
-
-`string`
-
-###### lru
-
-`ITimeLruCache`
+[`XMemCacheOptions`](../type-aliases/XMemCacheOptions.md)
 
 #### Returns
 
@@ -44,32 +38,50 @@ Clear the cache and return the number of items removed.
 
 ### runAsync()
 
-> **runAsync**\<`TFunction`\>(`params`): `Promise`\<\{ `data`: `Awaited`\<`ReturnType`\<`TFunction`\>\>; \}\>
+> **runAsync**\<`TResult`, `TKey`\>(`params`): `Promise`\<`Result`\<`TResult`\>\>
 
 Execute the provided async function if it's not in the cache, otherwise
 return the cached value.
 
 #### Type Parameters
 
-##### TFunction
+##### TResult
 
-`TFunction` *extends* [`CacheableAsyncFunction`](../type-aliases/CacheableAsyncFunction.md)
+`TResult` *extends* `SupportedCacheValues`
+
+##### TKey
+
+`TKey` *extends* `CacheKeyTuple`
 
 #### Parameters
 
 ##### params
 
-[`XCacheRunAsyncParams`](../type-aliases/XCacheRunAsyncParams.md)\<`TFunction`\>
+###### fn
+
+(`params`) => `Promise`\<`TResult`\>
+
+###### key
+
+`TKey`
+
+###### namespace?
+
+`string`
+
+###### ttl?
+
+`number`
 
 #### Returns
 
-`Promise`\<\{ `data`: `Awaited`\<`ReturnType`\<`TFunction`\>\>; \}\>
+`Promise`\<`Result`\<`TResult`\>\>
 
 #### Example
 
 ```typescript
 const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 5000 });
-const xMemCache = new XMemCache({ lru, keyPrefix: 'namespace1' });
+const xMemCache = new XMemCache({ lru });
 
 const asyncDataFetcher = async (params: { id: number }) => {
   return { id: params.id, data: `Data for ${params.id}` };
@@ -79,7 +91,7 @@ const params: { id: number } = { id: 1 };
 
 const { data } = await xMemCache.runAsync({
  key: ['/api/data', params],
- fn: () => asyncDataFetcher(params),
+ fn: ({ key }) => asyncDataFetcher(params),
 })
 ```
 

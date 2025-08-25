@@ -1,4 +1,4 @@
-[**@httpx/assert v0.15.5**](../../README.md)
+[**@httpx/assert v0.16.2**](../../README.md)
 
 ***
 
@@ -6,7 +6,7 @@
 
 # Interface: DefaultBasePlainObject
 
-Defined in: [object.internal.types.ts:7](https://github.com/belgattitude/httpx/blob/7903e9ebf18607df55b9a2972c85cfc54f82587a/packages/assert/src/object.internal.types.ts#L7)
+Defined in: [object.internal.types.ts:7](https://github.com/belgattitude/httpx/blob/7682ae8e8bf25ac4dbe7ea6b3b3dbe40b897e70c/packages/assert/src/object.internal.types.ts#L7)
 
 ## Extends
 
@@ -26,4 +26,4 @@ Defined in: [object.internal.types.ts:7](https://github.com/belgattitude/httpx/b
 
 > `readonly` **\_\_tag**: `"default-plain-object"`
 
-Defined in: [object.internal.types.ts:8](https://github.com/belgattitude/httpx/blob/7903e9ebf18607df55b9a2972c85cfc54f82587a/packages/assert/src/object.internal.types.ts#L8)
+Defined in: [object.internal.types.ts:8](https://github.com/belgattitude/httpx/blob/7682ae8e8bf25ac4dbe7ea6b3b3dbe40b897e70c/packages/assert/src/object.internal.types.ts#L8)

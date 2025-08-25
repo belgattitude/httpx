@@ -1,8 +1,8 @@
-**@httpx/dsn-parser v1.8.8**
+**@httpx/dsn-parser v1.9.2**
 
 ***
 
-# @httpx/dsn-parser v1.8.8
+# @httpx/dsn-parser v1.9.2
 
 ## Type Aliases
 

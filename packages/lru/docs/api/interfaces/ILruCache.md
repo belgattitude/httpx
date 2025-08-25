@@ -1,4 +1,4 @@
-[**@httpx/lru v0.11.0**](../README.md)
+[**@httpx/lru v0.11.4**](../README.md)
 
 ***
 
@@ -54,13 +54,13 @@ expect(results).toStrictEqual([
 
 ### clear()
 
-> **clear**: () => `void`
+> **clear**: () => `number`
 
 Clear all entries from the cache and return the number of deleted items
 
 #### Returns
 
-`void`
+`number`
 
 ***
 
