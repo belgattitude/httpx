@@ -8,7 +8,7 @@
 
 > **assertNeverNoThrow**(`v`): `never`
 
-Defined in: [types.asserts.ts:24](https://github.com/belgattitude/httpx/blob/7682ae8e8bf25ac4dbe7ea6b3b3dbe40b897e70c/packages/assert/src/types.asserts.ts#L24)
+Defined in: [types.asserts.ts:24](https://github.com/belgattitude/httpx/blob/4dae8c09c15139f4a822e2110336093570f143a3/packages/assert/src/types.asserts.ts#L24)
 
 A slight variation of assertNever that doesn't throw in runtime and
 will return the value. Typechecks are still enforced.
