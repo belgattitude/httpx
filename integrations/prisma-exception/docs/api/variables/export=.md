@@ -8,7 +8,7 @@
 
 > **export=**: `object`
 
-Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/7682ae8e8bf25ac4dbe7ea6b3b3dbe40b897e70c/integrations/prisma-exception/package.json#L1)
+Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/4dae8c09c15139f4a822e2110336093570f143a3/integrations/prisma-exception/package.json#L1)
 
 ## Type Declaration
 
@@ -46,7 +46,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/7682ae8e
 
 #### devDependencies.@belgattitude/eslint-config-bases
 
-> **@belgattitude/eslint-config-bases**: `string` = `"7.6.1"`
+> **@belgattitude/eslint-config-bases**: `string` = `"7.7.0"`
 
 #### devDependencies.@size-limit/file
 
