@@ -33,4 +33,8 @@ describe('convertJdbcToDsn', () => {
       port: 1433,
     });
   });
+  it('should throw if the given jdbc is not a string', () => {
+    const jdbc = 1234 as unknown as string;
+    expect(() => convertJdbcToDsn(jdbc)).toThrow(TypeError);
+  });
 });
