@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.9.3
+
+### Patch Changes
+
+- [#2505](https://github.com/belgattitude/httpx/pull/2505) [`a61e58a`](https://github.com/belgattitude/httpx/commit/a61e58a3a6a88ecb11f46d8835996c80f475956f) Thanks [@belgattitude](https://github.com/belgattitude)! - fix convertJdbcToDsn to throw TypeError is the jdbc param isn't a valid string
+
 ## 1.9.2
 
 ### Patch Changes
