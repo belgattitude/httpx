@@ -45,7 +45,8 @@ jobs:
         run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
 
       - name: 🌠 Run benchmarks
-        uses: CodSpeedHQ/action@v3
+        uses: CodSpeedHQ/action@v4
         with:
           run: yarn g:bench-codspeed
+          mode: "instrumentation"
           token: ${{ secrets.CODSPEED_TOKEN }}
