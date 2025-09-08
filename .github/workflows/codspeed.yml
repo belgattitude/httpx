@@ -25,9 +25,10 @@ jobs:
           fetch-depth: 0
 
       - name: ⚙️ Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
+          package-manager-cache: false
 
       - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
         id: nx-set-shas
