@@ -40,9 +40,10 @@ jobs:
           fetch-depth: 0
 
       - name: ⚙️ Setup node 22.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "22.x"
+          package-manager-cache: false
 
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
