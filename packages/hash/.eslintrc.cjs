@@ -41,7 +41,7 @@ module.exports = {
           {
             devDependencies: ['**/*.test.ts', '**/*.spec.ts'],
             optionalDependencies: false,
-            peerDependencies: false,
+            peerDependencies: true,
           },
         ],
         // 'import-x/no-cycle': [1, { maxDepth: 5 }],
