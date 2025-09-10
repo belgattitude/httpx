@@ -1,8 +1,25 @@
-const MAX_INT64 = 9_223_372_036_854_775_807n; // 2n ** 63n - 1n;
-const MAX_UINT64 = 18_446_744_073_709_551_616n; // 2n ** 64n;
+const MAX_INT64 = 9_223_372_036_854_775_807n; // 2n ** 63n - 1n
+const MAX_UINT64 = 18_446_744_073_709_551_616n; // 2n ** 64n
+const UINT64_MASK = MAX_UINT64 - 1n; // 0xffff_ffff_ffff_ffffn
 
 export type SignedInt64 = bigint & { __type: 'SignedInt64' };
 
-export const bigintToSignedInt64 = (u: bigint): SignedInt64 => {
-  return (u > MAX_INT64 ? u - MAX_UINT64 : u) as SignedInt64;
+/**
+ * Convert an arbitrary bigint to a signed 64-bit integer
+ *
+ * Notes:
+ * - If `unsignedBigint` is outside the [0, 2^64-1] range or even negative, it will be
+ *   normalized to its low 64 bits before conversion, matching two's
+ *   complement behavior.
+ * - This function is safe to use with values returned by xxhash-wasm (always
+ *   within [0, 2^64-1]).
+ *
+ * @throws RangeError is the input is outside the [0, 2^64] range.
+ */
+export const bigintToSignedInt64 = (unsignedBigint: bigint): SignedInt64 => {
+  if (unsignedBigint < 0n || unsignedBigint >= MAX_UINT64) {
+    throw new RangeError('Value must be in the range [0, 2^64)');
+  }
+  const lo64 = unsignedBigint & UINT64_MASK;
+  return (lo64 > MAX_INT64 ? lo64 - MAX_UINT64 : lo64) as SignedInt64;
 };
