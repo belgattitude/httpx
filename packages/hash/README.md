@@ -27,6 +27,29 @@ $ pnpm add @httpx/hash
 
 ## Documentation
 
+### XXHashWasm
+
+> You'll need to install `xxhash-wasm` peer dependency.
+
+Create a file named `xxHasher.ts` to benefit from a singleton instance of the hasher.
+
+```typescript
+// in file `
+import { createXXWasmHasher } from '@httpx/hash/xxhash-wasm';
+export const xxHasher = await createXXWasmHasher({
+  defaultSeed: 0n, // optional
+});
+```
+
+Use it as follows:
+
+```typescript
+import { xxHasher } from './xxHasher';
+
+const bigintHash = xxHasher.toBigint("a string");
+
+const signed64Hash = xxHasher.toSigned64("a string");
+```
 
 ## Benchmarks
 

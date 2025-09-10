@@ -1,12 +1,13 @@
 import { expectTypeOf } from 'vitest';
 
 import type { SignedInt64 } from '../utils/bigint-to-signed-int64';
+import { createXXWasmHasher } from './create-xx-wasm-hasher';
 import { getXXHashWasmInstance } from './get-xxhash-wasm-instance';
 import { XXHash64 } from './xxhash64';
 
 describe('XXHash64', async () => {
-  const { h64 } = await getXXHashWasmInstance();
-  const xxHash64 = new XXHash64(h64);
+  const xxHashWasm = await getXXHashWasmInstance();
+  const xxHash64 = await createXXWasmHasher();
 
   describe('toBigint', () => {
     it('should return a bigint', () => {
@@ -64,7 +65,7 @@ describe('XXHash64', async () => {
   describe('seeds and options', () => {
     it('should use the provided defaultSeed when none is passed', () => {
       const seed = 42n;
-      const withDefault = new XXHash64(h64, { defaultSeed: seed });
+      const withDefault = new XXHash64(xxHashWasm, { defaultSeed: seed });
       const a = withDefault.toBigint('abc');
       const b = withDefault.toBigint('abc', seed);
       expect(a).toBe(b);
@@ -72,7 +73,7 @@ describe('XXHash64', async () => {
     it('explicit seed should override the defaultSeed', () => {
       const defaultSeed = 42n;
       const explicitSeed = 7n;
-      const withDefault = new XXHash64(h64, { defaultSeed });
+      const withDefault = new XXHash64(xxHashWasm, { defaultSeed });
       const withoutExplicit = withDefault.toBigint('override-me');
       const withExplicit = withDefault.toBigint('override-me', explicitSeed);
       // Sanity check: same explicit seed through two code paths is equal
