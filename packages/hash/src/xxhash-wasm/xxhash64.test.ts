@@ -41,8 +41,8 @@ describe('XXHash64', async () => {
       expectTypeOf(hash).toEqualTypeOf<SignedInt64>();
     });
     it('should hash a know string', () => {
-      const hash = xxHash64.toSigned64('very long string'.repeat(20));
-      expect(hash).toBe(8_683_227_379_430_503_136n);
+      const hash = xxHash64.toSigned64('long string'.repeat(20));
+      expect(hash).toBe(-8_545_599_274_714_813_119n);
     });
     it('should be within 64-bit signed integer range', () => {
       const s = xxHash64.toSigned64('range-check');
