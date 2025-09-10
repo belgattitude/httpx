@@ -20,19 +20,14 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./xxhash-wasm": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -48,10 +43,8 @@
     "bench-watch": "vitest bench",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
-    "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check --not './dist/*.map.js' -v es2023 './dist/**/*.cjs'",
-    "check-dist-esm": "es-check --not './dist/*.map.js' -v es2023 --module './dist/**/*.mjs'",
-    "check-pub": "attw --pack && publint",
+    "check-dist": "es-check --not './dist/*.map.js' -v es2023 --module './dist/**/*.mjs'",
+    "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
@@ -67,6 +60,14 @@
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-hash-unit --dir ./coverage"
+  },
+  "peerDependencies": {
+    "xxhash-wasm": "^1.1.0"
+  },
+  "peerDependenciesMeta": {
+    "xxhash-wasm": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
@@ -91,7 +92,8 @@
     "typedoc-plugin-markdown": "4.8.1",
     "typescript": "5.9.2",
     "vitest": "3.2.4",
-    "webpack": "5.101.3"
+    "webpack": "5.101.3",
+    "xxhash-wasm": "1.1.0"
   },
   "engines": {
     "node": ">=20.9.0"

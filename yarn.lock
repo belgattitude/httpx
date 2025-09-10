@@ -1633,6 +1633,12 @@ __metadata:
     typescript: "npm:5.9.2"
     vitest: "npm:3.2.4"
     webpack: "npm:5.101.3"
+    xxhash-wasm: "npm:1.1.0"
+  peerDependencies:
+    xxhash-wasm: ^1.1.0
+  peerDependenciesMeta:
+    xxhash-wasm:
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -17886,6 +17892,13 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 10c0/eac918213de265ef7cb3d4ca348b891a51a520d839aa51cdb8ca93d4fa7ff9f6ccb339ccee89e4075324097f0a55157c89fa3f7147bde9d8d7e90335dc087b53
+  languageName: node
+  linkType: hard
+
+"xxhash-wasm@npm:1.1.0":
+  version: 1.1.0
+  resolution: "xxhash-wasm@npm:1.1.0"
+  checksum: 10c0/35aa152fc7d775ae13364fe4fb20ebd89c6ac1f56cdb6060a6d2f1ed68d15180694467e63a4adb3d11936a4798ccd75a540979070e70d9b911e9981bbdd9cea6
   languageName: node
   linkType: hard
 

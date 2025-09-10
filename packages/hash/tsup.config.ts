@@ -6,17 +6,12 @@ export default defineConfig((options) => {
     cjsInterop: false,
     clean: true,
     dts: true,
-    entry: ['src/index.ts'],
-    format: ['esm', 'cjs'],
+    entry: ['src/index.ts', 'src/xxhash-wasm/index.ts'],
+    format: 'esm',
     minify: !options.watch,
     minifyIdentifiers: true,
     minifySyntax: true,
     minifyWhitespace: true,
-    outExtension({ format }) {
-      return {
-        js: `.${format === 'cjs' ? 'cjs' : 'mjs'}`,
-      };
-    },
     platform: 'browser',
     sourcemap: !options.watch,
     splitting: true,
