@@ -1254,7 +1254,7 @@ __metadata:
   resolution: "@examples/nextjs-app@workspace:examples/nextjs-app"
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:7.8.0"
-    "@hono/node-server": "npm:1.19.1"
+    "@hono/node-server": "npm:1.19.2"
     "@httpx/assert": "workspace:^"
     "@httpx/compress": "workspace:^"
     "@httpx/dsn-parser": "workspace:^"
@@ -1282,7 +1282,7 @@ __metadata:
     hono: "npm:4.9.6"
     ky: "npm:1.10.0"
     next: "npm:15.5.2"
-    pino: "npm:9.9.4"
+    pino: "npm:9.9.5"
     postcss: "npm:8.5.6"
     prettier: "npm:3.6.2"
     primereact: "npm:10.9.7"
@@ -1392,12 +1392,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hono/node-server@npm:1.19.1":
-  version: 1.19.1
-  resolution: "@hono/node-server@npm:1.19.1"
+"@hono/node-server@npm:1.19.2":
+  version: 1.19.2
+  resolution: "@hono/node-server@npm:1.19.2"
   peerDependencies:
     hono: ^4
-  checksum: 10c0/83457ebb15b0d04644c334dbd30036cfbcf3019164c29d8f4b67f070735c6cd21c7d1713e7db47f658530e0bf3c5583434fba03b0bc4dd6b26fc2c2fdf4ea1e5
+  checksum: 10c0/36a191740ca65780ef5b9da21e5ea7ac34e77c64ecbd4449b03eb0b4430bf9e27d9f51266b9898e53e266e4d7505caa735d1a3ef543585ceeefb10684e253aa5
   languageName: node
   linkType: hard
 
@@ -1598,6 +1598,36 @@ __metadata:
     superjson: "npm:2.2.2"
     tsup: "npm:8.5.0"
     tupleson: "npm:0.23.1"
+    typedoc: "npm:0.28.12"
+    typedoc-plugin-markdown: "npm:4.8.1"
+    typescript: "npm:5.9.2"
+    vitest: "npm:3.2.4"
+    webpack: "npm:5.101.3"
+  languageName: unknown
+  linkType: soft
+
+"@httpx/hash@workspace:packages/hash":
+  version: 0.0.0-use.local
+  resolution: "@httpx/hash@workspace:packages/hash"
+  dependencies:
+    "@arethetypeswrong/cli": "npm:0.18.2"
+    "@belgattitude/eslint-config-bases": "npm:7.8.0"
+    "@httpx/devtools-vitest": "workspace:^"
+    "@size-limit/file": "npm:11.2.0"
+    "@size-limit/webpack": "npm:11.2.0"
+    "@types/lodash-es": "npm:4.17.12"
+    browserslist: "npm:4.25.4"
+    browserslist-to-esbuild: "npm:2.1.1"
+    cross-env: "npm:10.0.0"
+    es-check: "npm:9.3.1"
+    esbuild: "npm:0.25.9"
+    eslint: "npm:8.57.1"
+    npm-run-all2: "npm:8.0.4"
+    prettier: "npm:3.6.2"
+    publint: "npm:0.3.12"
+    rimraf: "npm:6.0.1"
+    size-limit: "npm:11.2.0"
+    tsup: "npm:8.5.0"
     typedoc: "npm:0.28.12"
     typedoc-plugin-markdown: "npm:4.8.1"
     typescript: "npm:5.9.2"
@@ -13768,9 +13798,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino@npm:9.9.4":
-  version: 9.9.4
-  resolution: "pino@npm:9.9.4"
+"pino@npm:9.9.5":
+  version: 9.9.5
+  resolution: "pino@npm:9.9.5"
   dependencies:
     atomic-sleep: "npm:^1.0.0"
     fast-redact: "npm:^3.1.1"
@@ -13785,7 +13815,7 @@ __metadata:
     thread-stream: "npm:^3.0.0"
   bin:
     pino: bin.js
-  checksum: 10c0/dde6cde45b569da42f5b1741f4242ec121e1e20125a41a7aa0c92104eabae45fe04f7692b29e7baf295bff63e1a69c65c1f39ec2aa3ed8139529894e75a9716b
+  checksum: 10c0/2b43de21fac267ef4b7267e14b4dbf207509f16cb81755c3bf54d325c45028a88457a369b7e2118fe534cbf2b313f28cf29cc0caa54dce60ea66c8b6084c8b6c
   languageName: node
   linkType: hard
 
