@@ -18,20 +18,20 @@ describe('bigintToSignedInt64', () => {
   });
 
   it('0 -> 0', () => {
-    expect(bigintToSignedInt64(0n)).toBe(0n as any);
+    expect(bigintToSignedInt64(0n)).toBe(0n);
   });
 
   it('MAX_INT64 stays positive', () => {
-    expect(bigintToSignedInt64(MAX_INT64)).toBe(MAX_INT64 as any);
+    expect(bigintToSignedInt64(MAX_INT64)).toBe(MAX_INT64);
   });
 
   it('MAX_INT64+1 -> -2^63', () => {
     const minInt64 = -(1n << 63n);
-    expect(bigintToSignedInt64(MAX_INT64 + 1n)).toBe(minInt64 as any);
+    expect(bigintToSignedInt64(MAX_INT64 + 1n)).toBe(minInt64);
   });
 
   it('MAX_UINT64-1 -> -1', () => {
-    expect(bigintToSignedInt64(MAX_UINT64 - 1n)).toBe(-1n as any);
+    expect(bigintToSignedInt64(MAX_UINT64 - 1n)).toBe(-1n);
   });
 
   it('throws RangeError for inputs < 0', () => {
@@ -59,7 +59,7 @@ describe('bigintToSignedInt64', () => {
     const maxUint64 = MAX_UINT64;
     for (const u of samples) {
       const expected = u > maxInt64 ? u - maxUint64 : u;
-      expect(bigintToSignedInt64(u)).toBe(expected as any);
+      expect(bigintToSignedInt64(u)).toBe(expected);
     }
   });
 });
