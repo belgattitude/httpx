@@ -1481,7 +1481,7 @@ __metadata:
     "@codspeed/vitest-plugin": "npm:4.0.1"
     "@edge-runtime/vm": "npm:5.0.0"
     "@testing-library/dom": "npm:10.4.1"
-    "@types/node": "npm:24.3.1"
+    "@types/node": "npm:24.3.3"
     "@types/react": "npm:19.1.13"
     "@types/react-dom": "npm:19.1.9"
     "@vitest/browser": "npm:3.2.4"
@@ -1581,7 +1581,7 @@ __metadata:
     "@size-limit/file": "npm:11.2.0"
     "@size-limit/webpack": "npm:11.2.0"
     "@size-limit/webpack-why": "npm:11.2.0"
-    "@types/node": "npm:24.3.1"
+    "@types/node": "npm:24.3.3"
     "@types/statuses": "npm:2.0.6"
     browserslist: "npm:4.25.4"
     browserslist-to-esbuild: "npm:2.1.1"
@@ -4613,7 +4613,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:24.3.1":
+"@types/node@npm:*, @types/node@npm:24.3.3":
+  version: 24.3.3
+  resolution: "@types/node@npm:24.3.3"
+  dependencies:
+    undici-types: "npm:~7.10.0"
+  checksum: 10c0/5324108314b3d9abaafd82ea04a91ea6904580c1fbe47c52600881ae250fef3b2d3d28c7d68cb979b07241d29fe889b66bd9f92346902bea65a3e562937c7d9a
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:24.3.1":
   version: 24.3.1
   resolution: "@types/node@npm:24.3.1"
   dependencies:
@@ -14062,7 +14071,7 @@ __metadata:
     "@size-limit/file": "npm:11.2.0"
     "@size-limit/webpack": "npm:11.2.0"
     "@size-limit/webpack-why": "npm:11.2.0"
-    "@types/node": "npm:24.3.1"
+    "@types/node": "npm:24.3.3"
     "@vitest/coverage-istanbul": "npm:3.2.4"
     "@vitest/ui": "npm:3.2.4"
     browserslist: "npm:4.25.4"
