@@ -1,0 +1,26 @@
+name: CD pkg-pr-new
+on: [push, pull_request]
+
+permissions: 
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: ⚙️ Use Node.js 22.x
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.x
+          package-manager-cache: false
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+
+      - name: 🏗 Build packages
+        run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
+
+      - run: yarn exec pkg-pr-new publish "./packages/*"
