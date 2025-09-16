@@ -9,6 +9,8 @@ Lightweight assertions and typeguards starting at [~60b](https://github.com/belg
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-assert-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fassert)
 [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/assert/.size-limit.cjs)
 [![downloads](https://img.shields.io/npm/dm/@httpx/assert?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/assert)
+[![pkg.pr.new](https://pkg.pr.new/badge/belgattitude/httpx)](https://pkg.pr.new/~/belgattitude/httpx)
+
 
 ### [@httpx/exception](https://github.com/belgattitude/httpx/tree/main/packages/exception#readme)
 
