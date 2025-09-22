@@ -1,5 +1,16 @@
 # @httpx/xcache
 
+## 0.4.3
+
+### Patch Changes
+
+- [`cc363ff`](https://github.com/belgattitude/httpx/commit/cc363ff36a48aece196423ee61f59a3c6cee48db) Thanks [@belgattitude](https://github.com/belgattitude)! - No code change, maintenance release to rebuild with latest esbuild.
+
+- Updated dependencies [[`cc363ff`](https://github.com/belgattitude/httpx/commit/cc363ff36a48aece196423ee61f59a3c6cee48db)]:
+  - @httpx/stable-hash@0.3.3
+  - @httpx/compress@0.3.6
+  - @httpx/lru@0.11.5
+
 ## 0.4.2
 
 ### Patch Changes

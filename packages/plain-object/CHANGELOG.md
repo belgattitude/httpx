@@ -1,5 +1,11 @@
 # @httpx/plain-object
 
+## 2.1.3
+
+### Patch Changes
+
+- [`cc363ff`](https://github.com/belgattitude/httpx/commit/cc363ff36a48aece196423ee61f59a3c6cee48db) Thanks [@belgattitude](https://github.com/belgattitude)! - No code change, maintenance release to rebuild with latest esbuild.
+
 ## 2.1.2
 
 ### Patch Changes
