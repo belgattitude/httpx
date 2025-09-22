@@ -1,5 +1,13 @@
 # @httpx/hash
 
+## 0.0.2
+
+### Patch Changes
+
+- [`cc363ff`](https://github.com/belgattitude/httpx/commit/cc363ff36a48aece196423ee61f59a3c6cee48db) Thanks [@belgattitude](https://github.com/belgattitude)! - No code change, maintenance release to rebuild with latest esbuild.
+
+- [#2530](https://github.com/belgattitude/httpx/pull/2530) [`504682b`](https://github.com/belgattitude/httpx/commit/504682bddd41fb0b2ff24aac880a22334b7fb72b) Thanks [@belgattitude](https://github.com/belgattitude)! - Initial release of @httpx/hash (alpha)
+
 ## 0.0.2-canary.0
 
 ### Patch Changes
