@@ -6,6 +6,7 @@ export { NullTimeLruCache } from './null-time-lru-cache';
 export type { TimeLruCacheParams } from './time-lru-cache';
 export { TimeLruCache } from './time-lru-cache';
 export type { ITimeLruCache } from './time-lru-cache.interface';
+export { CookieStoreChunked } from './cookie-store-chunked';
 export type {
   BaseCacheKeyTypes,
   LruCacheHasOptions,

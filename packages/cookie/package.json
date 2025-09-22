@@ -1,24 +1,21 @@
 {
-  "name": "@httpx/plain-object",
-  "description": "Fast and lightweight utility functions to check if a value is a plain object.",
-  "version": "2.1.2",
+  "name": "@httpx/cookie",
+  "description": "Cookie store with support for chunking",
+  "version": "0.0.1",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://belgattitude.github.io/httpx/plain-object",
+  "homepage": "https://belgattitude.github.io/httpx/cooki",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
-    "directory": "packages/plain-object"
+    "directory": "packages/cookie"
   },
   "keywords": [
-    "plainObject",
-    "plain-object",
-    "is-plain-object",
-    "is-plain-obj",
-    "assert-plain-object"
+    "cookie",
+    "chunk"
   ],
   "sideEffects": false,
   "type": "module",
@@ -58,7 +55,7 @@
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsup --watch",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/plain-object.eslintcache",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/cookie.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
@@ -68,34 +65,28 @@
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-plain-object-unit --dir ./coverage"
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-cookie-unit --dir ./coverage"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
     "@belgattitude/eslint-config-bases": "7.8.0",
     "@httpx/devtools-vitest": "workspace:^",
-    "@sindresorhus/is": "7.1.0",
     "@size-limit/file": "11.2.0",
     "@size-limit/webpack": "11.2.0",
     "@types/lodash-es": "4.17.12",
-    "browserslist": "4.26.2",
+    "browserslist": "4.25.4",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.0.0",
     "es-check": "9.3.1",
-    "es-toolkit": "1.39.10",
     "esbuild": "0.25.9",
     "eslint": "8.57.1",
-    "is-plain-obj": "4.1.0",
-    "is-plain-object": "5.0.0",
-    "lodash-es": "4.17.21",
     "npm-run-all2": "8.0.4",
     "prettier": "3.6.2",
     "publint": "0.3.12",
-    "redux": "5.0.1",
     "rimraf": "6.0.1",
     "size-limit": "11.2.0",
     "tsup": "8.5.0",
-    "typedoc": "0.28.13",
+    "typedoc": "0.28.12",
     "typedoc-plugin-markdown": "4.8.1",
     "typescript": "5.9.2",
     "vitest": "3.2.4",
@@ -103,5 +94,8 @@
   },
   "engines": {
     "node": ">=20.9.0"
+  },
+  "dependencies": {
+    "hono-openapi": "https://pkg.pr.new/rhinobase/hono-openapi@179"
   }
 }
