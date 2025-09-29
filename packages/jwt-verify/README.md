@@ -19,11 +19,7 @@ $ pnpm add @httpx/jwt-verify
 
 ## Features
 
-- 🖖&nbsp; Provides [jwt-verifyCache](#jwt-verifycache) and [Timejwt-verifyCache](#timejwt-verifycache).
-- 🚀&nbsp; Fast `cache.get()` in O(1) thx to [doubly linked list](https://en.wikipedia.org/wiki/Doubly_linked_list).
-- 📐&nbsp; Lightweight (starts at [~570B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 20-24, browser, cloudflare workers and runtime/edge](#compatibility).
-- 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
 
