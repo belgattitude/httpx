@@ -19,14 +19,18 @@
     "jwt",
     "openid",
     "entra",
-    "azure-ad"
+    "azure-ad",
+    "lru",
+    "standard validator"
   ],
   "sideEffects": false,
   "type": "module",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
         "default": "./dist/index.js"
       }
     },

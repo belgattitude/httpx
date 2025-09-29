@@ -32,6 +32,7 @@ $ pnpm add @httpx/jwt-verify
 
 ```typescript
 import { JwtVerifier } from '@httpx/jwt-verify';
+import * as v from 'valibot';
 
 const entraVerifier = new JwtVerifier({
   authorityHost: 'https://login.microsoftonline.com',
