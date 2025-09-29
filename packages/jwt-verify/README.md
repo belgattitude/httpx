@@ -1,5 +1,8 @@
 # @httpx/jwt-verify
 
+JWT verification with safe parsing, OIDC discovery/JWKS fetching, 
+optional schema validation.
+
 [![npm](https://img.shields.io/npm/v/@httpx/jwt-verify?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/jwt-verify)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/jwt-verify/CHANGELOG.md)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-jwt-verify-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fjwt-verify)
@@ -19,13 +22,43 @@ $ pnpm add @httpx/jwt-verify
 
 ## Features
 
-- 🖖&nbsp; Provides [jwt-verifyCache](#jwt-verifycache) and [Timejwt-verifyCache](#timejwt-verifycache).
-- 🚀&nbsp; Fast `cache.get()` in O(1) thx to [doubly linked list](https://en.wikipedia.org/wiki/Doubly_linked_list).
-- 📐&nbsp; Lightweight (starts at [~570B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 20-24, browser, cloudflare workers and runtime/edge](#compatibility).
-- 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
+
+### Create a JwtVerifier
+
+```typescript
+import { JwtVerifier } from '@httpx/jwt-verify';
+
+const entraVerifier = new JwtVerifier({
+  authorityHost: 'https://login.microsoftonline.com',
+  tenantId: 'xxxxxx-xxx-xxxx-xxx-xxxxxxxx',
+  clockToleranceSec: 60, // optional
+});
+
+const entraJwtToken = '....'
+
+// Verify, validate and return the parsed token
+const { value, error } = await entraVerifier.safeParse(entraJwtToken, {
+  /**
+   * Optional standard schema to validate the payload
+   * If provided, only the properties defined in the schema will be
+   * exposed in the `value.payload` object.
+   */
+  schema: v.object({
+    // Add properties to validate  
+    oid: v.string()    
+  })
+});
+
+if (error) {
+  // see error documentation  
+}
+
+console.log('payload', value.payload);
+```
+
 
 
 ## Benchmarks

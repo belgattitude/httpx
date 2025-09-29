@@ -1,6 +1,6 @@
 import * as v from 'valibot';
 
-import { JwtVerifier } from '../jwt-verifier';
+import { JwtVerifier } from '../../src/jwt-verifier';
 
 /**
  * To run this test, you need to provide a valid token in the env var
@@ -11,7 +11,6 @@ const entraJwtToken = process.env.TEST_INTEG_ENTRA_VALID_TOKEN!;
 describe.skipIf(entraJwtToken === undefined)(
   'Microsoft entra integration test',
   () => {
-    console.log('azureAdToken', entraJwtToken);
     it('should parse', async () => {
       const entraSchema = v.object({
         aio: v.string(), // "ASQA2/8ZAAAAsHFQOHLRysRcnpHLKr/dscVPztjPPAurvLaxtpEQvJM=",
