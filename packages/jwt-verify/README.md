@@ -59,6 +59,46 @@ if (error) {
 console.log('payload', value.payload);
 ```
 
+### Error handling
+
+Below is the list of error types you may get back from JwtVerifier.safeParse. Each error implements a stable type tag you can match on at runtime.
+
+| Error class               | error.type             | Extends     | When it happens                                                                                          | Notes |
+|---------------------------|------------------------|-------------|-----------------------------------------------------------------------------------------------------------|-------|
+| NotATokenError            | `not-a-token`          | TypeError   | The provided token is not a non-empty string.                                                             | — |
+| ExpiredTokenError         | `expired-token`        | Error       | Token is expired or not yet valid.                                                                        | Reserved type; jose typically reports expiry which surfaces as JwtVerifyError for now. |
+| FetchError                | `fetch-error`          | TypeError   | OIDC discovery fetch failed (non-2xx status).                                                             | cause carries `{ status, statusText }`. |
+| SchemaValidationError     | `schema-validation`    | TypeError   | The payload did not pass the provided standard-schema validation.                                         | — |
+| JwtVerifyError            | `jwt-verify`           | Error       | Signature/claims verification failed (e.g., wrong issuer/audience, bad signature, expired, nbf, etc.).   | has `.code` from underlying JOSEError (e.g. `JWTInvalid`, `JWTExpired`) and `.cause`. |
+| JwksNoMatchingKeyError    | `jwks-no-matching-key` | Error       | No key in the JWKS matched the token header (kid/alg).                                                    | May surface depending on verifier strategy. |
+
+Example usage
+
+```ts
+const { value, error } = await verifier.safeParse(token, { schema });
+if (error) {
+  // Quick match using the stable type tag
+  switch (error.type) {
+    case 'not-a-token':
+      // handle
+      break;
+    case 'fetch-error':
+      // (error as FetchError).cause -> { status, statusText }
+      break;
+    case 'schema-validation':
+      // handle
+      break;
+    case 'jwt-verify': {
+      const e = error as JwtVerifyError;
+      // e.code contains JOSE error code like 'JWTInvalid' | 'JWTExpired' ...
+      break;
+    }
+    default:
+      // fallback
+  }
+}
+```
+
 
 
 ## Benchmarks
