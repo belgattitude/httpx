@@ -115,12 +115,7 @@ export class JwtVerifier {
     try {
       discovery = await this.fetchOidcConfig();
     } catch (e) {
-      return fail(
-        new FetchError(
-          `Error fetching OidcConfig ${(e as Error)?.message ?? ''}`,
-          { cause: e as Error }
-        )
-      );
+      return fail(new FetchError((e as Error)?.message, { cause: e as Error }));
     }
 
     const jwks = createRemoteJWKSet(new URL(discovery.jwks_uri), {});
