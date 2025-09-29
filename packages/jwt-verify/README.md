@@ -1,7 +1,6 @@
 # @httpx/jwt-verify
 
-JWT verification with safe parsing, OIDC discovery/JWKS fetching, 
-optional schema validation.
+
 
 [![npm](https://img.shields.io/npm/v/@httpx/jwt-verify?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/jwt-verify)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/jwt-verify/CHANGELOG.md)
@@ -22,9 +21,14 @@ $ pnpm add @httpx/jwt-verify
 
 ## Features
 
+- 🖖&nbsp; Provides [jwt-verifyCache](#jwt-verifycache) and [Timejwt-verifyCache](#timejwt-verifycache).
+- 🚀&nbsp; Fast `cache.get()` in O(1) thx to [doubly linked list](https://en.wikipedia.org/wiki/Doubly_linked_list).
+- 📐&nbsp; Lightweight (starts at [~570B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 20-24, browser, cloudflare workers and runtime/edge](#compatibility).
+- 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
+
 
 ### Create a JwtVerifier
 
@@ -58,48 +62,6 @@ if (error) {
 
 console.log('payload', value.payload);
 ```
-
-### Error handling
-
-Below is the list of error types you may get back from JwtVerifier.safeParse. Each error implements a stable type tag you can match on at runtime.
-
-| Error class               | error.type             | Extends     | When it happens                                                                                          | Notes |
-|---------------------------|------------------------|-------------|-----------------------------------------------------------------------------------------------------------|-------|
-| NotATokenError            | `not-a-token`          | TypeError   | The provided token is not a non-empty string.                                                             | — |
-| ExpiredTokenError         | `expired-token`        | Error       | Token is expired or not yet valid.                                                                        | Reserved type; jose typically reports expiry which surfaces as JwtVerifyError for now. |
-| FetchError                | `fetch-error`          | TypeError   | OIDC discovery fetch failed (non-2xx status).                                                             | cause carries `{ status, statusText }`. |
-| SchemaValidationError     | `schema-validation`    | TypeError   | The payload did not pass the provided standard-schema validation.                                         | — |
-| JwtVerifyError            | `jwt-verify`           | Error       | Signature/claims verification failed (e.g., wrong issuer/audience, bad signature, expired, nbf, etc.).   | has `.code` from underlying JOSEError (e.g. `JWTInvalid`, `JWTExpired`) and `.cause`. |
-| JwksNoMatchingKeyError    | `jwks-no-matching-key` | Error       | No key in the JWKS matched the token header (kid/alg).                                                    | May surface depending on verifier strategy. |
-
-Example usage
-
-```ts
-const { value, error } = await verifier.safeParse(token, { schema });
-if (error) {
-  // Quick match using the stable type tag
-  switch (error.type) {
-    case 'not-a-token':
-      // handle
-      break;
-    case 'fetch-error':
-      // (error as FetchError).cause -> { status, statusText }
-      break;
-    case 'schema-validation':
-      // handle
-      break;
-    case 'jwt-verify': {
-      const e = error as JwtVerifyError;
-      // e.code contains JOSE error code like 'JWTInvalid' | 'JWTExpired' ...
-      break;
-    }
-    default:
-      // fallback
-  }
-}
-```
-
-
 
 ## Benchmarks
 
