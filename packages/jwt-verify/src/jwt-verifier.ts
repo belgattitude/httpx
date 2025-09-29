@@ -111,7 +111,17 @@ export class JwtVerifier {
       return fail(new NotATokenError('JWT token must be a non-empty string'));
     }
 
-    const discovery = await this.fetchOidcConfig();
+    let discovery: { issuer: string; jwks_uri: string };
+    try {
+      discovery = await this.fetchOidcConfig();
+    } catch (e) {
+      return fail(
+        new FetchError(
+          `Error fetching OidcConfig ${(e as Error)?.message ?? ''}`,
+          { cause: e as Error }
+        )
+      );
+    }
 
     const jwks = createRemoteJWKSet(new URL(discovery.jwks_uri), {});
 
@@ -120,6 +130,7 @@ export class JwtVerifier {
       audience,
       clockToleranceSec = defaultVerifierOptions.clockToleranceSec,
     } = this.#options;
+
     const issuer = expectedIssuer ?? discovery.issuer;
 
     const acceptedAlgos = ['RS256'];
