@@ -1,7 +1,5 @@
 # @httpx/jwt-verify
 
-
-
 [![npm](https://img.shields.io/npm/v/@httpx/jwt-verify?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/jwt-verify)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/jwt-verify/CHANGELOG.md)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-jwt-verify-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fjwt-verify)
@@ -79,10 +77,9 @@ console.log('payload', value.payload);
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/jwt-verify/.size-limit.ts)
 
-| Scenario (esm)                              | Size (compressed) |
-|---------------------------------------------|------------------:|
-| `import { jwt-verifyCache } from '@httpx/jwt-verify`      |            ~ 570B |
-
+| Scenario (esm)                                   | Size (compressed) |
+|--------------------------------------------------|------------------:|
+| `import { JwtVerifier } from '@httpx/jwt-verify` |             ~ 8KB |
 
 ## Compatibility
 
