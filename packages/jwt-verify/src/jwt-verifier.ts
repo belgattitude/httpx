@@ -41,7 +41,8 @@ type ParseErrors =
   | NotATokenError
   | ExpiredTokenError
   | FetchError
-  | SchemaValidationError;
+  | SchemaValidationError
+  | JwtVerifyError;
 
 export type ParsedJwtSuccess<TPayload extends JWTPayload = JWTPayload> = {
   payload: TPayload;
@@ -101,8 +102,8 @@ export class JwtVerifier {
     Result<
       ParsedJwtSuccess<
         TSchema extends undefined
-          ? JWTPayload
-          : StandardSchemaV1.InferOutput<TSchema> & JWTPayload
+          ? StandardSchemaV1.InferOutput<TSchema> & JWTPayload
+          : JWTPayload
       >,
       ParseErrors
     >
@@ -140,16 +141,18 @@ export class JwtVerifier {
         clockTolerance: clockToleranceSec,
       });
     } catch (e) {
-      throw new JwtVerifyError(`Failed to verify JWT ${(e as Error).message}`, {
-        cause: e as Error | JOSEError,
-      });
+      return fail(
+        new JwtVerifyError(`Failed to verify JWT ${(e as Error).message}`, {
+          cause: e as Error | JOSEError,
+        })
+      );
     }
 
     const { payload, protectedHeader } = verifyResult;
 
     type TValidatedPayload = TSchema extends undefined
-      ? JWTPayload
-      : StandardSchemaV1.InferOutput<TSchema> & JWTPayload;
+      ? StandardSchemaV1.InferOutput<TSchema> & JWTPayload
+      : JWTPayload;
     let validatedPayload: TValidatedPayload;
 
     const { schema } = options ?? {};
