@@ -1,3 +1,4 @@
+import * as v from 'valibot';
 import { describe } from 'vitest';
 
 import { NotATokenError } from './error/not-a-token-error';
@@ -21,6 +22,22 @@ describe('JWTVerifier', () => {
       if (data) {
         expectTypeOf(error).toBeUndefined();
       }
+    });
+  });
+
+  describe('type tests', () => {
+    const verifier = new JwtVerifier({
+      authorityHost: 'https://login.microsoftonline.com',
+      tenantId: 'common',
+    });
+    it('should correctly infer return types based on provided schema', async () => {
+      const { data, error } = await verifier.safeParse('some-token', {
+        schema: v.object({
+          oid: v.string(),
+        }),
+      });
+      const { payload } = data!;
+      expectTypeOf(payload).toEqualTypeOf<{ oid: string }>();
     });
   });
 });

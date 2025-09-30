@@ -65,7 +65,7 @@ export class JwtVerifier {
    *
    * @example
    * ```typescript
-   * import { JWTVerifier } from 'jose';
+   * import { JWTVerifier } from '@httpx/jwt-verify';
    * import * as v from 'valibot'; // or any standard-schema compatible schema library
    *
    * const entraVerifier = new JwtVerifier({
@@ -76,7 +76,7 @@ export class JwtVerifier {
    *
    * const token = '...';
    *
-   * const { error, value } = await entraVerifier.safeParse(token, {
+   * const { error, data } = await entraVerifier.safeParse(token, {
    *    schema: v.object({
    *      oid: v.string(),
    *    })
@@ -101,8 +101,8 @@ export class JwtVerifier {
     Result<
       ParsedJwtSuccess<
         TSchema extends undefined
-          ? StandardSchemaV1.InferOutput<TSchema> & JWTPayload
-          : JWTPayload
+          ? JWTPayload
+          : StandardSchemaV1.InferOutput<TSchema> & JWTPayload
       >,
       ParseErrors
     >
@@ -148,8 +148,8 @@ export class JwtVerifier {
     const { payload, protectedHeader } = verifyResult;
 
     type TValidatedPayload = TSchema extends undefined
-      ? StandardSchemaV1.InferOutput<TSchema> & JWTPayload
-      : JWTPayload;
+      ? JWTPayload
+      : StandardSchemaV1.InferOutput<TSchema> & JWTPayload;
     let validatedPayload: TValidatedPayload;
 
     const { schema } = options ?? {};
