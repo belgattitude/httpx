@@ -102,8 +102,8 @@ export class JwtVerifier {
     Result<
       ParsedJwtSuccess<
         TSchema extends undefined
-          ? StandardSchemaV1.InferOutput<TSchema> & JWTPayload
-          : JWTPayload
+          ? JWTPayload
+          : StandardSchemaV1.InferOutput<TSchema> & JWTPayload
       >,
       ParseErrors
     >
@@ -151,8 +151,9 @@ export class JwtVerifier {
     const { payload, protectedHeader } = verifyResult;
 
     type TValidatedPayload = TSchema extends undefined
-      ? StandardSchemaV1.InferOutput<TSchema> & JWTPayload
-      : JWTPayload;
+      ? JWTPayload
+      : StandardSchemaV1.InferOutput<TSchema> & JWTPayload;
+
     let validatedPayload: TValidatedPayload;
 
     const { schema } = options ?? {};

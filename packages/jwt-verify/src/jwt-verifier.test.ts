@@ -1,3 +1,4 @@
+import type { JWTPayload } from 'jose';
 import * as v from 'valibot';
 import { describe, expectTypeOf } from 'vitest';
 
@@ -30,15 +31,25 @@ describe('JWTVerifier', () => {
       authorityHost: 'https://login.microsoftonline.com',
       tenantId: 'common',
     });
+    it('should correctly infer return type when no schema is provided', async () => {
+      const { data } = await verifier.safeParse('some-token');
+      if (data) {
+        expectTypeOf(data.payload).toEqualTypeOf<JWTPayload>();
+      }
+    });
     it('should correctly infer return types based on provided schema', async () => {
-      const { data, error } = await verifier.safeParse('some-token', {
+      const { data } = await verifier.safeParse('some-token', {
         schema: v.object({
           oid: v.string(),
         }),
       });
-      const typedData = { payload: undefined } as unknown as typeof data;
-
-      expectTypeOf(typedData!.payload).toEqualTypeOf<{ oid: string }>();
+      if (data) {
+        expectTypeOf(data.payload).toEqualTypeOf<
+          {
+            oid: string;
+          } & JWTPayload
+        >();
+      }
     });
   });
 });
