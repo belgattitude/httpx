@@ -1,4 +1,4 @@
-[**@httpx/jwt-verify v0.0.1**](../README.md)
+[**@httpx/jwt-verify v0.1.0**](../README.md)
 
 ***
 
@@ -36,7 +36,7 @@
 
 ### safeParse()
 
-> **safeParse**\<`TSchema`\>(`token`, `options?`): `Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` *extends* `undefined` ? `InferOutput`\<`TSchema`\<`TSchema`\>\> & `JWTPayload` : `JWTPayload`\>, `ParseErrors`\>\>
+> **safeParse**\<`TSchema`\>(`token`, `options?`): `Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` *extends* `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `ParseErrors`\>\>
 
 Safely parse and verify a JWT token
 
@@ -60,7 +60,7 @@ Safely parse and verify a JWT token
 
 #### Returns
 
-`Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` *extends* `undefined` ? `InferOutput`\<`TSchema`\<`TSchema`\>\> & `JWTPayload` : `JWTPayload`\>, `ParseErrors`\>\>
+`Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` *extends* `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `ParseErrors`\>\>
 
 #### Example
 
