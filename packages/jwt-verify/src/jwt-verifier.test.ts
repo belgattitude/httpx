@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { describe } from 'vitest';
+import { describe, expectTypeOf } from 'vitest';
 
 import { NotATokenError } from './error/not-a-token-error';
 import { JwtVerifier } from './jwt-verifier';
@@ -36,8 +36,9 @@ describe('JWTVerifier', () => {
           oid: v.string(),
         }),
       });
-      const { payload } = data!;
-      expectTypeOf(payload).toEqualTypeOf<{ oid: string }>();
+      const typedData = { payload: undefined } as unknown as typeof data;
+
+      expectTypeOf(typedData!.payload).toEqualTypeOf<{ oid: string }>();
     });
   });
 });
