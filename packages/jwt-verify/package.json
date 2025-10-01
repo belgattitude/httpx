@@ -48,7 +48,7 @@
     "bench-watch-disabled": "vitest bench",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
-    "check-dist": "es-check --not './dist/*.map.js' -v es2023 --module --checkFeatures --ignore='ErrorCause,TopLevelAwait' './dist/**/*.js'",
+    "check-dist": "es-check --not './dist/*.map.js' -v es2023 --module --checkFeatures './dist/**/*.js'",
     "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
