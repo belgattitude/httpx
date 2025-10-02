@@ -1554,8 +1554,8 @@ __metadata:
     "@edge-runtime/vm": "npm:5.0.0"
     "@testing-library/dom": "npm:10.4.1"
     "@types/node": "npm:24.6.1"
-    "@types/react": "npm:19.1.16"
-    "@types/react-dom": "npm:19.1.9"
+    "@types/react": "npm:19.2.0"
+    "@types/react-dom": "npm:19.2.0"
     "@vitest/browser": "npm:3.2.4"
     "@vitest/coverage-istanbul": "npm:3.2.4"
     "@vitest/runner": "npm:3.2.4"
@@ -1566,8 +1566,8 @@ __metadata:
     is-ci: "npm:4.1.0"
     playwright: "npm:1.55.1"
     prettier: "npm:3.6.2"
-    react: "npm:19.1.1"
-    react-dom: "npm:19.1.1"
+    react: "npm:19.2.0"
+    react-dom: "npm:19.2.0"
     typescript: "npm:5.9.3"
     vite: "npm:7.1.7"
     vite-tsconfig-paths: "npm:5.1.4"
@@ -5001,6 +5001,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:19.2.0":
+  version: 19.2.0
+  resolution: "@types/react-dom@npm:19.2.0"
+  peerDependencies:
+    "@types/react": ^19.2.0
+  checksum: 10c0/73ba326c8bc53e7bb597aa8e66ce4aabd79e501f744e1386278f0c63f1be6d78cca71a8269af3565206f296675116109a3ccbed4038409614fabf8405e54c6ef
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.4.1":
   version: 4.4.12
   resolution: "@types/react-transition-group@npm:4.4.12"
@@ -5016,6 +5025,15 @@ __metadata:
   dependencies:
     csstype: "npm:^3.0.2"
   checksum: 10c0/3d781f715f15f308b601d74142fae77c65679c318a3bb0a319df898f39095e738ba7ed7061cec971b19b6d33969ef9cd50fec92b034024ef3fcc25bb9a2eb3d0
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:19.2.0":
+  version: 19.2.0
+  resolution: "@types/react@npm:19.2.0"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 10c0/a280e146df2abd3b06eaa2f5332dade9f7ebe916334a40699ee11139c5f22aeb49b5b78b6de8c55b53ef2fa94285e1bc2feaf4fbce6fe259a7de92dc1bf67b17
   languageName: node
   linkType: hard
 
@@ -10341,8 +10359,8 @@ __metadata:
   dependencies:
     "@belgattitude/eslint-config-bases": "npm:7.9.0"
     "@tailwindcss/postcss": "npm:4.1.13"
-    "@types/react": "npm:19.1.16"
-    "@types/react-dom": "npm:19.1.9"
+    "@types/react": "npm:19.2.0"
+    "@types/react-dom": "npm:19.2.0"
     eslint: "npm:8.57.1"
     eslint-config-next: "npm:15.5.4"
     next: "npm:15.5.4"
@@ -10350,8 +10368,8 @@ __metadata:
     nextra-theme-docs: "npm:3.3.1"
     postcss: "npm:8.5.6"
     prettier: "npm:3.6.2"
-    react: "npm:19.1.1"
-    react-dom: "npm:19.1.1"
+    react: "npm:19.2.0"
+    react-dom: "npm:19.2.0"
     rimraf: "npm:6.0.1"
     sirv: "npm:3.0.2"
     sirv-cli: "npm:3.0.1"
@@ -14754,6 +14772,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom@npm:19.2.0":
+  version: 19.2.0
+  resolution: "react-dom@npm:19.2.0"
+  dependencies:
+    scheduler: "npm:^0.27.0"
+  peerDependencies:
+    react: ^19.2.0
+  checksum: 10c0/fa2cae05248d01288e91523b590ce4e7635b1e13f1344e225f850d722a8da037bf0782f63b1c1d46353334e0c696909b82e582f8cad607948fde6f7646cc18d9
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -14804,6 +14833,13 @@ __metadata:
   version: 19.1.1
   resolution: "react@npm:19.1.1"
   checksum: 10c0/8c9769a2dfd02e603af6445058325e6c8a24b47b185d0e461f66a6454765ddcaecb3f0a90184836c68bb509f3c38248359edbc42f0d07c23eb500a5c30c87b4e
+  languageName: node
+  linkType: hard
+
+"react@npm:19.2.0":
+  version: 19.2.0
+  resolution: "react@npm:19.2.0"
+  checksum: 10c0/1b6d64eacb9324725bfe1e7860cb7a6b8a34bc89a482920765ebff5c10578eb487e6b46b2f0df263bd27a25edbdae2c45e5ea5d81ae61404301c1a7192c38330
   languageName: node
   linkType: hard
 
@@ -15602,6 +15638,13 @@ __metadata:
   version: 0.26.0
   resolution: "scheduler@npm:0.26.0"
   checksum: 10c0/5b8d5bfddaae3513410eda54f2268e98a376a429931921a81b5c3a2873aab7ca4d775a8caac5498f8cbc7d0daeab947cf923dbd8e215d61671f9f4e392d34356
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "scheduler@npm:0.27.0"
+  checksum: 10c0/4f03048cb05a3c8fddc45813052251eca00688f413a3cee236d984a161da28db28ba71bd11e7a3dd02f7af84ab28d39fb311431d3b3772fed557945beb00c452
   languageName: node
   linkType: hard
 
