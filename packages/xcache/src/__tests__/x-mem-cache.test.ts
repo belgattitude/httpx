@@ -53,7 +53,7 @@ describe('XMemCache', () => {
 
       const removed = lru.clear();
       expect(removed).toBe(1); // One item should be removed from the cache
-      expect(fn).toHaveBeenCalledOnce();
+      expect(fn).toHaveBeenCalledExactlyOnceWith();
     });
   });
 });
