@@ -10428,6 +10428,7 @@ __metadata:
     husky: "npm:9.1.7"
     is-ci: "npm:4.1.0"
     lint-staged: "npm:16.2.3"
+    npm-check-updates: "npm:19.0.0"
     npm-run-all2: "npm:8.0.4"
     nx: "npm:21.6.3"
     pkg-pr-new: "npm:0.0.60"
@@ -13572,6 +13573,16 @@ __metadata:
     semver: "npm:2 || 3 || 4 || 5"
     validate-npm-package-license: "npm:^3.0.1"
   checksum: 10c0/357cb1646deb42f8eb4c7d42c4edf0eec312f3628c2ef98501963cc4bbe7277021b2b1d977f982b2edce78f5a1014613ce9cf38085c3df2d76730481357ca504
+  languageName: node
+  linkType: hard
+
+"npm-check-updates@npm:19.0.0":
+  version: 19.0.0
+  resolution: "npm-check-updates@npm:19.0.0"
+  bin:
+    ncu: build/cli.js
+    npm-check-updates: build/cli.js
+  checksum: 10c0/8b461b59539a5bd6de617461f3de3423badb197a63ee37ad6de46dc60b654d6b22f84e189f079ac6e69982c47eb38a398d4bbf44fd5f1be9e0fc24a04ccfd7d3
   languageName: node
   linkType: hard
 
