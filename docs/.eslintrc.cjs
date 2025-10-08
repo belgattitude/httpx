@@ -28,7 +28,7 @@ module.exports = {
     '@belgattitude/eslint-config-bases/rtl',
     // '@belgattitude/eslint-config-bases/tailwind',
     // Add specific rules for nextjs
-    'next/core-web-vitals',
+    // 'next/core-web-vitals',
     // Apply prettier and disable incompatible rules
     '@belgattitude/eslint-config-bases/prettier-plugin',
   ],

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/raineorshine/npm-check-updates/main/src/types/RunOptions.json",
+    "workspaces": true,
+    "deep": false,
+    "mergeConfig": true,
+    "root": true,
+    "cooldown": 1,
+    "packageManager": "yarn",
+    "reject": [
+      "eslint",
+      "nextra",
+      "nextra-theme-docs",
+      "@opentelemetry/api",
+      "@opentelemetry/api-logs",
+      "@opentelemetry/instrumentation",
+      "@opentelemetry/resources",
+      "@opentelemetry/sdk-logs",
+      "@opentelemetry/sdk-metrics",
+      "@opentelemetry/sdk-trace-base"
+    ]
+}
+
+
