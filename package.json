@@ -33,6 +33,7 @@
     "g:check-pub": "nx run-many --output-style=static --target=check-pub --exclude='examples/**' --exclude='docs'",
     "g:release": "yarn g:build-release && yarn exec changeset publish",
     "g:ci-coverage-upload": "yarn workspaces foreach --all -tv run ci-coverage-upload",
+    "check:security": "yarn npm audit --no-deprecations --all",
     "clean:lint": "rimraf ./.cache/eslint",
     "clean:global-cache": "rimraf ./.cache",
     "clean:nx": "nx reset",
