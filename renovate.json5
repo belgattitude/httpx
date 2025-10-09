@@ -14,7 +14,7 @@
     // Will run yarn dedupe --strategy highest
     'yarnDedupeHighest'
   ],
-  stabilityDays: 1,
+  minimumReleaseAge: "1 day",
   packageRules: [
     {
       // Exclusions
