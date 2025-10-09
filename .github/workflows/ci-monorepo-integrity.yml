@@ -33,8 +33,8 @@ jobs:
       - name: 👬🏽 Check for duplicates
         run: yarn dedupe --check
 
-      - name: 🦺 Check for yarn constraints.pro
-        run: yarn constraints
+      - name: 🛡️ Check for security vulnerabilities
+        run: yarn npm audit --no-deprecations --all
 
       #- name: 🛟 Check monorepo dependency graph
       #  run: yarn check:install
