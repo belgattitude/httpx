@@ -1,5 +1,11 @@
 # @httpx/hash
 
+## 0.0.3
+
+### Patch Changes
+
+- [#2594](https://github.com/belgattitude/httpx/pull/2594) [`034811d`](https://github.com/belgattitude/httpx/commit/034811de68068fcbeff743971684dbcd19d5a815) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix wrong export
+
 ## 0.0.2
 
 ### Patch Changes
