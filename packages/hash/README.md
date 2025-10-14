@@ -19,9 +19,9 @@ $ pnpm add @httpx/hash
 
 ## Features
 
-- 🖖&nbsp; Provides 
-- 🚀&nbsp; Fast 
-- 📐&nbsp; Lightweight (starts at [~570B](#bundle-size)) 
+- 🖖&nbsp; Provides
+- 🚀&nbsp; Fast
+- 📐&nbsp; Lightweight (starts at [~570B](#bundle-size))
 - 🛡️&nbsp; Tested on [node 20-24, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
@@ -29,7 +29,7 @@ $ pnpm add @httpx/hash
 
 ### XXHash64 (wasm)
 
-The [XXHash](https://github.com/Cyan4973/xxHash) is a very fast non-cryptographic hash 
+The [XXHash](https://github.com/Cyan4973/xxHash) is a very fast non-cryptographic hash
 algorithm. It is designed to be extremely fast while maintaining a low collision rate.
 
 The XXHash64 variant produces a 64-bit hash suitable for checksums, hash tables and databases.
@@ -39,7 +39,7 @@ The XXHash64 variant produces a 64-bit hash suitable for checksums, hash tables 
 - [x] 64-bit output (bigint, signed64).
 - [x] Passes [SMHasher](https://github.com/rurban/smhasher) tests.
 - [x] Doesn't fully pass [SMHasher3](https://gitlab.com/fwojcik/smhasher3) tests
-      (but still good enough for non-cryptographic use cases).
+  (but still good enough for non-cryptographic use cases).
 
 > Check [SMHasher](https://github.com/rurban/smhasher) and [SMHasher3](https://gitlab.com/fwojcik/smhasher3/-/blob/main/results/README.md#passing-hashes)
 > for more details about quality of hash functions.
@@ -47,7 +47,7 @@ The XXHash64 variant produces a 64-bit hash suitable for checksums, hash tables 
 #### Usage
 
 For most projects, you can benefit from top-level await by creating a file named `xxHash64.ts`.
-The file will initialize the wasm module and export the hasher instance without async calls in 
+The file will initialize the wasm module and export the hasher instance without async calls in
 the rest of your code.
 
 ```typescript
@@ -77,7 +77,7 @@ const hashedSigned64 = xxHash64.toSigned64('some input string');
 
 ## Benchmarks
 
-> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx). 
+> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx).
 >
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
@@ -96,9 +96,11 @@ const hashedSigned64 = xxHash64.toSigned64('some input string');
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/hash/.size-limit.ts)
 
-| Scenario (esm)                                            | Size (compressed) |
-|-----------------------------------------------------------|------------------:|
-| `import { createXXHash64 } from '@httpx/hash/xxhash-wasm' |            ~ 765B |
+| Scenario (esm)                                             | Size (compressed) |
+|------------------------------------------------------------|------------------:|
+| `import { createXXHash64 } from '@httpx/hash/xxhash-wasm'` |        ~ 765B (*) |
+
+(*) Add [2.3KB gzipped](https://github.com/jungomi/xxhash-wasm?tab=readme-ov-file#bundle-size) for the wasm file.
 
 ## Compatibility
 
