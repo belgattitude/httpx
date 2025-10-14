@@ -1,5 +1,11 @@
 # @httpx/hash
 
+## 0.1.0
+
+### Minor Changes
+
+- [#2602](https://github.com/belgattitude/httpx/pull/2602) [`cbadcd6`](https://github.com/belgattitude/httpx/commit/cbadcd64599341f00199d4a1b0f695e4c5b61f02) Thanks [@belgattitude](https://github.com/belgattitude)! - Use globalThis to store xxHash wasm instance
+
 ## 0.0.3
 
 ### Patch Changes
