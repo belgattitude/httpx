@@ -1,4 +1,4 @@
-name: CD pkg-pr-new
+name: CD-pkg-pr-new
 on: [push, pull_request]
 
 permissions: 
@@ -11,10 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: ⚙️ Use Node.js 22.x
+      - name: ⚙️ Use Node.js 24.x
         uses: actions/setup-node@v5
         with:
-          node-version: 22.x
+          node-version: 24.x
           package-manager-cache: false
 
       - name: 📥 Monorepo install
@@ -23,4 +23,5 @@ jobs:
       - name: 🏗 Build packages
         run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
 
-      - run: yarn exec pkg-pr-new publish "./packages/*"
+      - name: 📦 Publish on pkg.pr.new
+        run: yarn exec pkg-pr-new publish "./packages/*"
