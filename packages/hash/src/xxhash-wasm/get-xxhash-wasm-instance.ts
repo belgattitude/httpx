@@ -7,14 +7,23 @@ declare global {
 
 globalThis.xxhashInstance ??= null;
 
+let initPromise: Promise<XXHashAPI> | null = null;
+
 export const getXXHashWasmInstance = async (): Promise<XXHashAPI> => {
-  globalThis.xxhashInstance ??= await import('xxhash-wasm')
+  if (globalThis.xxhashInstance) {
+    return globalThis.xxhashInstance;
+  }
+  if (initPromise) {
+    return initPromise;
+  }
+  initPromise = import('xxhash-wasm')
     .then((mod) => mod.default())
     .catch((e) => {
+      initPromise = null;
       const msg = `xxhash-wasm module failed to load, did you forget to install it? (${(e as Error).message})`;
       throw new Error(msg);
     });
-
-  // Type assertion to ensure correct return type
+  globalThis.xxhashInstance = await initPromise;
+  initPromise = null;
   return globalThis.xxhashInstance;
 };
