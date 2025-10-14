@@ -1,4 +1,4 @@
-import type { XXHash64Options } from '../types/xxhash.type';
+import type { XXHash64DefaultOptions } from '../types/xxhash.type';
 import { getXXHashAPI } from './get-xxhash-api';
 import { XXHash64 } from './xxhash64';
 
@@ -14,8 +14,9 @@ import { XXHash64 } from './xxhash64';
  * import { createXXHash64 } from '@httpx/hash/xxhash-wasm';
  *
  * // Notice the await as wasm loading is async.
- * const xxHash64 = await createXXWasmHasher({
- *   // options are optional
+ * const xxHash64 = await createXXHash64({
+ *   // Optionally provide a seed (default is 0n)
+ *   // For example, Spark uses 42 as a default seed
  *   defaultSeed: 0n,
  * });
  *
@@ -27,7 +28,7 @@ import { XXHash64 } from './xxhash64';
  * ```
  */
 export const createXXHash64 = async (
-  options?: XXHash64Options
+  options?: XXHash64DefaultOptions
 ): Promise<XXHash64> => {
   const xxHashWasm = await getXXHashAPI();
   return new XXHash64(xxHashWasm, options);

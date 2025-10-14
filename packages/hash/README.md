@@ -46,14 +46,17 @@ The XXHash64 variant produces a 64-bit hash suitable for checksums, hash tables 
 
 #### Usage
 
-Create a file named `xxHasher.ts` to benefit from a singleton instance of the hasher.
+For most projects, you can benefit from top-level await by creating a file named `xxHash64.ts`.
+The file will initialize the wasm module and export the hasher instance without async calls in 
+the rest of your code.
 
 ```typescript
 import { createXXHash64 } from '@httpx/hash/xxhash-wasm';
 
-// Notice the await as wasm loading is async.
-const xxHash64 = await createXXWasmHasher({
-  // optionally provide a seed (default is 0n)
+// Notice the top-level await as wasm loading is async.
+const xxHash64 = await createXXHash64({
+  // Optionally provide a seed (default is 0n)
+  // For example, Spark uses 42 as a default seed
   defaultSeed: 0n,
 });
 
@@ -62,7 +65,7 @@ const xxHash64 = await createXXWasmHasher({
 Use it as follows:
 
 ```typescript
-import { xxHasher } from './xxHasher';
+import { xxHash64 } from './xxHash64';
 
 // Javascript Bigint output as 64-bit unsigned integer
 const hashedBigint = xxHash64.toBigint('some input string');

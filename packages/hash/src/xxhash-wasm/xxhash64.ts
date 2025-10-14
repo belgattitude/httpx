@@ -1,6 +1,9 @@
 import type { XXHashAPI } from 'xxhash-wasm';
 
-import type { XXHash64Options } from '../types/xxhash.type';
+import type {
+  XXHash64DefaultOptions,
+  XXHash64Options,
+} from '../types/xxhash.type';
 import {
   bigintToSignedInt64,
   type SignedInt64,
@@ -22,8 +25,8 @@ import {
  */
 export class XXHash64 {
   #xxHash: XXHashAPI;
-  readonly options: XXHash64Options = {};
-  constructor(xxHash: XXHashAPI, options?: XXHash64Options) {
+  readonly options: XXHash64DefaultOptions = {};
+  constructor(xxHash: XXHashAPI, options?: XXHash64DefaultOptions) {
     this.#xxHash = xxHash;
     this.options = options ?? {};
   }
@@ -31,15 +34,15 @@ export class XXHash64 {
   /**
    * Return a 64-bit unsigned integer hash as a bigint using XXHash64 algorithm.
    */
-  toBigint = (input: string, seed?: bigint): bigint => {
-    return this.#xxHash.h64(input, seed ?? this.options.defaultSeed);
+  toBigint = (input: string, options?: XXHash64Options): bigint => {
+    return this.#xxHash.h64(input, options?.seed ?? this.options.defaultSeed);
   };
   /**
    * Convert input string to signed 64-bit integer using XXHash64 algorithm.
    *
    * This accommodates some databases like mssql that do not support unsigned 64-bit integers.
    */
-  toSigned64 = (input: string, seed?: bigint): SignedInt64 => {
-    return bigintToSignedInt64(this.toBigint(input, seed));
+  toSigned64 = (input: string, options?: XXHash64Options): SignedInt64 => {
+    return bigintToSignedInt64(this.toBigint(input, options));
   };
 }
