@@ -2,8 +2,8 @@ import { expectTypeOf } from 'vitest';
 import type { XXHashAPI } from 'xxhash-wasm';
 
 import type { SignedInt64 } from '../utils/bigint-to-signed-int64';
-import { createXXWasmHasher } from './create-xx-wasm-hasher';
-import { getXXHashWasmInstance } from './get-xxhash-wasm-instance';
+import { createXXHash64 } from './create-xxhash64';
+import { getXXHashAPI } from './get-xxhash-api';
 import { XXHash64 } from './xxhash64';
 
 describe('XXHash64', () => {
@@ -11,8 +11,8 @@ describe('XXHash64', () => {
   let xxHashWasm: XXHashAPI;
 
   beforeAll(async () => {
-    xxHashWasm = await getXXHashWasmInstance();
-    xx64Hasher = await createXXWasmHasher();
+    xxHashWasm = await getXXHashAPI();
+    xx64Hasher = await createXXHash64();
   });
 
   describe('toBigint', () => {

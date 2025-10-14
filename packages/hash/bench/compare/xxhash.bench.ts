@@ -1,6 +1,6 @@
 import { bench, describe } from 'vitest';
 
-import { getXXHashWasmInstance, XXHash64 } from '../../src/xxhash-wasm';
+import { createXXHash64 } from '../../src/xxhash-wasm';
 import { benchOptions } from '../bench-options';
 
 const seeds = {
@@ -8,8 +8,7 @@ const seeds = {
 };
 
 describe(`xxHash64`, async () => {
-  const xxHashWasm = await getXXHashWasmInstance();
-  const xxhash64 = new XXHash64(xxHashWasm);
+  const xxhash64 = await createXXHash64();
   bench(
     `toBigint`,
     () => {

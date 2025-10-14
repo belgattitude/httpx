@@ -1,2 +1,4 @@
-export { getXXHashWasmInstance } from './get-xxhash-wasm-instance';
+export type { XXHash64Options } from '../types/xxhash.type';
+export { createXXHash64 } from './create-xxhash64';
+export { getXXHashAPI } from './get-xxhash-api';
 export { XXHash64 } from './xxhash64';

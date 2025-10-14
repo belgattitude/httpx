@@ -8,10 +8,16 @@ declare global {
 }
 
 globalThis.xxhashInstance ??= null;
-
 globalThis.xxhashInstancePromise ??= null;
 
-export const getXXHashWasmInstance = async (): Promise<XXHashAPI> => {
+/**
+ * Load and return a singleton instance of the `xxhash-wasm` module.
+ *
+ * This function ensures that the `xxhash-wasm` module is only loaded once,
+ * even if called multiple times. It uses global variables (globalThis) to store
+ * the `XXHashApi` instance.
+ */
+export const getXXHashAPI = async (): Promise<XXHashAPI> => {
   if (globalThis.xxhashInstance) {
     return globalThis.xxhashInstance;
   }
