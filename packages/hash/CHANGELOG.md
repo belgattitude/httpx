@@ -1,5 +1,11 @@
 # @httpx/hash
 
+## 0.2.0
+
+### Minor Changes
+
+- [#2605](https://github.com/belgattitude/httpx/pull/2605) [`daca602`](https://github.com/belgattitude/httpx/commit/daca602e13148dd094ed5e862387a663dd10a7d1) Thanks [@belgattitude](https://github.com/belgattitude)! - Export more types and add documentation
+
 ## 0.1.0
 
 ### Minor Changes
