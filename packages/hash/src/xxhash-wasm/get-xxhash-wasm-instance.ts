@@ -1,15 +1,31 @@
 import type { XXHashAPI } from 'xxhash-wasm';
 
-let instance: XXHashAPI | null = null;
+declare global {
+  // eslint-disable-next-line no-var
+  var xxhashInstance: XXHashAPI | null | undefined;
+  // eslint-disable-next-line no-var
+  var xxhashInstancePromise: Promise<XXHashAPI> | null | undefined;
+}
+
+globalThis.xxhashInstance ??= null;
+
+globalThis.xxhashInstancePromise ??= null;
 
 export const getXXHashWasmInstance = async (): Promise<XXHashAPI> => {
-  instance ??= await import('xxhash-wasm')
-    .then((mod) => {
-      return mod.default();
-    })
+  if (globalThis.xxhashInstance) {
+    return globalThis.xxhashInstance;
+  }
+  if (globalThis.xxhashInstancePromise) {
+    return globalThis.xxhashInstancePromise;
+  }
+  globalThis.xxhashInstancePromise = import('xxhash-wasm')
+    .then((mod) => mod.default())
     .catch((e) => {
+      globalThis.xxhashInstancePromise = null;
       const msg = `xxhash-wasm module failed to load, did you forget to install it? (${(e as Error).message})`;
       throw new Error(msg);
     });
-  return instance;
+  globalThis.xxhashInstance = await globalThis.xxhashInstancePromise;
+  globalThis.xxhashInstancePromise = null;
+  return globalThis.xxhashInstance;
 };
