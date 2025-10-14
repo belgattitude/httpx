@@ -13,7 +13,7 @@ export const getXXHashWasmInstance = async (): Promise<XXHashAPI> => {
   if (globalThis.xxhashInstance) {
     return globalThis.xxhashInstance;
   }
-  if (initPromise) {
+  if (initPromise !== null) {
     return initPromise;
   }
   initPromise = import('xxhash-wasm')
