@@ -27,28 +27,52 @@ $ pnpm add @httpx/hash
 
 ## Documentation
 
-### XXHashWasm
+### XXHash64 (wasm)
 
-> You'll need to install `xxhash-wasm` peer dependency.
+The [XXHash](https://github.com/Cyan4973/xxHash) is a very fast non-cryptographic hash 
+algorithm. It is designed to be extremely fast while maintaining a low collision rate.
 
-Create a file named `xxHasher.ts` to benefit from a singleton instance of the hasher.
+The XXHash64 variant produces a 64-bit hash suitable for checksums, hash tables and databases.
+
+- [x] Extremely fast.
+- [x] Low collision rate.
+- [x] 64-bit output (bigint, signed64).
+- [x] Passes [SMHasher](https://github.com/rurban/smhasher) tests.
+- [x] Doesn't fully pass [SMHasher3](https://gitlab.com/fwojcik/smhasher3) tests
+      (but still good enough for non-cryptographic use cases).
+
+> Check [SMHasher](https://github.com/rurban/smhasher) and [SMHasher3](https://gitlab.com/fwojcik/smhasher3/-/blob/main/results/README.md#passing-hashes)
+> for more details about quality of hash functions.
+
+#### Usage
+
+For most projects, you can benefit from top-level await by creating a file named `xxHash64.ts`.
+The file will initialize the wasm module and export the hasher instance without async calls in 
+the rest of your code.
 
 ```typescript
-// in file `
-import { createXXWasmHasher } from '@httpx/hash/xxhash-wasm';
-export const xxHasher = await createXXWasmHasher({
-  defaultSeed: 0n, // optional
+import { createXXHash64 } from '@httpx/hash/xxhash-wasm';
+
+// Notice the top-level await as wasm loading is async.
+const xxHash64 = await createXXHash64({
+  // Optionally provide a seed (default is 0n)
+  // For example, Spark uses 42 as a default seed
+  defaultSeed: 0n,
 });
+
 ```
 
 Use it as follows:
 
 ```typescript
-import { xxHasher } from './xxHasher';
+import { xxHash64 } from './xxHash64';
 
-const bigintHash = xxHasher.toBigint("a string");
+// Javascript Bigint output as 64-bit unsigned integer
+const hashedBigint = xxHash64.toBigint('some input string');
 
-const signed64Hash = xxHasher.toSigned64("a string");
+// Javascript Bigint output as 64-bit signed integer
+// Same as `BigInt.asIntN(64, xxHash64.toBigint('some input string'))`
+const hashedSigned64 = xxHash64.toSigned64('some input string');
 ```
 
 ## Benchmarks
@@ -58,6 +82,12 @@ const signed64Hash = xxHasher.toSigned64("a string");
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
+ RUN  v3.2.4 /home/sebastien/github/httpx/packages/hash
+
+ ✓ bench/compare/xxhash.bench.ts > xxHash64 2823ms
+     name                  hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · toBigint    1,741,422.57  0.0002  1.0043  0.0006  0.0007  0.0011  0.0013  0.0039  ±0.89%   870712
+   · toSigned64  1,630,206.76  0.0003  0.8919  0.0006  0.0007  0.0013  0.0015  0.0079  ±1.17%   815106
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/hash/bench) for details.
@@ -66,11 +96,9 @@ const signed64Hash = xxHasher.toSigned64("a string");
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/hash/.size-limit.ts)
 
-| Scenario (esm)                               | Size (compressed) |
-|----------------------------------------------|------------------:|
-| `import { md5 } from '@httpx/hash`           |            ~ 570B |
-
-> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/hash@latest).
+| Scenario (esm)                                            | Size (compressed) |
+|-----------------------------------------------------------|------------------:|
+| `import { createXXHash64 } from '@httpx/hash/xxhash-wasm' |            ~ 765B |
 
 ## Compatibility
 

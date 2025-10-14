@@ -2,8 +2,8 @@ import { expectTypeOf } from 'vitest';
 import type { XXHashAPI } from 'xxhash-wasm';
 
 import type { SignedInt64 } from '../utils/bigint-to-signed-int64';
-import { createXXWasmHasher } from './create-xx-wasm-hasher';
-import { getXXHashWasmInstance } from './get-xxhash-wasm-instance';
+import { createXXHash64 } from './create-xxhash64';
+import { getXXHashAPI } from './get-xxhash-api';
 import { XXHash64 } from './xxhash64';
 
 describe('XXHash64', () => {
@@ -11,8 +11,8 @@ describe('XXHash64', () => {
   let xxHashWasm: XXHashAPI;
 
   beforeAll(async () => {
-    xxHashWasm = await getXXHashWasmInstance();
-    xx64Hasher = await createXXWasmHasher();
+    xxHashWasm = await getXXHashAPI();
+    xx64Hasher = await createXXHash64();
   });
 
   describe('toBigint', () => {
@@ -26,14 +26,14 @@ describe('XXHash64', () => {
     });
     it('should be deterministic for same input and seed', () => {
       const seed = 123n;
-      const h1 = xx64Hasher.toBigint('deterministic', seed);
-      const h2 = xx64Hasher.toBigint('deterministic', seed);
+      const h1 = xx64Hasher.toBigint('deterministic', { seed });
+      const h2 = xx64Hasher.toBigint('deterministic', { seed });
       expect(h1).toBe(h2);
     });
     it('should produce different hashes for different inputs', () => {
       const seed = 123n;
-      const h1 = xx64Hasher.toBigint('input-a', seed);
-      const h2 = xx64Hasher.toBigint('input-b', seed);
+      const h1 = xx64Hasher.toBigint('input-a', { seed });
+      const h2 = xx64Hasher.toBigint('input-b', { seed });
       expect(h1).not.toBe(h2);
     });
   });
@@ -73,7 +73,7 @@ describe('XXHash64', () => {
       const seed = 42n;
       const withDefault = new XXHash64(xxHashWasm, { defaultSeed: seed });
       const a = withDefault.toBigint('abc');
-      const b = withDefault.toBigint('abc', seed);
+      const b = withDefault.toBigint('abc', { seed });
       expect(a).toBe(b);
     });
     it('explicit seed should override the defaultSeed', () => {
@@ -81,9 +81,13 @@ describe('XXHash64', () => {
       const explicitSeed = 7n;
       const withDefault = new XXHash64(xxHashWasm, { defaultSeed });
       const withoutExplicit = withDefault.toBigint('override-me');
-      const withExplicit = withDefault.toBigint('override-me', explicitSeed);
+      const withExplicit = withDefault.toBigint('override-me', {
+        seed: explicitSeed,
+      });
       // Sanity check: same explicit seed through two code paths is equal
-      const directExplicit = xx64Hasher.toBigint('override-me', explicitSeed);
+      const directExplicit = xx64Hasher.toBigint('override-me', {
+        seed: explicitSeed,
+      });
       expect(withExplicit).toBe(directExplicit);
       // Extremely unlikely to be equal to the default-seeded hash
       expect(withExplicit).not.toBe(withoutExplicit);
