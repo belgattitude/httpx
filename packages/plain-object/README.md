@@ -62,13 +62,6 @@ const runInNewContext = await import('node:vm').then(
 );
 isPlainObject(runInNewContext('({})'));   // ✅
 
-// ✅👇 Static built-in classes are treated as plain objects
-//       check for `isStaticBuiltInClass` to exclude if needed
-
-isPlainObject(Math);                // ✅
-isPlainObject(JSON);                // ✅
-isPlainObject(Atomics);             // ✅
-
 // ❌👇 False
 
 class Test { };
@@ -84,6 +77,16 @@ isPlainObject(Promise.resolve({})); // ❌
 isPlainObject(Object.create({}));   // ❌
 isPlainObject(new (class Cls {}));  // ❌
 isPlainObject(globalThis);          // ❌,
+
+// ⚠️👇 Note that at runtime static built-in classes will return true
+// but the typing guards will prevent you from passing them.
+// This is a trade-off to keep the isPlainObject as performant as possible
+// while preventing accidental usage of static built-in classes (edge case).
+
+isPlainObject(Math);                // ⚠️️ Typecheck error
+isPlainObject(JSON);                // ⚠️ Typecheck error
+isPlainObject(Atomics);             // ⚠️ Typecheck error
+
 ```
 
 ### assertPlainObject
@@ -119,7 +122,7 @@ try {
 
 ### isStaticBuiltInClass
 
-> info: Since v2.0.0
+> info: Since v2.0.0 and deprecated till v3.0.0
 
 Since v2.0.0, `isPlainObject` will accept static built-in classes 
 as plain objects (Math, JSON, Atomics). If you need to exclude them,
@@ -228,22 +231,21 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | `import { isPlainObject } from '@httpx/plain-object`        |             ~ 80B |
 | `import { assertPlainObject } from '@httpx/plain-object`    |            ~ 133B |
 | `Both isPlainObject and assertPlainObject`                  |            ~ 141B |
-| `import { isStaticBuiltInClass } from '@httpx/plain-object` |             ~ 37B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/plain-object@latest).
 
 ## Compatibility
 
-| Level      | CI | Description                                                                                                                                                                                                                                                                                                                                                                                       |
-|------------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node       | ✅  | CI for 20.x, 22.x & 24.x.                                                                                                                                                                                                                                                                                                                                                                         |
+| Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                                       |
+|--------------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| Node         | ✅  | CI for 20.x, 22.x & 24.x.                                                                                                                                                                                                                                                                                                                                                                         |
 | Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                     |
 | Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.browserslistrc) |
 | Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                                | 
 | Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                                  |
-| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                     |
-| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                      |
-| Performance| ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                              |
+| Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                     |
+| ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                      |
+| Performance  | ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                              |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
@@ -274,7 +276,6 @@ Notable differences:
 
 Since v2, it diverges from `is-plain-obj` by 
 
-- [x] Static built-in classes are considered as plain objects (use [isStaticBuiltInClass](#isstaticbuiltinclass) to exclude).
 - [x] `[Symbol.iterator]` is considered as a valid property for plain objects.
 - [x] `[Symbol.toStringTag]` is considered as a valid property for plain objects.`
 
