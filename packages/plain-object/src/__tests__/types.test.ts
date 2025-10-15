@@ -39,6 +39,18 @@ describe('plain-object types tests', () => {
   });
 
   describe('isPlainObject', () => {
+    it.each([
+      ['Atomics', Atomics],
+      ['Math', Math],
+      ['JSON', JSON],
+    ] as const)(
+      'should not allow passing static built-in classes',
+      (name, cls) => {
+        // @ts-expect-error for static built-in classes
+        const runtimeTrue = isPlainObject(cls);
+        expect(runtimeTrue).toBe(true);
+      }
+    );
     it(`should not make any assumptions when the value isn't statically known`, () => {
       const unknownPo = {
         key: 'value',

@@ -5,6 +5,7 @@ import type {
 } from './internal.types';
 import { isPlainObject } from './is-plain-object';
 import type { PlainObject } from './plain-object.types';
+import type { WithoutStaticBuiltInClass } from './static-built-in-class.types';
 
 /**
  * Assert a value is a plain object
@@ -39,16 +40,23 @@ import type { PlainObject } from './plain-object.types';
  * }
  * ```
  *
- * @throws TypeError
+ * @throws TypeError or any Error returned by `msgOrErrorFactory`
  */
 export function assertPlainObject<
+  /** Custom type of the plain object values, DefaultBasePlainObject by default */
   TValue extends BasePlainObject = DefaultBasePlainObject,
+  /**
+   * Do not set second generic, its purpose is to prevent allowing static
+   * built-in classes like Math, JSON, Atomics
+   */
+  TAnyInput = unknown,
 >(
-  v: unknown,
+  v: TAnyInput & WithoutStaticBuiltInClass<TAnyInput>,
   msgOrErrorFactory?: MsgOrErrorFactory
-): asserts v is TValue extends DefaultBasePlainObject
-  ? BasePlainObject
-  : PlainObject<TValue> {
+): asserts v is (TAnyInput & WithoutStaticBuiltInClass<TAnyInput>) &
+  (TValue extends DefaultBasePlainObject
+    ? BasePlainObject
+    : PlainObject<TValue>) {
   if (!isPlainObject<TValue>(v)) {
     if (
       msgOrErrorFactory === undefined ||

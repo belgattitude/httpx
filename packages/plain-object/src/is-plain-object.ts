@@ -1,5 +1,6 @@
 import type { BasePlainObject, DefaultBasePlainObject } from './internal.types';
 import type { PlainObject } from './plain-object.types';
+import type { WithoutStaticBuiltInClass } from './static-built-in-class.types';
 
 /**
  * Check if a value is a plain object
@@ -43,21 +44,30 @@ import type { PlainObject } from './plain-object.types';
  * isPlainObject(new (class Cls {}));  // ❌
  * isPlainObject(globalThis);          // ❌
  *
- * // ✅👇 Note that static built-in classes are treated as plain objects
- * //    check for `isStaticBuiltInClass` to exclude if needed
+ * // ⚠️👇 Note that at runtime static built-in classes will return true
+ * // but the typing guards will prevent you from passing them.
+ * // This is a trade-off to keep the isPlainObject as performant as possible
+ * // while preventing accidental usage of static built-in classes (edge case).
  *
- * isPlainObject(Math);                // ✅
- * isPlainObject(JSON);                // ✅
- * isPlainObject(Atomics);             // ✅
+ * isPlainObject(Math);                // ⚠️️ Typecheck error
+ * isPlainObject(JSON);                // ⚠️ Typecheck error
+ * isPlainObject(Atomics);             // ⚠️ Typecheck error
  * ```
  */
 export const isPlainObject = <
+  /** Custom type of the plain object values, DefaultBasePlainObject by default */
   TValue extends BasePlainObject = DefaultBasePlainObject,
+  /**
+   * Do not set second generic, its purpose is to prevent allowing static
+   * built-in classes like Math, JSON, Atomics
+   */
+  TAnyInput = unknown,
 >(
-  v: unknown
-): v is TValue extends DefaultBasePlainObject
-  ? BasePlainObject
-  : PlainObject<TValue> => {
+  v: TAnyInput & WithoutStaticBuiltInClass<TAnyInput>
+): v is (TAnyInput & WithoutStaticBuiltInClass<TAnyInput>) &
+  (TValue extends DefaultBasePlainObject
+    ? BasePlainObject
+    : PlainObject<TValue>) => {
   if (v === null || typeof v !== 'object') {
     return false;
   }
