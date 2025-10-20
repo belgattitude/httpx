@@ -1,13 +1,20 @@
-name: CI-monorepo-integrity
+name: CI-security-audit
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'yarn.lock'
+      - '.github/workflows/**'
+
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - '**'
+    paths:
+      - 'yarn.lock'
+      - '.github/workflows/**'
 
 permissions:
   contents: read
@@ -30,11 +37,5 @@ jobs:
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
 
-      - name: 👬🏽 Check for duplicates
-        run: yarn dedupe --check
-
-      #- name: 🛟 Check monorepo dependency graph
-      #  run: yarn check:install
-
-      - name: 🦺 Syncpack checks - packages - lint-semver-ranges
-        run: yarn syncpack:check
+      - name: 🛡️ Check for security vulnerabilities
+        run: yarn npm audit --no-deprecations --all
