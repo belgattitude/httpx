@@ -40,8 +40,8 @@
     "install:playwright": "yarn workspace @httpx/devtools-vitest install-playwright",
     "website:build": "yarn workspace httpx-docs run build",
     "website:deploy": "gh-pages -d ./docs/out -t",
-    "deps:check": "npm-check-updates --configFileName .ncurc.json",
-    "deps:update": "npm-check-updates --configFileName .ncurc.json -u",
+    "deps:check": "npm-check-updates --configFileName .ncurc.cjs",
+    "deps:update": "npm-check-updates --configFileName .ncurc.cjs -u",
     "check:install": "yarn dlx @yarnpkg/doctor@3 .",
     "postinstall": "is-ci || yarn husky",
     "syncpack:format": "syncpack format",
@@ -86,19 +86,19 @@
     "@commitlint/cli": "20.1.0",
     "@commitlint/config-conventional": "20.0.0",
     "@types/shell-quote": "1.7.5",
-    "@typescript-eslint/eslint-plugin": "8.46.0",
-    "@typescript-eslint/parser": "8.46.0",
+    "@typescript-eslint/eslint-plugin": "8.46.1",
+    "@typescript-eslint/parser": "8.46.1",
     "cross-env": "10.1.0",
     "eslint": "8.57.1",
     "gh-pages": "6.3.0",
     "husky": "9.1.7",
     "is-ci": "4.1.0",
     "lint-staged": "16.2.4",
-    "npm-check-updates": "19.0.0",
+    "npm-check-updates": "19.1.1",
     "npm-run-all2": "8.0.4",
-    "nx": "21.6.4",
+    "nx": "21.6.5",
     "pkg-pr-new": "0.0.60",
-    "playwright": "1.56.0",
+    "playwright": "1.56.1",
     "prettier": "3.6.2",
     "rimraf": "6.0.1",
     "shell-quote": "1.8.3",
@@ -109,7 +109,7 @@
     "node": ">=20.19"
   },
   "resolutions": {
-    "esbuild": "^0.25.10"
+    "esbuild": "^0.25.11"
   },
   "resolutionsHelp": {
     "esbuild": "To prevent multiple versions"
