@@ -20,7 +20,7 @@ permissions:
   contents: read
 
 jobs:
-  install-integrity:
+  security-audit:
     runs-on: ubuntu-latest
     strategy:
       matrix:
