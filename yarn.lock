@@ -1668,7 +1668,7 @@ __metadata:
     rimraf: "npm:6.0.1"
     size-limit: "npm:11.2.0"
     statuses: "npm:2.0.2"
-    superjson: "npm:2.2.2"
+    superjson: "npm:2.2.3"
     tsup: "npm:8.5.0"
     tupleson: "npm:0.23.1"
     typedoc: "npm:0.28.14"
@@ -1979,7 +1979,7 @@ __metadata:
     publint: "npm:0.3.14"
     rimraf: "npm:6.0.1"
     size-limit: "npm:11.2.0"
-    superjson: "npm:2.2.2"
+    superjson: "npm:2.2.3"
     tsup: "npm:8.5.0"
     typedoc: "npm:0.28.14"
     typedoc-plugin-markdown: "npm:4.9.0"
@@ -7108,6 +7108,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"copy-anything@npm:^4":
+  version: 4.0.5
+  resolution: "copy-anything@npm:4.0.5"
+  dependencies:
+    is-what: "npm:^5.2.0"
+  checksum: 10c0/d0a4a4102334399dae8504a2c2e13f45ad05746a9fd5cc0df349a554e3749a05e8a6d62b3724a8049cd59fc0bbbf4f54c4edc94a428edc76211dffe3ac0af586
+  languageName: node
+  linkType: hard
+
 "core-js-compat@npm:^3.38.1":
   version: 3.45.1
   resolution: "core-js-compat@npm:3.45.1"
@@ -11098,6 +11107,13 @@ __metadata:
   version: 4.1.16
   resolution: "is-what@npm:4.1.16"
   checksum: 10c0/611f1947776826dcf85b57cfb7bd3b3ea6f4b94a9c2f551d4a53f653cf0cb9d1e6518846648256d46ee6c91d114b6d09d2ac8a07306f7430c5900f87466aae5b
+  languageName: node
+  linkType: hard
+
+"is-what@npm:^5.2.0":
+  version: 5.5.0
+  resolution: "is-what@npm:5.5.0"
+  checksum: 10c0/065c8a4ac651988a495cc0211c2754c198788383c9fe1bbfdf6d237c423114a0c5f2fc3e26ad7ea43a63cd4169f4503f584305acbac91706d5308cc14dedd1bd
   languageName: node
   linkType: hard
 
@@ -16728,6 +16744,15 @@ __metadata:
   dependencies:
     copy-anything: "npm:^3.0.2"
   checksum: 10c0/aa49ebe6653e963020bc6a1ed416d267dfda84cfcc3cbd3beffd75b72e44eb9df7327215f3e3e77528f6e19ad8895b16a4964fdcd56d1799d14350db8c92afbc
+  languageName: node
+  linkType: hard
+
+"superjson@npm:2.2.3":
+  version: 2.2.3
+  resolution: "superjson@npm:2.2.3"
+  dependencies:
+    copy-anything: "npm:^4"
+  checksum: 10c0/276179f4a56be5c73ebb25abf07a4801d6b000f98a31ebaa3f41da1342f9d31c7fadde81bf79db8eeeec7f0ba8f62c30ca681b166a0244e1414f33fbb750c358
   languageName: node
   linkType: hard
 
