@@ -1,4 +1,4 @@
-[**@httpx/lru v0.11.4**](../README.md)
+[**@httpx/lru v0.11.5**](../README.md)
 
 ***
 
@@ -85,7 +85,7 @@ if the item was actually deleted in case it exist.
 
 ### get()
 
-> **get**: (`key`) => `undefined` \| `TValue`
+> **get**: (`key`) => `TValue` \| `undefined`
 
 Get an item from the cache or return undefined if it doesn't exist.
 Item will be marked as most recently used.
@@ -108,7 +108,7 @@ lru.get('key1');   // 👈 undefined
 
 #### Returns
 
-`undefined` \| `TValue`
+`TValue` \| `undefined`
 
 ***
 
@@ -225,7 +225,7 @@ Return the params
 
 ### peek()
 
-> **peek**: (`key`) => `undefined` \| `TValue`
+> **peek**: (`key`) => `TValue` \| `undefined`
 
 Get an item without marking it as recently used or undefined if item doesn't exist.
 
@@ -237,7 +237,7 @@ Get an item without marking it as recently used or undefined if item doesn't exi
 
 #### Returns
 
-`undefined` \| `TValue`
+`TValue` \| `undefined`
 
 ***
 

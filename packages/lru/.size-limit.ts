@@ -8,10 +8,22 @@ module.exports = [
     limit: '570B',
   },
   {
+    name: 'import { getOrCreateLruCache } (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ getOrCreateLruCache }',
+    limit: '645B',
+  },
+  {
     name: 'import { TimeLruCache } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ TimeLruCache }',
-    limit: '660B',
+    limit: '661B',
+  },
+  {
+    name: 'import { getOrCreateTimeLruCache } (ESM)',
+    path: ['dist/index.mjs'],
+    import: '{ getOrCreateTimeLruCache }',
+    limit: '750B',
   },
   {
     name: 'require { LruCache } (CJS)',
