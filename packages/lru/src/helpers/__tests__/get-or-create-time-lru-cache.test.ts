@@ -13,7 +13,7 @@ declare global {
     | undefined;
 }
 
-describe('getOrCreateLruCache()', () => {
+describe('getOrCreateTimeLruCache()', () => {
   beforeEach(() => {
     // Reset the singleton registry to avoid test cross-contamination
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

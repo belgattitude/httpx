@@ -8,7 +8,7 @@
 
 > **getOrCreateTimeLruCache**\<`TValue`, `TKey`\>(`name`, `lruCacheParams`, `options?`): [`TimeLruCache`](../classes/TimeLruCache.md)\<`TValue`, `TKey`\>
 
-Creates or retrieves a singleton LruCache instance by name
+Creates or retrieves a singleton TimeLruCache instance by name
 ensuring that only one instance exists for each unique name.
 
 This helper function relies on globalThis to store and retrieve
