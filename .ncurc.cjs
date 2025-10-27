@@ -7,8 +7,12 @@ const npmPreapprovedPackages = [
   '@belgattitude/*',
   '@flowblade/*',
   '@httpx/*',
+  'hono',
   'vite',
-  '@vitejs/*'
+  '@vitejs/*',
+  'esbuild',
+  '@esbuild/*',
+  'hono',
 ];
 
 module.exports = defineConfig({

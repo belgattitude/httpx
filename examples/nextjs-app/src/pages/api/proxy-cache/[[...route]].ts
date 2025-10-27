@@ -1,11 +1,10 @@
 import { handle } from '@hono/node-server/vercel';
 import { Hono } from 'hono';
-import type { PageConfig } from 'next';
 
 import { proxyCacheConfig } from '@/server/config/proxy-cache.config';
 import { ProxyCache } from '@/server/lib/proxy-cache';
 
-export const config: PageConfig = {
+export const config = {
   runtime: 'nodejs',
   api: {
     bodyParser: false,

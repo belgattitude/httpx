@@ -18,9 +18,6 @@ const nextConfig = {
   output: 'export',
   productionBrowserSourceMaps:
     process.env.NEXT_BUILD_ENV_SOURCEMAPS !== 'false',
-  eslint: {
-    ignoreDuringBuilds: process.env.NEXT_BUILD_ENV_LINT === 'false',
-  },
   typescript: {
     ignoreBuildErrors: process.env.NEXT_BUILD_ENV_TYPECHECK === 'false',
   },
