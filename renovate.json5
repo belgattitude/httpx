@@ -1,59 +1,33 @@
-/**
- * Renovatebot config and overrides for the monorepo
- *
- * - https://docs.renovatebot.com/configuration-options/
- * - https://docs.renovatebot.com/presets-default/
- */
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["config:recommended"],
   enabled: true,
   enabledManagers: ["npm", "docker-compose", "dockerfile", "github-actions"],
-  postUpdateOptions: [
-    // https://docs.renovatebot.com/configuration-options/#postupdateoptions
-    // Will run yarn dedupe --strategy highest
-    'yarnDedupeHighest'
-  ],
+  postUpdateOptions: ["yarnDedupeHighest"],
   minimumReleaseAge: "3 days",
   packageRules: [
     {
-      // Exclusions
-      matchPackageNames: [
-        // keep this inline with .ncurc.yml
-        // ie: "is-port-reachable",
-      ],
-      enabled: false
+      matchPackageNames: [],
+      enabled: false,
     },
     {
-      // Root package.json
-      matchFiles: ["package.json"],
-      matchDepTypes: [
-        "dependencies",
-      ],
-      rangeStrategy: "pin"
+      matchFileNames: ["package.json"],
+      matchDepTypes: ["dependencies"],
+      rangeStrategy: "pin",
     },
     {
-      // Will pin dependencies found in apps/*...
-      matchPaths: ["apps/**", "examples/**"],
-      matchDepTypes: [
-        "dependencies",
-      ],
-      rangeStrategy: "pin"
+      matchFileNames: ["apps/**", "examples/**"],
+      matchDepTypes: ["dependencies"],
+      rangeStrategy: "pin",
     },
     {
-      // Will preserve semver found in packages/*
-      matchPaths: ["packages/**", "integrations/**"],
-      matchDepTypes: [
-        "dependencies",
-      ],
-      "rangeStrategy": "replace"
+      matchFileNames: ["packages/**", "integrations/**"],
+      matchDepTypes: ["dependencies"],
+      rangeStrategy: "replace",
     },
     {
-      // All dev deps
-      matchDepTypes: [
-        "devDependencies"
-      ],
-      rangeStrategy: "auto"
-    }
-  ]
+      matchDepTypes: ["devDependencies"],
+      rangeStrategy: "auto",
+    },
+  ],
 }
