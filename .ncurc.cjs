@@ -3,10 +3,12 @@
 const { defineConfig } = require('npm-check-updates');
 
 // @todo read the content from .yarnrc.yml
-const npmPreapprovedPackagesPrefixes = [
-  '@belgattitude/',
-  '@flowblade/',
-  '@httpx/',
+const npmPreapprovedPackages = [
+  '@belgattitude/*',
+  '@flowblade/*',
+  '@httpx/*',
+  'vite',
+  '@vitejs/*'
 ];
 
 module.exports = defineConfig({
@@ -16,9 +18,14 @@ module.exports = defineConfig({
   packageManager: 'yarn',
   cooldown: (packageName) => {
     if (
-      npmPreapprovedPackagesPrefixes.some((prefix) =>
-        packageName.startsWith(prefix)
-      )
+      npmPreapprovedPackages.some((allowed) =>
+      {
+        if (allowed.endsWith('/*')) {
+          return packageName.startsWith(allowed.slice(0, -1));
+        } else {
+          return packageName === allowed;
+        }
+      })
     ) {
       return 0;
     }
