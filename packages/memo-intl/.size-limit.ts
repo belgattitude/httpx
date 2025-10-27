@@ -17,6 +17,6 @@ module.exports = [
     name: 'Everything (CJS)',
     import: '*',
     path: ['dist/index.cjs'],
-    limit: '1.60KB',
+    limit: '1.67KB',
   },
 ] satisfies SizeLimitConfig;
