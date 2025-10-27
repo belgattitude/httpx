@@ -1,8 +1,8 @@
-**@httpx/lru v0.11.4**
+**@httpx/lru v0.11.5**
 
 ***
 
-# @httpx/lru v0.11.4
+# @httpx/lru v0.11.5
 
 ## Classes
 
@@ -23,3 +23,8 @@
 - [LruCacheParams](type-aliases/LruCacheParams.md)
 - [SupportedCacheValues](type-aliases/SupportedCacheValues.md)
 - [TimeLruCacheParams](type-aliases/TimeLruCacheParams.md)
+
+## Functions
+
+- [getOrCreateLruCache](functions/getOrCreateLruCache.md)
+- [getOrCreateTimeLruCache](functions/getOrCreateTimeLruCache.md)

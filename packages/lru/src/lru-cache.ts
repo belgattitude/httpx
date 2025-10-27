@@ -48,13 +48,17 @@ export class LruCache<
   #tail: DoublyLinkedNode<TValue, TKey> | null = null;
 
   /**
-   * Create a new LruCache instance
+   * Create a new LruCache instance.
+   *
+   * 👉 As an alternative to constructor, consider using the helper
+   * `getOrCreateLruCache` to ensure only one instance is created.
    *
    * @example
    * ```typescript
    * import { LruCache } from '@httpx/lru';
    *
    * const lru = new LruCache({ maxSize: 1000 });
+   *
    * lru.set('🦄', ['cool', 'stuff']);
    * if (lru.has('🦄')) {;
    *  console.log(lru.get('🦄'));

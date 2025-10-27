@@ -1,3 +1,5 @@
+export { getOrCreateLruCache } from './helpers/get-or-create-lru-cache';
+export { getOrCreateTimeLruCache } from './helpers/get-or-create-time-lru-cache';
 export type { LruCacheParams } from './lru-cache';
 export { LruCache } from './lru-cache';
 export type { ILruCache } from './lru-cache.interface';

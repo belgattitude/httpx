@@ -1,4 +1,4 @@
-[**@httpx/lru v0.11.4**](../README.md)
+[**@httpx/lru v0.11.5**](../README.md)
 
 ***
 
@@ -28,7 +28,10 @@ Double linked list based lru cache that supports get in O(1)
 
 > **new LruCache**\<`TValue`, `TKey`\>(`params`): `LruCache`\<`TValue`, `TKey`\>
 
-Create a new LruCache instance
+Create a new LruCache instance.
+
+👉 As an alternative to constructor, consider using the helper
+`getOrCreateLruCache` to ensure only one instance is created.
 
 #### Parameters
 
@@ -46,6 +49,7 @@ Create a new LruCache instance
 import { LruCache } from '@httpx/lru';
 
 const lru = new LruCache({ maxSize: 1000 });
+
 lru.set('🦄', ['cool', 'stuff']);
 if (lru.has('🦄')) {;
  console.log(lru.get('🦄'));
@@ -178,7 +182,7 @@ if the item was actually deleted in case it exist.
 
 ### get()
 
-> **get**(`key`): `undefined` \| `TValue`
+> **get**(`key`): `TValue` \| `undefined`
 
 Get an item from the cache or return undefined if it doesn't exist.
 Item will be marked as most recently used.
@@ -201,7 +205,7 @@ lru.get('key1');   // 👈 undefined
 
 #### Returns
 
-`undefined` \| `TValue`
+`TValue` \| `undefined`
 
 #### Implementation of
 
@@ -318,7 +322,7 @@ lru.has('key1', {
 
 ### peek()
 
-> **peek**(`key`): `undefined` \| `TValue`
+> **peek**(`key`): `TValue` \| `undefined`
 
 Get an item without marking it as recently used or undefined if item doesn't exist.
 
@@ -330,7 +334,7 @@ Get an item without marking it as recently used or undefined if item doesn't exi
 
 #### Returns
 
-`undefined` \| `TValue`
+`TValue` \| `undefined`
 
 #### Implementation of
 
