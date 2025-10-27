@@ -30,6 +30,9 @@ Double linked list based lru cache that supports get in O(1) and time to live fo
 
 Create a new LruCache instance
 
+👉 As an alternative to constructor, consider using the helper
+`getOrCreateTimeLruCache` to ensure only one instance is created.
+
 #### Parameters
 
 ##### params

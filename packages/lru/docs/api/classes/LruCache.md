@@ -28,7 +28,10 @@ Double linked list based lru cache that supports get in O(1)
 
 > **new LruCache**\<`TValue`, `TKey`\>(`params`): `LruCache`\<`TValue`, `TKey`\>
 
-Create a new LruCache instance
+Create a new LruCache instance.
+
+👉 As an alternative to constructor, consider using the helper
+`getOrCreateLruCache` to ensure only one instance is created.
 
 #### Parameters
 
@@ -46,6 +49,7 @@ Create a new LruCache instance
 import { LruCache } from '@httpx/lru';
 
 const lru = new LruCache({ maxSize: 1000 });
+
 lru.set('🦄', ['cool', 'stuff']);
 if (lru.has('🦄')) {;
  console.log(lru.get('🦄'));

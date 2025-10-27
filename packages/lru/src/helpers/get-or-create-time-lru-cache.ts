@@ -30,7 +30,7 @@ type Options = {
  * ```typescript
  * import { getOrCreateTimeLruCache } from '@httpx/lru';
  *
- * const ttlLru = getOrCreateTimeLruCache('main-cache', { maxSize: 500 });
+ * const ttlLru = getOrCreateTimeLruCache('main-cache', { maxSize: 500, defaultTTL: 60000 });
  * ```
  */
 export const getOrCreateTimeLruCache = <

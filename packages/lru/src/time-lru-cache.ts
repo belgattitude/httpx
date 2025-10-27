@@ -47,6 +47,9 @@ export class TimeLruCache<
   /**
    * Create a new LruCache instance
    *
+   * 👉 As an alternative to constructor, consider using the helper
+   * `getOrCreateTimeLruCache` to ensure only one instance is created.
+   *
    * @example
    * ```typescript
    * import { TimeLruCache } from '@httpx/lru';

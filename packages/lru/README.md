@@ -21,6 +21,7 @@ $ pnpm add @httpx/lru
 
 - 🖖&nbsp; Provides [LruCache](#lrucache) and [TimeLruCache](#timelrucache).
 - 🚀&nbsp; Fast `cache.get()` in O(1) thx to [doubly linked list](https://en.wikipedia.org/wiki/Doubly_linked_list).
+- ✨&nbsp; Provides convenience [helpers](#helpers) to preserve single instance across your app.
 - 📐&nbsp; Lightweight (starts at [~570B](#bundle-size)) 
 - 🛡️&nbsp; Tested on [node 20-24, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
@@ -51,6 +52,8 @@ a doubly linked list implementation to allow `get()` in O(1).
 // bundle size: ~550B
 import { LruCache } from '@httpx/lru';
 
+// 👉 As an alternative to constructor, consider using the helper
+//    `getOrCreateLruCache` to ensure only one instance is created
 const lru = new LruCache({ maxSize: 1000 });
 
 lru.set('🦄', ['cool', 'stuff']);
@@ -88,6 +91,9 @@ import { TimeLruCache } from '@httpx/lru';
 
 const oneSecondInMillis = 1000;
 
+// 👉 As an alternative to constructor, consider using the helper
+//    `getOrCreateTimeLruCache` to ensure only one instance is created
+
 const lru = new TimeLruCache({
   maxSize: 1,
   defaultTTL: oneSecondInMillis,
@@ -107,6 +113,28 @@ const value = lru.get('key1'); // 👈 'value1' (item is present and is not expi
 // 🕛 wait 3 seconds, time for the item to expire
 
 lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction will be called)
+```
+
+## Helpers
+
+As an alternative to using the constructors directly, the package provides helpers to ensure only one instance
+of LruCache or TimeLruCache is created for a given name. This is particularly useful for hybrid application such as NextJs 
+that might loose their references due to their specific module loading strategy.
+
+### getOrCreateLruCache
+
+```typescript
+import { getOrCreateLruCache } from '@httpx/lru';
+
+const ttlLru = getOrCreateLruCache('main-cache', { maxSize: 500 });
+```
+
+### getOrCreateTimeLruCache
+
+```typescript
+import { getOrCreateTimeLruCache } from '@httpx/lru';
+
+const ttlLru = getOrCreateTimeLruCache('main-cache', { maxSize: 500, defaultTTL: 60000 });
 ```
 
 ## API
