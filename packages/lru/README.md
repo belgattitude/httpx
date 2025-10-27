@@ -118,8 +118,9 @@ lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction wi
 ## Helpers
 
 As an alternative to using the constructors directly, the package provides helpers to ensure only one instance
-of LruCache or TimeLruCache is created for a given name. This is particularly useful for hybrid application such as NextJs 
-that might loose their references due to their specific module loading strategy.
+of `LruCache` or `TimeLruCache` is created for a given name. This is particularly useful for hybrid application such as NextJs 
+that might loose their references due to their specific module loading strategy. Under the hood instances are
+preserved on `globalThis`.
 
 ### getOrCreateLruCache
 
@@ -134,7 +135,10 @@ const ttlLru = getOrCreateLruCache('main-cache', { maxSize: 500 });
 ```typescript
 import { getOrCreateTimeLruCache } from '@httpx/lru';
 
-const ttlLru = getOrCreateTimeLruCache('main-cache', { maxSize: 500, defaultTTL: 60000 });
+const ttlLru = getOrCreateTimeLruCache('main-cache', { 
+    maxSize: 500, 
+    defaultTTL: 60000 
+});
 ```
 
 ## API

@@ -32,6 +32,10 @@ type Options = {
  *
  * const lru = getOrCreateLruCache('main-cache', { maxSize: 500 });
  * ```
+ *
+ * @warning The same name must always be used with consistent TValue and TKey types.
+ *          Calling this function with different type parameters for the same name will cause
+ *          type safety violations and unexpected behavior.
  */
 export const getOrCreateLruCache = <
   TValue extends SupportedCacheValues = SupportedCacheValues,
