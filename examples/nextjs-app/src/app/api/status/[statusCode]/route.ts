@@ -48,11 +48,14 @@ const validateNextRequest = <
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { statusCode: string } }
+  { params }: { params: Promise<{ statusCode: string }> }
 ) {
   // Throw HttpBadRequest if didn't pass schema requirements
   try {
-    const safeReq = validateNextRequest(zodGetSchema, { req, params });
+    const safeReq = validateNextRequest(zodGetSchema, {
+      req,
+      params: await params,
+    });
     const { statusCode } = safeReq.params;
 
     const response = {

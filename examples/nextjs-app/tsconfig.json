@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "baseUrl": "./src",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -10,23 +9,23 @@
     "strictNullChecks": true,
     "incremental": true,
     "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "paths": {
-      "@/server/*": ["./server/*"],
-      "@/lib": ["./lib/index"],
-      "@httpx/assert": ["../../../packages/assert/src/index"],
-      "@httpx/compress": ["../../../packages/compress/src/index"],
-      "@httpx/dsn-parser": ["../../../packages/dsn-parser/src/index"],
-      "@httpx/memo-intl": ["../../../packages/memo-intl/src/index"],
-      "@httpx/exception": ["../../../packages/exception/src/index"],
+      "@/server/*": ["./src/server/*"],
+      "@/lib": ["./src/lib/index"],
+      "@httpx/assert": ["../../packages/assert/src/index"],
+      "@httpx/compress": ["../../packages/compress/src/index"],
+      "@httpx/dsn-parser": ["../../packages/dsn-parser/src/index"],
+      "@httpx/memo-intl": ["../../packages/memo-intl/src/index"],
+      "@httpx/exception": ["../../packages/exception/src/index"],
       "@httpx/exception/serializer": [
-        "../../../packages/exception/src/serializer/index"
+        "../../packages/exception/src/serializer/index"
       ],
-      "@httpx/treeu": ["../../../packages/treeu/src/index"],
-      "@httpx/lru": ["../../../packages/lru/src/index"],
-      "@httpx/stable-hash": ["../../../packages/stable-hash/src/index"],
-      "@httpx/plain-object": ["../../../packages/plain-object/src/index"],
-      "@httpx/xcache": ["../../../packages/xcache/src/index"]
+      "@httpx/treeu": ["../../packages/treeu/src/index"],
+      "@httpx/lru": ["../../packages/lru/src/index"],
+      "@httpx/stable-hash": ["../../packages/stable-hash/src/index"],
+      "@httpx/plain-object": ["../../packages/plain-object/src/index"],
+      "@httpx/xcache": ["../../packages/xcache/src/index"]
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -41,7 +40,7 @@
       }
     ]
   },
-  "exclude": ["**/node_modules", "**/.*/*"],
+  "exclude": ["**/node_modules"],
   "include": [
     ".eslintrc.*",
     "next-env.d.ts",
@@ -54,6 +53,7 @@
     "**/*.json",
     ".next/types/**/*.ts",
     ".storybook/**/*.ts",
-    ".storybook/**/*.tsx"
+    ".storybook/**/*.tsx",
+    ".next/dev/types/**/*.ts"
   ]
 }

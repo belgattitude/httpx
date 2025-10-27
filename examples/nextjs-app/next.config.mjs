@@ -2,9 +2,6 @@
 
 const trueEnv = ['true', '1', 'yes'];
 
-const NEXTJS_IGNORE_ESLINT = trueEnv.includes(
-  process.env?.NEXTJS_IGNORE_ESLINT ?? 'false'
-);
 const NEXTJS_IGNORE_TYPECHECK = trueEnv.includes(
   process.env?.NEXTJS_IGNORE_TYPECHECK ?? 'false'
 );
@@ -13,10 +10,6 @@ const TYPESCRIPT_CONFIG = process.env.TSCONFIG ?? './tsconfig.json';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    dirs: ['src'],
-    ignoreDuringBuilds: NEXTJS_IGNORE_ESLINT,
-  },
   experimental: {
     // Prefer loading of ES Modules over CommonJS
     // @link {https://nextjs.org/blog/next-11-1#es-modules-support|Blog 11.1.0}

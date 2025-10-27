@@ -27,9 +27,6 @@ module.exports = {
     '@belgattitude/eslint-config-bases/prettier-plugin',
   ],
   ignorePatterns: [...getDefaultIgnorePatterns()],
-  overrides: [
-    // optional overrides per project file match
-  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     projectService: true,
@@ -40,4 +37,13 @@ module.exports = {
     // optional overrides per project
     '@typescript-eslint/require-await': 'off',
   },
+  overrides: [
+    {
+      files: ['next-env.d.ts'],
+      rules: {
+        'prettier/prettier': 'off',
+        '@typescript-eslint/triple-slash-reference': 'off',
+      },
+    },
+  ],
 };
