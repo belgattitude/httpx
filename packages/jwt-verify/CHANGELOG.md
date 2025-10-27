@@ -1,5 +1,12 @@
 # @httpx/jwt-verify
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`6c2486e`](https://github.com/belgattitude/httpx/commit/6c2486e082cdeacee0969a359213570aef512a04)]:
+  - @httpx/lru@0.12.0
+
 ## 0.1.1
 
 ### Patch Changes
