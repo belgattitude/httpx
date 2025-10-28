@@ -13,6 +13,7 @@ const npmPreapprovedPackages = [
   'esbuild',
   '@esbuild/*',
   'hono',
+  'immer'
 ];
 
 module.exports = defineConfig({

@@ -2,6 +2,7 @@ import isPlainObj from 'is-plain-obj';
 import { isPlainObject as reduxIsPlainObject } from 'redux';
 
 import { isPlainObject } from '../is-plain-object';
+import { immerIsPlainObject } from './comparison/immer-is-plain-object';
 
 const isNodeLike = !('window' in globalThis);
 const isCloudflareWorker = 'caches' in globalThis;
@@ -162,6 +163,28 @@ describe('isPlainObject', () => {
               (mod) => mod.runInNewContext
             );
             expect(reduxIsPlainObject(runInNewContext('({})'))).toBe(true);
+            const sandbox = { fromAnotherRealm: false };
+            runInNewContext('fromAnotherRealm = {}', sandbox);
+            expect(isPlainObject(sandbox.fromAnotherRealm)).toBe(true);
+          }
+        );
+      });
+
+      describe('Compatibility with immer/isPlainObject', async () => {
+        it.skip.each(cases)(
+          'compat when "%s" is given, should return %s',
+          (v, _expected) => {
+            expect(immerIsPlainObject(v)).toBe(isPlainObject(v));
+          }
+        );
+        it.skipIf(!isNodeLike)(
+          'should support cross-realms - node:runInNewContext',
+          async () => {
+            // eslint-disable-next-line import-x/no-nodejs-modules
+            const runInNewContext = await import('node:vm').then(
+              (mod) => mod.runInNewContext
+            );
+            expect(immerIsPlainObject(runInNewContext('({})'))).toBe(true);
             const sandbox = { fromAnotherRealm: false };
             runInNewContext('fromAnotherRealm = {}', sandbox);
             expect(isPlainObject(sandbox.fromAnotherRealm)).toBe(true);
