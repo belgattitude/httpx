@@ -1,6 +1,7 @@
 import { bench, describe } from 'vitest';
 
 import { devDependencies } from '../package.json' with { type: 'json' };
+import { immerIsPlainObject } from '../src/__tests__/comparison/immer-is-plain-object';
 
 const versions = devDependencies;
 
@@ -107,6 +108,12 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
       }
     }
   );
+
+  bench(`"immer/is-plain-object":"4.2.0": 'isPlainObject(v)'`, () => {
+    for (const value of realLifeScenarios) {
+      immerIsPlainObject(value);
+    }
+  });
 
   bench(`lodash-es:"${versions['lodash-es']}": '_.isPlainObject(v)'`, () => {
     for (const value of realLifeScenarios) {
