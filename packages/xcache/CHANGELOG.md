@@ -1,5 +1,29 @@
 # @httpx/xcache
 
+## 0.4.5
+
+### Patch Changes
+
+- [#2632](https://github.com/belgattitude/httpx/pull/2632) [`087482a`](https://github.com/belgattitude/httpx/commit/087482a0c7d29441d40e1c044717299ccb8a0653) Thanks [@belgattitude](https://github.com/belgattitude)! - Update minimum peer-deps for devalue and superjson to latest. They bring fixes and some
+  speedup.
+
+  ```json
+  {
+    "peerDependencies": {
+      "devalue": "^5.4.2",
+      "superjson": "^2.2.5"
+    },
+    "peerDependenciesMeta": {
+      "devalue": {
+        "optional": true
+      },
+      "superjson": {
+        "optional": true
+      }
+    }
+  }
+  ```
+
 ## 0.4.4
 
 ### Patch Changes
