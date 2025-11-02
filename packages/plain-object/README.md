@@ -31,7 +31,7 @@ $ pnpm add @httpx/plain-object
 - 🦄&nbsp; Convenience [PlainObject](#plainobject-type) typescript typings.
 - 🚀&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
 - 📐&nbsp; Lightweight (starts at [~80B](#bundle-size)) 
-- 🛡️&nbsp; Tested on [node 20-24, browser, cloudflare workers and runtime/edge](#compatibility).
+- 🛡️&nbsp; Tested on [node 20-25, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🙏&nbsp; Works cross-realms (node:vm runInNewContext,...)
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
@@ -193,28 +193,30 @@ someFn(value)
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
- RUN  v3.0.4 /home/sebastien/github/httpx/packages/plain-object
+ RUN  v3.2.4 /home/sebastien/github/httpx/packages/plain-object
 
 
- ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 5684ms
-     name                                                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · "@httpx/plain-object": `isPlainObject(v)`        1,832,016.65  0.0004  0.4702  0.0005  0.0005  0.0009  0.0011  0.0018  ±0.49%   916009   fastest
-   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'          1,565,569.05  0.0005  0.5879  0.0006  0.0006  0.0014  0.0015  0.0018  ±0.53%   782785
-   · "@sindresorhus/is":"7.0.1": 'is.plainObject(v)'    944,124.29  0.0008  0.5417  0.0011  0.0010  0.0017  0.0023  0.0032  ±0.38%   472063
-   · "es-toolkit":"1.31.0": 'isPlainObject(v)'        1,432,993.92  0.0005  0.4105  0.0007  0.0007  0.0012  0.0016  0.0028  ±0.56%   716497
-   · "redux":"5.0.1": 'isPlainObject(v)'                651,167.40  0.0012  0.7868  0.0015  0.0015  0.0021  0.0028  0.0071  ±0.55%   325584
-   · "is-plain-object":"5.0.0": 'isPlainObject(v)'      828,601.23  0.0010  0.7233  0.0012  0.0012  0.0022  0.0028  0.0106  ±0.68%   414301
-   · lodash-es:"4.17.21": '_.isPlainObject(v)'           23,543.74  0.0332  0.6199  0.0425  0.0399  0.1037  0.1168  0.2867  ±0.80%    11772   slowest
+ ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 6594ms
+     name                                                         hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · "@httpx/plain-object": `isPlainObject(v)`            932,629.62  0.0008  0.7244  0.0011  0.0010  0.0019  0.0021  0.0103  ±0.55%   466316
+   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'              891,373.92  0.0009  1.0045  0.0011  0.0010  0.0019  0.0022  0.0149  ±1.00%   445687
+   · "@sindresorhus/is":"7.1.0": 'is.plainObject(v)'      343,401.88  0.0022  1.1724  0.0029  0.0024  0.0052  0.0079  0.0489  ±1.50%   171706
+   · "es-toolkit":"1.41.0": 'isPlainObject(v)'            776,704.94  0.0010  0.9174  0.0013  0.0011  0.0022  0.0024  0.0242  ±1.03%   388353
+   · "redux":"5.0.1": 'isPlainObject(v)'                  316,795.75  0.0024  0.7996  0.0032  0.0029  0.0053  0.0084  0.0370  ±0.91%   158461
+   · "is-plain-object":"5.0.0": 'isPlainObject(v)'        374,471.38  0.0021  1.8234  0.0027  0.0027  0.0056  0.0061  0.0272  ±1.00%   187236
+   · "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'  310,784.72  0.0026  0.4656  0.0032  0.0033  0.0069  0.0081  0.0267  ±0.51%   155393
+   · lodash-es:"4.17.21": '_.isPlainObject(v)'             12,787.05  0.0662  1.5537  0.0782  0.0766  0.1903  0.2622  0.5214  ±1.13%     6394
+
+ BENCH  Summary
                                                                                                                                                     
- BENCH  Summary                                                                                                                                     
-                                                                                                                                                    
-  "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values               
-    1.17x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'                                                                                       
-    1.28x faster than "es-toolkit":"1.31.0": 'isPlainObject(v)'                                                                                     
-    1.94x faster than "@sindresorhus/is":"7.0.1": 'is.plainObject(v)'                                                                               
-    2.21x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
-    2.81x faster than "redux":"5.0.1": 'isPlainObject(v)'
-    77.81x faster than lodash-es:"4.17.21": '_.isPlainObject(v)'
+  "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
+    1.05x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
+    1.20x faster than "es-toolkit":"1.41.0": 'isPlainObject(v)'
+    2.49x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
+    2.72x faster than "@sindresorhus/is":"7.1.0": 'is.plainObject(v)'
+    2.94x faster than "redux":"5.0.1": 'isPlainObject(v)'
+    3.00x faster than "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'
+    72.94x faster than lodash-es:"4.17.21": '_.isPlainObject(v)'
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/bench/comparative.bench.ts) for details.
@@ -234,16 +236,16 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 ## Compatibility
 
-| Level      | CI | Description                                                                                                                                                                                                                                                                                                                                                                                       |
-|------------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node       | ✅  | CI for 20.x, 22.x & 24.x.                                                                                                                                                                                                                                                                                                                                                                         |
-| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                     |
-| Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.browserslistrc) |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                                | 
-| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                                  |
-| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                     |
-| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                      |
-| Performance| ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                              |
+| Level        | CI  | Description                                                                                                                                                                                                                                                                                                                                                                                       |
+|--------------|-----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
+| Browser      | ✅   | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                     |
+| Browserslist | ✅   | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.browserslistrc) |
+| Edge         | ✅   | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                                | 
+| Cloudflare   | ✅   | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                                  |
+| Typescript   | ✅   | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                     |
+| ES2022       | ✅   | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                      |
+| Performance  | ✅   | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                              |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 

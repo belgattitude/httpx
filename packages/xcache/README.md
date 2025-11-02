@@ -94,72 +94,73 @@ const { data } = await xMemCache.runAsync({
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
-  RUN  v3.2.4 /home/sebastien/github/httpx/packages/xcache
+ RUN  v3.2.4 /home/sebastien/github/httpx/packages/xcache
 
 
- ✓ bench/x-mem-cache.bench.ts > XMemCache benchmarks with 46.7 MB 47346ms
-     name                                   hz       min       max      mean       p75       p99      p995      p999     rme  samples
-   · original function                  2.4309    401.11    434.16    411.37    416.01    434.16    434.16    434.16  ±1.69%       10
-   · with cache (just lru)        7,275,952.06    0.0001    3.0182    0.0001    0.0001    0.0003    0.0003    0.0006  ±1.10%  5820762
-   · with cache                     385,532.40    0.0015    2.9556    0.0026    0.0023    0.0069    0.0077    0.0266  ±2.55%   308790
-   · cache with json + gzip             1.4160    637.00    767.52    706.22    736.02    767.52    767.52    767.52  ±4.55%       10
-   · cache with superjson + gzip        0.9788    930.77  1,101.96  1,021.63  1,040.75  1,101.96  1,101.96  1,101.96  ±3.28%       10
-   · cache with devalue + gzip          0.7232  1,282.23  1,581.08  1,382.81  1,388.98  1,581.08  1,581.08  1,581.08  ±5.04%       10
+ ✓ bench/x-mem-cache.bench.ts > XMemCache benchmarks with 46.7 MB 74628ms
+     name                                   hz       min       max      mean       p75       p99      p995      p999      rme  samples
+   · original function                  2.4339    400.94    434.29    410.86    418.86    434.29    434.29    434.29   ±1.87%       10
+   · with cache (just lru)        3,054,089.19    0.0002   14.4000    0.0003    0.0003    0.0007    0.0022    0.0040   ±5.04%  2443272
+   · with cache                     411,941.25    0.0017    3.7591    0.0024    0.0020    0.0057    0.0074    0.0404   ±2.38%   329553
+   · cache with json + gzip             0.6551  1,182.69  1,849.31  1,526.47  1,706.09  1,849.31  1,849.31  1,849.31   ±9.93%       10
+   · cache with superjson + gzip        0.7255  1,139.75  1,791.56  1,378.28  1,492.88  1,791.56  1,791.56  1,791.56  ±11.51%       10
+   · cache with devalue + gzip          0.3867  2,294.54  2,802.35  2,586.15  2,742.74  2,802.35  2,802.35  2,802.35   ±4.91%       10
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with json 1944ms
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with json 1960ms
      name                                           hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · json.serialize(4.52 MB) - native types    79.8831   9.7263  27.4216  12.5183  12.3058  27.4216  27.4216  27.4216   ±6.80%       64
-   · json.deserialize(4.52 MB) - native types  38.3516  17.4318  45.3487  26.0745  30.5054  45.3487  45.3487  45.3487  ±10.52%       31
+   · json.serialize(4.52 MB) - native types    42.7513  17.8273  61.9698  23.3911  25.4860  61.9698  61.9698  61.9698  ±11.51%       35
+   · json.deserialize(4.52 MB) - native types  54.3614  15.8986  24.7563  18.3954  19.4053  24.7563  24.7563  24.7563   ±3.89%       44
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with devalue 3176ms
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with devalue 3856ms
      name                                              hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · devalue.serialize(5.66 MB) - native types     6.0316   125.29   216.31   165.79   187.40   216.31   216.31   216.31  ±13.14%       10
-   · devalue.deserialize(5.66 MB) - native types  29.4361  27.9085  49.1535  33.9719  35.2153  49.1535  49.1535  49.1535   ±6.83%       24
+   · devalue.serialize(5.66 MB) - native types     4.5549   181.51   310.60   219.54   229.88   310.60   310.60   310.60  ±12.22%       10
+   · devalue.deserialize(5.66 MB) - native types  25.8784  33.8357  60.3575  38.6422  38.0392  60.3575  60.3575  60.3575   ±7.44%       21
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with superjson 3410ms
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with superjson 4017ms
      name                                                hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · superjson.serialize(4.52 MB) - native types     5.5025   132.11   280.01   181.74   191.92   280.01   280.01   280.01  ±16.31%       10
-   · superjson.deserialize(4.52 MB) - native types  15.9297  44.7352  89.8279  62.7758  70.2771  89.8279  89.8279  89.8279  ±12.73%       13
+   · superjson.serialize(4.52 MB) - native types     4.3337   191.75   299.23   230.75   235.30   299.23   299.23   299.23  ±11.34%       10
+   · superjson.deserialize(4.52 MB) - native types  59.9753  15.3860  21.7358  16.6735  17.1168  21.7358  21.7358  21.7358   ±2.47%       48
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with devalue 6238ms
-     name                                               hz      min     max    mean     p75     p99    p995    p999      rme  samples
-   · devalue.serialize(11.6 MB) - extended types    2.9080   289.14  471.58  343.88  368.45  471.58  471.58  471.58  ±11.67%       10
-   · devalue.deserialize(11.6 MB) - extended types  8.4212  93.5613  148.45  118.75  126.28  148.45  148.45  148.45   ±9.96%       10
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with devalue 7899ms
+     name                                               hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · devalue.serialize(11.6 MB) - extended types    2.1285  411.59  618.03  469.81  492.86  618.03  618.03  618.03  ±9.40%       10
+   · devalue.deserialize(11.6 MB) - extended types  7.5291  111.54  168.71  132.82  144.80  168.71  168.71  168.71  ±9.55%       10
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with superjson 24667ms
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with superjson 31316ms
      name                                                 hz       min       max      mean       p75       p99      p995      p999     rme  samples
-   · superjson.serialize(16.8 MB) - extended types    0.8085  1,032.67  1,303.75  1,236.78  1,291.99  1,303.75  1,303.75  1,303.75  ±5.03%       10
-   · superjson.deserialize(16.8 MB) - extended types  1.6891    491.75    661.74    592.02    647.18    661.74    661.74    661.74  ±7.30%       10
+   · superjson.serialize(16.8 MB) - extended types    0.5910  1,467.09  1,987.69  1,692.02  1,759.17  1,987.69  1,987.69  1,987.69  ±7.26%       10
+   · superjson.deserialize(16.8 MB) - extended types  1.4491    618.85    872.47    690.09    714.58    872.47    872.47    872.47  ±8.01%       10
 
- ✓ bench/cache-key.bench.ts > genCacheKey benches 984ms
+ ✓ bench/cache-key.bench.ts > genCacheKey benches 1014ms
      name                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · original function  203,058.29  0.0030  2.0647  0.0049  0.0047  0.0109  0.0147  0.0399  ±1.71%   162447
+   · original function  155,643.54  0.0047  5.8940  0.0064  0.0064  0.0170  0.0275  0.1160  ±1.96%   124516
 
  BENCH  Summary
 
   original function - bench/cache-key.bench.ts > genCacheKey benches
 
-  json.serialize(4.52 MB) - native types - bench/serializer.bench.ts > Serializer benchmarks with json
-    2.08x faster than json.deserialize(4.52 MB) - native types
+  json.deserialize(4.52 MB) - native types - bench/serializer.bench.ts > Serializer benchmarks with json
+    1.27x faster than json.serialize(4.52 MB) - native types
 
   devalue.deserialize(5.66 MB) - native types - bench/serializer.bench.ts > Serializer benchmarks with devalue
-    4.88x faster than devalue.serialize(5.66 MB) - native types
+    5.68x faster than devalue.serialize(5.66 MB) - native types
 
   superjson.deserialize(4.52 MB) - native types - bench/serializer.bench.ts > Serializer benchmarks with superjson
-    2.90x faster than superjson.serialize(4.52 MB) - native types
+    13.84x faster than superjson.serialize(4.52 MB) - native types
 
   devalue.deserialize(11.6 MB) - extended types - bench/serializer.bench.ts > Serializer benchmarks with devalue
-    2.90x faster than devalue.serialize(11.6 MB) - extended types
+    3.54x faster than devalue.serialize(11.6 MB) - extended types
 
   superjson.deserialize(16.8 MB) - extended types - bench/serializer.bench.ts > Serializer benchmarks with superjson
-    2.09x faster than superjson.serialize(16.8 MB) - extended types
+    2.45x faster than superjson.serialize(16.8 MB) - extended types
 
   with cache (just lru) - bench/x-mem-cache.bench.ts > XMemCache benchmarks with 46.7 MB
-    18.87x faster than with cache
-    2993138.81x faster than original function
-    5138402.11x faster than cache with json + gzip
-    7433294.53x faster than cache with superjson + gzip
-    10061269.63x faster than cache with devalue + gzip
+    7.41x faster than with cache
+    1254817.36x faster than original function
+    4209397.40x faster than cache with superjson + gzip
+    4661963.60x faster than cache with json + gzip
+    7898344.77x faster than cache with devalue + gzip
+
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/xcache/bench) for details.
@@ -177,8 +178,8 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 ## Compatibility
 
 | Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                                 |
-|--------------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅  | CI for 20.x, 22.x & 24.x.                                                                                                                                                                                                                                                                                                                                                                   |
+|--------------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
 | Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                               |
 | Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/xcache/.browserslistrc) |
 | Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                          | 
