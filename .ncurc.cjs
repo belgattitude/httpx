@@ -10,10 +10,11 @@ const npmPreapprovedPackages = [
   'hono',
   'vite',
   '@vitejs/*',
+  "vitest",
+  "@vitest/*",
   'esbuild',
   '@esbuild/*',
-  'hono',
-  'immer'
+  'hono'
 ];
 
 module.exports = defineConfig({

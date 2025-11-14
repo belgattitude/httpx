@@ -5,7 +5,7 @@ const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
 export default defineConfig({
   esbuild: {
-    target: ['node18'],
+    target: ['node20'],
   },
   plugins: [tsconfigPaths()],
   cacheDir: '../../.cache/vite/prisma-exception',
@@ -13,7 +13,6 @@ export default defineConfig({
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
     coverage: {
-      all: true,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       provider: 'istanbul',
       reporter: ['text', 'json', 'clover'],
@@ -22,17 +21,6 @@ export default defineConfig({
       enabled: false,
     },
     pool: 'forks',
-    poolOptions: {
-      vmThreads: {
-        // useAtomics: true,
-      },
-      threads: {
-        // minThreads: 1,
-        // maxThreads: 16,
-        useAtomics: true, // perf+
-        isolate: false, // perf+++
-      },
-    },
     environment: 'node',
     exclude: [
       '**/node_modules/**',

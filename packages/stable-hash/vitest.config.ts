@@ -1,4 +1,5 @@
 import codspeedPlugin from '@codspeed/vitest-plugin';
+import { playwright } from '@vitest/browser-playwright';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
@@ -9,13 +10,17 @@ const cspeed = isCodeSpeedEnabled ? codspeedPlugin() : undefined;
 
 export default defineConfig({
   esbuild: {
-    target: ['node18'],
+    target: ['node20'],
   },
   plugins: [tsconfigPaths(), ...[cspeed].filter(Boolean)],
   cacheDir: '../../.cache/vite/stable-hash',
   test: {
     browser: {
-      provider: 'playwright', // or 'webdriverio'
+      provider: playwright({
+        launchOptions: {
+          slowMo: 100,
+        },
+      }),
       enabled: false,
       // at least one instance is required
       instances: [{ browser: 'chromium' }],
@@ -23,7 +28,6 @@ export default defineConfig({
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
     coverage: {
-      all: true,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       provider: 'istanbul',
       reporter: ['text', 'json', 'clover'],
@@ -36,17 +40,6 @@ export default defineConfig({
       outputJson: './bench/output/benchmark-results.json',
     },
     pool: 'forks',
-    poolOptions: {
-      vmThreads: {
-        // useAtomics: true,
-      },
-      threads: {
-        // minThreads: 1,
-        // maxThreads: 16,
-        useAtomics: true, // perf+
-        isolate: false, // perf+++
-      },
-    },
     environment: 'node',
     exclude: [
       '**/node_modules/**',

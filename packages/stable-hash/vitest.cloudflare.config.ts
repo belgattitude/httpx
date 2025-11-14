@@ -5,7 +5,7 @@ const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
 export default defineWorkersConfig({
   esbuild: {
-    target: ['node18'],
+    target: ['node20'],
   },
   plugins: [tsconfigPaths()],
   cacheDir: '../../.cache/vite/httpx-stable-hash',
