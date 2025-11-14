@@ -14,7 +14,7 @@ const npmPreapprovedPackages = [
   "@vitest/*",
   'esbuild',
   '@esbuild/*',
-  'hono'
+  'tsup',
 ];
 
 module.exports = defineConfig({
