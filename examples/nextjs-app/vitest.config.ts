@@ -20,7 +20,7 @@ export default defineConfig({
     globals: true,
     deps: {
       optimizer: {
-        web: {
+        client: {
           enabled: true,
         },
         ssr: { enabled: true },
