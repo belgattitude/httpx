@@ -44,7 +44,7 @@ describe('Base64', () => {
   });
 
   describe.each(testRealms)('Compatibility', (realm, encoder) => {
-    describe('With js-base64', () => {
+    describe(`With js-base64 (${realm})`, () => {
       const encoded = jsBase64.encode(string);
       it('encode', () => {
         expect(encoder.encode(string)).toBe(jsBase64.encode(string));
