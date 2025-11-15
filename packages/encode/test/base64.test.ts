@@ -28,21 +28,23 @@ describe('Base64', () => {
   const string = getEncodingTestData().repeat(1000);
   const size = prettyBytes(string.length);
   describe.each(testRealms)('Base64.encode (%s)', (realm, encoder) => {
-    it(`should encode a string of ${size}`, () => {
-      const encoded = encoder.encode(string);
-      expect(encoded).toMatchSnapshot('base64-encoded');
+    it(`should encode a complex string and give expected base64`, () => {
+      const encoded = encoder.encode("H🌸😊🚀🔥/ÄÖé?=:@&$+!#'()~*%/;:<>\\");
+      expect(encoded).toStrictEqual(
+        'SPCfjLjwn5iK8J+agPCflKUvw4TDlsOpPz06QCYkKyEjJygpfiolLzs6PD5c'
+      );
     });
   });
 
   describe.each(testRealms)('Base64.encode (%s)', (realm, encoder) => {
-    it(`should encode a string of ${size}`, () => {
+    it(`should decode and encoded a string of ${size}`, () => {
       const decoded = encoder.decode(encoder.encode(string));
       expect(decoded).toStrictEqual(string);
     });
   });
 
   describe.each(testRealms)('Compatibility', (realm, encoder) => {
-    describe('With js-base64', () => {
+    describe(`With js-base64 (${realm})`, () => {
       const encoded = jsBase64.encode(string);
       it('encode', () => {
         expect(encoder.encode(string)).toBe(jsBase64.encode(string));

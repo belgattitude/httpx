@@ -20,7 +20,7 @@ export default defineConfig({
     globals: true,
     deps: {
       optimizer: {
-        web: {
+        client: {
           enabled: true,
         },
         ssr: { enabled: true },
@@ -32,31 +32,13 @@ export default defineConfig({
     // threads is good, vmThreads is faster (perf++) but comes with possible memory leaks
     // @link https://vitest.dev/config/#vmthreads
     pool: 'forks',
-    poolOptions: {
-      vmThreads: {
-        // useAtomics -> perf+
-        // @link https://vitest.dev/config/#pooloptions-threads-useatomics
-        useAtomics: true,
-      },
-      threads: {
-        // minThreads: 4,
-        // maxThreads: 16,
-        // useAtomics -> perf+
-        // @link https://vitest.dev/config/#pooloptions-threads-useatomics
-        useAtomics: true,
-        // isolate to false makes perf++ but comes with limitations
-        // @link https://vitest.dev/config/#pooloptions-threads-isolate
-        isolate: true,
-      },
-    },
     environment: 'happy-dom',
     passWithNoTests: true,
     // setupFiles: './setup/tests/setupVitest.ts',
-
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'clover'],
-      extension: ['js', 'jsx', 'ts', 'tsx'],
+      include: ['src/**/*.{js,jsx,ts,tsx}'],
+      provider: 'istanbul',
+      reporter: ['text', 'json', 'clover'],
     },
     include: testFiles,
     // you might want to disable it, if you don't have tests that rely on CSS

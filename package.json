@@ -11,7 +11,8 @@
   "scripts": {
     "g:clean": "yarn clean:global-cache && yarn clean:nx && yarn workspaces foreach --all -pv run clean",
     "g:bench": "nx run-many --output-style=static --parallel=1 --target=bench --exclude='examples/**' --exclude='docs'",
-    "g:bench-codspeed": "nx run-many --output-style=static --parallel=1 --target=bench-codspeed --exclude='examples/**' --exclude='docs'",
+    "g:bench-codspeed": "yarn workspaces foreach -tv --worktree --from 'packages/*' run bench-codspeed",
+    "g:bench-codspeed-nx": "nx run-many --output-style=static --parallel=1 --target=bench-codspeed --exclude='examples/**' --exclude='docs'",
     "g:build": "nx run-many --output-style=static --target=build --exclude='examples/**' --exclude='docs'",
     "g:build-release": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build-release",
     "g:build-packages": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build",
@@ -58,7 +59,7 @@
     "packages/*",
     "devtools/*"
   ],
-  "packageManager": "yarn@4.10.3",
+  "packageManager": "yarn@4.11.0",
   "dependenciesMeta": {
     "@swc/core": {
       "built": true
@@ -83,11 +84,21 @@
     "@belgattitude/eslint-config-bases": "8.3.2",
     "@changesets/changelog-github": "0.5.1",
     "@changesets/cli": "2.29.7",
+    "@cloudflare/vitest-pool-workers": "0.10.7",
+    "@codspeed/vitest-plugin": "5.0.1",
     "@commitlint/cli": "20.1.0",
     "@commitlint/config-conventional": "20.0.0",
+    "@edge-runtime/vm": "5.0.0",
+    "@testing-library/dom": "10.4.1",
     "@types/shell-quote": "1.7.5",
-    "@typescript-eslint/eslint-plugin": "8.46.2",
-    "@typescript-eslint/parser": "8.46.2",
+    "@typescript-eslint/eslint-plugin": "8.46.4",
+    "@typescript-eslint/parser": "8.46.4",
+    "@vitest/browser": "4.0.9",
+    "@vitest/browser-playwright": "4.0.9",
+    "@vitest/coverage-istanbul": "4.0.9",
+    "@vitest/runner": "4.0.9",
+    "@vitest/snapshot": "4.0.9",
+    "@vitest/ui": "4.0.9",
     "cross-env": "10.1.0",
     "eslint": "8.57.1",
     "gh-pages": "6.3.0",
@@ -96,20 +107,21 @@
     "lint-staged": "16.2.6",
     "npm-check-updates": "19.1.2",
     "npm-run-all2": "8.0.4",
-    "nx": "22.0.2",
+    "nx": "22.0.3",
     "pkg-pr-new": "0.0.60",
     "playwright": "1.56.1",
     "prettier": "3.6.2",
-    "rimraf": "6.0.1",
+    "rimraf": "6.1.0",
     "shell-quote": "1.8.3",
     "syncpack": "13.0.4",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "4.0.9"
   },
   "engines": {
     "node": ">=20.19"
   },
   "resolutions": {
-    "esbuild": "^0.25.12"
+    "esbuild": "^0.27.0"
   },
   "resolutionsHelp": {
     "esbuild": "To prevent multiple versions"
