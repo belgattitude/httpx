@@ -21,10 +21,10 @@ jobs:
           # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
           fetch-depth: 0
 
-      - name: ⚙️ Use Node.js 24.x
+      - name: ⚙️ Use Node.js 22.x
         uses: actions/setup-node@v6
         with:
-          node-version: '24.x'
+          node-version: '22.x'
           package-manager-cache: false
 
       - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
