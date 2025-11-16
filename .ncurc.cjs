@@ -42,6 +42,6 @@ module.exports = defineConfig({
     'eslint',
     // Till documentation website is upgraded
     'nextra',
-    'nextra-theme-docs',
+    'nextra-theme-docs'
   ],
 });
