@@ -44,9 +44,9 @@ jobs:
 
       - name: 🌠 Run benchmarks
         uses: CodSpeedHQ/action@v4
-        env:
-          NODE_OPTIONS: '--interpreted-frames-native-stack --expose-gc --max-old-space-size=4096'
         with:
           run: yarn g:bench-codspeed
           mode: "instrumentation"
+          cache-instruments: true
+          instruments-cache-dir: ~/.cache/codspeed-action
           token: ${{ secrets.CODSPEED_TOKEN }}
