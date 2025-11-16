@@ -12,9 +12,6 @@ on:
 jobs:
   benchmarks:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 24.x ]
     env:
       NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
     steps:
@@ -24,10 +21,10 @@ jobs:
           # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
           fetch-depth: 0
 
-      - name: ⚙️ Use Node.js ${{ matrix.node-version }}
+      - name: ⚙️ Use Node.js 24.x
         uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '24.x'
           package-manager-cache: false
 
       - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
@@ -50,4 +47,6 @@ jobs:
         with:
           run: yarn g:bench-codspeed
           mode: "instrumentation"
+          cache-instruments: true
+          instruments-cache-dir: ~/.cache/codspeed-action
           token: ${{ secrets.CODSPEED_TOKEN }}

@@ -10,10 +10,11 @@ const npmPreapprovedPackages = [
   'hono',
   'vite',
   '@vitejs/*',
+  "vitest",
+  "@vitest/*",
   'esbuild',
   '@esbuild/*',
-  'hono',
-  'immer'
+  'tsup',
 ];
 
 module.exports = defineConfig({
@@ -41,6 +42,6 @@ module.exports = defineConfig({
     'eslint',
     // Till documentation website is upgraded
     'nextra',
-    'nextra-theme-docs',
+    'nextra-theme-docs'
   ],
 });

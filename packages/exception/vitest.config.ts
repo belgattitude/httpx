@@ -1,3 +1,4 @@
+import { playwright } from '@vitest/browser-playwright';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
@@ -5,13 +6,17 @@ const testFiles = ['./src/**/*.test.{js,ts}', './test/**/*.test.{js,ts}'];
 
 export default defineConfig({
   esbuild: {
-    target: ['node18'],
+    target: ['node20'],
   },
   plugins: [tsconfigPaths()],
   cacheDir: '../../.cache/vite/httpx-exception',
   test: {
     browser: {
-      provider: 'playwright', // or 'webdriverio'
+      provider: playwright({
+        launchOptions: {
+          slowMo: 100,
+        },
+      }),
       enabled: false,
       // at least one instance is required
       instances: [{ browser: 'chromium' }],
@@ -19,14 +24,13 @@ export default defineConfig({
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
     coverage: {
-      all: true,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       provider: 'istanbul',
       reporter: ['text', 'json', 'clover'],
     },
     deps: {
       optimizer: {
-        web: {
+        client: {
           enabled: true,
         },
         ssr: { enabled: true },
@@ -38,21 +42,6 @@ export default defineConfig({
     // threads is good, vmThreads is faster (perf++) but comes with limitations
     // @link https://vitest.dev/config/#vmthreads
     pool: 'forks',
-    poolOptions: {
-      vmThreads: {
-        // useAtomics -> perf+
-        // @link https://vitest.dev/config/#pooloptions-threads-useatomics
-        useAtomics: true,
-      },
-      threads: {
-        // useAtomics -> perf+
-        // @link https://vitest.dev/config/#pooloptions-threads-useatomics
-        useAtomics: true,
-        // isolate to false makes perf++ but comes with limitations
-        // @link https://vitest.dev/config/#pooloptions-threads-isolate
-        isolate: true,
-      },
-    },
     environment: 'node',
     exclude: [
       '**/node_modules/**',
