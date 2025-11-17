@@ -57,6 +57,7 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/json-api.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-bun": "bun --bun run vitest run",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-browser": "vitest run --browser",

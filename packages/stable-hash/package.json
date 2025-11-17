@@ -60,6 +60,7 @@
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
+    "test-unit-bun": "bun --bun run vitest run",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-browser": "vitest run --browser",
     "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
