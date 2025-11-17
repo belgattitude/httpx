@@ -22,6 +22,7 @@
     "g:test-unit": "nx run-many --output-style=static --target=test-unit --exclude='examples/**' --exclude='docs'",
     "g:test-unit-coverage": "nx run-many --output-style=static --target=test-unit-coverage --exclude='examples/**' --exclude='docs'",
     "g:test-unit-edge": "nx run-many --output-style=static --target=test-unit-edge --exclude='examples/**' --exclude='docs'",
+    "g:test-unit-bun": "nx run-many --output-style=static --target=test-unit-bun --exclude='examples/**' --exclude='docs'",
     "g:test-unit-browser": "nx run-many --output-style=static --target=test-unit-browser --exclude='examples/**' --exclude='docs'",
     "g:test-unit-cloudflare": "nx run-many --output-style=static --target=test-unit-cloudflare --exclude='examples/**' --exclude='docs'",
     "g:lint": "nx run-many --output-style=static --target=lint",
