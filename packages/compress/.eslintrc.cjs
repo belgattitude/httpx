@@ -49,6 +49,12 @@ module.exports = {
         'import-x/no-self-import': 'error',
       },
     },
+    {
+      files: ['src/**/*.bun.ts'],
+      rules: {
+        'import-x/no-nodejs-modules': 'off',
+      },
+    },
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {

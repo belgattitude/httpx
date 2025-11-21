@@ -27,10 +27,12 @@
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
+        "bun": "./dist/index.bun.mjs",
         "default": "./dist/index.mjs"
       },
       "require": {
         "types": "./dist/index.d.cts",
+        "bun": "./dist/index.bun.cjs",
         "default": "./dist/index.cjs"
       }
     },
@@ -44,6 +46,7 @@
     "build": "run clean && yarn run tsup",
     "build-release": "run build",
     "bench": "vitest bench --run",
+    "bench-bun": "bun --bun run vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
     "docgen": "run-s docgen-typedoc",
@@ -74,7 +77,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@belgattitude/eslint-config-bases": "8.3.2",
+    "@belgattitude/eslint-config-bases": "8.4.0",
     "@httpx/devtools-vitest": "workspace:^",
     "@sindresorhus/is": "7.1.1",
     "@size-limit/file": "11.2.0",
@@ -95,7 +98,7 @@
     "typedoc": "0.28.14",
     "typedoc-plugin-markdown": "4.9.0",
     "typescript": "5.9.3",
-    "vitest": "4.0.9",
+    "vitest": "4.0.12",
     "webpack": "5.102.1"
   },
   "engines": {

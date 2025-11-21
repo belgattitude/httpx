@@ -1,3 +1,5 @@
+import '../src/bun/compression-stream-polyfill.bun';
+
 import { vitestBenchOptionsConfig } from '@httpx/devtools-vitest';
 
 import { Compressor, Decompressor } from '../src';

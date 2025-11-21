@@ -1,6 +1,10 @@
 # @httpx/compress
 
-Simple compression helpers that works on node, browsers, edge and Cloudflare workers.
+Lightweight compression helpers based on widely available [Compression Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API).
+Works in node, bun, edge, cloudflare and browsers. Provides support for string encoding (base64 and base64-urlsafe).
+
+> Note that bun support is polyfilled till Compression Streams API is natively supported.
+
 [![npm](https://img.shields.io/npm/v/@httpx/compress?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/compress)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/compress/CHANGELOG.md)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-compress-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fcompress)
@@ -23,9 +27,9 @@ $ pnpm add @httpx/compress
 
 - 👉&nbsp; Compress and decompress strings or Uint8Array.
 - 🦄&nbsp; Support base64 encoding for strings (and base64-urlsafe).
-- 📐&nbsp; Lightweight (starts at [~600B](#bundle-size))
-- 🛡️&nbsp; Tested on [node 20-24, browser, cloudflare workers and runtime/edge](#compatibility).
-- 🙏&nbsp; Works cross-realms (browser, edge, node, cloudflare...)
+- 📐&nbsp; Lightweight (starts at [~570B](#bundle-size))
+- 🛡️&nbsp; Tested on [node 20-25, browser, bun, cloudflare workers and runtime/edge](#compatibility).
+- 🙏&nbsp; Works cross-realms (workers, browser, bun, edge, node, cloudflare...)
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
@@ -38,7 +42,9 @@ $ pnpm add @httpx/compress
 import { Compressor, Decompressor } from '@httpx/compress';
 
 const compressor = new Compressor('gzip');
-const gzippedStr = await compressor.toEncodedString('Hello, World! 🦆');
+const gzippedStr = await compressor.toEncodedString('Hello, World! 🦆', {
+  encoding: 'base64', // optional, 'base64' by default
+});
 
 const decompressor = new Decompressor('gzip');
 const originalStr = await decompressor.fromEncodedString(gzippedStr);
@@ -84,8 +90,8 @@ import { Compressor } from '@httpx/compress';
 const compressor = new Compressor('gzip'); // or 'deflate'
 const longString = 'Hello, World! 🦆'.repeat(500_000);
 const compressedString = await compressor.toEncodedString(longString, {
-  // Option are optional, use base64 by default.
-  // Supported values: 'base64', 'base64_urlsafe'
+  // Optional.
+  // Supported values: 'base64' (default), 'base64_urlsafe'
   encoding: 'base64',
 });
 ```
@@ -117,47 +123,45 @@ const decompressedString = await decompressor.fromEncodedString(compressedString
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
-  RUN  v3.2.4 /home/sebastien/github/httpx/packages/compress
+ RUN  v4.0.10 /home/sebastien/github/httpx/packages/compress
 
+ ✓ bench/compress-string.bench.ts > Compressor 2909ms
+     name                                                                               hz      min      max     mean      p75      p99     p995     p999     rme  samples
+   · Compressor('gzip').toEncodedString/base64 (original size: 10 MB)              23.7417  36.5044  50.2012  42.1200  45.6970  50.2012  50.2012  50.2012  ±6.49%       13
+   · Compressor('gzip').toEncodedString/base64_urlsafe (original size: 10 MB)      25.0138  36.3645  48.4145  39.9780  42.7624  48.4145  48.4145  48.4145  ±5.97%       13
+   · Compressor('deflate').toEncodedString/base64 (original size: 10 MB)           25.7052  32.4704  44.4953  38.9026  41.5483  44.4953  44.4953  44.4953  ±5.58%       13                                                                                                                              
+   · Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB)  25.7872  36.2869  43.8019  38.7790  39.3598  43.8019  43.8019  43.8019  ±3.70%       13                                                                                                                              
 
- ✓ bench/compress-string.bench.ts > Compressor 3150ms
-     name                                                                               hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · Compressor('gzip').toEncodedString/base64 (original size: 10 MB)              21.2399  38.3533  78.4293  47.0811  45.9620  78.4293  78.4293  78.4293  ±19.64%       11
-   · Compressor('gzip').toEncodedString/base64_urlsafe (original size: 10 MB)      23.0785  38.2649  53.4220  43.3304  44.0882  53.4220  53.4220  53.4220   ±6.32%       12
-   · Compressor('deflate').toEncodedString/base64 (original size: 10 MB)           23.8324  37.0958  48.9180  41.9598  46.6411  48.9180  48.9180  48.9180   ±6.87%       12                                                                                                                           
-   · Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB)  18.0114  38.4635  84.1481  55.5204  66.7628  84.1481  84.1481  84.1481  ±21.54%       10                                                                                                                           
-
- ✓ bench/decompress-string.bench.ts > Decompressor 1919ms
+ ✓ bench/decompress-string.bench.ts > Decompressor 1770ms
      name                                                                                      hz      min      max     mean      p75      p99     p995     p999     rme  samples
-   · Decompressor('gzip').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)     13.0794  70.9455  80.8573  76.4563  79.1825  80.8573  80.8573  80.8573  ±4.06%        7
-   · Decompressor('deflate').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)  12.6271  73.4368  90.0020  79.1951  83.1411  90.0020  90.0020  90.0020  ±6.66%        7
+   · Decompressor('gzip').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)     13.8849  63.9173  77.2744  72.0209  75.4232  77.2744  77.2744  77.2744  ±5.92%        7
+   · Decompressor('deflate').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)  15.9822  58.0578  68.1414  62.5697  63.3899  68.1414  68.1414  68.1414  ±4.40%        8
 
- ✓ bench/decompress-uint8array.bench.ts > Decompressor 1467ms
+ ✓ bench/decompress-uint8array.bench.ts > Decompressor 1424ms
      name                                                                                   hz      min      max     mean      p75      p99     p995     p999     rme  samples
-   · Decompressor('gzip').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)     24.3597  37.6331  45.2544  41.0514  41.6229  45.2544  45.2544  45.2544  ±3.01%       13
-   · Decompressor('deflate').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)  25.9400  35.3180  42.2106  38.5505  40.7133  42.2106  42.2106  42.2106  ±3.59%       13
+   · Decompressor('gzip').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)     25.3188  34.7045  44.3954  39.4964  41.7273  44.3954  44.3954  44.3954  ±4.61%       13
+   · Decompressor('deflate').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)  27.8963  32.0022  40.0406  35.8470  37.3682  40.0406  40.0406  40.0406  ±3.88%       14
 
- ✓ bench/compress-uint8array.bench.ts > Compressor 1575ms
-     name                                                            hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · Compressor('gzip').toUint8Array (original size: 10 MB)     18.5683  40.2740   104.09  53.8551  57.2336   104.09   104.09   104.09  ±25.91%       10
-   · Compressor('deflate').toUint8Array (original size: 10 MB)  23.5681  37.1711  54.7645  42.4302  42.4824  54.7645  54.7645  54.7645   ±9.08%       12
+ ✓ bench/compress-uint8array.bench.ts > Compressor 1453ms
+     name                                                            hz      min      max     mean      p75      p99     p995     p999     rme  samples
+   · Compressor('gzip').toUint8Array (original size: 10 MB)     25.4082  33.8772  45.0735  39.3574  41.9890  45.0735  45.0735  45.0735  ±5.10%       13
+   · Compressor('deflate').toUint8Array (original size: 10 MB)  26.7354  33.5035  42.0188  37.4037  40.4936  42.0188  42.0188  42.0188  ±4.43%       14
 
  BENCH  Summary
-                                                                                                                                                   
-  Compressor('deflate').toEncodedString/base64 (original size: 10 MB) - bench/compress-string.bench.ts > Compressor
+                                                                                                                                                    
+  Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB) - bench/compress-string.bench.ts > Compressor
+    1.00x faster than Compressor('deflate').toEncodedString/base64 (original size: 10 MB)
     1.03x faster than Compressor('gzip').toEncodedString/base64_urlsafe (original size: 10 MB)
-    1.12x faster than Compressor('gzip').toEncodedString/base64 (original size: 10 MB)
-    1.32x faster than Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB)
+    1.09x faster than Compressor('gzip').toEncodedString/base64 (original size: 10 MB)
 
   Compressor('deflate').toUint8Array (original size: 10 MB) - bench/compress-uint8array.bench.ts > Compressor
-    1.27x faster than Compressor('gzip').toUint8Array (original size: 10 MB)
+    1.05x faster than Compressor('gzip').toUint8Array (original size: 10 MB)
 
-  Decompressor('gzip').fromEncodedString (compressed size: 40.5 kB / total: 10 MB) - bench/decompress-string.bench.ts > Decompressor
-    1.04x faster than Decompressor('deflate').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)
+  Decompressor('deflate').fromEncodedString (compressed size: 40.5 kB / total: 10 MB) - bench/decompress-string.bench.ts > Decompressor
+    1.15x faster than Decompressor('gzip').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)
 
   Decompressor('deflate').fromUint8Array (compressed size: 30.4 kB / total: 10 MB) - bench/decompress-uint8array.bench.ts > Decompressor
-    1.06x faster than Decompressor('gzip').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)
-
+    1.10x faster than Decompressor('gzip').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/compress/bench/comparative.bench.ts) for details.
@@ -179,9 +183,10 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                                   |
 |--------------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
+| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                               |
 | Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                 |
 | Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/compress/.browserslistrc) |
+| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.2)                                                                                                                                                                                                                                                                                                                                              |
 | Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                            | 
 | Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                              |
 | Typescript   | ✅  | TS 5.4 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                 |
