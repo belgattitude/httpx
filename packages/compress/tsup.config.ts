@@ -6,7 +6,7 @@ export default defineConfig((options) => {
     cjsInterop: false,
     clean: true,
     dts: true,
-    entry: ['src/index.ts', 'src/index.bun.ts'],
+    entry: ['src/index.ts'],
     format: ['esm', 'cjs'],
     minify: !options.watch,
     minifyIdentifiers: true,

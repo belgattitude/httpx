@@ -1,5 +1,3 @@
-import './bun/compression-stream-polyfill.bun';
-
 import { describe } from 'vitest';
 
 // eslint-disable-next-line unused-imports/no-unused-imports
