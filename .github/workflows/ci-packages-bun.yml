@@ -1,0 +1,47 @@
+name: CI-packages-bun
+
+on:
+  push:
+    branches:
+     - main
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - '**'
+
+permissions:
+  contents: read
+
+jobs:
+  test-unit-bun:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        bun-version: ['latest']
+    env:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Fetch all git history so that yarn workspaces --since can compare with the correct commits
+          # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
+          fetch-depth: 0
+
+      - name: ⚙️ Use Bun ${{ matrix.bun-version }}
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ matrix.bun-version }}
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+
+      - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
+        id: nx-set-shas
+        uses: nrwl/nx-set-shas@v4
+
+      - run: |
+          echo "BASE: ${{ steps.nx-set-shas.outputs.base }}"
+          echo "HEAD: ${{ steps.nx-set-shas.outputs.head }}"
+
+      - name: 🧪 Bun unit tests (no-coverage)
+        run: yarn nx run-many --target=test-unit-bun --exclude='examples/**' --exclude='docs'

@@ -1,5 +1,6 @@
 import { describe } from 'vitest';
 
+// eslint-disable-next-line unused-imports/no-unused-imports
 import type { SupportedCompressionAlgorithm } from './compression-algorithm';
 import { Compressor } from './compressor';
 import { Decompressor } from './decompressor';

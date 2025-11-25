@@ -120,6 +120,17 @@
       ],
       "cache": true
     },
+    "test-unit-bun": {
+      "dependsOn": ["^test-unit-bun"],
+      "inputs": [
+        "default",
+        "^public",
+        {
+          "externalDependencies": ["vitest"]
+        }
+      ],
+      "cache": true
+    },
     "test-unit-browser": {
       "dependsOn": ["^test-unit-browser"],
       "inputs": [

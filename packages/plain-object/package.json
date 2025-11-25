@@ -62,6 +62,7 @@
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-coverage": "vitest run --coverage",
+    "test-unit-bun": "bun --bun run vitest run",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-browser": "vitest run --browser",
     "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
@@ -72,7 +73,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@belgattitude/eslint-config-bases": "8.3.2",
+    "@belgattitude/eslint-config-bases": "8.4.0",
     "@httpx/devtools-vitest": "workspace:^",
     "@sindresorhus/is": "7.1.1",
     "@size-limit/file": "11.2.0",
@@ -82,7 +83,7 @@
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
     "es-check": "9.4.5",
-    "es-toolkit": "1.41.0",
+    "es-toolkit": "1.42.0",
     "esbuild": "0.27.0",
     "eslint": "8.57.1",
     "immer": "10.2.0",
@@ -93,14 +94,14 @@
     "prettier": "3.6.2",
     "publint": "0.3.15",
     "redux": "5.0.1",
-    "rimraf": "6.1.0",
+    "rimraf": "6.1.2",
     "size-limit": "11.2.0",
     "tsup": "8.5.1",
     "typedoc": "0.28.14",
     "typedoc-plugin-markdown": "4.9.0",
     "typescript": "5.9.3",
-    "vitest": "4.0.9",
-    "webpack": "5.102.1"
+    "vitest": "4.0.14",
+    "webpack": "5.103.0"
   },
   "engines": {
     "node": ">=20.9.0"

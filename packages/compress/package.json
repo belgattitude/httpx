@@ -44,6 +44,7 @@
     "build": "run clean && yarn run tsup",
     "build-release": "run build",
     "bench": "vitest bench --run",
+    "bench-bun": "bun --bun run vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
     "docgen": "run-s docgen-typedoc",
@@ -59,6 +60,7 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/compress.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-bun": "bun --bun run vitest run",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-browser": "vitest run --browser",
@@ -73,7 +75,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@belgattitude/eslint-config-bases": "8.3.2",
+    "@belgattitude/eslint-config-bases": "8.4.0",
     "@httpx/devtools-vitest": "workspace:^",
     "@sindresorhus/is": "7.1.1",
     "@size-limit/file": "11.2.0",
@@ -88,14 +90,14 @@
     "prettier": "3.6.2",
     "pretty-bytes": "7.1.0",
     "publint": "0.3.15",
-    "rimraf": "6.1.0",
+    "rimraf": "6.1.2",
     "size-limit": "11.2.0",
     "tsup": "8.5.1",
     "typedoc": "0.28.14",
     "typedoc-plugin-markdown": "4.9.0",
     "typescript": "5.9.3",
-    "vitest": "4.0.9",
-    "webpack": "5.102.1"
+    "vitest": "4.0.14",
+    "webpack": "5.103.0"
   },
   "engines": {
     "node": ">=20"
