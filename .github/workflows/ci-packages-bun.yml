@@ -27,10 +27,10 @@ jobs:
           # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
           fetch-depth: 0
 
-      - name: ⚙️ Use Bun ${{ matrix.node-version }}
+      - name: ⚙️ Use Bun ${{ matrix.bun-version }}
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: ${{ matrix.node-version }}
+          bun-version: ${{ matrix.bun-version }}
 
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
