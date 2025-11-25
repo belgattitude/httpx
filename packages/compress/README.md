@@ -174,7 +174,6 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | `import { Decompressor }`             |            ~ 450B |
 | `import { Decompressor, Compressor }` |            ~ 697B |
 
-
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/compress@latest).
 
 ## Compatibility
