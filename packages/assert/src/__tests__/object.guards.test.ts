@@ -3,6 +3,7 @@ import { isPlainObject } from '../object.guards';
 describe('Object typeguards tests', () => {
   const isNodeLike = !('window' in globalThis);
   const isCloudflareWorker = 'caches' in globalThis;
+  const isBun = isNodeLike && 'Bun' in globalThis;
 
   describe('isPlainObject', () => {
     const str = 'key';
@@ -50,14 +51,6 @@ describe('Object typeguards tests', () => {
       ],
     ] as const;
 
-    const validPlainObjectsBuiltIn = [
-      // Static built-in classes
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
-      [JSON, true],
-      [Math, true],
-      [Atomics, true],
-    ] as const;
-
     const invalidPlainObjects = [
       ['hello', false],
       [false, false],
@@ -103,11 +96,7 @@ describe('Object typeguards tests', () => {
       ],
     ] as const;
 
-    const cases = [
-      ...validPlainObjects,
-      ...validPlainObjectsBuiltIn,
-      ...invalidPlainObjects,
-    ] as const;
+    const cases = [...validPlainObjects, ...invalidPlainObjects] as const;
     it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
       expect(isPlainObject(v)).toStrictEqual(expected);
     });
@@ -119,11 +108,35 @@ describe('Object typeguards tests', () => {
         expect(isPlainObject(Buffer.from('123123'))).toBe(false);
       }
     );
+  });
 
-    it('should return true when globalThis is given', () => {
-      expect(isPlainObject(globalThis)).toBe(false);
+  describe('Allowed edge cases for static built-ins', () => {
+    const javascriptStaticBuiltIn = [
+      // Static built-in classes
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+      [JSON, true],
+      [Math, true],
+      [Atomics, true],
+      [Reflect, true],
+    ] as const;
+
+    it.each(javascriptStaticBuiltIn)(
+      'should return true for static built-in classes',
+      (buildInCls) => {
+        expect(isPlainObject(buildInCls)).toBe(true);
+      }
+    );
+
+    describe('globalThis edge case', () => {
+      it.skipIf(!isBun)('BUN: should return true for globalThis', () => {
+        expect(isPlainObject(globalThis)).toBe(true);
+      });
+      it.skipIf(!isBun)('Not Bun: should return false for globalThis', () => {
+        expect(isPlainObject(globalThis)).toBe(true);
+      });
     });
   });
+
   describe.skipIf(!isNodeLike || isCloudflareWorker)(
     'Support node:vm.runInNewContext',
     () => {
