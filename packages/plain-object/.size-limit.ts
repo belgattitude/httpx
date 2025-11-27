@@ -14,12 +14,6 @@ module.exports = [
     limit: '135B',
   },
   {
-    name: 'Only { isStaticBuiltInClass } (ESM)',
-    path: ['dist/index.mjs'],
-    import: '{ isStaticBuiltInClass }',
-    limit: '38B',
-  },
-  {
     name: 'Import { assertPlainObject, isPlainObject } (ESM)',
     path: ['dist/index.mjs'],
     import: '{ assertPlainObject, isPlainObject }',

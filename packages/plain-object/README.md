@@ -62,13 +62,6 @@ const runInNewContext = await import('node:vm').then(
 );
 isPlainObject(runInNewContext('({})'));   // ✅
 
-// ✅👇 Static built-in classes are treated as plain objects
-//       check for `isStaticBuiltInClass` to exclude if needed
-
-isPlainObject(Math);                // ✅
-isPlainObject(JSON);                // ✅
-isPlainObject(Atomics);             // ✅
-
 // ❌👇 False
 
 class Test { };
@@ -83,7 +76,24 @@ isPlainObject(Buffer.from('ABC'));  // ❌
 isPlainObject(Promise.resolve({})); // ❌
 isPlainObject(Object.create({}));   // ❌
 isPlainObject(new (class Cls {}));  // ❌
-isPlainObject(globalThis);          // ❌,
+
+// ⚠️ Edge cases
+//
+// 👇 globalThis isn't properly portable across all JS environments
+//
+
+isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare)
+
+// 👇 Static built-in classes aren't properly checked. This is a trade-off
+//    to maintain the best performance and size. If you need to check for these,
+//    use a custom type guard. But in most cases, you won't need to check for these
+//    as the probability of writing a code that receives these as plain objects is low.
+//    and probably indicates an issue in your code.
+
+isPlainObject(Math);                // ⚠️✅ return true, but Math is not a plain object
+isPlainObject(JSON);                // ⚠️✅ return true, but JSON is not a plain object
+isPlainObject(Atomics);             // ⚠️✅ return true, but Atomics is not a plain object
+isPlainObject(Reflect);             // ⚠️✅ return true, but Reflect is not a plain object
 ```
 
 ### assertPlainObject
@@ -117,21 +127,6 @@ try {
 }
 ```
 
-### isStaticBuiltInClass
-
-> info: Since v2.0.0
-
-Since v2.0.0, `isPlainObject` will accept static built-in classes 
-as plain objects (Math, JSON, Atomics). If you need to exclude them,
-a new typeguard has been created `isStaticBuiltInClass`.
-
-```typescript
-import { isPlainObject, isStaticBuiltInClass } from '@httpx/plain-object';
-const v = Math; // or Atomics or JSON
-if (isPlainObject(v) && !isStaticBuiltInClass(v)) {
-    console.log('v is a plain object but not a static built-in class');
-}
-```
 ### PlainObject type
 
 #### Generic
@@ -230,7 +225,6 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | `import { isPlainObject } from '@httpx/plain-object`        |             ~ 80B |
 | `import { assertPlainObject } from '@httpx/plain-object`    |            ~ 133B |
 | `Both isPlainObject and assertPlainObject`                  |            ~ 141B |
-| `import { isStaticBuiltInClass } from '@httpx/plain-object` |             ~ 37B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/plain-object@latest).
 
@@ -252,12 +246,12 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 ## Comparison with other libraries
 
-| Library                                                      | Compat      | Perf          | CJS+ESM |
-|--------------------------------------------------------------|-------------|---------------|---------|  
-| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj) | Differences | 1.17x slower  | No      | 
-| [es-toolkit](https://github.com/toss/es-toolkit)             | No          | 1.25x slower  | Yes     | 
-| (@redux)[isPlainObject](https://github.com/reduxjs/redux)    | ✅ 100%      | 2.76x slower  | Yes     |
-| (lodash)[isPlainObject](https://lodash.com/docs/4.17.15#isPlainObject)    | No          | 83.50x slower | No      |
+| Library                                                                | Compat      | Perf          | CJS+ESM |
+|------------------------------------------------------------------------|-------------|---------------|---------|  
+| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj)           | Differences | 1.17x slower  | No      | 
+| [es-toolkit](https://github.com/toss/es-toolkit)                       | No          | 1.25x slower  | Yes     | 
+| (@redux)[isPlainObject](https://github.com/reduxjs/redux)              | ✅ 100%      | 2.76x slower  | Yes     |
+| (lodash)[isPlainObject](https://lodash.com/docs/4.17.15#isPlainObject) | No          | 83.50x slower | No      |
 
 ### redux/isPlainObject
 
@@ -268,7 +262,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 This library wouldn't be possible without [@sindresorhus](https://github.com/sindresorhus) [is-plain-obj](https://github.com/sindresorhus/is-plain-obj).
 Notable differences:
 
-- [x] Slightly faster (10%)
+- [x] Slightly faster (10%) and lighter
 - [x] ESM and CJS formats.
 - [x] Named export.
 - [x] Smaller bundle size.

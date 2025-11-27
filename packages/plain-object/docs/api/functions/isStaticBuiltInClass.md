@@ -1,10 +1,10 @@
-[**@httpx/plain-object v2.1.2**](../README.md)
+[**@httpx/plain-object v2.1.3**](../README.md)
 
 ***
 
 [@httpx/plain-object](../README.md) / isStaticBuiltInClass
 
-# Function: isStaticBuiltInClass()
+# ~~Function: isStaticBuiltInClass()~~
 
 > **isStaticBuiltInClass**(`v`): `v is StaticBuiltInClass`
 
@@ -17,3 +17,7 @@
 ## Returns
 
 `v is StaticBuiltInClass`
+
+## Deprecated
+
+create a custom typeguard if you need it
