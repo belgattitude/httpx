@@ -1,4 +1,4 @@
-[**@httpx/xcache v0.4.2**](../README.md)
+[**@httpx/xcache v0.4.5**](../README.md)
 
 ***
 
@@ -29,6 +29,9 @@ Double linked list based lru cache that supports get in O(1) and time to live fo
 > **new TimeLruCache**\<`TValue`, `TKey`\>(`params`): `TimeLruCache`\<`TValue`, `TKey`\>
 
 Create a new LruCache instance
+
+👉 As an alternative to constructor, consider using the helper
+`getOrCreateTimeLruCache` to ensure only one instance is created.
 
 #### Parameters
 
@@ -180,7 +183,7 @@ if the item was actually deleted in case it exist.
 
 ### get()
 
-> **get**(`key`): `undefined` \| `TValue`
+> **get**(`key`): `TValue` \| `undefined`
 
 Get an item from the cache or return undefined if it doesn't exist or
 has expired.
@@ -208,7 +211,7 @@ lru.get('key1');   // 👈 undefined
 
 #### Returns
 
-`undefined` \| `TValue`
+`TValue` \| `undefined`
 
 #### Implementation of
 
@@ -347,7 +350,7 @@ lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction wi
 
 ### peek()
 
-> **peek**(`key`): `undefined` \| `TValue`
+> **peek**(`key`): `TValue` \| `undefined`
 
 Get an item without marking it as recently used. Will return undefined if
 the item doesn't exist or has expired (ttl).
@@ -363,7 +366,7 @@ return undefined if they have.
 
 #### Returns
 
-`undefined` \| `TValue`
+`TValue` \| `undefined`
 
 #### Implementation of
 

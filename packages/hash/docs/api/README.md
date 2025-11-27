@@ -1,8 +1,8 @@
-**@httpx/hash v0.1.0**
+**@httpx/hash v0.2.0**
 
 ***
 
-# @httpx/hash v0.1.0
+# @httpx/hash v0.2.0
 
 ## Modules
 

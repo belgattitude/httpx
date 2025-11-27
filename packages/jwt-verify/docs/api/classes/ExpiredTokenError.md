@@ -1,4 +1,4 @@
-[**@httpx/jwt-verify v0.1.0**](../README.md)
+[**@httpx/jwt-verify v0.1.2**](../README.md)
 
 ***
 

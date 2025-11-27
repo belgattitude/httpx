@@ -1,4 +1,4 @@
-[**@httpx/stable-hash v0.3.2**](../README.md)
+[**@httpx/stable-hash v0.3.3**](../README.md)
 
 ***
 

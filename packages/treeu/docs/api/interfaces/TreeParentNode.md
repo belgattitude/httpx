@@ -1,4 +1,4 @@
-[**@httpx/treeu v0.5.2**](../README.md)
+[**@httpx/treeu v0.5.3**](../README.md)
 
 ***
 
@@ -32,7 +32,7 @@
 
 ### parentId
 
-> **parentId**: `null` \| `TId`
+> **parentId**: `TId` \| `null`
 
 ***
 

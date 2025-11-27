@@ -48,7 +48,7 @@ import { Tabs } from 'nextra/components';
 - 🦄&nbsp; Convenience [PlainObject](#plainobject-type) typescript typings.
 - 🚀&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
 - 📐&nbsp; Lightweight (starts at [~80B](#bundle-size))
-- 🛡️&nbsp; Tested on [node 20-24, browser, cloudflare workers and runtime/edge](#compatibility).
+- 🛡️&nbsp; Tested on [node 20-25, bun, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🙏&nbsp; Works cross-realms (node:vm runInNewContext,...)
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
@@ -64,6 +64,7 @@ import { Tabs } from 'nextra/components';
 import { isPlainObject } from '@httpx/plain-object';
 
 // ✅👇 True
+
 isPlainObject({ });                       // ✅
 isPlainObject({ key: 'value' });          // ✅
 isPlainObject({ key: new Date() });       // ✅
@@ -79,13 +80,6 @@ const runInNewContext = await import('node:vm').then(
 );
 isPlainObject(runInNewContext('({})'));   // ✅
 
-// ✅👇 Static built-in classes are treated as plain objects
-//       check for `isStaticBuiltInClass` to exclude if needed
-
-isPlainObject(Math);                // ✅
-isPlainObject(JSON);                // ✅
-isPlainObject(Atomics);             // ✅
-
 // ❌👇 False
 
 class Test { };
@@ -100,7 +94,25 @@ isPlainObject(Buffer.from('ABC'));  // ❌
 isPlainObject(Promise.resolve({})); // ❌
 isPlainObject(Object.create({}));   // ❌
 isPlainObject(new (class Cls {}));  // ❌
-isPlainObject(globalThis);          // ❌,
+
+// ⚠️ Edge cases
+//
+// 👇 globalThis isn't properly portable across all JS environments
+//
+
+isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare)
+
+// 👇 Static built-in classes aren't properly checked. This is a trade-off
+//    to maintain the best performance and size. If you need to check for these,
+//    use a custom type guard. But in most cases, you won't need to check for these
+//    as the probability of writing a code that receives these as plain objects is low.
+//    and probably indicates an issue in your code.
+
+isPlainObject(Math);                // ⚠️✅ return true, but Math is not a plain object
+isPlainObject(JSON);                // ⚠️✅ return true, but JSON is not a plain object
+isPlainObject(Atomics);             // ⚠️✅ return true, but Atomics is not a plain object
+isPlainObject(Reflect);             // ⚠️✅ return true, but Reflect is not a plain object
+
 ```
 
 ### assertPlainObject

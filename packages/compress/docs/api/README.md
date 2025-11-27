@@ -1,8 +1,8 @@
-**@httpx/compress v0.3.5**
+**@httpx/compress v0.3.6**
 
 ***
 
-# @httpx/compress v0.3.5
+# @httpx/compress v0.3.6
 
 ## Classes
 

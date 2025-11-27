@@ -1,4 +1,4 @@
-[**@httpx/treeu v0.5.2**](../README.md)
+[**@httpx/treeu v0.5.3**](../README.md)
 
 ***
 
@@ -46,7 +46,7 @@ https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
 
 ### findOne()
 
-> **findOne**(`idOrConditionOrFn`, `params?`): `undefined` \| `TreeNodeOptionalChildren`\<`TValue`, `TKey`\>
+> **findOne**(`idOrConditionOrFn`, `params?`): `TreeNodeOptionalChildren`\<`TValue`, `TKey`\> \| `undefined`
 
 Find first matching node in the tree. The `reverse` parameter can be used
 to traverse the tree in reverse order.
@@ -63,4 +63,4 @@ to traverse the tree in reverse order.
 
 #### Returns
 
-`undefined` \| `TreeNodeOptionalChildren`\<`TValue`, `TKey`\>
+`TreeNodeOptionalChildren`\<`TValue`, `TKey`\> \| `undefined`

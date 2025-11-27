@@ -79,7 +79,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 ### code
 
-> `readonly` **code**: `undefined` \| `string`
+> `readonly` **code**: `string` \| `undefined`
 
 Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k2-1664884491087-b41a2832f559'...)
 
@@ -91,7 +91,7 @@ Custom additional code (ie: 'ERR_UNREACHABLE_SERVICE', 'AbortError', 'cdg1::h99k
 
 ### errorId
 
-> `readonly` **errorId**: `undefined` \| `string`
+> `readonly` **errorId**: `string` \| `undefined`
 
 Inform about an unique error identifier (ie: nanoid, cuid...)
 
@@ -113,7 +113,7 @@ Inform about an unique error identifier (ie: nanoid, cuid...)
 
 ### method
 
-> `readonly` **method**: `undefined` \| `HttpMethod`
+> `readonly` **method**: `HttpMethod` \| `undefined`
 
 Http method
 
@@ -157,7 +157,7 @@ Http error status code (400-599)
 
 ### url
 
-> `readonly` **url**: `undefined` \| `string`
+> `readonly` **url**: `string` \| `undefined`
 
 Indicates the original url that caused the error.
 

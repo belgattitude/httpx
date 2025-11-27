@@ -1,4 +1,4 @@
-[**@httpx/assert v0.16.2**](../../README.md)
+[**@httpx/assert v0.16.3**](../../README.md)
 
 ***
 
@@ -6,9 +6,9 @@
 
 # Function: getUuidVersion()
 
-> **getUuidVersion**(`uuid`): `null` \| [`UuidVersion`](../../uuid.types/type-aliases/UuidVersion.md)
+> **getUuidVersion**(`uuid`): [`UuidVersion`](../../uuid.types/type-aliases/UuidVersion.md) \| `null`
 
-Defined in: [uuid.helpers.ts:7](https://github.com/belgattitude/httpx/blob/4dae8c09c15139f4a822e2110336093570f143a3/packages/assert/src/uuid.helpers.ts#L7)
+Defined in: [uuid.helpers.ts:7](https://github.com/belgattitude/httpx/blob/9b2cbd569895f8040210d7274ce6ead66a415c7d/packages/assert/src/uuid.helpers.ts#L7)
 
 Adapted from https://github.com/uuidjs/uuid/blob/main/src/version.js
 
@@ -20,4 +20,4 @@ Adapted from https://github.com/uuidjs/uuid/blob/main/src/version.js
 
 ## Returns
 
-`null` \| [`UuidVersion`](../../uuid.types/type-aliases/UuidVersion.md)
+[`UuidVersion`](../../uuid.types/type-aliases/UuidVersion.md) \| `null`
