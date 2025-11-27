@@ -1,5 +1,14 @@
 # @httpx/json-api
 
+## 0.6.4
+
+### Patch Changes
+
+- [#2643](https://github.com/belgattitude/httpx/pull/2643) [`52f8075`](https://github.com/belgattitude/httpx/commit/52f8075465f567f5b231a2a4b45c7a84c924089c) Thanks [@belgattitude](https://github.com/belgattitude)! - Enable CI for bun latest on CI (bun 1.3.3)
+
+- Updated dependencies [[`52f8075`](https://github.com/belgattitude/httpx/commit/52f8075465f567f5b231a2a4b45c7a84c924089c)]:
+  - @httpx/exception@3.1.5
+
 ## 0.6.3
 
 ### Patch Changes

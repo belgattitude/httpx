@@ -1,5 +1,14 @@
 # @httpx/treeu
 
+## 0.5.4
+
+### Patch Changes
+
+- [#2643](https://github.com/belgattitude/httpx/pull/2643) [`52f8075`](https://github.com/belgattitude/httpx/commit/52f8075465f567f5b231a2a4b45c7a84c924089c) Thanks [@belgattitude](https://github.com/belgattitude)! - Enable CI for bun latest on CI (bun 1.3.3)
+
+- Updated dependencies [[`af88ef3`](https://github.com/belgattitude/httpx/commit/af88ef335b3aec8ab7bdc97f48747535e5da8bb2), [`af88ef3`](https://github.com/belgattitude/httpx/commit/af88ef335b3aec8ab7bdc97f48747535e5da8bb2), [`52f8075`](https://github.com/belgattitude/httpx/commit/52f8075465f567f5b231a2a4b45c7a84c924089c)]:
+  - @httpx/plain-object@2.1.4
+
 ## 0.5.3
 
 ### Patch Changes

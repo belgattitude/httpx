@@ -1,5 +1,17 @@
 # @httpx/plain-object
 
+## 2.1.4
+
+### Patch Changes
+
+- [#2645](https://github.com/belgattitude/httpx/pull/2645) [`af88ef3`](https://github.com/belgattitude/httpx/commit/af88ef335b3aec8ab7bdc97f48747535e5da8bb2) Thanks [@belgattitude](https://github.com/belgattitude)! - Mention bun difference for isPlainObject(globalThis)
+
+  In Bun (tested with 1.3.3), `isPlainObject(globalThis)` returns true, while in Node.js, edge, cloudflare and browsers it returns false.
+
+- [#2645](https://github.com/belgattitude/httpx/pull/2645) [`af88ef3`](https://github.com/belgattitude/httpx/commit/af88ef335b3aec8ab7bdc97f48747535e5da8bb2) Thanks [@belgattitude](https://github.com/belgattitude)! - Deprecate isStaticBuiltInClass as it's a very edge case
+
+- [#2643](https://github.com/belgattitude/httpx/pull/2643) [`52f8075`](https://github.com/belgattitude/httpx/commit/52f8075465f567f5b231a2a4b45c7a84c924089c) Thanks [@belgattitude](https://github.com/belgattitude)! - Enable CI for bun latest on CI (bun 1.3.3)
+
 ## 2.1.3
 
 ### Patch Changes
