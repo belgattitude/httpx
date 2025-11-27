@@ -1,8 +1,8 @@
-**@httpx/plain-object v2.1.2**
+**@httpx/plain-object v2.1.3**
 
 ***
 
-# @httpx/plain-object v2.1.2
+# @httpx/plain-object v2.1.3
 
 ## Type Aliases
 
@@ -13,4 +13,4 @@
 
 - [assertPlainObject](functions/assertPlainObject.md)
 - [isPlainObject](functions/isPlainObject.md)
-- [isStaticBuiltInClass](functions/isStaticBuiltInClass.md)
+- [~~isStaticBuiltInClass~~](functions/isStaticBuiltInClass.md)
