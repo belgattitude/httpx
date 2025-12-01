@@ -46,6 +46,7 @@
     "build": "run clean && yarn run tsup",
     "build-release": "run build",
     "bench": "vitest bench --run",
+    "bench-bun": "bun --bun run vitest bench --run",
     "bench-watch": "vitest bench",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",

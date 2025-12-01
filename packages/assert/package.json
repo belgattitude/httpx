@@ -57,6 +57,7 @@
     "fix-staged": "lint-staged --allow-empty",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/assert.eslintcache",
     "bench": "vitest bench --run",
+    "bench-bun": "bun --bun run vitest bench --run",
     "bench-watch": "vitest bench",
     "test": "vitest run",
     "test-unit": "vitest run",

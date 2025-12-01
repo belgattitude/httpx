@@ -58,6 +58,7 @@
     "build": "yarn run clean && yarn run tsup",
     "build-release": "yarn run build",
     "bench": "vitest bench --run",
+    "bench-bun": "bun --bun run vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
     "docgen": "run-s docgen-typedoc",

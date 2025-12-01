@@ -44,6 +44,7 @@
     "build": "run clean && yarn run tsup",
     "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
     "bench-disabled": "vitest bench --run",
+    "bench-bun-disabled": "bun --bun run vitest bench --run",
     "bench-codspeed-disabled": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch-disabled": "vitest bench",
     "docgen": "run-s docgen-typedoc",

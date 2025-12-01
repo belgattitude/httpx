@@ -81,6 +81,7 @@
     "build-release": "yarn build",
     "build": "run clean && yarn run tsup",
     "bench": "vitest bench --run",
+    "bench-bun": "bun --bun run vitest bench --run",
     "bench-watch": "vitest bench",
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
     "docgen": "run-s docgen-typedoc",
