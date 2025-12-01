@@ -60,7 +60,7 @@
     "packages/*",
     "devtools/*"
   ],
-  "packageManager": "yarn@4.11.0",
+  "packageManager": "yarn@4.12.0",
   "dependenciesMeta": {
     "@swc/core": {
       "built": true
@@ -74,26 +74,23 @@
     "nx": {
       "built": true
     },
-    "sharp": {
-      "built": true
-    },
     "workerd": {
       "built": true
     }
   },
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "8.4.0",
-    "@changesets/changelog-github": "0.5.1",
-    "@changesets/cli": "2.29.7",
-    "@cloudflare/vitest-pool-workers": "0.10.10",
+    "@belgattitude/eslint-config-bases": "8.7.0",
+    "@changesets/changelog-github": "0.5.2",
+    "@changesets/cli": "2.29.8",
+    "@cloudflare/vitest-pool-workers": "0.10.11",
     "@codspeed/vitest-plugin": "5.0.1",
     "@commitlint/cli": "20.1.0",
     "@commitlint/config-conventional": "20.0.0",
     "@edge-runtime/vm": "5.0.0",
     "@testing-library/dom": "10.4.1",
     "@types/shell-quote": "1.7.5",
-    "@typescript-eslint/eslint-plugin": "8.47.0",
-    "@typescript-eslint/parser": "8.47.0",
+    "@typescript-eslint/eslint-plugin": "8.48.0",
+    "@typescript-eslint/parser": "8.48.0",
     "@vitest/browser": "4.0.14",
     "@vitest/browser-playwright": "4.0.14",
     "@vitest/coverage-istanbul": "4.0.14",
@@ -108,9 +105,9 @@
     "lint-staged": "16.2.7",
     "npm-check-updates": "19.1.2",
     "npm-run-all2": "8.0.4",
-    "nx": "22.1.1",
+    "nx": "22.1.3",
     "pkg-pr-new": "0.0.60",
-    "playwright": "1.56.1",
+    "playwright": "1.57.0",
     "prettier": "3.6.2",
     "rimraf": "6.1.2",
     "shell-quote": "1.8.3",
