@@ -6,7 +6,7 @@ type LruCacheSingleInstanceName = string;
 declare global {
   // eslint-disable-next-line no-var
   var __httpx_lru_cache_instances: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Map<LruCacheSingleInstanceName, LruCache<any, any>> | undefined;
+  Map<LruCacheSingleInstanceName, LruCache<any, any>> | undefined;
 }
 
 type Options = {

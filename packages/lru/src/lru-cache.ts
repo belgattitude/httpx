@@ -12,7 +12,7 @@ type LruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
 };
 
 export type LruCacheParams<
-  TValue = unknown,
+  TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
 > = {
   /**
@@ -37,7 +37,8 @@ export type LruCacheParams<
 export class LruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
-> implements ILruCache<TValue, TKey> {
+> implements ILruCache<TValue, TKey>
+{
   #maxSize: number;
   #touchOnHas: boolean;
   #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
