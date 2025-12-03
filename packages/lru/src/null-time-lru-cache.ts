@@ -10,8 +10,7 @@ import type {
 export class NullTimeLruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
-> implements ITimeLruCache<TValue, TKey>
-{
+> implements ITimeLruCache<TValue, TKey> {
   /**
    * Create a new NullTimeLruCache (does cache nothing)
    *

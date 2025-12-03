@@ -103,7 +103,8 @@ export class JwtVerifier {
       ParsedJwtSuccess<
         TSchema extends undefined
           ? JWTPayload
-          : StandardSchemaV1.InferOutput<TSchema> & JWTPayload
+          : // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+            StandardSchemaV1.InferOutput<TSchema> & JWTPayload
       >,
       ParseErrors
     >
@@ -152,7 +153,8 @@ export class JwtVerifier {
 
     type TValidatedPayload = TSchema extends undefined
       ? JWTPayload
-      : StandardSchemaV1.InferOutput<TSchema> & JWTPayload;
+      : // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+        StandardSchemaV1.InferOutput<TSchema> & JWTPayload;
 
     let validatedPayload: TValidatedPayload;
 

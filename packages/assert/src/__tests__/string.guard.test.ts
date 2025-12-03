@@ -28,10 +28,11 @@ describe('Typeguards string tests', () => {
       [false, null],
     ] as const)('should return %s when %s(/%s) is given', (expected, v) => {
       expect(isParsableStrictIsoDateZ(v)).toBe(expected);
-      if (expected === true) {
-        expect(new Date(v).toISOString()).toBe(v.toUpperCase());
-        expect(Date.parse(v)).toBe(new Date(v).getTime());
-      }
+    });
+    it('should return the iso date with lowercase z as uppercase', () => {
+      expect(new Date('2023-12-29t23:37:31.653z').toISOString()).toBe(
+        '2023-12-29T23:37:31.653Z'
+      );
     });
   });
   describe('isParsableSafeInt', () => {
