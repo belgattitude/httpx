@@ -31,8 +31,7 @@ export type TimeLruCacheParams<
 export class TimeLruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
-> implements ITimeLruCache<TValue, TKey>
-{
+> implements ITimeLruCache<TValue, TKey> {
   #maxSize: number;
   #touchOnHas: boolean;
 

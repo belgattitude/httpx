@@ -15,6 +15,8 @@ const npmPreapprovedPackages = [
   'esbuild',
   '@esbuild/*',
   'tsup',
+  'prettier',
+  '@typescript-eslint/*',
 ];
 
 module.exports = defineConfig({
