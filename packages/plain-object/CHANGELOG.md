@@ -1,5 +1,15 @@
 # @httpx/plain-object
 
+## 2.1.6
+
+### Patch Changes
+
+- [#2650](https://github.com/belgattitude/httpx/pull/2650) [`a30cf76`](https://github.com/belgattitude/httpx/commit/a30cf7699e9950315ebc4002a9f387929935da75) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest esbuild 0.27.1
+
+  See upstream fixes: [esbuild v0.27.1 release notes](https://github.com/evanw/esbuild/releases/tag/v0.27.1)
+
+  PS: due a failing ci action, the correct changes can be found in [#2648](https://github.com/belgattitude/httpx/pull/2648)
+
 ## 2.1.5
 
 ### Patch Changes
