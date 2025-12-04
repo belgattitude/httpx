@@ -16,7 +16,7 @@ type TimeLruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
 };
 
 export type TimeLruCacheParams<
-  TValue = unknown,
+  TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
 > = LruCacheParams<TValue, TKey> & {
   /**

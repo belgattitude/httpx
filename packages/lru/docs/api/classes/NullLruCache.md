@@ -1,4 +1,4 @@
-[**@httpx/lru v0.12.0**](../README.md)
+[**@httpx/lru v0.12.1**](../README.md)
 
 ***
 
@@ -186,12 +186,17 @@ lru.get('key1');   // 👈 undefined
 
 > **getOrSet**\<`T`\>(`_key`, `valueOrFn`): `T`
 
-Get an item from the cache, if the item doesn't exist it will
-create a new entry with the provided value and returns it.
+Get an item from the cache, if the item doesn't exist or has expired
+it will create a new entry with the provided value or function and returns it.
 
-In case of a new entry:
+In case of a new entry (key either doesn't exist or has expired):
+ - the provided value or the result of the function will be used as value.
  - it will be marked as most recently used.
  - an eviction will be triggered if the maximum capacity is reached
+
+In case the item exists and hasn't expired:
+ - the existing value will be returned.
+ - it will be marked as most recently used.
 
 #### Type Parameters
 
@@ -217,14 +222,18 @@ In case of a new entry:
 
 ```typescript
 const lru = new LruCache({ maxSize: 2 });
-lru.set('key1', 'value1');
-lru.getOrSet('key1', () => 'value2');  // 👈 'value1' (entry exists)
-lru.getOrSet('key2', () => 'value2');  // 👈 'value2' (new entry)
-lru.has('key2');                       // 👈 true (it was added)
-lru.get('key1');                       // 👈 'value1'
 
-// Will trigger an eviction as capacity (2) is reached.
-lru.getOrSet('key3', () => 'value3');
+// The key exists
+lru.set('key1', 'value1');
+lru.getOrSet('key1', () => 'value2');         // 👈 returns 'value1' (entry exists)
+
+// The key doesn't exist, a new entry will be created from the function return value
+lru.getOrSet('key2', () => 'value2');  // 👈 returns 'value2'
+lru.has('key2');                              // 👈 true (it was added)
+lru.get('key1');                              // 👈 'value1'
+
+// Will trigger an eviction as maxSize capacity (2) is reached.
+lru.getOrSet('key3', () => 'value3');        // 👈 returns 'value3'
 
 lru.get('key1'); // 👈 undefined (first entry was evicted)
 ```

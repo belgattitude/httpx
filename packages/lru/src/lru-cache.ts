@@ -12,7 +12,7 @@ type LruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
 };
 
 export type LruCacheParams<
-  TValue = unknown,
+  TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
 > = {
   /**

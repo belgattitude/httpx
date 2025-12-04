@@ -1,4 +1,4 @@
-[**@httpx/lru v0.12.0**](../README.md)
+[**@httpx/lru v0.12.1**](../README.md)
 
 ***
 
@@ -12,7 +12,7 @@
 
 ### TValue
 
-`TValue` = `unknown`
+`TValue` *extends* [`SupportedCacheValues`](SupportedCacheValues.md) = [`SupportedCacheValues`](SupportedCacheValues.md)
 
 ### TKey
 
