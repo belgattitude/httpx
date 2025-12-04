@@ -20,9 +20,9 @@ const __dirname = path.dirname(__filename);
  * @type {import('lint-staged').Configuration}
  */
 export default {
-    '**/*.{json,md,mdx,css,html,yml,yaml,scss,ts,js,tsx,jsx,mjs}': (
-        filenames
-    ) => {
-        return [`prettier --write ${concatFilesForPrettier(filenames)}`];
-    },
+  '**/*.{json,md,mdx,css,html,yml,yaml,scss,ts,js,tsx,jsx,mjs,cjs}': (
+    filenames
+  ) => {
+    return [`prettier --write ${concatFilesForPrettier(filenames)}`];
+  },
 };

@@ -18,4 +18,4 @@
 
 Rebuild with latest esbuild 0.27.1
 
-See upstream fixes: https://github.com/evanw/esbuild/releases/tag/v0.27.1
+See upstream fixes: [esbuild v0.27.1 release notes](https://github.com/evanw/esbuild/releases/tag/v0.27.1)
