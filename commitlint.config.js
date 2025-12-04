@@ -1,4 +1,4 @@
-module.exports = {
+const commitlintConfig = {
   extends: ['@commitlint/config-conventional'],
   rules: {
     'body-leading-blank': [1, 'always'],
@@ -37,3 +37,5 @@ module.exports = {
     ],
   },
 };
+
+export default commitlintConfig;

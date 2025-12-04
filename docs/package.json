@@ -2,6 +2,7 @@
   "name": "httpx-docs",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,14 +16,14 @@
     "clean": "rimraf ./.next ./out /coverage ./tsconfig.tsbuildinfo"
   },
   "dependencies": {
-    "next": "16.0.3",
+    "next": "16.0.7",
     "nextra": "3.3.1",
     "nextra-theme-docs": "3.3.1",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "8.7.0",
+    "@belgattitude/eslint-config-bases": "8.7.1",
     "@tailwindcss/postcss": "4.1.17",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",

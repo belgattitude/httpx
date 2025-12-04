@@ -17,6 +17,8 @@ const npmPreapprovedPackages = [
   'tsup',
   'prettier',
   '@typescript-eslint/*',
+  'next',
+  '@next/*'
 ];
 
 module.exports = defineConfig({

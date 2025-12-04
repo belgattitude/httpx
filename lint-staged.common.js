@@ -1,11 +1,11 @@
 // @ts-check
 
-const path = require('path');
-const escape = require('shell-quote').quote;
+import path from 'node:path';
+import * as shellQuote from 'shell-quote';
 
 const isWin = process.platform === 'win32';
 
-const eslintGlobalRulesForFix = [
+export const eslintGlobalRulesForFix = [
   // react-hooks/eslint and react in general is very strict about exhaustively
   // declaring the dependencies when using the useEffect, useCallback... hooks.
   //
@@ -30,9 +30,9 @@ const eslintGlobalRulesForFix = [
 
 /**
  * Lint-staged command for running eslint in packages or apps.
- * @param {{cwd: string, files: string[], fix: boolean, fixType?: ('problem'|'suggestion'|'layout'|'directive')[], cache: boolean, rules?: string[], maxWarnings?: number}} params
+ * @param {{cwd: string, files: string[] | Readonly<string[]>, fix: boolean, fixType?: ('problem'|'suggestion'|'layout'|'directive')[], cache: boolean, rules?: string[], maxWarnings?: number}} params
  */
-const getEslintFixCmd = ({
+export const getEslintFixCmd = ({
   cwd,
   files,
   rules,
@@ -56,7 +56,7 @@ const getEslintFixCmd = ({
     fix ? '--fix' : '',
     cliFixType.length > 0 ? `--fix-type ${cliFixType.join(',')}` : '',
     maxWarnings !== undefined ? `--max-warnings=${maxWarnings}` : '',
-    cliRules.length > 0 ? `--rule ${cliRules.join('--rule ')}` : '',
+    cliRules.length > 0 ? `--rule ${cliRules.join(' --rule ')}` : '',
     files
       // makes output cleaner by removing absolute paths from filenames
       .map((f) => `"./${path.relative(cwd, f)}"`)
@@ -73,18 +73,12 @@ const getEslintFixCmd = ({
  *
  * @link https://github.com/okonet/lint-staged/issues/676
  *
- * @param {string[]} filenames
+ * @param {string[]|Readonly<string[]>} filenames
  * @returns {string} Return concatenated and escaped filenames
  */
-const concatFilesForPrettier = (filenames) =>
+export const concatFilesForPrettier = (filenames) =>
   filenames
-    .map((filename) => `"${isWin ? filename : escape([filename])}"`)
+    .map((filename) => (isWin ? `"${filename}"` : shellQuote.quote([filename])))
     .join(' ');
 
-const concatFilesForStylelint = concatFilesForPrettier;
-
-module.exports = {
-  concatFilesForPrettier,
-  concatFilesForStylelint,
-  getEslintFixCmd,
-};
+export const concatFilesForStylelint = concatFilesForPrettier;
