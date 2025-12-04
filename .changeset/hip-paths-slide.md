@@ -2,4 +2,4 @@
 "@httpx/lru": patch
 ---
 
-Improve coverage
+Improve tests and coverage
