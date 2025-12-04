@@ -3,6 +3,7 @@
   "description": "Shareable dev setups for vitest",
   "version": "0.0.2",
   "private": true,
+  "type": "module",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
@@ -30,7 +31,7 @@
     "vitest": "^4.0.8"
   },
   "dependencies": {
-    "@belgattitude/eslint-config-bases": "8.7.0",
+    "@belgattitude/eslint-config-bases": "8.7.1",
     "@cloudflare/vitest-pool-workers": "0.10.11",
     "@codspeed/vitest-plugin": "5.0.1",
     "@edge-runtime/vm": "5.0.0",
@@ -41,7 +42,7 @@
     "@vitest/runner": "4.0.15",
     "@vitest/snapshot": "4.0.15",
     "@vitest/ui": "4.0.15",
-    "esbuild": "0.27.0",
+    "esbuild": "0.27.1",
     "eslint": "8.57.1",
     "playwright": "1.57.0",
     "prettier": "3.7.4",

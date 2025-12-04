@@ -1,5 +1,42 @@
 # @httpx/jwt-verify
 
+## 0.1.6
+
+### Patch Changes
+
+- [#2652](https://github.com/belgattitude/httpx/pull/2652) [`2cbe861`](https://github.com/belgattitude/httpx/commit/2cbe861ea41bd5a7b4d0542c4c891aa67570395b) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest esbuild 0.27.1
+
+  See upstream fixes: [esbuild v0.27.1 release notes](https://github.com/evanw/esbuild/releases/tag/v0.27.1)
+
+  PS: due to a failing ci action, the correct changes can be found in [#2648](https://github.com/belgattitude/httpx/pull/2648)
+
+- Updated dependencies [[`2cbe861`](https://github.com/belgattitude/httpx/commit/2cbe861ea41bd5a7b4d0542c4c891aa67570395b)]:
+  - @httpx/lru@0.12.4
+
+## 0.1.5
+
+### Patch Changes
+
+- [#2650](https://github.com/belgattitude/httpx/pull/2650) [`a30cf76`](https://github.com/belgattitude/httpx/commit/a30cf7699e9950315ebc4002a9f387929935da75) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest esbuild 0.27.1
+
+  See upstream fixes: [esbuild v0.27.1 release notes](https://github.com/evanw/esbuild/releases/tag/v0.27.1)
+
+  PS: due a failing ci action, the correct changes can be found in [#2648](https://github.com/belgattitude/httpx/pull/2648)
+
+- Updated dependencies [[`a30cf76`](https://github.com/belgattitude/httpx/commit/a30cf7699e9950315ebc4002a9f387929935da75)]:
+  - @httpx/lru@0.12.3
+
+## 0.1.4
+
+### Patch Changes
+
+- [#2648](https://github.com/belgattitude/httpx/pull/2648) [`680e368`](https://github.com/belgattitude/httpx/commit/680e368baa2b618e609fe7374ca373002b2680ee) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest esbuild 0.27.1
+
+  See upstream fixes: [esbuild v0.27.1 release notes](https://github.com/evanw/esbuild/releases/tag/v0.27.1)
+
+- Updated dependencies [[`680e368`](https://github.com/belgattitude/httpx/commit/680e368baa2b618e609fe7374ca373002b2680ee)]:
+  - @httpx/lru@0.12.2
+
 ## 0.1.3
 
 ### Patch Changes

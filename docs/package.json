@@ -2,27 +2,26 @@
   "name": "httpx-docs",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "sirv ./out --cors --port 8888",
     "export": "next export",
-    "prettier-check": "run --top-level prettier --check --cache --cache-location=\"../../.cache/prettier/docs.prettiercache\" --config ../.prettierrc.js --ignore-path ../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,json,css,scss,less}\"",
-    "prettier-fix": "run --top-level prettier --write --cache --cache-location=\"../../.cache/prettier/docs.prettiercache\" --config ../.prettierrc.js --ignore-path ../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,json,css,scss,less}\"",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../.cache/eslint/docs.eslintcache",
     "lint-timing": "cross-env TIMING=1 run lint",
     "typecheck": "tsc --project ./tsconfig.json --noEmit",
     "clean": "rimraf ./.next ./out /coverage ./tsconfig.tsbuildinfo"
   },
   "dependencies": {
-    "next": "16.0.3",
+    "next": "16.0.7",
     "nextra": "3.3.1",
     "nextra-theme-docs": "3.3.1",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "8.7.0",
+    "@belgattitude/eslint-config-bases": "8.7.1",
     "@tailwindcss/postcss": "4.1.17",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",

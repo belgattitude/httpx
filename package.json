@@ -50,7 +50,6 @@
     "syncpack:check": "syncpack lint-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "syncpack:list": "syncpack list-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "nuke:node_modules": "rimraf --glob '**/node_modules'",
-    "prettier:format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"**/*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write",
     "prepare": "husky"
   },
   "workspaces": [
@@ -79,7 +78,7 @@
     }
   },
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "8.7.0",
+    "@belgattitude/eslint-config-bases": "8.7.1",
     "@changesets/changelog-github": "0.5.2",
     "@changesets/cli": "2.29.8",
     "@cloudflare/vitest-pool-workers": "0.10.11",
@@ -106,7 +105,7 @@
     "npm-check-updates": "19.1.2",
     "npm-run-all2": "8.0.4",
     "nx": "22.1.3",
-    "pkg-pr-new": "0.0.60",
+    "pkg-pr-new": "0.0.62",
     "playwright": "1.57.0",
     "prettier": "3.7.4",
     "rimraf": "6.1.2",
@@ -119,7 +118,7 @@
     "node": ">=20.19"
   },
   "resolutions": {
-    "esbuild": "^0.27.0"
+    "esbuild": "^0.27.1"
   },
   "resolutionsHelp": {
     "esbuild": "To prevent multiple versions"

@@ -9,17 +9,20 @@
  * {@link https://github.com/belgattitude/nextjs-monorepo-example/blob/main/docs/about-lint-staged.md}
  */
 
-const { concatFilesForPrettier } = require('./lint-staged.common.cjs');
+import { concatFilesForPrettier } from './lint-staged.common.mjs';
+import url from 'node:url';
+import path from 'node:path';
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
- * @type {Record<string, (filenames: string[]) => string | string[] | Promise<string | string[]>>}
+ * @type {import('lint-staged').Configuration}
  */
-const rules = {
-  '**/*.{json,css,html,yml,yaml,scss,ts,js,tsx,jsx,mjs}': (
+export default {
+  '**/*.{json,md,mdx,css,html,yml,yaml,scss,ts,js,tsx,jsx,mjs,cjs}': (
     filenames
   ) => {
     return [`prettier --write ${concatFilesForPrettier(filenames)}`];
   },
 };
-
-module.exports = rules;

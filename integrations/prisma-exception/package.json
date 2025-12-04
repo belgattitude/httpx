@@ -1,7 +1,7 @@
 {
   "name": "prisma-exception",
   "description": "Prisma errors to http exceptions.",
-  "version": "0.0.21",
+  "version": "0.0.24",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
@@ -49,8 +49,6 @@
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
-    "prettier-check": "run --top-level prettier --check --cache --cache-location=\"../../.cache/prettier/prisma-exception.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
-    "prettier-fix": "run --top-level prettier --write --cache --cache-location=\"../../.cache/prettier/prisma-exception.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/prisma-exception.eslintcache",
     "lint-timing": "cross-env TIMING=1 run lint",
     "typecheck": "tsc --project ./tsconfig.json --noEmit",
@@ -71,7 +69,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@belgattitude/eslint-config-bases": "8.7.0",
+    "@belgattitude/eslint-config-bases": "8.7.1",
     "@size-limit/file": "12.0.0",
     "@size-limit/webpack": "12.0.0",
     "@size-limit/webpack-why": "12.0.0",
@@ -82,7 +80,7 @@
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
     "es-check": "9.5.0",
-    "esbuild": "0.27.0",
+    "esbuild": "0.27.1",
     "eslint": "8.57.1",
     "npm-run-all2": "8.0.4",
     "prettier": "3.7.4",
