@@ -13,7 +13,7 @@ import url from 'node:url';
 import {
   concatFilesForPrettier,
   getEslintFixCmd,
-} from '../../lint-staged.common.js';
+} from '../../lint-staged.common.mjs';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

@@ -2,7 +2,6 @@
   "name": "httpx-monorepo",
   "private": true,
   "license": "MIT",
-  "type": "module",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
@@ -51,7 +50,6 @@
     "syncpack:check": "syncpack lint-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "syncpack:list": "syncpack list-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "nuke:node_modules": "rimraf --glob '**/node_modules'",
-    "prettier:format": "prettier --config .prettierrc.js --cache --cache-location=\".cache/prettier/monorepo.prettiercache\" --ignore-path .prettierignore \"**/*.{js,cjs,mjs,ts,mts,md,mdx,json}\" --write",
     "prepare": "husky"
   },
   "workspaces": [
