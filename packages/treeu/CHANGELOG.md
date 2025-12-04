@@ -1,5 +1,16 @@
 # @httpx/treeu
 
+## 0.5.5
+
+### Patch Changes
+
+- [#2648](https://github.com/belgattitude/httpx/pull/2648) [`680e368`](https://github.com/belgattitude/httpx/commit/680e368baa2b618e609fe7374ca373002b2680ee) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild with latest esbuild 0.27.1
+
+  See upstream fixes: [esbuild v0.27.1 release notes](https://github.com/evanw/esbuild/releases/tag/v0.27.1)
+
+- Updated dependencies [[`680e368`](https://github.com/belgattitude/httpx/commit/680e368baa2b618e609fe7374ca373002b2680ee)]:
+  - @httpx/plain-object@2.1.5
+
 ## 0.5.4
 
 ### Patch Changes
