@@ -22,13 +22,13 @@
   "sideEffects": false,
   "type": "module",
   "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
+        "default": "./dist/index.js"
       },
       "require": {
         "types": "./dist/index.d.cts",
@@ -42,7 +42,7 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsup",
+    "build": "run clean && yarn run tsdown",
     "build-release": "run build",
     "bench": "vitest bench --run",
     "bench-bun": "bun --bun run vitest bench --run",
@@ -56,7 +56,7 @@
     "check-pub": "attw --pack && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
-    "dev": "tsup --watch",
+    "dev": "tsdown --watch",
     "fix-staged": "lint-staged --allow-empty",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/lru.eslintcache",
     "test": "vitest run",
@@ -91,8 +91,7 @@
     "quick-lru": "7.3.0",
     "rimraf": "6.1.2",
     "size-limit": "12.0.0",
-    "tsdown": "0.17.0",
-    "tsup": "8.5.1",
+    "tsdown": "^0.17.0",
     "typedoc": "0.28.15",
     "typedoc-plugin-markdown": "4.9.0",
     "typescript": "5.9.3",
