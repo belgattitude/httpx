@@ -6,7 +6,7 @@ type TimeLruCacheSingleInstanceName = string;
 declare global {
   // eslint-disable-next-line no-var
   var __httpx_time_lru_cache_instances: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Map<TimeLruCacheSingleInstanceName, TimeLruCache<any, any>> | undefined;
+    Map<TimeLruCacheSingleInstanceName, TimeLruCache<any, any>> | undefined;
 }
 
 type Options = {

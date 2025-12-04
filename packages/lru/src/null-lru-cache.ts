@@ -9,8 +9,7 @@ import type {
 export class NullLruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
-> implements ILruCache<TValue, TKey>
-{
+> implements ILruCache<TValue, TKey> {
   /**
    * Create a new NullLruCache (does cache nothing)
    *
