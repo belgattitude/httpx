@@ -34,9 +34,6 @@ jobs:
           node-version: 24.x
           package-manager-cache: false
 
-      - run: npm install -g corepack@latest --force
-      - run: corepack enable
-
       - name: 📥 Monorepo install
         uses: ./.github/actions/yarn-nm-install
 
