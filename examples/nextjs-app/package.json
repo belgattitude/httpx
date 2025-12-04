@@ -15,8 +15,6 @@
     "typecheck": "next typegen && tsc --project tsconfig.json --noEmit",
     "typecheck-no-paths": "next typegen && tsc --project tsconfig.no-paths.json --noEmit",
     "lint": "next typegen && eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/nextjs-app.eslintcache",
-    "prettier-check": "yarn run --top-level prettier --check --cache --cache-location=\"../../.cache/prettier/next-app.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
-    "prettier-fix": "yarn run --top-level prettier --write --cache --cache-location=\"../../.cache/prettier/next-app.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\"",
     "fix-staged": "lint-staged --allow-empty"
   },
   "dependencies": {

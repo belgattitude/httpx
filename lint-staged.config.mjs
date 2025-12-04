@@ -9,7 +9,7 @@
  * {@link https://github.com/belgattitude/nextjs-monorepo-example/blob/main/docs/about-lint-staged.md}
  */
 
-import { concatFilesForPrettier } from './lint-staged.common.js';
+import { concatFilesForPrettier } from './lint-staged.common.mjs';
 import url from 'node:url';
 import path from 'node:path';
 

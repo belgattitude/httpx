@@ -8,8 +8,6 @@
     "build": "next build",
     "start": "sirv ./out --cors --port 8888",
     "export": "next export",
-    "prettier-check": "run --top-level prettier --check --cache --cache-location=\"../../.cache/prettier/docs.prettiercache\" --config ../.prettierrc.js --ignore-path ../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,json,css,scss,less}\"",
-    "prettier-fix": "run --top-level prettier --write --cache --cache-location=\"../../.cache/prettier/docs.prettiercache\" --config ../.prettierrc.js --ignore-path ../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,json,css,scss,less}\"",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../.cache/eslint/docs.eslintcache",
     "lint-timing": "cross-env TIMING=1 run lint",
     "typecheck": "tsc --project ./tsconfig.json --noEmit",
