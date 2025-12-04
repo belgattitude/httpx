@@ -11,8 +11,8 @@ import path from 'node:path';
 import url from 'node:url';
 
 import {
-    concatFilesForPrettier,
-    getEslintFixCmd,
+  concatFilesForPrettier,
+  getEslintFixCmd,
 } from '../../lint-staged.common.js';
 
 const __filename = url.fileURLToPath(import.meta.url);
@@ -22,16 +22,16 @@ const __dirname = path.dirname(__filename);
  * @type {import('lint-staged').Configuration}
  */
 export default {
-    '**/*.{js,jsx,ts,tsx}': (filenames) => {
-        return getEslintFixCmd({
-            cache: true,
-            cwd: __dirname,
-            files: filenames,
-            fix: true,
-            maxWarnings: 25,
-        });
-    },
-    '**/*.{json,md,mdx,css,html,yml,yaml,scss}': (filenames) => {
-        return [`prettier --write ${concatFilesForPrettier(filenames)}`];
-    },
+  '**/*.{js,jsx,ts,tsx}': (filenames) => {
+    return getEslintFixCmd({
+      cache: true,
+      cwd: __dirname,
+      files: filenames,
+      fix: true,
+      maxWarnings: 25,
+    });
+  },
+  '**/*.{json,md,mdx,css,html,yml,yaml,scss}': (filenames) => {
+    return [`prettier --write ${concatFilesForPrettier(filenames)}`];
+  },
 };
