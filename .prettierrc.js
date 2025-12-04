@@ -1,25 +1,29 @@
 // @ts-check
 
-/**
- * @type {import('prettier').Config}
- */
+import { createRequire } from 'node:module';
 
-const { getPrettierConfig } = require('@belgattitude/eslint-config-bases/helpers');
+const require = createRequire(import.meta.url);
+const {
+    getPrettierConfig,
+} = require('@belgattitude/eslint-config-bases/helpers');
 
 const { overrides = [], ...prettierConfig } = getPrettierConfig();
 
-module.exports = {
-  ...prettierConfig,
-  overrides: [
-    ...overrides,
-    ...[
-      {
-        files: '*.md',
-        options: {
-          singleQuote: false,
-          quoteProps: 'preserve',
-        },
-      },
+/**
+ * @type {import('prettier').Config}
+ */
+export default {
+    ...prettierConfig,
+    overrides: [
+        ...overrides,
+        ...[
+            {
+                files: '*.md',
+                options: {
+                    singleQuote: false,
+                    quoteProps: 'preserve',
+                },
+            },
+        ],
     ],
-  ],
 };
