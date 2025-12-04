@@ -1,5 +1,17 @@
 # @httpx/lru
 
+## 0.12.5
+
+### Patch Changes
+
+- [#2647](https://github.com/belgattitude/httpx/pull/2647) [`461359a`](https://github.com/belgattitude/httpx/commit/461359a6fe975a7a214add4c3c5ca7c174fc77e7) Thanks [@belgattitude](https://github.com/belgattitude)! - Align constructor types to prevent unsupported values
+
+- [#2647](https://github.com/belgattitude/httpx/pull/2647) [`461359a`](https://github.com/belgattitude/httpx/commit/461359a6fe975a7a214add4c3c5ca7c174fc77e7) Thanks [@belgattitude](https://github.com/belgattitude)! - Improve tests and coverage
+
+- [#2647](https://github.com/belgattitude/httpx/pull/2647) [`461359a`](https://github.com/belgattitude/httpx/commit/461359a6fe975a7a214add4c3c5ca7c174fc77e7) Thanks [@belgattitude](https://github.com/belgattitude)! - Update benchmarks in documentation
+
+- [#2647](https://github.com/belgattitude/httpx/pull/2647) [`461359a`](https://github.com/belgattitude/httpx/commit/461359a6fe975a7a214add4c3c5ca7c174fc77e7) Thanks [@belgattitude](https://github.com/belgattitude)! - Improve getOrSet() documentation
+
 ## 0.12.4
 
 ### Patch Changes
