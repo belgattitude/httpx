@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabled": true,
+  "enabledManagers": ["npm", "docker-compose", "dockerfile", "github-actions"],
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "minimumReleaseAge": "3 days",
+  "packageRules": [
+    {
+      "matchPackageNames": [],
+      "enabled": false
+    },
+    {
+      "matchFileNames": ["package.json"],
+      "matchDepTypes": ["dependencies"],
+      "rangeStrategy": "pin"
+    },
+    {
+      "matchFileNames": ["apps/**", "examples/**"],
+      "matchDepTypes": ["dependencies"],
+      "rangeStrategy": "pin"
+    },
+    {
+      "matchFileNames": ["packages/**", "integrations/**"],
+      "matchDepTypes": ["dependencies"],
+      "rangeStrategy": "replace"
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "rangeStrategy": "auto"
+    }
+  ]
+}
