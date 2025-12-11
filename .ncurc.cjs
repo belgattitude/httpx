@@ -15,6 +15,7 @@ const npmPreapprovedPackages = [
   'esbuild',
   '@esbuild/*',
   'tsup',
+  'tsdown',
   'prettier',
   '@typescript-eslint/*',
   'next',

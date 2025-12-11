@@ -1,4 +1,7 @@
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { defineConfig } from 'tsdown';
+
+console.log('targets', ...browserslistToEsbuild());
 
 export default defineConfig((options) => {
   return {
@@ -12,10 +15,18 @@ export default defineConfig((options) => {
     minifySyntax: true,
     minifyWhitespace: true,
     platform: 'neutral',
+    bundle: true,
     sourcemap: !options.watch,
     splitting: true,
-    target: ['es2024'],
-    // target: ['es2022'],
+    target: [
+      'node20',
+      'chrome98',
+      'edge100',
+      'firefox98',
+      'safari16',
+      'ios16',
+      'opera100',
+    ],
     treeshake: true,
     tsconfig: './tsconfig.build.json',
   };
