@@ -15,7 +15,7 @@ export default defineConfig((options) => {
     minifySyntax: true,
     minifyWhitespace: true,
     platform: 'neutral',
-    bundle: true,
+    unbundle: false,
     sourcemap: !options.watch,
     splitting: true,
     target: [
