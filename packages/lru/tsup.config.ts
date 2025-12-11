@@ -1,4 +1,3 @@
-import browserslistToEsbuild from 'browserslist-to-esbuild';
 import { defineConfig } from 'tsup';
 
 export default defineConfig((options) => {
@@ -14,15 +13,22 @@ export default defineConfig((options) => {
     minifyWhitespace: true,
     outExtension({ format }) {
       return {
-        js: `.${format === 'cjs' ? 'cjs' : 'mjs'}`,
+        js: `.${format === 'cjs' ? 'cjs' : 'js'}`,
       };
     },
     platform: 'browser',
     sourcemap: !options.watch,
     splitting: true,
     bundle: true,
-    target: ['node20', ...browserslistToEsbuild()],
-    // target: ['es2022'],
+    target: [
+      'node20',
+      'chrome98',
+      'edge100',
+      'firefox98',
+      'safari16',
+      'ios16',
+      'opera100',
+    ],
     treeshake: true,
     tsconfig: './tsconfig.build.json',
   };

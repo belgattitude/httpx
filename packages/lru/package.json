@@ -42,7 +42,8 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsdown",
+    "build": "tsdown",
+    "build-tsup": "run clean && tsup",
     "build-release": "run build",
     "bench": "vitest bench --run",
     "bench-bun": "bun --bun run vitest bench --run",
@@ -52,7 +53,7 @@
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check es2022 './dist/**/*.cjs' --not './dist/*.map.js'",
-    "check-dist-esm": "es-check es2022 './dist/**/*.mjs' --not './dist/*.map.js' --module",
+    "check-dist-esm": "es-check es2022 './dist/**/*.js' --not './dist/*.map.js' --module",
     "check-pub": "attw --pack && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
