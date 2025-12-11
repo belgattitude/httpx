@@ -10,10 +10,15 @@ export default defineConfig((options) => {
     dts: true,
     entry: ['src/index.ts'],
     format: ['esm', 'cjs'],
-    minify: !options.watch,
-    minifyIdentifiers: true,
-    minifySyntax: true,
-    minifyWhitespace: true,
+    // minify: 'dce-only',
+    minify: options.watch
+      ? false
+      : {
+          mangle: false,
+          codegen: {
+            removeWhitespace: false,
+          },
+        },
     platform: 'neutral',
     unbundle: false,
     sourcemap: !options.watch,
