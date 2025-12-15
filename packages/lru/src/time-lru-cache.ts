@@ -187,7 +187,7 @@ export class TimeLruCache<
   peek(key: TKey): TValue | undefined {
     const val = this.#cache.get(key);
     if (val === undefined) {
-      return;
+      return void 0;
     }
     return val.expiry < Date.now() ? undefined : val.value;
   }
@@ -201,27 +201,6 @@ export class TimeLruCache<
     return this.#cache.delete(key);
   }
 
-  /**
-   * Iterate over the cache from the least recently used to the most recently used.
-   *
-   * ```typescript
-   * const lru = new LruCache({ maxSize: 2 });
-   * lru.set('key1', 'value1');
-   * lru.set('key2', 'value2');
-   * lru.set('key3', 'value3');
-   * // trigger a get to move key2 to the head
-   * lru.get('key2');
-   * const results = [];
-   * // iterate over the cache entries
-   * for (const [key, value] of lru) {
-   *   results.push([key, value]);
-   * }
-   * expect(results).toStrictEqual([
-   *    ['key3', 'value3'], // Least recently used
-   *    ['key2', 'value2'], // Most recently used
-   * ]);
-   * ```
-   */
   *[Symbol.iterator](): IterableIterator<[TKey, TValue]> {
     let current = this.#tail;
 

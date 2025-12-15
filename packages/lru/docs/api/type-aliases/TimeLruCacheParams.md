@@ -1,6 +1,6 @@
-[**@httpx/lru v0.12.1**](../README.md)
+[**@httpx/lru v0.12.5**](../README.md)
 
-***
+---
 
 [@httpx/lru](../README.md) / TimeLruCacheParams
 
@@ -20,8 +20,8 @@ Default time to live for each entry in milliseconds
 
 ### TValue
 
-`TValue` *extends* [`SupportedCacheValues`](SupportedCacheValues.md) = [`SupportedCacheValues`](SupportedCacheValues.md)
+`TValue` _extends_ [`SupportedCacheValues`](SupportedCacheValues.md) = [`SupportedCacheValues`](SupportedCacheValues.md)
 
 ### TKey
 
-`TKey` *extends* [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`
+`TKey` _extends_ [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`

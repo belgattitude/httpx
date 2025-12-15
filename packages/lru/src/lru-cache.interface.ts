@@ -144,21 +144,29 @@ export interface ILruCache<
   /**
    * Iterate over the cache from the least recently used to the most recently used.
    *
+   * @example
    * ```typescript
+   * import { LruCache } from '@httpx/lru';
+   *
    * const lru = new LruCache({ maxSize: 2 });
+   *
+   * // 👇 Fill the cache with 3 entries
    * lru.set('key1', 'value1');
    * lru.set('key2', 'value2');
-   * lru.set('key3', 'value3');
-   * // trigger a get to move key2 to the head
-   * lru.get('key2');
+   * lru.set('key3', 'value3'); // 👈 Will evict key1 as maxSize is 2
+   *
+   * lru.get('key2'); // 👈 Trigger a get to move key2 to the head
+   *
    * const results = [];
-   * // iterate over the cache entries
+   *
+   * // 🖖 Iterate over the cache entries
    * for (const [key, value] of lru) {
    *   results.push([key, value]);
    * }
+   *
    * expect(results).toStrictEqual([
-   *    ['key3', 'value3'], // Least recently used
-   *    ['key2', 'value2'], // Most recently used
+   *    ['key3', 'value3'], // 👈  Least recently used first
+   *    ['key2', 'value2'], // 👈  Most recently used last
    * ]);
    * ```
    */

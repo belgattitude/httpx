@@ -9,7 +9,7 @@ declare global {
     Map<TimeLruCacheSingleInstanceName, TimeLruCache<any, any>> | undefined;
 }
 
-type Options = {
+export type GetOrCreateTimeLruCacheOptions = {
   onCreate?: <
     TValue extends SupportedCacheValues = SupportedCacheValues,
     TKey extends BaseCacheKeyTypes = string,
@@ -43,7 +43,7 @@ export const getOrCreateTimeLruCache = <
 >(
   name: TimeLruCacheSingleInstanceName,
   lruCacheParams: TimeLruCacheParams<TValue, TKey>,
-  options?: Options
+  options?: GetOrCreateTimeLruCacheOptions
 ): TimeLruCache<TValue, TKey> => {
   globalThis.__httpx_time_lru_cache_instances ??= new Map<
     TimeLruCacheSingleInstanceName,

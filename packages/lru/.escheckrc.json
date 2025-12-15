@@ -1,0 +1,16 @@
+[
+  {
+    "ecmaVersion": "es2022",
+    "module": true,
+    "files": ["dist/**/*.js"],
+    "not": ["**/*.ts", "**/*.map"],
+    "allowHashBang": false
+  },
+  {
+    "ecmaVersion": "es2022",
+    "module": false,
+    "files": ["dist/**/*.cjs"],
+    "not": ["**/*.ts", "**/*.map"],
+    "allowHashBang": false
+  }
+]

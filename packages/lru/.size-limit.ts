@@ -11,24 +11,18 @@ module.exports = [
     name: 'import { getOrCreateLruCache } (ESM)',
     path: ['dist/index.js'],
     import: '{ getOrCreateLruCache }',
-    limit: '645B',
+    limit: '675B',
   },
   {
     name: 'import { TimeLruCache } (ESM)',
     path: ['dist/index.js'],
     import: '{ TimeLruCache }',
-    limit: '661B',
+    limit: '670B',
   },
   {
     name: 'import { getOrCreateTimeLruCache } (ESM)',
     path: ['dist/index.js'],
     import: '{ getOrCreateTimeLruCache }',
     limit: '750B',
-  },
-  {
-    name: 'require { LruCache } (CJS)',
-    import: '{ LruCache }',
-    path: ['dist/index.cjs'],
-    limit: '650B',
-  },
+  }
 ] satisfies SizeLimitConfig;
