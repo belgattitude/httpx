@@ -1,6 +1,6 @@
-[**@httpx/lru v0.12.1**](../README.md)
+[**@httpx/lru v0.12.5**](../README.md)
 
-***
+---
 
 [@httpx/lru](../README.md) / LruCacheParams
 
@@ -12,11 +12,11 @@
 
 ### TValue
 
-`TValue` *extends* [`SupportedCacheValues`](SupportedCacheValues.md) = [`SupportedCacheValues`](SupportedCacheValues.md)
+`TValue` _extends_ [`SupportedCacheValues`](SupportedCacheValues.md) = [`SupportedCacheValues`](SupportedCacheValues.md)
 
 ### TKey
 
-`TKey` *extends* [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`
+`TKey` _extends_ [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`
 
 ## Properties
 
@@ -26,7 +26,7 @@
 
 The maximum number of items that the cache can hold.
 
-***
+---
 
 ### onEviction()?
 
@@ -49,7 +49,7 @@ Useful for side effects or for items like object URLs that need explicit cleanup
 
 `void`
 
-***
+---
 
 ### touchOnHas?
 
@@ -60,5 +60,5 @@ If true, the item will be marked as recently used when calling has.
 #### Default
 
 ```ts
-false
+false;
 ```

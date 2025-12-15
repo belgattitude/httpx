@@ -22,13 +22,13 @@
   "sideEffects": false,
   "type": "module",
   "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
+        "default": "./dist/index.js"
       },
       "require": {
         "types": "./dist/index.d.cts",
@@ -42,7 +42,7 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsup",
+    "build": "run clean && tsdown",
     "build-release": "run build",
     "bench": "vitest bench --run",
     "bench-bun": "bun --bun run vitest bench --run",
@@ -50,13 +50,11 @@
     "bench-watch": "vitest bench",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
-    "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check es2022 './dist/**/*.cjs' --not './dist/*.map.js'",
-    "check-dist-esm": "es-check es2022 './dist/**/*.mjs' --not './dist/*.map.js' --module",
+    "check-dist": "es-check --config=.escheckrc.json",
     "check-pub": "attw --pack && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
-    "dev": "tsup --watch",
+    "dev": "tsdown --watch",
     "fix-staged": "lint-staged --allow-empty",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/lru.eslintcache",
     "test": "vitest run",
@@ -73,32 +71,31 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@belgattitude/eslint-config-bases": "8.7.1",
+    "@belgattitude/eslint-config-bases": "8.8.0",
     "@httpx/devtools-vitest": "workspace:^",
+    "@size-limit/esbuild": "12.0.0",
     "@size-limit/file": "12.0.0",
-    "@size-limit/webpack": "12.0.0",
     "@types/lodash-es": "4.17.12",
-    "browserslist": "4.28.0",
+    "browserslist": "4.28.1",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
-    "es-check": "9.5.0",
+    "es-check": "9.5.2",
     "esbuild": "0.27.1",
     "eslint": "8.57.1",
     "lru-cache": "11.2.4",
     "npm-run-all2": "8.0.4",
     "prettier": "3.7.4",
-    "publint": "0.3.15",
+    "publint": "0.3.16",
     "quick-lru": "7.3.0",
     "rimraf": "6.1.2",
     "size-limit": "12.0.0",
-    "tsup": "8.5.1",
+    "tsdown": "0.18.0",
     "typedoc": "0.28.15",
     "typedoc-plugin-markdown": "4.9.0",
     "typescript": "5.9.3",
-    "vitest": "4.0.15",
-    "webpack": "5.103.0"
+    "vitest": "4.0.15"
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=18"
   }
 }
