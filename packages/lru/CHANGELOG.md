@@ -1,5 +1,29 @@
 # @httpx/lru
 
+## 0.13.0
+
+### Minor Changes
+
+- [#2657](https://github.com/belgattitude/httpx/pull/2657) [`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748) Thanks [@belgattitude](https://github.com/belgattitude)! - The build now contains sourcemaps and declaration maps in
+  esm usage. This allows to browse the source code directly from the IDE
+  and provides useful debugging when necessary.
+
+- [#2657](https://github.com/belgattitude/httpx/pull/2657) [`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748) Thanks [@belgattitude](https://github.com/belgattitude)! - The distributed js files aren't mangled anymore and should
+  be more readable, auditable and allow patching with tools like patch package...
+
+- [#2657](https://github.com/belgattitude/httpx/pull/2657) [`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748) Thanks [@belgattitude](https://github.com/belgattitude)! - Update browserslist targets.
+
+  `defaults, > 0.26%, last 2 versions, Firefox ESR, not dead`
+
+- [#2657](https://github.com/belgattitude/httpx/pull/2657) [`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748) Thanks [@belgattitude](https://github.com/belgattitude)! - Build with tsdown 0.18.0
+
+  Removed tsup in favour of tsdown to improve build times and
+  correctness.
+
+### Patch Changes
+
+- [#2657](https://github.com/belgattitude/httpx/pull/2657) [`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix the jsdoc comments for iterator to the ITimeLruCache interface.
+
 ## 0.12.5
 
 ### Patch Changes

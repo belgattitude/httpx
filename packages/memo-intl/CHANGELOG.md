@@ -1,5 +1,12 @@
 # @httpx/memo-intl
 
+## 1.4.9
+
+### Patch Changes
+
+- Updated dependencies [[`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748), [`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748), [`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748), [`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748), [`4878acb`](https://github.com/belgattitude/httpx/commit/4878acb749b803060d052c5d501102b0ccab9748)]:
+  - @httpx/lru@0.13.0
+
 ## 1.4.8
 
 ### Patch Changes
