@@ -1,5 +1,11 @@
 # @httpx/xcache
 
+## 0.4.11
+
+### Patch Changes
+
+- [#2659](https://github.com/belgattitude/httpx/pull/2659) [`b05d4f6`](https://github.com/belgattitude/httpx/commit/b05d4f60f06da0a33235345dd932ed9cd6467b48) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix jsdoc and improve readme
+
 ## 0.4.10
 
 ### Patch Changes
