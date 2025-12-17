@@ -1,6 +1,6 @@
-[**@httpx/treeu v0.5.3**](../README.md)
+[**@httpx/treeu v0.5.7**](../README.md)
 
-***
+---
 
 [@httpx/treeu](../README.md) / FlatTreeWsMapper
 
@@ -10,11 +10,11 @@
 
 ### TValue
 
-`TValue` *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md)
+`TValue` _extends_ [`TreeNodeValue`](../type-aliases/TreeNodeValue.md)
 
 ### TKey
 
-`TKey` *extends* `string` = `string`
+`TKey` _extends_ `string` = `string`
 
 ## Constructors
 
@@ -38,7 +38,7 @@ Will convert a tree of nodes to a flat tree.
 
 ##### TId
 
-`TId` *extends* `string` = `string`
+`TId` _extends_ `string` = `string`
 
 #### Parameters
 
@@ -56,7 +56,7 @@ Will convert a tree of nodes to a flat tree.
 
 `FlatTreeWsMap`\<`TValue`, `TKey`\>
 
-***
+---
 
 ### toTreeNodes()
 
@@ -76,7 +76,7 @@ Will convert a tree of nodes to a flat tree.
 
 `TreeMapperResult`\<`TValue`, `TKey`\>
 
-***
+---
 
 ### toTreeNodesOrThrow()
 

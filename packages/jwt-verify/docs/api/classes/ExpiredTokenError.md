@@ -1,6 +1,6 @@
-[**@httpx/jwt-verify v0.1.2**](../README.md)
+[**@httpx/jwt-verify v0.1.7**](../README.md)
 
-***
+---
 
 [@httpx/jwt-verify](../README.md) / ExpiredTokenError
 
@@ -66,7 +66,7 @@
 
 `TypedError.type`
 
-***
+---
 
 ### \[hasInstance\]()
 

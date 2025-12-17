@@ -1,6 +1,6 @@
-[**@httpx/compress v0.3.6**](../README.md)
+[**@httpx/compress v0.3.10**](../README.md)
 
-***
+---
 
 [@httpx/compress](../README.md) / Decompressor
 
@@ -31,14 +31,15 @@
 Decompress a compressed string and return it as a string
 
 ```typescript
-import { Decompressor } from '@httpx/compress';
+import { Decompressor } from "@httpx/compress";
 
-const decompressor = new Decompressor('gzip');
+const decompressor = new Decompressor("gzip");
 
 // Previously compressed with Compressor.toEncodedString()
-const compressedString = 'H4sIAAAAAAAAAwvJLS5R4gUAFvQ7FwAAAA==';
+const compressedString = "H4sIAAAAAAAAAwvJLS5R4gUAFvQ7FwAAAA==";
 
-const decompressedString = await decompressor.fromEncodedString(compressedString);
+const decompressedString =
+  await decompressor.fromEncodedString(compressedString);
 ```
 
 #### Parameters
@@ -59,7 +60,7 @@ const decompressedString = await decompressor.fromEncodedString(compressedString
 
 Error
 
-***
+---
 
 ### fromUint8Array()
 
@@ -68,8 +69,8 @@ Error
 Decompress a compressed Uint8Array and return it as a Uint8Array
 
 ```typescript
-import { Decompressor } from '@httpx/compress';
-const decompressor = new Decompressor('gzip');
+import { Decompressor } from "@httpx/compress";
+const decompressor = new Decompressor("gzip");
 const decompressed = await decompressor.fromUint8Array(compressedData);
 ```
 

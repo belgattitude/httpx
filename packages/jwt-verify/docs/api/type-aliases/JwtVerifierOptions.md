@@ -1,6 +1,6 @@
-[**@httpx/jwt-verify v0.1.2**](../README.md)
+[**@httpx/jwt-verify v0.1.7**](../README.md)
 
-***
+---
 
 [@httpx/jwt-verify](../README.md) / JwtVerifierOptions
 
@@ -14,7 +14,7 @@
 
 > `optional` **audience**: `string` \| `string`[]
 
-***
+---
 
 ### authorityHost
 
@@ -22,25 +22,25 @@
 
 The authority host URL, e.g. https://login.microsoftonline.com for azure
 
-***
+---
 
 ### clockToleranceSec?
 
 > `optional` **clockToleranceSec**: `number`
 
-***
+---
 
 ### expectedIssuer?
 
 > `optional` **expectedIssuer**: `string`
 
-***
+---
 
 ### schema?
 
 > `optional` **schema**: `StandardSchemaV1`\<`unknown`\>
 
-***
+---
 
 ### tenantId
 

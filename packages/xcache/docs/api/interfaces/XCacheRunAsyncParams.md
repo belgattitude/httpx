@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.5**](../README.md)
+[**@httpx/xcache v0.4.10**](../README.md)
 
-***
+---
 
 [@httpx/xcache](../README.md) / XCacheRunAsyncParams
 
@@ -10,7 +10,7 @@
 
 ### TFunction
 
-`TFunction` *extends* [`CacheableAsyncFunction`](../type-aliases/CacheableAsyncFunction.md)
+`TFunction` _extends_ [`CacheableAsyncFunction`](../type-aliases/CacheableAsyncFunction.md)
 
 ## Properties
 
@@ -28,19 +28,19 @@
 
 `Awaited`\<`ReturnType`\<`TFunction`\>\>
 
-***
+---
 
 ### key
 
 > **key**: `CacheKeyTuple`
 
-***
+---
 
 ### namespace?
 
 > `optional` **namespace**: `string`
 
-***
+---
 
 ### ttl?
 

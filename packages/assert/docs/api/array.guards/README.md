@@ -1,6 +1,6 @@
-[**@httpx/assert v0.16.3**](../README.md)
+[**@httpx/assert v0.16.7**](../README.md)
 
-***
+---
 
 [@httpx/assert](../README.md) / array.guards
 

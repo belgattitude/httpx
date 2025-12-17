@@ -1,6 +1,6 @@
-[**@httpx/json-api v0.6.3**](../README.md)
+[**@httpx/json-api v0.6.7**](../README.md)
 
-***
+---
 
 [@httpx/json-api](../README.md) / JsonApiResponseFactory
 
@@ -38,7 +38,7 @@ fallback http status if not present in JsonApiError
 
 [`JsonApiErrorResponse`](../type-aliases/JsonApiErrorResponse.md)
 
-***
+---
 
 ### fromSuccess()
 

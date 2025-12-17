@@ -1,6 +1,6 @@
-[**@httpx/assert v0.16.3**](../../README.md)
+[**@httpx/assert v0.16.7**](../../README.md)
 
-***
+---
 
 [@httpx/assert](../../README.md) / [object.asserts](../README.md) / assertPlainObject
 
@@ -8,7 +8,7 @@
 
 > **assertPlainObject**\<`TValue`\>(`v`, `msgOrErrorFactory?`): `asserts v is TValue extends DefaultBasePlainObject ? BasePlainObject : PlainObject<TValue>`
 
-Defined in: [object.asserts.ts:45](https://github.com/belgattitude/httpx/blob/9b2cbd569895f8040210d7274ce6ead66a415c7d/packages/assert/src/object.asserts.ts#L45)
+Defined in: [object.asserts.ts:45](https://github.com/belgattitude/httpx/blob/38d880ecf05f1934d921b8525130cab1b4a6f511/packages/assert/src/object.asserts.ts#L45)
 
 Assert a value is a plain object
 
@@ -16,7 +16,7 @@ Assert a value is a plain object
 
 ### TValue
 
-`TValue` *extends* [`BasePlainObject`](../../object.internal.types/type-aliases/BasePlainObject.md) = [`DefaultBasePlainObject`](../../object.internal.types/interfaces/DefaultBasePlainObject.md)
+`TValue` _extends_ [`BasePlainObject`](../../object.internal.types/type-aliases/BasePlainObject.md) = [`DefaultBasePlainObject`](../../object.internal.types/interfaces/DefaultBasePlainObject.md)
 
 ## Parameters
 
@@ -35,31 +35,30 @@ Assert a value is a plain object
 ## Example
 
 ```typescript
-import { assertPlainObject } from '@httpx/plain-object';
-import type { PlainObject } from '@httpx/plain-object';
+import { assertPlainObject } from "@httpx/plain-object";
+import type { PlainObject } from "@httpx/plain-object";
 
 function fn(value: unknown) {
+  // 👇 Throws `new TypeError('Not a plain object')` if not a plain object
+  assertPlainObject(value);
 
-    // 👇 Throws `new TypeError('Not a plain object')` if not a plain object
-    assertPlainObject(value);
+  // 👇 Throws `new TypeError('Custom message')` if not a plain object
+  assertPlainObject(value, "Custom message");
 
-    // 👇 Throws `new TypeError('Custom message')` if not a plain object
-    assertPlainObject(value, 'Custom message');
+  // 👇 Throws custom error if not a plain object
+  assertPlainObject(value, () => {
+    throw new HttpBadRequest("Custom message");
+  });
 
-    // 👇 Throws custom error if not a plain object
-    assertPlainObject(value, () => {
-        throw new HttpBadRequest('Custom message');
-    });
-
-    return value;
+  return value;
 }
 
 try {
-    const value = fn({ key: 'value' });
-    // ✅ Value is known to be PlainObject<unknown>
-    assertType<PlainObject>(value);
+  const value = fn({ key: "value" });
+  // ✅ Value is known to be PlainObject<unknown>
+  assertType<PlainObject>(value);
 } catch (error) {
-    console.error(error);
+  console.error(error);
 }
 ```
 

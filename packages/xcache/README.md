@@ -9,7 +9,7 @@
 [![downloads](https://img.shields.io/npm/dm/@httpx/xcache?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/xcache)
 [![license](https://img.shields.io/npm/l/@httpx/xcache?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
-In memory cache utility 
+In memory cache utility
 
 ## Install
 
@@ -21,7 +21,7 @@ $ pnpm add @httpx/xcache
 
 ## Features
 
-- 📐&nbsp; Lightweight (starts at [~800B](#bundle-size)) 
+- 📐&nbsp; Lightweight (starts at [~800B](#bundle-size))
 - 🛡️&nbsp; Tested on [node 20-24, bun, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
@@ -29,67 +29,87 @@ $ pnpm add @httpx/xcache
 
 ## Simple usage
 
-
 ```typescript
-import { XMemCache, TimeLruCache } from '@httpx/xcache';
+import { XMemCache, TimeLruCache } from "@httpx/xcache";
 
-const xMemCache = new XMemCache({ 
-    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }), 
-    namespace: 'default' 
+const xMemCache = new XMemCache({
+  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+  namespace: "default",
 });
 
 const fetchSmth = async (params: { id: number }) => {
   return { id: params.id, data: `Data for ${params.id}` };
-}
+};
 
 const params = { id: 1 };
 
 const { data } = await xMemCache.runAsync({
- key: ['/api/data', params],
- fn: () => fetchSmth(params),
-})
+  key: ["/api/data", params],
+  fn: () => fetchSmth(params),
+});
 
 // data: { id: 1, data: 'Data for 1' }
-
 ```
 
 ## With compression
 
 You can use compression to reduce the size of the cached data. The library supports `gzip` compression algorithm
-To be able to serialize and deserialize the data, you can use adapters like `DevalueSerializer` (fastest), 
+To be able to serialize and deserialize the data, you can use adapters like `DevalueSerializer`,
 `SuperjsonSerializer` or `JsonSerializer`.
 
 ```typescript
-import { XMemCache, TimeLruCache, CacheCompress, DevalueSerializer  } from '@httpx/xcache';
+import {
+  XMemCache,
+  TimeLruCache,
+  CacheCompress,
+  SuperjsonSerializer,
+} from "@httpx/xcache";
 
-const xMemCache = new XMemCache({ 
-    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
-    compressor: new CacheCompress({
-      algorithm: 'deflate', // 'gzip' or 'deflate'
-      serializer: new DevalueSerializer(),
-    }),
+const xMemCache = new XMemCache({
+  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+
+  compressor: new CacheCompress({
+    // To enable compression the data needs to be serialized
+    // Choose between SuperJsonSerializer, DevalueSerializer, JsonSerializer
+    serializer: new SuperjsonSerializer(),
+    algorithm: "gzip", // or 'deflate'
+
+    // Skip compression if the achieved compression ratio is less than
+    // the provided ratio. 1.3 means that the compression will be skipped
+    // if the ratio does not give at least 30% memory reduction
+    // @default 1.3
+    minimumRatio: 1.3,
+
+    // Skip compression if the result is a string shorter than 1000 characters
+    // @default 1000
+    minimumStringLength: 1000,
+
+    // Skip compression if the achieved byte saving is less than 16 KB
+    // @default 16_384
+    minimumByteSaving: 16_384,
+  }),
 });
 
 const fetchThings = async (params: { name: string }) => {
-    return {
-        message: `Hello ${params.name}`,
-        bigint: BigInt('1234567890123456789012345678901234567890'),
-        date: new Date(),
-    };
+  return {
+    message: `Hello ${params.name}`,
+    bigint: BigInt("1234567890123456789012345678901234567890"),
+    date: new Date(),
+  };
 };
 
+// Params will be hashed through @httpx/stable-hash
+const params = { name: "cool", createdAt: new Date() };
+
 const { data } = await xMemCache.runAsync({
- key: ['/api/data', { name: 'cool' }],
- fn: () => fetchThings({ name: 'cool'}),
-})
-
+  key: ["/api/data", params],
+  fn: () => fetchThings(params),
+});
 ```
-
-
 
 ## Benchmarks
 
-> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx). 
+> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx).
 >
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
@@ -169,21 +189,21 @@ const { data } = await xMemCache.runAsync({
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/xcache/.size-limit.ts)
 
-| Scenario (esm)                              | Size (compressed) |
-|---------------------------------------------|------------------:|
-| `import { XMemCache } from '@httpx/xcache`  |            ~ 800B |
+| Scenario (esm)                             | Size (compressed) |
+| ------------------------------------------ | ----------------: |
+| `import { XMemCache } from '@httpx/xcache` |            ~ 800B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/xcache@latest).
 
 ## Compatibility
 
-| Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                                 |
-|--------------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
+| Level        | CI  | Description                                                                                                                                                                                                                                                                                                                                                                                 |
+| ------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Node         | ✅  | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                             |
 | Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                               |
 | Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/xcache/.browserslistrc) |
-| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                              |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                          | 
+| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                            |
+| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                          |
 | Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                            |
 | Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                               |
 | ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                |

@@ -1,6 +1,6 @@
-[**@httpx/treeu v0.5.3**](../README.md)
+[**@httpx/treeu v0.5.7**](../README.md)
 
-***
+---
 
 [@httpx/treeu](../README.md) / TreeNode
 
@@ -12,8 +12,8 @@
 
 ### TValue
 
-`TValue` *extends* [`TreeNodeValue`](TreeNodeValue.md) \| `undefined` = `undefined`
+`TValue` _extends_ [`TreeNodeValue`](TreeNodeValue.md) \| `undefined` = `undefined`
 
 ### TId
 
-`TId` *extends* `TreeNodeValidId` = `string`
+`TId` _extends_ `TreeNodeValidId` = `string`

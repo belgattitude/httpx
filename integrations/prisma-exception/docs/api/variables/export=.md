@@ -1,6 +1,6 @@
 [**prisma-exception**](../README.md)
 
-***
+---
 
 [prisma-exception](../globals.md) / export=
 
@@ -8,7 +8,7 @@
 
 > **export=**: `object`
 
-Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be639560bf9f70b6b098dd34d58905b4af4/integrations/prisma-exception/package.json#L1)
+Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ecf05f1934d921b8525130cab1b4a6f511/integrations/prisma-exception/package.json#L1)
 
 ## Type Declaration
 
@@ -46,19 +46,19 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be6
 
 #### devDependencies.@belgattitude/eslint-config-bases
 
-> **@belgattitude/eslint-config-bases**: `string` = `"8.4.0"`
+> **@belgattitude/eslint-config-bases**: `string` = `"8.8.0"`
 
 #### devDependencies.@size-limit/file
 
-> **@size-limit/file**: `string` = `"11.2.0"`
+> **@size-limit/file**: `string` = `"12.0.0"`
 
 #### devDependencies.@size-limit/webpack
 
-> **@size-limit/webpack**: `string` = `"11.2.0"`
+> **@size-limit/webpack**: `string` = `"12.0.0"`
 
 #### devDependencies.@size-limit/webpack-why
 
-> **@size-limit/webpack-why**: `string` = `"11.2.0"`
+> **@size-limit/webpack-why**: `string` = `"12.0.0"`
 
 #### devDependencies.@types/node
 
@@ -66,15 +66,15 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be6
 
 #### devDependencies.@vitest/coverage-istanbul
 
-> **@vitest/coverage-istanbul**: `string` = `"4.0.14"`
+> **@vitest/coverage-istanbul**: `string` = `"4.0.16"`
 
 #### devDependencies.@vitest/ui
 
-> **@vitest/ui**: `string` = `"4.0.14"`
+> **@vitest/ui**: `string` = `"4.0.16"`
 
 #### devDependencies.browserslist
 
-> **browserslist**: `string` = `"4.28.0"`
+> **browserslist**: `string` = `"4.28.1"`
 
 #### devDependencies.browserslist-to-esbuild
 
@@ -86,11 +86,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be6
 
 #### devDependencies.es-check
 
-> **es-check**: `string` = `"9.4.5"`
+> **es-check**: `string` = `"9.5.2"`
 
 #### devDependencies.esbuild
 
-> **esbuild**: `string` = `"0.27.0"`
+> **esbuild**: `string` = `"0.27.2"`
 
 #### devDependencies.eslint
 
@@ -102,11 +102,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be6
 
 #### devDependencies.prettier
 
-> **prettier**: `string` = `"3.6.2"`
+> **prettier**: `string` = `"3.7.4"`
 
 #### devDependencies.publint
 
-> **publint**: `string` = `"0.3.15"`
+> **publint**: `string` = `"0.3.16"`
 
 #### devDependencies.rimraf
 
@@ -114,7 +114,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be6
 
 #### devDependencies.size-limit
 
-> **size-limit**: `string` = `"11.2.0"`
+> **size-limit**: `string` = `"12.0.0"`
 
 #### devDependencies.tsup
 
@@ -122,7 +122,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be6
 
 #### devDependencies.typedoc
 
-> **typedoc**: `string` = `"0.28.14"`
+> **typedoc**: `string` = `"0.28.15"`
 
 #### devDependencies.typedoc-plugin-markdown
 
@@ -138,7 +138,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be6
 
 #### devDependencies.vitest
 
-> **vitest**: `string` = `"4.0.14"`
+> **vitest**: `string` = `"4.0.16"`
 
 #### devDependencies.webpack
 
@@ -296,14 +296,6 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be6
 
 > **lint-timing**: `string` = `"cross-env TIMING=1 run lint"`
 
-#### scripts.prettier-check
-
-> **prettier-check**: `string` = `"run --top-level prettier --check --cache --cache-location=\"../../.cache/prettier/prisma-exception.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\""`
-
-#### scripts.prettier-fix
-
-> **prettier-fix**: `string` = `"run --top-level prettier --write --cache --cache-location=\"../../.cache/prettier/prisma-exception.prettiercache\" --config ../../.prettierrc.js --ignore-path ../../.prettierignore \"./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,md,mdx,json,css,scss,less}\""`
-
 #### scripts.test
 
 > **test**: `string` = `"vitest run"`
@@ -338,4 +330,4 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/55aa6be6
 
 ### version
 
-> **version**: `string` = `"0.0.21"`
+> **version**: `string` = `"0.0.24"`

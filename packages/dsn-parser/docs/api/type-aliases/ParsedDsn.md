@@ -1,6 +1,6 @@
-[**@httpx/dsn-parser v1.9.4**](../README.md)
+[**@httpx/dsn-parser v1.9.8**](../README.md)
 
-***
+---
 
 [@httpx/dsn-parser](../README.md) / ParsedDsn
 
@@ -14,19 +14,19 @@
 
 > `optional` **db**: `string`
 
-***
+---
 
 ### driver
 
 > **driver**: `string`
 
-***
+---
 
 ### host
 
 > **host**: `string`
 
-***
+---
 
 ### params?
 
@@ -34,19 +34,19 @@
 
 Query params
 
-***
+---
 
 ### pass?
 
 > `optional` **pass**: `string`
 
-***
+---
 
 ### port?
 
 > `optional` **port**: `number`
 
-***
+---
 
 ### user?
 

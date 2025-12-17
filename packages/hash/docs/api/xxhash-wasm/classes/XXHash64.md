@@ -1,6 +1,6 @@
-[**@httpx/hash v0.2.0**](../../README.md)
+[**@httpx/hash v0.2.4**](../../README.md)
 
-***
+---
 
 [@httpx/hash](../../README.md) / [xxhash-wasm](../README.md) / XXHash64
 
@@ -9,12 +9,12 @@
 XXHash64 hasher using WebAssembly implementation from `xxhash-wasm`.
 
 ```typescript
-import { createXXWasmHasher } from '@httpx/hash/xxhash-wasm';
+import { createXXWasmHasher } from "@httpx/hash/xxhash-wasm";
 export const xxWasm = await createXXWasmHasher({
   defaultSeed: 0n, // optional
 });
 
-const hash = xxWasm.toBigint('some input string');
+const hash = xxWasm.toBigint("some input string");
 ```
 
 ## See
@@ -69,7 +69,7 @@ Return a 64-bit unsigned integer hash as a bigint using XXHash64 algorithm.
 
 `bigint`
 
-***
+---
 
 ### toSigned64()
 

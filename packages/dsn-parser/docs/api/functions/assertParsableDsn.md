@@ -1,6 +1,6 @@
-[**@httpx/dsn-parser v1.9.4**](../README.md)
+[**@httpx/dsn-parser v1.9.8**](../README.md)
 
-***
+---
 
 [@httpx/dsn-parser](../README.md) / assertParsableDsn
 

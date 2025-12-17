@@ -1,6 +1,6 @@
-[**@httpx/compress v0.3.6**](../README.md)
+[**@httpx/compress v0.3.10**](../README.md)
 
-***
+---
 
 [@httpx/compress](../README.md) / Compressor
 
@@ -15,12 +15,12 @@
 Create a new Compressor instance.
 
 ```typescript
-import { Compressor } from '@httpx/compress';
+import { Compressor } from "@httpx/compress";
 
-const compressor = new Compressor('gzip'); // or 'deflate'
+const compressor = new Compressor("gzip"); // or 'deflate'
 
-const binary = await compressor.toUint8Array('Hello, World! 🦆');
-const textEncoded = await compressor.toEncodedString('Hello, World! 🦆');
+const binary = await compressor.toUint8Array("Hello, World! 🦆");
+const textEncoded = await compressor.toEncodedString("Hello, World! 🦆");
 ```
 
 #### Parameters
@@ -42,14 +42,14 @@ const textEncoded = await compressor.toEncodedString('Hello, World! 🦆');
 Compress the given data and return it as a base64 encoded string.
 
 ```typescript
-import { Compressor } from '@httpx/compress';
+import { Compressor } from "@httpx/compress";
 
-const compressor = new Compressor('gzip');
-const longString = 'Hello, World! 🦆'.repeat(500_000);
+const compressor = new Compressor("gzip");
+const longString = "Hello, World! 🦆".repeat(500_000);
 
 const compressedString = await compressor.toEncodedString(longString, {
   // Default is 'base64'
-  encoding: 'base64',
+  encoding: "base64",
 });
 ```
 
@@ -57,7 +57,7 @@ const compressedString = await compressor.toEncodedString(longString, {
 
 ##### T
 
-`T` *extends* `string` \| `Uint8Array`\<`ArrayBufferLike`\>
+`T` _extends_ `string` \| `Uint8Array`\<`ArrayBufferLike`\>
 
 #### Parameters
 
@@ -77,7 +77,7 @@ const compressedString = await compressor.toEncodedString(longString, {
 
 TypeError if the encoding is not supported
 
-***
+---
 
 ### toUint8Array()
 
@@ -86,10 +86,10 @@ TypeError if the encoding is not supported
 Compress the given data and return it as a Uint8Array binary format
 
 ```typescript
-import { Compressor } from '@httpx/compress';
+import { Compressor } from "@httpx/compress";
 
-const compressor = new Compressor('gzip');
-const longString = 'Hello, World! 🦆'.repeat(500_000);
+const compressor = new Compressor("gzip");
+const longString = "Hello, World! 🦆".repeat(500_000);
 const compressedBinary = await compressor.Uint8Array(longString);
 ```
 
@@ -97,7 +97,7 @@ const compressedBinary = await compressor.Uint8Array(longString);
 
 ##### T
 
-`T` *extends* `string` \| `Uint8Array`\<`ArrayBufferLike`\>
+`T` _extends_ `string` \| `Uint8Array`\<`ArrayBufferLike`\>
 
 #### Parameters
 

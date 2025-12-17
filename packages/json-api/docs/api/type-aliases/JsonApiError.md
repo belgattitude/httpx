@@ -1,6 +1,6 @@
-[**@httpx/json-api v0.6.3**](../README.md)
+[**@httpx/json-api v0.6.7**](../README.md)
 
-***
+---
 
 [@httpx/json-api](../README.md) / JsonApiError
 
@@ -20,7 +20,7 @@ https://jsonapi.org/format/#errors
 
 an application-specific error code, expressed as a string value.
 
-***
+---
 
 ### detail?
 
@@ -28,7 +28,7 @@ an application-specific error code, expressed as a string value.
 
 a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized.
 
-***
+---
 
 ### id?
 
@@ -36,7 +36,7 @@ a human-readable explanation specific to this occurrence of the problem. Like ti
 
 a unique identifier for this particular occurrence of the problem.
 
-***
+---
 
 ### meta?
 
@@ -44,7 +44,7 @@ a unique identifier for this particular occurrence of the problem.
 
 a meta object containing non-standard meta-information about the error.
 
-***
+---
 
 ### parameter?
 
@@ -52,7 +52,7 @@ a meta object containing non-standard meta-information about the error.
 
 a string indicating which URI query parameter caused the error.
 
-***
+---
 
 ### status?
 
@@ -60,7 +60,7 @@ a string indicating which URI query parameter caused the error.
 
 the HTTP status code applicable to this problem, expressed as a string value.
 
-***
+---
 
 ### title
 

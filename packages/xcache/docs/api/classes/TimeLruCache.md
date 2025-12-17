@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.5**](../README.md)
+[**@httpx/xcache v0.4.10**](../README.md)
 
-***
+---
 
 [@httpx/xcache](../README.md) / TimeLruCache
 
@@ -12,11 +12,11 @@ Double linked list based lru cache that supports get in O(1) and time to live fo
 
 ### TValue
 
-`TValue` *extends* `SupportedCacheValues` = `SupportedCacheValues`
+`TValue` _extends_ `SupportedCacheValues` = `SupportedCacheValues`
 
 ### TKey
 
-`TKey` *extends* `BaseCacheKeyTypes` = `string`
+`TKey` _extends_ `BaseCacheKeyTypes` = `string`
 
 ## Implements
 
@@ -46,18 +46,21 @@ Create a new LruCache instance
 #### Example
 
 ```typescript
-import { TimeLruCache } from '@httpx/lru';
+import { TimeLruCache } from "@httpx/lru";
 
-const THIRTY_SECONDS_IN_MILLIS = 30_000
+const THIRTY_SECONDS_IN_MILLIS = 30_000;
 
-const lru = new TimeLruCache({ maxSize: 1000, defaultTTL: THIRTY_SECONDS_IN_MILLIS});
-lru.set('🦄', ['cool', 'stuff'], THIRTY_SECONDS_IN_MILLIS);
-if (lru.has('🦄')) {;
- console.log(lru.get('🦄'));
- // ['cool', 'stuff']
+const lru = new TimeLruCache({
+  maxSize: 1000,
+  defaultTTL: THIRTY_SECONDS_IN_MILLIS,
+});
+lru.set("🦄", ["cool", "stuff"], THIRTY_SECONDS_IN_MILLIS);
+if (lru.has("🦄")) {
+  console.log(lru.get("🦄"));
+  // ['cool', 'stuff']
 }
 console.log(lru.size); // 1
-lru.delete('🦄');
+lru.delete("🦄");
 console.log(lru.size); // 0
 lru.clear();
 ```
@@ -88,7 +91,7 @@ Return the current size of the cache
 
 `ITimeLruCache.params`
 
-***
+---
 
 ### size
 
@@ -112,26 +115,6 @@ Return the current number of entries in the cache
 
 > **\[iterator\]**(): `IterableIterator`\<\[`TKey`, `TValue`\]\>
 
-Iterate over the cache from the least recently used to the most recently used.
-
-```typescript
-const lru = new LruCache({ maxSize: 2 });
-lru.set('key1', 'value1');
-lru.set('key2', 'value2');
-lru.set('key3', 'value3');
-// trigger a get to move key2 to the head
-lru.get('key2');
-const results = [];
-// iterate over the cache entries
-for (const [key, value] of lru) {
-  results.push([key, value]);
-}
-expect(results).toStrictEqual([
-   ['key3', 'value3'], // Least recently used
-   ['key2', 'value2'], // Most recently used
-]);
-```
-
 #### Returns
 
 `IterableIterator`\<\[`TKey`, `TValue`\]\>
@@ -140,7 +123,7 @@ expect(results).toStrictEqual([
 
 `ITimeLruCache.[iterator]`
 
-***
+---
 
 ### clear()
 
@@ -156,7 +139,7 @@ Clear all entries from the cache and return the number of deleted items
 
 `ITimeLruCache.clear`
 
-***
+---
 
 ### delete()
 
@@ -179,7 +162,7 @@ if the item was actually deleted in case it exist.
 
 `ITimeLruCache.delete`
 
-***
+---
 
 ### get()
 
@@ -191,16 +174,16 @@ has expired.
 Item will be marked as most recently used.
 
 ```typescript
-import { TimeLruCache } from '@httpx/lru';
+import { TimeLruCache } from "@httpx/lru";
 
 const lru = new TimeLruCache({
   maxSize: 1,
   defaultTTL: 30_000, // 30 seconds
 });
 
-lru.set('key0', 'value0');
-lru.get('key0');   // 👈 'value0'
-lru.get('key1');   // 👈 undefined
+lru.set("key0", "value0");
+lru.get("key0"); // 👈 'value0'
+lru.get("key1"); // 👈 undefined
 ```
 
 #### Parameters
@@ -217,25 +200,31 @@ lru.get('key1');   // 👈 undefined
 
 `ITimeLruCache.get`
 
-***
+---
 
 ### getOrSet()
 
 > **getOrSet**\<`T`\>(`key`, `valueOrFn`, `ttl?`): `T`
 
 Get an item from the cache, if the item doesn't exist or has expired
-it will create a new entry with the provided value and returns it.
+it will create a new entry with the provided value or function and returns it.
 
-In case of a new entry:
- - it will be marked as most recently used.
- - an eviction will be triggered if the maximum capacity is reached
-   or the item has expired.
+In case of a new entry (key either doesn't exist or has expired):
+
+- the provided value or the result of the function will be used as value.
+- it will be marked as most recently used.
+- an eviction will be triggered if the maximum capacity is reached
+
+In case the item exists and hasn't expired:
+
+- the existing value will be returned.
+- it will be marked as most recently used.
 
 #### Type Parameters
 
 ##### T
 
-`T` *extends* `SupportedCacheValues`
+`T` _extends_ `SupportedCacheValues`
 
 #### Parameters
 
@@ -258,24 +247,28 @@ In case of a new entry:
 #### Example
 
 ```typescript
-const lru = new TimeLruCache({ maxSize: 2 });
-lru.set('key1', 'value1');
-lru.getOrSet('key1', () => 'value2');  // 👈 'value1' (entry exists)
-lru.getOrSet('key2', () => 'value2');  // 👈 'value2' (new entry)
-lru.has('key2');                       // 👈 true (it was added)
-lru.get('key1');                       // 👈 'value1'
+const lru = new TimeLruCache({ maxSize: 2, defaultTTL: 30_000 });
 
-// Will trigger an eviction as capacity (2) is reached.
-lru.getOrSet('key3', () => 'value3');
+// The key exists and hasn't expired
+lru.set("key1", "value1");
+lru.getOrSet("key1", () => "value2"); // 👈 returns 'value1' (entry exists)
 
-lru.get('key1'); // 👈 undefined (first entry was evicted)
+// The key doesn't exist, a new entry will be created from the function return value
+lru.getOrSet("key2", () => "value2", 2_000); // 👈 returns 'value2'
+lru.has("key2"); // 👈 true (it was added)
+lru.get("key1"); // 👈 'value1'
+
+// Will trigger an eviction as maxSize capacity (2) is reached.
+lru.getOrSet("key3", () => "value3"); // 👈 returns 'value3'
+
+lru.get("key1"); // 👈 undefined (first entry was evicted)
 ```
 
 #### Implementation of
 
 `ITimeLruCache.getOrSet`
 
-***
+---
 
 ### has()
 
@@ -288,8 +281,8 @@ and trigger the `onEviction` callback if present.
 
 The item will be marked as recently used only if either
 
- - the global cache `touchOnHas` option is true (default: false)
- - or the `touch` option is true (default false)
+- the global cache `touchOnHas` option is true (default: false)
+- or the `touch` option is true (default false)
 
 #### Parameters
 
@@ -346,7 +339,7 @@ lru.has('key1'); // 👈 false (item is present but expired - 👋 onEviction wi
 
 `ITimeLruCache.has`
 
-***
+---
 
 ### peek()
 
@@ -372,7 +365,7 @@ return undefined if they have.
 
 `ITimeLruCache.peek`
 
-***
+---
 
 ### set()
 
@@ -385,20 +378,22 @@ If maximum capacity is reached and eviction will be done and the
 onEviction callback will be triggered.
 
 ```typescript
-import { TimeLruCache } from '@httpx/lru';
+import { TimeLruCache } from "@httpx/lru";
 
 const lru = new TimeLruCache({
   maxSize: 1,
   defaultTTL: 30_000, // 30 seconds in millis
-  onEviction: () => { console.log('evicted') }
+  onEviction: () => {
+    console.log("evicted");
+  },
 });
 
-lru.set('key0', 'value0', 1000); // 👈 true     (new key, size increase)
-lru.set('key0', 'valuex', 1000); // 👈 false    (existing key, no size increase)
-lru.get('key0');                 // 👈 'valuex'
+lru.set("key0", "value0", 1000); // 👈 true     (new key, size increase)
+lru.set("key0", "valuex", 1000); // 👈 false    (existing key, no size increase)
+lru.get("key0"); // 👈 'valuex'
 
 // 👇 Will evict key0 as maximum capacity is reached
-lru.set('key1', 'value1', 1000);
+lru.set("key1", "value1", 1000);
 ```
 
 #### Parameters
