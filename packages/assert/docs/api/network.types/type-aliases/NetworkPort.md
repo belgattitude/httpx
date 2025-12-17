@@ -1,6 +1,6 @@
-[**@httpx/assert v0.16.3**](../../README.md)
+[**@httpx/assert v0.16.7**](../../README.md)
 
-***
+---
 
 [@httpx/assert](../../README.md) / [network.types](../README.md) / NetworkPort
 
@@ -8,4 +8,4 @@
 
 > **NetworkPort** = `number` & `WeakOpaqueContainer`\<`"NetworkPort"`\>
 
-Defined in: [network.types.ts:3](https://github.com/belgattitude/httpx/blob/9b2cbd569895f8040210d7274ce6ead66a415c7d/packages/assert/src/network.types.ts#L3)
+Defined in: [network.types.ts:3](https://github.com/belgattitude/httpx/blob/38d880ecf05f1934d921b8525130cab1b4a6f511/packages/assert/src/network.types.ts#L3)

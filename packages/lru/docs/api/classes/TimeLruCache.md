@@ -1,4 +1,4 @@
-[**@httpx/lru v0.12.5**](../README.md)
+[**@httpx/lru v0.13.0**](../README.md)
 
 ---
 

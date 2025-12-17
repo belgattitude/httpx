@@ -1,6 +1,6 @@
-[**@httpx/plain-object v2.1.3**](../README.md)
+[**@httpx/plain-object v2.1.7**](../README.md)
 
-***
+---
 
 [@httpx/plain-object](../README.md) / isPlainObject
 
@@ -16,7 +16,7 @@ A plain object is a basic JavaScript object, such as {}, { data: [] }, new Objec
 
 ### TValue
 
-`TValue` *extends* `BasePlainObject` = `DefaultBasePlainObject`
+`TValue` _extends_ `BasePlainObject` = `DefaultBasePlainObject`
 
 ## Parameters
 
@@ -31,46 +31,46 @@ A plain object is a basic JavaScript object, such as {}, { data: [] }, new Objec
 ## Example
 
 ```typescript
-import { isPlainObject } from '@httpx/plain-object';
+import { isPlainObject } from "@httpx/plain-object";
 
 // ✅👇 True
 
-isPlainObject({ });                       // ✅
-isPlainObject({ key: 'value' });          // ✅
-isPlainObject({ key: new Date() });       // ✅
-isPlainObject(new Object());              // ✅
-isPlainObject(Object.create(null));       // ✅
-isPlainObject({ nested: { key: true} });  // ✅
-isPlainObject(new Proxy({}, {}));         // ✅
-isPlainObject({ [Symbol('tag')]: 'A' });  // ✅
+isPlainObject({}); // ✅
+isPlainObject({ key: "value" }); // ✅
+isPlainObject({ key: new Date() }); // ✅
+isPlainObject(new Object()); // ✅
+isPlainObject(Object.create(null)); // ✅
+isPlainObject({ nested: { key: true } }); // ✅
+isPlainObject(new Proxy({}, {})); // ✅
+isPlainObject({ [Symbol("tag")]: "A" }); // ✅
 
 // ✅👇 (node context, workers, ...)
-const runInNewContext = await import('node:vm').then(
-    (mod) => mod.runInNewContext
+const runInNewContext = await import("node:vm").then(
+  (mod) => mod.runInNewContext
 );
-isPlainObject(runInNewContext('({})'));   // ✅
+isPlainObject(runInNewContext("({})")); // ✅
 
 // ❌👇 False
 
-class Test { };
-isPlainObject(new Test())           // ❌
-isPlainObject(10);                  // ❌
-isPlainObject(null);                // ❌
-isPlainObject('hello');             // ❌
-isPlainObject([]);                  // ❌
-isPlainObject(new Date());          // ❌
+class Test {}
+isPlainObject(new Test()); // ❌
+isPlainObject(10); // ❌
+isPlainObject(null); // ❌
+isPlainObject("hello"); // ❌
+isPlainObject([]); // ❌
+isPlainObject(new Date()); // ❌
 isPlainObject(new Uint8Array([1])); // ❌
-isPlainObject(Buffer.from('ABC'));  // ❌
+isPlainObject(Buffer.from("ABC")); // ❌
 isPlainObject(Promise.resolve({})); // ❌
-isPlainObject(Object.create({}));   // ❌
-isPlainObject(new (class Cls {}));  // ❌
+isPlainObject(Object.create({})); // ❌
+isPlainObject(new (class Cls {})()); // ❌
 
 // ⚠️ Edge cases
 //
 // 👇 globalThis isn't properly portable across all JS environments
 //
 
-isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare)
+isPlainObject(globalThis); // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare)
 
 // 👇 Static built-in classes aren't properly checked. This is a trade-off
 //    to maintain the best performance and size. If you need to check for these,
@@ -78,8 +78,8 @@ isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Node
 //    as the probability of writing a code that receives these as plain objects is low.
 //    and probably indicates an issue in your code.
 
-isPlainObject(Math);                // ⚠️✅ return true, but Math is not a plain object
-isPlainObject(JSON);                // ⚠️✅ return true, but JSON is not a plain object
-isPlainObject(Atomics);             // ⚠️✅ return true, but Atomics is not a plain object
-isPlainObject(Reflect);             // ⚠️✅ return true, but Reflect is not a plain object
+isPlainObject(Math); // ⚠️✅ return true, but Math is not a plain object
+isPlainObject(JSON); // ⚠️✅ return true, but JSON is not a plain object
+isPlainObject(Atomics); // ⚠️✅ return true, but Atomics is not a plain object
+isPlainObject(Reflect); // ⚠️✅ return true, but Reflect is not a plain object
 ```

@@ -1,6 +1,6 @@
-[**@httpx/treeu v0.5.3**](../README.md)
+[**@httpx/treeu v0.5.7**](../README.md)
 
-***
+---
 
 [@httpx/treeu](../README.md) / DfsTreeSearch
 
@@ -20,11 +20,11 @@ https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
 
 ### TValue
 
-`TValue` *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
+`TValue` _extends_ [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
 
 ### TKey
 
-`TKey` *extends* `string` \| `number` = `string`
+`TKey` _extends_ `string` \| `number` = `string`
 
 ## Constructors
 

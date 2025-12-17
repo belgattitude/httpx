@@ -1,6 +1,6 @@
-[**@httpx/assert v0.16.3**](../../README.md)
+[**@httpx/assert v0.16.7**](../../README.md)
 
-***
+---
 
 [@httpx/assert](../../README.md) / [array.types](../README.md) / ArrayNonEmpty
 
@@ -8,7 +8,7 @@
 
 > **ArrayNonEmpty**\<`T`\> = \[`T`, `...T[]`\]
 
-Defined in: [array.types.ts:1](https://github.com/belgattitude/httpx/blob/9b2cbd569895f8040210d7274ce6ead66a415c7d/packages/assert/src/array.types.ts#L1)
+Defined in: [array.types.ts:1](https://github.com/belgattitude/httpx/blob/38d880ecf05f1934d921b8525130cab1b4a6f511/packages/assert/src/array.types.ts#L1)
 
 ## Type Parameters
 

@@ -1,6 +1,6 @@
-[**@httpx/hash v0.2.0**](../../README.md)
+[**@httpx/hash v0.2.4**](../../README.md)
 
-***
+---
 
 [@httpx/hash](../../README.md) / [xxhash-wasm](../README.md) / getXXHashAPI
 

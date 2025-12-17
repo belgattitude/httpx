@@ -1,6 +1,6 @@
-[**@httpx/treeu v0.5.3**](../README.md)
+[**@httpx/treeu v0.5.7**](../README.md)
 
-***
+---
 
 [@httpx/treeu](../README.md) / FlatTreeWs
 
@@ -12,8 +12,8 @@
 
 ### TValue
 
-`TValue` *extends* [`TreeNodeValue`](TreeNodeValue.md) \| `undefined`
+`TValue` _extends_ [`TreeNodeValue`](TreeNodeValue.md) \| `undefined`
 
 ### TKey
 
-`TKey` *extends* `FlatTreeWsUniqueKey` = `string`
+`TKey` _extends_ `FlatTreeWsUniqueKey` = `string`

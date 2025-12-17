@@ -1,6 +1,6 @@
-[**@httpx/treeu v0.5.3**](../README.md)
+[**@httpx/treeu v0.5.7**](../README.md)
 
-***
+---
 
 [@httpx/treeu](../README.md) / TreeRootNode
 
@@ -10,11 +10,11 @@
 
 ### TValue
 
-`TValue` *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined` = `undefined`
+`TValue` _extends_ [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined` = `undefined`
 
 ### TId
 
-`TId` *extends* `TreeNodeValidId` = `string`
+`TId` _extends_ `TreeNodeValidId` = `string`
 
 ## Properties
 
@@ -22,19 +22,19 @@
 
 > **children**: [`TreeNode`](../type-aliases/TreeNode.md)\<`TValue`, `TId`\>[]
 
-***
+---
 
 ### id
 
 > **id**: `TId`
 
-***
+---
 
 ### parentId
 
 > **parentId**: `null`
 
-***
+---
 
 ### value?
 

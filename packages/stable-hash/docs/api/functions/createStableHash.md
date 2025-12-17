@@ -1,6 +1,6 @@
-[**@httpx/stable-hash v0.3.3**](../README.md)
+[**@httpx/stable-hash v0.3.7**](../README.md)
 
-***
+---
 
 [@httpx/stable-hash](../README.md) / createStableHash
 
@@ -18,7 +18,7 @@ the same keys but in different order.
 
 ### T
 
-`T` *extends* `SupportedDataTypesRW`
+`T` _extends_ `SupportedDataTypesRW`
 
 ## Parameters
 
@@ -37,24 +37,24 @@ the same keys but in different order.
 ## Example
 
 ```typescript
-import { createStableHash } from '@httpx/stable-hash';
+import { createStableHash } from "@httpx/stable-hash";
 
 const value = {
-  key8: 'a string',
+  key8: "a string",
   key1: 1,
   key3: true,
   key2: [3, 2, 1],
   key7: {
     key2: true,
-    key1: new Date('2025-02-11T08:58:32.075Z'),
+    key1: new Date("2025-02-11T08:58:32.075Z"),
   },
 };
 
 const result = await createStableHash(value, {
   // By default SHA-256 is used (SHA-512 available)
-  algorithm: 'SHA-256',
+  algorithm: "SHA-256",
   // By default the hash is encoded in hexadecimal
-  encoding: 'hexa',
+  encoding: "hexa",
 });
 if (!result.success) {
   throw result.error;

@@ -1,6 +1,6 @@
-[**@httpx/memo-intl v1.4.4**](../README.md)
+[**@httpx/memo-intl v1.4.9**](../README.md)
 
-***
+---
 
 [@httpx/memo-intl](../README.md) / MIntl
 
@@ -57,7 +57,7 @@ Return a memoized Intl.Collator instance
 #### Example
 
 ```typescript
-const collator = MIntl.Collator('de', {
+const collator = MIntl.Collator("de", {
   sensitivity: "base",
   caseFirst: "upper",
 });
@@ -134,7 +134,7 @@ const formatter = new Intl.ListFormat("en", {
   style: "long",
   type: "conjunction",
 });
-const value = formatter.format(vehicles) // 👈 'Motorcycle, Bus, and Car'
+const value = formatter.format(vehicles); // 👈 'Motorcycle, Bus, and Car'
 ```
 
 #### See
@@ -164,7 +164,7 @@ Return a memoized Intl.Locale instance
 #### Example
 
 ```typescript
-const enLocale = MIntl.Locale('en');
+const enLocale = MIntl.Locale("en");
 const koLocale = new Intl.Locale("ko", {
   script: "Kore",
   region: "KR",
@@ -200,10 +200,10 @@ Return a memoized Intl.NumberFormatter instance
 #### Example
 
 ```typescript
-const formatter = MIntl.NumberFormat('fr-FR', {
-  style: 'currency',
-  currency: 'EUR',
-  notation: 'compact',
+const formatter = MIntl.NumberFormat("fr-FR", {
+  style: "currency",
+  currency: "EUR",
+  notation: "compact",
   minimumFractionDigits: 2,
 });
 const value = formatter.format(10.1345); // 👈 '10,13 €'
@@ -236,7 +236,7 @@ Return a memoized Intl.PluralRules instance
 #### Example
 
 ```typescript
-const pluralRules = MIntl.PluralRules('en-US', { type: 'ordinal' });
+const pluralRules = MIntl.PluralRules("en-US", { type: "ordinal" });
 const num = pluralRules.select(2); // 👈 'two'
 ```
 
@@ -268,7 +268,7 @@ Return a memoized Intl.RelativeTimeFormat instance
 
 ```typescript
 const rtf1 = MIntl.RelativeTimeFormat("en", { style: "short" });
-const value = rtf1.format(3, "quarter") // // 👈 'in 3 qtrs.'
+const value = rtf1.format(3, "quarter"); // // 👈 'in 3 qtrs.'
 ```
 
 #### See
@@ -298,10 +298,10 @@ Return a memoized Intl.Segmenter instance
 #### Example
 
 ```typescript
-const segmenter = MIntl.Segmenter('fr', { granularity: 'word' });
-const string = 'Que ma joie demeure';
+const segmenter = MIntl.Segmenter("fr", { granularity: "word" });
+const string = "Que ma joie demeure";
 const iterator = segmenter.segment(string)[Symbol.iterator]();
-iterator1.next().value!.segment // 👈 'Que'
+iterator1.next().value!.segment; // 👈 'Que'
 ```
 
 #### See

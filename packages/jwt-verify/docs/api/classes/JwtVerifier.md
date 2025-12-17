@@ -1,6 +1,6 @@
-[**@httpx/jwt-verify v0.1.2**](../README.md)
+[**@httpx/jwt-verify v0.1.7**](../README.md)
 
-***
+---
 
 [@httpx/jwt-verify](../README.md) / JwtVerifier
 
@@ -32,11 +32,11 @@
 
 `Promise`\<\{ `issuer`: `string`; `jwks_uri`: `string`; \}\>
 
-***
+---
 
 ### safeParse()
 
-> **safeParse**\<`TSchema`\>(`token`, `options?`): `Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` *extends* `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `ParseErrors`\>\>
+> **safeParse**\<`TSchema`\>(`token`, `options?`): `Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` _extends_ `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `ParseErrors`\>\>
 
 Safely parse and verify a JWT token
 
@@ -44,7 +44,7 @@ Safely parse and verify a JWT token
 
 ##### TSchema
 
-`TSchema` *extends* `StandardSchemaV1`\<`unknown`, `unknown`\>
+`TSchema` _extends_ `StandardSchemaV1`\<`unknown`, `unknown`\>
 
 #### Parameters
 
@@ -60,26 +60,26 @@ Safely parse and verify a JWT token
 
 #### Returns
 
-`Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` *extends* `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `ParseErrors`\>\>
+`Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` _extends_ `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `ParseErrors`\>\>
 
 #### Example
 
 ```typescript
-import { JWTVerifier } from '@httpx/jwt-verify';
-import * as v from 'valibot'; // or any standard-schema compatible schema library
+import { JWTVerifier } from "@httpx/jwt-verify";
+import * as v from "valibot"; // or any standard-schema compatible schema library
 
 const entraVerifier = new JwtVerifier({
-  authorityHost: 'https://login.microsoftonline.com',
-  tenantId: '8ca5b849-53e1-48cf-89fb-0103886af200',
+  authorityHost: "https://login.microsoftonline.com",
+  tenantId: "8ca5b849-53e1-48cf-89fb-0103886af200",
   clockToleranceSec: 60, // optional
 });
 
-const token = '...';
+const token = "...";
 
 const { error, data } = await entraVerifier.safeParse(token, {
-   schema: v.object({
-     oid: v.string(),
-   })
+  schema: v.object({
+    oid: v.string(),
+  }),
 });
 
 if (error) {

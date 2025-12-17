@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.5**](../README.md)
+[**@httpx/xcache v0.4.10**](../README.md)
 
-***
+---
 
 [@httpx/xcache](../README.md) / XMemCacheOptions
 
@@ -14,13 +14,13 @@
 
 > `optional` **compressor**: [`ICacheCompressor`](../interfaces/ICacheCompressor.md)
 
-***
+---
 
 ### lru
 
 > **lru**: `ITimeLruCache`
 
-***
+---
 
 ### namespace?
 

@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.5**](../README.md)
+[**@httpx/xcache v0.4.10**](../README.md)
 
-***
+---
 
 [@httpx/xcache](../README.md) / SuperjsonSerializer
 
@@ -46,7 +46,7 @@
 
 [`ICacheSerializer`](../interfaces/ICacheSerializer.md).[`deserialize`](../interfaces/ICacheSerializer.md#deserialize)
 
-***
+---
 
 ### getIdentifier()
 
@@ -60,7 +60,7 @@
 
 [`ICacheSerializer`](../interfaces/ICacheSerializer.md).[`getIdentifier`](../interfaces/ICacheSerializer.md#getidentifier)
 
-***
+---
 
 ### serialize()
 
@@ -86,7 +86,7 @@
 
 [`ICacheSerializer`](../interfaces/ICacheSerializer.md).[`serialize`](../interfaces/ICacheSerializer.md#serialize)
 
-***
+---
 
 ### toString()
 

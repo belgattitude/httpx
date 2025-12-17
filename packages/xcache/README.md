@@ -81,11 +81,11 @@ const xMemCache = new XMemCache({
     minimumRatio: 1.3,
 
     // Skip compression if the result is a string shorter than 1000 characters
-    // @default 10000
+    // @default 1000
     minimumStringLength: 1000,
 
     // Skip compression if the achieved byte saving is less than 16 KB
-    // @default 1000
+    // @default 16_384
     minimumByteSaving: 16_384,
   }),
 });
@@ -98,7 +98,9 @@ const fetchThings = async (params: { name: string }) => {
   };
 };
 
-const params = { name: cool };
+// Params will be hashed through @httpx/stable-hash
+const params = { name: "cool", createdAt: new Date() };
+
 const { data } = await xMemCache.runAsync({
   key: ["/api/data", params],
   fn: () => fetchThings(params),

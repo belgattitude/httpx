@@ -1,6 +1,6 @@
-[**@httpx/treeu v0.5.3**](../README.md)
+[**@httpx/treeu v0.5.7**](../README.md)
 
-***
+---
 
 [@httpx/treeu](../README.md) / Tree
 
@@ -10,11 +10,11 @@
 
 ### TValue
 
-`TValue` *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
+`TValue` _extends_ [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
 
 ### TKey
 
-`TKey` *extends* `string` = `string`
+`TKey` _extends_ `string` = `string`
 
 ## Constructors
 

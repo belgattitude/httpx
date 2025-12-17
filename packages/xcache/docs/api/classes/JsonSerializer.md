@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.5**](../README.md)
+[**@httpx/xcache v0.4.10**](../README.md)
 
-***
+---
 
 [@httpx/xcache](../README.md) / JsonSerializer
 
@@ -48,7 +48,7 @@ Native JSON serializer. Does not support BigInt, ... serialization.
 
 [`ICacheSerializer`](../interfaces/ICacheSerializer.md).[`deserialize`](../interfaces/ICacheSerializer.md#deserialize)
 
-***
+---
 
 ### getIdentifier()
 
@@ -62,7 +62,7 @@ Native JSON serializer. Does not support BigInt, ... serialization.
 
 [`ICacheSerializer`](../interfaces/ICacheSerializer.md).[`getIdentifier`](../interfaces/ICacheSerializer.md#getidentifier)
 
-***
+---
 
 ### serialize()
 
@@ -88,7 +88,7 @@ Native JSON serializer. Does not support BigInt, ... serialization.
 
 [`ICacheSerializer`](../interfaces/ICacheSerializer.md).[`serialize`](../interfaces/ICacheSerializer.md#serialize)
 
-***
+---
 
 ### toString()
 

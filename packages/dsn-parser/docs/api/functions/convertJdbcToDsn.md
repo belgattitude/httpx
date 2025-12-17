@@ -1,6 +1,6 @@
-[**@httpx/dsn-parser v1.9.4**](../README.md)
+[**@httpx/dsn-parser v1.9.8**](../README.md)
 
-***
+---
 
 [@httpx/dsn-parser](../README.md) / convertJdbcToDsn
 
@@ -23,7 +23,8 @@ Convert JDBC URL to DSN format.
 ## Example
 
 ```typescript
-const jdbc = 'sqlserver://localhost:1433;database=my-db;authentication=default;user=sa;password=pass03$;encrypt=true;trustServerCertificate=true';
+const jdbc =
+  "sqlserver://localhost:1433;database=my-db;authentication=default;user=sa;password=pass03$;encrypt=true;trustServerCertificate=true";
 const dsn = convertJdbcToDsn(jdbc);
 // dsn is 'sqlserver://localhost:1433?database=my-db&authentication=default&user=sa&password=pass03$&encrypt=true&trustServerCertificate=true
 ```

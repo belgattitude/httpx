@@ -1,8 +1,8 @@
-**@httpx/jwt-verify v0.1.2**
+**@httpx/jwt-verify v0.1.7**
 
-***
+---
 
-# @httpx/jwt-verify v0.1.2
+# @httpx/jwt-verify v0.1.7
 
 ## Classes
 

@@ -1,6 +1,6 @@
-[**@httpx/encode v0.1.3**](../README.md)
+[**@httpx/encode v0.1.7**](../README.md)
 
-***
+---
 
 [@httpx/encode](../README.md) / Base64
 
