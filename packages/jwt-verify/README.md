@@ -12,10 +12,12 @@
 ## Install
 
 ```bash
-$ npm install @httpx/jwt-verify jose @standard-schema/spec
-$ yarn add @httpx/jwt-verify jose @standard-schema/spec
-$ pnpm add @httpx/jwt-verify jose @standard-schema/spec
+$ npm install @httpx/jwt-verify
+$ yarn add @httpx/jwt-verify
+$ pnpm add @httpx/jwt-verify
 ```
+
+> Optionally: add `@standard-schema/spec` and the validation of your choice (zod, valibot...)
 
 ## Features
 
