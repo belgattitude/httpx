@@ -13,8 +13,8 @@
 
 ```bash
 $ npm install @httpx/jwt-verify jose @standard-schema/spec
-$ yarn add @httpx/jwt-verify
-$ pnpm add @httpx/jwt-verify
+$ yarn add @httpx/jwt-verify jose @standard-schema/spec
+$ pnpm add @httpx/jwt-verify jose @standard-schema/spec
 ```
 
 ## Features
@@ -23,7 +23,6 @@ $ pnpm add @httpx/jwt-verify
 - 🛡️&nbsp; Rely on battle tested [jose](https://github.com/panva/jose) for jwt validation and decoding.
 - ✨️&nbsp; OIDC Discovery Fetcher to safely fetch and validate OIDC configurations (retries...).
 - 🧪&nbsp; Tested on [node 20-25, bun, browser, cloudflare workers and runtime/edge](#compatibility).
-- 🗝️&nbsp; ESM only
 
 ## Documentation
 
