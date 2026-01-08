@@ -1,7 +1,9 @@
-import { AzureCliCredential } from '@azure/identity';
+import { DefaultAzureCredential } from '@azure/identity';
 
-const entra = new AzureCliCredential();
+const entraCreds = new DefaultAzureCredential();
 
-const token = await entra.getToken(['common']);
+const token = await entraCreds.getToken([
+  'https://graph.microsoft.com/.default',
+]);
 
 console.log('Access token', token.token);

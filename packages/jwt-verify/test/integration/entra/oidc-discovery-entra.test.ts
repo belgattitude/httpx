@@ -1,7 +1,7 @@
 import { OidcDiscoveryFetcher } from '../../../src';
 
 describe('oidc-discovery-entra', () => {
-  describe('safeFetch', async () => {
+  describe('safeFetch', () => {
     it('should return a payload containing expected issuer and jwks_uri for Entra', async () => {
       const oidcDiscovery = new OidcDiscoveryFetcher();
       const { error, data: oidcPayload } = await oidcDiscovery.safeFetch(
