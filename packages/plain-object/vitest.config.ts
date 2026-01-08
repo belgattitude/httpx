@@ -25,6 +25,15 @@ export default defineConfig({
       // at least one instance is required
       instances: [{ browser: 'chromium' }],
     },
+    deps: {
+      // See https://github.com/vitest-dev/vitest/issues/6543#issuecomment-2432221609
+      optimizer: {
+        ssr: {
+          enabled: true,
+          include: ['es-toolkit', 'lodash-es', '@sindresorhus/is', 'redux'],
+        },
+      },
+    },
     // @link https://vitest.dev/config/#clearmocks
     clearMocks: true,
     coverage: {
