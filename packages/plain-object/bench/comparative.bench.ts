@@ -47,17 +47,16 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
       );
     });
   const is = await import('@sindresorhus/is').then((mod) => mod.default);
+  const sindreIsIsPlainObject = is.plainObject;
   const isPlainObj = await import('is-plain-obj').then((mod) => mod.default);
-  const lodashIsPlainObject = await import('lodash-es').then(
-    (mod) => mod.isPlainObject
-  );
+  const lodash = await import('lodash-es').then((mod) => mod);
+  const lodashIsPlainObject = lodash.isPlainObject;
   const esToolkitIsPlainObject = await import('es-toolkit').then(
     (mod) => mod.isPlainObject
   );
 
-  const reduxIsPlainObject = await import('redux').then(
-    (mod) => mod.isPlainObject
-  );
+  const redux = await import('redux').then((mod) => mod);
+  const reduxIsPlainObject = redux.isPlainObject;
 
   // @ts-expect-error packaging of this lib is not compatible with latest ts / module
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -82,7 +81,7 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
     `"@sindresorhus/is":"${versions['@sindresorhus/is']}": 'is.plainObject(v)'`,
     () => {
       for (const value of realLifeScenarios) {
-        is.plainObject(value);
+        sindreIsIsPlainObject(value);
       }
     }
   );

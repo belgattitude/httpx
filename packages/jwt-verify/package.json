@@ -21,18 +21,14 @@
     "entra",
     "azure-ad",
     "lru",
-    "standard validator"
+    "standard schema"
   ],
   "sideEffects": false,
   "type": "module",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "import": "./dist/index.js",
-        "default": "./dist/index.js"
-      }
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -41,7 +37,7 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsup",
+    "build": "tsdown",
     "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
     "bench-disabled": "vitest bench --run",
     "bench-bun-disabled": "bun --bun run vitest bench --run",
@@ -53,7 +49,7 @@
     "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
-    "dev": "tsup --watch",
+    "dev": "tsdown --watch",
     "fix-staged": "lint-staged --allow-empty",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/jwt-verify.eslintcache",
     "test": "vitest run",
@@ -61,7 +57,7 @@
     "test-unit-bun": "bun --bun run vitest run",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
-    "test-unit-browser-disabled": "vitest run --browser",
+    "test-unit-browser": "vitest run --browser",
     "test-unit-cloudflare-disabled": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
@@ -70,8 +66,9 @@
   },
   "dependencies": {
     "@httpx/lru": "workspace:^",
-    "@standard-schema/spec": "^1.0.0",
-    "jose": "^6.1.3"
+    "@httpx/plain-object": "workspace:^",
+    "jose": "^6.1.3",
+    "ky": "^1.14.2"
   },
   "peerDependencies": {
     "@standard-schema/spec": "^1.0.0"
@@ -83,17 +80,18 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
+    "@azure/identity": "4.13.0",
     "@belgattitude/eslint-config-bases": "8.8.0",
-    "@dotenvx/dotenvx": "1.51.2",
+    "@dotenvx/dotenvx": "1.51.4",
     "@httpx/devtools-vitest": "workspace:^",
+    "@size-limit/esbuild": "12.0.0",
     "@size-limit/file": "12.0.0",
-    "@size-limit/webpack": "12.0.0",
-    "@standard-schema/spec": "^1.0.0",
+    "@standard-schema/spec": "1.1.0",
+    "aws-jwt-verify": "5.1.1",
     "browserslist": "4.28.1",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
-    "es-check": "9.5.2",
-    "esbuild": "0.27.2",
+    "es-check": "9.5.3",
     "eslint": "8.57.1",
     "nock": "14.0.10",
     "npm-run-all2": "8.0.4",
@@ -101,14 +99,14 @@
     "publint": "0.3.16",
     "rimraf": "6.1.2",
     "size-limit": "12.0.0",
-    "tsup": "8.5.1",
+    "tsdown": "0.18.4",
+    "tsx": "4.21.0",
     "type-fest": "5.3.1",
     "typedoc": "0.28.15",
     "typedoc-plugin-markdown": "4.9.0",
     "typescript": "5.9.3",
     "valibot": "1.2.0",
     "vitest": "4.0.16",
-    "webpack": "5.103.0",
     "zod": "4.1.13"
   },
   "engines": {
