@@ -12,91 +12,71 @@
 
 ## Implements
 
-- `TypedError`
+- [`TypedError`](../interfaces/TypedError.md)
 
 ## Constructors
 
 ### Constructor
 
-> **new FetchError**(`message?`): `FetchError`
+> **new FetchError**(`params`, `options`): `FetchError`
 
 #### Parameters
 
-##### message?
+##### params
+
+###### message
 
 `string`
+
+###### statusCode?
+
+`number`
+
+Http status code that is related to the FetchError if available
+
+###### statusText?
+
+`string`
+
+Http status code that is related to the FetchError if available
+
+###### url
+
+`string`
+
+Url that was being fetched when the error occurred
+
+##### options
+
+###### cause?
+
+`Error` \| `HTTPError`\<`unknown`\>
 
 #### Returns
 
 `FetchError`
 
-#### Inherited from
-
-`TypeError.constructor`
-
-### Constructor
-
-> **new FetchError**(`message?`, `options?`): `FetchError`
-
-#### Parameters
-
-##### message?
-
-`string`
-
-##### options?
-
-`ErrorOptions`
-
-#### Returns
-
-`FetchError`
-
-#### Inherited from
-
-`TypeError.constructor`
-
-### Constructor
-
-> **new FetchError**(`message?`): `FetchError`
-
-#### Parameters
-
-##### message?
-
-`string`
-
-#### Returns
-
-`FetchError`
-
-#### Inherited from
-
-`TypeError.constructor`
-
-### Constructor
-
-> **new FetchError**(`message?`, `options?`): `FetchError`
-
-#### Parameters
-
-##### message?
-
-`string`
-
-##### options?
-
-`ErrorOptions`
-
-#### Returns
-
-`FetchError`
-
-#### Inherited from
+#### Overrides
 
 `TypeError.constructor`
 
 ## Properties
+
+### statusCode
+
+> `readonly` **statusCode**: `number` \| `undefined`
+
+Http status code that is related to the FetchError if available
+
+---
+
+### statusText
+
+> `readonly` **statusText**: `string` \| `undefined`
+
+Http statusText that is related to the FetchError if available
+
+---
 
 ### type
 
@@ -104,7 +84,15 @@
 
 #### Implementation of
 
-`TypedError.type`
+[`TypedError`](../interfaces/TypedError.md).[`type`](../interfaces/TypedError.md#type)
+
+---
+
+### url
+
+> `readonly` **url**: `string` \| `undefined`
+
+Url that was being fetched when the error occurred
 
 ---
 

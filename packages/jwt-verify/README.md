@@ -12,31 +12,34 @@
 ## Install
 
 ```bash
-$ npm install @httpx/jwt-verify
+$ npm install @httpx/jwt-verify jose @standard-schema/spec
 $ yarn add @httpx/jwt-verify
 $ pnpm add @httpx/jwt-verify
 ```
 
 ## Features
 
-- 🛡️&nbsp; Tested on [node 20-24, bun, browser, cloudflare workers and runtime/edge](#compatibility).
+- ✨&nbsp; Customize payload validation with any [standard-schema](https://github.com/standard-schema/standard-schema) compatible library (ie: zod, valibot...).
+- 🛡️&nbsp; Rely on battle tested [jose](https://github.com/panva/jose) for jwt validation and decoding.
+- ✨️&nbsp; OIDC Discovery Fetcher to safely fetch and validate OIDC configurations (retries...).
+- 🧪&nbsp; Tested on [node 20-25, bun, browser, cloudflare workers and runtime/edge](#compatibility).
+- 🗝️&nbsp; ESM only
 
 ## Documentation
 
-
-### Create a JwtVerifier
+### OIDC Verifier
 
 ```typescript
-import { JwtVerifier } from '@httpx/jwt-verify';
-import * as v from 'valibot';
+import { JwtVerifier } from "@httpx/jwt-verify";
+import * as v from "valibot";
 
 const entraVerifier = new JwtVerifier({
-  authorityHost: 'https://login.microsoftonline.com',
-  tenantId: 'xxxxxx-xxx-xxxx-xxx-xxxxxxxx',
+  authorityHost: "https://login.microsoftonline.com",
+  tenantId: "xxxxxx-xxx-xxxx-xxx-xxxxxxxx",
   clockToleranceSec: 60, // optional
 });
 
-const entraJwtToken = '....'
+const entraJwtToken = "..."; // The JWT token to verify
 
 // Verify, validate and return the parsed token
 const { value, error } = await entraVerifier.safeParse(entraJwtToken, {
@@ -46,21 +49,81 @@ const { value, error } = await entraVerifier.safeParse(entraJwtToken, {
    * exposed in the `value.payload` object.
    */
   schema: v.object({
-    // Add properties to validate  
-    oid: v.string()    
-  })
+    // Add properties to validate, note that if you provide a schema, only
+    // the properties defined in the schema will be available in the value.payload.
+    oid: v.string(),
+  }),
 });
 
 if (error) {
-  // see error documentation  
+  // See error documentation for details about possible errors:
+  // > NotATokenError, ExpiredTokenError, FetchError, SchemaValidationError, JwtVerifyError
+  // > InvalidOidcConfigError
 }
 
-console.log('payload', value.payload);
+console.log("payload", value.payload);
+```
+
+### OIDC Fetcher
+
+OIDC Discovery Fetcher can be used to safely fetch and validate OIDC configurations.
+
+```typescript
+import { OidcDiscoveryFetcher } from "@flowblade/jwt-verify";
+
+const fetchOptions = {
+  // See options below
+};
+
+const fetcher = new OidcDiscoveryFetcher(
+  // Optional default fetch options for all calls
+  fetchOptions
+);
+
+// Any oidc discovery url
+const oidcDiscoveryUrl =
+  "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration";
+
+const { data, error } = await fetcher.safeFetch(
+  oidcDiscoveryUrl,
+  // optional to override fetch options for this call
+  fetchOptions
+);
+
+if (data) {
+  console.log("Discovery Payload:", data);
+}
+
+if (error) {
+  // FetchError | InvalidOidcConfigError
+  console.error("Error fetching OIDC configuration:", error);
+}
+```
+
+#### FetcherOptions
+
+By default, the fetcher uses the following options:
+
+```typescript
+const fetchOptions = {
+  // These are the default options, you can customize them as needed
+  // in the constructor or in safeFetch
+  timeoutMs: 30_000,
+  retry: {
+    limit: 3,
+    methods: ["get", "head", "options", "trace"],
+    statusCodes: [408, 413, 429, 500, 502, 503, 504],
+    afterStatusCodes: [413, 429, 503],
+    maxRetryAfter: Number.POSITIVE_INFINITY,
+    retryOnTimeout: true,
+    delay: (attemptCount) => 0.3 * 2 ** (attemptCount - 1) * 1000,
+  },
+};
 ```
 
 ## Benchmarks
 
-> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx). 
+> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx).
 >
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
@@ -74,23 +137,26 @@ console.log('payload', value.payload);
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/jwt-verify/.size-limit.ts)
 
-| Scenario (esm)                                   | Size (compressed) |
-|--------------------------------------------------|------------------:|
-| `import { JwtVerifier } from '@httpx/jwt-verify` |             ~ 8KB |
+| Scenario (esm)                                            | Size (compressed) |
+| --------------------------------------------------------- | ----------------: |
+| `import { JwtVerifier } from '@httpx/jwt-verify`          |         ~ 12.30KB |
+| `import { OidcDiscoveryFetcher } from '@httpx/jwt-verify` |          ~ 5.20KB |
+
+The total size accounts for the dependency on [jose](https://github.com/panva/jose).
 
 ## Compatibility
 
-| Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                              |
-|--------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
-| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                            |
-| Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/jwt-verify/.browserslistrc) |
-| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                              |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                       | 
-| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                         |
-| Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                            |
-| ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                             |
-| Performance  | ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                     |
+| Level        | CI  | Description                                                                                                                                      |
+| ------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Node         | ✅  | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                  |
+| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                    |
+| Browserslist | ✅  | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/jwt-verify/.browserslistrc) |
+| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                 |
+| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                               |
+| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
+| Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                    |
+| ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                     |
+| Performance  | ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                             |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
@@ -126,4 +192,3 @@ or star – any gesture of support fuels my passion to improve. Thanks for being
 ## License
 
 MIT © [Sébastien Vanvelthem](https://github.com/belgattitude) and contributors.
-

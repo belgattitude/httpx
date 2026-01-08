@@ -24,19 +24,9 @@
 
 ## Methods
 
-### fetchOidcConfig()
-
-> **fetchOidcConfig**(): `Promise`\<\{ `issuer`: `string`; `jwks_uri`: `string`; \}\>
-
-#### Returns
-
-`Promise`\<\{ `issuer`: `string`; `jwks_uri`: `string`; \}\>
-
----
-
 ### safeParse()
 
-> **safeParse**\<`TSchema`\>(`token`, `options?`): `Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` _extends_ `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `ParseErrors`\>\>
+> **safeParse**\<`TSchema`\>(`token`, `options?`): `Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` _extends_ `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `JwtVerifyErrors`\>\>
 
 Safely parse and verify a JWT token
 
@@ -60,7 +50,7 @@ Safely parse and verify a JWT token
 
 #### Returns
 
-`Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` _extends_ `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `ParseErrors`\>\>
+`Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` _extends_ `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `JwtVerifyErrors`\>\>
 
 #### Example
 
@@ -76,18 +66,19 @@ const entraVerifier = new JwtVerifier({
 
 const token = "...";
 
-const { error, data } = await entraVerifier.safeParse(token, {
+const { data, error } = await entraVerifier.safeParse(token, {
   schema: v.object({
     oid: v.string(),
   }),
 });
 
+// If something failed the error will be !== undefined
 if (error) {
-  // handle error amongst
-  // - NotATokenError
-  // - ExpiredTokenError
-  // - FetchError
-  // - SchemaValidationError
-  // - JwtVerifyError
+  // `error` is an instance Error with a brand of TypedError
+  // Currently supported are: NotATokenError, ExpiredTokenError
+  // SchemaValidationError, JwtVerifyError, FetchError
 }
+
+// If everything went fine, data will be defined
+console.log("Token payload:", data.payload);
 ```

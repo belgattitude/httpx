@@ -2,9 +2,9 @@
 
 ---
 
-[@httpx/jwt-verify](../README.md) / SchemaValidationError
+[@httpx/jwt-verify](../README.md) / InvalidOidcConfigError
 
-# Class: SchemaValidationError
+# Class: InvalidOidcConfigError
 
 ## Extends
 
@@ -18,7 +18,7 @@
 
 ### Constructor
 
-> **new SchemaValidationError**(`message?`): `SchemaValidationError`
+> **new InvalidOidcConfigError**(`message?`): `InvalidOidcConfigError`
 
 #### Parameters
 
@@ -28,7 +28,7 @@
 
 #### Returns
 
-`SchemaValidationError`
+`InvalidOidcConfigError`
 
 #### Inherited from
 
@@ -36,7 +36,7 @@
 
 ### Constructor
 
-> **new SchemaValidationError**(`message?`, `options?`): `SchemaValidationError`
+> **new InvalidOidcConfigError**(`message?`, `options?`): `InvalidOidcConfigError`
 
 #### Parameters
 
@@ -50,7 +50,7 @@
 
 #### Returns
 
-`SchemaValidationError`
+`InvalidOidcConfigError`
 
 #### Inherited from
 
@@ -58,7 +58,7 @@
 
 ### Constructor
 
-> **new SchemaValidationError**(`message?`): `SchemaValidationError`
+> **new InvalidOidcConfigError**(`message?`): `InvalidOidcConfigError`
 
 #### Parameters
 
@@ -68,7 +68,7 @@
 
 #### Returns
 
-`SchemaValidationError`
+`InvalidOidcConfigError`
 
 #### Inherited from
 
@@ -76,7 +76,7 @@
 
 ### Constructor
 
-> **new SchemaValidationError**(`message?`, `options?`): `SchemaValidationError`
+> **new InvalidOidcConfigError**(`message?`, `options?`): `InvalidOidcConfigError`
 
 #### Parameters
 
@@ -90,7 +90,7 @@
 
 #### Returns
 
-`SchemaValidationError`
+`InvalidOidcConfigError`
 
 #### Inherited from
 
@@ -100,7 +100,7 @@
 
 ### type
 
-> `readonly` **type**: `"schema-validation"` = `'schema-validation'`
+> `readonly` **type**: `"invalid-oidc-config-error"` = `'invalid-oidc-config-error'`
 
 #### Implementation of
 

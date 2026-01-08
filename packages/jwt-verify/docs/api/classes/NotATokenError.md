@@ -12,7 +12,7 @@
 
 ## Implements
 
-- `TypedError`
+- [`TypedError`](../interfaces/TypedError.md)
 
 ## Constructors
 
@@ -104,7 +104,7 @@
 
 #### Implementation of
 
-`TypedError.type`
+[`TypedError`](../interfaces/TypedError.md).[`type`](../interfaces/TypedError.md#type)
 
 ---
 

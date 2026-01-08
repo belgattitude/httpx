@@ -1,12 +1,20 @@
 import * as v from 'valibot';
 
-import { JwtVerifier } from '../../src/jwt-verifier';
+import { JwtVerifier } from '../../../src/jwt-verifier';
+
+const isBrowser = typeof window !== 'undefined';
 
 /**
  * To run this test, you need to provide a valid token in the env var
  * TEST_INTEG_ENTRA_VALID_TOKEN, either in the CI or in your local env.
  */
-const entraJwtToken = process.env.TEST_INTEG_ENTRA_VALID_TOKEN!;
+const entraJwtToken = isBrowser
+  ? undefined
+  : process.env.TEST_INTEG_ENTRA_VALID_TOKEN!;
+
+const entraTenantId = isBrowser
+  ? undefined
+  : process.env.TEST_INTEG_ENTRA_TENANT_ID!;
 
 describe.skipIf(entraJwtToken === undefined)(
   'Microsoft entra integration test',
@@ -27,29 +35,23 @@ describe.skipIf(entraJwtToken === undefined)(
 
       const entraJwtVerifier = new JwtVerifier({
         authorityHost: 'https://login.microsoftonline.com',
-        tenantId: '8ca5b849-53e1-48cf-89fb-0103886af200',
+        tenantId: `${entraTenantId}`,
         clockToleranceSec: 10_000_000, // allow to have a big clock tolerance for tests
       });
 
-      const { data, error } = await entraJwtVerifier.safeParse(entraJwtToken, {
+      const { data, error } = await entraJwtVerifier.safeParse(entraJwtToken!, {
         schema: entraSchema,
       });
       expect(error).toBeUndefined();
       expect(data).toBeDefined();
-      expect(data).toStrictEqual({
-        expiresAt: new Date('2025-09-19T15:55:00.000Z'),
-        issuer:
-          'https://login.microsoftonline.com/8ca5b849-53e1-48cf-89fb-0103886af200/v2.0',
-        jwksUri:
-          'https://login.microsoftonline.com/8ca5b849-53e1-48cf-89fb-0103886af200/discovery/v2.0/keys',
-        notBefore: new Date('2025-09-18T15:50:00.000Z'),
+
+      expect(data).toMatchObject({
+        expiresAt: expect.any(Date),
+        issuer: expect.stringContaining(entraTenantId!),
+        jwksUri: expect.stringContaining(entraTenantId!),
+        notBefore: expect.any(Date),
         payload: {
-          oid: '78e95575-4752-4134-8378-b5fb0040dc65',
-        },
-        protectedHeader: {
-          alg: 'RS256',
-          kid: 'JYhAcTPMZ_LX6DBlOWQ7Hn0NeXE',
-          typ: 'JWT',
+          oid: expect.stringMatching(/^([0-9a-z-]){1,40}$/),
         },
       });
     });
