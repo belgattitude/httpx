@@ -6,4 +6,4 @@
 
 # Type Alias: OidcDiscoveryOptions
 
-> **OidcDiscoveryOptions** = `FetchOptions`
+> **OidcDiscoveryOptions** = [`FetchOptions`](FetchOptions.md)

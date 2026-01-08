@@ -70,7 +70,7 @@ console.log("payload", value.payload);
 OIDC Discovery Fetcher can be used to safely fetch and validate OIDC configurations.
 
 ```typescript
-import { OidcDiscoveryFetcher } from "@flowblade/jwt-verify";
+import { OidcDiscoveryFetcher } from "@httpx/jwt-verify";
 
 const fetchOptions = {
   // See options below

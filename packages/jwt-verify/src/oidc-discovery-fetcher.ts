@@ -28,7 +28,7 @@ export class OidcDiscoveryFetcher {
    *
    * @example
    * ```typescript
-   * import { OidcDiscoveryFetcher } from '@flowblade/jwt-verify';
+   * import { OidcDiscoveryFetcher } from '@httpx/jwt-verify';
    *
    * const fetchOptions = {
    *   // These are the default options, you can customize them as needed

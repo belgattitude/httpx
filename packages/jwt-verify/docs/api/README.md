@@ -22,8 +22,13 @@
 
 ## Type Aliases
 
+- [FetchOptions](type-aliases/FetchOptions.md)
 - [JwtVerifierOptions](type-aliases/JwtVerifierOptions.md)
 - [OidcDiscoveryOptions](type-aliases/OidcDiscoveryOptions.md)
+
+## Variables
+
+- [defaultFetchOptions](variables/defaultFetchOptions.md)
 
 ## Functions
 

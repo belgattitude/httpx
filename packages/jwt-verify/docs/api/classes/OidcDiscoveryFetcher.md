@@ -16,7 +16,7 @@
 
 ##### options?
 
-`FetchOptions`
+[`FetchOptions`](../type-aliases/FetchOptions.md)
 
 #### Returns
 
@@ -38,7 +38,7 @@ Fetches and validates the OIDC Discovery Payload from the given URL.
 
 ##### options?
 
-`FetchOptions`
+[`FetchOptions`](../type-aliases/FetchOptions.md)
 
 #### Returns
 
@@ -47,7 +47,7 @@ Fetches and validates the OIDC Discovery Payload from the given URL.
 #### Example
 
 ```typescript
-import { OidcDiscoveryFetcher } from "@flowblade/jwt-verify";
+import { OidcDiscoveryFetcher } from "@httpx/jwt-verify";
 
 const fetchOptions = {
   // These are the default options, you can customize them as needed
