@@ -9,7 +9,16 @@ const isCloudflareWorker = 'caches' in globalThis;
 describe.skipIf(isCloudflareWorker)(
   'statuses messages compatibility',
   async () => {
-    const statuses = await import('statuses').then((mod) => mod.default);
+    const statuses = await import('statuses')
+      .then((mod) => mod.default)
+      .catch((reason) => {
+        if (isCloudflareWorker) {
+          return (_v: unknown) => {
+            return 'we allow this, due to current cloudflare vitest v4 integration issues';
+          };
+        }
+        throw new Error(`Cannot load npm:statuses package: ${reason}`);
+      });
 
     describe('ensure default messages are compatible with npm:statuses package', () => {
       const all: [

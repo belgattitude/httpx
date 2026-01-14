@@ -6,10 +6,11 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
-    "resolveJsonModule": true,
     "strict": true,
-    "paths": {},
-    "types": ["vitest/globals", "node"]
+    "paths": {
+      "@httpx/devtools-vitest": ["../../devtools/vitest/src/index.ts"]
+    },
+    "types": ["vitest/globals"]
   },
   "exclude": ["**/node_modules", "**/.*/*", "dist", "coverage"],
   "include": [
