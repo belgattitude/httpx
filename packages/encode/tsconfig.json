@@ -10,7 +10,7 @@
     "paths": {
       "@httpx/devtools-vitest": ["../../devtools/vitest/src/index.ts"]
     },
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "node"]
   },
   "exclude": ["**/node_modules", "**/.*/*", "dist", "coverage"],
   "include": [
