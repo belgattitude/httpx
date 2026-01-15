@@ -7,8 +7,10 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "strict": true,
-    "paths": {},
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "paths": {
+      "@httpx/devtools-vitest": ["../../devtools/vitest/src/index.ts"]
+    }
   },
   "exclude": ["**/node_modules", "**/.*/*", "dist", "coverage"],
   "include": [

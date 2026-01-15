@@ -19,7 +19,8 @@ const npmPreapprovedPackages = [
   'prettier',
   '@typescript-eslint/*',
   'next',
-  '@next/*'
+  '@next/*',
+  '@cloudflare/*',
 ];
 
 module.exports = defineConfig({
@@ -40,7 +41,7 @@ module.exports = defineConfig({
     ) {
       return 0;
     }
-    return 3;
+    return 2;
   },
   reject: [
     // Cause v9 isn't yet supported
