@@ -73,6 +73,7 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/encode.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-bun": "bun --bun run vitest run",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-browser": "vitest run --browser",
@@ -89,7 +90,7 @@
     "@sindresorhus/is": "7.2.0",
     "@size-limit/file": "12.0.0",
     "@size-limit/webpack": "12.0.0",
-    "@types/node": "25.0.3",
+    "@types/node": "25.0.6",
     "browserslist": "4.28.1",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
@@ -101,13 +102,13 @@
     "is-ci": "4.1.0",
     "js-base64": "3.7.8",
     "npm-run-all2": "8.0.4",
-    "prettier": "3.7.4",
+    "prettier": "3.8.0",
     "pretty-bytes": "7.1.0",
     "publint": "0.3.16",
     "rimraf": "6.1.2",
     "size-limit": "12.0.0",
     "tsup": "8.5.1",
-    "typedoc": "0.28.15",
+    "typedoc": "0.28.16",
     "typedoc-plugin-markdown": "4.9.0",
     "typescript": "5.9.3",
     "uint8array-extras": "1.5.0",
@@ -115,6 +116,6 @@
     "webpack": "5.104.1"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.9.0"
   }
 }
