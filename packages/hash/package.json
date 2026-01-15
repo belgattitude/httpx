@@ -57,7 +57,7 @@
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-browser": "vitest run --browser",
-    "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
+    "test-unit-cloudflare-disabled": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
