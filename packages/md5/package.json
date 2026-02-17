@@ -1,0 +1,100 @@
+{
+  "name": "@httpx/md5",
+  "description": "Fast md5 hashing function",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "homepage": "https://belgattitude.github.io/httpx/md5",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/belgattitude/httpx.git",
+    "directory": "packages/md5"
+  },
+  "keywords": [
+    "md5",
+    "fast"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
+    "build": "run clean && tsdown",
+    "build-release": "run build",
+    "bench": "vitest bench --run",
+    "bench-bun": "bun --bun run vitest bench --run",
+    "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
+    "bench-watch": "vitest bench",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "check-dist": "es-check --config=.escheckrc.json",
+    "check-pub": "attw --pack && publint",
+    "check-size": "size-limit",
+    "clean": "rimraf ./dist ./build ./coverage ./_release",
+    "dev": "tsdown --watch",
+    "fix-staged": "lint-staged --allow-empty",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/md5.eslintcache",
+    "test": "vitest run",
+    "test-unit": "vitest run",
+    "test-unit-bun": "bun --bun run vitest run",
+    "test-unit-coverage": "vitest run --coverage",
+    "test-unit-edge": "vitest run --environment edge-runtime",
+    "test-unit-browser": "vitest run --browser",
+    "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
+    "test-unit-watch": "vitest --ui --api 4515",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-md5-unit --dir ./coverage"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.2",
+    "@belgattitude/eslint-config-bases": "8.9.0",
+    "@httpx/devtools-vitest": "workspace:^",
+    "@size-limit/esbuild": "12.0.0",
+    "@size-limit/file": "12.0.0",
+    "@types/md5": "2.3.6",
+    "@types/spark-md5": "3.0.5",
+    "browserslist": "4.28.1",
+    "browserslist-to-esbuild": "2.1.1",
+    "cross-env": "10.1.0",
+    "es-check": "9.5.4",
+    "esbuild": "0.27.3",
+    "eslint": "8.57.1",
+    "md5": "2.3.0",
+    "npm-run-all2": "8.0.4",
+    "prettier": "3.8.1",
+    "publint": "0.3.17",
+    "rimraf": "6.1.2",
+    "size-limit": "12.0.0",
+    "spark-md5": "3.0.2",
+    "tsdown": "0.20.3",
+    "typedoc": "0.28.17",
+    "typedoc-plugin-markdown": "4.10.0",
+    "typescript": "5.9.3",
+    "vitest": "4.0.18"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
