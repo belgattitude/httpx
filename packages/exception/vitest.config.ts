@@ -1,8 +1,3 @@
-import { getVitestBaseConfig } from '@httpx/devtools-vitest';
-import { defineConfig } from 'vitest/config';
+import { createVitestConfig } from '@httpx/devtools-vitest';
 
-export default defineConfig(
-  getVitestBaseConfig({
-    useCloudflare: false,
-  })
-);
+export default createVitestConfig();

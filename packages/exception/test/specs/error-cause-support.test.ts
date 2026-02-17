@@ -8,6 +8,12 @@ import {
 import { HttpNotFound } from '../../src/client';
 import { supportsErrorCause } from '../../src/support/supportsErrorCause';
 
+vi.mock('../../src/support/supportsErrorCause', () => {
+  return {
+    supportsErrorCause: () => false,
+  };
+});
+
 describe(`when Error.cause isn't supported`, () => {
   beforeEach(() => {
     vi.restoreAllMocks();
@@ -28,12 +34,6 @@ describe(`when Error.cause isn't supported`, () => {
     ['HttpServerException', new HttpServerException(500, params)],
     ['HttpNotFound', new HttpNotFound(params)],
   ];
-
-  vi.mock('../../src/support/supportsErrorCause', () => {
-    return {
-      supportsErrorCause: () => false,
-    };
-  });
 
   it.each(scenarios)('should ignore the cause for %s.', (_name, err) => {
     expect(supportsErrorCause()).toStrictEqual(false);

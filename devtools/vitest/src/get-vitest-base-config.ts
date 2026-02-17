@@ -1,35 +1,31 @@
 import path from 'node:path';
 
-import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
 import codspeedPlugin from '@codspeed/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import type { ViteUserConfigExport } from 'vitest/config';
 
-import { cloudflareConfig } from './cloudflare.config.ts';
 import { getPackageNameFromCwd } from './get-package-name-from-cwd.ts';
 import { monorepoConfig } from './monorepo.config.ts';
 import type { RequiredOptionals } from './utils/type-utils.ts';
 
-type Params = {
+export type VitestBaseConfigParams = {
   packageName?: string;
   testFiles?: string[];
-  useCloudflare?: boolean;
 };
 
 const getDefaultParams = () => {
   const defaultParams = {
     packageName: getPackageNameFromCwd(),
     testFiles: ['./src/**/*.test.{js,ts,tsx}', './test/**/*.test.{js,ts,tsx}'],
-    useCloudflare: false,
-  } as const satisfies RequiredOptionals<Params>;
+  } as const satisfies RequiredOptionals<VitestBaseConfigParams>;
   return defaultParams;
 };
 
-export const getVitestBaseConfig = (params: Params) => {
+export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
   const isCodeSpeedEnabled = process.env?.CODSPEED === '1';
 
-  const { packageName, testFiles, useCloudflare } = {
+  const { packageName, testFiles } = {
     ...getDefaultParams(),
     ...params,
   };
@@ -37,23 +33,13 @@ export const getVitestBaseConfig = (params: Params) => {
 
   const config = {
     cacheDir: cacheDir,
-    esbuild: {
-      target: ['node20'],
-    },
     plugins: [
       tsconfigPaths({
         // projectDiscovery: 'lazy',
         // root: process.cwd(),
         // logFile: '/tmp/test.log',
       }),
-      useCloudflare
-        ? cloudflareTest({
-            miniflare: {
-              ...cloudflareConfig.miniflare,
-              // compatibilityFlags: ['nodejs_compat'],
-            },
-          })
-        : null,
+
       isCodeSpeedEnabled ? codspeedPlugin() : undefined,
     ].filter(Boolean),
     test: {
@@ -88,7 +74,7 @@ export const getVitestBaseConfig = (params: Params) => {
         'dist/**',
         'build/**',
         '**/coverage/**',
-        '**/.{idea,next,git,cache,output,temp}/**',
+        '**/.{idea,next,git,turbo,cache,output,temp}/**',
       ],
       globals: true,
       include: testFiles,
