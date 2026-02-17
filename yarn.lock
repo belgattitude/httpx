@@ -1682,6 +1682,7 @@ __metadata:
     "@codspeed/vitest-plugin": "npm:5.2.0"
     "@edge-runtime/vm": "npm:5.0.0"
     "@testing-library/dom": "npm:10.4.1"
+    "@types/estree": "npm:1.0.8"
     "@types/node": "npm:25.2.3"
     "@types/react": "npm:19.2.14"
     "@types/react-dom": "npm:19.2.3"
@@ -1692,6 +1693,7 @@ __metadata:
     "@vitest/snapshot": "npm:4.0.18"
     "@vitest/ui": "npm:4.0.18"
     baseline-browser-mapping: "npm:2.9.19"
+    ci-info: "npm:4.4.0"
     esbuild: "npm:0.27.3"
     eslint: "npm:8.57.1"
     is-ci: "npm:4.1.0"
@@ -1699,6 +1701,7 @@ __metadata:
     prettier: "npm:3.8.1"
     react: "npm:19.2.4"
     react-dom: "npm:19.2.4"
+    rollup: "npm:4.57.1"
     tinybench: "npm:6.0.0"
     tsdown: "npm:0.20.3"
     type-fest: "npm:5.4.4"
@@ -1707,8 +1710,6 @@ __metadata:
     vite-tsconfig-paths: "npm:6.1.1"
     vitest: "npm:4.0.18"
     vitest-browser-react: "npm:2.0.5"
-  peerDependencies:
-    vitest: ^4.0.8
   languageName: unknown
   linkType: soft
 
@@ -6772,17 +6773,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ci-info@npm:4.4.0, ci-info@npm:^4.0.0, ci-info@npm:^4.1.0":
+  version: 4.4.0
+  resolution: "ci-info@npm:4.4.0"
+  checksum: 10c0/44156201545b8dde01aa8a09ee2fe9fc7a73b1bef9adbd4606c9f61c8caeeb73fb7a575c88b0443f7b4edb5ee45debaa59ed54ba5f99698339393ca01349eb3a
+  languageName: node
+  linkType: hard
+
 "ci-info@npm:^3.7.0":
   version: 3.9.0
   resolution: "ci-info@npm:3.9.0"
   checksum: 10c0/6f0109e36e111684291d46123d491bc4e7b7a1934c3a20dea28cba89f1d4a03acd892f5f6a81ed3855c38647e285a150e3c9ba062e38943bef57fee6c1554c3a
-  languageName: node
-  linkType: hard
-
-"ci-info@npm:^4.0.0, ci-info@npm:^4.1.0":
-  version: 4.4.0
-  resolution: "ci-info@npm:4.4.0"
-  checksum: 10c0/44156201545b8dde01aa8a09ee2fe9fc7a73b1bef9adbd4606c9f61c8caeeb73fb7a575c88b0443f7b4edb5ee45debaa59ed54ba5f99698339393ca01349eb3a
   languageName: node
   linkType: hard
 
@@ -15512,7 +15513,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^4.34.8, rollup@npm:^4.43.0":
+"rollup@npm:4.57.1, rollup@npm:^4.34.8, rollup@npm:^4.43.0":
   version: 4.57.1
   resolution: "rollup@npm:4.57.1"
   dependencies:
