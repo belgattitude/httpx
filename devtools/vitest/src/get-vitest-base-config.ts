@@ -1,12 +1,10 @@
 import path from 'node:path';
 
-import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
 import codspeedPlugin from '@codspeed/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import type { ViteUserConfigExport } from 'vitest/config';
 
-import { cloudflareConfig } from './cloudflare.config.ts';
 import { getPackageNameFromCwd } from './get-package-name-from-cwd.ts';
 import { monorepoConfig } from './monorepo.config.ts';
 import type { RequiredOptionals } from './utils/type-utils.ts';
@@ -37,23 +35,13 @@ export const getVitestBaseConfig = (params: Params) => {
 
   const config = {
     cacheDir: cacheDir,
-    esbuild: {
-      target: ['node20'],
-    },
     plugins: [
       tsconfigPaths({
         // projectDiscovery: 'lazy',
         // root: process.cwd(),
         // logFile: '/tmp/test.log',
       }),
-      useCloudflare
-        ? cloudflareTest({
-            miniflare: {
-              ...cloudflareConfig.miniflare,
-              // compatibilityFlags: ['nodejs_compat'],
-            },
-          })
-        : null,
+
       isCodeSpeedEnabled ? codspeedPlugin() : undefined,
     ].filter(Boolean),
     test: {
@@ -83,6 +71,17 @@ export const getVitestBaseConfig = (params: Params) => {
         outputJson: './bench/output/benchmark-results.json',
       },
       pool: 'forks',
+      ...(useCloudflare
+        ? {
+            poolOptions: {
+              workers: {
+                wrangler: {
+                  configPath: '../../devtools/vitest/wrangler.toml',
+                },
+              },
+            },
+          }
+        : null),
       exclude: [
         '**/node_modules/**',
         'dist/**',
