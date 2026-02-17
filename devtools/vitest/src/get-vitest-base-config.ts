@@ -9,25 +9,23 @@ import { getPackageNameFromCwd } from './get-package-name-from-cwd.ts';
 import { monorepoConfig } from './monorepo.config.ts';
 import type { RequiredOptionals } from './utils/type-utils.ts';
 
-type Params = {
+export type VitestBaseConfigParams = {
   packageName?: string;
   testFiles?: string[];
-  useCloudflare?: boolean;
 };
 
 const getDefaultParams = () => {
   const defaultParams = {
     packageName: getPackageNameFromCwd(),
     testFiles: ['./src/**/*.test.{js,ts,tsx}', './test/**/*.test.{js,ts,tsx}'],
-    useCloudflare: false,
-  } as const satisfies RequiredOptionals<Params>;
+  } as const satisfies RequiredOptionals<VitestBaseConfigParams>;
   return defaultParams;
 };
 
-export const getVitestBaseConfig = (params: Params) => {
+export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
   const isCodeSpeedEnabled = process.env?.CODSPEED === '1';
 
-  const { packageName, testFiles, useCloudflare } = {
+  const { packageName, testFiles } = {
     ...getDefaultParams(),
     ...params,
   };
@@ -71,23 +69,12 @@ export const getVitestBaseConfig = (params: Params) => {
         outputJson: './bench/output/benchmark-results.json',
       },
       pool: 'forks',
-      ...(useCloudflare
-        ? {
-            poolOptions: {
-              workers: {
-                wrangler: {
-                  configPath: '../../devtools/vitest/wrangler.toml',
-                },
-              },
-            },
-          }
-        : null),
       exclude: [
         '**/node_modules/**',
         'dist/**',
         'build/**',
         '**/coverage/**',
-        '**/.{idea,next,git,cache,output,temp}/**',
+        '**/.{idea,next,git,turbo,cache,output,temp}/**',
       ],
       globals: true,
       include: testFiles,
