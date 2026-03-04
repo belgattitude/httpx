@@ -11,7 +11,7 @@ describe('compatibility with other libraries', () => {
     '1. hello', // ascii
     '2. Hello 世界',
     '3. Привет мир',
-    '4. Émojis: 🌍🚀✨',
+    '4. Émojis: 🌍🚀✨🦄',
     '5. 한국어',
   ].map((text) => {
     return {

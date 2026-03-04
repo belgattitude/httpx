@@ -22,6 +22,9 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "edge": "./dist/nodejs/index.mjs",
+      "bun": "./dist/nodejs/index.mjs",
+      "node": "./dist/nodejs/index.mjs",
       "default": "./dist/index.js"
     },
     "./ecmascript": {

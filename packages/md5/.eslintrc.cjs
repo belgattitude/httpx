@@ -36,6 +36,7 @@ module.exports = {
     {
       files: ['src/**/*.ts'],
       rules: {
+        'unicorn/prefer-code-point': 'off',
         'unicorn/prefer-math-trunc': 'off',
         'import-x/no-extraneous-dependencies': [
           'error',

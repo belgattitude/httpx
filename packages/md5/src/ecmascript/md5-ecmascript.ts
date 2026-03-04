@@ -5,10 +5,9 @@
  * @see http://www.myersdaily.org/joseph/javascript/md5-text.html
  */
 
-import { stringToUnicode } from '../utils/string-to-unicode.ts';
+import { toUtf8 } from '../utils/to-utf8.ts';
 
 const hex_chr = '0123456789abcdef'.split('');
-const decRegexp = /(.*?)(.{0,8})$/;
 type NumberQuadlets = [number, number, number, number];
 type SixteenNumberArray = [
   number,
@@ -173,7 +172,7 @@ function md5cycle(x: NumberQuadlets, k: SixteenNumberArray): void {
   x[3] = (d + x[3]) | 0;
 }
 
-function md5blk(s: string): number[] {
+function md5blk(s: string): SixteenNumberArray {
   const md5blks = [];
   let i; /* Andy King said do it this way. */
 
@@ -184,7 +183,7 @@ function md5blk(s: string): number[] {
       (s.charCodeAt(i + 2) << 16) +
       (s.charCodeAt(i + 3) << 24);
   }
-  return md5blks;
+  return md5blks as unknown as SixteenNumberArray;
 }
 
 function md51(s: string): NumberQuadlets {
@@ -214,10 +213,12 @@ function md51(s: string): NumberQuadlets {
   }
 
   // Beware that the final length might not fit in 32 bits so we take care of that
-  const tmp = n * 8;
-  const tmpArr = decRegexp.exec(tmp.toString(16));
-  const lo = Number.parseInt(tmpArr![2]!, 16);
-  const hi = Number.parseInt(tmpArr![1]!, 16) || 0;
+  // Split the 64-bit length (n * 8) into low and high 32-bit words
+  const bitLength = n * 8;
+  // For the low 32 bits, we can use bitwise OR to ensure it's a 32-bit integer
+  const lo = bitLength | 0;
+  // For the high 32 bits, divide by 2^32 and truncate
+  const hi = Math.floor(bitLength / 4_294_967_296);
 
   tail[14] = lo;
   tail[15] = hi;
@@ -243,6 +244,6 @@ function hex(x: number[]): string {
 }
 
 export function md5Ecmascript(text: string): string {
-  const hash = md51(stringToUnicode(text));
+  const hash = md51(toUtf8(text));
   return hex(hash);
 }
