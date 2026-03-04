@@ -1,9 +1,11 @@
 /*
- * Implementation adapted from  the fastest md5 implementation around (JKM md5).
+ * Implementation adapted from the fastest md5 implementation around (JKM md5).
  * Original author: Joseph Myers
  *
  * @see http://www.myersdaily.org/joseph/javascript/md5-text.html
  */
+
+import { stringToUnicode } from '../utils/string-to-unicode.ts';
 
 const hex_chr = '0123456789abcdef'.split('');
 const decRegexp = /(.*?)(.{0,8})$/;
@@ -240,35 +242,7 @@ function hex(x: number[]): string {
   return result.join('');
 }
 
-// ---------------------------------------------------
-
-/**
- * Helpers.
- */
-const utf8Regexp = /[\u0080-\uFFFF]/;
-function toUtf8(str: string): string {
-  if (utf8Regexp.test(str)) {
-    str = globalThis.unescape(encodeURIComponent(str));
-  }
-
-  return str;
-}
-
-const encoder = new TextEncoder();
-// Native TextEncoder approach (fastest)
-function stringToUtf8Native(str: string): string {
-  if (utf8Regexp.test(str)) {
-    const bytes = encoder.encode(str);
-    let result = '';
-    for (const byte of bytes) {
-      result += String.fromCodePoint(byte);
-    }
-    return result;
-  }
-  return str;
-}
-
 export function md5Ecmascript(text: string): string {
-  const hash = md51(toUtf8(text));
+  const hash = md51(stringToUnicode(text));
   return hex(hash);
 }

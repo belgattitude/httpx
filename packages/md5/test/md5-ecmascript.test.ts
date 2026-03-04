@@ -49,7 +49,7 @@ describe('md5Ecmascript - UTF-8 compatible implementation', () => {
     );
   });
 
-  it('should match Node.js crypto.createHash behavior', () => {
+  it('should match md5 md5_rfc1321', () => {
     // These are the exact same hashes that Node.js crypto produces
     const testCases = [
       { text: 'hello', hash: '5d41402abc4b2a76b9719d911017c592' },

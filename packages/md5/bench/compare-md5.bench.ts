@@ -1,45 +1,50 @@
+import { vitestBenchOptionsConfig } from '@httpx/devtools-vitest';
 import { md5 as httpxMd5PureJs } from '@httpx/md5/ecmascript';
 import { md5 as httpxMd5NativeNodeJs } from '@httpx/md5/nodejs';
 import { default as NpmMd5 } from 'md5';
 import { default as NpmSparkMd5 } from 'spark-md5';
 import { bench, describe } from 'vitest';
+const { isCiOrCodSpeed } = vitestBenchOptionsConfig;
 
 const npmSparkMd5 = NpmSparkMd5;
 const npmMd5 = NpmMd5;
 
 const benchOptions = {
   warmupIterations: 1,
-  iterations: 1,
+  iterations: isCiOrCodSpeed ? 1 : 2,
 };
 
-const seeds = Array.from({ length: 10_000 }).map((_, i) => {
-  return `seed-4. Émojis: 🌍🚀✨-${i}`.repeat(1);
+const totalStrings = isCiOrCodSpeed ? 1000 : 100_000;
+
+const seeds = Array.from({ length: totalStrings }).map((_, i) => {
+  return `seed-4. Émojis: 🌍🚀✨-${i}`.repeat(3);
 });
 
 describe(`@httpx/md5 compared`, async () => {
   bench(
-    `httpx/md5 (pure js)`,
-    () => {
-      seeds.forEach((text) => httpxMd5PureJs(text));
-    },
-    benchOptions
-  );
-  bench(
-    `httpx/md5 (nodejs)`,
+    `httpx/md5     - ${totalStrings} hashes - nodejs`,
     () => {
       seeds.forEach((text) => httpxMd5NativeNodeJs(text));
     },
     benchOptions
   );
   bench(
-    `npm:md5`,
+    `httpx/md5     - ${totalStrings} hashes - purejs`,
+    () => {
+      seeds.forEach((text) => httpxMd5PureJs(text));
+    },
+    benchOptions
+  );
+
+  bench(
+    `npm:md5       - ${totalStrings} hashes`,
     () => {
       seeds.forEach((text) => npmMd5(text));
     },
     benchOptions
   );
   bench(
-    `npm:spark-md5`,
+    `npm:spark-md5 - ${totalStrings} hashes`,
     () => {
       seeds.forEach((text) => npmSparkMd5.hash(text));
     },
