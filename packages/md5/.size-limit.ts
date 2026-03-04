@@ -2,9 +2,20 @@ import type { SizeLimitConfig } from 'size-limit';
 
 module.exports = [
   {
-    name: 'import { md5 } (ESM)',
+    name: "import { md5 } from '@httpx/md5'",
     path: ['dist/index.js'],
     import: '{ md5 }',
-    limit: '570B',
+    limit: '1250B',
   },
+  {
+    name: "import { md5 } from '@httpx/md5/nodejs'",
+    path: ['dist/nodejs/index.mjs'],
+    import: '{ md5 }',
+    limit: '80B',
+    modifyEsbuildConfig: (config) => {
+      config.platform = 'node';
+      return config;
+    }
+  },
+
 ] satisfies SizeLimitConfig;

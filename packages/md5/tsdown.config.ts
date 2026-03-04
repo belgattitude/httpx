@@ -14,12 +14,29 @@ export default defineConfig((_options) => {
       treeshake: true,
       format: {
         esm: {
-          target: [...browserslistToEsbuild()],
+          target: ['es2022', ...browserslistToEsbuild()],
           unbundle: false,
           sourcemap: true,
         },
       },
     },
+    {
+      clean: true,
+      dts: true,
+      entry: ['src/ecmascript/index.ts'],
+      outDir: 'dist/ecmascript',
+      minify: 'dce-only',
+      platform: 'neutral',
+      treeshake: true,
+      format: {
+        esm: {
+          target: ['es2022', ...browserslistToEsbuild()],
+          unbundle: false,
+          sourcemap: true,
+        },
+      },
+    },
+
     {
       clean: true,
       dts: true,
