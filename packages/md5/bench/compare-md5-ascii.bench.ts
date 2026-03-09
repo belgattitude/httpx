@@ -29,14 +29,18 @@ describe(`@httpx/md5 compared`, async () => {
   bench(
     `httpx/md5     - ${text} - ${isBun ? 'bun' : 'nodejs'}`,
     () => {
-      seeds.forEach((text) => httpxMd5NativeNodeJs(text));
+      for (const seed of seeds) {
+        httpxMd5NativeNodeJs(seed);
+      }
     },
     benchOptions
   );
   bench(
     `httpx/md5     - ${text} - purejs`,
     () => {
-      seeds.forEach((text) => httpxMd5PureJs(text));
+      for (const seed of seeds) {
+        httpxMd5PureJs(seed);
+      }
     },
     benchOptions
   );
@@ -44,21 +48,27 @@ describe(`@httpx/md5 compared`, async () => {
   bench(
     `npm:md5       - ${text}`,
     () => {
-      seeds.forEach((text) => npmMd5(text));
+      for (const seed of seeds) {
+        npmMd5(seed);
+      }
     },
     benchOptions
   );
   bench(
     `npm:spark-md5 - ${text}`,
     () => {
-      seeds.forEach((text) => npmSparkMd5.hash(text));
+      for (const seed of seeds) {
+        npmSparkMd5.hash(seed);
+      }
     },
     benchOptions
   );
   bench.skipIf(isBun)(
     `npm:hash-wasm - ${text}`,
     async () => {
-      seeds.forEach(async (text) => await npmHashWasmMd5(text));
+      for (const seed of seeds) {
+        await npmHashWasmMd5(seed);
+      }
     },
     benchOptions
   );
