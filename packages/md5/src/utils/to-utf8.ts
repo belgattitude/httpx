@@ -10,11 +10,11 @@ function hasNonAscii(str: string): boolean {
 }
 
 /**
- * Converts a string (ascii, utf8, utd-16) into its
+ * Converts a string (ascii, utf8, utf-16) into its
  * UTF-8 encoded representation.
  */
 export function toUtf8(str: string): string {
-  if (str.length < 1000 && !hasNonAscii(str)) {
+  if (str.length < 4000 && !hasNonAscii(str)) {
     return str;
   }
 

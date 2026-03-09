@@ -1,3 +1,4 @@
+import { md5 as npmHashWasmMd5 } from 'hash-wasm';
 import { default as SparkMd5 } from 'spark-md5';
 
 import { md5Ecmascript } from '../src/ecmascript/md5-ecmascript.ts';
@@ -26,6 +27,16 @@ describe('compatibility with other libraries', () => {
       ({ text, md5_rfc1321: md5 }) => {
         // const sparkMd5 = new SparkMd5();
         expect(SparkMd5.hash(text)).toBe(md5);
+      }
+    );
+  });
+
+  describe('npm:hash-wasm', () => {
+    it.each(md5Seeds)(
+      'hash-wasm md5 hash with %s',
+      async ({ text, md5_rfc1321: md5 }) => {
+        // const sparkMd5 = new SparkMd5();
+        expect(await npmHashWasmMd5(text)).toBe(md5);
       }
     );
   });

@@ -18,12 +18,12 @@ const benchOptions = {
 const totalStrings = isCiOrCodSpeed ? 1000 : 10_000;
 
 const seeds = Array.from({ length: totalStrings }).map((_, i) => {
-  return `seed-4. Émojis: 🌍🚀✨-${i}`.repeat(30);
+  return `seed-3. abcdefghij999-${i}`.repeat(30);
 });
 
 describe(`@httpx/md5 compared`, async () => {
   const hashLength = seeds[0]!.length;
-  const text = `${hashLength} chars x ${totalStrings}`;
+  const text = `${hashLength} ascii chars x ${totalStrings}`;
   bench(
     `httpx/md5     - ${text} - nodejs`,
     () => {
