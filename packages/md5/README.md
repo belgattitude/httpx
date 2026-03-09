@@ -53,39 +53,44 @@ small strings. Working with edge, cloudflare workers, bun and runtime/edge is no
 
 ### NodeJs
 
-```
+```plain
+
+Benchmarking is an experimental feature.
+Breaking changes might not follow SemVer, please pin Vitest's version when using it.
+
  RUN  v4.0.18 /home/sebastien/github/httpx/packages/md5
 
 
- ✓ bench/compare-md5-unicode.bench.ts > @httpx/md5 compared 6649ms
+ ✓ bench/compare-md5-unicode.bench.ts > @httpx/md5 compared 6536ms
      name                                             hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · httpx/md5     - 690 chars x 10000 - nodejs  14.8770  60.2639  77.4490  67.2177  72.2443  77.4490  77.4490  77.4490   ±7.85%        8
-   · httpx/md5     - 690 chars x 10000 - purejs   3.8499   256.46   263.03   259.75   263.03   263.03   263.03   263.03  ±16.08%        2
-   · npm:md5       - 690 chars x 10000            1.7184   581.94   581.94   581.94   581.94   581.94   581.94   581.94   ±0.00%        1
-   · npm:spark-md5 - 690 chars x 10000            4.2299   224.64   243.26   236.41   243.26   243.26   243.26   243.26  ±10.77%        3
-   · npm:hash-wasm - 690 chars x 10000            7.3175  74.6362   204.11   136.66   168.52   204.11   204.11   204.11  ±69.86%        4
+   · httpx/md5     - 690 chars x 10000 - nodejs  13.9609  61.0814   108.85  71.6287  72.4407   108.85   108.85   108.85  ±21.77%        7
+   · httpx/md5     - 690 chars x 10000 - purejs   3.4657   286.75   290.33   288.54   290.33   290.33   290.33   290.33   ±7.90%        2
+   · npm:md5       - 690 chars x 10000            1.8376   544.20   544.20   544.20   544.20   544.20   544.20   544.20   ±0.00%        1
+   · npm:spark-md5 - 690 chars x 10000            4.6467   194.97   228.99   215.21   228.99   228.99   228.99   228.99  ±20.67%        3
+   · npm:hash-wasm - 690 chars x 10000           13.9578  59.0143  95.9703  71.6447  89.4958  95.9703  95.9703  95.9703  ±19.26%        7
 
- ✓ bench/compare-md5-ascii.bench.ts > @httpx/md5 compared 5436ms
+ ✓ bench/compare-md5-ascii.bench.ts > @httpx/md5 compared 5264ms
      name                                                   hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · httpx/md5     - 690 ascii chars x 10000 - nodejs  23.2945  34.2419   104.10  42.9287  39.4617   104.10   104.10   104.10  ±23.96%       14
-   · httpx/md5     - 690 ascii chars x 10000 - purejs  12.5336  73.6855  85.4632  79.7858  85.1800  85.4632  85.4632  85.4632   ±6.09%        7
-   · npm:md5       - 690 ascii chars x 10000            2.3947   407.74   427.44   417.59   427.44   427.44   427.44   427.44  ±29.98%        2
-   · npm:spark-md5 - 690 ascii chars x 10000           13.9445  68.9787  80.4274  71.7130  72.0278  80.4274  80.4274  80.4274   ±5.12%        7
-   · npm:hash-wasm - 690 ascii chars x 10000           26.2122  36.2324  49.4476  38.1502  38.7697  49.4476  49.4476  49.4476   ±5.15%       14
+   · httpx/md5     - 690 ascii chars x 10000 - nodejs  22.7386  32.0795  93.1540  43.9781  43.5266  93.1540  93.1540  93.1540  ±21.07%       13
+   · httpx/md5     - 690 ascii chars x 10000 - purejs  11.4324  68.9253   119.06  87.4708   105.11   119.06   119.06   119.06  ±24.10%        6
+   · npm:md5       - 690 ascii chars x 10000            2.4663   384.96   425.99   405.47   425.99   425.99   425.99   425.99  ±64.31%        2
+   · npm:spark-md5 - 690 ascii chars x 10000           13.2383  70.0139  81.0351  75.5386  78.3253  81.0351  81.0351  81.0351   ±4.71%        7
+   · npm:hash-wasm - 690 ascii chars x 10000           24.2918  36.8053  47.8226  41.1661  41.3947  47.8226  47.8226  47.8226   ±5.53%       13
 
  BENCH  Summary
 
   npm:hash-wasm - 690 ascii chars x 10000 - bench/compare-md5-ascii.bench.ts > @httpx/md5 compared
-    1.13x faster than httpx/md5     - 690 ascii chars x 10000 - nodejs
-    1.88x faster than npm:spark-md5 - 690 ascii chars x 10000
-    2.09x faster than httpx/md5     - 690 ascii chars x 10000 - purejs
-    10.95x faster than npm:md5       - 690 ascii chars x 10000
+    1.07x faster than httpx/md5     - 690 ascii chars x 10000 - nodejs
+    1.83x faster than npm:spark-md5 - 690 ascii chars x 10000
+    2.12x faster than httpx/md5     - 690 ascii chars x 10000 - purejs
+    9.85x faster than npm:md5       - 690 ascii chars x 10000
 
   httpx/md5     - 690 chars x 10000 - nodejs - bench/compare-md5-unicode.bench.ts > @httpx/md5 compared
-    2.03x faster than npm:hash-wasm - 690 chars x 10000
-    3.52x faster than npm:spark-md5 - 690 chars x 10000
-    3.86x faster than httpx/md5     - 690 chars x 10000 - purejs
-    8.66x faster than npm:md5       - 690 chars x 10000
+    1.00x faster than npm:hash-wasm - 690 chars x 10000
+    3.00x faster than npm:spark-md5 - 690 chars x 10000
+    4.03x faster than httpx/md5     - 690 chars x 10000 - purejs
+    7.60x faster than npm:md5       - 690 chars x 10000
+
 ```
 
 ### Bun
