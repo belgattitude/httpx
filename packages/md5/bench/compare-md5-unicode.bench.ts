@@ -7,6 +7,8 @@ import { default as NpmSparkMd5 } from 'spark-md5';
 import { bench, describe } from 'vitest';
 const { isCiOrCodSpeed } = vitestBenchOptionsConfig;
 
+const isBun = 'Bun' in globalThis;
+
 const npmSparkMd5 = NpmSparkMd5;
 const npmMd5 = NpmMd5;
 
@@ -25,7 +27,7 @@ describe(`@httpx/md5 compared`, async () => {
   const hashLength = seeds[0]!.length;
   const text = `${hashLength} chars x ${totalStrings}`;
   bench(
-    `httpx/md5     - ${text} - nodejs`,
+    `httpx/md5     - ${text} - ${isBun ? 'bun' : 'nodejs'}`,
     () => {
       seeds.forEach((text) => httpxMd5NativeNodeJs(text));
     },
@@ -53,7 +55,7 @@ describe(`@httpx/md5 compared`, async () => {
     },
     benchOptions
   );
-  bench(
+  bench.skipIf(isBun)(
     `npm:hash-wasm - ${text}`,
     async () => {
       seeds.forEach(async (text) => await npmHashWasmMd5(text));

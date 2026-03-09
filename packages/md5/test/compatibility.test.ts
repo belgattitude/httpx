@@ -1,8 +1,8 @@
 import { md5 as npmHashWasmMd5 } from 'hash-wasm';
 import { default as SparkMd5 } from 'spark-md5';
 
-import { md5Ecmascript } from '../src/ecmascript/md5-ecmascript.ts';
-import { md5Nodejs } from '../src/nodejs/md5-nodejs.ts';
+import { md5 as md5Ecma } from '../src/ecmascript/md5-ecmascript.ts';
+import { md5 as md5Node } from '../src/nodejs/md5-nodejs.ts';
 
 describe('compatibility with other libraries', () => {
   // Some cases, ascii, utf-8, utf-16, emojis
@@ -17,7 +17,7 @@ describe('compatibility with other libraries', () => {
   ].map((text) => {
     return {
       text: text,
-      md5_rfc1321: md5Nodejs(text),
+      md5_rfc1321: md5Node(text),
     };
   });
 
@@ -45,7 +45,7 @@ describe('compatibility with other libraries', () => {
     it.each(md5Seeds)(
       'ecmascript md5 hash with %s',
       ({ text, md5_rfc1321: md5 }) => {
-        expect(md5Ecmascript(text)).toBe(md5);
+        expect(md5Ecma(text)).toBe(md5);
       }
     );
   });
@@ -54,7 +54,7 @@ describe('compatibility with other libraries', () => {
     it.each(md5Seeds)(
       'native nodejs md5 hash with %s',
       ({ text, md5_rfc1321: md5 }) => {
-        expect(md5Nodejs(text)).toBe(md5);
+        expect(md5Node(text)).toBe(md5);
       }
     );
   });

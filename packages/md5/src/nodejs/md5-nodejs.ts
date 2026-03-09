@@ -2,22 +2,24 @@
 import { createHash } from 'node:crypto';
 
 /**
- * Generate MD5 hash of a string using Node.js crypto module
- *
- * This implementation uses Node's native crypto module which:
- * - Properly handles UTF-8 encoding (consistent with other MD5 libraries)
- * - Is significantly faster than pure JavaScript implementations
- * - Is the standard way to compute hashes in Node.js environments
- *
- * @param text - The string to hash
- * @returns The MD5 hash as a hexadecimal string
+ * Create a MD5 hash of a string.
  *
  * @example
- * ```ts
- * md5('hello'); // '5d41402abc4b2a76b9719d911017c592'
- * md5('Hello 世界'); // 'af91c2603879085df0cb545dd0366dcd'
+ * ```typescript
+ * import { md5 } from '@httpx/md5';
+ *
+ * const hash = md5('Hello: 🌍🚀✨🦄');
+ *
+ * // Hexadecimal RFC1321 / NodeJs string
+ * // '8f11a08695d43b4f737a9706dffbf208'
  * ```
+ *
+ * @returns The MD5 hash of the input string as a hexadecimal string.
+ * @throws TypeError if the input is not a string
  */
-export function md5Nodejs(text: string): string {
+export function md5(text: string): string {
+  if (typeof text != 'string') {
+    throw new TypeError('Expected a string');
+  }
   return createHash('md5').update(text, 'utf8').digest('hex');
 }

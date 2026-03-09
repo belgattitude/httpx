@@ -14,6 +14,7 @@ function hasNonAscii(str: string): boolean {
  * UTF-8 encoded representation.
  */
 export function toUtf8(str: string): string {
+  // fast path
   if (str.length < 4000 && !hasNonAscii(str)) {
     return str;
   }
