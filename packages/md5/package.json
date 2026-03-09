@@ -21,14 +21,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/index.d.mts",
       "bun": "./dist/nodejs/index.mjs",
       "node": "./dist/nodejs/index.mjs",
-      "default": "./dist/index.js"
+      "default": "./dist/index.mjs"
     },
     "./ecmascript": {
-      "types": "./dist/ecmascript/index.d.ts",
-      "default": "./dist/ecmascript/index.js"
+      "types": "./dist/ecmascript/index.d.mts",
+      "default": "./dist/ecmascript/index.mjs"
     },
     "./nodejs": {
       "types": "./dist/nodejs/index.d.mts",

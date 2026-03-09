@@ -10,6 +10,7 @@ export default defineConfig((_options) => {
       dts: true,
       entry: ['src/index.ts'],
       minify: 'dce-only',
+      fixedExtension: true,
       platform: 'neutral',
       treeshake: true,
       format: {
@@ -26,6 +27,7 @@ export default defineConfig((_options) => {
       entry: ['src/ecmascript/index.ts'],
       outDir: 'dist/ecmascript',
       minify: 'dce-only',
+      fixedExtension: true,
       platform: 'neutral',
       treeshake: true,
       format: {
@@ -36,7 +38,6 @@ export default defineConfig((_options) => {
         },
       },
     },
-
     {
       clean: true,
       dts: true,
@@ -44,6 +45,7 @@ export default defineConfig((_options) => {
       outDir: 'dist/nodejs',
       minify: 'dce-only',
       platform: 'node',
+      fixedExtension: true,
       treeshake: true,
       format: {
         esm: {
