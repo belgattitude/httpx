@@ -1,37 +1,38 @@
 {
-  "name": "@httpx/json-api",
-  "description": "Basic typescript helpers to work with json-api",
-  "version": "0.6.7",
+  "name": "@httpx/md5",
+  "description": "Fast md5 optimized for small strings (<4kb)",
+  "version": "0.0.1",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://github.com/belgattitude/httpx/tree/main/packages/json-api#readme",
+  "homepage": "https://belgattitude.github.io/httpx/md5",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
-    "directory": "packages/json-api"
+    "directory": "packages/md5"
   },
   "keywords": [
-    "json-api",
-    "helpers"
+    "md5",
+    "fast"
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
+      "types": "./dist/index.d.mts",
+      "bun": "./dist/nodejs/index.mjs",
+      "node": "./dist/nodejs/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./ecmascript": {
+      "types": "./dist/ecmascript/index.d.mts",
+      "default": "./dist/ecmascript/index.mjs"
+    },
+    "./nodejs": {
+      "types": "./dist/nodejs/index.d.mts",
+      "default": "./dist/nodejs/index.mjs"
     },
     "./package.json": "./package.json"
   },
@@ -40,64 +41,62 @@
   ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "yarn clean && yarn tsup",
-    "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
+    "build": "run clean && tsdown",
+    "build-release": "run build",
     "bench": "vitest bench --run",
+    "bench-bun": "bun --bun run vitest bench --run",
+    "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
-    "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check es2022 './dist/**/*.cjs' --not './dist/*.map.js'",
-    "check-dist-esm": "es-check es2022 './dist/**/*.mjs' --not './dist/*.map.js' --module",
-    "check-pub": "attw --pack && publint",
+    "check-dist": "es-check --config=.escheckrc.json",
+    "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
-    "dev": "tsup --watch",
+    "dev": "tsdown --watch",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/json-api.eslintcache",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/md5.eslintcache",
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-bun": "bun --bun run vitest run",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
-    "test-unit-browser": "vitest run --browser",
+    "test-unit-browser": "vitest --exclude 'test/compatibility.test.ts' run --browser",
     "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
-    "test-unit-watch": "vitest --ui  --api 4313",
+    "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-json-api-unit --dir ./coverage"
-  },
-  "dependencies": {
-    "@httpx/exception": "workspace:^"
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-md5-unit --dir ./coverage"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
     "@belgattitude/eslint-config-bases": "8.9.0",
     "@httpx/devtools-vitest": "workspace:^",
+    "@size-limit/esbuild": "12.0.1",
     "@size-limit/file": "12.0.1",
-    "@size-limit/webpack": "12.0.1",
+    "@types/md5": "2.3.6",
+    "@types/spark-md5": "3.0.5",
     "browserslist": "4.28.1",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
     "es-check": "9.6.2",
     "esbuild": "0.27.3",
     "eslint": "8.57.1",
+    "hash-wasm": "4.12.0",
+    "md5": "2.3.0",
     "npm-run-all2": "8.0.4",
     "prettier": "3.8.1",
     "publint": "0.3.18",
     "rimraf": "6.1.3",
     "size-limit": "12.0.1",
-    "tsup": "8.5.1",
+    "spark-md5": "3.0.2",
+    "tsdown": "0.21.1",
     "typedoc": "0.28.17",
     "typedoc-plugin-markdown": "4.10.0",
     "typescript": "5.9.3",
-    "vitest": "4.0.18",
-    "webpack": "5.105.4"
+    "vitest": "4.0.18"
   },
   "engines": {
     "node": ">=20.9.0"
-  },
-  "publishConfig": {
-    "directory": "_release/package"
   }
 }

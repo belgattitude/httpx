@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "declaration": true,
+    "declarationMap": true,
+    "strict": true,
+    "paths": {
+      "@httpx/devtools-vitest": ["../../devtools/vitest/src/index.ts"],
+      "@httpx/md5/ecmascript": ["./src/ecmascript/index.ts"],
+      "@httpx/md5/nodejs": ["./src/nodejs/index.ts"]
+    },
+    "types": ["vitest/globals", "node"]
+  },
+  "exclude": ["dist", "coverage"],
+  "include": [
+    ".eslintrc.*",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    "**/*.json"
+  ]
+}

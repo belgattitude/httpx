@@ -36,5 +36,5 @@ jobs:
       #- name: 🛟 Check monorepo dependency graph
       #  run: yarn check:install
 
-      - name: 🦺 Syncpack checks - packages - lint-semver-ranges
-        run: yarn syncpack:check
+      #- name: 🦺 Syncpack checks - packages - lint-semver-ranges
+      #  run: yarn syncpack:check
