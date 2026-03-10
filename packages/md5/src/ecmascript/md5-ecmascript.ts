@@ -264,5 +264,6 @@ export function md5(text: string): string {
     throw new TypeError('Expected a string');
   }
   const hash = md51(toUtf8(text));
+  console.log(hash);
   return hex(hash);
 }
