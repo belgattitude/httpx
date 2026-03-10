@@ -3,14 +3,14 @@
 [![npm](https://img.shields.io/npm/v/@httpx/md5?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/md5)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/md5/CHANGELOG.md)
 [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-md5-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fmd5)
-[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/md5/.size-limit.cjs)
+[![bundles](https://img.shields.io/static/v1?label=&message=esm&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/md5/.size-limit.ts)
 [![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
 [![browserslist](https://img.shields.io/static/v1?label=Browsers&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
 [![downloads](https://img.shields.io/npm/dm/@httpx/md5?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/md5)
 [![license](https://img.shields.io/npm/l/@httpx/md5?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
 1.2Kb [MD5](https://en.wikipedia.org/wiki/MD5) synchronous hash function very fast on small strings (<4Kb).
-Automatically uses the native crypto module on node, bun and edge runtimes for the best performance.
+Automatically uses the native crypto module on node, bun for the best performance.
 
 ## Install
 
@@ -22,9 +22,9 @@ pnpm add @httpx/md5
 
 ## Features
 
-- 🚀&nbsp; [Fast](#benchmarks) hash for small strings (2x-10x faster than [md5](https://www.npmjs.com/package/md5)).
-- 🖖&nbsp; Produce RFC1321 / NodeJs compatible md5 hashes.
-- ✨&nbsp; Use native crypto module on nodejs, edge and bun.
+- 🖖&nbsp; RFC1321 / NodeJs compatible md5 hashes with unicode support.
+- 🚀&nbsp; [Fast](#benchmarks) hash for small strings (2x-5x faster than [md5](https://www.npmjs.com/package/md5)).
+- ✨&nbsp; Use native crypto module on nodejs and bun (ultra fast).
 - 📐&nbsp; Lightweight for browsers usage ([~1.2Kb](#bundle-size))
 - 🛡️&nbsp; Tested on [node 20-25, bun, browser, cloudflare workers and runtime/edge](#compatibility).
 
@@ -34,7 +34,17 @@ pnpm add @httpx/md5
 import { md5 } from "@httpx/md5";
 
 const hash = md5("Hello: 🌍🚀✨🦄");
+
+// Hexadecimal RFC1321 / NodeJs string
+// '8f11a08695d43b4f737a9706dffbf208'
 ```
+
+## Considerations
+
+MD5 is a non-cryptographic hash function that produces a 128-bit (16-byte) value. More modern hash function
+exists nowadays and should be preferred (xxhash, rapidhash...). However, I (the author) had a requirement
+to use it in many runtimes (edge, cloudflare, node and the browser) to compute hashes for millions of relatively
+small strings. This library is aimed at this use case. Please check alternatives if it doesn't fit your scenario.
 
 ## Comparison with other libraries
 
@@ -44,7 +54,7 @@ const hash = md5("Hello: 🌍🚀✨🦄");
 Their performance is equivalent, that said on node, bun and edge runtimes, the native crypto will transparently be used thanks
 to a more modern packaging, which generally gives a speed boost.
 
-[npm:md5](https://www.npmjs.com/package/md5) is the most popular library (still 2x-10x slower than this one) and also much bigger.
+[npm:md5](https://www.npmjs.com/package/md5) is the most popular library (still 2x-5x slower than this one) and also much bigger.
 
 [hash-wasm](https://www.npmjs.com/package/hash-wasm) is asynchronous and uses WebAssembly which defeats a bit the performance for
 small strings. Working with edge, cloudflare workers, bun and runtime/edge is not always easy to set up.
@@ -54,10 +64,6 @@ small strings. Working with edge, cloudflare workers, bun and runtime/edge is no
 ### NodeJs
 
 ```plain
-
-Benchmarking is an experimental feature.
-Breaking changes might not follow SemVer, please pin Vitest's version when using it.
-
  RUN  v4.0.18 /home/sebastien/github/httpx/packages/md5
 
 
@@ -150,6 +156,11 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                    |
 | ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                     |
 | Performance  | ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                             |
+
+## Credits
+
+- The [spark-md5](https://github.com/satazor/js-spark-md5) on which most functions have been ported from.
+- Joseph Myers for the [underlying approach](http://www.myersdaily.org/joseph/javascript/md5-text.html).
 
 ## Contributors
 
