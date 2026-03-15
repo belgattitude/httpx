@@ -2,7 +2,6 @@ import path from 'node:path';
 
 import codspeedPlugin from '@codspeed/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import type { ViteUserConfigExport } from 'vitest/config';
 
 import { getPackageNameFromCwd } from './get-package-name-from-cwd.ts';
@@ -33,15 +32,12 @@ export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
 
   const config = {
     cacheDir: cacheDir,
-    plugins: [
-      tsconfigPaths({
-        // projectDiscovery: 'lazy',
-        // root: process.cwd(),
-        // logFile: '/tmp/test.log',
-      }),
-
-      isCodeSpeedEnabled ? codspeedPlugin() : undefined,
-    ].filter(Boolean),
+    plugins: [isCodeSpeedEnabled ? codspeedPlugin() : undefined].filter(
+      Boolean
+    ),
+    resolve: {
+      tsconfigPaths: true,
+    },
     test: {
       browser: {
         provider: playwright({
