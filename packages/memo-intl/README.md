@@ -1,7 +1,7 @@
 # @httpx/memo-intl
 
-LRU-based memoizer for [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat),[Intl.DateFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) and other Intl constructors.
-Speeds up Intl operations up to 30x.
+Speeds up Intl operations up to 40x. LRU-based memoizer for [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat),[Intl.DateFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) and other Intl constructors.
+Less than 1kb.
 
 [![npm](https://img.shields.io/npm/v/@httpx/memo-intl?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/memo-intl)
 [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/CHANGELOG.md)
@@ -9,7 +9,6 @@ Speeds up Intl operations up to 30x.
 [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.size-limit.cjs)
 [![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
 [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![size](https://img.shields.io/bundlephobia/minzip/@httpx/memo-intl@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/memo-intl@latest)
 [![downloads](https://img.shields.io/npm/dm/@httpx/memo-intl?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/memo-intl)
 [![license](https://img.shields.io/npm/l/@httpx/memo-intl?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
@@ -164,42 +163,42 @@ Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/htt
 See [bench](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/bench) for details.
 
 ```
- RUN  v4.0.15 /home/sebastien/github/httpx/packages/memo-intl
+ RUN  v4.1.0 /home/sebastien/github/httpx/packages/memo-intl
 
 
- ✓ bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks (1000 instances) 1294ms
-     name                                                    hz      min      max     mean      p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.NumberFormatter()`        1,505.36   0.5185   1.5463   0.6643   0.6942   1.0228   1.1927   1.5463  ±0.99%      753
-   · Without memoization `new Intl.NumberFormatter()`   45.3186  21.1337  23.1010  22.0660  22.3082  23.1010  23.1010  23.1010  ±0.91%       23
+ ✓ bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks (1000 instances) 2280ms
+     name                                                hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · With memoization `MIntl.DateFormatter()`        319.62  2.2842  8.7999  3.1287  3.2833  5.5124  8.7999  8.7999  ±3.53%      160
+   · Without memoization `new Intl.DateFormatter()`  6.9108  134.01  153.85  144.70  150.15  153.85  153.85  153.85  ±9.89%        4
 
- ✓ bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks (1000 instances) 1509ms
-     name                                                 hz      min      max     mean      p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.DateFormatter()`         639.68   1.2663   2.6546   1.5633   1.6006   2.2871   2.2935   2.6546  ±1.31%      320
-   · Without memoization `new Intl.DateFormatter()`  17.4417  52.7808  70.5025  57.3339  55.9290  70.5025  70.5025  70.5025  ±7.30%        9
+ ✓ bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks (1000 instances) 1428ms
+     name                                                   hz      min      max     mean      p75      p99     p995     p999     rme  samples
+   · With memoization `MIntl.NumberFormatter()`         630.46   1.3785   3.3911   1.5861   1.7105   2.9305   3.3167   3.3911  ±2.04%      316
+   · Without memoization `new Intl.NumberFormatter()`  27.9431  33.2026  39.5232  35.7870  37.1625  39.5232  39.5232  39.5232  ±3.43%       14
 
- ✓ bench/m-intl.relative-time-format.bench.ts > MIntl RelativeTimeFormat benchmarks (1000 instances) 1246ms
-     name                                                       hz     min      max     mean      p75      p99     p995     p999      rme  samples
-   · With memoization `MIntl.RelativeTimeFormat()`        1,905.42  0.4204   1.0122   0.5248   0.5442   0.7369   0.8688   1.0122   ±0.74%      953
-   · Without memoization `new Intl.RelativeTimeFormat()`   97.2481  7.6225  30.8928  10.2830  10.0394  30.8928  30.8928  30.8928  ±11.33%       49
+ ✓ bench/m-intl.relative-time-format.bench.ts > MIntl RelativeTimeFormat benchmarks (1000 instances) 1289ms
+     name                                                      hz      min      max     mean      p75      p99     p995     p999      rme  samples
+   · With memoization `MIntl.RelativeTimeFormat()`         655.89   1.1328   6.1182   1.5246   1.7606   2.8280   3.1006   6.1182   ±3.51%      328
+   · Without memoization `new Intl.RelativeTimeFormat()`  34.3497  14.3163  41.4047  29.1123  31.7652  41.4047  41.4047  41.4047  ±10.27%       18
 
- ✓ bench/m-intl.locale.bench.ts > MIntl Locale benchmarks (1000 instances) 1226ms
-     name                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · With memoization `MIntl.Locale()`        6,327.65  0.1240  0.6766  0.1580  0.1621  0.2588  0.2956  0.4056  ±0.57%     3164
-   · Without memoization `new Intl.Locale()`    284.81  2.7692  9.1417  3.5111  3.3905  8.9251  9.1417  9.1417  ±4.86%      143
+ ✓ bench/m-intl.locale.bench.ts > MIntl Locale benchmarks (1000 instances) 1244ms
+     name                                           hz     min      max    mean     p75      p99     p995     p999     rme  samples
+   · With memoization `MIntl.Locale()`        2,651.83  0.3070   2.9604  0.3771  0.3572   0.9173   1.1504   2.0406  ±2.21%     1327
+   · Without memoization `new Intl.Locale()`    124.48  5.8074  12.0320  8.0335  9.2540  12.0320  12.0320  12.0320  ±4.76%       63
 
  BENCH  Summary
 
   With memoization `MIntl.DateFormatter()` - bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks (1000 instances)
-    36.68x faster than Without memoization `new Intl.DateFormatter()`
+    46.25x faster than Without memoization `new Intl.DateFormatter()`
 
   With memoization `MIntl.Locale()` - bench/m-intl.locale.bench.ts > MIntl Locale benchmarks (1000 instances)
-    22.22x faster than Without memoization `new Intl.Locale()`
+    21.30x faster than Without memoization `new Intl.Locale()`
 
   With memoization `MIntl.NumberFormatter()` - bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks (1000 instances)
-    33.22x faster than Without memoization `new Intl.NumberFormatter()`
+    22.56x faster than Without memoization `new Intl.NumberFormatter()`
 
   With memoization `MIntl.RelativeTimeFormat()` - bench/m-intl.relative-time-format.bench.ts > MIntl RelativeTimeFormat benchmarks (1000 instances)
-    19.59x faster than Without memoization `new Intl.RelativeTimeFormat()`
+    19.09x faster than Without memoization `new Intl.RelativeTimeFormat()`
 ```
 
 ## Bundle size
@@ -211,7 +210,6 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | `import { MIntl } from '@httpx/memo-intl' |                      ~ 790B |
 
 > Note that per-se the library weights less than 300 bytes, the size limit accounts for the @httpx/lru dependency.
-> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/memo-intl@latest).
 
 ## Compatibility
 
