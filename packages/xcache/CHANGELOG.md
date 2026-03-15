@@ -1,5 +1,16 @@
 # @httpx/xcache
 
+## 0.4.12
+
+### Patch Changes
+
+- [#2673](https://github.com/belgattitude/httpx/pull/2673) [`c33262d`](https://github.com/belgattitude/httpx/commit/c33262d028d0b5ce5ff2dd64e8e6bd6a0eb74d48) Thanks [@belgattitude](https://github.com/belgattitude)! - Re-enable cloudflare tests in CI
+
+- Updated dependencies [[`c33262d`](https://github.com/belgattitude/httpx/commit/c33262d028d0b5ce5ff2dd64e8e6bd6a0eb74d48)]:
+  - @httpx/stable-hash@0.3.8
+  - @httpx/compress@0.3.11
+  - @httpx/lru@0.13.1
+
 ## 0.4.11
 
 ### Patch Changes
