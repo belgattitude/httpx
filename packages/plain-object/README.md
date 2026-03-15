@@ -1,7 +1,7 @@
 # @httpx/plain-object
 
 [Fast](#benchmarks) and lightweight ([~80B](#bundle-size)) functions to check or assert
-that a value is a plain object. 
+that a value is a plain object.
 
 A plain object is a basic JavaScript object, such as `{}`, `{ data: [] }`, `new Object()` or `Object.create(null)`.
 
@@ -30,7 +30,7 @@ $ pnpm add @httpx/plain-object
 - 👉&nbsp; Provide [isPlainObject](#isplainobject) and [assertPlainObject](#assertplainobject) functions.
 - 🦄&nbsp; Convenience [PlainObject](#plainobject-type) typescript typings.
 - 🚀&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
-- 📐&nbsp; Lightweight (starts at [~80B](#bundle-size)) 
+- 📐&nbsp; Lightweight (starts at [~80B](#bundle-size))
 - 🛡️&nbsp; Tested on [node 20-25, bun, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🙏&nbsp; Works cross-realms (node:vm runInNewContext,...)
 - 🗝️&nbsp; Available in ESM and CJS formats.
@@ -44,45 +44,45 @@ $ pnpm add @httpx/plain-object
 ### isPlainObject
 
 ```typescript
-import { isPlainObject } from '@httpx/plain-object';
+import { isPlainObject } from "@httpx/plain-object";
 
 // ✅👇 True
-isPlainObject({ });                       // ✅
-isPlainObject({ key: 'value' });          // ✅
-isPlainObject({ key: new Date() });       // ✅
-isPlainObject(new Object());              // ✅
-isPlainObject(Object.create(null));       // ✅
-isPlainObject({ nested: { key: true} });  // ✅
-isPlainObject(new Proxy({}, {}));         // ✅
-isPlainObject({ [Symbol('tag')]: 'A' });  // ✅
+isPlainObject({}); // ✅
+isPlainObject({ key: "value" }); // ✅
+isPlainObject({ key: new Date() }); // ✅
+isPlainObject(new Object()); // ✅
+isPlainObject(Object.create(null)); // ✅
+isPlainObject({ nested: { key: true } }); // ✅
+isPlainObject(new Proxy({}, {})); // ✅
+isPlainObject({ [Symbol("tag")]: "A" }); // ✅
 
 // ✅👇 (node context, workers, ...)
-const runInNewContext = await import('node:vm').then(
-    (mod) => mod.runInNewContext
+const runInNewContext = await import("node:vm").then(
+  (mod) => mod.runInNewContext
 );
-isPlainObject(runInNewContext('({})'));   // ✅
+isPlainObject(runInNewContext("({})")); // ✅
 
 // ❌👇 False
 
-class Test { };
-isPlainObject(new Test())           // ❌
-isPlainObject(10);                  // ❌
-isPlainObject(null);                // ❌
-isPlainObject('hello');             // ❌
-isPlainObject([]);                  // ❌
-isPlainObject(new Date());          // ❌
+class Test {}
+isPlainObject(new Test()); // ❌
+isPlainObject(10); // ❌
+isPlainObject(null); // ❌
+isPlainObject("hello"); // ❌
+isPlainObject([]); // ❌
+isPlainObject(new Date()); // ❌
 isPlainObject(new Uint8Array([1])); // ❌
-isPlainObject(Buffer.from('ABC'));  // ❌
+isPlainObject(Buffer.from("ABC")); // ❌
 isPlainObject(Promise.resolve({})); // ❌
-isPlainObject(Object.create({}));   // ❌
-isPlainObject(new (class Cls {}));  // ❌
+isPlainObject(Object.create({})); // ❌
+isPlainObject(new (class Cls {})()); // ❌
 
 // ⚠️ Edge cases
 //
 // 👇 globalThis isn't properly portable across all JS environments
 //
 
-isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare)
+isPlainObject(globalThis); // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare)
 
 // 👇 Static built-in classes aren't properly checked. This is a trade-off
 //    to maintain the best performance and size. If you need to check for these,
@@ -90,40 +90,39 @@ isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Node
 //    as the probability of writing a code that receives these as plain objects is low.
 //    and probably indicates an issue in your code.
 
-isPlainObject(Math);                // ⚠️✅ return true, but Math is not a plain object
-isPlainObject(JSON);                // ⚠️✅ return true, but JSON is not a plain object
-isPlainObject(Atomics);             // ⚠️✅ return true, but Atomics is not a plain object
-isPlainObject(Reflect);             // ⚠️✅ return true, but Reflect is not a plain object
+isPlainObject(Math); // ⚠️✅ return true, but Math is not a plain object
+isPlainObject(JSON); // ⚠️✅ return true, but JSON is not a plain object
+isPlainObject(Atomics); // ⚠️✅ return true, but Atomics is not a plain object
+isPlainObject(Reflect); // ⚠️✅ return true, but Reflect is not a plain object
 ```
 
 ### assertPlainObject
 
 ```typescript
-import { assertPlainObject } from '@httpx/plain-object';
-import type { PlainObject } from '@httpx/plain-object';
+import { assertPlainObject } from "@httpx/plain-object";
+import type { PlainObject } from "@httpx/plain-object";
 
 function fn(value: unknown) {
+  // 👇 Throws `new TypeError('Not a PlainObject')` if not a plain object
+  assertPlainObject(value);
 
-    // 👇 Throws `new TypeError('Not a PlainObject')` if not a plain object
-    assertPlainObject(value);
+  // 👇 Throws `new TypeError('Custom message')` if not a plain object
+  assertPlainObject(value, "Custom message");
 
-    // 👇 Throws `new TypeError('Custom message')` if not a plain object
-    assertPlainObject(value, 'Custom message');
+  // 👇 Throws custom error if not a plain object
+  assertPlainObject(value, () => {
+    throw new HttpBadRequest("Custom message");
+  });
 
-    // 👇 Throws custom error if not a plain object
-    assertPlainObject(value, () => {
-        throw new HttpBadRequest('Custom message');
-    });
-    
-    return value;
+  return value;
 }
 
 try {
-    const value = fn({ key: 'value' });
-    // ✅ Value is known to be PlainObject<unknown>
-    assertType<PlainObject>(value);
+  const value = fn({ key: "value" });
+  // ✅ Value is known to be PlainObject<unknown>
+  assertType<PlainObject>(value);
 } catch (error) {
-    console.error(error);
+  console.error(error);
 }
 ```
 
@@ -131,38 +130,38 @@ try {
 
 #### Generic
 
-`ìsPlainObject` and `assertPlainObject` accepts a generic to provide type 
-autocompletion. Be aware that no runtime check are done. If you're looking for 
+`ìsPlainObject` and `assertPlainObject` accepts a generic to provide type
+autocompletion. Be aware that no runtime check are done. If you're looking for
 runtime validation, check zod, valibot or other alternatives.
 
 ```typescript
-import { isPlainObject } from '@httpx/plain-object';
-import type { PlainObject } from '@httpx/plain-object';
+import { isPlainObject } from "@httpx/plain-object";
+import type { PlainObject } from "@httpx/plain-object";
 
 type CustomType = {
-    id: number;
-    data?: {
-        test: string[];
-        attributes?: {
-            url?: string | null;
-            caption?: string | null;
-            alternativeText?: string | null;
-        } | null;
+  id: number;
+  data?: {
+    test: string[];
+    attributes?: {
+      url?: string | null;
+      caption?: string | null;
+      alternativeText?: string | null;
     } | null;
+  } | null;
 };
 
 const value = { id: 1 } as unknown;
 
 if (isPlainObject<CustomType>(value)) {
-   // ✅ Value is a PlainObject with typescript autocompletion
-   // Note that there's no runtime checking of keys, so they are
-   // `unknown | undefined`. They will require unsing `?.` to access. 
-    
+  // ✅ Value is a PlainObject with typescript autocompletion
+  // Note that there's no runtime checking of keys, so they are
+  // `unknown | undefined`. They will require unsing `?.` to access.
+
   const url = value?.data?.attributes?.url; // autocompletion works
   // ✅ url is `unknown | undefined`, so in order to use it, you'll need to
   //    manually check for the type.
-  if (typeof url === 'string') {
-      console.log(url.toUpperCase());
+  if (typeof url === "string") {
+    console.log(url.toUpperCase());
   }
 }
 ```
@@ -170,48 +169,81 @@ if (isPlainObject<CustomType>(value)) {
 #### PlainObject
 
 ```typescript
-import { assertPlainObject } from '@httpx/plain-object';
-import type { PlainObject } from '@httpx/plain-object';
+import { assertPlainObject } from "@httpx/plain-object";
+import type { PlainObject } from "@httpx/plain-object";
 
 function someFn(value: PlainObject) {
-  //    
+  //
 }
 
-const value = { key: 'value' } as unknown;
+const value = { key: "value" } as unknown;
 assertPlainObject(value);
-someFn(value)
+someFn(value);
 ```
+
 ## Benchmarks
 
-> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx). 
+> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx).
 >
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
+### NodeJs 24.x
+
 ```
- RUN  v3.2.4 /home/sebastien/github/httpx/packages/plain-object
+ RUN  v4.1.0 /home/sebastien/github/httpx/packages/plain-object
 
 
- ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 6594ms
-     name                                                         hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · "@httpx/plain-object": `isPlainObject(v)`            932,629.62  0.0008  0.7244  0.0011  0.0010  0.0019  0.0021  0.0103  ±0.55%   466316
-   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'              891,373.92  0.0009  1.0045  0.0011  0.0010  0.0019  0.0022  0.0149  ±1.00%   445687
-   · "@sindresorhus/is":"7.1.0": 'is.plainObject(v)'      343,401.88  0.0022  1.1724  0.0029  0.0024  0.0052  0.0079  0.0489  ±1.50%   171706
-   · "es-toolkit":"1.41.0": 'isPlainObject(v)'            776,704.94  0.0010  0.9174  0.0013  0.0011  0.0022  0.0024  0.0242  ±1.03%   388353
-   · "redux":"5.0.1": 'isPlainObject(v)'                  316,795.75  0.0024  0.7996  0.0032  0.0029  0.0053  0.0084  0.0370  ±0.91%   158461
-   · "is-plain-object":"5.0.0": 'isPlainObject(v)'        374,471.38  0.0021  1.8234  0.0027  0.0027  0.0056  0.0061  0.0272  ±1.00%   187236
-   · "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'  310,784.72  0.0026  0.4656  0.0032  0.0033  0.0069  0.0081  0.0267  ±0.51%   155393
-   · lodash-es:"4.17.21": '_.isPlainObject(v)'             12,787.05  0.0662  1.5537  0.0782  0.0766  0.1903  0.2622  0.5214  ±1.13%     6394
+ ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 6714ms
+     name                                                           hz     min      max    mean     p75     p99    p995    p999      rme  samples
+   · "@httpx/plain-object": `isPlainObject(v)`            1,167,837.33  0.0007   0.8963  0.0009  0.0008  0.0015  0.0018  0.0090   ±1.00%   583919
+   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'              1,047,345.27  0.0008   8.3108  0.0010  0.0008  0.0016  0.0020  0.0150   ±3.48%   523673
+   · "@sindresorhus/is":"7.2.0": 'is.plainObject(v)'      1,062,605.89  0.0008   1.1887  0.0009  0.0008  0.0018  0.0021  0.0127   ±0.92%   531303
+   · "es-toolkit":"1.45.1": 'isPlainObject(v)'              800,068.53  0.0009  22.2441  0.0012  0.0010  0.0022  0.0025  0.0167  ±10.58%   400035
+   · "redux":"5.0.1": 'isPlainObject(v)'                    329,692.81  0.0024   1.5117  0.0030  0.0028  0.0052  0.0065  0.0311   ±1.13%   164847
+   · "is-plain-object":"5.0.0": 'isPlainObject(v)'          511,111.59  0.0016   1.6956  0.0020  0.0017  0.0041  0.0047  0.0257   ±1.40%   255556
+   · "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'    351,237.13  0.0020   3.4495  0.0028  0.0032  0.0052  0.0092  0.0623   ±2.24%   175627
+   · lodash-es:"4.17.23": '_.isPlainObject(v)'               12,394.91  0.0515   1.1758  0.0807  0.0894  0.2915  0.4332  0.8713   ±1.85%     6198
 
  BENCH  Summary
-                                                                                                                                                    
+
   "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
-    1.05x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
-    1.20x faster than "es-toolkit":"1.41.0": 'isPlainObject(v)'
-    2.49x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
-    2.72x faster than "@sindresorhus/is":"7.1.0": 'is.plainObject(v)'
-    2.94x faster than "redux":"5.0.1": 'isPlainObject(v)'
-    3.00x faster than "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'
-    72.94x faster than lodash-es:"4.17.21": '_.isPlainObject(v)'
+    1.10x faster than "@sindresorhus/is":"7.2.0": 'is.plainObject(v)'
+    1.12x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
+    1.46x faster than "es-toolkit":"1.45.1": 'isPlainObject(v)'
+    2.28x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
+    3.32x faster than "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'
+    3.54x faster than "redux":"5.0.1": 'isPlainObject(v)'
+    94.22x faster than lodash-es:"4.17.23": '_.isPlainObject(v)'
+```
+
+### Bun 1.3
+
+```
+
+ RUN  v4.1.0 /home/sebastien/github/httpx/packages/plain-object
+
+
+ ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 8801ms
+     name                                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · "@httpx/plain-object": `isPlainObject(v)`            3,031,245.38  0.0003  1.1474  0.0003  0.0003  0.0005  0.0007  0.0008  ±0.87%  1515623
+   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'              2,549,208.34  0.0003  1.5657  0.0004  0.0003  0.0007  0.0008  0.0010  ±0.84%  1274605
+   · "@sindresorhus/is":"7.2.0": 'is.plainObject(v)'      2,331,887.24  0.0003  9.4652  0.0004  0.0005  0.0008  0.0008  0.0019  ±4.52%  1165944
+   · "es-toolkit":"1.45.1": 'isPlainObject(v)'            1,001,717.61  0.0008  1.6459  0.0010  0.0009  0.0020  0.0022  0.0158  ±1.17%   500859
+   · "redux":"5.0.1": 'isPlainObject(v)'                  1,300,233.22  0.0006  1.5704  0.0008  0.0007  0.0012  0.0014  0.0049  ±0.92%   650117
+   · "is-plain-object":"5.0.0": 'isPlainObject(v)'          517,269.60  0.0015  7.0468  0.0019  0.0016  0.0033  0.0043  0.0270  ±4.92%   258635
+   · "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'  1,117,577.40  0.0008  1.1199  0.0009  0.0008  0.0015  0.0016  0.0138  ±0.73%   558789
+   · lodash-es:"4.17.23": '_.isPlainObject(v)'               26,383.39  0.0083  4.4473  0.0379  0.0424  0.1492  0.1926  0.4897  ±2.96%    13206
+
+ BENCH  Summary
+
+  "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
+    1.19x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
+    1.30x faster than "@sindresorhus/is":"7.2.0": 'is.plainObject(v)'
+    2.33x faster than "redux":"5.0.1": 'isPlainObject(v)'
+    2.71x faster than "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'
+    3.03x faster than "es-toolkit":"1.45.1": 'isPlainObject(v)'
+    5.86x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
+    114.89x faster than lodash-es:"4.17.23": '_.isPlainObject(v)'
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/bench/comparative.bench.ts) for details.
@@ -220,37 +252,37 @@ someFn(value)
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.size-limit.ts)
 
-| Scenario (esm)                                              | Size (compressed) |
-|-------------------------------------------------------------|------------------:|
-| `import { isPlainObject } from '@httpx/plain-object`        |             ~ 80B |
-| `import { assertPlainObject } from '@httpx/plain-object`    |            ~ 133B |
-| `Both isPlainObject and assertPlainObject`                  |            ~ 141B |
+| Scenario (esm)                                           | Size (compressed) |
+| -------------------------------------------------------- | ----------------: |
+| `import { isPlainObject } from '@httpx/plain-object`     |             ~ 80B |
+| `import { assertPlainObject } from '@httpx/plain-object` |            ~ 133B |
+| `Both isPlainObject and assertPlainObject`               |            ~ 141B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/plain-object@latest).
 
 ## Compatibility
 
 | Level        | CI  | Description                                                                                                                                                                                                                                                                                                                                                                                       |
-|--------------|-----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
-| Browser      | ✅   | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                     |
-| Browserslist | ✅   | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.browserslistrc) |
-| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                              |
-| Edge         | ✅   | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                                | 
-| Cloudflare   | ✅   | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                                  |
-| Typescript   | ✅   | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                     |
-| ES2022       | ✅   | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                      |
-| Performance  | ✅   | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                              |
+| ------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Node         | ✅  | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
+| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                     |
+| Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.browserslistrc) |
+| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                                  |
+| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                                |
+| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                                  |
+| Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                     |
+| ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                      |
+| Performance  | ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                              |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
 ## Comparison with other libraries
 
 | Library                                                                | Compat      | Perf          | CJS+ESM |
-|------------------------------------------------------------------------|-------------|---------------|---------|  
-| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj)           | Differences | 1.17x slower  | No      | 
-| [es-toolkit](https://github.com/toss/es-toolkit)                       | No          | 1.25x slower  | Yes     | 
-| (@redux)[isPlainObject](https://github.com/reduxjs/redux)              | ✅ 100%      | 2.76x slower  | Yes     |
+| ---------------------------------------------------------------------- | ----------- | ------------- | ------- |
+| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj)           | Differences | 1.17x slower  | No      |
+| [es-toolkit](https://github.com/toss/es-toolkit)                       | No          | 1.25x slower  | Yes     |
+| (@redux)[isPlainObject](https://github.com/reduxjs/redux)              | ✅ 100%     | 2.76x slower  | Yes     |
 | (lodash)[isPlainObject](https://lodash.com/docs/4.17.15#isPlainObject) | No          | 83.50x slower | No      |
 
 ### redux/isPlainObject
@@ -269,7 +301,7 @@ Notable differences:
 - [x] Provide a `PlainObject` type and `assertPlainObject` function.
 - [x] Typescript convenience `PlainObject` type.
 
-Since v2, it diverges from `is-plain-obj` by 
+Since v2, it diverges from `is-plain-obj` by
 
 - [x] Static built-in classes are considered as plain objects (use [isStaticBuiltInClass](#isstaticbuiltinclass) to exclude).
 - [x] `[Symbol.iterator]` is considered as a valid property for plain objects.

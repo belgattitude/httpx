@@ -3,13 +3,13 @@ import type { SizeLimitConfig } from 'size-limit';
 module.exports = [
   {
     name: 'Everything (ESM)',
-    path: ['dist/index.mjs'],
+    path: ['dist/index.js'],
     import: '*',
     limit: '1.15KB',
   },
   {
     name: 'Only parseDsn (ESM)',
-    path: ['dist/index.mjs'],
+    path: ['dist/index.js'],
     import: '{ parseDsn }',
     limit: '785B',
   },
