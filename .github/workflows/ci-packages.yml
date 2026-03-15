@@ -60,11 +60,11 @@ jobs:
             ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('yarn.lock') }}-
 
       - name: 🕵️ Typecheck
-        if: matrix.node-version == '20.x'
+        if: matrix.node-version == '24.x'
         run: yarn nx run-many --target=typecheck --exclude='examples/**' --exclude='docs'
 
       - name: 🔬 ESLint checks
-        if: matrix.node-version == '20.x'
+        if: matrix.node-version == '24.x'
         run: yarn nx run-many --target=lint --exclude='examples/**' --exclude='docs'
 
       - name: 🧪 Unit tests (no-coverage - node !== 20.x)
@@ -99,38 +99,36 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: 🧪 Unit tests (edge-runtime)
-        if: matrix.node-version == '22.x'
+        if: matrix.node-version == '20.x'
         run: yarn nx run-many --target=test-unit-edge --exclude='examples/**' --exclude='docs'
 
-      # Disabled till @cloudflare/vitest-pool-workers supports Vite 4.x
-      # @todo re-enable when possible
-      #- name: 🧪 Unit tests (cloudflare - only node 20.x)
-      #  if: matrix.node-version == '20.x'
-      #  run: yarn nx run-many --target=test-unit-cloudflare --exclude='examples/**' --exclude='docs'
+      - name: 🧪 Unit tests (cloudflare - only node 20.x)
+        if: matrix.node-version == '20.x'
+        run: yarn nx run-many --target=test-unit-cloudflare --exclude='examples/**' --exclude='docs'
 
-      - name: ⚙️ Install Playwright Chromium (only node 22.x)
-        if: matrix.node-version == '22.x'
+      - name: ⚙️ Install Playwright Chromium (only node 24.x)
+        if: matrix.node-version == '24.x'
         run: yarn playwright install chromium
 
-      - name: 🧪 Unit tests (playwright chromium - only node 22.x)
-        if: matrix.node-version == '22.x'
+      - name: 🧪 Unit tests (playwright chromium - only node 24.x)
+        if: matrix.node-version == '24.x'
         run: yarn nx run-many --target=test-unit-browser --exclude='examples/**' --exclude='docs'
 
       - name: 🏗 Build packages
         run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
 
       - name: 📐 Check build for size-limits
-        if: matrix.node-version == '20.x'
+        if: matrix.node-version == '24.x'
         run: yarn nx run-many --target=check-size --exclude='examples/**' --exclude='docs'
 
       - name: 🛟 Check build for ecmascript compliance
-        if: matrix.node-version == '20.x'
+        if: matrix.node-version == '24.x'
         run: yarn nx run-many --target=check-dist --exclude='examples/**' --exclude='docs'
 
       - name: 🛟 Check publishable dist (arethetypeswrong)
-        if: matrix.node-version == '20.x'
+        if: matrix.node-version == '24.x'
         run: yarn nx run-many --target=check-pub --exclude='examples/**' --exclude='docs'
 
       - name: 📄 Check doc can be built
-        if: matrix.node-version == '20.x'
+        if: matrix.node-version == '24.x'
         run: yarn nx run-many --target=docgen --exclude='examples/**' --exclude='docs'
