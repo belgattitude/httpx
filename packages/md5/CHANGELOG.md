@@ -1,5 +1,11 @@
 # @httpx/md5
 
+## 1.0.2
+
+### Patch Changes
+
+- [#2673](https://github.com/belgattitude/httpx/pull/2673) [`c33262d`](https://github.com/belgattitude/httpx/commit/c33262d028d0b5ce5ff2dd64e8e6bd6a0eb74d48) Thanks [@belgattitude](https://github.com/belgattitude)! - Re-enable cloudflare tests in CI
+
 ## 1.0.1
 
 ### Patch Changes

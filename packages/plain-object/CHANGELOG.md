@@ -1,5 +1,15 @@
 # @httpx/plain-object
 
+## 2.1.8
+
+### Patch Changes
+
+- [#2673](https://github.com/belgattitude/httpx/pull/2673) [`c33262d`](https://github.com/belgattitude/httpx/commit/c33262d028d0b5ce5ff2dd64e8e6bd6a0eb74d48) Thanks [@belgattitude](https://github.com/belgattitude)! - Build with tsdown rather than tsup
+
+- [#2673](https://github.com/belgattitude/httpx/pull/2673) [`c33262d`](https://github.com/belgattitude/httpx/commit/c33262d028d0b5ce5ff2dd64e8e6bd6a0eb74d48) Thanks [@belgattitude](https://github.com/belgattitude)! - Update benchmarks for node 24 and bun
+
+- [#2673](https://github.com/belgattitude/httpx/pull/2673) [`c33262d`](https://github.com/belgattitude/httpx/commit/c33262d028d0b5ce5ff2dd64e8e6bd6a0eb74d48) Thanks [@belgattitude](https://github.com/belgattitude)! - Re-enable cloudflare tests in CI
+
 ## 2.1.7
 
 ### Patch Changes
