@@ -1,26 +1,36 @@
-import { defineWorkersConfig } from '@cloudflare/vitest-pool-workers/config';
-import type { UserConfig } from 'vite';
+import path from 'node:path';
+
+import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
 
 import {
   getVitestBaseConfig,
   type VitestBaseConfigParams,
 } from './get-vitest-base-config.ts';
 
-type Params = VitestBaseConfigParams;
+type Params = VitestBaseConfigParams & {
+  wranglerConfigPath?: string;
+};
+
+const __dirname = import.meta.dirname;
+
+const defaultWranglerConfigPath = path.resolve(
+  __dirname,
+  '..',
+  'wrangler.toml'
+);
 
 export const createVitestCloudflareConfig = (params?: Params) => {
-  const baseConfig = getVitestBaseConfig(params);
-  return defineWorkersConfig({
-    ...getVitestBaseConfig(params),
-    test: {
-      ...baseConfig.test,
-      poolOptions: {
-        workers: {
-          wrangler: {
-            configPath: '../../devtools/vitest/wrangler.toml',
-          },
-        },
-      },
-    },
-  }) as unknown as UserConfig;
+  const { wranglerConfigPath = defaultWranglerConfigPath, ...restParams } =
+    params ?? {};
+  const baseConfig = getVitestBaseConfig(restParams);
+  return {
+    ...baseConfig,
+    plugins: [
+      ...(baseConfig.plugins ?? []),
+      cloudflareTest({
+        wrangler: { configPath: wranglerConfigPath },
+      }),
+    ],
+  };
+  // }) as unknown as UserConfig;
 };
