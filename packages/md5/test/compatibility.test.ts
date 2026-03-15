@@ -4,6 +4,10 @@ import { default as SparkMd5 } from 'spark-md5';
 import { md5 as md5Ecma } from '../src/ecmascript/md5-ecmascript.ts';
 import { md5 as md5Node } from '../src/nodejs/md5-nodejs.ts';
 
+const isCloudflare =
+  typeof navigator !== 'undefined' &&
+  navigator.userAgent === 'Cloudflare-Workers';
+
 describe('compatibility with other libraries', () => {
   // Some cases, ascii, utf-8, utf-16, emojis
   const md5Seeds = [
@@ -31,16 +35,6 @@ describe('compatibility with other libraries', () => {
     );
   });
 
-  describe('npm:hash-wasm', () => {
-    it.each(md5Seeds)(
-      'hash-wasm md5 hash with %s',
-      async ({ text, md5_rfc1321: md5 }) => {
-        // const sparkMd5 = new SparkMd5();
-        expect(await npmHashWasmMd5(text)).toBe(md5);
-      }
-    );
-  });
-
   describe('httpx/md5 - rfc1321 pure js', () => {
     it.each(md5Seeds)(
       'ecmascript md5 hash with %s',
@@ -55,6 +49,17 @@ describe('compatibility with other libraries', () => {
       'native nodejs md5 hash with %s',
       ({ text, md5_rfc1321: md5 }) => {
         expect(md5Node(text)).toBe(md5);
+      }
+    );
+  });
+
+  // hash-wasm doesn't work on cloudflare
+  describe.skipIf(isCloudflare)('npm:hash-wasm', () => {
+    it.each(md5Seeds)(
+      'hash-wasm md5 hash with %s',
+      async ({ text, md5_rfc1321: md5 }) => {
+        // const sparkMd5 = new SparkMd5();
+        expect(await npmHashWasmMd5(text)).toBe(md5);
       }
     );
   });
