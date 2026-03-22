@@ -70,8 +70,7 @@
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-memo-intl-unit --dir ./coverage"
   },
   "dependencies": {
-    "@httpx/lru": "workspace:^",
-    "tsdown": "0.21.4"
+    "@httpx/lru": "workspace:^"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
@@ -91,6 +90,7 @@
     "publint": "0.3.18",
     "rimraf": "6.1.3",
     "size-limit": "12.0.1",
+    "tsdown": "0.21.4",
     "typedoc": "0.28.17",
     "typedoc-plugin-markdown": "4.11.0",
     "typescript": "5.9.3",
