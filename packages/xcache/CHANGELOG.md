@@ -1,5 +1,17 @@
 # @httpx/xcache
 
+## 0.5.0
+
+### Minor Changes
+
+- [#2675](https://github.com/belgattitude/httpx/pull/2675) [`dfd7d10`](https://github.com/belgattitude/httpx/commit/dfd7d10aab8aad19f7cab0dd2f7253cabc6f36e5) Thanks [@belgattitude](https://github.com/belgattitude)! - Build with tsdown - update benchmarks
+
+### Patch Changes
+
+- Updated dependencies [[`dfd7d10`](https://github.com/belgattitude/httpx/commit/dfd7d10aab8aad19f7cab0dd2f7253cabc6f36e5), [`dfd7d10`](https://github.com/belgattitude/httpx/commit/dfd7d10aab8aad19f7cab0dd2f7253cabc6f36e5), [`dfd7d10`](https://github.com/belgattitude/httpx/commit/dfd7d10aab8aad19f7cab0dd2f7253cabc6f36e5)]:
+  - @httpx/compress@0.3.12
+  - @httpx/lru@0.13.2
+
 ## 0.4.12
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @httpx/md5
 
+## 1.0.3
+
+### Patch Changes
+
+- [#2675](https://github.com/belgattitude/httpx/pull/2675) [`dfd7d10`](https://github.com/belgattitude/httpx/commit/dfd7d10aab8aad19f7cab0dd2f7253cabc6f36e5) Thanks [@belgattitude](https://github.com/belgattitude)! - Update benchmarks
+
 ## 1.0.2
 
 ### Patch Changes
