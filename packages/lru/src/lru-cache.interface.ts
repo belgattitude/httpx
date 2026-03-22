@@ -144,6 +144,8 @@ export interface ILruCache<
   /**
    * Iterate over the cache from the least recently used to the most recently used.
    *
+   * Iterating over results does not mark the items as recently.
+   *
    * @example
    * ```typescript
    * import { LruCache } from '@httpx/lru';

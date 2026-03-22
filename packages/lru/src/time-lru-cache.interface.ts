@@ -178,6 +178,8 @@ export interface ITimeLruCache<
   /**
    * Iterate over the cache from the least recently used to the most recently used.
    *
+   * Iterating over results does not mark the items as recently used and doesn't skip expired items.
+   *
    * @example
    * import { TimeLruCache } from '@httpx/lru';
    *
