@@ -24,7 +24,7 @@ $ pnpm add @httpx/memo-intl
 
 - 👉&nbsp; Don't re-create the same Intl instance for the same options (memoized).
 - 👉&nbsp; Keep the [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) api untouched. Just replace `new Intl.NumberFormat` by `MIntl.NumberFormat`...
-- 👉&nbsp; Up to 30x faster than non-memoized Intl constructors.
+- 👉&nbsp; Up to 40x faster than non-memoized Intl constructors.
 - 👉&nbsp; Decrease memory usage, unwanted memory leaks and garbage collection pressure.
 - 👉&nbsp; Max out 50 cache instances by default with [@httpx/lru](https://github.com/belgattitude/httpx/tree/main/packages/lru#readme).
 - 👉&nbsp; Lightweight. [Node, bun, browser and edge support](#compatibility).

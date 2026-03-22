@@ -9,6 +9,10 @@
 [![downloads](https://img.shields.io/npm/dm/@httpx/lru?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/lru)
 [![license](https://img.shields.io/npm/l/@httpx/lru?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
+LRU cache optimized for performance and low memory usage. 2x-4x times faster on `get()` than [quick-lru](https://github.com/sindresorhus/quick-lru)
+without [memory overhead](https://github.com/sindresorhus/quick-lru?tab=readme-ov-file#trade-offs) and 6 times smaller than
+[lru-cache](https://github.com/isaacs/node-lru-cache). Less than 1Kb.
+
 ## Install
 
 ```bash
@@ -23,50 +27,11 @@ $ pnpm add @httpx/lru
 - 🚀&nbsp; [Fast](#benchmarks) `cache.get()` in O(1) thx to [doubly linked list](https://en.wikipedia.org/wiki/Doubly_linked_list).
 - 🦆&nbsp; Expose `getOrSet()` method to simplify cache usage patterns.
 - ✨&nbsp; Provides convenience [helpers](#helpers) to preserve single instance across your app.
-- 📐&nbsp; Lightweight (starts at [~570B](#bundle-size))
+- 📐&nbsp; Lightweight (starts at [~600B](#bundle-size))
 - 🛡️&nbsp; Tested on [node 20-25, bun, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
-
-## LruCache
-
-LruCache provides a base LRU implementation. It is a simple cache with a fixed capacity.
-When the cache is full, the least recently used item is removed. Under the hood it uses
-a doubly linked list implementation to allow `get()` in O(1). If you're looking for a cache with
-expiry time (TTL) consider using [TimeLruCache](#timelrucache) instead.
-
-### API
-
-| Method                             | Description                                                        |
-| ---------------------------------- | ------------------------------------------------------------------ |
-| `set(key, value): boolean`         | Add a new entry and return true if entry was overwritten           |
-| `get(key): TValue \| undefined`    | Retrieve a cache entry by key                                      |
-| `has(key): boolean`                | Check if an entry exist                                            |
-| `delete(key): boolean`             | Remove an entry, returns bool indicating if the entry was existing |
-| `getOrSet(key, valueOrFn): TValue` | Return the entry if exists otherwise save a new entry              |
-| `clear(): number`                  | Clear the cache and return the actual number of deleted entries    |
-
-### Usage
-
-```typescript
-// bundle size: ~550B
-import { LruCache } from "@httpx/lru";
-
-// 👉 As an alternative to constructor, consider using the helper
-//    `getOrCreateLruCache` to ensure only one instance is created
-const lru = new LruCache({ maxSize: 1000 });
-
-lru.set("🦆", ["cool", "stuff"]);
-
-if (lru.has("🦆")) {
-  console.log(lru.get("🦆"));
-  // ['cool', 'stuff']
-}
-
-lru.delete("🦆");
-lru.clear();
-```
 
 ## TimeLruCache
 
@@ -150,6 +115,45 @@ const value = lru.get("key1"); // 👈 'value1' (item is present and is not expi
 // 🕛 wait 3 seconds, time for the item to expire
 
 lru.has("key1"); // 👈 false (item is present but expired - 👋 onEviction will be called)
+```
+
+## LruCache
+
+LruCache provides a base LRU implementation. It is a simple cache with a fixed capacity.
+When the cache is full, the least recently used item is removed. Under the hood it uses
+a doubly linked list implementation to allow `get()` in O(1). If you're looking for a cache with
+expiry time (TTL) consider using [TimeLruCache](#timelrucache) instead.
+
+### API
+
+| Method                             | Description                                                        |
+| ---------------------------------- | ------------------------------------------------------------------ |
+| `set(key, value): boolean`         | Add a new entry and return true if entry was overwritten           |
+| `get(key): TValue \| undefined`    | Retrieve a cache entry by key                                      |
+| `has(key): boolean`                | Check if an entry exist                                            |
+| `delete(key): boolean`             | Remove an entry, returns bool indicating if the entry was existing |
+| `getOrSet(key, valueOrFn): TValue` | Return the entry if exists otherwise save a new entry              |
+| `clear(): number`                  | Clear the cache and return the actual number of deleted entries    |
+
+### Usage
+
+```typescript
+// bundle size: ~550B
+import { LruCache } from "@httpx/lru";
+
+// 👉 As an alternative to constructor, consider using the helper
+//    `getOrCreateLruCache` to ensure only one instance is created
+const lru = new LruCache({ maxSize: 1000 });
+
+lru.set("🦆", ["cool", "stuff"]);
+
+if (lru.has("🦆")) {
+  console.log(lru.get("🦆"));
+  // ['cool', 'stuff']
+}
+
+lru.delete("🦆");
+lru.clear();
 ```
 
 ## Helpers
@@ -321,10 +325,10 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                        | Size (brotli) |
 | ----------------------------------------------------- | ------------: |
-| `import { LruCache } from '@httpx/lru`                |        ~ 568B |
-| `import { TimeLruCache } from '@httpx/lru`            |        ~ 661B |
-| `import { getOrCreateLruCache } from '@httpx/lru`     |        ~ 642B |
-| `import { getOrCreateTimeLruCache } from '@httpx/lru` |        ~ 746B |
+| `import { LruCache } from '@httpx/lru`                |        ~ 597B |
+| `import { TimeLruCache } from '@httpx/lru`            |        ~ 662B |
+| `import { getOrCreateLruCache } from '@httpx/lru`     |        ~ 693B |
+| `import { getOrCreateTimeLruCache } from '@httpx/lru` |        ~ 770B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
 
