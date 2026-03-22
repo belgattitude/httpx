@@ -183,7 +183,7 @@ export interface ITimeLruCache<
    * @example
    * import { TimeLruCache } from '@httpx/lru';
    *
-   * const lru = new TimeLruCache({ maxSize: 2 });
+   * const lru = new TimeLruCache({ maxSize: 2, defaultTTL: 60_000 });
    *
    * // 👇 Fill the cache with 3 entries
    * lru.set('key1', 'value1');

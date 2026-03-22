@@ -14,7 +14,7 @@ without [memory overhead](https://github.com/sindresorhus/quick-lru?tab=readme-o
 
 ### [@httpx/memo-intl](https://github.com/belgattitude/httpx/tree/main/packages/memo-intl#readme)
 
-Speeds up Intl operations up to 40x. LRU-based memoizer for [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat),[Intl.DateFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+Speeds up Intl operations up to 50x. LRU-based memoizer for [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat),[Intl.DateFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
 and other Intl constructors. Less than 1kb.
 
 [![npm](https://img.shields.io/npm/v/@httpx/memo-intl?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/memo-intl)

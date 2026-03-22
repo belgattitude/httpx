@@ -39,7 +39,6 @@ export class LruCache<
   TKey extends BaseCacheKeyTypes = string,
 > implements ILruCache<TValue, TKey> {
   #maxSize: number;
-  #currentSize = 0;
   #touchOnHas: boolean;
   #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
@@ -91,14 +90,13 @@ export class LruCache<
    * Return the current number of items in the cache
    */
   get size(): number {
-    return this.#currentSize;
+    return this.#cache.size;
   }
 
   clear(): number {
-    const size = this.#currentSize;
+    const size = this.#cache.size;
     this.#cache.clear();
     this.#head = this.#tail = null;
-    this.#currentSize = 0;
     return size;
   }
 
@@ -124,10 +122,8 @@ export class LruCache<
     this.#cache.set(key, data);
     this.#moveToHead(newNode);
 
-    if (this.#currentSize >= this.#maxSize) {
+    if (this.#cache.size > this.#maxSize) {
       this.#removeTail();
-    } else {
-      this.#currentSize += 1;
     }
     return true;
   }
@@ -162,7 +158,6 @@ export class LruCache<
       return false;
     }
     this.#removeNode(node);
-    this.#currentSize -= 1;
     return this.#cache.delete(key);
   }
 

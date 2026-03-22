@@ -33,7 +33,6 @@ export class TimeLruCache<
   TKey extends BaseCacheKeyTypes = string,
 > implements ITimeLruCache<TValue, TKey> {
   #maxSize: number;
-  #currentSize = 0;
   #touchOnHas: boolean;
 
   #ttl: Milliseconds;
@@ -98,14 +97,13 @@ export class TimeLruCache<
    * Return the current number of entries in the cache
    */
   get size(): number {
-    return this.#currentSize;
+    return this.#cache.size;
   }
 
   clear(): number {
-    const size = this.#currentSize;
+    const size = this.#cache.size;
     this.#cache.clear();
     this.#head = this.#tail = null;
-    this.#currentSize = 0;
     return size;
   }
 
@@ -147,10 +145,8 @@ export class TimeLruCache<
     this.#cache.set(key, data);
     this.#moveToHead(newNode);
 
-    if (this.#currentSize >= this.#maxSize) {
+    if (this.#cache.size > this.#maxSize) {
       this.#removeTail();
-    } else {
-      this.#currentSize += 1;
     }
     return true;
   }
@@ -168,11 +164,6 @@ export class TimeLruCache<
       return;
     }
 
-    const node = data.node;
-    if (node === this.#head) {
-      return data.value;
-    }
-    this.#removeNode(node);
     this.#moveToHead(data.node);
 
     return data.value;
@@ -196,7 +187,7 @@ export class TimeLruCache<
   peek(key: TKey): TValue | undefined {
     const val = this.#cache.get(key);
     if (val === undefined) {
-      return void 0;
+      return;
     }
     return val.expiry < Date.now() ? undefined : val.value;
   }
@@ -207,7 +198,6 @@ export class TimeLruCache<
       return false;
     }
     this.#removeNode(node);
-    this.#currentSize -= 1;
     return this.#cache.delete(key);
   }
 
@@ -219,7 +209,7 @@ export class TimeLruCache<
    * @example
    * import { TimeLruCache } from '@httpx/lru';
    *
-   * const lru = new TimeLruCache({ maxSize: 2 });
+   * const lru = new TimeLruCache({ maxSize: 2, defaultTTL: 60_000 });
    *
    * // 👇 Fill the cache with 3 entries
    * lru.set('key1', 'value1');

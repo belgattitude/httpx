@@ -11,7 +11,7 @@
 
 LRU cache optimized for performance and low memory usage. 2x-4x times faster on `get()` than [quick-lru](https://github.com/sindresorhus/quick-lru)
 without [memory overhead](https://github.com/sindresorhus/quick-lru?tab=readme-ov-file#trade-offs) and 6 times smaller than
-[lru-cache](https://github.com/isaacs/node-lru-cache). Less than 1Kb.
+[lru-cache](https://github.com/isaacs/node-lru-cache). TimeLru is less than 700b. Lru less than 600b.
 
 ## Install
 
@@ -325,10 +325,10 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                        | Size (brotli) |
 | ----------------------------------------------------- | ------------: |
-| `import { LruCache } from '@httpx/lru`                |        ~ 597B |
-| `import { TimeLruCache } from '@httpx/lru`            |        ~ 662B |
-| `import { getOrCreateLruCache } from '@httpx/lru`     |        ~ 693B |
-| `import { getOrCreateTimeLruCache } from '@httpx/lru` |        ~ 770B |
+| `import { LruCache } from '@httpx/lru`                |        ~ 570B |
+| `import { TimeLruCache } from '@httpx/lru`            |        ~ 670B |
+| `import { getOrCreateLruCache } from '@httpx/lru`     |        ~ 695B |
+| `import { getOrCreateTimeLruCache } from '@httpx/lru` |        ~ 750B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
 
