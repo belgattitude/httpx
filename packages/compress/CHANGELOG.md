@@ -1,5 +1,11 @@
 # @httpx/compress
 
+## 0.3.12
+
+### Patch Changes
+
+- [#2675](https://github.com/belgattitude/httpx/pull/2675) [`dfd7d10`](https://github.com/belgattitude/httpx/commit/dfd7d10aab8aad19f7cab0dd2f7253cabc6f36e5) Thanks [@belgattitude](https://github.com/belgattitude)! - Build with tsdown instead of tsup
+
 ## 0.3.11
 
 ### Patch Changes

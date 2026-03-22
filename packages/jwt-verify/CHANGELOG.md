@@ -1,5 +1,14 @@
 # @httpx/jwt-verify
 
+## 0.2.2
+
+### Patch Changes
+
+- [#2675](https://github.com/belgattitude/httpx/pull/2675) [`dfd7d10`](https://github.com/belgattitude/httpx/commit/dfd7d10aab8aad19f7cab0dd2f7253cabc6f36e5) Thanks [@belgattitude](https://github.com/belgattitude)! - Update jose and azure identity to latest versions
+
+- Updated dependencies [[`dfd7d10`](https://github.com/belgattitude/httpx/commit/dfd7d10aab8aad19f7cab0dd2f7253cabc6f36e5), [`dfd7d10`](https://github.com/belgattitude/httpx/commit/dfd7d10aab8aad19f7cab0dd2f7253cabc6f36e5)]:
+  - @httpx/lru@0.13.2
+
 ## 0.2.1
 
 ### Patch Changes
