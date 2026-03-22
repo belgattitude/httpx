@@ -35,6 +35,16 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, as
   );
 
   bench(
+    `@httpx/time-lru.set() - ts file (dev)`,
+    () => {
+      seeds.forEach(({ key, value }) =>
+        lrus['@httpx/time-lru'].cache.set(key, value, benchTtl)
+      );
+    },
+    benchOptions
+  );
+
+  bench(
     `@httpx/time-lru.set() - compiled (dist)`,
     () => {
       seeds.forEach(({ key, value }) =>
