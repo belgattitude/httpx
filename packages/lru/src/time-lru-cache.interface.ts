@@ -178,10 +178,12 @@ export interface ITimeLruCache<
   /**
    * Iterate over the cache from the least recently used to the most recently used.
    *
+   * Iterating over results does not mark the items as recently used and doesn't skip expired items.
+   *
    * @example
    * import { TimeLruCache } from '@httpx/lru';
    *
-   * const lru = new TimeLruCache({ maxSize: 2 });
+   * const lru = new TimeLruCache({ maxSize: 2, defaultTTL: 60_000 });
    *
    * // 👇 Fill the cache with 3 entries
    * lru.set('key1', 'value1');

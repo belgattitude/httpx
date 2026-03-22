@@ -114,72 +114,72 @@ const { data } = await xMemCache.runAsync({
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
- RUN  v3.2.4 /home/sebastien/github/httpx/packages/xcache
+ RUN  v4.1.0 /home/sebastien/github/httpx/packages/xcache
 
 
- ✓ bench/x-mem-cache.bench.ts > XMemCache benchmarks with 46.7 MB 74628ms
-     name                                   hz       min       max      mean       p75       p99      p995      p999      rme  samples
-   · original function                  2.4339    400.94    434.29    410.86    418.86    434.29    434.29    434.29   ±1.87%       10
-   · with cache (just lru)        3,054,089.19    0.0002   14.4000    0.0003    0.0003    0.0007    0.0022    0.0040   ±5.04%  2443272
-   · with cache                     411,941.25    0.0017    3.7591    0.0024    0.0020    0.0057    0.0074    0.0404   ±2.38%   329553
-   · cache with json + gzip             0.6551  1,182.69  1,849.31  1,526.47  1,706.09  1,849.31  1,849.31  1,849.31   ±9.93%       10
-   · cache with superjson + gzip        0.7255  1,139.75  1,791.56  1,378.28  1,492.88  1,791.56  1,791.56  1,791.56  ±11.51%       10
-   · cache with devalue + gzip          0.3867  2,294.54  2,802.35  2,586.15  2,742.74  2,802.35  2,802.35  2,802.35   ±4.91%       10
+ ✓ bench/x-mem-cache.bench.ts > XMemCache benchmarks with 46.7 MB 64878ms
+     name                                   hz       min       max      mean       p75       p99      p995      p999     rme  samples
+   · original function                  2.4955    400.41    401.00    400.73    400.89    401.00    401.00    401.00  ±0.03%       10
+   · with cache (just lru)        5,291,610.29    0.0001    6.1445    0.0002    0.0002    0.0004    0.0007    0.0031  ±2.15%  4233289
+   · with cache                     513,034.43    0.0013    2.8092    0.0019    0.0020    0.0055    0.0085    0.0366  ±1.24%   410428
+   · cache with json + gzip             0.8131  1,161.82  1,382.36  1,229.84  1,253.09  1,382.36  1,382.36  1,382.36  ±3.54%       10
+   · cache with superjson + gzip        0.8313  1,128.63  1,376.68  1,202.91  1,222.47  1,376.68  1,376.68  1,376.68  ±4.08%       10
+   · cache with devalue + gzip          0.4417  2,142.59  2,467.50  2,264.21  2,375.01  2,467.50  2,467.50  2,467.50  ±3.48%       10
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with json 1960ms
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with json 1924ms
      name                                           hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · json.serialize(4.52 MB) - native types    42.7513  17.8273  61.9698  23.3911  25.4860  61.9698  61.9698  61.9698  ±11.51%       35
-   · json.deserialize(4.52 MB) - native types  54.3614  15.8986  24.7563  18.3954  19.4053  24.7563  24.7563  24.7563   ±3.89%       44
+   · json.serialize(4.52 MB) - native types    34.7313  18.3491   114.08  28.7925  30.9104   114.08   114.08   114.08  ±28.57%       28
+   · json.deserialize(4.52 MB) - native types  61.1447  14.0582  25.3669  16.3547  17.5522  25.3669  25.3669  25.3669   ±3.67%       49
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with devalue 3856ms
-     name                                              hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · devalue.serialize(5.66 MB) - native types     4.5549   181.51   310.60   219.54   229.88   310.60   310.60   310.60  ±12.22%       10
-   · devalue.deserialize(5.66 MB) - native types  25.8784  33.8357  60.3575  38.6422  38.0392  60.3575  60.3575  60.3575   ±7.44%       21
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with devalue 3548ms
+     name                                              hz      min      max     mean      p75      p99     p995     p999     rme  samples
+   · devalue.serialize(5.66 MB) - native types     5.1668   176.95   244.94   193.54   193.85   244.94   244.94   244.94  ±7.04%       10
+   · devalue.deserialize(5.66 MB) - native types  28.5541  29.7521  50.5638  35.0213  39.9162  50.5638  50.5638  50.5638  ±7.47%       23
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with superjson 4017ms
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with superjson 3521ms
      name                                                hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · superjson.serialize(4.52 MB) - native types     4.3337   191.75   299.23   230.75   235.30   299.23   299.23   299.23  ±11.34%       10
-   · superjson.deserialize(4.52 MB) - native types  59.9753  15.3860  21.7358  16.6735  17.1168  21.7358  21.7358  21.7358   ±2.47%       48
+   · superjson.serialize(4.52 MB) - native types     5.0457   155.96   258.63   198.19   207.44   258.63   258.63   258.63  ±12.33%       10
+   · superjson.deserialize(4.52 MB) - native types  64.9085  14.0191  20.0136  15.4063  15.4649  20.0136  20.0136  20.0136   ±2.51%       52
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with devalue 7899ms
-     name                                               hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · devalue.serialize(11.6 MB) - extended types    2.1285  411.59  618.03  469.81  492.86  618.03  618.03  618.03  ±9.40%       10
-   · devalue.deserialize(11.6 MB) - extended types  7.5291  111.54  168.71  132.82  144.80  168.71  168.71  168.71  ±9.55%       10
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with devalue 7846ms
+     name                                               hz      min     max    mean     p75     p99    p995    p999      rme  samples
+   · devalue.serialize(11.6 MB) - extended types    2.0381   419.75  569.72  490.66  551.97  569.72  569.72  569.72   ±8.16%       10
+   · devalue.deserialize(11.6 MB) - extended types  8.6823  77.6905  197.99  115.18  124.29  197.99  197.99  197.99  ±20.73%       10
 
- ✓ bench/serializer.bench.ts > Serializer benchmarks with superjson 31316ms
-     name                                                 hz       min       max      mean       p75       p99      p995      p999     rme  samples
-   · superjson.serialize(16.8 MB) - extended types    0.5910  1,467.09  1,987.69  1,692.02  1,759.17  1,987.69  1,987.69  1,987.69  ±7.26%       10
-   · superjson.deserialize(16.8 MB) - extended types  1.4491    618.85    872.47    690.09    714.58    872.47    872.47    872.47  ±8.01%       10
+ ✓ bench/serializer.bench.ts > Serializer benchmarks with superjson 24993ms
+     name                                                 hz       min       max      mean       p75       p99      p995      p999      rme  samples
+   · superjson.serialize(16.8 MB) - extended types    0.7203  1,165.80  2,116.25  1,388.25  1,382.20  2,116.25  2,116.25  2,116.25  ±13.84%       10
+   · superjson.deserialize(16.8 MB) - extended types  1.7432    476.36    742.18    573.66    599.53    742.18    742.18    742.18  ±11.37%       10
 
- ✓ bench/cache-key.bench.ts > genCacheKey benches 1014ms
+ ✓ bench/cache-key.bench.ts > genCacheKey benches 1020ms
      name                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · original function  155,643.54  0.0047  5.8940  0.0064  0.0064  0.0170  0.0275  0.1160  ±1.96%   124516
+   · original function  250,201.57  0.0031  1.0082  0.0040  0.0035  0.0122  0.0215  0.0540  ±0.78%   200162
 
  BENCH  Summary
 
   original function - bench/cache-key.bench.ts > genCacheKey benches
 
   json.deserialize(4.52 MB) - native types - bench/serializer.bench.ts > Serializer benchmarks with json
-    1.27x faster than json.serialize(4.52 MB) - native types
+    1.76x faster than json.serialize(4.52 MB) - native types
 
   devalue.deserialize(5.66 MB) - native types - bench/serializer.bench.ts > Serializer benchmarks with devalue
-    5.68x faster than devalue.serialize(5.66 MB) - native types
+    5.53x faster than devalue.serialize(5.66 MB) - native types
 
   superjson.deserialize(4.52 MB) - native types - bench/serializer.bench.ts > Serializer benchmarks with superjson
-    13.84x faster than superjson.serialize(4.52 MB) - native types
+    12.86x faster than superjson.serialize(4.52 MB) - native types
 
   devalue.deserialize(11.6 MB) - extended types - bench/serializer.bench.ts > Serializer benchmarks with devalue
-    3.54x faster than devalue.serialize(11.6 MB) - extended types
+    4.26x faster than devalue.serialize(11.6 MB) - extended types
 
   superjson.deserialize(16.8 MB) - extended types - bench/serializer.bench.ts > Serializer benchmarks with superjson
-    2.45x faster than superjson.serialize(16.8 MB) - extended types
+    2.42x faster than superjson.serialize(16.8 MB) - extended types
 
   with cache (just lru) - bench/x-mem-cache.bench.ts > XMemCache benchmarks with 46.7 MB
-    7.41x faster than with cache
-    1254817.36x faster than original function
-    4209397.40x faster than cache with superjson + gzip
-    4661963.60x faster than cache with json + gzip
-    7898344.77x faster than cache with devalue + gzip
+    10.31x faster than with cache
+    2120485.35x faster than original function
+    6365308.96x faster than cache with superjson + gzip
+    6507834.98x faster than cache with json + gzip
+    11981322.35x faster than cache with devalue + gzip
 
 ```
 

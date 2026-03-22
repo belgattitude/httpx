@@ -1,6 +1,6 @@
 # @httpx/memo-intl
 
-Speeds up Intl operations up to 40x. LRU-based memoizer for [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat),[Intl.DateFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) and other Intl constructors.
+Speeds up Intl operations up to 50x. LRU-based memoizer for [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat),[Intl.DateFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) and other Intl constructors.
 Less than 1kb.
 
 [![npm](https://img.shields.io/npm/v/@httpx/memo-intl?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/memo-intl)
@@ -24,7 +24,7 @@ $ pnpm add @httpx/memo-intl
 
 - 👉&nbsp; Don't re-create the same Intl instance for the same options (memoized).
 - 👉&nbsp; Keep the [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) api untouched. Just replace `new Intl.NumberFormat` by `MIntl.NumberFormat`...
-- 👉&nbsp; Up to 30x faster than non-memoized Intl constructors.
+- 👉&nbsp; Up to 40x faster than non-memoized Intl constructors.
 - 👉&nbsp; Decrease memory usage, unwanted memory leaks and garbage collection pressure.
 - 👉&nbsp; Max out 50 cache instances by default with [@httpx/lru](https://github.com/belgattitude/httpx/tree/main/packages/lru#readme).
 - 👉&nbsp; Lightweight. [Node, bun, browser and edge support](#compatibility).
@@ -166,39 +166,39 @@ See [bench](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/b
  RUN  v4.1.0 /home/sebastien/github/httpx/packages/memo-intl
 
 
- ✓ bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks (1000 instances) 2280ms
+ ✓ bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks (1000 instances) 1985ms
      name                                                hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · With memoization `MIntl.DateFormatter()`        319.62  2.2842  8.7999  3.1287  3.2833  5.5124  8.7999  8.7999  ±3.53%      160
-   · Without memoization `new Intl.DateFormatter()`  6.9108  134.01  153.85  144.70  150.15  153.85  153.85  153.85  ±9.89%        4
+   · With memoization `MIntl.DateFormatter()`        400.46  2.0947  6.8366  2.4972  2.7550  3.8448  4.8877  6.8366  ±2.92%      201
+   · Without memoization `new Intl.DateFormatter()`  7.9472  122.46  128.16  125.83  128.15  128.16  128.16  128.16  ±3.56%        4
 
- ✓ bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks (1000 instances) 1428ms
+ ✓ bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks (1000 instances) 1351ms
      name                                                   hz      min      max     mean      p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.NumberFormatter()`         630.46   1.3785   3.3911   1.5861   1.7105   2.9305   3.3167   3.3911  ±2.04%      316
-   · Without memoization `new Intl.NumberFormatter()`  27.9431  33.2026  39.5232  35.7870  37.1625  39.5232  39.5232  39.5232  ±3.43%       14
+   · With memoization `MIntl.NumberFormatter()`         662.47   1.2588   3.3460   1.5095   1.6116   2.7973   3.1873   3.3460  ±2.44%      332
+   · Without memoization `new Intl.NumberFormatter()`  29.7328  30.5401  40.3873  33.6329  34.5215  40.3873  40.3873  40.3873  ±4.93%       15
 
- ✓ bench/m-intl.relative-time-format.bench.ts > MIntl RelativeTimeFormat benchmarks (1000 instances) 1289ms
-     name                                                      hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · With memoization `MIntl.RelativeTimeFormat()`         655.89   1.1328   6.1182   1.5246   1.7606   2.8280   3.1006   6.1182   ±3.51%      328
-   · Without memoization `new Intl.RelativeTimeFormat()`  34.3497  14.3163  41.4047  29.1123  31.7652  41.4047  41.4047  41.4047  ±10.27%       18
+ ✓ bench/m-intl.relative-time-format.bench.ts > MIntl RelativeTimeFormat benchmarks (1000 instances) 1274ms
+     name                                                      hz      min      max     mean      p75      p99     p995     p999     rme  samples
+   · With memoization `MIntl.RelativeTimeFormat()`         815.39   1.0436   3.6512   1.2264   1.2974   2.3457   2.3843   3.6512  ±2.26%      408
+   · Without memoization `new Intl.RelativeTimeFormat()`  39.4420  23.4202  28.6828  25.3537  25.8205  28.6828  28.6828  28.6828  ±2.66%       20
 
  ✓ bench/m-intl.locale.bench.ts > MIntl Locale benchmarks (1000 instances) 1244ms
      name                                           hz     min      max    mean     p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.Locale()`        2,651.83  0.3070   2.9604  0.3771  0.3572   0.9173   1.1504   2.0406  ±2.21%     1327
-   · Without memoization `new Intl.Locale()`    124.48  5.8074  12.0320  8.0335  9.2540  12.0320  12.0320  12.0320  ±4.76%       63
+   · With memoization `MIntl.Locale()`        2,935.58  0.2828   4.9438  0.3406  0.3235   0.8030   0.9692   2.1852  ±2.47%     1468
+   · Without memoization `new Intl.Locale()`    150.35  5.0975  24.2801  6.6514  6.7613  24.2801  24.2801  24.2801  ±8.06%       78
 
  BENCH  Summary
 
   With memoization `MIntl.DateFormatter()` - bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks (1000 instances)
-    46.25x faster than Without memoization `new Intl.DateFormatter()`
+    50.39x faster than Without memoization `new Intl.DateFormatter()`
 
   With memoization `MIntl.Locale()` - bench/m-intl.locale.bench.ts > MIntl Locale benchmarks (1000 instances)
-    21.30x faster than Without memoization `new Intl.Locale()`
+    19.53x faster than Without memoization `new Intl.Locale()`
 
   With memoization `MIntl.NumberFormatter()` - bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks (1000 instances)
-    22.56x faster than Without memoization `new Intl.NumberFormatter()`
+    22.28x faster than Without memoization `new Intl.NumberFormatter()`
 
   With memoization `MIntl.RelativeTimeFormat()` - bench/m-intl.relative-time-format.bench.ts > MIntl RelativeTimeFormat benchmarks (1000 instances)
-    19.09x faster than Without memoization `new Intl.RelativeTimeFormat()`
+    20.67x faster than Without memoization `new Intl.RelativeTimeFormat()`
 ```
 
 ## Bundle size
@@ -207,7 +207,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario                                  | Size with deps (compressed) |
 | ----------------------------------------- | --------------------------: |
-| `import { MIntl } from '@httpx/memo-intl' |                      ~ 790B |
+| `import { MIntl } from '@httpx/memo-intl' |                      ~ 794B |
 
 > Note that per-se the library weights less than 300 bytes, the size limit accounts for the @httpx/lru dependency.
 

@@ -19,6 +19,13 @@ const nextConfig = {
     // @link {https://github.com/vercel/next.js/pull/22867|Original PR}
     // @link {https://github.com/vercel/next.js/discussions/26420|Discussion}
     externalDir: true,
+
+    // see https://nextjs.org/blog/next-16-2-turbopack#lightning-css-configuration
+    useLightningcss: true,
+    lightningCssFeatures: {
+      include: ['light-dark', 'oklab-colors'],
+      exclude: ['nesting'],
+    },
   },
   productionBrowserSourceMaps: true,
   reactStrictMode: true,

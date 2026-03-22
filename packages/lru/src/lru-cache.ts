@@ -32,7 +32,7 @@ export type LruCacheParams<
 };
 
 /**
- * Double linked list based lru cache that supports get in O(1)
+ * Double-linked list based lru cache that supports get in O(1)
  */
 export class LruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
@@ -161,6 +161,37 @@ export class LruCache<
     return this.#cache.delete(key);
   }
 
+  /**
+   * Iterate over the cache from the least recently used to the most recently used.
+   *
+   * Iterating over results does not mark the items as recently.
+   *
+   * @example
+   * ```typescript
+   * import { LruCache } from '@httpx/lru';
+   *
+   * const lru = new LruCache({ maxSize: 2 });
+   *
+   * // 👇 Fill the cache with 3 entries
+   * lru.set('key1', 'value1');
+   * lru.set('key2', 'value2');
+   * lru.set('key3', 'value3'); // 👈 Will evict key1 as maxSize is 2
+   *
+   * lru.get('key2'); // 👈 Trigger a get to move key2 to the head
+   *
+   * const results = [];
+   *
+   * // 🖖 Iterate over the cache entries
+   * for (const [key, value] of lru) {
+   *   results.push([key, value]);
+   * }
+   *
+   * expect(results).toStrictEqual([
+   *    ['key3', 'value3'], // 👈  Least recently used first
+   *    ['key2', 'value2'], // 👈  Most recently used last
+   * ]);
+   * ```
+   */
   *[Symbol.iterator](): IterableIterator<[TKey, TValue]> {
     let current = this.#tail;
 

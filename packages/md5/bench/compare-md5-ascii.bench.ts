@@ -63,7 +63,7 @@ describe(`@httpx/md5 compared`, async () => {
     },
     benchOptions
   );
-  bench.skipIf(isBun)(
+  bench(
     `npm:hash-wasm - ${text}`,
     async () => {
       for (const seed of seeds) {
