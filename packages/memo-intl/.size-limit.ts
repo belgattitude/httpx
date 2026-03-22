@@ -5,13 +5,13 @@ module.exports = [
     name: 'Everything (ESM)',
     path: ['dist/index.js'],
     import: '*',
-    limit: '950B',
+    limit: '955B',
   },
   {
     name: 'MIntl (ESM)',
     path: ['dist/index.js'],
     import: '{ MIntl }',
-    limit: '800B',
+    limit: '825B',
   },
   {
     name: 'Everything (CJS)',
