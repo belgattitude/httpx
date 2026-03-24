@@ -46,7 +46,7 @@ jobs:
         uses: CodSpeedHQ/action@v4
         with:
           run: yarn g:bench-codspeed
-          mode: "instrumentation"
+          mode: "simulation"
           cache-instruments: true
           instruments-cache-dir: ~/.cache/codspeed-action
           token: ${{ secrets.CODSPEED_TOKEN }}
