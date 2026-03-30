@@ -1,5 +1,5 @@
 /**
- * @throws TypeError
+ * @throws TypeError|Error
  */
 export const createAssertException = (
   msgOrErrorFactory?: string | (() => Error),
