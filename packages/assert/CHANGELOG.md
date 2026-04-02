@@ -1,5 +1,11 @@
 # @httpx/assert
 
+## 0.16.9
+
+### Patch Changes
+
+- [#2678](https://github.com/belgattitude/httpx/pull/2678) [`03bc2ad`](https://github.com/belgattitude/httpx/commit/03bc2ad7ae6d2fa0738b56cedc3605787bb7739e) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix minor internal createAssertException logic
+
 ## 0.16.8
 
 ### Patch Changes
