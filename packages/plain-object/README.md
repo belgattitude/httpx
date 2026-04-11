@@ -190,60 +190,112 @@ someFn(value);
 ### NodeJs 24.x
 
 ```
- RUN  v4.1.0 /home/sebastien/github/httpx/packages/plain-object
+ RUN  v4.1.4 /home/sebastien/github/httpx/packages/lru
 
 
- ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 6714ms
-     name                                                           hz     min      max    mean     p75     p99    p995    p999      rme  samples
-   · "@httpx/plain-object": `isPlainObject(v)`            1,167,837.33  0.0007   0.8963  0.0009  0.0008  0.0015  0.0018  0.0090   ±1.00%   583919
-   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'              1,047,345.27  0.0008   8.3108  0.0010  0.0008  0.0016  0.0020  0.0150   ±3.48%   523673
-   · "@sindresorhus/is":"7.2.0": 'is.plainObject(v)'      1,062,605.89  0.0008   1.1887  0.0009  0.0008  0.0018  0.0021  0.0127   ±0.92%   531303
-   · "es-toolkit":"1.45.1": 'isPlainObject(v)'              800,068.53  0.0009  22.2441  0.0012  0.0010  0.0022  0.0025  0.0167  ±10.58%   400035
-   · "redux":"5.0.1": 'isPlainObject(v)'                    329,692.81  0.0024   1.5117  0.0030  0.0028  0.0052  0.0065  0.0311   ±1.13%   164847
-   · "is-plain-object":"5.0.0": 'isPlainObject(v)'          511,111.59  0.0016   1.6956  0.0020  0.0017  0.0041  0.0047  0.0257   ±1.40%   255556
-   · "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'    351,237.13  0.0020   3.4495  0.0028  0.0032  0.0052  0.0092  0.0623   ±2.24%   175627
-   · lodash-es:"4.17.23": '_.isPlainObject(v)'               12,394.91  0.0515   1.1758  0.0807  0.0894  0.2915  0.4332  0.8713   ±1.85%     6198
+ ✓ bench/compare/lru-cache/eviction.bench.ts > LruCache.set() 1000 items / maxSize: 500 4318ms
+     name                                           hz     min      max    mean     p75     p99    p995     p999      rme  samples
+   · @httpx/lru.set() - ts files (dev)        1,175.05  0.0821  23.1778  0.8510  1.4457  6.5121  8.6780  23.1778  ±14.28%      589
+   · @httpx/lru.set() - compiled (dist)       1,799.95  0.0784  31.7102  0.5556  0.8049  3.3640  5.9146  31.7102  ±16.10%      900
+   · @httpx/time-lru.set() - ts file (dev)    2,062.35  0.1259  27.7223  0.4849  0.3526  2.5203  3.8710  16.7191  ±15.69%     1035
+   · @httpx/time-lru.set() - compiled (dist)  2,094.49  0.1247  17.1540  0.4774  0.2864  3.1822  7.1180  16.7256  ±14.63%     1048
+   · quick-lru@7.3.0.set()                    8,905.67  0.0793  16.5620  0.1123  0.0968  0.2730  0.3948   4.4825   ±9.73%     4453
+   · lru-cache@11.3.3.set()                   2,289.97  0.1136  20.1939  0.4367  0.4941  2.2460  6.7288  15.2900  ±13.62%     1145
+   · lru-cache@11.3.3.set(/with ttl/)         3,695.37  0.1160  18.6887  0.2706  0.2004  1.7347  5.4360  16.0937  ±15.44%     1856
+
+ ✓ bench/compare/lru-cache/get.bench.ts > LruCache.get() - 1000 items / maxSize: 1000 3741ms
+     name                                            hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · @httpx/lru.get() - ts files (dev)        30,168.91  0.0266  0.5430  0.0331  0.0344  0.0860  0.1109  0.2084  ±0.75%    15085
+   · @httpx/lru.get() - compiled (dist)       30,683.73  0.0268  0.7166  0.0326  0.0309  0.0897  0.1170  0.2570  ±0.87%    15342
+   · @httpx/time-lru.get() - ts files (dev)   12,419.77  0.0576  1.1029  0.0805  0.0893  0.2157  0.2817  0.5182  ±1.21%     6210
+   · @httpx/time-lru.get() - compiled (dist)  13,743.03  0.0581  0.6241  0.0728  0.0815  0.1652  0.2072  0.4652  ±0.88%     6872
+   · quick-lru@7.3.0.get()                     4,326.30  0.1037  6.6405  0.2311  0.2668  1.0491  1.3541  3.1520  ±4.61%     2164
+   · lru-cache@11.3.3.get()                   17,973.52  0.0318  6.9126  0.0556  0.0664  0.1576  0.1901  0.4403  ±3.74%     8987
+
+ ✓ bench/compare/lru-cache/set.bench.ts > LruCache.set() 1000 items / maxSize: 1000 3113ms
+     name                                            hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · @httpx/lru.set() - ts files (dev)        27,175.32  0.0299  0.9546  0.0368  0.0389  0.0959  0.1307  0.2700  ±0.92%    13588
+   · @httpx/lru.set() - compiled (dist)       29,332.81  0.0287  0.8213  0.0341  0.0311  0.0882  0.1136  0.2603  ±0.90%    14667
+   · @httpx/time-lru.set() - compiled (dist)  13,867.36  0.0579  3.3996  0.0721  0.0784  0.1828  0.2395  0.4477  ±1.61%     6934
+   · quick-lru@7.3.0.set()                    10,359.08  0.0475  7.7692  0.0965  0.0881  0.4080  0.5350  4.7785  ±6.90%     5180
+   · lru-cache@11.3.3.set()                    9,410.83  0.0689  5.9828  0.1063  0.1100  0.2915  0.3955  0.7865  ±3.18%     4706
+
+ ✓ bench/compare/lru-cache/peek.bench.ts > LruCache.peek() - 1000 items / maxSize: 1000 2540ms
+     name                                        hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · @httpx/lru.peek() - ts files (dev)   78,945.81  0.0085  1.2403  0.0127  0.0108  0.0397  0.0688  0.1498  ±1.01%    39473
+   · @httpx/lru.peek() - compiled (dist)  80,282.39  0.0104  2.4150  0.0125  0.0108  0.0318  0.0509  0.1241  ±1.17%    40142
+   · quick-lru@7.3.0.peek()               17,581.59  0.0475  1.1144  0.0569  0.0626  0.1323  0.1846  0.3347  ±0.91%     8791
+   · lru-cache@11.3.3.peek()              28,485.41  0.0191  7.1274  0.0351  0.0394  0.1376  0.1700  0.3293  ±3.68%    14243
+
+ ✓ bench/compare/lru-cache/iterate.bench.ts > LruCache iterator - 1000 items 2501ms
+     name                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · @httpx/lru - forEach - ts files (dev)   24,403.88  0.0201  5.4129  0.0410  0.0366  0.1810  0.2322  0.4927  ±4.90%    12202
+   · @httpx/lru - forEach - compiled (dist)  29,713.74  0.0201  5.7892  0.0337  0.0332  0.1205  0.1579  0.4510  ±4.71%    14857
+   · quick-lru@7.3.0 - forEach               12,066.81  0.0651  5.1362  0.0829  0.0792  0.1908  0.2577  0.4724  ±4.11%     6034
+   · lru-cache@11.3.3 - forEach              17,142.82  0.0389  6.9446  0.0583  0.0603  0.1580  0.2302  0.5820  ±4.46%     8572
 
  BENCH  Summary
+                                                                                                                                                                                    
+  @httpx/lru.set() - compiled (dist) - bench/compare/lru-cache/set.bench.ts > LruCache.set() 1000 items / maxSize: 1000
+    1.08x faster than @httpx/lru.set() - ts files (dev)
+    2.12x faster than @httpx/time-lru.set() - compiled (dist)
+    2.83x faster than quick-lru@7.3.0.set()
+    3.12x faster than lru-cache@11.3.3.set()
 
-  "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
-    1.10x faster than "@sindresorhus/is":"7.2.0": 'is.plainObject(v)'
-    1.12x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
-    1.46x faster than "es-toolkit":"1.45.1": 'isPlainObject(v)'
-    2.28x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
-    3.32x faster than "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'
-    3.54x faster than "redux":"5.0.1": 'isPlainObject(v)'
-    94.22x faster than lodash-es:"4.17.23": '_.isPlainObject(v)'
+  @httpx/lru.peek() - compiled (dist) - bench/compare/lru-cache/peek.bench.ts > LruCache.peek() - 1000 items / maxSize: 1000
+    1.02x faster than @httpx/lru.peek() - ts files (dev)
+    2.82x faster than lru-cache@11.3.3.peek()
+    4.57x faster than quick-lru@7.3.0.peek()
+
+  quick-lru@7.3.0.set() - bench/compare/lru-cache/eviction.bench.ts > LruCache.set() 1000 items / maxSize: 500
+    2.41x faster than lru-cache@11.3.3.set(/with ttl/)
+    3.89x faster than lru-cache@11.3.3.set()
+    4.25x faster than @httpx/time-lru.set() - compiled (dist)
+    4.32x faster than @httpx/time-lru.set() - ts file (dev)
+    4.95x faster than @httpx/lru.set() - compiled (dist)
+    7.58x faster than @httpx/lru.set() - ts files (dev)
+
+  @httpx/lru - forEach - compiled (dist) - bench/compare/lru-cache/iterate.bench.ts > LruCache iterator - 1000 items
+    1.22x faster than @httpx/lru - forEach - ts files (dev)
+    1.73x faster than lru-cache@11.3.3 - forEach
+    2.46x faster than quick-lru@7.3.0 - forEach
+
+  @httpx/lru.get() - compiled (dist) - bench/compare/lru-cache/get.bench.ts > LruCache.get() - 1000 items / maxSize: 1000
+    1.02x faster than @httpx/lru.get() - ts files (dev)
+    1.71x faster than lru-cache@11.3.3.get()
+    2.23x faster than @httpx/time-lru.get() - compiled (dist)
+    2.47x faster than @httpx/time-lru.get() - ts files (dev)
+    7.09x faster than quick-lru@7.3.0.get()
+
 ```
 
-### Bun 1.3
+### Bun 1.3.12
 
 ```
+ RUN  v4.1.4 /home/sebastien/github/httpx/packages/plain-object
 
- RUN  v4.1.0 /home/sebastien/github/httpx/packages/plain-object
-
-
- ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 8801ms
+ ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 7742ms
      name                                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · "@httpx/plain-object": `isPlainObject(v)`            3,031,245.38  0.0003  1.1474  0.0003  0.0003  0.0005  0.0007  0.0008  ±0.87%  1515623
-   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'              2,549,208.34  0.0003  1.5657  0.0004  0.0003  0.0007  0.0008  0.0010  ±0.84%  1274605
-   · "@sindresorhus/is":"7.2.0": 'is.plainObject(v)'      2,331,887.24  0.0003  9.4652  0.0004  0.0005  0.0008  0.0008  0.0019  ±4.52%  1165944
-   · "es-toolkit":"1.45.1": 'isPlainObject(v)'            1,001,717.61  0.0008  1.6459  0.0010  0.0009  0.0020  0.0022  0.0158  ±1.17%   500859
-   · "redux":"5.0.1": 'isPlainObject(v)'                  1,300,233.22  0.0006  1.5704  0.0008  0.0007  0.0012  0.0014  0.0049  ±0.92%   650117
-   · "is-plain-object":"5.0.0": 'isPlainObject(v)'          517,269.60  0.0015  7.0468  0.0019  0.0016  0.0033  0.0043  0.0270  ±4.92%   258635
-   · "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'  1,117,577.40  0.0008  1.1199  0.0009  0.0008  0.0015  0.0016  0.0138  ±0.73%   558789
-   · lodash-es:"4.17.23": '_.isPlainObject(v)'               26,383.39  0.0083  4.4473  0.0379  0.0424  0.1492  0.1926  0.4897  ±2.96%    13206
+   · "@httpx/plain-object": `isPlainObject(v)`            3,068,133.07  0.0002  1.0000  0.0003  0.0003  0.0006  0.0007  0.0016  ±0.84%  1534067
+   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'              3,021,500.93  0.0003  1.0634  0.0003  0.0003  0.0006  0.0007  0.0011  ±0.82%  1510751
+   · "@sindresorhus/is":"8.0.0": 'is.plainObject(v)'      1,728,034.46  0.0004  2.0252  0.0006  0.0005  0.0009  0.0011  0.0032  ±1.00%   864018
+   · "es-toolkit":"1.45.1": 'isPlainObject(v)'            1,022,275.89  0.0008  1.7334  0.0010  0.0008  0.0018  0.0022  0.0144  ±1.10%   511138
+   · "redux":"5.0.1": 'isPlainObject(v)'                  1,430,576.48  0.0005  1.5664  0.0007  0.0006  0.0012  0.0014  0.0060  ±0.82%   715289
+   · "is-plain-object":"5.0.0": 'isPlainObject(v)'          501,447.54  0.0014  4.3306  0.0020  0.0018  0.0043  0.0059  0.0285  ±3.94%   250724
+   · "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'  1,120,115.77  0.0007  0.8322  0.0009  0.0007  0.0015  0.0018  0.0151  ±0.87%   560101
+   · lodash-es:"4.18.1": '_.isPlainObject(v)'                33,581.59  0.0072  4.1610  0.0298  0.0349  0.1210  0.1850  0.5121  ±2.54%    16791
 
  BENCH  Summary
-
+                                                                                                                                                                                    
   "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
-    1.19x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
-    1.30x faster than "@sindresorhus/is":"7.2.0": 'is.plainObject(v)'
-    2.33x faster than "redux":"5.0.1": 'isPlainObject(v)'
-    2.71x faster than "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'
-    3.03x faster than "es-toolkit":"1.45.1": 'isPlainObject(v)'
-    5.86x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
-    114.89x faster than lodash-es:"4.17.23": '_.isPlainObject(v)'
+    1.02x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
+    1.78x faster than "@sindresorhus/is":"8.0.0": 'is.plainObject(v)'
+    2.14x faster than "redux":"5.0.1": 'isPlainObject(v)'
+    2.74x faster than "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'
+    3.00x faster than "es-toolkit":"1.45.1": 'isPlainObject(v)'
+    6.12x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
+    91.36x faster than lodash-es:"4.18.1": '_.isPlainObject(v)'
+
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/bench/comparative.bench.ts) for details.
