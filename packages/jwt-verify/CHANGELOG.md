@@ -1,5 +1,16 @@
 # @httpx/jwt-verify
 
+## 0.3.0
+
+### Minor Changes
+
+- [#2682](https://github.com/belgattitude/httpx/pull/2682) [`67ff436`](https://github.com/belgattitude/httpx/commit/67ff436f418a04412a23e493c7187fff6fda2a3a) Thanks [@belgattitude](https://github.com/belgattitude)! - Update to ky 2.0
+
+### Patch Changes
+
+- Updated dependencies [[`67ff436`](https://github.com/belgattitude/httpx/commit/67ff436f418a04412a23e493c7187fff6fda2a3a)]:
+  - @httpx/plain-object@2.1.9
+
 ## 0.2.2
 
 ### Patch Changes

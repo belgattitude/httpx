@@ -1,5 +1,11 @@
 # @httpx/plain-object
 
+## 2.1.9
+
+### Patch Changes
+
+- [#2682](https://github.com/belgattitude/httpx/pull/2682) [`67ff436`](https://github.com/belgattitude/httpx/commit/67ff436f418a04412a23e493c7187fff6fda2a3a) Thanks [@belgattitude](https://github.com/belgattitude)! - Update benchmarks
+
 ## 2.1.8
 
 ### Patch Changes
