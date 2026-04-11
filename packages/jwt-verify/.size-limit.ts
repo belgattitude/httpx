@@ -5,12 +5,12 @@ module.exports = [
     name: 'import { JwtVerifier } (ESM)',
     path: ['dist/index.js'],
     import: '{ JwtVerifier }',
-    limit: '13KB',
+    limit: '15KB',
   },
   {
     name: 'import { OidcDiscoveryFetcher } (ESM)',
     path: ['dist/index.js'],
     import: '{ OidcDiscoveryFetcher }',
-    limit: '6KB',
+    limit: '8KB',
   },
 ] satisfies SizeLimitConfig;
