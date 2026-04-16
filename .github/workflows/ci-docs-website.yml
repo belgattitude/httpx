@@ -33,7 +33,7 @@ jobs:
       NEXT_TELEMETRY_DISABLED: true
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.1
+        uses: styfle/cancel-workflow-action@0.13.1
 
       - uses: actions/checkout@v6
         with:
