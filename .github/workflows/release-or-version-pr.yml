@@ -39,7 +39,7 @@ jobs:
 
       - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
         id: nx-set-shas
-        uses: nrwl/nx-set-shas@v4
+        uses: nrwl/nx-set-shas@v5
 
       - name: 🦋 Create Release Pull Request or Publish to npm
         id: changesets
