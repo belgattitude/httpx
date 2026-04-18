@@ -1,8 +1,8 @@
-**@httpx/stable-hash v0.3.7**
+**@httpx/stable-hash v0.3.8**
 
----
+***
 
-# @httpx/stable-hash v0.3.7
+# @httpx/stable-hash v0.3.8
 
 ## Functions
 

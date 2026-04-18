@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.10**](../README.md)
+[**@httpx/xcache v0.5.0**](../README.md)
 
----
+***
 
 [@httpx/xcache](../README.md) / ICacheSerializer
 
@@ -8,7 +8,7 @@
 
 ## Properties
 
-### deserialize()
+### deserialize
 
 > **deserialize**: \<`T`\>(`serializedData`) => `T`
 
@@ -28,9 +28,9 @@
 
 `T`
 
----
+***
 
-### getIdentifier()
+### getIdentifier
 
 > **getIdentifier**: () => `string`
 
@@ -38,9 +38,9 @@
 
 `string`
 
----
+***
 
-### serialize()
+### serialize
 
 > **serialize**: \<`T`\>(`data`) => `string`
 
@@ -60,9 +60,9 @@
 
 `string`
 
----
+***
 
-### toString()
+### toString
 
 > **toString**: () => `string`
 

@@ -1,6 +1,6 @@
-[**@httpx/jwt-verify v0.1.7**](../README.md)
+[**@httpx/jwt-verify v0.3.0**](../README.md)
 
----
+***
 
 [@httpx/jwt-verify](../README.md) / defaultFetchOptions
 
@@ -18,7 +18,7 @@
 
 > `readonly` **afterStatusCodes**: \[`413`, `429`, `503`\]
 
-#### retry.delay()
+#### retry.delay
 
 > `readonly` **delay**: (`attemptCount`) => `number`
 

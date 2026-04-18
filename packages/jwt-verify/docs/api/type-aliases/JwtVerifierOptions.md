@@ -1,6 +1,6 @@
-[**@httpx/jwt-verify v0.1.7**](../README.md)
+[**@httpx/jwt-verify v0.3.0**](../README.md)
 
----
+***
 
 [@httpx/jwt-verify](../README.md) / JwtVerifierOptions
 
@@ -12,11 +12,11 @@
 
 ### audience?
 
-> `optional` **audience**: `string` \| `string`[]
+> `optional` **audience?**: `string` \| `string`[]
 
 The expected audience(s) to validate against the token's `aud` claim.
 
-Accepts either a single string (for example a client_id, scope or resource URI)
+Accepts either a single string (for example a client\_id, scope or resource URI)
 or an array of strings when the token may be valid for multiple audiences.
 When provided, the verifier requires the token's `aud` claim to match at least
 one of these values. If omitted, audience validation is not performed.
@@ -25,19 +25,19 @@ one of these values. If omitted, audience validation is not performed.
 
 ```ts
 // single audience
-audience = "api://1234";
+audience = 'api://1234';
 ```
 
 ```ts
 // multiple audiences
-audience = ["api://1234", "https://api.example.com"];
+audience = ['api://1234', 'https://api.example.com'];
 ```
 
 #### See
 
 https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3
 
----
+***
 
 ### authorityHost
 
@@ -57,28 +57,28 @@ local endpoint for testing; when using non‑standard ports include them in the 
 
 ```ts
 // Azure public cloud
-authorityHost = "https://login.microsoftonline.com";
+authorityHost = 'https://login.microsoftonline.com';
 ```
 
 ```ts
 // custom identity provider
-authorityHost = "https://auth.example.com";
+authorityHost = 'https://auth.example.com';
 ```
 
 ```ts
 // local testing (include scheme and port)
-authorityHost = "http://localhost:8080";
+authorityHost = 'http://localhost:8080';
 ```
 
 #### See
 
 https://openid.net/specs/openid-connect-discovery-1_0.html
 
----
+***
 
 ### clockToleranceSec?
 
-> `optional` **clockToleranceSec**: `number`
+> `optional` **clockToleranceSec?**: `number`
 
 Allowed clock skew in seconds when validating time-based claims (`exp`, `nbf`, `iat`).
 
@@ -102,14 +102,14 @@ clockToleranceSec = 5;
 #### Default
 
 ```ts
-60;
+60
 ```
 
----
+***
 
 ### expectedIssuer?
 
-> `optional` **expectedIssuer**: `string`
+> `optional` **expectedIssuer?**: `string`
 
 Override issuer used to validate the token's `iss` claim.
 
@@ -123,24 +123,23 @@ deployments). Must be the full issuer URL expected in the token's `iss` claim
 
 ```ts
 // Azure single-tenant issuer
-expectedIssuer =
-  "https://login.microsoftonline.com/8ca5b849-53e1-48cf-89fb-0103886af200/v2.0";
+expectedIssuer = 'https://login.microsoftonline.com/8ca5b849-53e1-48cf-89fb-0103886af200/v2.0';
 ```
 
 ```ts
 // Custom identity provider
-expectedIssuer = "https://auth.example.com";
+expectedIssuer = 'https://auth.example.com';
 ```
 
 #### See
 
 https://www.rfc-editor.org/rfc/rfc7519#section-4.1.1
 
----
+***
 
 ### oidcConfigFetchOptions?
 
-> `optional` **oidcConfigFetchOptions**: [`OidcDiscoveryOptions`](OidcDiscoveryOptions.md)
+> `optional` **oidcConfigFetchOptions?**: [`OidcDiscoveryOptions`](OidcDiscoveryOptions.md)
 
 Optionally pass options to configure the OIDC configuration fetcher.
 
@@ -151,7 +150,7 @@ const defaultFetchOptions = {
   timeoutMs: 30_000,
   retry: {
     limit: 3,
-    methods: ["get", "head", "options", "trace"],
+    methods: ['get', 'head', 'options', 'trace'],
     statusCodes: [408, 413, 429, 500, 502, 503, 504],
     afterStatusCodes: [413, 429, 503],
     maxRetryAfter: Number.POSITIVE_INFINITY,
@@ -161,11 +160,11 @@ const defaultFetchOptions = {
 } as const satisfies OidcConfigFetchOptions;
 ```
 
----
+***
 
 ### schema?
 
-> `optional` **schema**: `StandardSchemaV1`\<`unknown`\>
+> `optional` **schema?**: `StandardSchemaV1`\<`unknown`\>
 
 Optional standard-schema compatible vaildation schema used to validate
 the decoded JWT payload. Most li
@@ -177,7 +176,7 @@ Each `safeParse` call may also pass a `schema` to override the verifier default.
 
 https://standardschema.dev/schema#what-schema-libraries-implement-the-spec
 
----
+***
 
 ### tenantId
 
@@ -197,10 +196,10 @@ Do not include leading or trailing slashes.
 
 ```ts
 // single-tenant (GUID)
-tenantId = "8ca5b849-53e1-48cf-89fb-0103886af200";
+tenantId = '8ca5b849-53e1-48cf-89fb-0103886af200';
 ```
 
 ```ts
 // multi-tenant or common endpoints
-tenantId = "common";
+tenantId = 'common';
 ```

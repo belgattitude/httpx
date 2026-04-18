@@ -48,7 +48,7 @@ either a message or an object containing HttpExceptionParams
 
 ##### msgOrParams?
 
-`string` | [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
+`string` \| [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
 
 #### Returns
 
@@ -62,7 +62,7 @@ either a message or an object containing HttpExceptionParams
 
 ### cause?
 
-> `readonly` `optional` **cause**: `Error` \| [`HttpException`](HttpException.md)
+> `readonly` `optional` **cause?**: `Error` \| [`HttpException`](HttpException.md)
 
 If set and the runtime (browser or node) supports it
 you can get back the error cause
@@ -135,7 +135,7 @@ Http method
 
 ### stack?
 
-> `optional` **stack**: `string`
+> `optional` **stack?**: `string`
 
 #### Inherited from
 

@@ -1,6 +1,6 @@
-[**@httpx/jwt-verify v0.1.7**](../README.md)
+[**@httpx/jwt-verify v0.3.0**](../README.md)
 
----
+***
 
 [@httpx/jwt-verify](../README.md) / JwtVerifier
 
@@ -26,7 +26,7 @@
 
 ### safeParse()
 
-> **safeParse**\<`TSchema`\>(`token`, `options?`): `Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` _extends_ `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `JwtVerifyErrors`\>\>
+> **safeParse**\<`TSchema`\>(`token`, `options?`): `Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` *extends* `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `JwtVerifyErrors`\>\>
 
 Safely parse and verify a JWT token
 
@@ -34,7 +34,7 @@ Safely parse and verify a JWT token
 
 ##### TSchema
 
-`TSchema` _extends_ `StandardSchemaV1`\<`unknown`, `unknown`\>
+`TSchema` *extends* `StandardSchemaV1`\<`unknown`, `unknown`\>
 
 #### Parameters
 
@@ -50,26 +50,26 @@ Safely parse and verify a JWT token
 
 #### Returns
 
-`Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` _extends_ `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `JwtVerifyErrors`\>\>
+`Promise`\<`Result`\<`ParsedJwtSuccess`\<`TSchema` *extends* `undefined` ? `JWTPayload` : `InferOutput`\<`TSchema`\> & `JWTPayload`\>, `JwtVerifyErrors`\>\>
 
 #### Example
 
 ```typescript
-import { JWTVerifier } from "@httpx/jwt-verify";
-import * as v from "valibot"; // or any standard-schema compatible schema library
+import { JWTVerifier } from '@httpx/jwt-verify';
+import * as v from 'valibot'; // or any standard-schema compatible schema library
 
 const entraVerifier = new JwtVerifier({
-  authorityHost: "https://login.microsoftonline.com",
-  tenantId: "8ca5b849-53e1-48cf-89fb-0103886af200",
+  authorityHost: 'https://login.microsoftonline.com',
+  tenantId: '8ca5b849-53e1-48cf-89fb-0103886af200',
   clockToleranceSec: 60, // optional
 });
 
-const token = "...";
+const token = '...';
 
 const { data, error } = await entraVerifier.safeParse(token, {
-  schema: v.object({
-    oid: v.string(),
-  }),
+   schema: v.object({
+     oid: v.string(),
+   })
 });
 
 // If something failed the error will be !== undefined
@@ -80,5 +80,5 @@ if (error) {
 }
 
 // If everything went fine, data will be defined
-console.log("Token payload:", data.payload);
+console.log('Token payload:', data.payload);
 ```

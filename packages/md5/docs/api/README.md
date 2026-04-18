@@ -1,8 +1,8 @@
-**@httpx/md5 v1.0.0**
+**@httpx/md5 v1.0.3**
 
----
+***
 
-# @httpx/md5 v1.0.0
+# @httpx/md5 v1.0.3
 
 ## Functions
 

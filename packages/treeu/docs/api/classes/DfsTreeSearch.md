@@ -1,6 +1,6 @@
-[**@httpx/treeu v0.5.7**](../README.md)
+[**@httpx/treeu v0.5.8**](../README.md)
 
----
+***
 
 [@httpx/treeu](../README.md) / DfsTreeSearch
 
@@ -20,11 +20,11 @@ https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
 
 ### TValue
 
-`TValue` _extends_ [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
+`TValue` *extends* [`TreeNodeValue`](../type-aliases/TreeNodeValue.md) \| `undefined`
 
 ### TKey
 
-`TKey` _extends_ `string` \| `number` = `string`
+`TKey` *extends* `string` \| `number` = `string`
 
 ## Constructors
 
@@ -55,7 +55,7 @@ to traverse the tree in reverse order.
 
 ##### idOrConditionOrFn
 
-`NativeNodeSearchKeys` | `TKey` | (`treeNode`) => `boolean`
+`NativeNodeSearchKeys` \| `TKey` \| ((`treeNode`) => `boolean`)
 
 ##### params?
 

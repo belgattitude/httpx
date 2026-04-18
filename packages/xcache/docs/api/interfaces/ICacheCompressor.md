@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.10**](../README.md)
+[**@httpx/xcache v0.5.0**](../README.md)
 
----
+***
 
 [@httpx/xcache](../README.md) / ICacheCompressor
 
@@ -8,7 +8,7 @@
 
 ## Properties
 
-### compress()
+### compress
 
 > **compress**: \<`T`\>(`data`) => `Promise`\<`CacheCompressResult`\<`unknown`\>\>
 
@@ -28,9 +28,9 @@
 
 `Promise`\<`CacheCompressResult`\<`unknown`\>\>
 
----
+***
 
-### decompress()
+### decompress
 
 > **decompress**: \<`T`\>(`data`) => `Promise`\<`T`\>
 
@@ -50,9 +50,9 @@
 
 `Promise`\<`T`\>
 
----
+***
 
-### getIdentifier()
+### getIdentifier
 
 > **getIdentifier**: () => `string`
 

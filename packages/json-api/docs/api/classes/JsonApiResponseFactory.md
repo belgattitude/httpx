@@ -1,6 +1,6 @@
-[**@httpx/json-api v0.6.7**](../README.md)
+[**@httpx/json-api v0.6.8**](../README.md)
 
----
+***
 
 [@httpx/json-api](../README.md) / JsonApiResponseFactory
 
@@ -26,7 +26,7 @@
 
 ##### errors
 
-`string` | [`JsonApiError`](../type-aliases/JsonApiError.md) | [`JsonApiError`](../type-aliases/JsonApiError.md)[]
+`string` \| [`JsonApiError`](../type-aliases/JsonApiError.md) \| [`JsonApiError`](../type-aliases/JsonApiError.md)[]
 
 ##### httpStatus?
 
@@ -38,7 +38,7 @@ fallback http status if not present in JsonApiError
 
 [`JsonApiErrorResponse`](../type-aliases/JsonApiErrorResponse.md)
 
----
+***
 
 ### fromSuccess()
 

@@ -1,6 +1,6 @@
-[**@httpx/json-api v0.6.7**](../README.md)
+[**@httpx/json-api v0.6.8**](../README.md)
 
----
+***
 
 [@httpx/json-api](../README.md) / JsonApiError
 
@@ -16,51 +16,51 @@ https://jsonapi.org/format/#errors
 
 ### code?
 
-> `optional` **code**: `string`
+> `optional` **code?**: `string`
 
 an application-specific error code, expressed as a string value.
 
----
+***
 
 ### detail?
 
-> `optional` **detail**: `string`
+> `optional` **detail?**: `string`
 
 a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized.
 
----
+***
 
 ### id?
 
-> `optional` **id**: `number` \| `string`
+> `optional` **id?**: `number` \| `string`
 
 a unique identifier for this particular occurrence of the problem.
 
----
+***
 
 ### meta?
 
-> `optional` **meta**: `Record`\<`string`, `unknown`\>
+> `optional` **meta?**: `Record`\<`string`, `unknown`\>
 
 a meta object containing non-standard meta-information about the error.
 
----
+***
 
 ### parameter?
 
-> `optional` **parameter**: `string`
+> `optional` **parameter?**: `string`
 
 a string indicating which URI query parameter caused the error.
 
----
+***
 
 ### status?
 
-> `optional` **status**: `number`
+> `optional` **status?**: `number`
 
 the HTTP status code applicable to this problem, expressed as a string value.
 
----
+***
 
 ### title
 

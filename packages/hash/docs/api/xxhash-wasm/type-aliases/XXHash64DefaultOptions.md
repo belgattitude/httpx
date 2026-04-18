@@ -1,6 +1,6 @@
-[**@httpx/hash v0.2.4**](../../README.md)
+[**@httpx/hash v0.2.5**](../../README.md)
 
----
+***
 
 [@httpx/hash](../../README.md) / [xxhash-wasm](../README.md) / XXHash64DefaultOptions
 
@@ -12,7 +12,7 @@
 
 ### defaultSeed?
 
-> `optional` **defaultSeed**: `bigint`
+> `optional` **defaultSeed?**: `bigint`
 
 The seed to use for hashing. If not provided, a default 0n seed will be used.
 Spark generally uses 42 as the default seed.

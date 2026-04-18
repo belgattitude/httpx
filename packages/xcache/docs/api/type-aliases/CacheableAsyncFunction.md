@@ -1,10 +1,10 @@
-[**@httpx/xcache v0.4.10**](../README.md)
+[**@httpx/xcache v0.5.0**](../README.md)
 
----
+***
 
 [@httpx/xcache](../README.md) / CacheableAsyncFunction
 
-# Type Alias: CacheableAsyncFunction()
+# Type Alias: CacheableAsyncFunction
 
 > **CacheableAsyncFunction** = (...`args`) => `Promise`\<`CacheableValues`\>
 

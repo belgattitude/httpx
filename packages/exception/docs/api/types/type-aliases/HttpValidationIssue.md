@@ -16,7 +16,7 @@ and zod (path).
 
 ### code?
 
-> `optional` **code**: `string`
+> `optional` **code?**: `string`
 
 An application-specific error code, expressed as a string value.
 

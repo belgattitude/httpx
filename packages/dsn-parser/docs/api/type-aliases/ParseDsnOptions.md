@@ -1,6 +1,6 @@
-[**@httpx/dsn-parser v1.9.8**](../README.md)
+[**@httpx/dsn-parser v1.9.9**](../README.md)
 
----
+***
 
 [@httpx/dsn-parser](../README.md) / ParseDsnOptions
 
@@ -12,14 +12,14 @@
 
 ### lowercaseDriver?
 
-> `optional` **lowercaseDriver**: `boolean`
+> `optional` **lowercaseDriver?**: `boolean`
 
 Whether to lowercase parsed driver name, default: false
 
----
+***
 
 ### overrides?
 
-> `optional` **overrides**: `Omit`\<`Partial`\<[`ParsedDsn`](ParsedDsn.md)\>, `"params"`\>
+> `optional` **overrides?**: `Omit`\<`Partial`\<[`ParsedDsn`](ParsedDsn.md)\>, `"params"`\>
 
 Overrides parsed values by those one (except query params)

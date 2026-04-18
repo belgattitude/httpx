@@ -1,6 +1,6 @@
-[**@httpx/jwt-verify v0.1.7**](../README.md)
+[**@httpx/jwt-verify v0.3.0**](../README.md)
 
----
+***
 
 [@httpx/jwt-verify](../README.md) / SchemaValidationError
 
@@ -106,9 +106,9 @@
 
 [`TypedError`](../interfaces/TypedError.md).[`type`](../interfaces/TypedError.md#type)
 
----
+***
 
-### \[hasInstance\]()
+### \[hasInstance\]
 
 > `static` **\[hasInstance\]**: (`value`) => `boolean`
 

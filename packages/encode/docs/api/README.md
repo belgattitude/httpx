@@ -1,8 +1,8 @@
-**@httpx/encode v0.1.7**
+**@httpx/encode v0.1.8**
 
----
+***
 
-# @httpx/encode v0.1.7
+# @httpx/encode v0.1.8
 
 ## Variables
 

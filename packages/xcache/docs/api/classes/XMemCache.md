@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.10**](../README.md)
+[**@httpx/xcache v0.5.0**](../README.md)
 
----
+***
 
 [@httpx/xcache](../README.md) / XMemCache
 
@@ -34,7 +34,7 @@ Clear the cache and return the number of items removed.
 
 `number`
 
----
+***
 
 ### runAsync()
 
@@ -47,11 +47,11 @@ return the cached value.
 
 ##### TResult
 
-`TResult` _extends_ `SupportedCacheValues`
+`TResult` *extends* `SupportedCacheValues`
 
 ##### TKey
 
-`TKey` _extends_ `CacheKeyTuple`
+`TKey` *extends* `CacheKeyTuple`
 
 #### Parameters
 
@@ -85,14 +85,14 @@ const xMemCache = new XMemCache({ lru });
 
 const asyncDataFetcher = async (params: { id: number }) => {
   return { id: params.id, data: `Data for ${params.id}` };
-};
+}
 
 const params: { id: number } = { id: 1 };
 
 const { data } = await xMemCache.runAsync({
-  key: ["/api/data", params],
-  fn: ({ key }) => asyncDataFetcher(params),
-});
+ key: ['/api/data', params],
+ fn: ({ key }) => asyncDataFetcher(params),
+})
 ```
 
 #### Throws

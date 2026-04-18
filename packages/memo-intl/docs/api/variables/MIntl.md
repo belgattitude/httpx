@@ -1,6 +1,6 @@
-[**@httpx/memo-intl v1.4.9**](../README.md)
+[**@httpx/memo-intl v1.4.10**](../README.md)
 
----
+***
 
 [@httpx/memo-intl](../README.md) / MIntl
 
@@ -14,7 +14,7 @@
 
 > **cache**: `object`
 
-#### cache.clear()
+#### cache.clear
 
 > **clear**: () => `void`
 
@@ -22,7 +22,7 @@
 
 `void`
 
-#### cache.stats()
+#### cache.stats
 
 > **stats**: () => `object`
 
@@ -34,7 +34,7 @@
 
 > **cachedInstances**: `number`
 
-### Collator()
+### Collator
 
 > **Collator**: (`locale`, `options?`) => `Collator`
 
@@ -57,7 +57,7 @@ Return a memoized Intl.Collator instance
 #### Example
 
 ```typescript
-const collator = MIntl.Collator("de", {
+const collator = MIntl.Collator('de', {
   sensitivity: "base",
   caseFirst: "upper",
 });
@@ -69,7 +69,7 @@ const sorted = ["Z", "a", "z", "ä"].sort(collator.compare);
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator
 
-### DateTimeFormat()
+### DateTimeFormat
 
 > **DateTimeFormat**: (`locale`, `options?`) => `DateTimeFormat`
 
@@ -106,7 +106,7 @@ const value = formatter.format(new Date()); // 👈 'mercredi 29 mai 2024 à 07:
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
 
-### ListFormat()
+### ListFormat
 
 > **ListFormat**: (`locale`, `options?`) => `ListFormat`
 
@@ -134,14 +134,14 @@ const formatter = new Intl.ListFormat("en", {
   style: "long",
   type: "conjunction",
 });
-const value = formatter.format(vehicles); // 👈 'Motorcycle, Bus, and Car'
+const value = formatter.format(vehicles) // 👈 'Motorcycle, Bus, and Car'
 ```
 
 #### See
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat
 
-### Locale()
+### Locale
 
 > **Locale**: (`locale`, `options?`) => `Locale`
 
@@ -164,7 +164,7 @@ Return a memoized Intl.Locale instance
 #### Example
 
 ```typescript
-const enLocale = MIntl.Locale("en");
+const enLocale = MIntl.Locale('en');
 const koLocale = new Intl.Locale("ko", {
   script: "Kore",
   region: "KR",
@@ -177,7 +177,7 @@ const koLocale = new Intl.Locale("ko", {
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale
 
-### NumberFormat()
+### NumberFormat
 
 > **NumberFormat**: (`locale`, `options?`) => `NumberFormat`
 
@@ -200,10 +200,10 @@ Return a memoized Intl.NumberFormatter instance
 #### Example
 
 ```typescript
-const formatter = MIntl.NumberFormat("fr-FR", {
-  style: "currency",
-  currency: "EUR",
-  notation: "compact",
+const formatter = MIntl.NumberFormat('fr-FR', {
+  style: 'currency',
+  currency: 'EUR',
+  notation: 'compact',
   minimumFractionDigits: 2,
 });
 const value = formatter.format(10.1345); // 👈 '10,13 €'
@@ -213,7 +213,7 @@ const value = formatter.format(10.1345); // 👈 '10,13 €'
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
 
-### PluralRules()
+### PluralRules
 
 > **PluralRules**: (`locale`, `options?`) => `PluralRules`
 
@@ -236,7 +236,7 @@ Return a memoized Intl.PluralRules instance
 #### Example
 
 ```typescript
-const pluralRules = MIntl.PluralRules("en-US", { type: "ordinal" });
+const pluralRules = MIntl.PluralRules('en-US', { type: 'ordinal' });
 const num = pluralRules.select(2); // 👈 'two'
 ```
 
@@ -244,7 +244,7 @@ const num = pluralRules.select(2); // 👈 'two'
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules
 
-### RelativeTimeFormat()
+### RelativeTimeFormat
 
 > **RelativeTimeFormat**: (`locale`, `options?`) => `RelativeTimeFormat`
 
@@ -268,14 +268,14 @@ Return a memoized Intl.RelativeTimeFormat instance
 
 ```typescript
 const rtf1 = MIntl.RelativeTimeFormat("en", { style: "short" });
-const value = rtf1.format(3, "quarter"); // // 👈 'in 3 qtrs.'
+const value = rtf1.format(3, "quarter") // // 👈 'in 3 qtrs.'
 ```
 
 #### See
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat
 
-### Segmenter()
+### Segmenter
 
 > **Segmenter**: (`locale`, `options?`) => `Segmenter`
 
@@ -298,10 +298,10 @@ Return a memoized Intl.Segmenter instance
 #### Example
 
 ```typescript
-const segmenter = MIntl.Segmenter("fr", { granularity: "word" });
-const string = "Que ma joie demeure";
+const segmenter = MIntl.Segmenter('fr', { granularity: 'word' });
+const string = 'Que ma joie demeure';
 const iterator = segmenter.segment(string)[Symbol.iterator]();
-iterator1.next().value!.segment; // 👈 'Que'
+iterator1.next().value!.segment // 👈 'Que'
 ```
 
 #### See

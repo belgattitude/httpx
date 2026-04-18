@@ -1,6 +1,6 @@
-[**@httpx/assert v0.16.7**](../../README.md)
+[**@httpx/assert v0.16.9**](../../README.md)
 
----
+***
 
 [@httpx/assert](../../README.md) / [string.types](../README.md) / StringNonEmpty
 
@@ -8,4 +8,4 @@
 
 > **StringNonEmpty** = `string` & `WeakOpaqueContainer`\<`"StringNonEmpty"`\>
 
-Defined in: [string.types.ts:3](https://github.com/belgattitude/httpx/blob/38d880ecf05f1934d921b8525130cab1b4a6f511/packages/assert/src/string.types.ts#L3)
+Defined in: [string.types.ts:3](https://github.com/belgattitude/httpx/blob/ead3a5e210bc10c98f666387bc1b821279c79c49/packages/assert/src/string.types.ts#L3)
