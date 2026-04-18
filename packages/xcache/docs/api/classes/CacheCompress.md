@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.10**](../README.md)
+[**@httpx/xcache v0.5.0**](../README.md)
 
----
+***
 
 [@httpx/xcache](../README.md) / CacheCompress
 
@@ -29,13 +29,13 @@
 #### Example
 
 ```typescript
-import { CacheCompress, SuperjsonSerializer } from "@httpx/xcache";
+import { CacheCompress, SuperjsonSerializer } from '@httpx/xcache';
 
 const customCacheCompressor = new CacheCompress({
   // Compression requires the data to be serialized (into a string)
   // JsonSerializer, SuperjsonSerialier, DevalueSerializer
   serializer: new SuperjsonSerializer(),
-  algorithm: "gzip", // or 'deflate'
+  algorithm: 'gzip', // or 'deflate'
   // Skip compression if the achieved compression ratio is less than
   // the provided ratio. 1.3 means that the compression will be skipped
   // if the ratio does not give at least 30 memory reduction
@@ -76,7 +76,7 @@ const customCacheCompressor = new CacheCompress({
 
 [`ICacheCompressor`](../interfaces/ICacheCompressor.md).[`compress`](../interfaces/ICacheCompressor.md#compress)
 
----
+***
 
 ### decompress()
 
@@ -102,7 +102,7 @@ const customCacheCompressor = new CacheCompress({
 
 [`ICacheCompressor`](../interfaces/ICacheCompressor.md).[`decompress`](../interfaces/ICacheCompressor.md#decompress)
 
----
+***
 
 ### getIdentifier()
 

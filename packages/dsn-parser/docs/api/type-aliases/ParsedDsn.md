@@ -1,6 +1,6 @@
-[**@httpx/dsn-parser v1.9.8**](../README.md)
+[**@httpx/dsn-parser v1.9.9**](../README.md)
 
----
+***
 
 [@httpx/dsn-parser](../README.md) / ParsedDsn
 
@@ -12,42 +12,42 @@
 
 ### db?
 
-> `optional` **db**: `string`
+> `optional` **db?**: `string`
 
----
+***
 
 ### driver
 
 > **driver**: `string`
 
----
+***
 
 ### host
 
 > **host**: `string`
 
----
+***
 
 ### params?
 
-> `optional` **params**: `Record`\<`string`, `boolean` \| `number` \| `string`\>
+> `optional` **params?**: `Record`\<`string`, `boolean` \| `number` \| `string`\>
 
 Query params
 
----
+***
 
 ### pass?
 
-> `optional` **pass**: `string`
+> `optional` **pass?**: `string`
 
----
+***
 
 ### port?
 
-> `optional` **port**: `number`
+> `optional` **port?**: `number`
 
----
+***
 
 ### user?
 
-> `optional` **user**: `string`
+> `optional` **user?**: `string`

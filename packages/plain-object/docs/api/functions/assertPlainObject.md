@@ -1,6 +1,6 @@
-[**@httpx/plain-object v2.1.7**](../README.md)
+[**@httpx/plain-object v2.1.9**](../README.md)
 
----
+***
 
 [@httpx/plain-object](../README.md) / assertPlainObject
 
@@ -14,7 +14,7 @@ Assert a value is a plain object
 
 ### TValue
 
-`TValue` _extends_ `BasePlainObject` = `DefaultBasePlainObject`
+`TValue` *extends* `BasePlainObject` = `DefaultBasePlainObject`
 
 ## Parameters
 
@@ -33,30 +33,31 @@ Assert a value is a plain object
 ## Example
 
 ```typescript
-import { assertPlainObject } from "@httpx/plain-object";
-import type { PlainObject } from "@httpx/plain-object";
+import { assertPlainObject } from '@httpx/plain-object';
+import type { PlainObject } from '@httpx/plain-object';
 
 function fn(value: unknown) {
-  // 👇 Throws `new TypeError('Not a plain object')` if not a plain object
-  assertPlainObject(value);
 
-  // 👇 Throws `new TypeError('Custom message')` if not a plain object
-  assertPlainObject(value, "Custom message");
+    // 👇 Throws `new TypeError('Not a plain object')` if not a plain object
+    assertPlainObject(value);
 
-  // 👇 Throws custom error if not a plain object
-  assertPlainObject(value, () => {
-    throw new HttpBadRequest("Custom message");
-  });
+    // 👇 Throws `new TypeError('Custom message')` if not a plain object
+    assertPlainObject(value, 'Custom message');
 
-  return value;
+    // 👇 Throws custom error if not a plain object
+    assertPlainObject(value, () => {
+        throw new HttpBadRequest('Custom message');
+    });
+
+    return value;
 }
 
 try {
-  const value = fn({ key: "value" });
-  // ✅ Value is known to be PlainObject<unknown>
-  assertType<PlainObject>(value);
+    const value = fn({ key: 'value' });
+    // ✅ Value is known to be PlainObject<unknown>
+    assertType<PlainObject>(value);
 } catch (error) {
-  console.error(error);
+    console.error(error);
 }
 ```
 

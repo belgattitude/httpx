@@ -1,6 +1,6 @@
-[**@httpx/lru v0.13.0**](../README.md)
+[**@httpx/lru v0.13.2**](../README.md)
 
----
+***
 
 [@httpx/lru](../README.md) / LruCacheParams
 
@@ -12,11 +12,11 @@
 
 ### TValue
 
-`TValue` _extends_ [`SupportedCacheValues`](SupportedCacheValues.md) = [`SupportedCacheValues`](SupportedCacheValues.md)
+`TValue` *extends* [`SupportedCacheValues`](SupportedCacheValues.md) = [`SupportedCacheValues`](SupportedCacheValues.md)
 
 ### TKey
 
-`TKey` _extends_ [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`
+`TKey` *extends* [`BaseCacheKeyTypes`](BaseCacheKeyTypes.md) = `string`
 
 ## Properties
 
@@ -26,11 +26,11 @@
 
 The maximum number of items that the cache can hold.
 
----
+***
 
-### onEviction()?
+### onEviction?
 
-> `optional` **onEviction**: (`key`, `value`) => `void`
+> `optional` **onEviction?**: (`key`, `value`) => `void`
 
 Callback that will be called before an item is evicted from the cache.
 Useful for side effects or for items like object URLs that need explicit cleanup (revokeObjectURL).
@@ -49,16 +49,16 @@ Useful for side effects or for items like object URLs that need explicit cleanup
 
 `void`
 
----
+***
 
 ### touchOnHas?
 
-> `optional` **touchOnHas**: `boolean`
+> `optional` **touchOnHas?**: `boolean`
 
 If true, the item will be marked as recently used when calling has.
 
 #### Default
 
 ```ts
-false;
+false
 ```

@@ -12,7 +12,7 @@
 
 ### exception
 
-[`HttpException`](../../base/classes/HttpException.md) | [`NativeError`](../type-aliases/NativeError.md)
+[`HttpException`](../../base/classes/HttpException.md) \| [`NativeError`](../type-aliases/NativeError.md)
 
 ### params?
 

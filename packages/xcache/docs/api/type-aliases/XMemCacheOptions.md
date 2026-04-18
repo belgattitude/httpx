@@ -1,6 +1,6 @@
-[**@httpx/xcache v0.4.10**](../README.md)
+[**@httpx/xcache v0.5.0**](../README.md)
 
----
+***
 
 [@httpx/xcache](../README.md) / XMemCacheOptions
 
@@ -12,19 +12,19 @@
 
 ### compressor?
 
-> `optional` **compressor**: [`ICacheCompressor`](../interfaces/ICacheCompressor.md)
+> `optional` **compressor?**: [`ICacheCompressor`](../interfaces/ICacheCompressor.md)
 
----
+***
 
 ### lru
 
 > **lru**: `ITimeLruCache`
 
----
+***
 
 ### namespace?
 
-> `optional` **namespace**: `string`
+> `optional` **namespace?**: `string`
 
 The default namespace is used to prefix the cache key,
 allowing for separation of cache entries. If not provided,

@@ -1,6 +1,6 @@
 [**prisma-exception**](../README.md)
 
----
+***
 
 [prisma-exception](../globals.md) / export=
 
@@ -8,7 +8,7 @@
 
 > **export=**: `object`
 
-Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ecf05f1934d921b8525130cab1b4a6f511/integrations/prisma-exception/package.json#L1)
+Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/29e282446ebf910678eb0546b3b2af57c1107f2e/integrations/prisma-exception/package.json#L1)
 
 ## Type Declaration
 
@@ -46,35 +46,35 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ec
 
 #### devDependencies.@belgattitude/eslint-config-bases
 
-> **@belgattitude/eslint-config-bases**: `string` = `"8.8.0"`
+> **@belgattitude/eslint-config-bases**: `string` = `"8.13.0"`
 
 #### devDependencies.@size-limit/file
 
-> **@size-limit/file**: `string` = `"12.0.0"`
+> **@size-limit/file**: `string` = `"12.1.0"`
 
 #### devDependencies.@size-limit/webpack
 
-> **@size-limit/webpack**: `string` = `"12.0.0"`
+> **@size-limit/webpack**: `string` = `"12.1.0"`
 
 #### devDependencies.@size-limit/webpack-why
 
-> **@size-limit/webpack-why**: `string` = `"12.0.0"`
+> **@size-limit/webpack-why**: `string` = `"12.1.0"`
 
 #### devDependencies.@types/node
 
-> **@types/node**: `string` = `"24.10.1"`
+> **@types/node**: `string` = `"25.6.0"`
 
 #### devDependencies.@vitest/coverage-istanbul
 
-> **@vitest/coverage-istanbul**: `string` = `"4.0.16"`
+> **@vitest/coverage-istanbul**: `string` = `"4.1.4"`
 
 #### devDependencies.@vitest/ui
 
-> **@vitest/ui**: `string` = `"4.0.16"`
+> **@vitest/ui**: `string` = `"4.1.4"`
 
 #### devDependencies.browserslist
 
-> **browserslist**: `string` = `"4.28.1"`
+> **browserslist**: `string` = `"4.28.2"`
 
 #### devDependencies.browserslist-to-esbuild
 
@@ -86,11 +86,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ec
 
 #### devDependencies.es-check
 
-> **es-check**: `string` = `"9.5.2"`
+> **es-check**: `string` = `"9.6.4"`
 
 #### devDependencies.esbuild
 
-> **esbuild**: `string` = `"0.27.2"`
+> **esbuild**: `string` = `"0.28.0"`
 
 #### devDependencies.eslint
 
@@ -102,19 +102,19 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ec
 
 #### devDependencies.prettier
 
-> **prettier**: `string` = `"3.7.4"`
+> **prettier**: `string` = `"3.8.3"`
 
 #### devDependencies.publint
 
-> **publint**: `string` = `"0.3.16"`
+> **publint**: `string` = `"0.3.18"`
 
 #### devDependencies.rimraf
 
-> **rimraf**: `string` = `"6.1.2"`
+> **rimraf**: `string` = `"6.1.3"`
 
 #### devDependencies.size-limit
 
-> **size-limit**: `string` = `"12.0.0"`
+> **size-limit**: `string` = `"12.1.0"`
 
 #### devDependencies.tsup
 
@@ -122,27 +122,23 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ec
 
 #### devDependencies.typedoc
 
-> **typedoc**: `string` = `"0.28.15"`
+> **typedoc**: `string` = `"0.28.19"`
 
 #### devDependencies.typedoc-plugin-markdown
 
-> **typedoc-plugin-markdown**: `string` = `"4.9.0"`
+> **typedoc-plugin-markdown**: `string` = `"4.11.0"`
 
 #### devDependencies.typescript
 
-> **typescript**: `string` = `"5.9.3"`
-
-#### devDependencies.vite-tsconfig-paths
-
-> **vite-tsconfig-paths**: `string` = `"5.1.4"`
+> **typescript**: `string` = `"6.0.2"`
 
 #### devDependencies.vitest
 
-> **vitest**: `string` = `"4.0.16"`
+> **vitest**: `string` = `"4.1.4"`
 
 #### devDependencies.webpack
 
-> **webpack**: `string` = `"5.103.0"`
+> **webpack**: `string` = `"5.106.2"`
 
 ### engines
 
@@ -268,10 +264,6 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ec
 
 > **check-size**: `string` = `"size-limit"`
 
-#### scripts.ci-coverage-upload
-
-> **ci-coverage-upload**: `string` = `"../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage"`
-
 #### scripts.clean
 
 > **clean**: `string` = `"rimraf ./dist ./coverage ./tsconfig.tsbuildinfo"`
@@ -283,10 +275,6 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ec
 #### scripts.docgen-typedoc
 
 > **docgen-typedoc**: `string` = `"rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api"`
-
-#### scripts.fix-all-files
-
-> **fix-all-files**: `string` = `"eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix"`
 
 #### scripts.lint
 
@@ -300,13 +288,13 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ec
 
 > **test**: `string` = `"vitest run"`
 
-#### scripts.test-unit
+#### scripts.test-unit-coverage-disabled
 
-> **test-unit**: `string` = `"vitest run"`
+> **test-unit-coverage-disabled**: `string` = `"vitest run --coverage"`
 
-#### scripts.test-unit-coverage
+#### scripts.test-unit-disabled
 
-> **test-unit-coverage**: `string` = `"vitest run --coverage"`
+> **test-unit-disabled**: `string` = `"vitest run"`
 
 #### scripts.test-unit-watch
 
@@ -330,4 +318,4 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/38d880ec
 
 ### version
 
-> **version**: `string` = `"0.0.24"`
+> **version**: `string` = `"0.0.25"`

@@ -1,6 +1,6 @@
-[**@httpx/jwt-verify v0.1.7**](../README.md)
+[**@httpx/jwt-verify v0.3.0**](../README.md)
 
----
+***
 
 [@httpx/jwt-verify](../README.md) / FetchError
 
@@ -68,7 +68,7 @@ Url that was being fetched when the error occurred
 
 Http status code that is related to the FetchError if available
 
----
+***
 
 ### statusText
 
@@ -76,7 +76,7 @@ Http status code that is related to the FetchError if available
 
 Http statusText that is related to the FetchError if available
 
----
+***
 
 ### type
 
@@ -86,7 +86,7 @@ Http statusText that is related to the FetchError if available
 
 [`TypedError`](../interfaces/TypedError.md).[`type`](../interfaces/TypedError.md#type)
 
----
+***
 
 ### url
 
@@ -94,9 +94,9 @@ Http statusText that is related to the FetchError if available
 
 Url that was being fetched when the error occurred
 
----
+***
 
-### \[hasInstance\]()
+### \[hasInstance\]
 
 > `static` **\[hasInstance\]**: (`value`) => `boolean`
 

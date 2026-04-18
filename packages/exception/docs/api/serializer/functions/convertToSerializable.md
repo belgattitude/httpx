@@ -15,7 +15,7 @@ an object suitable for serialization (a serializable version).
 
 ### e
 
-[`HttpException`](../../base/classes/HttpException.md) | [`NativeError`](../type-aliases/NativeError.md)
+[`HttpException`](../../base/classes/HttpException.md) \| [`NativeError`](../type-aliases/NativeError.md)
 
 ### params?
 

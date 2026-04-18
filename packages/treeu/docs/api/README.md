@@ -1,8 +1,8 @@
-**@httpx/treeu v0.5.7**
+**@httpx/treeu v0.5.8**
 
----
+***
 
-# @httpx/treeu v0.5.7
+# @httpx/treeu v0.5.8
 
 ## Classes
 

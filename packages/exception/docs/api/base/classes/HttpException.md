@@ -37,9 +37,9 @@ http status code between 400-599, no checks are done on the validity of the numb
 
 ##### msgOrParams?
 
-either a message or an object containing HttpExceptionParams
+`string` \| [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
 
-`string` | [`HttpExceptionParams`](../../types/type-aliases/HttpExceptionParams.md)
+either a message or an object containing HttpExceptionParams
 
 #### Returns
 
@@ -53,7 +53,7 @@ either a message or an object containing HttpExceptionParams
 
 ### cause?
 
-> `readonly` `optional` **cause**: `Error` \| `HttpException`
+> `readonly` `optional` **cause?**: `Error` \| `HttpException`
 
 If set and the runtime (browser or node) supports it
 you can get back the error cause
@@ -134,7 +134,7 @@ Http method
 
 ### stack?
 
-> `optional` **stack**: `string`
+> `optional` **stack?**: `string`
 
 #### Inherited from
 

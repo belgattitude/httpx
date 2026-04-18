@@ -1,6 +1,6 @@
-[**@httpx/json-api v0.6.7**](../README.md)
+[**@httpx/json-api v0.6.8**](../README.md)
 
----
+***
 
 [@httpx/json-api](../README.md) / JsonApiResponseMeta
 
@@ -12,10 +12,10 @@
 
 ### meta?
 
-> `optional` **meta**: `object` & `Record`\<`string`, `Record`\<`string`, `unknown`\> \| `boolean` \| `number` \| `string`\>
+> `optional` **meta?**: `object` & `Record`\<`string`, `Record`\<`string`, `unknown`\> \| `boolean` \| `number` \| `string`\>
 
 #### Type Declaration
 
 ##### cacheHit?
 
-> `optional` **cacheHit**: `boolean`
+> `optional` **cacheHit?**: `boolean`

@@ -1,6 +1,6 @@
-[**@httpx/lru v0.13.0**](../README.md)
+[**@httpx/lru v0.13.2**](../README.md)
 
----
+***
 
 [@httpx/lru](../README.md) / getOrCreateLruCache
 
@@ -18,11 +18,11 @@ the instance.
 
 ### TValue
 
-`TValue` _extends_ [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
+`TValue` *extends* [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md) = [`SupportedCacheValues`](../type-aliases/SupportedCacheValues.md)
 
 ### TKey
 
-`TKey` _extends_ [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
+`TKey` *extends* [`BaseCacheKeyTypes`](../type-aliases/BaseCacheKeyTypes.md) = `string`
 
 ## Parameters
 
@@ -45,13 +45,13 @@ the instance.
 ## Example
 
 ```typescript
-import { getOrCreateLruCache } from "@httpx/lru";
+import { getOrCreateLruCache } from '@httpx/lru';
 
-const lru = getOrCreateLruCache("main-cache", { maxSize: 500 });
+const lru = getOrCreateLruCache('main-cache', { maxSize: 500 });
 ```
 
 ## Warning
 
 The same name must always be used with consistent TValue and TKey types.
-Calling this function with different type parameters for the same name will cause
-type safety violations and unexpected behavior.
+         Calling this function with different type parameters for the same name will cause
+         type safety violations and unexpected behavior.

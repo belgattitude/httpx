@@ -1,6 +1,6 @@
-[**@httpx/json-api v0.6.7**](../README.md)
+[**@httpx/json-api v0.6.8**](../README.md)
 
----
+***
 
 [@httpx/json-api](../README.md) / JsonApiErrorFactory
 
@@ -20,7 +20,7 @@
 
 ### fromCatchVariable()
 
-> `readonly` `static` **fromCatchVariable**(`error`, `defaultHttpStatus`): [`JsonApiError`](../type-aliases/JsonApiError.md)
+> `readonly` `static` **fromCatchVariable**(`error`, `defaultHttpStatus?`): [`JsonApiError`](../type-aliases/JsonApiError.md)
 
 #### Parameters
 
@@ -28,7 +28,7 @@
 
 `unknown`
 
-##### defaultHttpStatus
+##### defaultHttpStatus?
 
 `number` = `500`
 
@@ -36,19 +36,19 @@
 
 [`JsonApiError`](../type-aliases/JsonApiError.md)
 
----
+***
 
 ### fromHttpException()
 
-> `readonly` `static` **fromHttpException**(`exception`, `defaultHttpStatus`): [`JsonApiError`](../type-aliases/JsonApiError.md)
+> `readonly` `static` **fromHttpException**(`exception`, `defaultHttpStatus?`): [`JsonApiError`](../type-aliases/JsonApiError.md)
 
 #### Parameters
 
 ##### exception
 
-`string` | `Error` | `HttpException`
+`string` \| `Error` \| `HttpException`
 
-##### defaultHttpStatus
+##### defaultHttpStatus?
 
 `number` = `500`
 
