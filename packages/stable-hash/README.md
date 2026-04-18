@@ -184,7 +184,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                                      |
 |--------------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
+| Node         | ✅  | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
 | Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                    |
 | Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.browserslistrc) |
 | Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                              |
@@ -203,38 +203,38 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
+RUN  v4.1.4 /home/sebastien/github/httpx/packages/stable-hash
 
- RUN  v3.0.5 /home/sebastien/github/httpx/packages/stable-hash
 
-
- ✓ bench/compare.bench.ts > Comparison 6441ms
+ ✓ bench/compare.bench.ts > Comparison 11116ms
      name                                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · @httpx/stable-hash                 294,773.22  0.0030  0.5363  0.0034  0.0032  0.0071  0.0094  0.0151  ±0.37%   147387   slowest
-   · stable-hash                     13,291,407.61  0.0001  0.0766  0.0001  0.0001  0.0001  0.0001  0.0003  ±0.06%  6645705   fastest
-   · @tanstack/query-core (hashKey)     295,851.66  0.0031  0.4376  0.0034  0.0033  0.0042  0.0059  0.0076  ±0.50%   147926
+   · @httpx/stable-hash                 217,237.08  0.0027  2.5960  0.0046  0.0049  0.0151  0.0361  0.0953  ±1.94%   108619
+   · stable-hash                     11,912,066.78  0.0001  0.6124  0.0001  0.0001  0.0001  0.0002  0.0004  ±0.65%  5956034
+   · stable-hash-x                   11,986,257.33  0.0001  1.1343  0.0001  0.0001  0.0001  0.0002  0.0004  ±0.90%  5993129
+   · @tanstack/query-core (hashKey)     262,568.87  0.0028  4.1629  0.0038  0.0033  0.0090  0.0159  0.0622  ±1.95%   131285
 
- ✓ bench/create-stable-hash.bench.ts > createStableHashOrThrow 1228ms
-     name                                                  hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · createStableHashOrThrow with array sorting     29,048.08  0.0263  0.2879  0.0344  0.0336  0.0729  0.1158  0.1718  ±0.49%    14525
-   · createStableHashOrThrow without array sorting  32,139.11  0.0245  0.9538  0.0311  0.0307  0.0459  0.0712  0.1496  ±0.55%    16070   fastest
+ ✓ bench/create-stable-hash.bench.ts > createStableHashOrThrow 1227ms
+     name                                                 hz     min      max    mean     p75     p99    p995    p999     rme  samples
+   · createStableHashOrThrow with array sorting     4,046.46  0.1254  10.4688  0.2471  0.2565  0.4820  0.6053  1.1734  ±5.03%     2024
+   · createStableHashOrThrow without array sorting  4,582.62  0.1261   1.5195  0.2182  0.2289  0.4637  0.5229  0.9285  ±1.22%     2292
 
- ✓ bench/create-stable-key.bench.ts > createStableKeyOrThrow 1403ms
+ ✓ bench/create-stable-key.bench.ts > createStableKeyOrThrow 1445ms
      name                                                  hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · createStableKeyOrThrow with array sorting     203,266.13  0.0044  0.4635  0.0049  0.0048  0.0087  0.0091  0.0146  ±0.37%   101639
-   · createStableKeyOrThrow without array sorting  283,858.83  0.0031  0.8852  0.0035  0.0034  0.0073  0.0095  0.0149  ±0.46%   141930   fastest
+   · createStableKeyOrThrow with array sorting     179,073.50  0.0038  7.9348  0.0056  0.0053  0.0145  0.0325  0.0869  ±3.27%    89537
+   · createStableKeyOrThrow without array sorting  273,073.08  0.0028  1.2681  0.0037  0.0035  0.0081  0.0147  0.0568  ±1.08%   136537
 
  BENCH  Summary
 
-  stable-hash - bench/compare.bench.ts > Comparison
-    44.93x faster than @tanstack/query-core (hashKey)
-    45.09x faster than @httpx/stable-hash
+  stable-hash-x - bench/compare.bench.ts > Comparison
+    1.01x faster than stable-hash
+    45.65x faster than @tanstack/query-core (hashKey)
+    55.18x faster than @httpx/stable-hash
 
   createStableHashOrThrow without array sorting - bench/create-stable-hash.bench.ts > createStableHashOrThrow
-    1.11x faster than createStableHashOrThrow with array sorting
+    1.13x faster than createStableHashOrThrow with array sorting
 
   createStableKeyOrThrow without array sorting - bench/create-stable-key.bench.ts > createStableKeyOrThrow
-    1.40x faster than createStableKeyOrThrow with array sorting
-
+    1.52x faster than createStableKeyOrThrow with array sorting
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/bench) for details.

@@ -256,31 +256,61 @@ const treeNodes: TreeNode<CustomValue>[] = [
 >
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
+### Node 24
+
 ```
- RUN  v3.0.3 /home/sebastien/github/httpx/packages/treeu
+ RUN  v4.1.4 /home/sebastien/github/httpx/packages/treeu
 
 
- ✓ bench/search.bench.ts > Bench search (10_000 entries) 3827ms
-     name                                                       hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · DfsTreeSearch.findOne(id_0) over 10_000          4,951,722.70  0.0002  0.2812  0.0002  0.0002  0.0004  0.0005  0.0009  ±0.36%  2475862   fastest
-   · DfsTreeSearch.findOne(id_1000) over 10_000          36,877.99  0.0242  0.2565  0.0271  0.0265  0.0417  0.0496  0.1387  ±0.39%    18439
-   · DfsTreeSearch.findOne(id_5000) over 10_000           7,109.04  0.1321  0.4006  0.1407  0.1401  0.2237  0.2336  0.3525  ±0.35%     3555
-   · DfsTreeSearch.findOne(id_NotExists) over 10_000      3,637.79  0.2513  0.5789  0.2749  0.2768  0.3892  0.4068  0.5149  ±0.43%     1819   slowest
+ ✓ bench/search.bench.ts > Bench search (10_000 entries) 3956ms
+     name                                                      hz     min      max    mean     p75     p99    p995    p999     rme  samples
+   · DfsTreeSearch.findOne(id_0) over 10000          3,430,283.50  0.0002   1.2582  0.0003  0.0002  0.0006  0.0018  0.0080  ±1.09%  1715142
+   · DfsTreeSearch.findOne(id_5000) over 10000           3,112.82  0.2228  25.0063  0.3213  0.3176  0.8564  1.0523  1.5798  ±9.87%     1557
+   · DfsTreeSearch.findOne(id_7500) over 10000           2,230.60  0.3361   1.9703  0.4483  0.4610  1.0186  1.4219  1.9018  ±1.91%     1116
+   · DfsTreeSearch.findOne(id_NotExists) over 10000      1,743.34  0.4133   8.7912  0.5736  0.5655  1.3223  1.7025  8.7912  ±4.64%      872
 
- ✓ bench/mapper.bench.ts > Bench mapper (10_000 entries) 647ms
-     name                                     hz     min      max    mean     p75      p99     p995     p999     rme  samples
-   · FlatTreeWsMapper.toTreeNodesOrThrow  148.37  6.3635  11.2594  6.7397  6.8240  11.2594  11.2594  11.2594  ±2.05%       75
+ ✓ bench/mapper.bench.ts > Bench mapper (10_000 entries) 656ms
+     name                                      hz     min      max     mean      p75      p99     p995     p999      rme  samples
+   · FlatTreeWsMapper.toTreeNodesOrThrow  87.5678  7.4232  25.5138  11.4197  14.6181  25.5138  25.5138  25.5138  ±11.99%       44
 
  BENCH  Summary
 
   FlatTreeWsMapper.toTreeNodesOrThrow - bench/mapper.bench.ts > Bench mapper (10_000 entries)
 
-  DfsTreeSearch.findOne(id_0) over 10_000 - bench/search.bench.ts > Bench search (10_000 entries)
-    134.27x faster than DfsTreeSearch.findOne(id_1000) over 10_000
-    696.54x faster than DfsTreeSearch.findOne(id_5000) over 10_000
-    1361.19x faster than DfsTreeSearch.findOne(id_NotExists) over 10_000
+  DfsTreeSearch.findOne(id_0) over 10000 - bench/search.bench.ts > Bench search (10_000 entries)
+    1101.99x faster than DfsTreeSearch.findOne(id_5000) over 10000
+    1537.83x faster than DfsTreeSearch.findOne(id_7500) over 10000
+    1967.65x faster than DfsTreeSearch.findOne(id_NotExists) over 10000
 
 ```
+
+### Bun 1.3.12
+
+```
+ RUN  v4.1.4 /home/sebastien/github/httpx/packages/treeu
+
+
+ ✓ bench/search.bench.ts > Bench search (10_000 entries) 3452ms
+     name                                                      hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   · DfsTreeSearch.findOne(id_0) over 10000          2,682,729.27  0.0002  6.2646  0.0004  0.0003  0.0013  0.0044  0.0124  ±3.29%  1341365
+   · DfsTreeSearch.findOne(id_5000) over 10000           1,982.51  0.4166  6.5149  0.5044  0.4961  0.9569  1.3263  6.5149  ±3.54%      993
+   · DfsTreeSearch.findOne(id_7500) over 10000           1,324.26  0.6295  5.9458  0.7551  0.7604  1.2362  1.3621  5.9458  ±2.88%      663
+   · DfsTreeSearch.findOne(id_NotExists) over 10000        901.15  0.8252  7.5179  1.1097  1.0764  3.3999  3.6177  7.5179  ±4.71%      451
+
+ ✓ bench/mapper.bench.ts > Bench mapper (10_000 entries) 654ms
+     name                                     hz     min      max    mean     p75      p99     p995     p999      rme  samples
+   · FlatTreeWsMapper.toTreeNodesOrThrow  129.23  4.7287  18.6373  7.7380  9.7776  18.6373  18.6373  18.6373  ±10.68%       66
+
+ BENCH  Summary
+
+  DfsTreeSearch.findOne(id_0) over 10000 - bench/search.bench.ts > Bench search (10_000 entries)
+    1353.20x faster than DfsTreeSearch.findOne(id_5000) over 10000
+    2025.83x faster than DfsTreeSearch.findOne(id_7500) over 10000
+    2977.00x faster than DfsTreeSearch.findOne(id_NotExists) over 10000
+
+  FlatTreeWsMapper.toTreeNodesOrThrow - bench/mapper.bench.ts > Bench mapper (10_000 entries)
+```
+
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/treeu/bench/README.md) for details.
 
@@ -290,7 +320,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                   | Size (compressed) |
 |--------------------------------------------------|------------------:|
-| `import { DfsTreeSearch } from '@httpx/treeu`       |            ~ 270B |
+| `import { DfsTreeSearch } from '@httpx/treeu`    |            ~ 270B |
 | `import { FlatTreeWsMapper } from '@httpx/treeu` |            ~ 802B |
 
 
@@ -298,18 +328,18 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 ## Compatibility
 
-| Level      | CI | Description                                                                                                                                                                                                                                                                                                                                                                                |
-|------------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
-| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                              |
-| Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/treeu/.browserslistrc) |
-| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                              |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                         | 
-| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                           |
-| Edge       | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                         | 
-| Typescript | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                              |
-| ES2022     | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                               |
-| Performance| ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                       |
+| Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                                |
+|--------------|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| Node         | ✅ | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
+| Browser      | ✅ | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                              |
+| Browserslist | ✅ | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/treeu/.browserslistrc) |
+| Bun          | ✅ | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                              |
+| Edge         | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                         | 
+| Cloudflare   | ✅ | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                           |
+| Edge         | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                         | 
+| Typescript   | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                              |
+| ES2022       | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                               |
+| Performance  | ✅ | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                       |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 

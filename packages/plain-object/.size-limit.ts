@@ -1,6 +1,6 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-module.exports = [
+const config =  [
   {
     name: 'Only { isPlainObject } (ESM)',
     path: ['dist/index.js'],
@@ -26,3 +26,5 @@ module.exports = [
     limit: '158KB',
   },
 ] satisfies SizeLimitConfig;
+
+export default config;

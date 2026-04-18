@@ -4,6 +4,7 @@ const { defineConfig } = require('npm-check-updates');
 
 // @todo read the content from .yarnrc.yml
 const npmPreapprovedPackages = [
+  'npm-check-updates',
   '@belgattitude/*',
   '@flowblade/*',
   '@httpx/*',

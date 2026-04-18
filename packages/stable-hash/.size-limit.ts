@@ -1,34 +1,36 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-module.exports = [
+const config = [
   {
     name: 'Everything (ESM)',
-    path: ['dist/index.mjs'],
+    path: ['dist/index.js'],
     import: '*',
     limit: '880B',
   },
   {
     name: 'createStableKeyOrThrow (ESM)',
-    path: ['dist/index.mjs'],
+    path: ['dist/index.js'],
     import: '{ createStableKeyOrThrow }',
     limit: '480B',
   },
   {
     name: 'createStableKey (ESM)',
-    path: ['dist/index.mjs'],
+    path: ['dist/index.js'],
     import: '{ createStableKey }',
     limit: '520B',
   },
   {
     name: 'createStableHashOrThrow (ESM)',
-    path: ['dist/index.mjs'],
+    path: ['dist/index.js'],
     import: '{ createStableHashOrThrow }',
     limit: '650B',
   },
   {
     name: 'createStableHash (ESM)',
-    path: ['dist/index.mjs'],
+    path: ['dist/index.js'],
     import: '{ createStableHash }',
     limit: '695B',
   },
 ] satisfies SizeLimitConfig;
+
+export default config;
