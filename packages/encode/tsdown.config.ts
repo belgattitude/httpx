@@ -7,7 +7,16 @@ export default defineConfig((_options) => {
   return {
     clean: true,
     dts: true,
-    entry: ['src/index.ts'],
+    entry: [
+      'src/index.ts',
+      'src/cache/global-cache.ts',
+      'src/index.browser.ts',
+      'src/index.nodejs.ts',
+      'src/index.purejs.ts',
+      'src/base64/base64.purejs.ts',
+      'src/base64/base64.nodejs.ts',
+      'src/base64/base64.browser.ts',
+    ],
     minify: 'dce-only',
     platform: 'neutral',
     treeshake: true,
@@ -16,11 +25,6 @@ export default defineConfig((_options) => {
         target: ['node20', ...browserslistToEsbuild()],
         unbundle: false,
         sourcemap: true,
-      },
-      cjs: {
-        target: ['node20', ...browserslistToEsbuild()],
-        unbundle: false,
-        sourcemap: false,
       },
     },
   };

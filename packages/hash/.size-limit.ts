@@ -1,6 +1,6 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-module.exports = [
+const config = [
   {
     name: 'import xxhash-wasm (ESM)',
     path: ['dist/xxhash-wasm/index.js'],
@@ -8,3 +8,5 @@ module.exports = [
     limit: '765B',
   },
 ] satisfies SizeLimitConfig;
+
+export default config;

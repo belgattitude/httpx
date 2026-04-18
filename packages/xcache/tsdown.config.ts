@@ -3,7 +3,7 @@ import { defineConfig } from 'tsdown';
 
 console.log('targets', ...browserslistToEsbuild());
 
-export default defineConfig((options) => {
+export default defineConfig((_options) => {
   return {
     clean: true,
     dts: true,
@@ -18,7 +18,7 @@ export default defineConfig((options) => {
         sourcemap: true,
       },
       cjs: {
-        target: ['node18', ...browserslistToEsbuild()],
+        target: ['node20', ...browserslistToEsbuild()],
         unbundle: false,
         sourcemap: false,
       },

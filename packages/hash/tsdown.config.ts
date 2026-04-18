@@ -7,7 +7,7 @@ export default defineConfig((_options) => {
   return {
     clean: true,
     dts: true,
-    entry: ['src/index.ts'],
+    entry: ['src/index.ts', 'src/xxhash-wasm/index.ts'],
     minify: 'dce-only',
     platform: 'neutral',
     treeshake: true,
@@ -16,11 +16,6 @@ export default defineConfig((_options) => {
         target: ['node20', ...browserslistToEsbuild()],
         unbundle: false,
         sourcemap: true,
-      },
-      cjs: {
-        target: ['node20', ...browserslistToEsbuild()],
-        unbundle: false,
-        sourcemap: false,
       },
     },
   };

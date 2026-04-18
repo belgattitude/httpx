@@ -14,12 +14,7 @@ export default defineConfig((_options) => {
     format: {
       esm: {
         target: ['node20', ...browserslistToEsbuild()],
-        unbundle: false,
-        sourcemap: true,
-      },
-      cjs: {
-        target: ['node20', ...browserslistToEsbuild()],
-        unbundle: false,
+        unbundle: true,
         sourcemap: false,
       },
     },

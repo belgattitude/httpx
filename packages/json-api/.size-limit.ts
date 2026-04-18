@@ -1,9 +1,9 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-module.exports = [
+const config = [
   {
     name: 'Everything (ESM)',
-    path: ['dist/index.mjs'],
+    path: ['dist/index.js'],
     import: '*',
     limit: '1.15KB',
     webpack: false,
@@ -16,3 +16,5 @@ module.exports = [
     webpack: false,
   },
 ] satisfies SizeLimitConfig;
+
+export default config;

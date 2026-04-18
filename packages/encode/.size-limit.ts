@@ -1,6 +1,6 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-module.exports = [
+const config = [
   {
     name: 'Only { Base64 } (index)',
     path: ['dist/index.js'],
@@ -28,3 +28,5 @@ module.exports = [
   },
 
 ] satisfies SizeLimitConfig;
+
+export default config;

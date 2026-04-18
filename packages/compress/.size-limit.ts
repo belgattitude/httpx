@@ -1,6 +1,6 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-module.exports = [
+const config = [
   {
     name: 'Only { Compressor } (ESM)',
     path: ['dist/index.js'],
@@ -20,3 +20,5 @@ module.exports = [
     limit: '697B',
   },
 ] satisfies SizeLimitConfig;
+
+export default config;

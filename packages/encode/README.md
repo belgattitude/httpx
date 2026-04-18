@@ -23,9 +23,9 @@ $ pnpm add @httpx/encode
 ## Features
 
 - 📐&nbsp; Lightweight (starts at [~600B](#bundle-size))
-- 🛡️&nbsp; Tested on [node 20-24, bun, browser, cloudflare workers and runtime/edge](#compatibility).
+- 🛡️&nbsp; Tested on [node 20-25, bun, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🙏&nbsp; Works cross-realms (browser, edge, node, cloudflare...)
-- 🗝️&nbsp; Available in ESM and CJS formats.
+- 🗝️&nbsp; Available in ESM only.
 
 ## Documentation
 

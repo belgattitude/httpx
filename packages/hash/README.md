@@ -19,18 +19,17 @@ $ pnpm add @httpx/hash
 
 ## Features
 
-- 🖖&nbsp; Provides
-- 🚀&nbsp; Fast
-- 📐&nbsp; Lightweight (starts at [~570B](#bundle-size))
+- 🖖&nbsp; Provides xxhash64 implementation at the moment.
+- 🚀&nbsp; Uses wasm implementation of xxhash64.
+- 📐&nbsp; Lightweight (starts at [~780B](#bundle-size))
 - 🛡️&nbsp; Tested on [node 20-24, bun, browser, cloudflare workers and runtime/edge](#compatibility).
-- 🗝️&nbsp; Available in ESM and CJS formats.
+- 🗝️&nbsp; Available in ESM.
 
 ## Documentation
 
 ### XXHash64 (wasm)
 
-The [XXHash](https://github.com/Cyan4973/xxHash) is a very fast non-cryptographic hash
-algorithm. It is designed to be extremely fast while maintaining a low collision rate.
+The [XXHash](https://github.com/Cyan4973/xxHash) is a very fast non-cryptographic hash algorithm that offers a low collision rate.
 
 The XXHash64 variant produces a 64-bit hash suitable for checksums, hash tables and databases.
 
@@ -38,8 +37,8 @@ The XXHash64 variant produces a 64-bit hash suitable for checksums, hash tables 
 - [x] Low collision rate.
 - [x] 64-bit output (bigint, signed64).
 - [x] Passes [SMHasher](https://github.com/rurban/smhasher) tests.
-- [x] Doesn't fully pass [SMHasher3](https://gitlab.com/fwojcik/smhasher3) tests
-  (but still good enough for non-cryptographic use cases).
+- [ ] Doesn't fully pass [SMHasher3](https://gitlab.com/fwojcik/smhasher3) tests
+
 
 > Check [SMHasher](https://github.com/rurban/smhasher) and [SMHasher3](https://gitlab.com/fwojcik/smhasher3/-/blob/main/results/README.md#passing-hashes)
 > for more details about quality of hash functions.
@@ -82,12 +81,19 @@ const hashedSigned64 = xxHash64.toSigned64('some input string');
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
 ```
- RUN  v3.2.4 /home/sebastien/github/httpx/packages/hash
+ RUN  v4.1.4 /home/sebastien/github/httpx/packages/hash
 
- ✓ bench/compare/xxhash.bench.ts > xxHash64 2823ms
+
+ ✓ bench/compare/xxhash.bench.ts > xxHash64 2525ms
      name                  hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · toBigint    1,741,422.57  0.0002  1.0043  0.0006  0.0007  0.0011  0.0013  0.0039  ±0.89%   870712
-   · toSigned64  1,630,206.76  0.0003  0.8919  0.0006  0.0007  0.0013  0.0015  0.0079  ±1.17%   815106
+   · toBigint    1,522,043.01  0.0005  8.8832  0.0007  0.0006  0.0010  0.0016  0.0095  ±3.54%   761022
+   · toSigned64  1,242,367.77  0.0006  1.4564  0.0008  0.0007  0.0020  0.0023  0.0152  ±1.13%   621184
+
+ BENCH  Summary
+
+  toBigint - bench/compare/xxhash.bench.ts > xxHash64
+    1.23x faster than toSigned64
+ 
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/hash/bench) for details.

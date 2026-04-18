@@ -3,7 +3,7 @@ import { defineConfig } from 'tsdown';
 
 console.log('targets', ...browserslistToEsbuild());
 
-export default defineConfig((_options) => {
+export default defineConfig((options) => {
   return {
     clean: true,
     dts: true,

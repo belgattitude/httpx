@@ -3,13 +3,7 @@ import type { SizeLimitConfig } from 'size-limit';
 const fullEsmMaxSize = '1950B';
 const fullCjsMaxSize = '2500B';
 
-/**
- * Will ensure esm tree-shakeability and total size are within expectations.
- *
- * @link https://github.com/ai/size-limit/
- * @type {{name: string, path: string[], limit: string, import?: string, webpack?: boolean}[]}
- */
-module.exports = [
+const config = [
   // ###################################################
   // ESM full bundle and individual imports
   // ###################################################
@@ -123,3 +117,5 @@ module.exports = [
     limit: '1750B',
   },
 ] satisfies SizeLimitConfig;
+
+export default config;
