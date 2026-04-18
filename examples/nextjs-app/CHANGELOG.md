@@ -1,5 +1,16 @@
 # @examples/nextjs-app
 
+## 0.1.125
+
+### Patch Changes
+
+- Updated dependencies [[`f73db14`](https://github.com/belgattitude/httpx/commit/f73db1403560cbc26a07afd1bc9dd4134ab994eb), [`f73db14`](https://github.com/belgattitude/httpx/commit/f73db1403560cbc26a07afd1bc9dd4134ab994eb), [`f73db14`](https://github.com/belgattitude/httpx/commit/f73db1403560cbc26a07afd1bc9dd4134ab994eb), [`f73db14`](https://github.com/belgattitude/httpx/commit/f73db1403560cbc26a07afd1bc9dd4134ab994eb), [`f73db14`](https://github.com/belgattitude/httpx/commit/f73db1403560cbc26a07afd1bc9dd4134ab994eb)]:
+  - @httpx/encode@0.2.0
+  - @httpx/treeu@0.6.0
+  - @httpx/assert@0.17.0
+  - @httpx/stable-hash@0.4.0
+  - @httpx/xcache@0.5.1
+
 ## 0.1.124
 
 ### Patch Changes

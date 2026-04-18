@@ -1,5 +1,13 @@
 # @httpx/assert
 
+## 0.17.0
+
+### Minor Changes
+
+- [#2694](https://github.com/belgattitude/httpx/pull/2694) [`f73db14`](https://github.com/belgattitude/httpx/commit/f73db1403560cbc26a07afd1bc9dd4134ab994eb) Thanks [@belgattitude](https://github.com/belgattitude)! - Built with tsdown rather than tsup
+
+- [#2694](https://github.com/belgattitude/httpx/pull/2694) [`f73db14`](https://github.com/belgattitude/httpx/commit/f73db1403560cbc26a07afd1bc9dd4134ab994eb) Thanks [@belgattitude](https://github.com/belgattitude)! - Move to esm only
+
 ## 0.16.9
 
 ### Patch Changes

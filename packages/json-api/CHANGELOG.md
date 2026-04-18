@@ -1,5 +1,11 @@
 # @httpx/json-api
 
+## 0.7.0
+
+### Minor Changes
+
+- [#2694](https://github.com/belgattitude/httpx/pull/2694) [`f73db14`](https://github.com/belgattitude/httpx/commit/f73db1403560cbc26a07afd1bc9dd4134ab994eb) Thanks [@belgattitude](https://github.com/belgattitude)! - Built with tsdown (remove tsup)
+
 ## 0.6.8
 
 ### Patch Changes
