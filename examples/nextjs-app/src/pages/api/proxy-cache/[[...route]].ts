@@ -1,4 +1,4 @@
-import { handle } from '@hono/node-server/vercel';
+import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 
 import { proxyCacheConfig } from '@/server/config/proxy-cache.config';
@@ -20,4 +20,7 @@ app.all('*', async (c) => {
   return proxyCache.getResponse(c);
 });
 
-export default handle(app);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type HandlerTypeCompat = (req: any, res: any) => unknown;
+
+export default serve(app) as unknown as HandlerTypeCompat;
