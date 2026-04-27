@@ -1,5 +1,11 @@
 # @httpx/dsn-parser
 
+## 1.9.10
+
+### Patch Changes
+
+- [#2706](https://github.com/belgattitude/httpx/pull/2706) [`b60879c`](https://github.com/belgattitude/httpx/commit/b60879c47ef0fae9cd59f692995655b7e86761f5) Thanks [@belgattitude](https://github.com/belgattitude)! - Add runtime check in case dsn isn't a string
+
 ## 1.9.9
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @httpx/lru
 
+## 0.13.3
+
+### Patch Changes
+
+- [#2706](https://github.com/belgattitude/httpx/pull/2706) [`b60879c`](https://github.com/belgattitude/httpx/commit/b60879c47ef0fae9cd59f692995655b7e86761f5) Thanks [@belgattitude](https://github.com/belgattitude)! - Relint codebase and simplify
+
 ## 0.13.2
 
 ### Patch Changes
