@@ -1,8 +1,3 @@
-import type {
-  createStableHashOrThrow as srcCreateStableHashOrThrow,
-  createStableKeyOrThrow as srcCreateStableKeyOrThrow,
-} from '../src';
-
 export const loadCreateStableKeyOrThrow = async () =>
   await import(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -12,7 +7,7 @@ export const loadCreateStableKeyOrThrow = async () =>
   )
     .then((mod) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      return mod.createStableKeyOrThrow as unknown as typeof srcCreateStableKeyOrThrow;
+      return mod.createStableKeyOrThrow;
     })
     .catch((_e) => {
       const msg =
@@ -29,7 +24,7 @@ export const loadCreateStableHashOrThrow = async () =>
   )
     .then((mod) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      return mod.createStableHashOrThrow as unknown as typeof srcCreateStableHashOrThrow;
+      return mod.createStableHashOrThrow;
     })
     .catch((_e) => {
       const msg =

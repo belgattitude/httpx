@@ -298,7 +298,7 @@ describe('parseDsn', () => {
   });
   describe('when a dsn is not the right type', () => {
     it('should return an EMPTY_DSN reason', () => {
-      expect(parseDsn([] as unknown as string)).toStrictEqual({
+      expect(parseDsn([] as unknown)).toStrictEqual({
         message: 'DSN must be a string',
         reason: 'INVALID_ARGUMENT',
         success: false,

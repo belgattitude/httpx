@@ -37,5 +37,5 @@ export const parseRequestWithZod = <
       url: req.url,
     });
   }
-  return parsed.data as unknown as T;
+  return parsed.data as unknown;
 };

@@ -43,7 +43,7 @@ const validateNextRequest = <
       url: reqWithParams.req.nextUrl.toString(),
     });
   }
-  return parsed.data as unknown as T;
+  return parsed.data as unknown;
 };
 
 export async function GET(

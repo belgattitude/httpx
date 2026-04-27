@@ -9,7 +9,7 @@ export const fromJson = (
 ): Error | HttpException | SerializerError => {
   let v: SerializableError;
   try {
-    v = JSON.parse(json ?? '') as unknown as SerializableError;
+    v = JSON.parse(json ?? '') as SerializableError;
   } catch (e) {
     return new SerializerError(`Can't parse json`, {
       ...(e instanceof Error ? { cause: e } : {}),

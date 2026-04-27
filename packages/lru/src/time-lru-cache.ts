@@ -176,8 +176,7 @@ export class TimeLruCache<
   ): T {
     const val = this.get(key);
     if (val === undefined) {
-      const value =
-        typeof valueOrFn === 'function' ? (valueOrFn as () => T)() : valueOrFn;
+      const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
       this.set(key, value as unknown as TValue, ttl);
       return value;
     }
