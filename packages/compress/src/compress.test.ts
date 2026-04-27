@@ -1,6 +1,7 @@
 import { describe } from 'vitest';
 
-// eslint-disable-next-line unused-imports/no-unused-imports
+const isBun = 'Bun' in globalThis;
+
 import type { SupportedCompressionAlgorithm } from './compression-algorithm';
 import { Compressor } from './compressor';
 import { Decompressor } from './decompressor';
@@ -34,13 +35,17 @@ describe.each(compressionAlgorithms)(
             expect(compressed.length).toBeGreaterThan(50);
             expect(compressed.length).toBeLessThan(longStringSize / 15);
           });
-          it('compressed based64 should match snapshot', async () => {
-            const comp = new Compressor(algorithm);
-            const compressed = await comp.toEncodedString(longString, {
-              encoding: encoding,
-            });
-            expect(compressed).toMatchSnapshot();
-          });
+          // Cause bun 1.3.13 changed zlib compression, so snapshots cannot be done
+          it.skipIf(isBun)(
+            'compressed based64 should match snapshot',
+            async () => {
+              const comp = new Compressor(algorithm);
+              const compressed = await comp.toEncodedString(longString, {
+                encoding: encoding,
+              });
+              expect(compressed).toMatchSnapshot();
+            }
+          );
         });
 
         describe('Decompressor.fromEncodedString', async () => {
