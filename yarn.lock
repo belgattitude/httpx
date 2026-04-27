@@ -462,31 +462,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@belgattitude/eslint-config-bases@npm:8.13.0":
-  version: 8.13.0
-  resolution: "@belgattitude/eslint-config-bases@npm:8.13.0"
+"@belgattitude/eslint-config-bases@npm:8.14.0":
+  version: 8.14.0
+  resolution: "@belgattitude/eslint-config-bases@npm:8.14.0"
   dependencies:
     "@rushstack/eslint-patch": "npm:^1.16.1"
     "@tanstack/eslint-plugin-query": "npm:^5.99.0"
-    "@typescript-eslint/eslint-plugin": "npm:^8.58.2"
-    "@typescript-eslint/parser": "npm:^8.58.2"
-    "@typescript-eslint/typescript-estree": "npm:^8.58.2"
-    "@typescript-eslint/utils": "npm:^8.58.2"
-    "@vitest/eslint-plugin": "npm:^1.6.14"
+    "@typescript-eslint/eslint-plugin": "npm:^8.59.0"
+    "@typescript-eslint/parser": "npm:^8.59.0"
+    "@typescript-eslint/typescript-estree": "npm:^8.59.0"
+    "@typescript-eslint/utils": "npm:^8.59.0"
+    "@vitest/eslint-plugin": "npm:^1.6.16"
     eslint-config-prettier: "npm:^10.1.8"
     eslint-import-resolver-typescript: "npm:^4.4.4"
     eslint-plugin-import-x: "npm:^4.16.2"
     eslint-plugin-jest: "npm:^29.15.2"
     eslint-plugin-jest-formatting: "npm:^3.1.0"
     eslint-plugin-jsx-a11y: "npm:^6.10.2"
-    eslint-plugin-perfectionist: "npm:^5.8.0"
-    eslint-plugin-playwright: "npm:^2.10.1"
+    eslint-plugin-perfectionist: "npm:^5.9.0"
+    eslint-plugin-playwright: "npm:^2.10.2"
     eslint-plugin-prettier: "npm:^5.5.5"
     eslint-plugin-react: "npm:^7.37.5"
-    eslint-plugin-react-hooks: "npm:^7.0.1"
+    eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-regexp: "npm:^2.10.0"
     eslint-plugin-simple-import-sort: "npm:^13.0.0"
-    eslint-plugin-sonarjs: "npm:^4.0.2"
+    eslint-plugin-sonarjs: "npm:^4.0.3"
     eslint-plugin-testing-library: "npm:^7.16.2"
     eslint-plugin-unicorn: "npm:^56.0.1"
     eslint-plugin-unused-imports: "npm:^4.4.1"
@@ -517,7 +517,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/f290e227477154958c111458790d74ebd81bd9565bce7d09a42a24ea1da7a8b3080c612e117d612ba2054ebf5278ed2ecb86a084fd3f8a18b9206c0cb72341b1
+  checksum: 10c0/981c571fa00b212d60448c29dbceb337d89678e48bd0cb4894636c675a13ac2eb76ef373b00b978ffacc2ca70854080070b6f008481a69917d3d983ba93c5e06
   languageName: node
   linkType: hard
 
@@ -1508,7 +1508,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@examples/nextjs-app@workspace:examples/nextjs-app"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@hono/node-server": "npm:2.0.0"
     "@httpx/assert": "workspace:^"
     "@httpx/compress": "workspace:^"
@@ -1665,7 +1665,7 @@ __metadata:
   resolution: "@httpx/assert@workspace:packages/assert"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@sinclair/typebox": "npm:0.34.49"
     "@sindresorhus/is": "npm:8.0.0"
@@ -1704,7 +1704,7 @@ __metadata:
   resolution: "@httpx/compress@workspace:packages/compress"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@sindresorhus/is": "npm:8.0.0"
     "@size-limit/file": "npm:12.1.0"
@@ -1735,7 +1735,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@httpx/devtools-vitest@workspace:devtools/vitest"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@cloudflare/vitest-pool-workers": "npm:0.15.0"
     "@codspeed/vitest-plugin": "npm:5.3.0"
     "@edge-runtime/vm": "npm:5.0.0"
@@ -1775,7 +1775,7 @@ __metadata:
   resolution: "@httpx/dsn-parser@workspace:packages/dsn-parser"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@size-limit/file": "npm:12.1.0"
     "@size-limit/webpack": "npm:12.1.0"
@@ -1804,7 +1804,7 @@ __metadata:
   resolution: "@httpx/encode@workspace:packages/encode"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@sindresorhus/is": "npm:8.0.0"
     "@size-limit/file": "npm:12.1.0"
@@ -1841,7 +1841,7 @@ __metadata:
   resolution: "@httpx/exception@workspace:packages/exception"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@size-limit/file": "npm:12.1.0"
     "@size-limit/webpack": "npm:12.1.0"
@@ -1876,7 +1876,7 @@ __metadata:
   resolution: "@httpx/hash@workspace:packages/hash"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@size-limit/file": "npm:12.1.0"
     "@size-limit/webpack": "npm:12.1.0"
@@ -1912,7 +1912,7 @@ __metadata:
   resolution: "@httpx/json-api@workspace:packages/json-api"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:12.1.0"
@@ -1943,7 +1943,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@azure/identity": "npm:4.13.1"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@dotenvx/dotenvx": "npm:1.63.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/lru": "workspace:^"
@@ -1987,7 +1987,7 @@ __metadata:
   resolution: "@httpx/lru@workspace:packages/lru"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@size-limit/esbuild": "npm:12.1.0"
     "@size-limit/file": "npm:12.1.0"
@@ -2017,7 +2017,7 @@ __metadata:
   resolution: "@httpx/md5@workspace:packages/md5"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@size-limit/esbuild": "npm:12.1.0"
     "@size-limit/file": "npm:12.1.0"
@@ -2050,7 +2050,7 @@ __metadata:
   resolution: "@httpx/memo-intl@workspace:packages/memo-intl"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/lru": "workspace:^"
     "@size-limit/file": "npm:12.1.0"
@@ -2081,7 +2081,7 @@ __metadata:
   resolution: "@httpx/plain-object@workspace:packages/plain-object"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@sindresorhus/is": "npm:8.0.0"
     "@size-limit/file": "npm:12.1.0"
@@ -2118,7 +2118,7 @@ __metadata:
   resolution: "@httpx/stable-hash@workspace:packages/stable-hash"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/plain-object": "workspace:^"
     "@size-limit/file": "npm:12.1.0"
@@ -2151,7 +2151,7 @@ __metadata:
   resolution: "@httpx/treeu@workspace:packages/treeu"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/plain-object": "workspace:^"
     "@sindresorhus/is": "npm:8.0.0"
@@ -2185,7 +2185,7 @@ __metadata:
   resolution: "@httpx/xcache@workspace:packages/xcache"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/compress": "workspace:^"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/lru": "workspace:^"
@@ -5284,7 +5284,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:8.59.0, @typescript-eslint/eslint-plugin@npm:^8.58.2":
+"@typescript-eslint/eslint-plugin@npm:8.59.0, @typescript-eslint/eslint-plugin@npm:^8.59.0":
   version: 8.59.0
   resolution: "@typescript-eslint/eslint-plugin@npm:8.59.0"
   dependencies:
@@ -5304,7 +5304,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.59.0, @typescript-eslint/parser@npm:^8.58.2":
+"@typescript-eslint/parser@npm:8.59.0, @typescript-eslint/parser@npm:^8.59.0":
   version: 8.59.0
   resolution: "@typescript-eslint/parser@npm:8.59.0"
   dependencies:
@@ -5375,7 +5375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:8.59.0, @typescript-eslint/typescript-estree@npm:^8.58.2":
+"@typescript-eslint/typescript-estree@npm:8.59.0, @typescript-eslint/typescript-estree@npm:^8.59.0":
   version: 8.59.0
   resolution: "@typescript-eslint/typescript-estree@npm:8.59.0"
   dependencies:
@@ -5394,7 +5394,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:8.59.0, @typescript-eslint/utils@npm:^8.0.0, @typescript-eslint/utils@npm:^8.56.0, @typescript-eslint/utils@npm:^8.58.0, @typescript-eslint/utils@npm:^8.58.1, @typescript-eslint/utils@npm:^8.58.2":
+"@typescript-eslint/utils@npm:8.59.0, @typescript-eslint/utils@npm:^8.0.0, @typescript-eslint/utils@npm:^8.56.0, @typescript-eslint/utils@npm:^8.58.0, @typescript-eslint/utils@npm:^8.58.1, @typescript-eslint/utils@npm:^8.58.2, @typescript-eslint/utils@npm:^8.59.0":
   version: 8.59.0
   resolution: "@typescript-eslint/utils@npm:8.59.0"
   dependencies:
@@ -5689,7 +5689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/eslint-plugin@npm:^1.6.14":
+"@vitest/eslint-plugin@npm:^1.6.16":
   version: 1.6.16
   resolution: "@vitest/eslint-plugin@npm:1.6.16"
   dependencies:
@@ -8762,26 +8762,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-perfectionist@npm:^5.8.0":
-  version: 5.8.0
-  resolution: "eslint-plugin-perfectionist@npm:5.8.0"
+"eslint-plugin-perfectionist@npm:^5.9.0":
+  version: 5.9.0
+  resolution: "eslint-plugin-perfectionist@npm:5.9.0"
   dependencies:
-    "@typescript-eslint/utils": "npm:^8.58.0"
+    "@typescript-eslint/utils": "npm:^8.58.2"
     natural-orderby: "npm:^5.0.0"
   peerDependencies:
     eslint: ^8.45.0 || ^9.0.0 || ^10.0.0
-  checksum: 10c0/050eb8a1761dd5728942f969fd2fe539bf42d5954999b35921be0ca1acce0740e9a68c5629d44a45d3258c33f3067fe74384f3845f5a2eb10b9e5e9438acc39f
+  checksum: 10c0/661d4c2b889b87303af17c6249d4ba4536d8c83340faca16e51779e6b54125346ded5af0a8cb6cac9ab0fdd3e5c127ef7ebd0271eedbc680e2dbfdbc68b8b880
   languageName: node
   linkType: hard
 
-"eslint-plugin-playwright@npm:^2.10.1":
-  version: 2.10.1
-  resolution: "eslint-plugin-playwright@npm:2.10.1"
+"eslint-plugin-playwright@npm:^2.10.2":
+  version: 2.10.2
+  resolution: "eslint-plugin-playwright@npm:2.10.2"
   dependencies:
     globals: "npm:^17.3.0"
   peerDependencies:
     eslint: ">=8.40.0"
-  checksum: 10c0/a38c6663444b8d52fd83c8f1e99219698775c399e23855c0563bd9a21ce2b422ea2a969ca03e8679ee22901e01c5bfb81b76c171e69810d01bc619264f06c3c4
+  checksum: 10c0/cede6b74aa8c242d058f42da7bfdc29db5119a4184b05d8735ced16a89a0968ca36de217ee7d927cdc6687ef3d32bff3f3f8211e7c62256ca274cb4d3b4e478d
   languageName: node
   linkType: hard
 
@@ -8805,9 +8805,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "eslint-plugin-react-hooks@npm:7.0.1"
+"eslint-plugin-react-hooks@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "eslint-plugin-react-hooks@npm:7.1.1"
   dependencies:
     "@babel/core": "npm:^7.24.4"
     "@babel/parser": "npm:^7.24.4"
@@ -8815,8 +8815,8 @@ __metadata:
     zod: "npm:^3.25.0 || ^4.0.0"
     zod-validation-error: "npm:^3.5.0 || ^4.0.0"
   peerDependencies:
-    eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
-  checksum: 10c0/1e711d1a9d1fa9cfc51fa1572500656577201199c70c795c6a27adfc1df39e5c598f69aab6aa91117753d23cc1f11388579a2bed14921cf9a4efe60ae8618496
+    eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0 || ^10.0.0
+  checksum: 10c0/cee8454915d71ac5d70a0d8f4f260e76eaf45fcd4162747dd4282b792ee5616d187351dabe6cdcff9040c79d0cec625635c4fd0777276be119efa88ebe058525
   languageName: node
   linkType: hard
 
@@ -8874,7 +8874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-sonarjs@npm:^4.0.2":
+"eslint-plugin-sonarjs@npm:^4.0.3":
   version: 4.0.3
   resolution: "eslint-plugin-sonarjs@npm:4.0.3"
   dependencies:
@@ -10359,7 +10359,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-docs@workspace:docs"
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@tailwindcss/postcss": "npm:4.2.4"
     "@types/react": "npm:19.2.14"
     "@types/react-dom": "npm:19.2.3"
@@ -10383,7 +10383,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "httpx-monorepo@workspace:."
   dependencies:
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@changesets/changelog-github": "npm:0.6.0"
     "@changesets/cli": "npm:2.31.0"
     "@commitlint/cli": "npm:20.5.2"
@@ -14471,7 +14471,7 @@ __metadata:
   resolution: "prisma-exception@workspace:integrations/prisma-exception"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@belgattitude/eslint-config-bases": "npm:8.13.0"
+    "@belgattitude/eslint-config-bases": "npm:8.14.0"
     "@httpx/exception": "workspace:^"
     "@size-limit/file": "npm:12.1.0"
     "@size-limit/webpack": "npm:12.1.0"

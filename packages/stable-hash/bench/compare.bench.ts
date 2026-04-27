@@ -3,11 +3,10 @@ import hash from 'stable-hash';
 import { hash as stableHashX } from 'stable-hash-x';
 import { bench } from 'vitest';
 
+import { createStableKeyOrThrow } from '../src';
 import { benchConfig } from './bench-config';
-import { loadCreateStableKeyOrThrow } from './bench-utils';
 
 describe(`Comparison`, async () => {
-  const createStableKeyOrThrow = await loadCreateStableKeyOrThrow();
   const params = {
     key8: true,
     key7: 'string',

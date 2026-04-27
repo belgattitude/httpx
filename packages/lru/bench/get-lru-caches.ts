@@ -16,9 +16,8 @@ const asyncLoadCompiledLruCache = async (): Promise<typeof LruCache | null> => {
     // eslint-disable-next-line import-x/no-unresolved
     '@httpx/lru'
   )
-    .then((mod) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      return mod.LruCache as unknown as typeof LruCache;
+    .then((mod: { LruCache: typeof LruCache }) => {
+      return mod.LruCache;
     })
     .catch((_e) => {
       console.warn('Requires httpx/lru to be built (yarn build)');
@@ -35,9 +34,8 @@ const asyncLoadCompiledTimeLruCache = async (): Promise<
     // eslint-disable-next-line import-x/no-unresolved
     '@httpx/lru'
   )
-    .then((mod) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      return mod.TimeLruCache as unknown as typeof TimeLruCache;
+    .then((mod: { TimeLruCache: typeof TimeLruCache }) => {
+      return mod.TimeLruCache;
     })
     .catch((_e) => {
       console.warn('Requires httpx/lru to be built (yarn build)');
