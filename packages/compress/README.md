@@ -119,47 +119,92 @@ const decompressedString =
 >
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
+### Node 24
+
 ```
- RUN  v4.1.0 /home/sebastien/github/httpx/packages/compress
+ RUN  v4.1.5 /home/sebastien/github/httpx/packages/compress
 
-
- ✓ bench/compress-string.bench.ts > Compressor 3372ms
-     name                                                                               hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · Compressor('gzip').toEncodedString/base64 (original size: 10 MB)              14.6228  51.2665   105.03  68.3865  62.2349   105.03   105.03   105.03  ±21.33%        8
-   · Compressor('gzip').toEncodedString/base64_urlsafe (original size: 10 MB)      17.4693  51.7026  76.1508  57.2432  53.6072  76.1508  76.1508  76.1508  ±12.73%        9
-   · Compressor('deflate').toEncodedString/base64 (original size: 10 MB)           17.9078  50.0100  64.0214  55.8416  56.9880  64.0214  64.0214  64.0214   ±7.29%        9
-   · Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB)  18.4466  47.9274  77.2346  54.2105  56.3455  77.2346  77.2346  77.2346  ±11.81%       10
-
- ✓ bench/decompress-string.bench.ts > Decompressor 2353ms
+ ✓ bench/decompress-string.bench.ts > Decompressor 2599ms
      name                                                                                     hz     min     max    mean     p75     p99    p995    p999      rme  samples
-   · Decompressor('gzip').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)     7.9639  113.95  146.56  125.57  127.04  146.56  146.56  146.56  ±19.29%        4
-   · Decompressor('deflate').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)  7.7943  120.79  135.43  128.30  130.74  135.43  135.43  135.43   ±7.76%        4
+   · Decompressor('gzip').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)     8.2768  114.35  130.45  120.82  125.14  130.45  130.45  130.45   ±7.07%        5
+   · Decompressor('deflate').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)  7.7771  109.35  164.30  128.58  127.66  164.30  164.30  164.30  ±31.05%        4
 
- ✓ bench/decompress-uint8array.bench.ts > Decompressor 2439ms
-     name                                                                                  hz      min     max    mean     p75     p99    p995    p999      rme  samples
-   · Decompressor('gzip').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)     7.4025   108.34  183.06  135.09  135.23  183.06  183.06  183.06  ±40.07%        4
-   · Decompressor('deflate').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)  9.2430  92.0323  124.78  108.19  116.49  124.78  124.78  124.78  ±14.55%        5
+ ✓ bench/decompress-uint8array.bench.ts > Decompressor 2408ms
+     name                                                                                  hz     min     max    mean     p75     p99    p995    p999      rme  samples
+   · Decompressor('gzip').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)     8.3570  103.47  139.05  119.66  122.70  139.05  139.05  139.05  ±13.43%        5
+   · Decompressor('deflate').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)  8.9012  103.14  122.16  112.34  116.46  122.16  122.16  122.16   ±8.00%        5
 
- ✓ bench/compress-uint8array.bench.ts > Compressor 1663ms
+ ✓ bench/compress-string.bench.ts > Compressor 3357ms
+     name                                                                               hz      min      max     mean      p75      p99     p995     p999      rme  samples
+   · Compressor('gzip').toEncodedString/base64 (original size: 10 MB)              15.6900  49.7846  97.8111  63.7350  64.5830  97.8111  97.8111  97.8111  ±23.72%        8
+   · Compressor('gzip').toEncodedString/base64_urlsafe (original size: 10 MB)      16.6442  53.0216  77.2079  60.0811  68.0045  77.2079  77.2079  77.2079  ±11.48%        9
+   · Compressor('deflate').toEncodedString/base64 (original size: 10 MB)           19.2947  47.4060  70.8287  51.8276  51.7732  70.8287  70.8287  70.8287   ±9.78%       10
+   · Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB)  17.0343  47.4363  73.3762  58.7052  60.0841  73.3762  73.3762  73.3762  ±10.38%        9
+
+ ✓ bench/compress-uint8array.bench.ts > Compressor 1698ms
      name                                                            hz      min      max     mean      p75      p99     p995     p999      rme  samples
-   · Compressor('gzip').toUint8Array (original size: 10 MB)     15.7262  54.1742  81.3818  63.5881  60.8143  81.3818  81.3818  81.3818  ±12.71%        8
-   · Compressor('deflate').toUint8Array (original size: 10 MB)  18.2422  47.6582  68.4186  54.8180  60.0257  68.4186  68.4186  68.4186  ±10.48%       10
+   · Compressor('gzip').toUint8Array (original size: 10 MB)     17.5662  50.8913  77.9940  56.9274  55.4450  77.9940  77.9940  77.9940  ±12.23%        9
+   · Compressor('deflate').toUint8Array (original size: 10 MB)  17.9343  47.4480  64.8101  55.7592  60.6946  64.8101  64.8101  64.8101   ±8.72%        9
 
  BENCH  Summary
 
-  Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB) - bench/compress-string.bench.ts > Compressor
-    1.03x faster than Compressor('deflate').toEncodedString/base64 (original size: 10 MB)
-    1.06x faster than Compressor('gzip').toEncodedString/base64_urlsafe (original size: 10 MB)
-    1.26x faster than Compressor('gzip').toEncodedString/base64 (original size: 10 MB)
+  Compressor('deflate').toEncodedString/base64 (original size: 10 MB) - bench/compress-string.bench.ts > Compressor
+    1.13x faster than Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB)
+    1.16x faster than Compressor('gzip').toEncodedString/base64_urlsafe (original size: 10 MB)
+    1.23x faster than Compressor('gzip').toEncodedString/base64 (original size: 10 MB)
 
   Compressor('deflate').toUint8Array (original size: 10 MB) - bench/compress-uint8array.bench.ts > Compressor
-    1.16x faster than Compressor('gzip').toUint8Array (original size: 10 MB)
+    1.02x faster than Compressor('gzip').toUint8Array (original size: 10 MB)
 
   Decompressor('gzip').fromEncodedString (compressed size: 40.5 kB / total: 10 MB) - bench/decompress-string.bench.ts > Decompressor
-    1.02x faster than Decompressor('deflate').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)
+    1.06x faster than Decompressor('deflate').fromEncodedString (compressed size: 40.5 kB / total: 10 MB)
 
   Decompressor('deflate').fromUint8Array (compressed size: 30.4 kB / total: 10 MB) - bench/decompress-uint8array.bench.ts > Decompressor
-    1.25x faster than Decompressor('gzip').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)
+    1.07x faster than Decompressor('gzip').fromUint8Array (compressed size: 30.4 kB / total: 10 MB)
+```
+
+### Bun 1.3.13
+
+```
+ RUN  v4.1.5 /home/sebastien/github/httpx/packages/compress
+
+ ✓ bench/compress-string.bench.ts > Compressor 2681ms
+     name                                                                               hz      min      max     mean      p75      p99     p995     p999      rme  samples
+   · Compressor('gzip').toEncodedString/base64 (original size: 10 MB)              35.7228  10.4090  54.8768  27.9933  35.0521  54.8768  54.8768  54.8768  ±22.40%       18
+   · Compressor('gzip').toEncodedString/base64_urlsafe (original size: 10 MB)      38.8395  13.2784  51.0637  25.7470  31.2537  51.0637  51.0637  51.0637  ±19.08%       20
+   · Compressor('deflate').toEncodedString/base64 (original size: 10 MB)           60.3501  11.4952  34.1153  16.5700  17.5864  34.1153  34.1153  34.1153   ±8.47%       31
+   · Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB)  34.5599  16.3495  66.9976  28.9352  30.7476  66.9976  66.9976  66.9976  ±19.62%       19
+
+ ✓ bench/decompress-string.bench.ts > Decompressor 3302ms
+     name                                                                                     hz     min     max    mean     p75     p99    p995    p999      rme  samples
+   · Decompressor('gzip').fromEncodedString (compressed size: 80.9 kB / total: 10 MB)     5.6077  153.89  197.60  178.33  197.60  197.60  197.60  197.60  ±20.20%        4
+   · Decompressor('deflate').fromEncodedString (compressed size: 80.9 kB / total: 10 MB)  5.9644  138.87  178.91  167.66  178.52  178.91  178.91  178.91  ±18.32%        4
+
+ ✓ bench/decompress-uint8array.bench.ts > Decompressor 2908ms
+     name                                                                                  hz     min     max    mean     p75     p99    p995    p999      rme  samples
+   · Decompressor('gzip').fromUint8Array (compressed size: 60.7 kB / total: 10 MB)     6.1927  147.94  170.98  161.48  170.24  170.98  170.98  170.98  ±10.98%        4
+   · Decompressor('deflate').fromUint8Array (compressed size: 60.7 kB / total: 10 MB)  6.6295  141.58  169.43  150.84  149.47  169.43  169.43  169.43  ±13.57%        4
+
+ ✓ bench/compress-uint8array.bench.ts > Compressor 1352ms
+     name                                                            hz      min      max     mean      p75      p99     p995     p999      rme  samples
+   · Compressor('gzip').toUint8Array (original size: 10 MB)     47.8415  10.6342  53.2631  20.9023  24.1018  53.2631  53.2631  53.2631  ±17.63%       24
+   · Compressor('deflate').toUint8Array (original size: 10 MB)  32.4733  22.3662  60.6708  30.7945  33.9284  60.6708  60.6708  60.6708  ±19.80%       17
+
+ BENCH  Summary
+
+  Compressor('gzip').toUint8Array (original size: 10 MB) - bench/compress-uint8array.bench.ts > Compressor
+    1.47x faster than Compressor('deflate').toUint8Array (original size: 10 MB)
+
+  Decompressor('deflate').fromUint8Array (compressed size: 60.7 kB / total: 10 MB) - bench/decompress-uint8array.bench.ts > Decompressor
+    1.07x faster than Decompressor('gzip').fromUint8Array (compressed size: 60.7 kB / total: 10 MB)
+
+  Compressor('deflate').toEncodedString/base64 (original size: 10 MB) - bench/compress-string.bench.ts > Compressor
+    1.55x faster than Compressor('gzip').toEncodedString/base64_urlsafe (original size: 10 MB)
+    1.69x faster than Compressor('gzip').toEncodedString/base64 (original size: 10 MB)
+    1.75x faster than Compressor('deflate').toEncodedString/base64-url_safe (original size: 10 MB)
+
+  Decompressor('deflate').fromEncodedString (compressed size: 80.9 kB / total: 10 MB) - bench/decompress-string.bench.ts > Decompressor
+    1.06x faster than Decompressor('gzip').fromEncodedString (compressed size: 80.9 kB / total: 10 MB)
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/compress/bench/comparative.bench.ts) for details.
