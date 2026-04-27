@@ -8,7 +8,10 @@ export const assertParsableDsn = (
   dsn: unknown,
   msg?: string
 ): asserts dsn is ParsableDsn => {
-  const parsed = parseDsn(dsn as string);
+  if (typeof dsn !== 'string') {
+    throw new TypeError('dsn: must be a string.');
+  }
+  const parsed = parseDsn(dsn);
   if (!parsed.success) {
     throw new Error(msg ?? `${parsed.message} (${parsed.reason})`);
   }

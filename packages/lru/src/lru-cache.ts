@@ -140,8 +140,7 @@ export class LruCache<
   getOrSet<T extends TValue>(key: TKey, valueOrFn: T | (() => T)): T {
     const val = this.get(key);
     if (val === undefined) {
-      const value =
-        typeof valueOrFn === 'function' ? (valueOrFn as () => T)() : valueOrFn;
+      const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
       this.set(key, value as unknown as TValue);
       return value;
     }
