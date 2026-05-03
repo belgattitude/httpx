@@ -1,4 +1,4 @@
-[**@httpx/assert v0.16.9**](../../README.md)
+[**@httpx/assert v0.17.0**](../../README.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **assertUuidV5**(`v`, `msgOrErrorFactory?`): `asserts v is UuidV5`
 
-Defined in: [uuid.asserts.ts:84](https://github.com/belgattitude/httpx/blob/ead3a5e210bc10c98f666387bc1b821279c79c49/packages/assert/src/uuid.asserts.ts#L84)
+Defined in: [uuid.asserts.ts:84](https://github.com/belgattitude/httpx/blob/4eb832ac6af7bad50063143f8687aea9981d1fac/packages/assert/src/uuid.asserts.ts#L84)
 
 Assert a value is a valid uuid v5
 

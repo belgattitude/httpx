@@ -1,8 +1,8 @@
-**@httpx/json-api v0.6.8**
+**@httpx/json-api v0.7.0**
 
 ***
 
-# @httpx/json-api v0.6.8
+# @httpx/json-api v0.7.0
 
 ## Classes
 
