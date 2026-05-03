@@ -1,4 +1,4 @@
-[**@httpx/assert v0.16.9**](../../README.md)
+[**@httpx/assert v0.17.0**](../../README.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **isPlainObject**\<`TValue`\>(`v`): `v is TValue extends DefaultBasePlainObject ? BasePlainObject : PlainObject<TValue>`
 
-Defined in: [object.guards.ts:67](https://github.com/belgattitude/httpx/blob/ead3a5e210bc10c98f666387bc1b821279c79c49/packages/assert/src/object.guards.ts#L67)
+Defined in: [object.guards.ts:67](https://github.com/belgattitude/httpx/blob/e59b8797ce5b90630aef5e1d0b8e634536b801fd/packages/assert/src/object.guards.ts#L67)
 
 Check if a value is a plain object
 

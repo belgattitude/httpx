@@ -8,7 +8,7 @@
 
 > **export=**: `object`
 
-Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/29e282446ebf910678eb0546b3b2af57c1107f2e/integrations/prisma-exception/package.json#L1)
+Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/e59b8797ce5b90630aef5e1d0b8e634536b801fd/integrations/prisma-exception/package.json#L1)
 
 ## Type Declaration
 
@@ -46,7 +46,7 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/29e28244
 
 #### devDependencies.@belgattitude/eslint-config-bases
 
-> **@belgattitude/eslint-config-bases**: `string` = `"8.13.0"`
+> **@belgattitude/eslint-config-bases**: `string` = `"8.14.0"`
 
 #### devDependencies.@size-limit/file
 
@@ -66,11 +66,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/29e28244
 
 #### devDependencies.@vitest/coverage-istanbul
 
-> **@vitest/coverage-istanbul**: `string` = `"4.1.4"`
+> **@vitest/coverage-istanbul**: `string` = `"4.1.5"`
 
 #### devDependencies.@vitest/ui
 
-> **@vitest/ui**: `string` = `"4.1.4"`
+> **@vitest/ui**: `string` = `"4.1.5"`
 
 #### devDependencies.browserslist
 
@@ -130,11 +130,11 @@ Defined in: [package.json:1](https://github.com/belgattitude/httpx/blob/29e28244
 
 #### devDependencies.typescript
 
-> **typescript**: `string` = `"6.0.2"`
+> **typescript**: `string` = `"6.0.3"`
 
 #### devDependencies.vitest
 
-> **vitest**: `string` = `"4.1.4"`
+> **vitest**: `string` = `"4.1.5"`
 
 #### devDependencies.webpack
 

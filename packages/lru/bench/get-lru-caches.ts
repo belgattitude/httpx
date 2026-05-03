@@ -16,6 +16,8 @@ const asyncLoadCompiledLruCache = async (): Promise<typeof LruCache | null> => {
     // eslint-disable-next-line import-x/no-unresolved
     '@httpx/lru'
   )
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore this won't generally work if the project isn't built or built
     .then((mod: { LruCache: typeof LruCache }) => {
       return mod.LruCache;
     })
@@ -34,6 +36,8 @@ const asyncLoadCompiledTimeLruCache = async (): Promise<
     // eslint-disable-next-line import-x/no-unresolved
     '@httpx/lru'
   )
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore this won't generally work if the project isn't built or built
     .then((mod: { TimeLruCache: typeof TimeLruCache }) => {
       return mod.TimeLruCache;
     })

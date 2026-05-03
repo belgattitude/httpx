@@ -64,8 +64,8 @@
     "test-unit-browser": "vitest --exclude 'test/compatibility.test.ts' run --browser",
     "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-watch": "vitest --ui --api 4515",
-    "typecheck": "tsc --project tsconfig.json --noEmit",
-    "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
+    "typecheck": "tsgo --project tsconfig.json --noEmit",
+    "typecheck-build": "tsgo --project tsconfig.build.json --noEmit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-md5-unit --dir ./coverage"
   },
   "devDependencies": {
@@ -76,6 +76,7 @@
     "@size-limit/file": "12.1.0",
     "@types/md5": "2.3.6",
     "@types/spark-md5": "3.0.5",
+    "@typescript/native-preview": "7.0.0-dev.20260501.1",
     "browserslist": "4.28.2",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",

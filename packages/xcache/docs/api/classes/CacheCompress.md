@@ -1,4 +1,4 @@
-[**@httpx/xcache v0.5.0**](../README.md)
+[**@httpx/xcache v0.5.1**](../README.md)
 
 ***
 
