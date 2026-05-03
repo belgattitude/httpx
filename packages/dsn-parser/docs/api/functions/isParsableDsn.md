@@ -1,4 +1,4 @@
-[**@httpx/dsn-parser v1.9.9**](../README.md)
+[**@httpx/dsn-parser v1.9.10**](../README.md)
 
 ***
 

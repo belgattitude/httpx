@@ -1,4 +1,4 @@
-[**@httpx/treeu v0.5.8**](../README.md)
+[**@httpx/treeu v0.6.0**](../README.md)
 
 ***
 
