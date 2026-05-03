@@ -10,7 +10,7 @@
     "export": "next export",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../.cache/eslint/docs.eslintcache",
     "lint-timing": "cross-env TIMING=1 run lint",
-    "typecheck": "tsc --project ./tsconfig.json --noEmit",
+    "typecheck": "tsgo --project ./tsconfig.json --noEmit",
     "clean": "rimraf ./.next ./out /coverage ./tsconfig.tsbuildinfo"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "@tailwindcss/postcss": "4.2.4",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "@typescript/native-preview": "7.0.0-dev.20260501.1",
     "eslint": "8.57.1",
     "postcss": "8.5.13",
     "prettier": "3.8.3",

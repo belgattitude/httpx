@@ -12,7 +12,7 @@
     "test-unit": "vitest run",
     "test-unit-watch": "vitest --ui",
     "typegen": "next typegen",
-    "typecheck": "next typegen && tsc --project tsconfig.json --noEmit",
+    "typecheck": "next typegen && tsgo --project tsconfig.json --noEmit",
     "typecheck-no-paths": "next typegen && tsc --project tsconfig.no-paths.json --noEmit",
     "lint": "next typegen && eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/nextjs-app.eslintcache",
     "fix-staged": "lint-staged --allow-empty"
@@ -48,6 +48,7 @@
     "@types/node": "25.6.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "@typescript/native-preview": "7.0.0-dev.20260501.1",
     "@vitejs/plugin-react-swc": "4.3.0",
     "@vitest/coverage-v8": "4.1.5",
     "@vitest/ui": "4.1.5",

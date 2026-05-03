@@ -64,8 +64,8 @@
     "test-unit-browser": "vitest run --browser",
     "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-watch": "vitest --ui --api 4515",
-    "typecheck": "tsc --project tsconfig.json --noEmit",
-    "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
+    "typecheck": "tsgo --project tsconfig.json --noEmit",
+    "typecheck-build": "tsgo --project tsconfig.build.json --noEmit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-xcache --dir ./coverage"
   },
   "dependencies": {
@@ -91,6 +91,7 @@
     "@httpx/devtools-vitest": "workspace:^",
     "@size-limit/file": "12.1.0",
     "@size-limit/webpack": "12.1.0",
+    "@typescript/native-preview": "7.0.0-dev.20260501.1",
     "browserslist": "4.28.2",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
