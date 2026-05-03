@@ -6,8 +6,9 @@
   "excludeExternals": true,
   "includeVersion": true,
   "disableSources": true,
+  "excludeNotDocumented": true,
   "entryFileName": "README.md",
   "githubPages": false,
   "readme": "none",
-  "exclude": ["**/*.test.ts", "**/*.bench.ts"]
+  "exclude": ["**/*.test.ts", "**/*.bench.ts", "bench/get-lru-caches.ts"]
 }

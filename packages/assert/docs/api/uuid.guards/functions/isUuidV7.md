@@ -8,7 +8,7 @@
 
 > **isUuidV7**(`v`): `v is UuidV7`
 
-Defined in: [uuid.guards.ts:37](https://github.com/belgattitude/httpx/blob/4eb832ac6af7bad50063143f8687aea9981d1fac/packages/assert/src/uuid.guards.ts#L37)
+Defined in: [uuid.guards.ts:37](https://github.com/belgattitude/httpx/blob/e59b8797ce5b90630aef5e1d0b8e634536b801fd/packages/assert/src/uuid.guards.ts#L37)
 
 ## Parameters
 

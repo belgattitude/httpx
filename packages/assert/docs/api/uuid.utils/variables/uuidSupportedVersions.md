@@ -8,4 +8,4 @@
 
 > `const` **uuidSupportedVersions**: `Set`\<`number`\>
 
-Defined in: [uuid.utils.ts:8](https://github.com/belgattitude/httpx/blob/4eb832ac6af7bad50063143f8687aea9981d1fac/packages/assert/src/uuid.utils.ts#L8)
+Defined in: [uuid.utils.ts:8](https://github.com/belgattitude/httpx/blob/e59b8797ce5b90630aef5e1d0b8e634536b801fd/packages/assert/src/uuid.utils.ts#L8)

@@ -8,7 +8,7 @@
 
 > **getUuidVersion**(`uuid`): [`UuidVersion`](../../uuid.types/type-aliases/UuidVersion.md) \| `null`
 
-Defined in: [uuid.helpers.ts:7](https://github.com/belgattitude/httpx/blob/4eb832ac6af7bad50063143f8687aea9981d1fac/packages/assert/src/uuid.helpers.ts#L7)
+Defined in: [uuid.helpers.ts:7](https://github.com/belgattitude/httpx/blob/e59b8797ce5b90630aef5e1d0b8e634536b801fd/packages/assert/src/uuid.helpers.ts#L7)
 
 Adapted from https://github.com/uuidjs/uuid/blob/main/src/version.js
 
