@@ -1,5 +1,14 @@
 # @httpx/plain-object
 
+## 2.1.10
+
+### Patch Changes
+
+- [#2716](https://github.com/belgattitude/httpx/pull/2716) [`573a807`](https://github.com/belgattitude/httpx/commit/573a807468d171096cd61ef0e140917731f51a95) Thanks [@belgattitude](https://github.com/belgattitude)! - Mention edge case for process.env
+
+  In bun and cloudflare workers, `isPlainObject(process.env)` returns `true`.
+  In node, edge runtime and deno `isPlainObject(process.env)` returns `false`.
+
 ## 2.1.9
 
 ### Patch Changes
