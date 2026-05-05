@@ -4,9 +4,11 @@ import { isPlainObject as reduxIsPlainObject } from 'redux';
 import { isPlainObject } from '../is-plain-object';
 import { immerIsPlainObject } from './comparison/immer-is-plain-object';
 
-const isNodeLike = !('window' in globalThis);
+const isNodeLike = 'process' in globalThis;
+const isBrowserLike = 'window' in globalThis;
 const isCloudflareWorker = 'caches' in globalThis;
 const isBun = isNodeLike && 'Bun' in globalThis;
+const _isDenoRuntime = 'Deno' in globalThis;
 
 describe('isPlainObject', () => {
   const str = 'key';
@@ -130,9 +132,25 @@ describe('isPlainObject', () => {
       it.skipIf(!isBun)('BUN: should return true for globalThis', () => {
         expect(isPlainObject(globalThis)).toBe(true);
       });
-      it.skipIf(!isBun)('Not Bun: should return false for globalThis', () => {
-        expect(isPlainObject(globalThis)).toBe(true);
+      it.skipIf(isBun)('Not Bun: should return false for globalThis', () => {
+        expect(isPlainObject(globalThis)).toBe(false);
       });
+    });
+
+    describe.skipIf(isBrowserLike)('process.env edge case', () => {
+      it.skipIf(isCloudflareWorker || isBun)(
+        'NodeJS, Deno and edge: should return false for process.env',
+        () => {
+          expect(isPlainObject(process.env)).toBe(false);
+        }
+      );
+
+      it.skipIf(!(isCloudflareWorker || isBun))(
+        'CLOUDFLARE or Bun: should return true for process.env',
+        () => {
+          expect(isPlainObject(process.env)).toBe(true);
+        }
+      );
     });
   });
 

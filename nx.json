@@ -120,6 +120,17 @@
       ],
       "cache": true
     },
+    "test-unit-deno": {
+      "dependsOn": ["^test-unit-deno"],
+      "inputs": [
+        "default",
+        "^public",
+        {
+          "runtime": "deno -v"
+        }
+      ],
+      "cache": true
+    },
     "test-unit-bun": {
       "dependsOn": ["^test-unit-bun"],
       "inputs": [
