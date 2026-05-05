@@ -255,14 +255,3 @@ describe.skipIf(!isNodeLike || isCloudflareWorker)(
     });
   }
 );
-
-/*
-describe.skipIf(!isBrowserLike)('Support iframe global', () => {
-  it('should support iframe', async () => {
-    expect(isPlainObject(runInNewContext('({})'))).toBe(true);
-    expect(isPlainObject(runInNewContext('(false)'))).toBe(false);
-    expect(isPlainObject(runInNewContext('(new Date())'))).toBe(false);
-  });
-});
-
- */
