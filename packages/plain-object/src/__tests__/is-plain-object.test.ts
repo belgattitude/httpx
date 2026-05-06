@@ -1,5 +1,6 @@
 import isPlainObj from 'is-plain-obj';
 import { isPlainObject as reduxIsPlainObject } from 'redux';
+import * as z from 'zod';
 
 import { isPlainObject } from '../is-plain-object';
 import { immerIsPlainObject } from './comparison/immer-is-plain-object';
@@ -9,6 +10,8 @@ const isBrowserLike = 'window' in globalThis;
 const isCloudflareWorker = 'caches' in globalThis;
 const isBun = isNodeLike && 'Bun' in globalThis;
 const _isDenoRuntime = 'Deno' in globalThis;
+
+const zodIsPlainObject = z.util.isPlainObject;
 
 describe('isPlainObject', () => {
   const str = 'key';
@@ -162,6 +165,15 @@ describe('isPlainObject', () => {
           'compat when "%s" is given, should return %s',
           (v, _expected) => {
             expect(isPlainObject(v)).toBe(isPlainObj(v));
+          }
+        );
+      });
+
+      describe('Compatibility with zod.util.isPlainObject', () => {
+        it.each(cases)(
+          'compat when "%s" is given, should return %s',
+          (v, _expected) => {
+            expect(isPlainObject(v)).toBe(zodIsPlainObject(v));
           }
         );
       });
