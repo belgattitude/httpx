@@ -31,7 +31,8 @@ describe('isPlainObject', () => {
   const validPlainObjects = [
     [{}, true],
     [Object.create(null), true],
-    [new Object({ key: 'new_object' }), true],
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    [Object.create(Object.create(null)), true],
     [new Object({ key: new Date() }), true],
     [{ 1: 'integer_key' }, true],
     [{ name: 'string_key' }, true],
@@ -91,7 +92,15 @@ describe('isPlainObject', () => {
       Object.create({}),
       false,
       {
-        zodExpects: true, // bug in zod
+        zodExpects: true, // bug in zod ?
+      },
+    ],
+    [
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      Object.create(Object.create({})),
+      false,
+      {
+        zodExpects: true, // bug in zod ?
       },
     ],
     [/(\d+)/, false],

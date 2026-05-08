@@ -1,4 +1,4 @@
-[**@httpx/plain-object v2.1.9**](../README.md)
+[**@httpx/plain-object v2.1.10**](../README.md)
 
 ***
 
