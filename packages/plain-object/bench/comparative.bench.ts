@@ -49,6 +49,9 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
   const is = await import('@sindresorhus/is').then((mod) => mod.default);
   const sindreIsIsPlainObject = is.plainObject;
   const isPlainObj = await import('is-plain-obj').then((mod) => mod.default);
+  const zodIsPlainObject = await import('zod').then(
+    (mod) => mod.util.isPlainObject
+  );
   const lodash = await import('lodash-es').then((mod) => mod);
   const lodashIsPlainObject = lodash.isPlainObject;
   const esToolkitIsPlainObject = await import('es-toolkit').then(
@@ -85,6 +88,12 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
       }
     }
   );
+
+  bench(`"zod":"${versions.zod}": 'zod.util.isPlainObject(v)'`, () => {
+    for (const value of realLifeScenarios) {
+      zodIsPlainObject(value);
+    }
+  });
 
   bench(`"es-toolkit":"${versions['es-toolkit']}": 'isPlainObject(v)'`, () => {
     for (const value of realLifeScenarios) {

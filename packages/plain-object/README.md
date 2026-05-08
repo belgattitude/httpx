@@ -80,9 +80,15 @@ isPlainObject(new (class Cls {})()); // ❌
 // ⚠️ Edge cases
 //
 // 👇 globalThis isn't properly portable across all JS environments
+//    In Bun, globalThis is a plain object, but in other environments
+//    (browser, Nodejs, edge, cloudflare, deno), it's not.
 //
+// 👇 process.env isn't properly portable across all JS environments
+//    In Bun && cloudlfare, process.env is a plain object, but in other environments
+//    (browser, Nodejs, edge, cloudflare, deno), it's not.
 
-isPlainObject(globalThis); // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare)
+isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare, deno)
+isPlainObject(process.env);         // ✅ with Bun and cloudflare ❌ otherwise (Nodejs, edge, deno)
 
 // 👇 Static built-in classes aren't properly checked. This is a trade-off
 //    to maintain the best performance and size. If you need to check for these,
