@@ -28,7 +28,7 @@ $ pnpm add @httpx/lru
 - 🦆&nbsp; Expose `getOrSet()` method to simplify cache usage patterns.
 - ✨&nbsp; Provides convenience [helpers](#helpers) to preserve single instance across your app.
 - 📐&nbsp; Lightweight (starts at [~600B](#bundle-size))
-- 🛡️&nbsp; Tested on [node 20-25, bun, browser, cloudflare workers and runtime/edge](#compatibility).
+- 🛡️&nbsp; Tested on [node 20-26, browser, bun, cloudflare, deno and runtime/edge](#compatibility).
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
 ## Documentation
@@ -417,11 +417,12 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 ## Compatibility
 
 | Level        | CI  | Description                                                                                                                                      |
-| ------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Node         | ✅  | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                  |
+|--------------| --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
+| Node         | ✅  | CI for 20.x, 22.x, 24.x & 26.x.                                                                                                                  |
 | Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                    |
 | Browserslist | ✅  | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/lru/.browserslistrc)        |
 | Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                 |
+| Deno         | ✅  | Tested with latest lts                                                                                              |
 | Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                               |
 | Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
 | Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                    |
