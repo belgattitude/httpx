@@ -22,6 +22,12 @@ describe('isPlainObject', () => {
   function ObjectConstructor() {}
   ObjectConstructor.prototype.constructor = Object;
 
+  type Expectations<T extends boolean> = [
+    value: unknown,
+    T,
+    compat?: { zodExpects?: T extends true ? false : true },
+  ][];
+
   const validPlainObjects = [
     [{}, true],
     [Object.create(null), true],
@@ -54,7 +60,7 @@ describe('isPlainObject', () => {
       },
       true,
     ],
-  ] as const;
+  ] as const satisfies Expectations<true>;
 
   const invalidPlainObjects = [
     ['hello', false],
@@ -81,7 +87,13 @@ describe('isPlainObject', () => {
     [new Promise(() => {}), false],
     [Promise.resolve({}), false],
     [new Uint8Array([1, 2, 3]), false],
-    [Object.create({}), false],
+    [
+      Object.create({}),
+      false,
+      {
+        zodExpects: true, // bug in zod
+      },
+    ],
     [/(\d+)/, false],
     // eslint-disable-next-line prefer-regex-literals
     [new RegExp('/d+/'), false],
@@ -89,8 +101,14 @@ describe('isPlainObject', () => {
     // Template literals
     [`cool`, false],
     [String.raw`rawtemplate`, false],
-    // @ts-expect-error to allow testing crafted object
-    [new ObjectConstructor(), false],
+    [
+      // @ts-expect-error to allow testing crafted object
+      new ObjectConstructor(),
+      false,
+      {
+        zodExpects: true, // bug in zod ? or different approach
+      },
+    ],
     [
       new Proxy(new Date(), {
         get(target, _prop, _receiver) {
@@ -98,10 +116,16 @@ describe('isPlainObject', () => {
         },
       }),
       false,
+      {
+        zodExpects: true, // bug in zod ? or different approach
+      },
     ],
-  ] as const;
+  ] as const satisfies Expectations<false>;
 
-  const cases = [...validPlainObjects, ...invalidPlainObjects] as const;
+  const cases = [
+    ...validPlainObjects,
+    ...invalidPlainObjects,
+  ] as Expectations<boolean>;
   it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
     expect(isPlainObject(v)).toStrictEqual(expected);
   });
@@ -172,8 +196,9 @@ describe('isPlainObject', () => {
       describe('Compatibility with zod.util.isPlainObject', () => {
         it.each(cases)(
           'compat when "%s" is given, should return %s',
-          (v, _expected) => {
-            expect(isPlainObject(v)).toBe(zodIsPlainObject(v));
+          (v, _expected, compatFlags) => {
+            const { zodExpects } = compatFlags ?? {};
+            expect(zodIsPlainObject(v)).toBe(zodExpects ?? isPlainObject(v));
           }
         );
       });
