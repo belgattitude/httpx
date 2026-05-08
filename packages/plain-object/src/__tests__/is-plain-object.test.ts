@@ -234,14 +234,29 @@ describe('isPlainObject', () => {
         it.skipIf(!isNodeLike)(
           'should support cross-realms - node:runInNewContext',
           async () => {
+            const createSandbox = () => ({
+              basicRecord: null,
+              objectNull: null,
+              objectRecord: null,
+              date: null,
+            });
+
             // eslint-disable-next-line import-x/no-nodejs-modules
             const runInNewContext = await import('node:vm').then(
               (mod) => mod.runInNewContext
             );
+
             expect(reduxIsPlainObject(runInNewContext('({})'))).toBe(true);
-            const sandbox = { fromAnotherRealm: false };
-            runInNewContext('fromAnotherRealm = {}', sandbox);
-            expect(isPlainObject(sandbox.fromAnotherRealm)).toBe(true);
+
+            const sandbox = createSandbox();
+            runInNewContext('basicRecord = {}', sandbox);
+            runInNewContext('objectNull = Object.create(null)', sandbox);
+            runInNewContext('objectRecord = Object.create({})', sandbox);
+            runInNewContext('date = new Date()', sandbox);
+            expect(isPlainObject(sandbox.basicRecord)).toBe(true);
+            expect(isPlainObject(sandbox.objectNull)).toBe(true);
+            expect(isPlainObject(sandbox.objectRecord)).toBe(false);
+            expect(isPlainObject(sandbox.date)).toBe(false);
           }
         );
       });
