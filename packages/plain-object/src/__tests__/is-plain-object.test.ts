@@ -46,6 +46,7 @@ describe('isPlainObject', () => {
     [{ constructor: { name: 'Object2' } }, true],
     [JSON.parse('{}'), true],
     [new Proxy({}, {}), true],
+    [new Proxy({}, { getPrototypeOf: () => Object.prototype }), true],
     [new Proxy({ key: 'proxied_key' }, {}), true],
     [
       {
