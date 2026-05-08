@@ -88,7 +88,7 @@ isPlainObject(new (class Cls {})()); // ❌
 //    (browser, Nodejs, edge, cloudflare, deno), it's not.
 
 isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare, deno)
-isPlainObject(process.env);         // ✅ with Bun and cloudflare ❌ otherwise (Nodejs, edge, cloudflare, deno)
+isPlainObject(process.env);         // ✅ with Bun and cloudflare ❌ otherwise (Nodejs, edge, deno)
 
 // 👇 Static built-in classes aren't properly checked. This is a trade-off
 //    to maintain the best performance and size. If you need to check for these,
