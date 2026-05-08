@@ -1,5 +1,11 @@
 # @httpx/md5
 
+## 1.0.4
+
+### Patch Changes
+
+- [#2724](https://github.com/belgattitude/httpx/pull/2724) [`ebcef3c`](https://github.com/belgattitude/httpx/commit/ebcef3c78563dafe3f5a95717277b6a4a0d1adac) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild using latest tsdown 0.22 and rolldown v1 (no code change)
+
 ## 1.0.3
 
 ### Patch Changes
