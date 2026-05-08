@@ -60,6 +60,7 @@
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-bun": "bun --bun run vitest run",
+    "test-unit-deno": "deno run test-unit",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-browser": "vitest run --browser",
