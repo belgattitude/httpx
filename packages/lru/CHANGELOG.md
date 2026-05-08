@@ -1,5 +1,13 @@
 # @httpx/lru
 
+## 0.13.4
+
+### Patch Changes
+
+- [#2724](https://github.com/belgattitude/httpx/pull/2724) [`ebcef3c`](https://github.com/belgattitude/httpx/commit/ebcef3c78563dafe3f5a95717277b6a4a0d1adac) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild using latest tsdown 0.22 and rolldown v1 (no code change)
+
+- [#2726](https://github.com/belgattitude/httpx/pull/2726) [`bf7d1ae`](https://github.com/belgattitude/httpx/commit/bf7d1ae5a8038d0207f7cb390e799f1c07ebf8ef) Thanks [@belgattitude](https://github.com/belgattitude)! - Add test with deno lts and add node 26.x to test matrix
+
 ## 0.13.3
 
 ### Patch Changes
