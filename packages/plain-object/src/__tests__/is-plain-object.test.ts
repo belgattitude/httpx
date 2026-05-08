@@ -31,7 +31,8 @@ describe('isPlainObject', () => {
   const validPlainObjects = [
     [{}, true],
     [Object.create(null), true],
-    [new Object({ key: 'new_object' }), true],
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    [Object.create(Object.create(null)), true],
     [new Object({ key: new Date() }), true],
     [{ 1: 'integer_key' }, true],
     [{ name: 'string_key' }, true],
@@ -45,6 +46,7 @@ describe('isPlainObject', () => {
     [{ constructor: { name: 'Object2' } }, true],
     [JSON.parse('{}'), true],
     [new Proxy({}, {}), true],
+    [new Proxy({}, { getPrototypeOf: () => Object.prototype }), true],
     [new Proxy({ key: 'proxied_key' }, {}), true],
     [
       {
@@ -91,7 +93,15 @@ describe('isPlainObject', () => {
       Object.create({}),
       false,
       {
-        zodExpects: true, // bug in zod
+        zodExpects: true, // bug in zod ?
+      },
+    ],
+    [
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      Object.create(Object.create({})),
+      false,
+      {
+        zodExpects: true, // bug in zod ?
       },
     ],
     [/(\d+)/, false],
@@ -225,14 +235,29 @@ describe('isPlainObject', () => {
         it.skipIf(!isNodeLike)(
           'should support cross-realms - node:runInNewContext',
           async () => {
+            const createSandbox = () => ({
+              basicRecord: null,
+              objectNull: null,
+              objectRecord: null,
+              date: null,
+            });
+
             // eslint-disable-next-line import-x/no-nodejs-modules
             const runInNewContext = await import('node:vm').then(
               (mod) => mod.runInNewContext
             );
+
             expect(reduxIsPlainObject(runInNewContext('({})'))).toBe(true);
-            const sandbox = { fromAnotherRealm: false };
-            runInNewContext('fromAnotherRealm = {}', sandbox);
-            expect(isPlainObject(sandbox.fromAnotherRealm)).toBe(true);
+
+            const sandbox = createSandbox();
+            runInNewContext('basicRecord = {}', sandbox);
+            runInNewContext('objectNull = Object.create(null)', sandbox);
+            runInNewContext('objectRecord = Object.create({})', sandbox);
+            runInNewContext('date = new Date()', sandbox);
+            expect(isPlainObject(sandbox.basicRecord)).toBe(true);
+            expect(isPlainObject(sandbox.objectNull)).toBe(true);
+            expect(isPlainObject(sandbox.objectRecord)).toBe(false);
+            expect(isPlainObject(sandbox.date)).toBe(false);
           }
         );
       });
