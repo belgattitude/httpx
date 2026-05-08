@@ -31,6 +31,7 @@ module.exports = {
     '**/_release',
     '.cache',
     '**/docs',
+    'bench/get-lru-caches.ts',
   ],
   overrides: [
     {
