@@ -2,6 +2,7 @@ import { bench, describe } from 'vitest';
 
 import { devDependencies } from '../package.json' with { type: 'json' };
 import { immerIsPlainObject } from '../src/__tests__/comparison/immer-is-plain-object';
+import { kyselyIsPlainObject } from '../src/__tests__/comparison/kysely-is-plain-object.ts';
 
 const versions = devDependencies;
 
@@ -120,6 +121,11 @@ describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed 
   bench(`"immer/is-plain-object":"4.2.0": 'isPlainObject(v)'`, () => {
     for (const value of realLifeScenarios) {
       immerIsPlainObject(value);
+    }
+  });
+  bench(`"kysely/is-plain-object":"0.29.0": 'isPlainObject(v)'`, () => {
+    for (const value of realLifeScenarios) {
+      kyselyIsPlainObject(value);
     }
   });
 

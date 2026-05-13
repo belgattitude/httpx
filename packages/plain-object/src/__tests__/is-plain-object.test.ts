@@ -4,6 +4,7 @@ import * as z from 'zod';
 
 import { isPlainObject } from '../is-plain-object';
 import { immerIsPlainObject } from './comparison/immer-is-plain-object';
+import { kyselyIsPlainObject } from './comparison/kysely-is-plain-object.ts';
 
 const isNodeLike = 'process' in globalThis;
 const isBrowserLike = 'window' in globalThis;
@@ -280,6 +281,28 @@ describe('isPlainObject', () => {
             const sandbox = { fromAnotherRealm: false };
             runInNewContext('fromAnotherRealm = {}', sandbox);
             expect(isPlainObject(sandbox.fromAnotherRealm)).toBe(true);
+          }
+        );
+      });
+
+      describe('Compatibility with kysely isPlainObject', async () => {
+        it.each(cases)(
+          'compat when "%s" is given, should return %s',
+          (v, _expected) => {
+            expect(kyselyIsPlainObject(v)).toBe(isPlainObject(v));
+          }
+        );
+        it.skipIf(!isNodeLike)(
+          'should support cross-realms - node:runInNewContext',
+          async () => {
+            // eslint-disable-next-line import-x/no-nodejs-modules
+            const runInNewContext = await import('node:vm').then(
+              (mod) => mod.runInNewContext
+            );
+            expect(kyselyIsPlainObject(runInNewContext('({})'))).toBe(true);
+            const sandbox = { fromAnotherRealm: false };
+            runInNewContext('fromAnotherRealm = {}', sandbox);
+            expect(kyselyIsPlainObject(sandbox.fromAnotherRealm)).toBe(true);
           }
         );
       });
