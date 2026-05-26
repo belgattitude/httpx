@@ -59,7 +59,7 @@
     "packages/*",
     "devtools/*"
   ],
-  "packageManager": "yarn@4.14.1",
+  "packageManager": "yarn@4.15.0",
   "dependenciesMeta": {
     "@swc/core": {
       "built": true
@@ -84,34 +84,36 @@
     "@commitlint/cli": "21.0.1",
     "@commitlint/config-conventional": "21.0.1",
     "@types/shell-quote": "1.7.5",
-    "@typescript-eslint/eslint-plugin": "8.59.3",
-    "@typescript-eslint/parser": "8.59.3",
-    "@typescript/native-preview": "7.0.0-dev.20260514.1",
+    "@typescript-eslint/eslint-plugin": "8.60.0",
+    "@typescript-eslint/parser": "8.60.0",
+    "@typescript/native-preview": "7.0.0-dev.20260524.1",
     "cross-env": "10.1.0",
     "eslint": "8.57.1",
     "gh-pages": "6.3.0",
     "husky": "9.1.7",
     "is-ci": "4.1.0",
-    "lint-staged": "17.0.4",
-    "npm-check-updates": "22.2.0",
-    "npm-run-all2": "8.0.4",
-    "nx": "22.7.2",
-    "pkg-pr-new": "0.0.73",
+    "lint-staged": "17.0.5",
+    "npm-check-updates": "22.2.1",
+    "npm-run-all2": "9.0.1",
+    "nx": "22.7.3",
+    "pkg-pr-new": "0.0.75",
     "playwright": "1.60.0",
     "prettier": "3.8.3",
     "rimraf": "6.1.3",
-    "shell-quote": "1.8.3",
-    "syncpack": "15.1.2",
+    "shell-quote": "1.8.4",
+    "syncpack": "15.3.1",
     "typescript": "6.0.3",
-    "vitest": "4.1.6"
+    "vitest": "4.1.7"
   },
   "engines": {
     "node": ">=20.19"
   },
   "resolutions": {
+    "fflate": "0.8.2",
     "esbuild": "^0.28.0"
   },
   "resolutionsHelp": {
-    "esbuild": "To prevent multiple versions"
+    "esbuild": "To prevent multiple versions",
+    "fflate": "https://github.com/arethetypeswrong/arethetypeswrong.github.io/issues/258"
   }
 }
