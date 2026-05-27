@@ -128,7 +128,13 @@ export interface ILruCache<
    * lru.get('key1'); // 👈 undefined (first entry was evicted)
    * ```
    */
-  getOrSet: <T extends TValue>(key: TKey, valueOrFn: T | (() => T)) => T;
+  getOrSet: <T extends TValue>(
+    key: TKey,
+    valueOrFn: T | (() => T),
+    options?: {
+      forceRevalidate?: boolean;
+    }
+  ) => T;
 
   /**
    * Get an item without marking it as recently used or undefined if item doesn't exist.

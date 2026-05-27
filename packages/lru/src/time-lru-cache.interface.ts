@@ -136,7 +136,8 @@ export interface ITimeLruCache<
    * lru.getOrSet('key1', () => 'value2');         // 👈 returns 'value1' (entry exists)
    *
    * // The key doesn't exist, a new entry will be created from the function return value
-   * lru.getOrSet('key2', () => 'value2', 2_000);  // 👈 returns 'value2'
+   * lru.getOrSet('key2', () => 'value2', { ttl: 2_000 });  // 👈 returns 'value2'
+   *
    * lru.has('key2');                              // 👈 true (it was added)
    * lru.get('key1');                              // 👈 'value1'
    *
@@ -144,6 +145,13 @@ export interface ITimeLruCache<
    * lru.getOrSet('key3', () => 'value3');        // 👈 returns 'value3'
    *
    * lru.get('key1'); // 👈 undefined (first entry was evicted)
+   *
+   * // The key doesn't exist, a new entry will be created from the function return value
+   * lru.getOrSet('key2', () => 'value2', {
+   *    ttl: 2_000,
+   *    forceRevalidate: true, // 👈 Force revalidation even if the item exists and hasn't expired,
+   *                           //    it will update the value and reset the TTL
+   * });
    * ```
    */
   getOrSet: <T extends TValue>(
@@ -153,11 +161,18 @@ export interface ITimeLruCache<
      * key doesn't exist or has expired.
      */
     valueOrFn: T | (() => T),
-    /**
-     * Optional time to live for this specific item in milliseconds.
-     * If not provided, the cache defaultTTL will be used.
-     */
-    ttl?: Milliseconds
+    options?: {
+      /**
+       * Optional time to live for this specific item in milliseconds.
+       * If not provided, the cache defaultTTL will be used.
+       */
+      ttl?: Milliseconds;
+      /**
+       * Force revalidation even if the item exists and hasn't expired. T
+       * This means that the valueOrFn will be used to update the value and reset the TTL.
+       */
+      forceRevalidate?: boolean;
+    }
   ) => T;
 
   /**

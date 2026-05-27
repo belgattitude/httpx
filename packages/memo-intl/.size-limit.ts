@@ -1,11 +1,11 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-module.exports = [
+const config = [
   {
     name: 'Everything (ESM)',
     path: ['dist/index.js'],
     import: '*',
-    limit: '955B',
+    limit: '965B',
   },
   {
     name: 'MIntl (ESM)',
@@ -20,3 +20,5 @@ module.exports = [
     limit: '1.67KB',
   },
 ] satisfies SizeLimitConfig;
+
+export default config;

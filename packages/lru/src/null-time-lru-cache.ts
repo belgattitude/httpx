@@ -49,7 +49,18 @@ export class NullTimeLruCache<
   getOrSet<T = TValue>(
     _key: TKey,
     valueOrFn: T | (() => T),
-    _ttl?: Milliseconds
+    _options?: {
+      /**
+       * Optional time to live for this specific item in milliseconds.
+       * If not provided, the cache defaultTTL will be used.
+       */
+      ttl?: Milliseconds;
+      /**
+       * Force revalidation even if the item exists and hasn't expired. T
+       * This means that the valueOrFn will be used to update the value and reset the TTL.
+       */
+      forceRevalidate?: boolean;
+    }
   ): T {
     return typeof valueOrFn === 'function'
       ? (valueOrFn as () => T)()
