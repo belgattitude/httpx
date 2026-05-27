@@ -37,14 +37,14 @@ $ pnpm add @httpx/lru
 
 TimeLruCache allows to work with expiry time (TTL). Time-to-live are expressed in milliseconds. The API is similar to LruCache.
 
-| Method                                   | Description                                                               |
-| ---------------------------------------- | ------------------------------------------------------------------------- |
-| `set(key, value, ttl?): boolean`         | Add a new entry and return true if entry was overwritten                  |
-| `get(key): TValue \| undefined`          | Retrieve an entry if exists and hasn't expired.                           |
-| `has(key): boolean`                      | Check if an entry exist and hasn't expired                                |
-| `delete(key): boolean`                   | Remove an entry, returns bool indicating if the entry was existing        |
-| `getOrSet(key, valueOrFn, ttl?): TValue` | Return the entry if exists otherwise save a new entry (value or callback) |
-| `clear(): number`                        | Clear the cache and return the actual number of deleted entries           |
+| Method                                       | Description                                                               |
+|----------------------------------------------| ------------------------------------------------------------------------- |
+| `set(key, value, ttl?): boolean`             | Add a new entry and return true if entry was overwritten                  |
+| `get(key): TValue \| undefined`              | Retrieve an entry if exists and hasn't expired.                           |
+| `has(key): boolean`                          | Check if an entry exist and hasn't expired                                |
+| `delete(key): boolean`                       | Remove an entry, returns bool indicating if the entry was existing        |
+| `getOrSet(key, valueOrFn, options?): TValue` | Return the entry if exists otherwise save a new entry (value or callback) |
+| `clear(): number`                            | Clear the cache and return the actual number of deleted entries           |
 
 ### TimeLruCache.getOrSet()
 
@@ -71,7 +71,10 @@ lru.set("key1", "value1");
 lru.getOrSet("key1", () => "value2"); // 👈 returns 'value1' (entry exists)
 
 // The key doesn't exist, a new entry will be created from the function return value
-lru.getOrSet("key2", () => "value2", 2_000); // 👈 returns 'value2'
+lru.getOrSet("key2", () => "value2", {
+  ttl: 2_000,
+  forceRevalidate: false, // default  
+}); // 👈 returns 'value2'
 lru.has("key2"); // 👈 true (it was added)
 lru.get("key1"); // 👈 'value1'
 

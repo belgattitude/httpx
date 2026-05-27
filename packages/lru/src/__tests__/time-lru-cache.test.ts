@@ -71,9 +71,24 @@ describe('TimeLruCache', () => {
         defaultTTL: HUNDRED_MILLIS,
       });
       lru.set('key1', 'value1', HUNDRED_MILLIS * 5);
-      const val = lru.getOrSet('key1', () => 'newValue', HUNDRED_MILLIS);
+      const val = lru.getOrSet('key1', () => 'newValue', {
+        ttl: HUNDRED_MILLIS,
+      });
       expect(val).toBe('value1');
     });
+    it('should force a revalidation is requested', () => {
+      const lru = new TimeLruCache({
+        maxSize: 2,
+        defaultTTL: HUNDRED_MILLIS,
+      });
+      lru.set('key1', 'value1', HUNDRED_MILLIS * 10);
+      const val = lru.getOrSet('key1', () => 'newValue', {
+        ttl: HUNDRED_MILLIS,
+        forceRevalidate: true,
+      });
+      expect(val).toBe('newValue');
+    });
+
     it('should set a new value item has expired', () => {
       const lru = new TimeLruCache({
         maxSize: 2,
@@ -82,7 +97,9 @@ describe('TimeLruCache', () => {
       lru.set('key1', 'value1', HUNDRED_MILLIS);
       // Advance fake time beyond key1's ttl
       vi.setSystemTime(Date.now() + HUNDRED_MILLIS + SIXTY_MILLIS);
-      const val = lru.getOrSet('key1', () => 'newValue', HUNDRED_MILLIS);
+      const val = lru.getOrSet('key1', () => 'newValue', {
+        ttl: HUNDRED_MILLIS,
+      });
       expect(val).toBe('newValue');
     });
   });

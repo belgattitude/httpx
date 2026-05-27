@@ -51,9 +51,56 @@ describe('XMemCache', () => {
       expect(secondRunData).toStrictEqual({ message: 'Hello test' });
       expect(lru.size).toStrictEqual(1);
 
+      expect(fn).toHaveBeenCalledExactlyOnceWith();
       const removed = lru.clear();
       expect(removed).toBe(1); // One item should be removed from the cache
-      expect(fn).toHaveBeenCalledExactlyOnceWith();
+    });
+  });
+  describe('XMemCache.runAsync(forceRevalidate)', () => {
+    const lru = new TimeLruCache({
+      maxSize: 50,
+      defaultTTL: 50_000,
+    });
+
+    const xMemCache = new XMemCache({ lru });
+
+    it('should execute the function and force revalidation', async () => {
+      const fn = vi.fn();
+      const runCachedWithForceRevalidate = async (params: TestFnParams) => {
+        return xMemCache.runAsync({
+          key: ['/api/test', params],
+          fn: () => {
+            fn();
+            return fetchDataFn(params);
+          },
+          forceRevalidate: true,
+        });
+      };
+
+      const { data: firstRunData, meta: firstRunMeta } =
+        await runCachedWithForceRevalidate({
+          name: 'test',
+        });
+      expect(firstRunData).toStrictEqual({ message: 'Hello test' });
+      expectTypeOf(firstRunData).toEqualTypeOf<{
+        message: string;
+      }>();
+
+      expect(firstRunMeta.cached).toStrictEqual(false);
+      expect(firstRunMeta.generatedKey).toStrictEqual(
+        '{"key":["/api/test",{"name":"test"}],"ns":"default"}'
+      );
+      expect(lru.size).toStrictEqual(1);
+
+      const { data: secondRunData } = await runCachedWithForceRevalidate({
+        name: 'test',
+      });
+      expect(secondRunData).toStrictEqual({ message: 'Hello test' });
+      expect(lru.size).toStrictEqual(1);
+
+      expect(fn).toHaveBeenCalledTimes(2);
+      const removed = lru.clear();
+      expect(removed).toBe(1); // One item should be removed from the cache
     });
   });
 });

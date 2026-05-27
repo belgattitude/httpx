@@ -172,12 +172,23 @@ export class TimeLruCache<
   getOrSet<T extends TValue>(
     key: TKey,
     valueOrFn: T | (() => T),
-    ttl?: Milliseconds
+    options?: {
+      /**
+       * Optional time to live for this specific item in milliseconds.
+       * If not provided, the cache defaultTTL will be used.
+       */
+      ttl?: Milliseconds;
+      /**
+       * Force revalidation even if the item exists and hasn't expired. T
+       * This means that the valueOrFn will be used to update the value and reset the TTL.
+       */
+      forceRevalidate?: boolean;
+    }
   ): T {
     const val = this.get(key);
-    if (val === undefined) {
+    if (val === undefined || options?.forceRevalidate === true) {
       const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
-      this.set(key, value as unknown as TValue, ttl);
+      this.set(key, value as unknown as TValue, options?.ttl);
       return value;
     }
     return val as unknown as T;

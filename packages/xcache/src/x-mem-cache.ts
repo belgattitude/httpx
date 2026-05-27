@@ -91,8 +91,10 @@ export class XMemCache {
     fn: (params: { key: TKey }) => Promise<TResult>;
     namespace?: string;
     ttl?: number;
+    /** force a revalidation even if a cache entry exists */
+    forceRevalidate?: boolean;
   }): Promise<Result<TResult>> => {
-    const { fn, key, ttl, namespace } = params;
+    const { fn, key, ttl, namespace, forceRevalidate = false } = params;
 
     const cacheKey = genCacheKeyString({
       key,
@@ -106,7 +108,7 @@ export class XMemCache {
 
     let data = result?.data as TResult | undefined;
 
-    if (result === undefined) {
+    if (result === undefined || forceRevalidate === true) {
       cached = false;
       data = await fn({ key });
       if (
