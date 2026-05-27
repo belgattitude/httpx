@@ -1,5 +1,16 @@
 # @httpx/xcache
 
+## 0.6.0
+
+### Minor Changes
+
+- [#2773](https://github.com/belgattitude/httpx/pull/2773) [`4536b07`](https://github.com/belgattitude/httpx/commit/4536b07f768df9b391af9872e2a7ef17e7031474) Thanks [@belgattitude](https://github.com/belgattitude)! - Support forceRevalidate in runAsync
+
+### Patch Changes
+
+- Updated dependencies [[`4536b07`](https://github.com/belgattitude/httpx/commit/4536b07f768df9b391af9872e2a7ef17e7031474)]:
+  - @httpx/lru@0.14.0
+
 ## 0.5.2
 
 ### Patch Changes
