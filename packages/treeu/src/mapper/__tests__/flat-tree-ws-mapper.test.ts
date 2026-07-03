@@ -6,8 +6,7 @@ import {
 } from '../flat-tree-ws-mapper';
 
 type CustomValue =
-  | { type: 'folder'; size?: never }
-  | { type: 'file'; size: number };
+  { type: 'folder'; size?: never } | { type: 'file'; size: number };
 
 describe('FlatTreeWsMapper', () => {
   const validFlatTreeWs: FlatTreeWs<CustomValue> = new Map([

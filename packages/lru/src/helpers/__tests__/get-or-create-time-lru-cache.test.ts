@@ -9,8 +9,7 @@ import { getOrCreateTimeLruCache } from '../get-or-create-time-lru-cache';
 declare global {
   // eslint-disable-next-line no-var
   var __httpx_time_lru_cache_instances:
-    | Map<string, TimeLruCache<any, any>>
-    | undefined;
+    Map<string, TimeLruCache<any, any>> | undefined;
 }
 
 describe('getOrCreateTimeLruCache()', () => {

@@ -66,11 +66,8 @@ export function assertParsableStrictIsoDateZ(
   msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is ParsableStrictIsoDateZ {
   let check:
-    | 'INVALID_FORMAT'
-    | 'INVALID_DATE'
-    | 'INVALID_ARGUMENT'
-    | true
-    | undefined = undefined;
+    'INVALID_FORMAT' | 'INVALID_DATE' | 'INVALID_ARGUMENT' | true | undefined =
+    undefined;
   if (typeof v !== 'string') {
     check = 'INVALID_ARGUMENT';
   } else if (v.length === 24 && isoDateTimeZRegexp.test(v)) {

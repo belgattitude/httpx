@@ -103,8 +103,7 @@ export class XMemCache {
     });
     let cached = true;
     const result = this.#lru.get(cacheKey) as
-      | LRUCacheValue<TResult>
-      | undefined;
+      LRUCacheValue<TResult> | undefined;
 
     let data = result?.data as TResult | undefined;
 

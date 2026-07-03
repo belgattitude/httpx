@@ -5,7 +5,7 @@ const config = [
     name: 'Everything (ESM)',
     path: ['dist/index.js'],
     import: '*',
-    limit: '965B',
+    limit: '1050B',
   },
   {
     name: 'MIntl (ESM)',

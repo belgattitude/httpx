@@ -149,7 +149,7 @@ The total size accounts for the dependency on [jose](https://github.com/panva/jo
 
 | Level        | CI  | Description                                                                                                                                      |
 | ------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Node         | ✅  | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                  |
+| Node         | ✅  | CI for 20.x, 22.x, 24.x & 26.x.                                                                                                                  |
 | Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                    |
 | Browserslist | ✅  | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/jwt-verify/.browserslistrc) |
 | Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                 |
