@@ -104,7 +104,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                             | Size (compressed) |
 |------------------------------------------------------------|------------------:|
-| `import { createXXHash64 } from '@httpx/hash/xxhash-wasm'` |        ~ 765B (*) |
+| `import { createXXHash64 } from '@httpx/hash/xxhash-wasm'` |        ~ 825B (*) |
 
 (*) Add [2.3KB gzipped](https://github.com/jungomi/xxhash-wasm?tab=readme-ov-file#bundle-size) for the wasm file.
 
@@ -112,7 +112,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                              |
 |--------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅   | CI for 20.x, 22.x, 24.x & 25.x.                                                                                                                                                                                                                                                                                                                                                                   |
+| Node         | ✅   | CI for 20.x, 22.x, 24.x & 26.x.                                                                                                                                                                                                                                                                                                                                                                   |
 | Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                            |
 | Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/hash/.browserslistrc) |
 | Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                       | 

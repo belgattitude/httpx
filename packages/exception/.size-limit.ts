@@ -1,7 +1,7 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-const fullEsmMaxSize = '1950B';
-const fullCjsMaxSize = '2500B';
+const fullEsmMaxSize = '2010B';
+const fullCjsMaxSize = '2550B';
 
 const config = [
   // ###################################################

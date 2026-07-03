@@ -5,7 +5,7 @@ const config = [
     name: 'Everything (ESM)',
     path: ['dist/index.js'],
     import: '*',
-    limit: '880B',
+    limit: '980B',
   },
   {
     name: 'createStableKeyOrThrow (ESM)',

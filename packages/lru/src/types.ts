@@ -23,5 +23,4 @@ type BaseCacheValueTypes =
   | Record<string | number | symbol, unknown>;
 
 export type SupportedCacheValues =
-  | Readonly<BaseCacheValueTypes>
-  | BaseCacheValueTypes;
+  Readonly<BaseCacheValueTypes> | BaseCacheValueTypes;

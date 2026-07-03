@@ -12,8 +12,7 @@ export type SupportedDataTypes =
   | undefined;
 
 export type SupportedDataTypesRW =
-  | SupportedDataTypes
-  | Readonly<SupportedDataTypes>;
+  SupportedDataTypes | Readonly<SupportedDataTypes>;
 
 export type CreateStableKeyOptions = {
   sortArrayValues?: boolean;

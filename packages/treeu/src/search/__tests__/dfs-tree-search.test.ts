@@ -3,8 +3,7 @@ import { DfsTreeSearch } from '../dfs-tree-search';
 
 describe('TreeSearch', () => {
   type CustomValue =
-    | { type: 'folder'; size?: never }
-    | { type: 'file'; size: number };
+    { type: 'folder'; size?: never } | { type: 'file'; size: number };
 
   const treeNodes: TreeNode<CustomValue>[] = [
     {
