@@ -1,5 +1,16 @@
 # @httpx/memo-intl
 
+## 1.4.13
+
+### Patch Changes
+
+- [#2797](https://github.com/belgattitude/httpx/pull/2797) [`a284cdc`](https://github.com/belgattitude/httpx/commit/a284cdc5455b519abd7dcd4eb7ec3f024fdc4458) Thanks [@belgattitude](https://github.com/belgattitude)! - No code change, rebuild with latest tsdown
+
+- [#2797](https://github.com/belgattitude/httpx/pull/2797) [`a284cdc`](https://github.com/belgattitude/httpx/commit/a284cdc5455b519abd7dcd4eb7ec3f024fdc4458) Thanks [@belgattitude](https://github.com/belgattitude)! - Tested on node 26.x
+
+- Updated dependencies [[`a284cdc`](https://github.com/belgattitude/httpx/commit/a284cdc5455b519abd7dcd4eb7ec3f024fdc4458), [`a284cdc`](https://github.com/belgattitude/httpx/commit/a284cdc5455b519abd7dcd4eb7ec3f024fdc4458)]:
+  - @httpx/lru@0.14.1
+
 ## 1.4.12
 
 ### Patch Changes
