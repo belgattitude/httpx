@@ -57,4 +57,13 @@ module.exports = {
   },
   root: true,
   rules: {},
+  settings: {
+    'import-x/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: './tsconfig.json',
+        conditionNames: ['httpx-monorepo-source', 'types', 'import', 'default'],
+      },
+    },
+  },
 };
