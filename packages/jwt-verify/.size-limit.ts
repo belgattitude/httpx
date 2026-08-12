@@ -1,6 +1,6 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-module.exports = [
+const config = [
   {
     name: 'import { JwtVerifier } (ESM)',
     path: ['dist/index.js'],
@@ -14,3 +14,5 @@ module.exports = [
     limit: '8KB',
   },
 ] satisfies SizeLimitConfig;
+
+export default config;

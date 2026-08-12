@@ -60,4 +60,13 @@ module.exports = {
     'sonarjs/cognitive-complexity': ['error', 17],
     'unicorn/no-array-reduce': 'off',
   },
+  settings: {
+    'import-x/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: './tsconfig.json',
+        conditionNames: ['httpx-monorepo-source', 'types', 'import', 'default'],
+      },
+    },
+  },
 };

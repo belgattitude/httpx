@@ -22,6 +22,8 @@ const npmPreapprovedPackages = [
   'next',
   '@next/*',
   '@cloudflare/*',
+  'size-limit',
+  '@size-limit/*'
 ];
 
 module.exports = defineConfig({
@@ -47,6 +49,8 @@ module.exports = defineConfig({
   reject: [
     // Cause v9 isn't yet supported
     'eslint',
+    'typescript',
+    'primereact',
     // Till documentation website is upgraded
     'nextra',
     'nextra-theme-docs'

@@ -7,9 +7,7 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "strict": true,
-    "paths": {
-      "@httpx/plain-object": ["../../packages/plain-object/src/index"]
-    },
+    "customConditions": ["httpx-monorepo-source"],
     "types": ["vitest/globals"]
   },
   "exclude": ["**/node_modules", "**/.*/*", "dist", "coverage"],

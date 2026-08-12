@@ -36,7 +36,14 @@ export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
       Boolean
     ),
     resolve: {
-      tsconfigPaths: true,
+      // tsconfigPaths: true,
+      conditions: ['httpx-monorepo-source'],
+    },
+    // https://vitest.dev/guide/common-errors.html#custom-package-conditions-are-not-resolved
+    ssr: {
+      resolve: {
+        conditions: ['httpx-monorepo-source', 'import', 'default'],
+      },
     },
     test: {
       browser: {

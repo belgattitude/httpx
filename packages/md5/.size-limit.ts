@@ -1,6 +1,6 @@
 import type { SizeLimitConfig } from 'size-limit';
 
-module.exports = [
+const config  = [
   {
     name: "import { md5 } from '@httpx/md5'",
     path: ['dist/index.mjs'],
@@ -17,5 +17,6 @@ module.exports = [
       return config;
     }
   },
-
 ] satisfies SizeLimitConfig;
+
+export default config;

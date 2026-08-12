@@ -26,6 +26,7 @@
   "types": "./dist/index.d.cts",
   "exports": {
     ".": {
+      "httpx-monorepo-source": "./src/index.ts",
       "import": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
@@ -72,30 +73,30 @@
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-lru-unit --dir ./coverage"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.4",
-    "@belgattitude/eslint-config-bases": "8.17.0",
+    "@arethetypeswrong/cli": "0.18.5",
+    "@belgattitude/eslint-config-bases": "8.19.1",
     "@httpx/devtools-vitest": "workspace:^",
-    "@size-limit/esbuild": "12.1.0",
-    "@size-limit/file": "12.1.0",
-    "@typescript/native-preview": "7.0.0-dev.20260701.1",
-    "browserslist": "4.28.4",
+    "@size-limit/esbuild": "13.0.3",
+    "@size-limit/file": "13.0.3",
+    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "browserslist": "4.28.8",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
     "es-check": "9.6.4",
-    "esbuild": "0.28.1",
+    "esbuild": "0.28.2",
     "eslint": "8.57.1",
-    "lru-cache": "11.5.1",
-    "npm-run-all2": "9.0.2",
-    "prettier": "3.9.4",
-    "publint": "0.3.21",
+    "lru-cache": "11.5.2",
+    "npm-run-all2": "9.0.3",
+    "prettier": "3.9.6",
+    "publint": "0.3.23",
     "quick-lru": "7.3.0",
     "rimraf": "6.1.3",
-    "size-limit": "12.1.0",
-    "tsdown": "0.22.3",
-    "typedoc": "0.28.19",
+    "size-limit": "13.0.3",
+    "tsdown": "0.22.14",
+    "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.12.0",
     "typescript": "6.0.3",
-    "vitest": "4.1.9"
+    "vitest": "4.1.10"
   },
   "engines": {
     "node": ">=20"
