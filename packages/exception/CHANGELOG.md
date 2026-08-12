@@ -1,5 +1,11 @@
 # @httpx/exception
 
+## 3.2.0
+
+### Minor Changes
+
+- [#2808](https://github.com/belgattitude/httpx/pull/2808) [`7231f1f`](https://github.com/belgattitude/httpx/commit/7231f1f0dd23aaa833e43ce736ae94947e5205b7) Thanks [@belgattitude](https://github.com/belgattitude)! - Remove tests on node 20 from the CI matrix
+
 ## 3.1.12
 
 ### Patch Changes

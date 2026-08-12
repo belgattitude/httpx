@@ -1,5 +1,22 @@
 # @examples/nextjs-app
 
+## 0.1.127
+
+### Patch Changes
+
+- Updated dependencies [[`7231f1f`](https://github.com/belgattitude/httpx/commit/7231f1f0dd23aaa833e43ce736ae94947e5205b7), [`7231f1f`](https://github.com/belgattitude/httpx/commit/7231f1f0dd23aaa833e43ce736ae94947e5205b7), [`7231f1f`](https://github.com/belgattitude/httpx/commit/7231f1f0dd23aaa833e43ce736ae94947e5205b7)]:
+  - @httpx/plain-object@2.2.0
+  - @httpx/stable-hash@0.5.0
+  - @httpx/dsn-parser@1.10.0
+  - @httpx/memo-intl@1.5.0
+  - @httpx/compress@0.4.0
+  - @httpx/assert@0.18.0
+  - @httpx/encode@0.3.0
+  - @httpx/xcache@0.7.0
+  - @httpx/treeu@0.7.0
+  - @httpx/lru@0.15.0
+  - @httpx/exception@3.2.0
+
 ## 0.1.126
 
 ### Patch Changes
