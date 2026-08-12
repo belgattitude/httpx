@@ -1,5 +1,22 @@
 # @httpx/lru
 
+## 0.15.0
+
+### Minor Changes
+
+- [#2808](https://github.com/belgattitude/httpx/pull/2808) [`7231f1f`](https://github.com/belgattitude/httpx/commit/7231f1f0dd23aaa833e43ce736ae94947e5205b7) Thanks [@belgattitude](https://github.com/belgattitude)! - Remove tests on node 20 from the CI matrix
+
+### Patch Changes
+
+- [#2808](https://github.com/belgattitude/httpx/pull/2808) [`7231f1f`](https://github.com/belgattitude/httpx/commit/7231f1f0dd23aaa833e43ce736ae94947e5205b7) Thanks [@belgattitude](https://github.com/belgattitude)! - Rebuild using latest rolldown / tsdown
+
+  ```
+  tsdown v0.22.14 powered by rolldown v1.2.3
+  targets chrome109 edge149 firefox121 ios16.6 opera127 safari18.5
+  ```
+
+- [#2808](https://github.com/belgattitude/httpx/pull/2808) [`7231f1f`](https://github.com/belgattitude/httpx/commit/7231f1f0dd23aaa833e43ce736ae94947e5205b7) Thanks [@belgattitude](https://github.com/belgattitude)! - Internal: move tsconfig aliases to source exports
+
 ## 0.14.1
 
 ### Patch Changes
