@@ -1056,16 +1056,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dotenvx/dotenvx@npm:2.20.1":
-  version: 2.20.1
-  resolution: "@dotenvx/dotenvx@npm:2.20.1"
+"@dotenvx/dotenvx@npm:2.21.0":
+  version: 2.21.0
+  resolution: "@dotenvx/dotenvx@npm:2.21.0"
   dependencies:
     "@dotenvx/primitives": "npm:^2.2.0"
     "@dotenvx/tooling": "npm:^1.0.3"
     yocto-spinner: "npm:^1.2.1"
   bin:
     dotenvx: src/cli/dotenvx.js
-  checksum: 10c0/1561eeb3e12b5ad01e4a3ae88f38052341e70de318ca507fd6eaba43b24105acad65bd9df7f4c24cc8e687a7b675fed5b6ef4eb26106ca32712efd74760ac031
+    dx: src/cli/dotenvx.js
+  checksum: 10c0/b2372034c16aafeaaf129ca229aa698a8f514662bc2870333571de66c746c85d03720a68a2bf84aa7e9d36f7bbe322fe898ce2bead1e6b2e2046674ed6a9e94f
   languageName: node
   linkType: hard
 
@@ -1855,7 +1856,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.18.5"
     "@azure/identity": "npm:4.13.1"
     "@belgattitude/eslint-config-bases": "npm:8.19.1"
-    "@dotenvx/dotenvx": "npm:2.20.1"
+    "@dotenvx/dotenvx": "npm:2.21.0"
     "@httpx/devtools-vitest": "workspace:^"
     "@httpx/lru": "workspace:^"
     "@httpx/plain-object": "workspace:^"
