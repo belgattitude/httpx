@@ -1,5 +1,11 @@
 # @httpx/xcache
 
+## 0.8.0
+
+### Minor Changes
+
+- [#2821](https://github.com/belgattitude/httpx/pull/2821) [`c637df8`](https://github.com/belgattitude/httpx/commit/c637df8bc04f18f22077120eba9d88a3177331f0) Thanks [@belgattitude](https://github.com/belgattitude)! - Support devalue v6
+
 ## 0.7.0
 
 ### Minor Changes
