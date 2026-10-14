@@ -1,4 +1,4 @@
-import { HttpServerException } from '../base/HttpServerException';
+import { HttpServerException } from "../base/HttpServerException";
 
 /**
  * Test whether a value is an instanceof HttpServerException
@@ -11,9 +11,6 @@ export const isHttpServerException = (
    * Ensure statusCode is in the server range [>=500, <600], true by default
    */
   checkStatusCode = true
-): error is HttpServerException => {
-  return (
-    error instanceof HttpServerException &&
-    (!checkStatusCode || (error.statusCode > 499 && error.statusCode < 600))
-  );
-};
+): error is HttpServerException =>
+  error instanceof HttpServerException &&
+  (!checkStatusCode || (error.statusCode > 499 && error.statusCode < 600));

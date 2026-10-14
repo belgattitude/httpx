@@ -1,14 +1,23 @@
-import type { XXHashAPI } from 'xxhash-wasm';
+import type { XXHashAPI } from "xxhash-wasm";
 
 declare global {
-  // eslint-disable-next-line no-var
   var xxhashInstance: XXHashAPI | null | undefined;
-  // eslint-disable-next-line no-var
   var xxhashInstancePromise: Promise<XXHashAPI> | null | undefined;
 }
 
 globalThis.xxhashInstance ??= null;
 globalThis.xxhashInstancePromise ??= null;
+
+const loadXXHashAPI = async (): Promise<XXHashAPI> => {
+  try {
+    const mod = await import("xxhash-wasm");
+    return await mod.default();
+  } catch (error) {
+    globalThis.xxhashInstancePromise = null;
+    const msg = `xxhash-wasm module failed to load, did you forget to install it? (${error instanceof Error ? error.message : String(error)})`;
+    throw new Error(msg, { cause: error });
+  }
+};
 
 /**
  * Load and return a singleton instance of the `xxhash-wasm` module.
@@ -22,15 +31,9 @@ export const getXXHashAPI = async (): Promise<XXHashAPI> => {
     return globalThis.xxhashInstance;
   }
   if (globalThis.xxhashInstancePromise) {
-    return globalThis.xxhashInstancePromise;
+    return await globalThis.xxhashInstancePromise;
   }
-  globalThis.xxhashInstancePromise = import('xxhash-wasm')
-    .then((mod) => mod.default())
-    .catch((e) => {
-      globalThis.xxhashInstancePromise = null;
-      const msg = `xxhash-wasm module failed to load, did you forget to install it? (${(e as Error).message})`;
-      throw new Error(msg);
-    });
+  globalThis.xxhashInstancePromise = loadXXHashAPI();
   globalThis.xxhashInstance = await globalThis.xxhashInstancePromise;
   globalThis.xxhashInstancePromise = null;
   return globalThis.xxhashInstance;

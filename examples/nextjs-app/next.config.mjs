@@ -1,12 +1,12 @@
 // @ts-check
 
-const trueEnv = ['true', '1', 'yes'];
+const trueEnv = ["true", "1", "yes"];
 
 const NEXTJS_IGNORE_TYPECHECK = trueEnv.includes(
-  process.env?.NEXTJS_IGNORE_TYPECHECK ?? 'false'
+  process.env?.NEXTJS_IGNORE_TYPECHECK ?? "false"
 );
 
-const TYPESCRIPT_CONFIG = process.env.TSCONFIG ?? './tsconfig.json';
+const TYPESCRIPT_CONFIG = process.env.TSCONFIG ?? "./tsconfig.json";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -23,8 +23,8 @@ const nextConfig = {
     // see https://nextjs.org/blog/next-16-2-turbopack#lightning-css-configuration
     useLightningcss: true,
     lightningCssFeatures: {
-      include: ['light-dark', 'oklab-colors'],
-      exclude: ['nesting'],
+      include: ["light-dark", "oklab-colors"],
+      exclude: ["nesting"],
     },
   },
   productionBrowserSourceMaps: true,

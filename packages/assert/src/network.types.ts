@@ -1,3 +1,3 @@
-import type { WeakOpaqueContainer } from './types/opaque.types';
+import type { WeakOpaqueContainer } from "./types/opaque.types";
 
-export type NetworkPort = number & WeakOpaqueContainer<'NetworkPort'>;
+export type NetworkPort = number & WeakOpaqueContainer<"NetworkPort">;

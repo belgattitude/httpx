@@ -1,17 +1,8 @@
 # @httpx/lru
 
-[![npm](https://img.shields.io/npm/v/@httpx/lru?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/lru)
-[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/lru/CHANGELOG.md)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-lru-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Flru)
-[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/lru/.size-limit.cjs)
-[![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![browserslist](https://img.shields.io/static/v1?label=Browsers&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![downloads](https://img.shields.io/npm/dm/@httpx/lru?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/lru)
-[![license](https://img.shields.io/npm/l/@httpx/lru?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/@httpx/lru?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/lru) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/lru/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-lru-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Flru) [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/lru/.size-limit.cjs) [![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browsers&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![downloads](https://img.shields.io/npm/dm/@httpx/lru?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/lru) [![license](https://img.shields.io/npm/l/@httpx/lru?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
-LRU cache optimized for performance and low memory usage. 2x-4x times faster on `get()` than [quick-lru](https://github.com/sindresorhus/quick-lru)
-without [memory overhead](https://github.com/sindresorhus/quick-lru?tab=readme-ov-file#trade-offs) and 6 times smaller than
-[lru-cache](https://github.com/isaacs/node-lru-cache). TimeLru is less than 700b. Lru less than 600b.
+LRU cache optimized for performance and low memory usage. 2x-4x times faster on `get()` than [quick-lru](https://github.com/sindresorhus/quick-lru) without [memory overhead](https://github.com/sindresorhus/quick-lru?tab=readme-ov-file#trade-offs) and 6 times smaller than [lru-cache](https://github.com/isaacs/node-lru-cache). TimeLru is less than 700b. Lru less than 600b.
 
 ## Install
 
@@ -37,19 +28,18 @@ $ pnpm add @httpx/lru
 
 TimeLruCache allows to work with expiry time (TTL). Time-to-live are expressed in milliseconds. The API is similar to LruCache.
 
-| Method                                       | Description                                                               |
-|----------------------------------------------| ------------------------------------------------------------------------- |
-| `set(key, value, ttl?): boolean`             | Add a new entry and return true if entry was overwritten                  |
-| `get(key): TValue \| undefined`              | Retrieve an entry if exists and hasn't expired.                           |
-| `has(key): boolean`                          | Check if an entry exist and hasn't expired                                |
-| `delete(key): boolean`                       | Remove an entry, returns bool indicating if the entry was existing        |
+| Method | Description |
+| --- | --- |
+| `set(key, value, ttl?): boolean` | Add a new entry and return true if entry was overwritten |
+| `get(key): TValue \| undefined` | Retrieve an entry if exists and hasn't expired. |
+| `has(key): boolean` | Check if an entry exist and hasn't expired |
+| `delete(key): boolean` | Remove an entry, returns bool indicating if the entry was existing |
 | `getOrSet(key, valueOrFn, options?): TValue` | Return the entry if exists otherwise save a new entry (value or callback) |
-| `clear(): number`                            | Clear the cache and return the actual number of deleted entries           |
+| `clear(): number` | Clear the cache and return the actual number of deleted entries |
 
 ### TimeLruCache.getOrSet()
 
-Get an item from the cache, if the item doesn't exist or has expired
-it will create a new entry with the provided value or function and returns it.
+Get an item from the cache, if the item doesn't exist or has expired it will create a new entry with the provided value or function and returns it.
 
 In case of a new entry (key either doesn't exist or has expired):
 
@@ -73,7 +63,7 @@ lru.getOrSet("key1", () => "value2"); // 👈 returns 'value1' (entry exists)
 // The key doesn't exist, a new entry will be created from the function return value
 lru.getOrSet("key2", () => "value2", {
   ttl: 2_000,
-  forceRevalidate: false, // default  
+  forceRevalidate: false, // default
 }); // 👈 returns 'value2'
 lru.has("key2"); // 👈 true (it was added)
 lru.get("key1"); // 👈 'value1'
@@ -86,8 +76,7 @@ lru.get("key1"); // 👈 undefined (first entry was evicted)
 
 ### TimeLruCache.has()
 
-Checks whether an entry exist and hasn't expired. If the entry exists but has expired, it will be removed
-automatically and trigger the `onEviction` callback if present.
+Checks whether an entry exist and hasn't expired. If the entry exists but has expired, it will be removed automatically and trigger the `onEviction` callback if present.
 
 ```typescript
 import { TimeLruCache } from "@httpx/lru";
@@ -122,21 +111,18 @@ lru.has("key1"); // 👈 false (item is present but expired - 👋 onEviction wi
 
 ## LruCache
 
-LruCache provides a base LRU implementation. It is a simple cache with a fixed capacity.
-When the cache is full, the least recently used item is removed. Under the hood it uses
-a doubly linked list implementation to allow `get()` in O(1). If you're looking for a cache with
-expiry time (TTL) consider using [TimeLruCache](#timelrucache) instead.
+LruCache provides a base LRU implementation. It is a simple cache with a fixed capacity. When the cache is full, the least recently used item is removed. Under the hood it uses a doubly linked list implementation to allow `get()` in O(1). If you're looking for a cache with expiry time (TTL) consider using [TimeLruCache](#timelrucache) instead.
 
 ### API
 
-| Method                             | Description                                                        |
-| ---------------------------------- | ------------------------------------------------------------------ |
-| `set(key, value): boolean`         | Add a new entry and return true if entry was overwritten           |
-| `get(key): TValue \| undefined`    | Retrieve a cache entry by key                                      |
-| `has(key): boolean`                | Check if an entry exist                                            |
-| `delete(key): boolean`             | Remove an entry, returns bool indicating if the entry was existing |
-| `getOrSet(key, valueOrFn): TValue` | Return the entry if exists otherwise save a new entry              |
-| `clear(): number`                  | Clear the cache and return the actual number of deleted entries    |
+| Method | Description |
+| --- | --- |
+| `set(key, value): boolean` | Add a new entry and return true if entry was overwritten |
+| `get(key): TValue \| undefined` | Retrieve a cache entry by key |
+| `has(key): boolean` | Check if an entry exist |
+| `delete(key): boolean` | Remove an entry, returns bool indicating if the entry was existing |
+| `getOrSet(key, valueOrFn): TValue` | Return the entry if exists otherwise save a new entry |
+| `clear(): number` | Clear the cache and return the actual number of deleted entries |
 
 ### Usage
 
@@ -161,10 +147,7 @@ lru.clear();
 
 ## Helpers
 
-As an alternative to using the constructors directly, the package provides helpers to ensure only one instance
-of `LruCache` or `TimeLruCache` is created for a given name. This is particularly useful for hybrid application such as NextJs
-that might loose their references due to their specific module loading strategy. Under the hood instances are
-preserved on `globalThis`.
+As an alternative to using the constructors directly, the package provides helpers to ensure only one instance of `LruCache` or `TimeLruCache` is created for a given name. This is particularly useful for hybrid application such as NextJs that might loose their references due to their specific module loading strategy. Under the hood instances are preserved on `globalThis`.
 
 ### getOrCreateLruCache
 
@@ -218,8 +201,7 @@ expect(results).toStrictEqual([
 
 #### onEviction callback
 
-Can be useful to clean up resources or trigger side effects. onEviction callback
-is called right before an entry is evicted.
+Can be useful to clean up resources or trigger side effects. onEviction callback is called right before an entry is evicted.
 
 ```typescript
 const fn = vi.fn();
@@ -289,7 +271,7 @@ expect(fn).toHaveBeenCalledExactlyOnceWith("key1", "value1");
    · lru-cache@11.3.5.peek()              36,763.90  0.0171  1.1830  0.0272  0.0293  0.0962  0.1333  0.3213  ±1.29%    18382
 
  BENCH  Summary
-                                                                                                                                                                                                                                    
+
   quick-lru@7.3.0.set() - bench/compare/lru-cache/eviction.bench.ts > LruCache.set() 1000 items / maxSize: 500
     1.29x faster than @httpx/lru.set() - ts files (dev)
     1.66x faster than lru-cache@11.3.5.set()
@@ -369,7 +351,7 @@ expect(fn).toHaveBeenCalledExactlyOnceWith("key1", "value1");
    · lru-cache@11.3.5 - forEach              17,421.94  0.0386   6.6090  0.0574  0.0608  0.1614  0.2096  0.5616  ±4.49%     8711
 
  BENCH  Summary
-                                                                                                                                                                                                                                    
+
   @httpx/lru.set() - ts files (dev) - bench/compare/lru-cache/set.bench.ts > LruCache.set() 1000 items / maxSize: 1000
     1.03x faster than @httpx/lru.set() - compiled (dist)
     1.90x faster than @httpx/time-lru.set() - compiled (dist)
@@ -419,29 +401,29 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 ## Compatibility
 
-| Level        | CI  | Description                                                                                                                                      |
-|--------------| --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
-| Node         | ✅  | CI for 20.x, 22.x, 24.x & 26.x.                                                                                                                  |
-| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                    |
-| Browserslist | ✅  | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/lru/.browserslistrc)        |
-| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                 |
-| Deno         | ✅  | Tested with latest lts                                                                                              |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                               |
-| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
-| Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                    |
-| ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                     |
-| Performance  | ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                             |
+| Level | CI | Description |
+| --- | --- | --- |
+| Node | ✅ | CI for 20.x, 22.x, 24.x & 26.x. |
+| Browser | ✅ | Tested with latest chrome (vitest/playwright) |
+| Browserslist | ✅ | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/lru/.browserslistrc) |
+| Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
+| Deno | ✅ | Tested with latest lts |
+| Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
+| Cloudflare | ✅ | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
+| Typescript | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
+| ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
+| Performance | ✅ | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx) |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
 ## Comparison with other libraries
 
-| Name       | Import             |     Size |  (gzip) | BundleJs                                                                                                                                                                          |
-| ---------- | ------------------ | -------: | ------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| @httpx/lru | `{ LruCache }`     |  1.49 KB | 0.65 KB | [![size](https://deno.bundlejs.com/badge?q=@httpx/lru@0.12.5&treeshake=[{+LruCache+}])](https://bundlejs.com/?q=%40httpx%2Flru%400.12.5&treeshake=%5B%7B+LruCache+%7D%5D)         |
-| @httpx/lru | `{ TimeLruCache }` |  1.91 KB | 0.78 KB | [![size](https://deno.bundlejs.com/badge?q=@httpx/lru@0.12.5&treeshake=[{+TimeLruCache+}])](https://bundlejs.com/?q=%40httpx%2Flru%400.12.5&treeshake=%5B%7B+TimeLruCache+%7D%5D) |
-| lru-cache  | `{ LruCache }`     | 17.30 KB | 5.71 KB | [![size](https://deno.bundlejs.com/badge?q=lru-cache@11.2.4&treeshake=[{+LRUCache+}])](https://bundlejs.com/?q=lru-cache%4011.2.4&treeshake=%5B%7B+LRUCache+%7D%5D)               |
-| quick-lru  | `{ default }`      |  3.36 KB | 1.17 KB | [![size](https://deno.bundlejs.com/badge?q=quick-lru@7.3.0&treeshake=[{+default+}])](https://bundlejs.com/?q=quick-lru%407.3.0&treeshake=%5B%7B+default+%7D%5D)                   |
+| Name | Import | Size | (gzip) | BundleJs |
+| --- | --- | --: | --: | --- |
+| @httpx/lru | `{ LruCache }` | 1.49 KB | 0.65 KB | [![size](https://deno.bundlejs.com/badge?q=@httpx/lru@0.12.5&treeshake=[{+LruCache+}])](https://bundlejs.com/?q=%40httpx%2Flru%400.12.5&treeshake=%5B%7B+LruCache+%7D%5D) |
+| @httpx/lru | `{ TimeLruCache }` | 1.91 KB | 0.78 KB | [![size](https://deno.bundlejs.com/badge?q=@httpx/lru@0.12.5&treeshake=[{+TimeLruCache+}])](https://bundlejs.com/?q=%40httpx%2Flru%400.12.5&treeshake=%5B%7B+TimeLruCache+%7D%5D) |
+| lru-cache | `{ LruCache }` | 17.30 KB | 5.71 KB | [![size](https://deno.bundlejs.com/badge?q=lru-cache@11.2.4&treeshake=[{+LRUCache+}])](https://bundlejs.com/?q=lru-cache%4011.2.4&treeshake=%5B%7B+LRUCache+%7D%5D) |
+| quick-lru | `{ default }` | 3.36 KB | 1.17 KB | [![size](https://deno.bundlejs.com/badge?q=quick-lru@7.3.0&treeshake=[{+default+}])](https://bundlejs.com/?q=quick-lru%407.3.0&treeshake=%5B%7B+default+%7D%5D) |
 
 ## Contributors
 
@@ -449,9 +431,7 @@ Contributions are welcome. Have a look to the [CONTRIBUTING](https://github.com/
 
 ## Sponsors
 
-If my OSS work brightens your day, let's take it to new heights together!
-[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
-or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+If my OSS work brightens your day, let's take it to new heights together! [Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>), or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
 
 ### Special thanks to
 

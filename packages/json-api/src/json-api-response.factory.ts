@@ -2,8 +2,8 @@ import type {
   JsonApiError,
   JsonApiErrorResponse,
   JsonApiSuccessResponse,
-} from './json-api-response.types';
-import { isPlainObject } from './typeguards';
+} from "./json-api-response.types";
+import { isPlainObject } from "./typeguards";
 
 export class JsonApiResponseFactory {
   static readonly fromError = (
@@ -12,8 +12,17 @@ export class JsonApiResponseFactory {
     httpStatus?: number
   ): JsonApiErrorResponse => {
     let errs: JsonApiError[];
-    if (typeof errors === 'string') {
-      errs = [{ title: errors, ...(httpStatus ? { status: httpStatus } : {}) }];
+    if (typeof errors === "string") {
+      errs = [
+        {
+          title: errors,
+          ...(httpStatus !== undefined &&
+          httpStatus !== 0 &&
+          !Number.isNaN(httpStatus)
+            ? { status: httpStatus }
+            : {}),
+        },
+      ];
     } else if (isPlainObject(errors)) {
       errs = [errors];
     } else {
@@ -26,10 +35,10 @@ export class JsonApiResponseFactory {
   };
   static readonly fromSuccess = <T>(
     data: T,
-    metadata?: JsonApiSuccessResponse<T>['meta']
+    metadata?: JsonApiSuccessResponse<T>["meta"]
   ): JsonApiSuccessResponse<T> => {
     return {
-      data: data,
+      data,
       success: true,
       ...(isPlainObject(metadata) ? { meta: metadata } : {}),
     };

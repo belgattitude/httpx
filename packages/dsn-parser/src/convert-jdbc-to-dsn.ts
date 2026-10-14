@@ -10,9 +10,9 @@
  * @throws TypeError .
  */
 export const convertJdbcToDsn = (jdbc: string): string => {
-  if (typeof jdbc !== 'string') {
-    throw new TypeError('jdbc param must be a string');
+  if (typeof jdbc !== "string") {
+    throw new TypeError("jdbc param must be a string");
   }
-  const [part1, ...rest] = jdbc.split(';');
-  return [part1, rest ? rest.join('&') : undefined].filter(Boolean).join('?');
+  const [part1, ...rest] = jdbc.split(";");
+  return [part1, rest.join("&")].filter(Boolean).join("?");
 };

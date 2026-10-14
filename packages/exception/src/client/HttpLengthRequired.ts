@@ -1,7 +1,7 @@
-import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpClientException } from "../base/HttpClientException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 411 Length required
@@ -13,7 +13,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  */
 
 const status = 411;
-const name = 'LengthRequired';
+const name = "LengthRequired";
 export class HttpLengthRequired extends HttpClientException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {

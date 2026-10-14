@@ -1,13 +1,13 @@
-import { DoublyLinkedNode } from './doubly-linked-node';
-import type { LruCacheParams } from './lru-cache';
-import type { ITimeLruCache } from './time-lru-cache.interface';
+import { DoublyLinkedNode } from "./doubly-linked-node";
+import type { LruCacheParams } from "./lru-cache";
+import type { ITimeLruCache } from "./time-lru-cache.interface";
 import type {
   BaseCacheKeyTypes,
   EpochTimeInMilliseconds,
   LruCacheHasOptions,
   Milliseconds,
   SupportedCacheValues,
-} from './types';
+} from "./types";
 
 type TimeLruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
   value: TValue;
@@ -32,14 +32,14 @@ export class TimeLruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
 > implements ITimeLruCache<TValue, TKey> {
-  #maxSize: number;
-  #touchOnHas: boolean;
+  readonly #maxSize: number;
+  readonly #touchOnHas: boolean;
 
-  #ttl: Milliseconds;
+  readonly #ttl: Milliseconds;
 
-  #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
+  readonly #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
-  #cache: Map<TKey, TimeLruCacheEntry<TValue, TKey>>;
+  readonly #cache: Map<TKey, TimeLruCacheEntry<TValue, TKey>>;
   #head: DoublyLinkedNode<TValue, TKey> | null = null;
   #tail: DoublyLinkedNode<TValue, TKey> | null = null;
 
@@ -70,10 +70,10 @@ export class TimeLruCache<
   constructor(params: TimeLruCacheParams<TValue, TKey>) {
     const { maxSize, touchOnHas = false, onEviction, defaultTTL } = params;
     if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
-      throw new TypeError('Invalid maxSize');
+      throw new TypeError("Invalid maxSize");
     }
     if (!Number.isSafeInteger(defaultTTL) || defaultTTL < 1) {
-      throw new TypeError('Invalid ttl');
+      throw new TypeError("Invalid ttl");
     }
 
     this.#touchOnHas = touchOnHas;
@@ -86,7 +86,7 @@ export class TimeLruCache<
   /**
    * Return the current size of the cache
    */
-  get params(): ITimeLruCache['params'] {
+  get params(): ITimeLruCache["params"] {
     return {
       maxSize: this.#maxSize,
       defaultTTL: this.#ttl,
@@ -101,9 +101,10 @@ export class TimeLruCache<
   }
 
   clear(): number {
-    const size = this.#cache.size;
+    const { size } = this.#cache;
     this.#cache.clear();
-    this.#head = this.#tail = null;
+    this.#head = null;
+    this.#tail = null;
     return size;
   }
 
@@ -114,24 +115,24 @@ export class TimeLruCache<
 
     if (hasExpired) {
       if (this.#onEviction) {
-        this.#onEviction(key, this.#cache.get(key)!.value);
+        this.#onEviction(key, value.value);
       }
       this.#removeNode(value.node);
       return false;
     }
 
     if (hasEntry && (options?.touch ?? this.#touchOnHas)) {
-      this.#moveToHead(this.#cache.get(key)!.node);
+      this.#moveToHead(value.node);
     }
     return hasEntry;
   }
 
   set(key: TKey, value: TValue, ttl?: Milliseconds): boolean {
-    if (this.#cache.has(key)) {
-      const data = this.#cache.get(key)!;
-      data.value = value;
-      data.expiry = Date.now() + (ttl ?? this.#ttl);
-      this.#moveToHead(data.node);
+    const existing = this.#cache.get(key);
+    if (existing !== undefined) {
+      existing.value = value;
+      existing.expiry = Date.now() + (ttl ?? this.#ttl);
+      this.#moveToHead(existing.node);
       return false;
     }
 
@@ -154,14 +155,14 @@ export class TimeLruCache<
   get(key: TKey): TValue | undefined {
     const data = this.#cache.get(key);
     if (data === undefined) {
-      return;
+      return undefined;
     }
     if (data.expiry < Date.now()) {
       if (this.#onEviction) {
         this.#onEviction(key, data.value);
       }
       this.#removeNode(data.node);
-      return;
+      return undefined;
     }
 
     this.#moveToHead(data.node);
@@ -187,7 +188,7 @@ export class TimeLruCache<
   ): T {
     const val = this.get(key);
     if (val === undefined || options?.forceRevalidate === true) {
-      const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
+      const value = typeof valueOrFn === "function" ? valueOrFn() : valueOrFn;
       this.set(key, value as unknown as TValue, options?.ttl);
       return value;
     }
@@ -197,7 +198,7 @@ export class TimeLruCache<
   peek(key: TKey): TValue | undefined {
     const val = this.#cache.get(key);
     if (val === undefined) {
-      return;
+      return undefined;
     }
     return val.expiry < Date.now() ? undefined : val.value;
   }
@@ -215,6 +216,8 @@ export class TimeLruCache<
    * Iterate over the cache from the least recently used to the most recently used.
    *
    * Iterating over results does not mark the items as recently used and doesn't skip expired items.
+   *
+   * @yields The `[key, value]` entries, from the least to the most recently used
    *
    * @example
    * import { TimeLruCache } from '@httpx/lru';
@@ -245,8 +248,10 @@ export class TimeLruCache<
     let current = this.#tail;
 
     while (current) {
-      const data = this.#cache.get(current.key)!;
-      yield [current.key, data.value];
+      const data = this.#cache.get(current.key);
+      if (data !== undefined) {
+        yield [current.key, data.value];
+      }
       current = current.prev;
     }
   }
@@ -285,9 +290,10 @@ export class TimeLruCache<
       return;
     }
     const tailKey = this.#tail.key;
+    const tailData = this.#cache.get(tailKey);
     this.#removeNode(this.#tail);
-    if (this.#onEviction) {
-      this.#onEviction(tailKey, this.#cache.get(tailKey)!.value);
+    if (this.#onEviction && tailData !== undefined) {
+      this.#onEviction(tailKey, tailData.value);
     }
     this.#cache.delete(tailKey);
   }

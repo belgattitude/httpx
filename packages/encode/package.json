@@ -1,25 +1,28 @@
 {
   "name": "@httpx/encode",
-  "description": "Base encodings, ie base64...",
   "version": "0.3.0",
+  "description": "Base encodings, ie base64...",
+  "keywords": [
+    "base convert",
+    "base64",
+    "encoding"
+  ],
+  "homepage": "https://belgattitude.github.io/httpx/encode",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://belgattitude.github.io/httpx/encode",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
     "directory": "packages/encode"
   },
-  "keywords": [
-    "encoding",
-    "base convert",
-    "base64"
+  "files": [
+    "dist"
   ],
-  "sideEffects": false,
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": {
@@ -51,43 +54,42 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "yarn run clean && yarn run tsdown",
-    "build-release": "yarn run build",
     "bench": "vitest bench --run",
     "bench-bun": "bun --bun run vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
-    "docgen": "run-s docgen-typedoc",
-    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "build": "yarn run clean && yarn run tsdown",
+    "build-release": "yarn run build",
     "check-dist": "run-s check-dist-esm",
     "check-dist-esm": "es-check es2022 './dist/**/*.js' --not './dist/*.map.js' --module",
     "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-encode-unit --dir ./coverage",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsdown --watch",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/encode.eslintcache",
+    "format": "dx-oxfmt --write",
+    "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
+    "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-browser": "vitest run --browser",
     "test-unit-bun": "bun --bun run vitest run",
+    "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
-    "test-unit-browser": "vitest run --browser",
-    "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsgo --project tsconfig.json --noEmit",
-    "typecheck-build": "tsc --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-encode-unit --dir ./coverage"
+    "typecheck-build": "tsc --project tsconfig.build.json --noEmit"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
-    "@belgattitude/eslint-config-bases": "8.19.1",
     "@httpx/devtools-vitest": "workspace:^",
+    "@httpx/dx": "workspace:^",
     "@sindresorhus/is": "8.1.0",
     "@size-limit/file": "13.0.3",
     "@size-limit/webpack": "13.0.3",
@@ -100,11 +102,9 @@
     "esbuild": "0.28.2",
     "esbuild-fix-imports-plugin": "1.0.23",
     "esbuild-plugin-file-path-extensions": "2.1.4",
-    "eslint": "8.57.1",
     "is-ci": "4.1.0",
     "js-base64": "3.9.2",
     "npm-run-all2": "9.0.3",
-    "prettier": "3.9.6",
     "pretty-bytes": "7.1.1",
     "publint": "0.3.23",
     "rimraf": "6.1.3",

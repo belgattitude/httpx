@@ -1,1 +1,1 @@
-export { getMsgFromCls } from './getMsgFromCls';
+export { getMsgFromCls } from "./getMsgFromCls";

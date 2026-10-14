@@ -1,5 +1,4 @@
-/* eslint-disable import-x/no-nodejs-modules */
-import { createHash } from 'node:crypto';
+import { createHash } from "node:crypto";
 
 /**
  * Create a MD5 hash of a string.
@@ -18,8 +17,8 @@ import { createHash } from 'node:crypto';
  * @throws TypeError if the input is not a string
  */
 export function md5(text: string): string {
-  if (typeof text != 'string') {
-    throw new TypeError('Expected a string');
+  if (typeof text != "string") {
+    throw new TypeError("Expected a string");
   }
-  return createHash('md5').update(text, 'utf8').digest('hex');
+  return createHash("md5").update(text, "utf8").digest("hex");
 }

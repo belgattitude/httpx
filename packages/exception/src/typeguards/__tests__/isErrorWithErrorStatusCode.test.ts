@@ -1,9 +1,9 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 
-import { HttpNotFound } from '../../client';
-import { isErrorWithErrorStatusCode } from '../isErrorWithErrorStatusCode';
+import { HttpNotFound } from "../../client";
+import { isErrorWithErrorStatusCode } from "../isErrorWithErrorStatusCode";
 
-describe('isErrorWithErrorStatusCode', () => {
+describe("isErrorWithErrorStatusCode", () => {
   it.each([
     [false, 100],
     [false, {}],
@@ -31,11 +31,11 @@ describe('isErrorWithErrorStatusCode', () => {
       true,
       new (class extends Error {
         statusCode = 400;
-        otherProp = 'other';
+        otherProp = "other";
       })(),
     ],
     [true, new HttpNotFound()],
-  ])('should return %s when %s', (expected, value) => {
+  ])("should return %s when %s", (expected, value) => {
     expect(isErrorWithErrorStatusCode(value)).toBe(expected);
   });
 });

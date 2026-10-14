@@ -1,6 +1,6 @@
-import { createStableKeyOrThrow } from './create-stable-key-or-throw';
-import { hashStr } from './hash-str';
-import type { CreateStableHashOptions, SupportedDataTypesRW } from './types';
+import { createStableKeyOrThrow } from "./create-stable-key-or-throw";
+import { hashStr } from "./hash-str";
+import type { CreateStableHashOptions, SupportedDataTypesRW } from "./types";
 
 /**
  * Create a stable hash (sha-256) from a given value useful for caching or memoization.
@@ -37,8 +37,8 @@ export const createStableHashOrThrow = async <T extends SupportedDataTypesRW>(
   value: T,
   options?: CreateStableHashOptions
 ): Promise<string> => {
-  const { encoding = 'hexa', algorithm = 'SHA-256' } = options ?? {};
-  return hashStr(createStableKeyOrThrow(value, options), {
+  const { encoding = "hexa", algorithm = "SHA-256" } = options ?? {};
+  return await hashStr(createStableKeyOrThrow(value, options), {
     encoding,
     algorithm,
   });

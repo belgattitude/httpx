@@ -19,8 +19,10 @@ type BaseCacheValueTypes =
   | null
   | unknown[]
   // objects or functions, but not promises
+  // oxlint-disable-next-line typescript/no-invalid-void-type -- public type, `void` makes any `then` property incompatible
   | (object & { then?: void })
   | Record<string | number | symbol, unknown>;
 
 export type SupportedCacheValues =
-  Readonly<BaseCacheValueTypes> | BaseCacheValueTypes;
+  | Readonly<BaseCacheValueTypes>
+  | BaseCacheValueTypes;

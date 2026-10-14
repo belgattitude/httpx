@@ -1,8 +1,8 @@
-import { vitestBenchOptionsConfig } from '@httpx/devtools-vitest';
+import { vitestBenchOptionsConfig } from "@httpx/devtools-vitest";
 
-import type { FlatTreeWsMap } from '../src/mapper/flat-tree-ws-mapper';
+import type { FlatTreeWsMap } from "../src/mapper/flat-tree-ws-mapper";
 
-const isCiOrCodSpeed = vitestBenchOptionsConfig.isCiOrCodSpeed;
+const { isCiOrCodSpeed } = vitestBenchOptionsConfig;
 
 type Custom = {
   idx: number;
@@ -13,7 +13,7 @@ export const getBenchFlatTreeWsData = (): FlatTreeWsMap<Custom> => {
   const arr = Array.from({ length });
   const map: FlatTreeWsMap<Custom> = new Map();
   for (let i = 0; i < arr.length; i++) {
-    const key = String(i).padStart(String(length).length, '0');
+    const key = String(i).padStart(String(length).length, "0");
     map.set(key, { idx: i });
   }
   return map;

@@ -1,9 +1,9 @@
-import { supportsErrorCause } from '../support/supportsErrorCause';
-import type { HttpErrorStatusCodeOrNumber } from '../types';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import type { HttpMethod } from '../types/HttpMethod';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { supportsErrorCause } from "../support/supportsErrorCause";
+import type { HttpErrorStatusCodeOrNumber } from "../types";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import type { HttpMethod } from "../types/HttpMethod";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 export class HttpException extends Error implements HttpExceptionParams {
   /**
@@ -48,7 +48,7 @@ export class HttpException extends Error implements HttpExceptionParams {
     statusCode: HttpErrorStatusCodeOrNumber,
     msgOrParams?: HttpExceptionParams | string
   ) {
-    const name = 'Exception';
+    const name = "Exception";
     const {
       cause: c,
       message: m,

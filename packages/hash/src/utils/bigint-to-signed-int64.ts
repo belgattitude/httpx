@@ -1,6 +1,6 @@
 const MAX_UINT64 = 18_446_744_073_709_551_616n; // 2n ** 64n
 
-export type SignedInt64 = bigint & { __type: 'SignedInt64' };
+export type SignedInt64 = bigint & { __type: "SignedInt64" };
 
 /**
  * Convert an arbitrary bigint to a signed 64-bit integer
@@ -16,7 +16,7 @@ export type SignedInt64 = bigint & { __type: 'SignedInt64' };
  */
 export const bigintToSignedInt64 = (unsignedBigint: bigint): SignedInt64 => {
   if (unsignedBigint < 0n || unsignedBigint >= MAX_UINT64) {
-    throw new RangeError('Value must be in the range [0, 2^64)');
+    throw new RangeError("Value must be in the range [0, 2^64)");
   }
   return BigInt.asIntN(64, unsignedBigint) as SignedInt64;
 };

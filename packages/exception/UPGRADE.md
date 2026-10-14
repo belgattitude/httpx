@@ -14,11 +14,7 @@ The following types have been removed:
 
 #### Serializer
 
-For security reasons [stack traces](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack)
-won't be serialized anymore by default as they might contain sensitive information in production. To opt-in selectively
-for stack traces serialization (ie: development or logging)
-`convertToSerializable`, `createFromSerializable`, `toJson` and `fromJson` functions
-accepts a `SerializerParams.includeStack` param as second argument.
+For security reasons [stack traces](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) won't be serialized anymore by default as they might contain sensitive information in production. To opt-in selectively for stack traces serialization (ie: development or logging) `convertToSerializable`, `createFromSerializable`, `toJson` and `fromJson` functions accepts a `SerializerParams.includeStack` param as second argument.
 
 <details>
 <summary>Example to opt-in back for stack traces serialization.</summary>

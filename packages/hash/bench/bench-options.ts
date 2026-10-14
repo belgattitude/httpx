@@ -1,4 +1,4 @@
-import { vitestBenchOptionsConfig } from '@httpx/devtools-vitest';
+import { vitestBenchOptionsConfig } from "@httpx/devtools-vitest";
 
 const defaultOptions = vitestBenchOptionsConfig.createBenchOptions({
   iterations: {

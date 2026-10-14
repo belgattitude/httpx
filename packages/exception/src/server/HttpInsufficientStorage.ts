@@ -1,7 +1,7 @@
-import { HttpServerException } from '../base/HttpServerException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpServerException } from "../base/HttpServerException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 507 Insufficient Storage (client / webdav specific)
@@ -12,7 +12,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/507
  */
 const status = 507;
-const name = 'InsufficientStorage';
+const name = "InsufficientStorage";
 export class HttpInsufficientStorage extends HttpServerException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {

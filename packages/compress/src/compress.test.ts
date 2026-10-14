@@ -1,20 +1,20 @@
-import { describe } from 'vitest';
+import { describe } from "vitest";
 
-const isBun = 'Bun' in globalThis;
+import type { SupportedCompressionAlgorithm } from "./compression-algorithm";
+import { Compressor } from "./compressor";
+import { Decompressor } from "./decompressor";
+import type { SupportedStringEncodings } from "./string-encodings";
 
-import type { SupportedCompressionAlgorithm } from './compression-algorithm';
-import { Compressor } from './compressor';
-import { Decompressor } from './decompressor';
-import type { SupportedStringEncodings } from './string-encodings';
+const isBun = "Bun" in globalThis;
 
 const compressionAlgorithms = [
-  ['gzip'],
-  ['deflate'],
+  ["gzip"],
+  ["deflate"],
 ] as const satisfies SupportedCompressionAlgorithm[][];
 
 const encodingAlgorithms = [
-  ['base64'],
-  ['base64_urlsafe'],
+  ["base64"],
+  ["base64_urlsafe"],
 ] as const satisfies SupportedStringEncodings[][];
 
 describe.each(compressionAlgorithms)(
@@ -26,33 +26,34 @@ describe.each(compressionAlgorithms)(
     describe.each(encodingAlgorithms)(
       'Compress & Decompress string with encoding "%s"',
       (encoding) => {
-        describe('Compressor.toEncodedString', () => {
-          it('should compress the long string by at least 15 times', async () => {
+        describe("Compressor.toEncodedString", () => {
+          it("should compress the long string by at least 15 times", async () => {
             const comp = new Compressor(algorithm);
             const compressed = await comp.toEncodedString(longString, {
-              encoding: encoding,
+              encoding,
             });
             expect(compressed.length).toBeGreaterThan(50);
             expect(compressed.length).toBeLessThan(longStringSize / 15);
           });
+
           // Cause bun 1.3.13 changed zlib compression, so snapshots cannot be done
           it.skipIf(isBun)(
-            'compressed based64 should match snapshot',
+            "compressed based64 should match snapshot",
             async () => {
               const comp = new Compressor(algorithm);
               const compressed = await comp.toEncodedString(longString, {
-                encoding: encoding,
+                encoding,
               });
               expect(compressed).toMatchSnapshot();
             }
           );
         });
 
-        describe('Decompressor.fromEncodedString', async () => {
-          it('should decompress a compressed string', async () => {
+        describe("Decompressor.fromEncodedString", () => {
+          it("should decompress a compressed string", async () => {
             const comp = new Compressor(algorithm);
             const compressed = await comp.toEncodedString(longString, {
-              encoding: encoding,
+              encoding,
             });
             const decomp = new Decompressor(algorithm);
             const decompressed = await decomp.fromEncodedString(compressed);

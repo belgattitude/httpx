@@ -1,4 +1,4 @@
-import type { HttpErrorStatusCodeOrNumber } from './HttpErrorStatusCodeOrNumber';
+import type { HttpErrorStatusCodeOrNumber } from "./HttpErrorStatusCodeOrNumber";
 
 export interface ErrorWithErrorStatusCode extends Error {
   statusCode: HttpErrorStatusCodeOrNumber;

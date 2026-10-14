@@ -32,8 +32,7 @@
   "extensions": {
     "recommendations": [
       "folke.vscode-monorepo-workspace",
-      "dbaeumer.vscode-eslint",
-      "esbenp.prettier-vscode",
+      "oxc.oxc-vscode",
       "ZixuanChen.vitest-explorer",
       "better-ts-errors.better-ts-errors"
     ]
@@ -42,24 +41,9 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "oxc.oxc-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
-    // Disable vscode formatting for js,jsx,ts,tsx files
-    // to allow dbaeumer.vscode-eslint to format them
-    "[javascript]": {
-      "editor.formatOnSave": false,
-    },
-    "eslint.alwaysShowStatus": true,
-    // https://github.com/Microsoft/vscode-eslint#mono-repository-setup
-    "eslint.workingDirectories": [
-      "./examples/nextjs-app",
-      "./packages/assert",
-      "./packages/dsn-parser",
-      "./packages/exception",
-      "./packages/json-api",
-      "./integrations/prisma-exception"
-    ]
+      "source.fixAll.oxc": "explicit"
+    }
   }
 }

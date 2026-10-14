@@ -2,11 +2,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@httpx/dx/typescript/tsconfig.base.json",
   "compilerOptions": {
-    "useUnknownInCatchVariables": true,
-    "noImplicitOverride": true,
-    "allowUnreachableCode": false,
-    "noFallthroughCasesInSwitch": true,
-    "exactOptionalPropertyTypes": true,
     "types": ["vitest/globals"]
   }
 }

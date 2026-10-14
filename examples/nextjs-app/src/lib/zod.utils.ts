@@ -1,10 +1,12 @@
-import { z, type ZodTypeAny } from 'zod';
+import * as z from "zod";
 
-export const zodStringToInt = (schema: ZodTypeAny) =>
+export const zodStringToInt = (schema: z.ZodType) =>
   z.preprocess((v): number | undefined => {
-    if (typeof v === 'string') {
+    if (typeof v === "string") {
       return Number.parseInt(v, 10);
     }
-    if (typeof v === 'number') return v;
+    if (typeof v === "number") {
+      return v;
+    }
     return undefined;
   }, schema);

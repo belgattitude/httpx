@@ -1,1 +1,1 @@
-export { md5 } from './ecmascript/md5-ecmascript.ts';
+export { md5 } from "./ecmascript/md5-ecmascript.ts";

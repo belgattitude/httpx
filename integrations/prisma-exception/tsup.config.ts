@@ -1,27 +1,28 @@
-import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { defineConfig } from 'tsup';
+import browserslistToEsbuild from "browserslist-to-esbuild";
+import { defineConfig } from "tsup";
 
 export default defineConfig((options) => {
+  const isWatch = Boolean(options.watch);
   return {
     cjsInterop: false,
     clean: true,
     dts: true,
-    entry: ['src/index.ts'],
-    format: ['esm', 'cjs'],
-    minify: !options.watch,
+    entry: ["src/index.ts"],
+    format: ["esm", "cjs"],
+    minify: !isWatch,
     minifyIdentifiers: true,
     minifySyntax: true,
     minifyWhitespace: true,
     outExtension({ format }) {
       return {
-        js: `.${format === 'cjs' ? 'cjs' : 'mjs'}`,
+        js: `.${format === "cjs" ? "cjs" : "mjs"}`,
       };
     },
-    platform: 'browser',
-    sourcemap: !options.watch,
+    platform: "browser",
+    sourcemap: !isWatch,
     splitting: true,
-    target: ['es2022', ...browserslistToEsbuild()],
+    target: ["es2022", ...browserslistToEsbuild()],
     treeshake: true,
-    tsconfig: './tsconfig.build.json',
+    tsconfig: "./tsconfig.build.json",
   };
 });

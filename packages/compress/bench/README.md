@@ -1,6 +1,6 @@
 ## @httpx/compress
 
-Benchmarks for [@httpx/compress](../README.md) 
+Benchmarks for [@httpx/compress](../README.md)
 
 ### Run
 
@@ -10,4 +10,3 @@ cd packages/compress
 yarn build
 yarn bench
 ```
-

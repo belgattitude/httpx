@@ -1,23 +1,26 @@
 {
   "name": "@httpx/xcache",
-  "description": "Memory cache for node and browsers",
   "version": "0.8.0",
+  "description": "Memory cache for node and browsers",
+  "keywords": [
+    "cache"
+  ],
+  "homepage": "https://belgattitude.github.io/httpx/xcache",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://belgattitude.github.io/httpx/xcache",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
     "directory": "packages/xcache"
   },
-  "keywords": [
-    "cache"
+  "files": [
+    "dist"
   ],
-  "sideEffects": false,
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.cts",
@@ -35,44 +38,73 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "directory": "_release/package"
+  },
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsdown",
-    "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
     "bench": "vitest bench --run",
     "bench-bun": "bun --bun run vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
-    "docgen": "run-s docgen-typedoc",
-    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "build": "run clean && yarn run tsdown",
+    "build-release": "yarn build && rimraf ./_release && yarn pack && mkdir ./_release && tar zxvf ./package.tgz --directory ./_release && rm ./package.tgz",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check es2022 './dist/**/*.cjs' --not './dist/*.map.js'",
     "check-dist-esm": "es-check es2022 './dist/**/*.js' --not './dist/*.map.js' --module",
     "check-pub": "attw --pack && publint",
     "check-size": "size-limit",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-xcache --dir ./coverage",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsdown --watch",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/xcache.eslintcache",
+    "format": "dx-oxfmt --write",
+    "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
+    "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-browser": "vitest run --browser",
     "test-unit-bun": "bun --bun run vitest run",
+    "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
-    "test-unit-browser": "vitest run --browser",
-    "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsgo --project tsconfig.json --noEmit",
-    "typecheck-build": "tsgo --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-xcache --dir ./coverage"
+    "typecheck-build": "tsgo --project tsconfig.build.json --noEmit"
   },
   "dependencies": {
     "@httpx/compress": "workspace:^",
     "@httpx/lru": "workspace:^",
     "@httpx/stable-hash": "workspace:^"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
+    "@httpx/devtools-vitest": "workspace:^",
+    "@httpx/dx": "workspace:^",
+    "@size-limit/file": "13.0.3",
+    "@size-limit/webpack": "13.0.3",
+    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "browserslist": "4.28.8",
+    "browserslist-to-esbuild": "2.1.1",
+    "cross-env": "10.1.0",
+    "devalue": "6.0.2",
+    "es-check": "9.6.4",
+    "esbuild": "0.28.2",
+    "fflate": "0.8.3",
+    "npm-run-all2": "9.0.3",
+    "pretty-bytes": "7.1.1",
+    "publint": "0.3.23",
+    "rimraf": "6.1.3",
+    "size-limit": "13.0.3",
+    "superjson": "2.2.6",
+    "tsdown": "0.22.14",
+    "typedoc": "0.28.20",
+    "typedoc-plugin-markdown": "4.12.0",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10",
+    "webpack": "5.109.2"
   },
   "peerDependencies": {
     "devalue": "^5.4.2 || ^6.0.0",
@@ -86,39 +118,7 @@
       "optional": true
     }
   },
-  "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.5",
-    "@belgattitude/eslint-config-bases": "8.19.1",
-    "@httpx/devtools-vitest": "workspace:^",
-    "@size-limit/file": "13.0.3",
-    "@size-limit/webpack": "13.0.3",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
-    "browserslist": "4.28.8",
-    "browserslist-to-esbuild": "2.1.1",
-    "cross-env": "10.1.0",
-    "devalue": "6.0.2",
-    "es-check": "9.6.4",
-    "esbuild": "0.28.2",
-    "eslint": "8.57.1",
-    "fflate": "0.8.3",
-    "npm-run-all2": "9.0.3",
-    "prettier": "3.9.6",
-    "pretty-bytes": "7.1.1",
-    "publint": "0.3.23",
-    "rimraf": "6.1.3",
-    "size-limit": "13.0.3",
-    "superjson": "2.2.6",
-    "tsdown": "0.22.14",
-    "typedoc": "0.28.20",
-    "typedoc-plugin-markdown": "4.12.0",
-    "typescript": "6.0.3",
-    "vitest": "4.1.10",
-    "webpack": "5.109.2"
-  },
   "engines": {
     "node": ">=20"
-  },
-  "publishConfig": {
-    "directory": "_release/package"
   }
 }

@@ -1,7 +1,7 @@
-import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpClientException } from "../base/HttpClientException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 429 Too Many Requests (client)
@@ -12,7 +12,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  * @see https://httpstatus.in/429/
  */
 const status = 429;
-const name = 'TooManyRequests';
+const name = "TooManyRequests";
 export class HttpTooManyRequests extends HttpClientException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {

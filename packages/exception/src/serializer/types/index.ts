@@ -3,9 +3,9 @@
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#error_types
  * @see https://262.ecma-international.org/12.0/#sec-well-known-intrinsic-objects
  */
-import type { HttpErrorStatusCodeOrNumber } from '../../types/HttpErrorStatusCodeOrNumber';
-import type { HttpMethod } from '../../types/HttpMethod';
-import type { HttpValidationIssue } from '../../types/HttpValidationIssue';
+import type { HttpErrorStatusCodeOrNumber } from "../../types/HttpErrorStatusCodeOrNumber";
+import type { HttpMethod } from "../../types/HttpMethod";
+import type { HttpValidationIssue } from "../../types/HttpValidationIssue";
 
 export type NativeError =
   | Error
@@ -16,7 +16,7 @@ export type NativeError =
   | TypeError
   | URIError;
 
-type DiscriminateSerializable<T extends Serializable['__type']> = Extract<
+type DiscriminateSerializable<T extends Serializable["__type"]> = Extract<
   Serializable,
   { __type: T }
 >;
@@ -48,19 +48,19 @@ export type HttpExceptionFields = NativeErrorFields & {
 
 export type Serializable =
   | ({
-      __type: 'HttpException';
+      __type: "HttpException";
     } & HttpExceptionFields)
   | ({
-      __type: 'NativeError';
+      __type: "NativeError";
     } & NativeErrorFields)
   | ({
-      __type: 'NonNativeError';
+      __type: "NonNativeError";
     } & NativeErrorFields);
 
 export type SerializableHttpException =
-  DiscriminateSerializable<'HttpException'>;
+  DiscriminateSerializable<"HttpException">;
 
-export type SerializableError = DiscriminateSerializable<'NativeError'>;
+export type SerializableError = DiscriminateSerializable<"NativeError">;
 
 export type SerializableNonNativeError =
-  DiscriminateSerializable<'NonNativeError'>;
+  DiscriminateSerializable<"NonNativeError">;

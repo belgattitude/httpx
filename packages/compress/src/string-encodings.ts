@@ -1,7 +1,7 @@
-export type SupportedStringEncodings = 'base64' | 'base64_urlsafe';
+export type SupportedStringEncodings = "base64" | "base64_urlsafe";
 export const supportedStringEncodings = [
-  'base64',
-  'base64_urlsafe',
+  "base64",
+  "base64_urlsafe",
 ] as const satisfies SupportedStringEncodings[];
 
 export type EncodeStringOptions = {

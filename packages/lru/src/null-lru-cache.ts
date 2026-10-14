@@ -1,10 +1,10 @@
-import type { LruCacheParams } from './lru-cache';
-import type { ILruCache } from './lru-cache.interface';
+import type { LruCacheParams } from "./lru-cache";
+import type { ILruCache } from "./lru-cache.interface";
 import type {
   BaseCacheKeyTypes,
   LruCacheHasOptions,
   SupportedCacheValues,
-} from './types';
+} from "./types";
 
 export class NullLruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
@@ -20,7 +20,6 @@ export class NullLruCache<
    * const lru = new NullLruCache({ maxSize: 1000 });
    * ```
    */
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(_params: LruCacheParams<TValue, TKey>) {}
 
   readonly size = 0;
@@ -45,7 +44,7 @@ export class NullLruCache<
   }
 
   getOrSet<T extends TValue>(_key: TKey, valueOrFn: T | (() => T)): T {
-    return typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
+    return typeof valueOrFn === "function" ? valueOrFn() : valueOrFn;
   }
 
   peek(_key: TKey): undefined {
@@ -56,6 +55,5 @@ export class NullLruCache<
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   *[Symbol.iterator](): IterableIterator<[TKey, TValue]> {}
 }

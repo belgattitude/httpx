@@ -1,10 +1,10 @@
-import type { ILruCache } from './lru-cache.interface';
+import type { ILruCache } from "./lru-cache.interface";
 import type {
   BaseCacheKeyTypes,
   LruCacheHasOptions,
   Milliseconds,
   SupportedCacheValues,
-} from './types';
+} from "./types";
 
 export interface ITimeLruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,

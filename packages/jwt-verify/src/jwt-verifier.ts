@@ -1,14 +1,14 @@
-import type { StandardSchemaV1 } from '@standard-schema/spec';
+import type { StandardSchemaV1 } from "@standard-schema/spec";
 import {
   createRemoteJWKSet,
   type JWSHeaderParameters,
   type JWTPayload,
   jwtVerify,
   type JWTVerifyResult,
-} from 'jose';
-import type { JOSEError } from 'jose/errors';
+} from "jose";
+import type { JOSEError } from "jose/errors";
 
-import { fail, type Result, success } from './base/result';
+import { fail, type Result, success } from "./base/result";
 import {
   type ExpiredTokenError,
   type FetchError,
@@ -16,11 +16,11 @@ import {
   JwtVerifyError,
   NotATokenError,
   SchemaValidationError,
-} from './error';
+} from "./error";
 import {
   OidcDiscoveryFetcher,
   type OidcDiscoveryOptions,
-} from './oidc-discovery-fetcher';
+} from "./oidc-discovery-fetcher";
 
 export type JwtVerifierOptions = {
   /**
@@ -141,7 +141,7 @@ export type JwtVerifierOptions = {
    *
    * @see https://standardschema.dev/schema#what-schema-libraries-implement-the-spec
    */
-  schema?: StandardSchemaV1<unknown>; // optional schema to validate payload
+  schema?: StandardSchemaV1; // optional schema to validate payload
 
   /**
    * Optionally pass options to configure the OIDC configuration fetcher.
@@ -168,7 +168,7 @@ export type JwtVerifierOptions = {
 
 const defaultVerifierOptions = {
   clockToleranceSec: 60,
-} as const satisfies Omit<JwtVerifierOptions, 'authorityHost' | 'tenantId'>;
+} as const satisfies Omit<JwtVerifierOptions, "authorityHost" | "tenantId">;
 
 type JwtVerifyErrors =
   | NotATokenError
@@ -189,8 +189,8 @@ export type ParsedJwtSuccess<TPayload extends JWTPayload = JWTPayload> = {
 };
 
 export class JwtVerifier {
-  #options: JwtVerifierOptions;
-  #oidcFetcher: OidcDiscoveryFetcher;
+  readonly #options: JwtVerifierOptions;
+  readonly #oidcFetcher: OidcDiscoveryFetcher;
 
   constructor(options: JwtVerifierOptions) {
     this.#options = options;
@@ -242,14 +242,13 @@ export class JwtVerifier {
       ParsedJwtSuccess<
         TSchema extends undefined
           ? JWTPayload
-          : // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-            StandardSchemaV1.InferOutput<TSchema> & JWTPayload
+          : StandardSchemaV1.InferOutput<TSchema> & JWTPayload
       >,
       JwtVerifyErrors
     >
   > => {
-    if (typeof token !== 'string' || token.trim().length === 0) {
-      return fail(new NotATokenError('JWT token must be a non-empty string'));
+    if (typeof token !== "string" || token.trim().length === 0) {
+      return fail(new NotATokenError("JWT token must be a non-empty string"));
     }
 
     const { authorityHost, tenantId } = this.#options;
@@ -275,7 +274,7 @@ export class JwtVerifier {
 
     const issuer = expectedIssuer ?? discovery.issuer;
 
-    const acceptedAlgos = ['RS256'];
+    const acceptedAlgos = ["RS256"];
 
     let verifyResult: JWTVerifyResult;
 
@@ -286,10 +285,10 @@ export class JwtVerifier {
         algorithms: acceptedAlgos,
         clockTolerance: clockToleranceSec,
       });
-    } catch (e) {
+    } catch (error) {
       return fail(
-        new JwtVerifyError(`Failed to verify JWT ${(e as Error).message}`, {
-          cause: e as Error | JOSEError,
+        new JwtVerifyError(`Failed to verify JWT ${(error as Error).message}`, {
+          cause: error as Error | JOSEError,
         })
       );
     }
@@ -298,16 +297,17 @@ export class JwtVerifier {
 
     type TValidatedPayload = TSchema extends undefined
       ? JWTPayload
-      : // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-        StandardSchemaV1.InferOutput<TSchema> & JWTPayload;
+      : StandardSchemaV1.InferOutput<TSchema> & JWTPayload;
 
     let validatedPayload: TValidatedPayload;
 
     const { schema } = options ?? {};
 
     if (schema) {
-      let result = schema['~standard'].validate(payload);
-      if (result instanceof Promise) result = await result;
+      let result = schema["~standard"].validate(payload);
+      if (result instanceof Promise) {
+        result = await result;
+      }
 
       if (result.issues) {
         return fail(new SchemaValidationError());
@@ -323,8 +323,14 @@ export class JwtVerifier {
       protectedHeader,
       issuer,
       jwksUri: discovery.jwks_uri,
-      expiresAt: payload.exp ? new Date(payload.exp * 1000) : undefined,
-      notBefore: payload.nbf ? new Date(payload.nbf * 1000) : undefined,
+      expiresAt:
+        payload.exp !== undefined && payload.exp !== 0
+          ? new Date(payload.exp * 1000)
+          : undefined,
+      notBefore:
+        payload.nbf !== undefined && payload.nbf !== 0
+          ? new Date(payload.nbf * 1000)
+          : undefined,
     };
 
     return success(result);

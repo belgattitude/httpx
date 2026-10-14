@@ -1,7 +1,7 @@
-import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpClientException } from "../base/HttpClientException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * Client status 417
@@ -13,7 +13,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  * @see https://httpstatus.in/417/
  */
 const status = 417;
-const name = 'ExpectationFailed';
+const name = "ExpectationFailed";
 export class HttpExpectationFailed extends HttpClientException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {

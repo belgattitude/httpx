@@ -1,10 +1,9 @@
-import { LruCache, type LruCacheParams } from '../lru-cache';
-import type { BaseCacheKeyTypes, SupportedCacheValues } from '../types';
+import { LruCache, type LruCacheParams } from "../lru-cache";
+import type { BaseCacheKeyTypes, SupportedCacheValues } from "../types";
 
 type LruCacheSingleInstanceName = string;
 
 declare global {
-  // eslint-disable-next-line no-var
   var __httpx_lru_cache_instances:
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Map<LruCacheSingleInstanceName, LruCache<any, any>> | undefined;
@@ -50,17 +49,13 @@ export const getOrCreateLruCache = <
     LruCacheSingleInstanceName,
     LruCache
   >();
-  if (!globalThis.__httpx_lru_cache_instances.has(name)) {
-    if (options?.onCreate instanceof Function) {
+  let cache = globalThis.__httpx_lru_cache_instances.get(name);
+  if (cache === undefined) {
+    if (typeof options?.onCreate === "function") {
       options.onCreate(name, lruCacheParams);
     }
-    globalThis.__httpx_lru_cache_instances.set(
-      name,
-      new LruCache<TValue, TKey>(lruCacheParams)
-    );
+    cache = new LruCache<TValue, TKey>(lruCacheParams);
+    globalThis.__httpx_lru_cache_instances.set(name, cache);
   }
-  return globalThis.__httpx_lru_cache_instances.get(name)! as LruCache<
-    TValue,
-    TKey
-  >;
+  return cache as LruCache<TValue, TKey>;
 };

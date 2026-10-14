@@ -1,8 +1,8 @@
-import { default as nextra } from 'nextra';
+import nextra from "nextra";
 
 const withNextra = nextra({
-  theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.tsx',
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.tsx",
   staticImage: true,
   defaultShowCopyCode: true,
 });
@@ -14,12 +14,12 @@ const basePath = process.env.NEXT_BUILD_ENV_BASE_PATH ?? undefined;
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  ...(basePath ? { basePath } : {}),
-  output: 'export',
+  ...(basePath !== undefined && basePath !== "" ? { basePath } : {}),
+  output: "export",
   productionBrowserSourceMaps:
-    process.env.NEXT_BUILD_ENV_SOURCEMAPS !== 'false',
+    process.env.NEXT_BUILD_ENV_SOURCEMAPS !== "false",
   typescript: {
-    ignoreBuildErrors: process.env.NEXT_BUILD_ENV_TYPECHECK === 'false',
+    ignoreBuildErrors: process.env.NEXT_BUILD_ENV_TYPECHECK === "false",
   },
   images: {
     unoptimized: true,

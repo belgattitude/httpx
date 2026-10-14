@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { PrimeReactProvider } from 'primereact/api';
-import type { FC, PropsWithChildren } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { PrimeReactProvider } from "primereact/api";
+import type { FC, PropsWithChildren } from "react";
+import { twMerge } from "tailwind-merge";
 
 const providerValue = {
   // Will add  as a pass through preset based on PrimeOne Design
@@ -16,10 +16,8 @@ const providerValue = {
   },
 };
 
-export const PrimeReactTailwindProvider: FC<PropsWithChildren> = (props) => {
-  return (
-    <PrimeReactProvider value={providerValue}>
-      {props.children}
-    </PrimeReactProvider>
-  );
-};
+export const PrimeReactTailwindProvider: FC<PropsWithChildren> = (props) => (
+  <PrimeReactProvider value={providerValue}>
+    {props.children}
+  </PrimeReactProvider>
+);

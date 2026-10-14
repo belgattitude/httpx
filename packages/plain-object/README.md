@@ -1,21 +1,12 @@
 # @httpx/plain-object
 
-[Fast](#benchmarks) and lightweight ([~80B](#bundle-size)) functions to check or assert
-that a value is a plain object.
+[Fast](#benchmarks) and lightweight ([~80B](#bundle-size)) functions to check or assert that a value is a plain object.
 
 A plain object is a basic JavaScript object, such as `{}`, `{ data: [] }`, `new Object()` or `Object.create(null)`.
 
 See how it [compares to other libraries](#comparison-with-other-libraries).
 
-[![npm](https://img.shields.io/npm/v/@httpx/plain-object?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/plain-object)
-[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/CHANGELOG.md)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-plain-object-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fplain-object)
-[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.size-limit.cjs)
-[![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![size](https://img.shields.io/bundlephobia/minzip/@httpx/plain-object@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/plain-object@latest)
-[![downloads](https://img.shields.io/npm/dm/@httpx/plain-object?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/plain-object)
-[![license](https://img.shields.io/npm/l/@httpx/plain-object?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/@httpx/plain-object?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/plain-object) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-plain-object-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fplain-object) [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.size-limit.cjs) [![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![size](https://img.shields.io/bundlephobia/minzip/@httpx/plain-object@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/plain-object@latest) [![downloads](https://img.shields.io/npm/dm/@httpx/plain-object?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/plain-object) [![license](https://img.shields.io/npm/l/@httpx/plain-object?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
 ## Install
 
@@ -87,8 +78,8 @@ isPlainObject(new (class Cls {})()); // ❌
 //    In Bun && cloudlfare, process.env is a plain object, but in other environments
 //    (browser, Nodejs, edge, cloudflare, deno), it's not.
 
-isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare, deno)
-isPlainObject(process.env);         // ✅ with Bun and cloudflare ❌ otherwise (Nodejs, edge, deno)
+isPlainObject(globalThis); // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare, deno)
+isPlainObject(process.env); // ✅ with Bun and cloudflare ❌ otherwise (Nodejs, edge, deno)
 
 // 👇 Static built-in classes aren't properly checked. This is a trade-off
 //    to maintain the best performance and size. If you need to check for these,
@@ -136,9 +127,7 @@ try {
 
 #### Generic
 
-`ìsPlainObject` and `assertPlainObject` accepts a generic to provide type
-autocompletion. Be aware that no runtime check are done. If you're looking for
-runtime validation, check zod, valibot or other alternatives.
+`ìsPlainObject` and `assertPlainObject` accepts a generic to provide type autocompletion. Be aware that no runtime check are done. If you're looking for runtime validation, check zod, valibot or other alternatives.
 
 ```typescript
 import { isPlainObject } from "@httpx/plain-object";
@@ -212,7 +201,7 @@ someFn(value);
    · lodash-es:"4.18.1": '_.isPlainObject(v)'                16,747.84  0.0467  1.8359  0.0597  0.0646  0.1725  0.2622  0.5797  ±1.46%     8375
 
  BENCH  Summary
-                                                                                                                                                                                    
+
   "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
     1.08x faster than "@sindresorhus/is":"8.0.0": 'is.plainObject(v)'
     1.09x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
@@ -230,7 +219,7 @@ someFn(value);
 ```
 
 Benchmarking is an experimental feature.
-Breaking changes might not follow SemVer, please pin Vitest's version when using it.                                                                                                
+Breaking changes might not follow SemVer, please pin Vitest's version when using it.
 
  RUN  v4.1.5 /home/sebastien/github/httpx/packages/plain-object
 
@@ -248,7 +237,7 @@ Breaking changes might not follow SemVer, please pin Vitest's version when using
    · lodash-es:"4.18.1": '_.isPlainObject(v)'                40,471.25  0.0073  2.2837  0.0247  0.0289  0.1214  0.1528  0.3628  ±1.82%    20236
 
  BENCH  Summary
-                                                                                                                                                                                    
+
   "@sindresorhus/is":"8.0.0": 'is.plainObject(v)' - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
     1.05x faster than "@httpx/plain-object": `isPlainObject(v)`
     1.10x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
@@ -277,28 +266,28 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 ## Compatibility
 
-| Level        | CI  | Description                                                                                                                                                                                                                                                                                                                                                                                       |
-| ------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Node         | ✅  | CI for 20.x, 22.x, 24.x & 26.x.                                                                                                                                                                                                                                                                                                                                                                   |
-| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                     |
-| Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.browserslistrc) |
-| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                                  |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                                |
-| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                                  |
-| Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                     |
-| ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                      |
-| Performance  | ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                              |
+| Level | CI | Description |
+| --- | --- | --- |
+| Node | ✅ | CI for 20.x, 22.x, 24.x & 26.x. |
+| Browser | ✅ | Tested with latest chrome (vitest/playwright) |
+| Browserslist | ✅ | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/.browserslistrc) |
+| Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
+| Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
+| Cloudflare | ✅ | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
+| Typescript | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
+| ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
+| Performance | ✅ | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx) |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
 ## Comparison with other libraries
 
-| Library                                                                | Compat      | Perf          | CJS+ESM |
-| ---------------------------------------------------------------------- | ----------- | ------------- | ------- |
-| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj)           | Differences | 1.17x slower  | No      |
-| [es-toolkit](https://github.com/toss/es-toolkit)                       | No          | 1.25x slower  | Yes     |
-| (@redux)[isPlainObject](https://github.com/reduxjs/redux)              | ✅ 100%     | 2.76x slower  | Yes     |
-| (lodash)[isPlainObject](https://lodash.com/docs/4.17.15#isPlainObject) | No          | 83.50x slower | No      |
+| Library | Compat | Perf | CJS+ESM |
+| --- | --- | --- | --- |
+| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj) | Differences | 1.17x slower | No |
+| [es-toolkit](https://github.com/toss/es-toolkit) | No | 1.25x slower | Yes |
+| (@redux)[isPlainObject](https://github.com/reduxjs/redux) | ✅ 100% | 2.76x slower | Yes |
+| (lodash)[isPlainObject](https://lodash.com/docs/4.17.15#isPlainObject) | No | 83.50x slower | No |
 
 ### redux/isPlainObject
 
@@ -306,8 +295,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 ### @sindresorhus/is-plain-obj
 
-This library wouldn't be possible without [@sindresorhus](https://github.com/sindresorhus) [is-plain-obj](https://github.com/sindresorhus/is-plain-obj).
-Notable differences:
+This library wouldn't be possible without [@sindresorhus](https://github.com/sindresorhus) [is-plain-obj](https://github.com/sindresorhus/is-plain-obj). Notable differences:
 
 - [x] Slightly faster (10%) and lighter
 - [x] ESM and CJS formats.
@@ -328,9 +316,7 @@ Contributions are welcome. Have a look to the [CONTRIBUTING](https://github.com/
 
 ## Sponsors
 
-If my OSS work brightens your day, let's take it to new heights together!
-[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
-or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+If my OSS work brightens your day, let's take it to new heights together! [Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>), or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
 
 ### Special thanks to
 

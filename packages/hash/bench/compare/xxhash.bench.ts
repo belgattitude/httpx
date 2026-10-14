@@ -1,7 +1,7 @@
-import { bench, describe } from 'vitest';
+import { bench, describe } from "vitest";
 
-import { createXXHash64 } from '../../src/xxhash-wasm';
-import { benchOptions } from '../bench-options';
+import { createXXHash64 } from "../../src/xxhash-wasm";
+import { benchOptions } from "../bench-options";
 
 const seeds = {
   smallStrings: Array.from({ length: 4 }).map((_, i) => `string${i}`.repeat(4)),
@@ -12,18 +12,18 @@ describe(`xxHash64`, async () => {
   bench(
     `toBigint`,
     () => {
-      seeds.smallStrings.forEach((v) => {
+      for (const v of seeds.smallStrings) {
         xxhash64.toBigint(v);
-      });
+      }
     },
     benchOptions
   );
   bench(
     `toSigned64`,
     () => {
-      seeds.smallStrings.forEach((v) => {
+      for (const v of seeds.smallStrings) {
         xxhash64.toSigned64(v);
-      });
+      }
     },
     benchOptions
   );

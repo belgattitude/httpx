@@ -1,8 +1,8 @@
-import { isHttpMethod, isHttpValidMethod } from './http.guards';
-import type { HttpMethod } from './http.types';
-import { formatErrMsg } from './messages/errorMessages';
-import type { MsgOrErrorFactory } from './types/internal.types';
-import { createAssertException } from './utils/createAssertException';
+import { isHttpMethod, isHttpValidMethod } from "./http.guards";
+import type { HttpMethod } from "./http.types";
+import { formatErrMsg } from "./messages/errorMessages";
+import type { MsgOrErrorFactory } from "./types/internal.types";
+import { createAssertException } from "./utils/createAssertException";
 /**
  * Assert the value is a valid http method (case-insensitive)
  * @throws TypeError
@@ -14,7 +14,7 @@ export function assertHttpValidMethod(
   if (!isHttpValidMethod(v)) {
     throw createAssertException(
       msgOrErrorFactory,
-      formatErrMsg('http method', v)
+      formatErrMsg("http method", v)
     );
   }
 }

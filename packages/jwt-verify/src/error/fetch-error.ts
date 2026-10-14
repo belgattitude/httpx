@@ -1,9 +1,9 @@
-import type { HTTPError } from 'ky';
+import type { HTTPError } from "ky";
 
-import { createHasInstance, type TypedError } from '../base/typed-error';
+import { createHasInstance, type TypedError } from "../base/typed-error";
 
 export class FetchError extends TypeError implements TypedError {
-  readonly type = 'fetch-error';
+  readonly type = "fetch-error";
   /**
    * Http status code that is related to the FetchError if available
    */
@@ -46,7 +46,7 @@ export class FetchError extends TypeError implements TypedError {
     this.url = params.url;
   }
   static override [Symbol.hasInstance] = createHasInstance(
-    'fetch-error',
+    "fetch-error",
     TypeError
   );
 }

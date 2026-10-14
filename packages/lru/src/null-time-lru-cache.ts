@@ -1,11 +1,11 @@
-import type { TimeLruCacheParams } from './time-lru-cache';
-import type { ITimeLruCache } from './time-lru-cache.interface';
+import type { TimeLruCacheParams } from "./time-lru-cache";
+import type { ITimeLruCache } from "./time-lru-cache.interface";
 import type {
   BaseCacheKeyTypes,
   LruCacheHasOptions,
   Milliseconds,
   SupportedCacheValues,
-} from './types';
+} from "./types";
 
 export class NullTimeLruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
@@ -21,7 +21,6 @@ export class NullTimeLruCache<
    * const lru = new NullTimeLruCache({ maxSize: 1000 });
    * ```
    */
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(_params: TimeLruCacheParams<TValue, TKey>) {}
 
   readonly size = 0;
@@ -62,7 +61,7 @@ export class NullTimeLruCache<
       forceRevalidate?: boolean;
     }
   ): T {
-    return typeof valueOrFn === 'function'
+    return typeof valueOrFn === "function"
       ? (valueOrFn as () => T)()
       : valueOrFn;
   }
@@ -75,6 +74,5 @@ export class NullTimeLruCache<
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   *[Symbol.iterator](): IterableIterator<[TKey, TValue]> {}
 }

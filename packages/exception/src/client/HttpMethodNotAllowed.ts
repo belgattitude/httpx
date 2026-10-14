@@ -1,7 +1,7 @@
-import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpClientException } from "../base/HttpClientException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 405 Method not allowed (client)
@@ -13,7 +13,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  * @see https://httpstatus.in/405/
  */
 const status = 405;
-const name = 'MethodNotAllowed';
+const name = "MethodNotAllowed";
 export class HttpMethodNotAllowed extends HttpClientException {
   static readonly STATUS = status;
   // static override readonly name = 'HttpNotFound';

@@ -1,4 +1,4 @@
-import { isParsableNumber } from './dsn-parser.util';
+import { isParsableNumber } from "./dsn-parser.util";
 
 type ParseQueryParamsOptions = {
   parseBooleans?: boolean;
@@ -21,25 +21,28 @@ export const parseQueryParams = (
     ...options,
   };
   const defaultValue = setTrueForUndefinedValues ? true : null;
-  const parts = queryParams.split('&').filter((v) => v.trim().length > 0);
-  return parts.reduce((acc, keyValuePair) => {
-    const [key, value = null] = keyValuePair.split('=') as [
+  const parts = queryParams.split("&").filter((v) => v.trim().length > 0);
+  const entries: [string, boolean | null | number | string][] = [];
+  for (const keyValuePair of parts) {
+    const [key, value = null] = keyValuePair.split("=") as [
       string,
       string | undefined,
     ];
     let val;
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       if (parseNumbers && isParsableNumber(value)) {
         val = Number.parseInt(value, 10);
       } else {
         val =
-          parseBooleans && ['false', 'true'].includes(value)
-            ? value === 'true'
+          parseBooleans && ["false", "true"].includes(value)
+            ? value === "true"
             : decodeURIComponent(value);
       }
     } else {
       val = defaultValue;
     }
-    return { ...acc, [key]: val };
-  }, {});
+    entries.push([key, val]);
+  }
+  // Object.fromEntries defines own properties (like the former spread), a "__proto__" key can't touch the prototype
+  return Object.fromEntries(entries);
 };

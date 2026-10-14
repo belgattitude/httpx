@@ -1,4 +1,4 @@
-type FetcherRelatedHttpMethod = 'get' | 'head' | 'options' | 'trace';
+type FetcherRelatedHttpMethod = "get" | "head" | "options" | "trace";
 
 export type FetchOptions = {
   /**
@@ -65,7 +65,7 @@ export const defaultFetchOptions = {
   timeoutMs: 30_000,
   retry: {
     limit: 3,
-    methods: ['get', 'head', 'options', 'trace'],
+    methods: ["get", "head", "options", "trace"],
     statusCodes: [408, 413, 429, 500, 502, 503, 504],
     afterStatusCodes: [413, 429, 503],
     maxRetryAfter: Number.POSITIVE_INFINITY,

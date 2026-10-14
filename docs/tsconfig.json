@@ -8,6 +8,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "allowImportingTsExtensions": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -21,7 +22,6 @@
   },
   "exclude": ["**/node_modules"],
   "include": [
-    ".eslintrc.*",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

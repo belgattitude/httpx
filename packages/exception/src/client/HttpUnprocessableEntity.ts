@@ -1,8 +1,8 @@
-import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParamsWithIssues } from '../types/HttpExceptionParamsWithIssues';
-import type { HttpValidationIssue } from '../types/HttpValidationIssue';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpClientException } from "../base/HttpClientException";
+import type { HttpExceptionParamsWithIssues } from "../types/HttpExceptionParamsWithIssues";
+import type { HttpValidationIssue } from "../types/HttpValidationIssue";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 422 Unprocessable entity (client / webdav specific per RFC / used for validation errors in most apis)
@@ -21,13 +21,13 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  */
 
 const status = 422;
-const name = 'UnprocessableEntity';
+const name = "UnprocessableEntity";
 export class HttpUnprocessableEntity extends HttpClientException {
   static readonly STATUS = status;
   public readonly issues: HttpValidationIssue[];
   constructor(msgOrParams?: HttpExceptionParamsWithIssues | string) {
     const { issues = [], ...restParams } =
-      typeof msgOrParams === 'string' ? {} : (msgOrParams ?? {});
+      typeof msgOrParams === "string" ? {} : (msgOrParams ?? {});
 
     super(status, getNormalizedParams(name, restParams));
     this.issues = issues;

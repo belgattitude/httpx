@@ -1,7 +1,7 @@
-import { HttpServerException } from '../base/HttpServerException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpServerException } from "../base/HttpServerException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 502 Bad Gateway (server)
@@ -12,7 +12,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502
  */
 const status = 502;
-const name = 'BadGateway';
+const name = "BadGateway";
 
 export class HttpBadGateway extends HttpServerException {
   static readonly STATUS = status;

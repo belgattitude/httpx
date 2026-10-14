@@ -1,7 +1,7 @@
-import { HttpServerException } from '../base/HttpServerException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpServerException } from "../base/HttpServerException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 503 Service Unavailable
@@ -19,7 +19,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  * @see https://httpstatus.in/503/
  */
 const status = 503;
-const name = 'ServiceUnavailable';
+const name = "ServiceUnavailable";
 export class HttpServiceUnavailable extends HttpServerException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {

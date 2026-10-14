@@ -1,6 +1,6 @@
-import type { SupportedCacheValues } from '@httpx/lru';
+import type { SupportedCacheValues } from "@httpx/lru";
 
-import type { CacheKeyTuple } from './cache-key';
+import type { CacheKeyTuple } from "./cache-key";
 
 type CacheableValues = SupportedCacheValues;
 

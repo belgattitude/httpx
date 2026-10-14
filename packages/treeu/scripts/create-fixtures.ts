@@ -1,18 +1,18 @@
-import { type Stats, statSync } from 'node:fs';
-import path from 'node:path';
+import { type Stats, statSync } from "node:fs";
+import path from "node:path";
 
-import { globSync } from 'tinyglobby';
+import { globSync } from "tinyglobby";
 
-import { DfsTreeSearch } from '../src';
+import { DfsTreeSearch } from "../src";
 import {
   type FlatTreeWsMap,
   FlatTreeWsMapper,
-} from '../src/mapper/flat-tree-ws-mapper';
+} from "../src/mapper/flat-tree-ws-mapper";
 
 const baseDir = path.dirname(path.dirname(process.cwd()));
 console.log(baseDir);
 
-const files = globSync(['**/*', '!.*', '!**/.cache'], {
+const files = globSync(["**/*", "!.*", "!**/.cache"], {
   cwd: baseDir,
   absolute: false,
   dot: true,
@@ -23,13 +23,13 @@ const files = globSync(['**/*', '!.*', '!**/.cache'], {
 
 type PathStats = {
   type:
-    | 'file'
-    | 'directory'
-    | 'socket'
-    | 'fifo'
-    | 'symlink'
-    | 'block-device'
-    | 'character-device';
+    | "file"
+    | "directory"
+    | "socket"
+    | "fifo"
+    | "symlink"
+    | "block-device"
+    | "character-device";
   size: number;
   atime: Date;
   mtime: Date;
@@ -39,30 +39,39 @@ type PathStats = {
 
 const flat: FlatTreeWsMap<PathStats> = new Map();
 
-const getFileType = (stats: Stats): PathStats['type'] => {
+const getFileType = (stats: Stats): PathStats["type"] => {
+  // oxlint-disable-next-line typescript/switch-exhaustiveness-check -- switch(true) pattern over Stats predicates
   switch (true) {
-    case stats.isFile():
-      return 'file';
-    case stats.isDirectory():
-      return 'directory';
-    case stats.isFIFO():
-      return 'fifo';
-    case stats.isSocket():
-      return 'socket';
-    case stats.isBlockDevice():
-      return 'block-device';
-    case stats.isCharacterDevice():
-      return 'character-device';
-    case stats.isSymbolicLink():
-      return 'symlink';
-    default:
-      throw new Error('Unsupported file type');
+    case stats.isFile(): {
+      return "file";
+    }
+    case stats.isDirectory(): {
+      return "directory";
+    }
+    case stats.isFIFO(): {
+      return "fifo";
+    }
+    case stats.isSocket(): {
+      return "socket";
+    }
+    case stats.isBlockDevice(): {
+      return "block-device";
+    }
+    case stats.isCharacterDevice(): {
+      return "character-device";
+    }
+    case stats.isSymbolicLink(): {
+      return "symlink";
+    }
+    default: {
+      throw new Error("Unsupported file type");
+    }
   }
 };
 
 for (const file of files) {
   const stats = statSync(path.join(baseDir, file));
-  const fileWithSeparator = file.replace(/\/$/, '');
+  const fileWithSeparator = file.replace(/\/$/, "");
   flat.set(fileWithSeparator, {
     type: getFileType(stats),
     size: stats.size,
@@ -76,10 +85,10 @@ for (const file of files) {
 console.log(flat.keys());
 // throw new Error('cool');
 const tree = new FlatTreeWsMapper<PathStats>().toTreeNodesOrThrow(flat, {
-  separator: '/',
+  separator: "/",
 });
 
 const search = new DfsTreeSearch<PathStats>(tree);
-const first = search.findOne((node) => node.id.includes('.d.ts'));
+const first = search.findOne((node) => node.id.includes(".d.ts"));
 
 console.log(first);

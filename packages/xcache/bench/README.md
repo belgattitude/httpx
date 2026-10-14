@@ -1,4 +1,4 @@
-## @httpx/xcache 
+## @httpx/xcache
 
 Benchmarks to measure [@httpx/xcache](../README.md) performance.
 
@@ -10,4 +10,3 @@ cd packages/xcache
 yarn build
 yarn bench
 ```
-

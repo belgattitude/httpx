@@ -1,7 +1,7 @@
-import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpClientException } from "../base/HttpClientException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 418 I'm a teapot (client)
@@ -13,7 +13,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  */
 
 const status = 418;
-const name = 'ImATeapot';
+const name = "ImATeapot";
 
 export class HttpImATeapot extends HttpClientException {
   static readonly STATUS = status;

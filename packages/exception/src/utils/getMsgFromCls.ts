@@ -5,11 +5,11 @@ const splitCapsRegexp = /[A-Z]/g;
  */
 export const getMsgFromCls = (className: string) => {
   const preserveName =
-    className.endsWith('Exception') || className === 'HttpVersionNotSupported';
+    className.endsWith("Exception") || className === "HttpVersionNotSupported";
   return (preserveName ? className : className.slice(4))
     .replaceAll(splitCapsRegexp, (match) => ` ${match}`)
     .trim()
-    .split(' ')
+    .split(" ")
     .map((word, idx) => (idx === 0 ? word : word.toLowerCase()))
-    .join(' ');
+    .join(" ");
 };

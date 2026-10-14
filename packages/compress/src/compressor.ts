@@ -1,14 +1,14 @@
-import { uint8ArrayToBase64 } from 'uint8array-extras';
+import { uint8ArrayToBase64 } from "uint8array-extras";
 
-import type { SupportedCompressionAlgorithm } from './compression-algorithm';
-import { globalCache } from './global-cache';
+import type { SupportedCompressionAlgorithm } from "./compression-algorithm";
+import { globalCache } from "./global-cache";
 import {
   type EncodeStringOptions,
   supportedStringEncodings,
-} from './string-encodings';
+} from "./string-encodings";
 
 export class Compressor {
-  #algorithm: SupportedCompressionAlgorithm;
+  readonly #algorithm: SupportedCompressionAlgorithm;
 
   /**
    * Create a new Compressor instance.
@@ -44,7 +44,7 @@ export class Compressor {
     const readableStream = new ReadableStream({
       start(controller) {
         controller.enqueue(
-          typeof data === 'string'
+          typeof data === "string"
             ? globalCache.utf8TextEncoder.encode(data)
             : data
         );
@@ -79,12 +79,12 @@ export class Compressor {
     data: T,
     options?: EncodeStringOptions
   ): Promise<string> => {
-    const { encoding = 'base64' } = options ?? {};
+    const { encoding = "base64" } = options ?? {};
     if (!supportedStringEncodings.includes(encoding)) {
       throw new TypeError(`Unsupported string encoding: ${encoding}`);
     }
     return uint8ArrayToBase64(await this.toUint8Array(data), {
-      urlSafe: encoding === 'base64_urlsafe',
+      urlSafe: encoding === "base64_urlsafe",
     });
   };
 }

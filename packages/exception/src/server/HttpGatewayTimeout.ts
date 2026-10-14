@@ -1,7 +1,7 @@
-import { HttpServerException } from '../base/HttpServerException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpServerException } from "../base/HttpServerException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 504 Gateway Timeout (server)
@@ -12,7 +12,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  * @see https://httpstatus.in/504/
  */
 const status = 504;
-const name = 'GatewayTimeout';
+const name = "GatewayTimeout";
 export class HttpGatewayTimeout extends HttpServerException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {

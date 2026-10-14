@@ -1,7 +1,7 @@
 export const isTrivialValue = (data: unknown): boolean => {
   const dataType = typeof data;
   if (
-    ['boolean', 'number', 'bigint', 'symbol', 'undefined', 'function'].includes(
+    ["boolean", "number", "bigint", "symbol", "undefined", "function"].includes(
       dataType
     ) ||
     data === null

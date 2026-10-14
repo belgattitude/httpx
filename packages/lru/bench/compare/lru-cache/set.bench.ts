@@ -1,7 +1,7 @@
-import { bench, describe } from 'vitest';
+import { bench, describe } from "vitest";
 
-import { benchOptions, benchSeeds } from '../../bench-options';
-import { getLruCaches } from '../../get-lru-caches';
+import { benchOptions, benchSeeds } from "../../bench-options";
+import { getLruCaches } from "../../get-lru-caches";
 
 const seeds = benchSeeds.getSeeds();
 
@@ -13,9 +13,9 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${seeds.length}`, asyn
   bench(
     `@httpx/lru.set() - ts files (dev)`,
     () => {
-      seeds.forEach(({ key, value }) =>
-        lrus['@httpx/lru'].cache.set(key, value)
-      );
+      for (const { key, value } of seeds) {
+        lrus["@httpx/lru"].cache.set(key, value);
+      }
     },
     benchOptions
   );
@@ -23,10 +23,10 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${seeds.length}`, asyn
   bench(
     `@httpx/lru.set() - compiled (dist)`,
     () => {
-      if ('@httpx/lru(compiled)' in lrus) {
-        seeds.forEach(({ key, value }) =>
-          lrus['@httpx/lru(compiled)']!.cache.set(key, value)
-        );
+      if ("@httpx/lru(compiled)" in lrus) {
+        for (const { key, value } of seeds) {
+          lrus["@httpx/lru(compiled)"].cache.set(key, value);
+        }
       }
     },
     benchOptions
@@ -35,29 +35,31 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${seeds.length}`, asyn
   bench(
     `@httpx/time-lru.set() - compiled (dist)`,
     () => {
-      seeds.forEach(({ key, value }) =>
-        lrus['@httpx/time-lru(compiled)']!.cache.set(key, value)
-      );
+      if ("@httpx/time-lru(compiled)" in lrus) {
+        for (const { key, value } of seeds) {
+          lrus["@httpx/time-lru(compiled)"].cache.set(key, value);
+        }
+      }
     },
     benchOptions
   );
 
   bench(
-    `quick-lru@${lrus['quick-lru'].version}.set()`,
+    `quick-lru@${lrus["quick-lru"].version}.set()`,
     () => {
-      seeds.forEach(({ key, value }) =>
-        lrus['quick-lru'].cache.set(key, value)
-      );
+      for (const { key, value } of seeds) {
+        lrus["quick-lru"].cache.set(key, value);
+      }
     },
     benchOptions
   );
 
   bench(
-    `lru-cache@${lrus['lru-cache'].version}.set()`,
+    `lru-cache@${lrus["lru-cache"].version}.set()`,
     () => {
-      seeds.forEach(({ key, value }) =>
-        lrus['lru-cache'].cache.set(key, value)
-      );
+      for (const { key, value } of seeds) {
+        lrus["lru-cache"].cache.set(key, value);
+      }
     },
     benchOptions
   );

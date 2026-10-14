@@ -1,6 +1,6 @@
-import { formatErrMsg } from './messages/errorMessages';
-import type { MsgOrErrorFactory } from './types/internal.types';
-import { createAssertException } from './utils/createAssertException';
+import { formatErrMsg } from "./messages/errorMessages";
+import type { MsgOrErrorFactory } from "./types/internal.types";
+import { createAssertException } from "./utils/createAssertException";
 
 /**
  * @throws TypeError
@@ -11,7 +11,7 @@ export function assertNever(
 ): never {
   throw createAssertException(
     msgOrErrorFactory,
-    formatErrMsg('A value is not expected (assertNever)', v, {
+    formatErrMsg("A value is not expected (assertNever)", v, {
       pfx: false,
     })
   );

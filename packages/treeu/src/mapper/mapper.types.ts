@@ -1,4 +1,4 @@
-import type { TreeNode, TreeNodeValue } from '../tree.types';
+import type { TreeNode, TreeNodeValue } from "../tree.types";
 
 export type TreeMapperResult<
   TValue extends TreeNodeValue | undefined,

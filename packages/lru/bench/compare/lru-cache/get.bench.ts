@@ -1,7 +1,7 @@
-import { bench, describe } from 'vitest';
+import { bench, describe } from "vitest";
 
-import { benchOptions, benchSeeds } from '../../bench-options';
-import { getLruCaches } from '../../get-lru-caches';
+import { benchOptions, benchSeeds } from "../../bench-options";
+import { getLruCaches } from "../../get-lru-caches";
 
 const { lruMaxSize } = benchSeeds;
 
@@ -16,7 +16,9 @@ describe(`LruCache.get() - ${seeds.length} items / maxSize: ${lruMaxSize}`, asyn
   bench(
     `@httpx/lru.get() - ts files (dev)`,
     () => {
-      seeds.forEach(({ key }) => lrus['@httpx/lru'].cache.get(key));
+      for (const { key } of seeds) {
+        lrus["@httpx/lru"].cache.get(key);
+      }
     },
     benchOptions
   );
@@ -24,10 +26,10 @@ describe(`LruCache.get() - ${seeds.length} items / maxSize: ${lruMaxSize}`, asyn
   bench(
     `@httpx/lru.get() - compiled (dist)`,
     () => {
-      if ('@httpx/lru(compiled)' in lrus) {
-        seeds.forEach(({ key }) =>
-          lrus['@httpx/lru(compiled)']!.cache.get(key)
-        );
+      if ("@httpx/lru(compiled)" in lrus) {
+        for (const { key } of seeds) {
+          lrus["@httpx/lru(compiled)"].cache.get(key);
+        }
       }
     },
     benchOptions
@@ -36,7 +38,9 @@ describe(`LruCache.get() - ${seeds.length} items / maxSize: ${lruMaxSize}`, asyn
   bench(
     `@httpx/time-lru.get() - ts files (dev)`,
     () => {
-      seeds.forEach(({ key }) => lrus['@httpx/time-lru'].cache.get(key));
+      for (const { key } of seeds) {
+        lrus["@httpx/time-lru"].cache.get(key);
+      }
     },
     benchOptions
   );
@@ -44,25 +48,31 @@ describe(`LruCache.get() - ${seeds.length} items / maxSize: ${lruMaxSize}`, asyn
   bench(
     `@httpx/time-lru.get() - compiled (dist)`,
     () => {
-      seeds.forEach(({ key }) =>
-        lrus['@httpx/time-lru(compiled)']!.cache.get(key)
-      );
+      if ("@httpx/time-lru(compiled)" in lrus) {
+        for (const { key } of seeds) {
+          lrus["@httpx/time-lru(compiled)"].cache.get(key);
+        }
+      }
     },
     benchOptions
   );
 
   bench(
-    `quick-lru@${lrus['quick-lru'].version}.get()`,
+    `quick-lru@${lrus["quick-lru"].version}.get()`,
     () => {
-      seeds.forEach(({ key }) => lrus['quick-lru'].cache.get(key));
+      for (const { key } of seeds) {
+        lrus["quick-lru"].cache.get(key);
+      }
     },
     benchOptions
   );
 
   bench(
-    `lru-cache@${lrus['lru-cache'].version}.get()`,
+    `lru-cache@${lrus["lru-cache"].version}.get()`,
     () => {
-      seeds.forEach(({ key }) => lrus['lru-cache'].cache.get(key));
+      for (const { key } of seeds) {
+        lrus["lru-cache"].cache.get(key);
+      }
     },
     benchOptions
   );

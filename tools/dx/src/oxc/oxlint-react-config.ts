@@ -5,6 +5,7 @@ import tanstack from "ultracite/oxlint/tanstack";
 import tanstackJsPlugins from "ultracite/oxlint/tanstack/js-plugins";
 
 import { oxlintDefaultConfig } from "./oxlint-default-config.ts";
+import { resolveJsPlugin } from "./resolve-js-plugin.ts";
 
 /**
  * oxlint-tailwindcss rules (Tailwind CSS v4), at the severity the plugin recommends.
@@ -125,11 +126,8 @@ export const createOxlintReactConfig = (options: OxlintReactConfigOptions) =>
   defineConfig({
     extends: [oxlintDefaultConfig, react, tanstack, tanstackJsPlugins],
     jsPlugins: [
-      "oxlint-tailwindcss",
-      {
-        name: "@tanstack/query",
-        specifier: "@tanstack/eslint-plugin-query",
-      },
+      resolveJsPlugin("tailwindcss", "oxlint-tailwindcss"),
+      resolveJsPlugin("@tanstack/query", "@tanstack/eslint-plugin-query"),
     ],
     settings: {
       ...jsPluginSettings,
@@ -137,7 +135,14 @@ export const createOxlintReactConfig = (options: OxlintReactConfigOptions) =>
         // mapped by glob so the rules also run on the plain `*.ts` files (`cva()`, `cn()`, `className` variables, ...)
         entryPoint: [
           {
-            files: ["**/*.ts", "**/*.tsx"],
+            files: [
+              "**/*.ts",
+              "**/*.tsx",
+              "**/*.js",
+              "**/*.jsx",
+              "**/*.mjs",
+              "**/*.cjs",
+            ],
             use: options.tailwindEntryPoint,
           },
         ],

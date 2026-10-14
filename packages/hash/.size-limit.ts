@@ -1,11 +1,11 @@
-import type { SizeLimitConfig } from 'size-limit';
+import type { SizeLimitConfig } from "size-limit";
 
 const config = [
   {
-    name: 'import xxhash-wasm (ESM)',
-    path: ['dist/xxhash-wasm/index.js'],
-    import: '{ createXXHash64 }',
-    limit: '826B',
+    name: "import xxhash-wasm (ESM)",
+    path: ["dist/xxhash-wasm/index.js"],
+    import: "{ createXXHash64 }",
+    limit: "826B",
   },
 ] satisfies SizeLimitConfig;
 

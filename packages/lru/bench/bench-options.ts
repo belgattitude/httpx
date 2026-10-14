@@ -1,4 +1,4 @@
-import { vitestBenchOptionsConfig } from '@httpx/devtools-vitest';
+import { vitestBenchOptionsConfig } from "@httpx/devtools-vitest";
 
 const defaultOptions = vitestBenchOptionsConfig.createBenchOptions({
   iterations: {
@@ -19,10 +19,8 @@ const SEEDS_COUNT = isCiOrCodSpeed ? 10 : 1000;
 export const benchSeeds = {
   lruMaxSize: SEEDS_COUNT,
   lruMaxSizeHalf: Math.floor(SEEDS_COUNT / 2),
-  getSeeds: () => {
-    return Array.from({ length: SEEDS_COUNT }).map((_, i) => ({
-      key: `key-${i}`,
-      value: `value-${i}`,
-    }));
-  },
+  getSeeds: () =>
+    Array.from({ length: SEEDS_COUNT }).map((_, i) => {
+      return { key: `key-${i}`, value: `value-${i}` };
+    }),
 };

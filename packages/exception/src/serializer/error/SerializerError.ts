@@ -1,4 +1,4 @@
-import { supportsErrorCause } from '../../support/supportsErrorCause';
+import { supportsErrorCause } from "../../support/supportsErrorCause";
 
 export class SerializerError extends Error {
   constructor(
@@ -13,6 +13,6 @@ export class SerializerError extends Error {
       this.cause = cause;
     }
     Object.setPrototypeOf(this, SerializerError.prototype);
-    this.name = 'SerializerError';
+    this.name = "SerializerError";
   }
 }

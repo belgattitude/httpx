@@ -1,3 +1,3 @@
-import { createVitestCloudflareConfig } from '@httpx/devtools-vitest';
+import { createVitestCloudflareConfig } from "@httpx/devtools-vitest";
 
 export default createVitestCloudflareConfig();

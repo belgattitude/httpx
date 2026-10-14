@@ -1,25 +1,28 @@
 {
   "name": "@httpx/hash",
-  "description": "Collection of hash functions",
   "version": "0.4.0",
-  "license": "MIT",
-  "author": {
-    "name": "Vanvelthem Sébastien",
-    "url": "https://github.com/belgattitude"
-  },
-  "homepage": "https://belgattitude.github.io/httpx/hash",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/belgattitude/httpx.git",
-    "directory": "packages/hash"
-  },
+  "description": "Collection of hash functions",
   "keywords": [
     "hash",
     "md5",
     "spark"
   ],
-  "sideEffects": false,
+  "homepage": "https://belgattitude.github.io/httpx/hash",
+  "license": "MIT",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/belgattitude/httpx.git",
+    "directory": "packages/hash"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "httpx-monorepo-source": "./src/index.ts",
@@ -33,50 +36,41 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && yarn run tsdown",
-    "build-release": "run build",
     "bench": "vitest bench --run",
     "bench-bun": "bun --bun run vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
-    "docgen": "run-s docgen-typedoc",
-    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "build": "run clean && yarn run tsdown",
+    "build-release": "run build",
     "check-dist": "es-check es2022 './dist/**/*.js' --not './dist/*.map.js' --module",
     "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-hash-unit --dir ./coverage",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsdown --watch",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/hash.eslintcache",
+    "format": "dx-oxfmt --write",
+    "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
+    "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-browser": "vitest run --browser",
     "test-unit-bun": "bun --bun run vitest run",
+    "test-unit-cloudflare-disabled": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
-    "test-unit-browser": "vitest run --browser",
-    "test-unit-cloudflare-disabled": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "tsgo --project tsconfig.json --noEmit",
-    "typecheck-build": "tsgo --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-hash-unit --dir ./coverage"
-  },
-  "peerDependencies": {
-    "xxhash-wasm": "^1.1.0"
-  },
-  "peerDependenciesMeta": {
-    "xxhash-wasm": {
-      "optional": true
-    }
+    "typecheck-build": "tsgo --project tsconfig.build.json --noEmit"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
-    "@belgattitude/eslint-config-bases": "8.19.1",
     "@httpx/devtools-vitest": "workspace:^",
+    "@httpx/dx": "workspace:^",
     "@size-limit/file": "13.0.3",
     "@size-limit/webpack": "13.0.3",
     "@types/lodash-es": "4.17.12",
@@ -86,9 +80,7 @@
     "cross-env": "10.1.0",
     "es-check": "9.6.4",
     "esbuild": "0.28.2",
-    "eslint": "8.57.1",
     "npm-run-all2": "9.0.3",
-    "prettier": "3.9.6",
     "publint": "0.3.23",
     "rimraf": "6.1.3",
     "size-limit": "13.0.3",
@@ -99,6 +91,14 @@
     "vitest": "4.1.10",
     "webpack": "5.109.2",
     "xxhash-wasm": "1.1.0"
+  },
+  "peerDependencies": {
+    "xxhash-wasm": "^1.1.0"
+  },
+  "peerDependenciesMeta": {
+    "xxhash-wasm": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=20.9.0"

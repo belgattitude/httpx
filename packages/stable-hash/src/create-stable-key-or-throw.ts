@@ -1,10 +1,10 @@
-import { isPlainObject } from '@httpx/plain-object';
+import { isPlainObject } from "@httpx/plain-object";
 
-import { sortArr } from './sort-arr';
-import { sortObjKeys } from './sort-obj-keys';
-import type { CreateStableKeyOptions, SupportedDataTypesRW } from './types';
+import { sortArr } from "./sort-arr";
+import { sortObjKeys } from "./sort-obj-keys";
+import type { CreateStableKeyOptions, SupportedDataTypesRW } from "./types";
 
-const baseTypes = new Set(['string', 'number', 'boolean']);
+const baseTypes = new Set(["string", "number", "boolean"]);
 
 /**
  * Create a stable key from a given value useful for caching or memoization.
@@ -44,7 +44,7 @@ export const createStableKeyOrThrow = <T extends SupportedDataTypesRW>(
   const { sortArrayValues = true } = options ?? {};
   return JSON.stringify(value, (_, val) => {
     if (val === undefined) {
-      return '[undefined]';
+      return "[undefined]";
     }
     if (val === null) {
       return null;
@@ -54,7 +54,7 @@ export const createStableKeyOrThrow = <T extends SupportedDataTypesRW>(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return val;
     }
-    if (valType === 'bigint') {
+    if (valType === "bigint") {
       return `[${val}n]`;
     }
     if (Array.isArray(val)) {

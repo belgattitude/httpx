@@ -2,7 +2,7 @@ import type {
   BaseCacheKeyTypes,
   LruCacheHasOptions,
   SupportedCacheValues,
-} from './types';
+} from "./types";
 
 export interface ILruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,

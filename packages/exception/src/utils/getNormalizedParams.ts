@@ -1,5 +1,5 @@
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getMsgFromCls } from './getMsgFromCls';
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getMsgFromCls } from "./getMsgFromCls";
 
 /**
  * Return params applicable to parent HttpException class when calling super();
@@ -11,7 +11,7 @@ export const getNormalizedParams = (
   msgOrParams?: HttpExceptionParams | string
 ): HttpExceptionParams => {
   const { message, ...rest } = {
-    ...(typeof msgOrParams === 'string'
+    ...(typeof msgOrParams === "string"
       ? { message: msgOrParams }
       : (msgOrParams ?? {})),
   };

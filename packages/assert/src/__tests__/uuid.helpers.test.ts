@@ -1,10 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 
-import { isUuidVersion } from '../uuid.guards';
-import type { UuidVersion } from '../uuid.types';
+import { isUuidVersion } from "../uuid.guards";
+import type { UuidVersion } from "../uuid.types";
 
-describe('Uuid typeguards tests', () => {
-  describe('isUuidVersion', () => {
+describe("Uuid typeguards tests", () => {
+  describe("isUuidVersion", () => {
     it.each([
       [true, 1],
       [true, 3],
@@ -14,7 +14,7 @@ describe('Uuid typeguards tests', () => {
       [false, Number.NaN],
       [false, {}],
     ])(
-      'isUuidVersion should return %s when version is %s and value is %s',
+      "isUuidVersion should return %s when version is %s and value is %s",
       (expected, v) => {
         expect(isUuidVersion(v as UuidVersion | undefined)).toBe(expected);
       }

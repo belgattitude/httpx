@@ -1,2 +1,2 @@
-export { Compressor } from './compressor';
-export { Decompressor } from './decompressor';
+export { Compressor } from "./compressor";
+export { Decompressor } from "./decompressor";

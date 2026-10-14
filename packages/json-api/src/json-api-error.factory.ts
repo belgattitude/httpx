@@ -1,6 +1,6 @@
-import { type HttpException, isHttpException } from '@httpx/exception';
+import { type HttpException, isHttpException } from "@httpx/exception";
 
-import type { JsonApiError } from './json-api-response.types';
+import type { JsonApiError } from "./json-api-response.types";
 
 export class JsonApiErrorFactory {
   static readonly fromCatchVariable = (
@@ -8,7 +8,7 @@ export class JsonApiErrorFactory {
     defaultHttpStatus = 500
   ): JsonApiError => {
     const e =
-      typeof error === 'string' || error instanceof Error
+      typeof error === "string" || error instanceof Error
         ? error
         : `Unknown error (type of catched variable: ${typeof error}`;
     return JsonApiErrorFactory.fromHttpException(e, defaultHttpStatus);
@@ -19,7 +19,7 @@ export class JsonApiErrorFactory {
     /** fallback http status if it can't be inferred from exception */
     defaultHttpStatus = 500
   ): JsonApiError => {
-    if (typeof exception === 'string') {
+    if (typeof exception === "string") {
       return {
         status: defaultHttpStatus,
         title: exception,
@@ -34,6 +34,7 @@ export class JsonApiErrorFactory {
     const { message, status, statusCode } = {
       status: null,
       statusCode: null,
+      // oxlint-disable-next-line typescript/no-misused-spread -- only the own enumerable props (status, statusCode) are read
       ...exception,
     };
     return {

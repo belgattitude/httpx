@@ -1,8 +1,9 @@
-import { createStableHashOrThrow } from './create-stable-hash-or-throw';
-import type { CreateStableHashOptions, SupportedDataTypesRW } from './types';
+import { createStableHashOrThrow } from "./create-stable-hash-or-throw";
+import type { CreateStableHashOptions, SupportedDataTypesRW } from "./types";
 
 type Result =
-  { success: true; hash: string } | { success: false; error: Error };
+  | { success: true; hash: string }
+  | { success: false; error: Error };
 
 /**
  * Create a stable sha-256/hexadecimal hash from a value. Useful for caching
@@ -49,7 +50,7 @@ export const createStableHash = async <T extends SupportedDataTypesRW>(
       success: true,
       hash,
     };
-  } catch (e) {
-    return { success: false, error: e as TypeError };
+  } catch (error) {
+    return { success: false, error: error as TypeError };
   }
 };

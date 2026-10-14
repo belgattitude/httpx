@@ -1,7 +1,7 @@
-import { HttpServerException } from '../base/HttpServerException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpServerException } from "../base/HttpServerException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 501 Not Implemented
@@ -14,7 +14,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  */
 
 const status = 501;
-const name = 'NotImplemented';
+const name = "NotImplemented";
 export class HttpNotImplemented extends HttpServerException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {

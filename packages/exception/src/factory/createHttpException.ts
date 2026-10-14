@@ -1,14 +1,14 @@
-import { HttpClientException } from '../base/HttpClientException';
-import { HttpException } from '../base/HttpException';
-import { HttpServerException } from '../base/HttpServerException';
-import { statusMap } from '../status';
-import { isHttpErrorStatusCode } from '../typeguards/isHttpErrorStatusCode';
-import type { AssignedErrorStatusCodes } from '../types/AssignedErrorStatusCodes';
+import { HttpClientException } from "../base/HttpClientException";
+import { HttpException } from "../base/HttpException";
+import { HttpServerException } from "../base/HttpServerException";
+import { statusMap } from "../status";
+import { isHttpErrorStatusCode } from "../typeguards/isHttpErrorStatusCode";
+import type { AssignedErrorStatusCodes } from "../types/AssignedErrorStatusCodes";
 import type {
   HttpExceptionFromStatus,
   HttpExceptionParamsFromStatus,
-} from '../types/FromStatusCode';
-import type { HttpErrorStatusCodeOrNumber } from '../types/HttpErrorStatusCodeOrNumber';
+} from "../types/FromStatusCode";
+import type { HttpErrorStatusCodeOrNumber } from "../types/HttpErrorStatusCodeOrNumber";
 
 /**
  * Create a concrete http exception object from a given http status code.
@@ -30,7 +30,7 @@ export const createHttpException = <T extends HttpErrorStatusCodeOrNumber>(
 ): HttpExceptionFromStatus<T> => {
   if (isHttpErrorStatusCode<AssignedErrorStatusCodes>(statusCode)) {
     const cls = statusMap?.[statusCode];
-    if (cls) {
+    if (cls !== undefined) {
       return new cls(msgOrParams) as HttpExceptionFromStatus<T>;
     }
     return (

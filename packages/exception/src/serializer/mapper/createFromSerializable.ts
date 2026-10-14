@@ -1,11 +1,11 @@
-import type { HttpException } from '../../base';
-import { createHttpException } from '../../factory/createHttpException';
-import type { HttpExceptionParamsWithIssues } from '../../types/HttpExceptionParamsWithIssues';
+import type { HttpException } from "../../base";
+import { createHttpException } from "../../factory/createHttpException";
+import type { HttpExceptionParamsWithIssues } from "../../types/HttpExceptionParamsWithIssues";
 import {
   baseExceptionMap,
   isBaseHttpException,
   nativeErrorMap,
-} from '../typeguard';
+} from "../typeguard";
 import type {
   NativeError,
   Serializable,
@@ -13,12 +13,12 @@ import type {
   SerializableHttpException,
   SerializableNonNativeError,
   SerializerParams,
-} from '../types';
+} from "../types";
 
 type MaskedUndefinedAsStringTillLibEs5SupportsExactTypes = string;
 
 const createCustomError = (
-  serializable: Omit<SerializableError | SerializableNonNativeError, '__type'>,
+  serializable: Omit<SerializableError | SerializableNonNativeError, "__type">,
   params?: SerializerParams
 ): Error | NativeError => {
   const { includeStack = false } = params ?? {};
@@ -26,6 +26,7 @@ const createCustomError = (
   const cls = nativeErrorMap[name as keyof typeof nativeErrorMap] ?? Error;
   const e: Error | NativeError = cause
     ? new cls(message, {
+        // oxlint-disable-next-line no-use-before-define -- mutual recursion, only called once the module is initialized
         cause: createFromSerializable(cause, params),
       })
     : new cls(message);
@@ -57,15 +58,16 @@ const createHttpExceptionError = (
   } = serializable;
   const exceptionParams = {
     cause: cause
-      ? createFromSerializable(cause, {
+      ? // oxlint-disable-next-line no-use-before-define -- mutual recursion, only called once the module is initialized
+        createFromSerializable(cause, {
           includeStack,
         })
       : undefined,
-    code: code,
-    errorId: errorId,
-    message: message,
-    method: method,
-    url: url,
+    code,
+    errorId,
+    message,
+    method,
+    url,
     ...(issues ? { issues } : {}),
   } satisfies HttpExceptionParamsWithIssues;
   let e: HttpException;
@@ -107,12 +109,12 @@ export const createFromSerializable = (
 ): Error | HttpException | NativeError => {
   let e: Error | HttpException | NativeError;
   switch (payload.__type) {
-    case 'HttpException': {
+    case "HttpException": {
       e = createHttpExceptionError(payload, params);
       break;
     }
-    case 'NativeError':
-    case 'NonNativeError': {
+    case "NativeError":
+    case "NonNativeError": {
       e = createCustomError(payload, params);
       break;
     }

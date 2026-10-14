@@ -2,9 +2,9 @@ import type {
   BasePlainObject,
   DefaultBasePlainObject,
   MsgOrErrorFactory,
-} from './internal.types';
-import { isPlainObject } from './is-plain-object';
-import type { PlainObject } from './plain-object.types';
+} from "./internal.types";
+import { isPlainObject } from "./is-plain-object";
+import type { PlainObject } from "./plain-object.types";
 
 /**
  * Assert a value is a plain object
@@ -52,7 +52,7 @@ export function assertPlainObject<
   if (!isPlainObject<TValue>(v)) {
     if (
       msgOrErrorFactory === undefined ||
-      typeof msgOrErrorFactory === 'string'
+      typeof msgOrErrorFactory === "string"
     ) {
       throw new TypeError(msgOrErrorFactory ?? `Not a PlainObject`);
     }

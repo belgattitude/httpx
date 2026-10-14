@@ -1,7 +1,7 @@
-import { HttpServerException } from '../base/HttpServerException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpServerException } from "../base/HttpServerException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 511 Network Authentication Required (server)
@@ -13,7 +13,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  */
 
 const status = 511;
-const name = 'NetworkAuthenticationRequired';
+const name = "NetworkAuthenticationRequired";
 export class HttpNetworkAuthenticationRequired extends HttpServerException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {

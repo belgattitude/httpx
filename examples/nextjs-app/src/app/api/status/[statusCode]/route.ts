@@ -2,12 +2,13 @@ import {
   createHttpException,
   HttpBadRequest,
   isHttpException,
-} from '@httpx/exception';
-import { toJson } from '@httpx/exception/serializer';
-import { type NextRequest, NextResponse } from 'next/server';
-import { z, type ZodSchema } from 'zod/v3';
+} from "@httpx/exception";
+import { toJson } from "@httpx/exception/serializer";
+import { type NextRequest, NextResponse } from "next/server";
+import * as z from "zod/v3";
+import type { ZodSchema } from "zod/v3";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 const zodGetSchema = z.object({
   params: z.object({
@@ -31,13 +32,13 @@ const validateNextRequest = <
   reqWithParams: TReq
 ): z.infer<T> => {
   const parsed = schema.safeParse(reqWithParams);
-  console.log('parsed', parsed);
+  console.log("parsed", parsed);
   if (!parsed.success) {
     const error = parsed.error as unknown as z.ZodError<T>;
     const msg = error.issues
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       .map((err) => `${err.path} - ${err.code}`)
-      .join(', ');
+      .join(", ");
     throw new HttpBadRequest({
       message: `Bad request, invalid parameter (${msg})`,
       url: reqWithParams.req.nextUrl.toString(),
@@ -59,9 +60,9 @@ export async function GET(
     const { statusCode } = safeReq.params;
 
     const response = {
-      statusCode: statusCode,
+      statusCode,
       url: req.url,
-      method: 'GET',
+      method: "GET",
     };
 
     return NextResponse.json(
@@ -70,7 +71,7 @@ export async function GET(
         _serialized: toJson(
           createHttpException(statusCode, {
             url: req.url,
-            method: 'GET',
+            method: "GET",
           })
         ),
       },
@@ -78,14 +79,14 @@ export async function GET(
         status: statusCode,
       }
     );
-  } catch (e) {
-    if (isHttpException(e)) {
-      const httpException = createHttpException(e.statusCode, {
+  } catch (error) {
+    if (isHttpException(error)) {
+      const httpException = createHttpException(error.statusCode, {
         url: req.url,
-        method: 'GET',
+        method: "GET",
       });
       return NextResponse.json(httpException, {
-        status: e.statusCode,
+        status: error.statusCode,
       });
     }
   }

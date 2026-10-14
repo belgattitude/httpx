@@ -2,7 +2,7 @@ const encoder = new TextEncoder();
 
 function hasNonAscii(str: string): boolean {
   for (let i = 0; i < str.length; i++) {
-    if (str.charCodeAt(i) > 127) {
+    if ((str.codePointAt(i) ?? 0) > 127) {
       return true;
     }
   }
@@ -20,7 +20,7 @@ export function toUtf8(str: string): string {
   }
 
   const bytes = encoder.encode(str);
-  let utf8 = '';
+  let utf8 = "";
   for (const byte of bytes) {
     utf8 += String.fromCodePoint(byte);
   }

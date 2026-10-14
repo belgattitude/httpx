@@ -1,20 +1,20 @@
-import isPlainObj from 'is-plain-obj';
-import { isPlainObject as reduxIsPlainObject } from 'redux';
-import * as z from 'zod';
+import isPlainObj from "is-plain-obj";
+import { isPlainObject as reduxIsPlainObject } from "redux";
+import * as z from "zod";
 
-import { isPlainObject } from '../is-plain-object';
-import { immerIsPlainObject } from './comparison/immer-is-plain-object';
+import { isPlainObject } from "../is-plain-object";
+import { immerIsPlainObject } from "./comparison/immer-is-plain-object";
 
-const isNodeLike = 'process' in globalThis;
-const isBrowserLike = 'window' in globalThis;
-const isCloudflareWorker = 'caches' in globalThis;
-const isBun = isNodeLike && 'Bun' in globalThis;
-const _isDenoRuntime = 'Deno' in globalThis;
+const isNodeLike = "process" in globalThis;
+const isBrowserLike = "window" in globalThis;
+const isCloudflareWorker = "caches" in globalThis;
+const isBun = isNodeLike && "Bun" in globalThis;
+const _isDenoRuntime = "Deno" in globalThis;
 
 const zodIsPlainObject = z.util.isPlainObject;
 
-describe('isPlainObject', () => {
-  const str = 'key';
+describe("isPlainObject", () => {
+  const str = "key";
   function fnWithProto(x: number) {
     // @ts-expect-error for the sake of testing
     this.x = x;
@@ -34,23 +34,23 @@ describe('isPlainObject', () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     [Object.create(Object.create(null)), true],
     [new Object({ key: new Date() }), true],
-    [{ 1: 'integer_key' }, true],
-    [{ name: 'string_key' }, true],
-    [{ [str]: 'dynamic_string_key' }, true],
-    [{ [Symbol('tag')]: 'value' }, true],
-    [{ children: [{ key: 'deep-children' }], name: 'deep-plain' }, true],
+    [{ 1: "integer_key" }, true],
+    [{ name: "string_key" }, true],
+    [{ [str]: "dynamic_string_key" }, true],
+    [{ [Symbol("tag")]: "value" }, true],
+    [{ children: [{ key: "deep-children" }], name: "deep-plain" }, true],
     [
-      { children: [{ key: new Date() }], name: 'deep-with-regular-object' },
+      { children: [{ key: new Date() }], name: "deep-with-regular-object" },
       true,
     ],
-    [{ constructor: { name: 'Object2' } }, true],
-    [JSON.parse('{}'), true],
+    [{ constructor: { name: "Object2" } }, true],
+    [JSON.parse("{}"), true],
     [new Proxy({}, {}), true],
     [new Proxy({}, { getPrototypeOf: () => Object.prototype }), true],
-    [new Proxy({ key: 'proxied_key' }, {}), true],
+    [new Proxy({ key: "proxied_key" }, {}), true],
     [
       {
-        [Symbol.iterator]: function* () {
+        *[Symbol.iterator]() {
           yield 1;
         },
       },
@@ -58,14 +58,14 @@ describe('isPlainObject', () => {
     ],
     [
       {
-        [Symbol.toStringTag]: 'string-tagged',
+        [Symbol.toStringTag]: "string-tagged",
       },
       true,
     ],
   ] as const satisfies Expectations<true>;
 
   const invalidPlainObjects = [
-    ['hello', false],
+    ["hello", false],
     [false, false],
     [undefined, false],
     [null, false],
@@ -73,19 +73,19 @@ describe('isPlainObject', () => {
     [[], false],
     [Number.NaN, false],
     // functions and objects
-    [() => 'cool', false],
+    [() => "cool", false],
     [new (class Cls {})(), false],
-    [new Intl.Locale('en'), false],
+    [new Intl.Locale("en"), false],
     [new (class extends Object {})(), false],
     [fnWithProto, false],
     // Symbols
-    [Symbol('cool'), false],
+    [Symbol("cool"), false],
     // Built-in classes
     [new Date(), false],
     [new Map(), false],
     [new Error(), false],
     [new Set(), false],
-    [new Request('http://localhost'), false],
+    [new Request("http://localhost"), false],
     [new Promise(() => {}), false],
     [Promise.resolve({}), false],
     [new Uint8Array([1, 2, 3]), false],
@@ -106,7 +106,7 @@ describe('isPlainObject', () => {
     ],
     [/(\d+)/, false],
     // eslint-disable-next-line prefer-regex-literals
-    [new RegExp('/d+/'), false],
+    [new RegExp("/d+/"), false],
     [/d+/, false],
     // Template literals
     [`cool`, false],
@@ -136,19 +136,19 @@ describe('isPlainObject', () => {
     ...validPlainObjects,
     ...invalidPlainObjects,
   ] as Expectations<boolean>;
+
   it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
     expect(isPlainObject(v)).toStrictEqual(expected);
   });
 
   it.skipIf(!isNodeLike)(
-    'should return false when node Buffer is given',
+    "should return false when node Buffer is given",
     () => {
-      // eslint-disable-next-line no-restricted-globals
-      expect(isPlainObject(Buffer.from('123123'))).toBe(false);
+      expect(isPlainObject(Buffer.from("123123"))).toBe(false);
     }
   );
 
-  describe('Allowed edge cases for static built-ins', () => {
+  describe("Allowed edge cases for static built-ins", () => {
     const javascriptStaticBuiltIn = [
       // Static built-in classes
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
@@ -159,31 +159,31 @@ describe('isPlainObject', () => {
     ] as const;
 
     it.each(javascriptStaticBuiltIn)(
-      'should return true for static built-in classes',
+      "should return true for static built-in classes",
       (buildInCls) => {
         expect(isPlainObject(buildInCls)).toBe(true);
       }
     );
 
-    describe('globalThis edge case', () => {
-      it.skipIf(!isBun)('BUN: should return true for globalThis', () => {
+    describe("globalThis edge case", () => {
+      it.skipIf(!isBun)("BUN: should return true for globalThis", () => {
         expect(isPlainObject(globalThis)).toBe(true);
       });
-      it.skipIf(isBun)('Not Bun: should return false for globalThis', () => {
+      it.skipIf(isBun)("Not Bun: should return false for globalThis", () => {
         expect(isPlainObject(globalThis)).toBe(false);
       });
     });
 
-    describe.skipIf(isBrowserLike)('process.env edge case', () => {
+    describe.skipIf(isBrowserLike)("process.env edge case", () => {
       it.skipIf(isCloudflareWorker || isBun)(
-        'NodeJS, Deno and edge: should return false for process.env',
+        "NodeJS, Deno and edge: should return false for process.env",
         () => {
           expect(isPlainObject(process.env)).toBe(false);
         }
       );
 
       it.skipIf(!(isCloudflareWorker || isBun))(
-        'CLOUDFLARE or Bun: should return true for process.env',
+        "CLOUDFLARE or Bun: should return true for process.env",
         () => {
           expect(isPlainObject(process.env)).toBe(true);
         }
@@ -192,9 +192,9 @@ describe('isPlainObject', () => {
   });
 
   describe.skipIf(isCloudflareWorker)(
-    'Compatibility with other libraries',
+    "Compatibility with other libraries",
     () => {
-      describe.skip('Compatibility with is-plain-obj', () => {
+      describe.skip("Compatibility with is-plain-obj", () => {
         it.each(cases)(
           'compat when "%s" is given, should return %s',
           (v, _expected) => {
@@ -203,7 +203,7 @@ describe('isPlainObject', () => {
         );
       });
 
-      describe('Compatibility with zod.util.isPlainObject', () => {
+      describe("Compatibility with zod.util.isPlainObject", () => {
         it.each(cases)(
           'compat when "%s" is given, should return %s',
           (v, _expected, compatFlags) => {
@@ -213,10 +213,11 @@ describe('isPlainObject', () => {
         );
       });
 
-      describe.skip('Compatibility with es-toolkit/is-plain-object', async () => {
-        const esToolkitIsPlainObject = await import('es-toolkit').then(
+      describe.skip("Compatibility with es-toolkit/is-plain-object", async () => {
+        const esToolkitIsPlainObject = await import("es-toolkit").then(
           (mod) => mod.isPlainObject
         );
+
         it.each(cases)(
           'compat when "%s" is given, should return %s',
           (v, _expected) => {
@@ -225,7 +226,7 @@ describe('isPlainObject', () => {
         );
       });
 
-      describe('Compatibility with redux/isPlainObject', async () => {
+      describe("Compatibility with redux/isPlainObject", () => {
         it.each(cases)(
           'compat when "%s" is given, should return %s',
           (v, _expected) => {
@@ -233,27 +234,28 @@ describe('isPlainObject', () => {
           }
         );
         it.skipIf(!isNodeLike)(
-          'should support cross-realms - node:runInNewContext',
+          "should support cross-realms - node:runInNewContext",
           async () => {
-            const createSandbox = () => ({
-              basicRecord: null,
-              objectNull: null,
-              objectRecord: null,
-              date: null,
-            });
+            const createSandbox = () => {
+              return {
+                basicRecord: null,
+                objectNull: null,
+                objectRecord: null,
+                date: null,
+              };
+            };
 
-            // eslint-disable-next-line import-x/no-nodejs-modules
-            const runInNewContext = await import('node:vm').then(
+            const runInNewContext = await import("node:vm").then(
               (mod) => mod.runInNewContext
             );
 
-            expect(reduxIsPlainObject(runInNewContext('({})'))).toBe(true);
+            expect(reduxIsPlainObject(runInNewContext("({})"))).toBe(true);
 
             const sandbox = createSandbox();
-            runInNewContext('basicRecord = {}', sandbox);
-            runInNewContext('objectNull = Object.create(null)', sandbox);
-            runInNewContext('objectRecord = Object.create({})', sandbox);
-            runInNewContext('date = new Date()', sandbox);
+            runInNewContext("basicRecord = {}", sandbox);
+            runInNewContext("objectNull = Object.create(null)", sandbox);
+            runInNewContext("objectRecord = Object.create({})", sandbox);
+            runInNewContext("date = new Date()", sandbox);
             expect(isPlainObject(sandbox.basicRecord)).toBe(true);
             expect(isPlainObject(sandbox.objectNull)).toBe(true);
             expect(isPlainObject(sandbox.objectRecord)).toBe(false);
@@ -262,7 +264,7 @@ describe('isPlainObject', () => {
         );
       });
 
-      describe('Compatibility with immer/isPlainObject', async () => {
+      describe("Compatibility with immer/isPlainObject", () => {
         it.skip.each(cases)(
           'compat when "%s" is given, should return %s',
           (v, _expected) => {
@@ -270,27 +272,26 @@ describe('isPlainObject', () => {
           }
         );
         it.skipIf(!isNodeLike)(
-          'should support cross-realms - node:runInNewContext',
+          "should support cross-realms - node:runInNewContext",
           async () => {
-            // eslint-disable-next-line import-x/no-nodejs-modules
-            const runInNewContext = await import('node:vm').then(
+            const runInNewContext = await import("node:vm").then(
               (mod) => mod.runInNewContext
             );
-            expect(immerIsPlainObject(runInNewContext('({})'))).toBe(true);
+            expect(immerIsPlainObject(runInNewContext("({})"))).toBe(true);
             const sandbox = { fromAnotherRealm: false };
-            runInNewContext('fromAnotherRealm = {}', sandbox);
+            runInNewContext("fromAnotherRealm = {}", sandbox);
             expect(isPlainObject(sandbox.fromAnotherRealm)).toBe(true);
           }
         );
       });
 
-      describe.skip('Compatibility with jonschlinkert/is-plain-object', async () => {
+      describe.skip("Compatibility with jonschlinkert/is-plain-object", async () => {
         // @ts-expect-error packaging of this lib is not compatible with latest ts / module
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const jonschlinkertIsPlainObject = await import('is-plain-object').then(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
+        const jonschlinkertIsPlainObject = await import("is-plain-object").then(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           (mod) => mod.isPlainObject
         );
+
         it.each(cases)(
           'compat when "%s" is given, should return %s',
           (v, _expected) => {
@@ -304,16 +305,15 @@ describe('isPlainObject', () => {
 });
 
 describe.skipIf(!isNodeLike || isCloudflareWorker)(
-  'Support node:vm.runInNewContext',
+  "Support node:vm.runInNewContext",
   () => {
-    it('should support vm', async () => {
-      // eslint-disable-next-line import-x/no-nodejs-modules
-      const runInNewContext = await import('node:vm').then(
+    test("should support vm", async () => {
+      const runInNewContext = await import("node:vm").then(
         (mod) => mod.runInNewContext
       );
-      expect(isPlainObject(runInNewContext('({})'))).toBe(true);
-      expect(isPlainObject(runInNewContext('(false)'))).toBe(false);
-      expect(isPlainObject(runInNewContext('(new Date())'))).toBe(false);
+      expect(isPlainObject(runInNewContext("({})"))).toBe(true);
+      expect(isPlainObject(runInNewContext("(false)"))).toBe(false);
+      expect(isPlainObject(runInNewContext("(new Date())"))).toBe(false);
     });
   }
 );

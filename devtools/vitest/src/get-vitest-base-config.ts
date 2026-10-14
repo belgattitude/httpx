@@ -1,12 +1,12 @@
-import path from 'node:path';
+import path from "node:path";
 
-import codspeedPlugin from '@codspeed/vitest-plugin';
-import { playwright } from '@vitest/browser-playwright';
-import type { ViteUserConfigExport } from 'vitest/config';
+import codspeedPlugin from "@codspeed/vitest-plugin";
+import { playwright } from "@vitest/browser-playwright";
+import type { ViteUserConfigExport } from "vitest/config";
 
-import { getPackageNameFromCwd } from './get-package-name-from-cwd.ts';
-import { monorepoConfig } from './monorepo.config.ts';
-import type { RequiredOptionals } from './utils/type-utils.ts';
+import { getPackageNameFromCwd } from "./get-package-name-from-cwd.ts";
+import { monorepoConfig } from "./monorepo.config.ts";
+import type { RequiredOptionals } from "./utils/type-utils.ts";
 
 export type VitestBaseConfigParams = {
   packageName?: string;
@@ -16,33 +16,33 @@ export type VitestBaseConfigParams = {
 const getDefaultParams = () => {
   const defaultParams = {
     packageName: getPackageNameFromCwd(),
-    testFiles: ['./src/**/*.test.{js,ts,tsx}', './test/**/*.test.{js,ts,tsx}'],
+    testFiles: ["./src/**/*.test.{js,ts,tsx}", "./test/**/*.test.{js,ts,tsx}"],
   } as const satisfies RequiredOptionals<VitestBaseConfigParams>;
   return defaultParams;
 };
 
 export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
-  const isCodeSpeedEnabled = process.env?.CODSPEED === '1';
+  const isCodeSpeedEnabled = process.env?.CODSPEED === "1";
 
   const { packageName, testFiles } = {
     ...getDefaultParams(),
     ...params,
   };
-  const cacheDir = path.join(monorepoConfig.root, '.cache', packageName);
+  const cacheDir = path.join(monorepoConfig.root, ".cache", packageName);
 
   const config = {
-    cacheDir: cacheDir,
+    cacheDir,
     plugins: [isCodeSpeedEnabled ? codspeedPlugin() : undefined].filter(
       Boolean
     ),
     resolve: {
       // tsconfigPaths: true,
-      conditions: ['httpx-monorepo-source'],
+      conditions: ["httpx-monorepo-source"],
     },
     // https://vitest.dev/guide/common-errors.html#custom-package-conditions-are-not-resolved
     ssr: {
       resolve: {
-        conditions: ['httpx-monorepo-source', 'import', 'default'],
+        conditions: ["httpx-monorepo-source", "import", "default"],
       },
     },
     test: {
@@ -54,30 +54,30 @@ export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
         }),
         enabled: false,
         // at least one instance is required
-        instances: [{ browser: 'chromium' }],
+        instances: [{ browser: "chromium" }],
       },
       // @link https://vitest.dev/config/#clearmocks
       clearMocks: true,
       coverage: {
-        include: ['src/**/*.{js,jsx,ts,tsx}'],
-        exclude: ['**/*.bench.ts'],
-        provider: 'istanbul',
-        reporter: ['text', 'json', 'clover'],
+        include: ["src/**/*.{js,jsx,ts,tsx}"],
+        exclude: ["**/*.bench.ts"],
+        provider: "istanbul",
+        reporter: ["text", "json", "clover"],
       },
       typecheck: {
         enabled: false,
       },
       benchmark: {
-        reporters: ['default'],
-        outputJson: './bench/output/benchmark-results.json',
+        reporters: ["default"],
+        outputJson: "./bench/output/benchmark-results.json",
       },
-      pool: 'forks',
+      pool: "forks",
       exclude: [
-        '**/node_modules/**',
-        'dist/**',
-        'build/**',
-        '**/coverage/**',
-        '**/.{idea,next,git,turbo,cache,output,temp}/**',
+        "**/node_modules/**",
+        "dist/**",
+        "build/**",
+        "**/coverage/**",
+        "**/.{idea,next,git,turbo,cache,output,temp}/**",
       ],
       globals: true,
       include: testFiles,

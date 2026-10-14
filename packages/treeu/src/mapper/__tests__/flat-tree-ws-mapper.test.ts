@@ -1,96 +1,97 @@
-import type { TreeNode } from '../../tree.types';
+import type { TreeNode } from "../../tree.types";
 import {
   type FlatTreeWs,
   FlatTreeWsMapper,
   flatTreeWsMapperErrors,
-} from '../flat-tree-ws-mapper';
+} from "../flat-tree-ws-mapper";
 
 type CustomValue =
-  { type: 'folder'; size?: never } | { type: 'file'; size: number };
+  | { type: "folder"; size?: never }
+  | { type: "file"; size: number };
 
-describe('FlatTreeWsMapper', () => {
+describe("FlatTreeWsMapper", () => {
   const validFlatTreeWs: FlatTreeWs<CustomValue> = new Map([
-    ['file1.ts', { type: 'file', size: 10 }],
-    ['file2.ts', { type: 'file', size: 20 }],
-    ['folder1', { type: 'folder' }],
-    ['folder1/file1.ts', { type: 'file', size: 30 }],
+    ["file1.ts", { type: "file", size: 10 }],
+    ["file2.ts", { type: "file", size: 20 }],
+    ["folder1", { type: "folder" }],
+    ["folder1/file1.ts", { type: "file", size: 30 }],
 
-    ['folder2', { type: 'folder' }],
-    ['folder2/file1.ts', { type: 'file', size: 40 }],
-    ['folder2/subfolder1', { type: 'folder' }],
-    ['folder2/subfolder1/file1.ts', { type: 'file', size: 50 }],
+    ["folder2", { type: "folder" }],
+    ["folder2/file1.ts", { type: "file", size: 40 }],
+    ["folder2/subfolder1", { type: "folder" }],
+    ["folder2/subfolder1/file1.ts", { type: "file", size: 50 }],
 
     // Testing reserved "constructor" keyword
-    ['constructor', { type: 'folder' }],
-    ['constructor/constructor.d.ts', { type: 'file', size: 50 }],
+    ["constructor", { type: "folder" }],
+    ["constructor/constructor.d.ts", { type: "file", size: 50 }],
   ]);
 
   const validTreeNodes: TreeNode<CustomValue>[] = [
     {
-      id: 'file1.ts',
+      id: "file1.ts",
       parentId: null,
       value: {
         size: 10,
-        type: 'file',
+        type: "file",
       },
       children: [],
     },
     {
-      id: 'file2.ts',
+      id: "file2.ts",
       parentId: null,
       value: {
         size: 20,
-        type: 'file',
+        type: "file",
       },
       children: [],
     },
     {
-      id: 'folder1',
+      id: "folder1",
       parentId: null,
       value: {
-        type: 'folder',
+        type: "folder",
       },
       children: [
         {
-          id: 'folder1/file1.ts',
-          parentId: 'folder1',
+          id: "folder1/file1.ts",
+          parentId: "folder1",
           value: {
             size: 30,
-            type: 'file',
+            type: "file",
           },
           children: [],
         },
       ],
     },
     {
-      id: 'folder2',
+      id: "folder2",
       parentId: null,
       value: {
-        type: 'folder',
+        type: "folder",
       },
       children: [
         {
-          id: 'folder2/file1.ts',
-          parentId: 'folder2',
+          id: "folder2/file1.ts",
+          parentId: "folder2",
           value: {
             size: 40,
-            type: 'file',
+            type: "file",
           },
           children: [],
         },
         {
-          id: 'folder2/subfolder1',
-          parentId: 'folder2',
+          id: "folder2/subfolder1",
+          parentId: "folder2",
           value: {
-            type: 'folder',
+            type: "folder",
           },
           children: [
             {
-              id: 'folder2/subfolder1/file1.ts',
-              parentId: 'folder2/subfolder1',
+              id: "folder2/subfolder1/file1.ts",
+              parentId: "folder2/subfolder1",
               value: {
                 size: 50,
-                type: 'file',
+                type: "file",
               },
               children: [],
             },
@@ -99,18 +100,18 @@ describe('FlatTreeWsMapper', () => {
       ],
     },
     {
-      id: 'constructor',
+      id: "constructor",
       parentId: null,
       value: {
-        type: 'folder',
+        type: "folder",
       },
       children: [
         {
-          id: 'constructor/constructor.d.ts',
-          parentId: 'constructor',
+          id: "constructor/constructor.d.ts",
+          parentId: "constructor",
           value: {
             size: 50,
-            type: 'file',
+            type: "file",
           },
           children: [],
         },
@@ -118,61 +119,61 @@ describe('FlatTreeWsMapper', () => {
     },
   ];
 
-  describe('fromTreeNodesOrThrow', () => {
-    it('should return a valid flat tree', () => {
+  describe("fromTreeNodesOrThrow", () => {
+    it("should return a valid flat tree", () => {
       const mapper = new FlatTreeWsMapper<CustomValue>();
       const treeNodes = mapper.fromTreeNodesOrThrow(validTreeNodes, {
-        method: 'breadth-first',
+        method: "breadth-first",
       });
 
-      const flattenedBreadthFirst: FlatTreeWs<CustomValue, string> = new Map([
-        ['file1.ts', { size: 10, type: 'file' }],
-        ['file2.ts', { size: 20, type: 'file' }],
-        ['folder1', { type: 'folder' }],
+      const flattenedBreadthFirst: FlatTreeWs<CustomValue> = new Map([
+        ["file1.ts", { size: 10, type: "file" }],
+        ["file2.ts", { size: 20, type: "file" }],
+        ["folder1", { type: "folder" }],
         [
-          'folder2',
+          "folder2",
           {
-            type: 'folder',
+            type: "folder",
           },
         ],
         [
-          'constructor',
+          "constructor",
           {
-            type: 'folder',
+            type: "folder",
           },
         ],
         [
-          'constructor/constructor.d.ts',
+          "constructor/constructor.d.ts",
           {
             size: 50,
-            type: 'file',
+            type: "file",
           },
         ],
         [
-          'folder1/file1.ts',
+          "folder1/file1.ts",
           {
             size: 30,
-            type: 'file',
+            type: "file",
           },
         ],
         [
-          'folder2/file1.ts',
+          "folder2/file1.ts",
           {
             size: 40,
-            type: 'file',
+            type: "file",
           },
         ],
         [
-          'folder2/subfolder1',
+          "folder2/subfolder1",
           {
-            type: 'folder',
+            type: "folder",
           },
         ],
         [
-          'folder2/subfolder1/file1.ts',
+          "folder2/subfolder1/file1.ts",
           {
             size: 50,
-            type: 'file',
+            type: "file",
           },
         ],
       ]);
@@ -182,22 +183,22 @@ describe('FlatTreeWsMapper', () => {
 
       // Back and forth
       const treeNodes2 = mapper.toTreeNodesOrThrow(flattenedBreadthFirst, {
-        separator: '/',
+        separator: "/",
       });
 
       const flattened2 = mapper.fromTreeNodesOrThrow(treeNodes2, {
-        method: 'breadth-first',
+        method: "breadth-first",
       });
       expect(flattened2).toStrictEqual(flattenedBreadthFirst);
     });
   });
-  describe('toTreeNodes()', () => {
-    describe('when a valid FlatTreeWs is given', () => {
-      it('should return a success result with validTreeNodes validTreeNodes', () => {
+  describe("toTreeNodes()", () => {
+    describe("when a valid FlatTreeWs is given", () => {
+      it("should return a success result with validTreeNodes validTreeNodes", () => {
         const treeResult = new FlatTreeWsMapper<CustomValue>().toTreeNodes(
           validFlatTreeWs,
           {
-            separator: '/',
+            separator: "/",
           }
         );
         expect(treeResult).toStrictEqual({
@@ -206,7 +207,7 @@ describe('FlatTreeWsMapper', () => {
         });
       });
 
-      it('should work with object (Record) and custom separator', () => {
+      it("should work with object (Record) and custom separator", () => {
         // inspired from prime-react onSelect event
         type PrimeReactSelected = {
           checked: boolean;
@@ -221,37 +222,37 @@ describe('FlatTreeWsMapper', () => {
         };
         const mapper = new FlatTreeWsMapper<PrimeReactSelected>();
         const treeResult = mapper.toTreeNodesOrThrow(selectedTreeNodes, {
-          separator: '___',
+          separator: "___",
         });
 
         const expected = [
           {
-            id: 'root1',
+            id: "root1",
             parentId: null,
             value: { checked: false, partialChecked: true },
             children: [
               {
-                id: 'root1___leaf1',
-                parentId: 'root1',
+                id: "root1___leaf1",
+                parentId: "root1",
                 value: { checked: true, partialChecked: false },
                 children: [],
               },
             ],
           },
           {
-            id: 'root2',
+            id: "root2",
             parentId: null,
             value: { checked: true, partialChecked: false },
             children: [
               {
-                id: 'root2___leaf1',
-                parentId: 'root2',
+                id: "root2___leaf1",
+                parentId: "root2",
                 value: { checked: true, partialChecked: false },
                 children: [],
               },
               {
-                id: 'root2___leaf2',
-                parentId: 'root2',
+                id: "root2___leaf2",
+                parentId: "root2",
                 value: { checked: true, partialChecked: false },
                 children: [],
               },
@@ -262,7 +263,7 @@ describe('FlatTreeWsMapper', () => {
         expect(treeResult).toStrictEqual(expected);
 
         const flattened = mapper.fromTreeNodesOrThrow(treeResult, {
-          method: 'breadth-first',
+          method: "breadth-first",
         });
 
         const mapToObject = (map: Map<string, unknown>) =>
@@ -271,10 +272,11 @@ describe('FlatTreeWsMapper', () => {
         expect(mapToObject(flattened)).toStrictEqual(selectedTreeNodes);
       });
 
-      it.skip('should be insensitive to path order', () => {
-        const reversedPaths = new Map([...validFlatTreeWs].reverse());
+      // oxlint-disable-next-line vitest/no-disabled-tests -- known limitation, kept as a reminder
+      it.skip("should be insensitive to path order", () => {
+        const reversedPaths = new Map([...validFlatTreeWs].toReversed());
         const treeResult = new FlatTreeWsMapper().toTreeNodes(reversedPaths, {
-          separator: '/',
+          separator: "/",
         });
         expect(treeResult).toStrictEqual({
           success: true,
@@ -283,23 +285,23 @@ describe('FlatTreeWsMapper', () => {
       });
     });
 
-    describe('when a FlatTreeWs contains an empty key', () => {
+    describe("when a FlatTreeWs contains an empty key", () => {
       const pathsWithEmptyKey: FlatTreeWs<null> = new Map([
-        ['file1.ts', null],
-        [' ', null],
-        ['folder1', null],
-        ['folder1/file1.ts', null],
-        ['folder2', null],
-        ['folder2/file1.ts', null],
-        ['folder2/file2.ts', null],
-        ['folder3', null],
+        ["file1.ts", null],
+        [" ", null],
+        ["folder1", null],
+        ["folder1/file1.ts", null],
+        ["folder2", null],
+        ["folder2/file1.ts", null],
+        ["folder2/file2.ts", null],
+        ["folder3", null],
       ]);
 
-      it('should return an error result', () => {
+      it("should return an error result", () => {
         const treeResult = new FlatTreeWsMapper().toTreeNodes(
           pathsWithEmptyKey,
           {
-            separator: '/',
+            separator: "/",
           }
         );
         expect(treeResult).toStrictEqual({
@@ -307,24 +309,24 @@ describe('FlatTreeWsMapper', () => {
           message: flatTreeWsMapperErrors.toTreeNodes.parsedErrorMsg,
           issues: [
             {
-              message: `${flatTreeWsMapperErrors.toTreeNodes.issues.EMPTY_KEY}`,
+              message: flatTreeWsMapperErrors.toTreeNodes.issues.EMPTY_KEY,
             },
           ],
         });
       });
     });
 
-    describe('when a FlatTreeWs contains an empty splitted key', () => {
+    describe("when a FlatTreeWs contains an empty splitted key", () => {
       const pathsWithEmptySplittedKey: FlatTreeWs<null> = new Map([
-        ['file1.ts', null],
-        ['folder2//file1.ts', null],
+        ["file1.ts", null],
+        ["folder2//file1.ts", null],
       ]);
 
-      it('should return an error result', () => {
+      it("should return an error result", () => {
         const treeResult = new FlatTreeWsMapper().toTreeNodes(
           pathsWithEmptySplittedKey,
           {
-            separator: '/',
+            separator: "/",
           }
         );
         expect(treeResult).toStrictEqual({
@@ -332,7 +334,8 @@ describe('FlatTreeWsMapper', () => {
           message: flatTreeWsMapperErrors.toTreeNodes.parsedErrorMsg,
           issues: [
             {
-              message: `${flatTreeWsMapperErrors.toTreeNodes.issues.SPLIT_EMPTY_KEY}`,
+              message:
+                flatTreeWsMapperErrors.toTreeNodes.issues.SPLIT_EMPTY_KEY,
             },
           ],
         });

@@ -1,7 +1,7 @@
-import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpClientException } from "../base/HttpClientException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 415 Unsupported Media Type (client)
@@ -12,7 +12,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  * @see https://httpstatus.in/415/
  */
 const status = 415;
-const name = 'UnsupportedMediaType';
+const name = "UnsupportedMediaType";
 export class HttpUnsupportedMediaType extends HttpClientException {
   static readonly STATUS = 415;
   constructor(msgOrParams?: HttpExceptionParams | string) {

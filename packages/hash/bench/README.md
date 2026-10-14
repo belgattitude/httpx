@@ -1,7 +1,6 @@
 ## @httpx/hash
 
-Benchmarks to measure [@httpx/hash](../README.md) performance over
-popular libraries.
+Benchmarks to measure [@httpx/hash](../README.md) performance over popular libraries.
 
 ### Run
 
@@ -11,4 +10,3 @@ cd packages/hash
 yarn build
 yarn bench
 ```
-

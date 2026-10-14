@@ -1,4 +1,4 @@
-import { HttpClientException } from '../base/HttpClientException';
+import { HttpClientException } from "../base/HttpClientException";
 
 /**
  * Test whether a value is an instanceof HttpClientException
@@ -11,9 +11,6 @@ export const isHttpClientException = (
    * Ensure statusCode is in the client range [>=400, <500], true by default
    */
   checkStatusCode = true
-): error is HttpClientException => {
-  return (
-    error instanceof HttpClientException &&
-    (!checkStatusCode || (error.statusCode > 399 && error.statusCode < 500))
-  );
-};
+): error is HttpClientException =>
+  error instanceof HttpClientException &&
+  (!checkStatusCode || (error.statusCode > 399 && error.statusCode < 500));

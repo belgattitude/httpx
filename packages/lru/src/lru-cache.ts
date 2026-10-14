@@ -1,10 +1,10 @@
-import { DoublyLinkedNode } from './doubly-linked-node';
-import type { ILruCache } from './lru-cache.interface';
+import { DoublyLinkedNode } from "./doubly-linked-node";
+import type { ILruCache } from "./lru-cache.interface";
 import type {
   BaseCacheKeyTypes,
   LruCacheHasOptions,
   SupportedCacheValues,
-} from './types';
+} from "./types";
 
 type LruCacheEntry<TValue, TKey extends BaseCacheKeyTypes = string> = {
   value: TValue;
@@ -38,11 +38,11 @@ export class LruCache<
   TValue extends SupportedCacheValues = SupportedCacheValues,
   TKey extends BaseCacheKeyTypes = string,
 > implements ILruCache<TValue, TKey> {
-  #maxSize: number;
-  #touchOnHas: boolean;
-  #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
+  readonly #maxSize: number;
+  readonly #touchOnHas: boolean;
+  readonly #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
-  #cache: Map<TKey, LruCacheEntry<TValue, TKey>>;
+  readonly #cache: Map<TKey, LruCacheEntry<TValue, TKey>>;
   #head: DoublyLinkedNode<TValue, TKey> | null = null;
   #tail: DoublyLinkedNode<TValue, TKey> | null = null;
 
@@ -72,7 +72,7 @@ export class LruCache<
   constructor(params: LruCacheParams<TValue, TKey>) {
     const { maxSize, touchOnHas = false, onEviction } = params;
     if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
-      throw new TypeError('Invalid maxSize');
+      throw new TypeError("Invalid maxSize");
     }
     this.#touchOnHas = touchOnHas;
     this.#onEviction = onEviction;
@@ -80,7 +80,7 @@ export class LruCache<
     this.#cache = new Map();
   }
 
-  get params(): ILruCache['params'] {
+  get params(): ILruCache["params"] {
     return {
       maxSize: this.#maxSize,
     };
@@ -94,25 +94,26 @@ export class LruCache<
   }
 
   clear(): number {
-    const size = this.#cache.size;
+    const { size } = this.#cache;
     this.#cache.clear();
-    this.#head = this.#tail = null;
+    this.#head = null;
+    this.#tail = null;
     return size;
   }
 
   has(key: TKey, options?: LruCacheHasOptions): boolean {
-    const hasEntry = this.#cache.has(key);
-    if (hasEntry && (options?.touch ?? this.#touchOnHas)) {
-      this.#moveToHead(this.#cache.get(key)!.node);
+    const entry = this.#cache.get(key);
+    if (entry !== undefined && (options?.touch ?? this.#touchOnHas)) {
+      this.#moveToHead(entry.node);
     }
-    return hasEntry;
+    return entry !== undefined;
   }
 
   set(key: TKey, value: TValue): boolean {
-    if (this.#cache.has(key)) {
-      const data = this.#cache.get(key)!;
-      data.value = value;
-      this.#moveToHead(data.node);
+    const existing = this.#cache.get(key);
+    if (existing !== undefined) {
+      existing.value = value;
+      this.#moveToHead(existing.node);
       return false;
     }
 
@@ -131,7 +132,7 @@ export class LruCache<
   get(key: TKey): TValue | undefined {
     const data = this.#cache.get(key);
     if (data === undefined) {
-      return;
+      return undefined;
     }
     this.#moveToHead(data.node);
     return data.value;
@@ -146,7 +147,7 @@ export class LruCache<
   ): T {
     const val = this.get(key);
     if (val === undefined || options?.forceRevalidate === true) {
-      const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
+      const value = typeof valueOrFn === "function" ? valueOrFn() : valueOrFn;
       this.set(key, value as unknown as TValue);
       return value;
     }
@@ -170,6 +171,8 @@ export class LruCache<
    * Iterate over the cache from the least recently used to the most recently used.
    *
    * Iterating over results does not mark the items as recently.
+   *
+   * @yields The `[key, value]` entries, from the least to the most recently used
    *
    * @example
    * ```typescript
@@ -201,8 +204,10 @@ export class LruCache<
     let current = this.#tail;
 
     while (current) {
-      const data = this.#cache.get(current.key)!;
-      yield [current.key, data.value];
+      const data = this.#cache.get(current.key);
+      if (data !== undefined) {
+        yield [current.key, data.value];
+      }
       current = current.prev;
     }
   }
@@ -241,9 +246,10 @@ export class LruCache<
       return;
     }
     const tailKey = this.#tail.key;
+    const tailData = this.#cache.get(tailKey);
     this.#removeNode(this.#tail);
-    if (this.#onEviction) {
-      this.#onEviction(tailKey, this.#cache.get(tailKey)!.value);
+    if (this.#onEviction && tailData !== undefined) {
+      this.#onEviction(tailKey, tailData.value);
     }
     this.#cache.delete(tailKey);
   }

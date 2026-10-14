@@ -1,13 +1,13 @@
-import { formatErrMsg } from './messages/errorMessages';
-import { isParsableSafeInt, isStringNonEmpty } from './string.guards';
+import { formatErrMsg } from "./messages/errorMessages";
+import { isParsableSafeInt, isStringNonEmpty } from "./string.guards";
 import type {
   ParsableSafeInt,
   ParsableStrictIsoDateZ,
   StringNonEmpty,
-} from './string.types';
-import { isoDateTimeZRegexp } from './string.utils';
-import type { MsgOrErrorFactory } from './types/internal.types';
-import { createAssertException } from './utils/createAssertException';
+} from "./string.types";
+import { isoDateTimeZRegexp } from "./string.utils";
+import type { MsgOrErrorFactory } from "./types/internal.types";
+import { createAssertException } from "./utils/createAssertException";
 
 /**
  * Assert a value is a non-empty string (trims the string by default)
@@ -65,22 +65,20 @@ export function assertParsableStrictIsoDateZ(
   v: unknown,
   msgOrErrorFactory?: MsgOrErrorFactory
 ): asserts v is ParsableStrictIsoDateZ {
-  let check:
-    'INVALID_FORMAT' | 'INVALID_DATE' | 'INVALID_ARGUMENT' | true | undefined =
-    undefined;
-  if (typeof v !== 'string') {
-    check = 'INVALID_ARGUMENT';
+  let check: "INVALID_FORMAT" | "INVALID_DATE" | "INVALID_ARGUMENT" | true;
+  if (typeof v !== "string") {
+    check = "INVALID_ARGUMENT";
   } else if (v.length === 24 && isoDateTimeZRegexp.test(v)) {
     try {
       check =
         new Date(v).toISOString().toUpperCase() === v.toUpperCase()
           ? true
-          : 'INVALID_DATE';
+          : "INVALID_DATE";
     } catch {
-      check = 'INVALID_DATE';
+      check = "INVALID_DATE";
     }
   } else {
-    check = 'INVALID_FORMAT';
+    check = "INVALID_FORMAT";
   }
   if (check !== true) {
     throw createAssertException(
