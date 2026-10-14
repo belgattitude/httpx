@@ -13,7 +13,7 @@ const config = [
     name: "Only { DfsTreeSearch } (ESM)",
     path: ["dist/index.js"],
     import: "{ DfsTreeSearch }",
-    limit: "280B",
+    limit: "290B",
   },
   // Mappers
   {

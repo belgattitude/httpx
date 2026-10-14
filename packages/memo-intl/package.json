@@ -57,7 +57,7 @@
     "check-size": "size-limit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-memo-intl-unit --dir ./coverage",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
-    "dev": "tsup --watch",
+    "dev": "tsdown --watch",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "fix-staged": "lint-staged --allow-empty",
@@ -72,8 +72,8 @@
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-watch": "vitest --ui  --api 4414",
-    "typecheck": "tsgo --project tsconfig.json --noEmit",
-    "typecheck-build": "tsgo --project tsconfig.build.json --noEmit"
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck-build": "tsc --project tsconfig.build.json --noEmit"
   },
   "dependencies": {
     "@httpx/lru": "workspace:^"
@@ -84,7 +84,6 @@
     "@httpx/dx": "workspace:^",
     "@size-limit/file": "13.0.3",
     "@size-limit/webpack": "13.0.3",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "browserslist": "4.28.8",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
@@ -98,7 +97,7 @@
     "tsdown": "0.22.14",
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.12.0",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "vitest": "4.1.10",
     "webpack": "5.109.2"
   },

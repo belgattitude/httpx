@@ -6,7 +6,7 @@ console.log("targets", ...browserslistToEsbuild());
 export default defineConfig((_options) => {
   return {
     clean: true,
-    dts: true,
+    dts: { tsconfig: "./tsconfig.build.json" },
     entry: ["src/index.ts", "src/xxhash-wasm/index.ts"],
     minify: "dce-only",
     platform: "neutral",

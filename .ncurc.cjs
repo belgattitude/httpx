@@ -15,7 +15,6 @@ const npmPreapprovedPackages = [
   "@vitest/*",
   "esbuild",
   "@esbuild/*",
-  "tsup",
   "tsdown",
   "prettier",
   "@typescript-eslint/*",
@@ -46,7 +45,6 @@ module.exports = defineConfig({
     return 2;
   },
   reject: [
-    "typescript",
     "primereact",
     // Till documentation website is upgraded
     "nextra",

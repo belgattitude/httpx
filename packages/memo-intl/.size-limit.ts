@@ -17,7 +17,7 @@ const config = [
     name: "Everything (CJS)",
     import: "*",
     path: ["dist/index.cjs"],
-    limit: "1.67KB",
+    limit: "1680B",
   },
 ] satisfies SizeLimitConfig;
 

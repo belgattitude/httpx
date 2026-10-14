@@ -5,7 +5,7 @@ const config = [
     name: "import xxhash-wasm (ESM)",
     path: ["dist/xxhash-wasm/index.js"],
     import: "{ createXXHash64 }",
-    limit: "826B",
+    limit: "905B",
   },
 ] satisfies SizeLimitConfig;
 

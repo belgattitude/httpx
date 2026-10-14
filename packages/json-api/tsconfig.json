@@ -2,9 +2,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@httpx/dx/typescript/tsconfig.base.json",
   "compilerOptions": {
-    "paths": {
-      "@httpx/exception": ["../../packages/exception/src/index"]
-    },
     "types": ["vitest/globals"]
   }
 }

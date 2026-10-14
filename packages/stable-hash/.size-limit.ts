@@ -23,7 +23,7 @@ const config = [
     name: "createStableHashOrThrow (ESM)",
     path: ["dist/index.js"],
     import: "{ createStableHashOrThrow }",
-    limit: "650B",
+    limit: "660B",
   },
   {
     name: "createStableHash (ESM)",

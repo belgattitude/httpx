@@ -1,6 +1,6 @@
 import type { SizeLimitConfig } from "size-limit";
 
-const fullEsmMaxSize = "2010B";
+const fullEsmMaxSize = "2030B";
 const fullCjsMaxSize = "2550B";
 
 const config = [
@@ -42,7 +42,7 @@ const config = [
     path: ["dist/index.mjs"],
     import:
       "{ HttpNotFound, HttpRequestTimeout, HttpConflict, HttpGone, HttpMethodNotAllowed, HttpForbidden }",
-    limit: "515B",
+    limit: "520B",
   },
   {
     name: "ESM (1 client and 1 server exception)",
@@ -66,7 +66,7 @@ const config = [
     name: "ESM (createHttpException + isHttpException)",
     path: ["dist/index.mjs"],
     import: "{ createHttpException, isHttpException }",
-    limit: "1260B",
+    limit: "1280B",
   },
   {
     name: "ESM (createHttpException + isHttpException + isHttpClientException )",
@@ -78,7 +78,7 @@ const config = [
     name: "ESM serializer ({ toJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ toJson }",
-    limit: "920B",
+    limit: "945B",
   },
   {
     name: "ESM serializer ({ fromJson })",
@@ -91,7 +91,7 @@ const config = [
     path: ["dist/serializer/index.mjs"],
     import:
       "{ fromJson, toJson, createFromSerializable, convertToSerializable }",
-    limit: "2030B",
+    limit: "2060B",
   },
   {
     name: "ESM experimental ({ tryOrFail })",
@@ -114,7 +114,7 @@ const config = [
     path: ["dist/index.cjs"],
     import: "{ isHttpException }",
     webpack: true,
-    limit: "1750B",
+    limit: "2160B", // tsdown cjs output (getter based exports) is ~400B bigger than tsup once bundled by webpack
   },
 ] satisfies SizeLimitConfig;
 

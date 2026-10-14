@@ -3,7 +3,7 @@ import { defineConfig } from "tsdown";
 export default defineConfig((_options) => {
   return {
     clean: true,
-    dts: true,
+    dts: { tsconfig: "./tsconfig.build.json" },
     entry: ["src/index.ts"],
     minify: "dce-only",
     platform: "node",

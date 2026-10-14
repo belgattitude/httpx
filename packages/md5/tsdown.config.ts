@@ -6,7 +6,7 @@ console.log("targets", ...browserslistToEsbuild());
 export default defineConfig((_options) => [
   {
     clean: true,
-    dts: true,
+    dts: { tsconfig: "./tsconfig.build.json" },
     entry: ["src/index.ts"],
     minify: "dce-only",
     fixedExtension: true,
@@ -22,7 +22,7 @@ export default defineConfig((_options) => [
   },
   {
     clean: true,
-    dts: true,
+    dts: { tsconfig: "./tsconfig.build.json" },
     entry: ["src/ecmascript/index.ts"],
     outDir: "dist/ecmascript",
     minify: "dce-only",
@@ -39,7 +39,7 @@ export default defineConfig((_options) => [
   },
   {
     clean: true,
-    dts: true,
+    dts: { tsconfig: "./tsconfig.build.json" },
     entry: ["src/nodejs/index.ts"],
     outDir: "dist/nodejs",
     minify: "dce-only",
