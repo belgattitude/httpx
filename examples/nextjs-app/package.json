@@ -7,7 +7,6 @@
     "build": "cross-env TSCONFIG=./tsconfig.no-paths.json next build",
     "clean": "rimraf ./.next ./coverage ./tsconfig.tsbuildinfo",
     "dev": "next dev",
-    "fix-staged": "lint-staged --allow-empty",
     "format": "dx-oxfmt --write",
     "lint": "next typegen && dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
     "lint-fix": "next typegen && dx-oxlint --fix && dx-oxfmt --write",

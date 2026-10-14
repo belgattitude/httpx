@@ -71,7 +71,6 @@
     "dev": "tsdown --watch",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
-    "fix-staged": "lint-staged --allow-empty",
     "format": "dx-oxfmt --write",
     "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
     "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",

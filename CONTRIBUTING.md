@@ -68,8 +68,6 @@ If applicable:
 
 This repo adheres to the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) convention.
 
-Commit messages are enforced through [commitlint](https://github.com/conventional-changelog/commitlint) and [a husky](https://github.com/typicode/husky) [commit-msg](https://github.com/belgattitude/httpx/blob/main/.husky/commit-msg) hook.
-
 ### Activated prefixes
 
 - **chore**: Changes that affect the build system or external dependencies
@@ -85,5 +83,3 @@ Commit messages are enforced through [commitlint](https://github.com/conventiona
 - **revert**: When reverting a commit
 - **style**: A change that affects the scss, less, css styles
 - **release**: All related to changeset (pre exit...)
-
-> **Note** Up-to-date configuration can be found in [commitlint.config.js](https://github.com/belgattitude/httpx/blob/main/commitlint.config.js).

@@ -23,7 +23,6 @@
   "scripts": {
     "build": "tsdown",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
-    "fix-staged": "lint-staged --allow-empty",
     "format": "dx-oxfmt --write",
     "install-playwright": "playwright install chromium",
     "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
