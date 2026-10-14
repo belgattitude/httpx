@@ -1,15 +1,15 @@
-import { TimeLruCache } from '@httpx/lru';
+import { TimeLruCache } from "@httpx/lru";
 
 import type {
   ProxyCacheConfig,
   ProxyCacheItem,
-} from '@/server/lib/proxy-cache';
+} from "@/server/lib/proxy-cache";
 
 export const proxyCacheConfig: ProxyCacheConfig = {
-  compressionAlgo: 'gzip',
+  compressionAlgo: "gzip",
   proxy: {
-    basePath: '/api/proxy-cache',
-    targetBaseUrl: 'http://localhost:3000',
+    basePath: "/api/proxy-cache",
+    targetBaseUrl: "http://localhost:3000",
   },
   cache: new TimeLruCache<ProxyCacheItem>({
     maxSize: 100,

@@ -4,7 +4,7 @@ import type {
   PlainObjectDeepPartialUnknown,
   PlainObjectKey,
   Simplify,
-} from './internal.types';
+} from "./internal.types";
 
 export type PlainObject<
   TValue extends BasePlainObject = DefaultBasePlainObject,

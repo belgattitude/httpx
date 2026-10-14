@@ -1,0 +1,9 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      run: |
+        echo "Running oxfmt on staged files..." &&
+        yarn dx-oxfmt --write --no-error-on-unmatched-pattern {staged_files}
+      glob: "*.{ts,tsx,js,jsx,mjs,cjs,json,css,md,mdx,yml,yaml}"
+      stage_fixed: true # ✨ Automatically re-stages the file after formatting

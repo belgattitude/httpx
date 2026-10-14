@@ -1,7 +1,6 @@
 ## @httpx/plain-object benchmarks
 
-Benchmarks to measure [@httpx/plain-object](../README.md) performance over
-popular libraries.
+Benchmarks to measure [@httpx/plain-object](../README.md) performance over popular libraries.
 
 ### Run
 
@@ -16,7 +15,7 @@ yarn bench
 
 #### isPlainObject
 
-See the [source](./comparative.bench.ts). 
+See the [source](./comparative.bench.ts).
 
 ```
  RUN  v2.0.5 /home/sebastien/github/httpx/packages/plain-object

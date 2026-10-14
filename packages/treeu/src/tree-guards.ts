@@ -1,6 +1,6 @@
-import { isPlainObject } from '@httpx/plain-object';
+import { isPlainObject } from "@httpx/plain-object";
 
-import type { TreeLeafNode, TreeParentNode } from './tree.types';
+import type { TreeLeafNode, TreeParentNode } from "./tree.types";
 
 export const TreeGuards = {
   isLeaf: (node: unknown): node is TreeLeafNode => {

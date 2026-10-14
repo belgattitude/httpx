@@ -1,32 +1,51 @@
 {
   "name": "@httpx/exception",
-  "description": "HTTP response errors with default message, stacktrace, instanceof, error cause support and more.",
   "version": "3.2.0",
+  "description": "HTTP response errors with default message, stacktrace, instanceof, error cause support and more.",
+  "keywords": [
+    "http error",
+    "http exception",
+    "http response error",
+    "http status",
+    "http status code"
+  ],
+  "homepage": "https://github.com/belgattitude/httpx/tree/main/packages/exception#readme",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://github.com/belgattitude/httpx/tree/main/packages/exception#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
     "directory": "packages/exception"
   },
-  "keywords": [
-    "http error",
-    "http exception",
-    "http response error",
-    "http status code",
-    "http status"
+  "files": [
+    "dist",
+    "README.md",
+    "UPGRADE.md",
+    "package.json",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
-  "sideEffects": false,
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
+  "typesVersions": {
+    "*": {
+      "serializer": [
+        "./dist/serializer"
+      ],
+      "experimental": [
+        "./dist/experimental"
+      ]
+    }
+  },
   "exports": {
     ".": {
+      "httpx-monorepo-source": "./src/index.ts",
       "import": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.mjs"
@@ -37,6 +56,7 @@
       }
     },
     "./experimental": {
+      "httpx-monorepo-source": "./src/experimental/index.ts",
       "import": {
         "types": "./dist/experimental/index.d.ts",
         "default": "./dist/experimental/index.mjs"
@@ -47,6 +67,7 @@
       }
     },
     "./serializer": {
+      "httpx-monorepo-source": "./src/serializer/index.ts",
       "import": {
         "types": "./dist/serializer/index.d.ts",
         "default": "./dist/serializer/index.mjs"
@@ -58,81 +79,63 @@
     },
     "./package.json": "./package.json"
   },
-  "typesVersions": {
-    "*": {
-      "serializer": [
-        "./dist/serializer"
-      ],
-      "experimental": [
-        "./dist/experimental"
-      ]
-    }
-  },
-  "files": [
-    "dist",
-    "README.md",
-    "UPGRADE.md",
-    "package.json",
-    "LICENSE",
-    "CHANGELOG.md"
-  ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build-release": "yarn build",
-    "build": "run clean && yarn run tsup",
     "bench": "vitest bench --run",
     "bench-bun": "bun --bun run vitest bench --run",
     "bench-watch": "vitest bench",
-    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
-    "docgen": "run-s docgen-typedoc",
-    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/exception.eslintcache",
-    "lint-timing": "cross-env TIMING=1 run lint",
-    "typecheck": "tsgo --project ./tsconfig.json --noEmit",
+    "build": "run clean && yarn run tsdown",
+    "build-release": "yarn build",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check es2022 './dist/**/*.cjs' --not './dist/*.map.js'",
     "check-dist-esm": "es-check es2022 './dist/**/*.mjs' --not './dist/*.map.js' --module",
-    "check-size": "size-limit",
     "check-pub": "attw --pack && publint",
+    "check-size": "size-limit",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage",
+    "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "fix-all-files": "dx-oxlint --fix && dx-oxfmt --write",
+    "format": "dx-oxfmt --write",
+    "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
+    "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
+    "lint-timing": "cross-env TIMING=1 run lint",
     "test": "vitest run",
     "test-unit": "vitest run",
+    "test-unit-browser": "vitest run --browser=chromium",
     "test-unit-bun": "bun --bun run vitest run",
+    "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
-    "test-unit-browser": "vitest run --browser=chromium",
-    "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-watch": "vitest --ui  --api 4212",
-    "fix-all-files": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --fix",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-exception-unit --dir ./coverage"
+    "typecheck": "tsc --project ./tsconfig.json --noEmit",
+    "typecheck-build": "tsc --project tsconfig.build.json --noEmit"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
-    "@belgattitude/eslint-config-bases": "8.19.1",
     "@httpx/devtools-vitest": "workspace:^",
+    "@httpx/dx": "workspace:^",
     "@size-limit/file": "13.0.3",
     "@size-limit/webpack": "13.0.3",
     "@size-limit/webpack-why": "13.0.3",
     "@types/node": "26.2.0",
     "@types/statuses": "2.0.6",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "browserslist": "4.28.8",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
     "es-check": "9.6.4",
     "esbuild": "0.28.2",
-    "eslint": "8.57.1",
     "npm-run-all2": "9.0.3",
-    "prettier": "3.9.6",
     "publint": "0.3.23",
     "rimraf": "6.1.3",
     "size-limit": "13.0.3",
     "statuses": "2.0.2",
     "superjson": "2.2.6",
-    "tsup": "8.5.1",
+    "tsdown": "0.22.14",
     "tupleson": "0.23.1",
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.12.0",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "vitest": "4.1.10",
     "webpack": "5.109.2"
   },

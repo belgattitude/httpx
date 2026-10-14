@@ -13,14 +13,14 @@ export type ParseDsnOptions = {
   /** Whether to lowercase parsed driver name, default: false */
   lowercaseDriver?: boolean;
   /** Overrides parsed values by those one (except query params) */
-  overrides?: Omit<Partial<ParsedDsn>, 'params'>;
+  overrides?: Omit<Partial<ParsedDsn>, "params">;
 };
 
 export const errorReasons = {
-  EMPTY_DSN: 'DSN cannot be empty',
-  INVALID_ARGUMENT: 'DSN must be a string',
-  INVALID_PORT: 'Invalid port',
-  PARSE_ERROR: 'Cannot parse DSN',
+  EMPTY_DSN: "DSN cannot be empty",
+  INVALID_ARGUMENT: "DSN must be a string",
+  INVALID_PORT: "Invalid port",
+  PARSE_ERROR: "Cannot parse DSN",
 } as const;
 
 export type ErrorReasons = keyof typeof errorReasons;
@@ -44,4 +44,4 @@ export type WeakOpaqueContainer<Token> = {
   readonly [tag]: Token;
 };
 
-export type ParsableDsn = string & WeakOpaqueContainer<'ParsableDsn'>;
+export type ParsableDsn = string & WeakOpaqueContainer<"ParsableDsn">;

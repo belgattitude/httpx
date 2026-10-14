@@ -1,13 +1,6 @@
 # @httpx/md5
 
-[![npm](https://img.shields.io/npm/v/@httpx/md5?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/md5)
-[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/md5/CHANGELOG.md)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-md5-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fmd5)
-[![bundles](https://img.shields.io/static/v1?label=&message=esm&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/md5/.size-limit.ts)
-[![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![browserslist](https://img.shields.io/static/v1?label=Browsers&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![downloads](https://img.shields.io/npm/dm/@httpx/md5?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/md5)
-[![license](https://img.shields.io/npm/l/@httpx/md5?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/@httpx/md5?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/md5) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/md5/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-md5-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fmd5) [![bundles](https://img.shields.io/static/v1?label=&message=esm&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/md5/.size-limit.ts) [![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browsers&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![downloads](https://img.shields.io/npm/dm/@httpx/md5?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/md5) [![license](https://img.shields.io/npm/l/@httpx/md5?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
 One of the fastest md5 hash function optimized for small strings (<8Kb). Less than 1.2Kb in browser usage.
 
@@ -42,23 +35,17 @@ const hash = md5("Hello: 🌍🚀✨🦄");
 
 ## Considerations
 
-MD5 is a non-cryptographic hash function that produces a 128-bit (16-byte) value. More modern hash function
-exists nowadays and should be preferred (xxhash, rapidhash...). However, I (the author) had a requirement
-to use it in many runtimes (edge, cloudflare, node and the browser) to compute hashes for millions of relatively
-small strings. This library is aimed at this use case. Please check alternatives if it doesn't fit your scenario.
+MD5 is a non-cryptographic hash function that produces a 128-bit (16-byte) value. More modern hash function exists nowadays and should be preferred (xxhash, rapidhash...). However, I (the author) had a requirement to use it in many runtimes (edge, cloudflare, node and the browser) to compute hashes for millions of relatively small strings. This library is aimed at this use case. Please check alternatives if it doesn't fit your scenario.
 
 ## Comparison with other libraries
 
-[spark-md5](https://www.npmjs.com/package/spark-md5) implementation, but relies on some deprecated APIs
-(such as [unescape](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/unescape)).
+[spark-md5](https://www.npmjs.com/package/spark-md5) implementation, but relies on some deprecated APIs (such as [unescape](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/unescape)).
 
-Their performance is equivalent, that said on node, bun and edge runtimes, the native crypto will transparently be used thanks
-to a more modern packaging, which generally gives a speed boost.
+Their performance is equivalent, that said on node, bun and edge runtimes, the native crypto will transparently be used thanks to a more modern packaging, which generally gives a speed boost.
 
 [npm:md5](https://www.npmjs.com/package/md5) is the most popular library (still 2x-5x slower than this one) and also much bigger.
 
-[hash-wasm](https://www.npmjs.com/package/hash-wasm) is asynchronous and uses WebAssembly which defeats a bit the performance for
-small strings. Working with edge, cloudflare workers, bun and runtime/edge is not always easy to set up.
+[hash-wasm](https://www.npmjs.com/package/hash-wasm) is asynchronous and uses WebAssembly which defeats a bit the performance for small strings. Working with edge, cloudflare workers, bun and runtime/edge is not always easy to set up.
 
 ## Benchmarks
 
@@ -146,17 +133,17 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 ## Compatibility
 
-| Level        | CI  | Description                                                                                                                                      |
-| ------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Node         | ✅  | CI for 20.x, 22.x, 24.x & 26.x.                                                                                                                  |
-| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                    |
-| Browserslist | ✅  | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/md5/.browserslistrc)        |
-| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                 |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                               |
-| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
-| Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                    |
-| ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                     |
-| Performance  | ✅  | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                             |
+| Level | CI | Description |
+| --- | --- | --- |
+| Node | ✅ | CI for 20.x, 22.x, 24.x & 26.x. |
+| Browser | ✅ | Tested with latest chrome (vitest/playwright) |
+| Browserslist | ✅ | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/md5/.browserslistrc) |
+| Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
+| Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
+| Cloudflare | ✅ | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
+| Typescript | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
+| ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
+| Performance | ✅ | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx) |
 
 ## Credits
 

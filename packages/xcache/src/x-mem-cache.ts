@@ -1,14 +1,14 @@
-import type { ITimeLruCache, SupportedCacheValues } from '@httpx/lru';
+import type { ITimeLruCache, SupportedCacheValues } from "@httpx/lru";
 
 import {
   type CacheKeyTuple,
   type CacheStringKey,
   genCacheKeyString,
-} from './cache-key';
+} from "./cache-key";
 import type {
   CacheCompressSuccessMeta,
   ICacheCompressor,
-} from './compress/types';
+} from "./compress/types";
 
 export type XMemCacheOptions = {
   lru: ITimeLruCache;
@@ -33,27 +33,27 @@ type Result<TResult> = {
 
 type LRUCacheValue<T> =
   | {
-      format: 'compressed';
+      format: "compressed";
       data: string;
       meta: CacheCompressSuccessMeta;
     }
   | {
-      format: 'native';
+      format: "native";
       data: T;
       meta: never;
     };
 
 export class XMemCache {
-  #lru: ITimeLruCache;
+  readonly #lru: ITimeLruCache;
   /**
    * Default namespace for the cache key.
    */
-  #defaultNs?: string;
-  #compressor?: ICacheCompressor | undefined;
-  #compressorId?: string | undefined;
+  readonly #defaultNs?: string;
+  readonly #compressor?: ICacheCompressor | undefined;
+  readonly #compressorId?: string | undefined;
 
   constructor(options: XMemCacheOptions) {
-    const { lru, compressor, namespace = 'default' } = options;
+    const { lru, compressor, namespace = "default" } = options;
     this.#lru = lru;
     this.#defaultNs = namespace;
     this.#compressor = compressor;
@@ -103,7 +103,8 @@ export class XMemCache {
     });
     let cached = true;
     const result = this.#lru.get(cacheKey) as
-      LRUCacheValue<TResult> | undefined;
+      | LRUCacheValue<TResult>
+      | undefined;
 
     let data = result?.data as TResult | undefined;
 
@@ -116,26 +117,24 @@ export class XMemCache {
         data !== undefined
       ) {
         const compressed = await this.#compressor.compress(data);
-        switch (compressed.status) {
-          case 'success':
-            this.#lru.set(
-              cacheKey,
-              {
-                format: 'compressed',
-                data: compressed.data,
-                meta: compressed.meta,
-              },
-              ttl
-            );
-            break;
-          default:
-            this.#lru.set(cacheKey, { format: 'native', data }, ttl);
+        if (compressed.status === "success") {
+          this.#lru.set(
+            cacheKey,
+            {
+              format: "compressed",
+              data: compressed.data,
+              meta: compressed.meta,
+            },
+            ttl
+          );
+        } else {
+          this.#lru.set(cacheKey, { format: "native", data }, ttl);
         }
       } else {
         this.#lru.set(
           cacheKey,
           {
-            format: 'native',
+            format: "native",
             data,
           },
           ttl
@@ -143,16 +142,16 @@ export class XMemCache {
       }
     } else if (
       this.#compressor !== undefined &&
-      result.format === 'compressed'
+      result.format === "compressed"
     ) {
       data = await this.#compressor.decompress<TResult>({
-        status: 'success',
+        status: "success",
         data: result.data,
         meta: result.meta,
       });
     }
     return {
-      data: data!,
+      data: data as TResult,
       meta: {
         cached,
         generatedKey: cacheKey,
@@ -166,7 +165,5 @@ export class XMemCache {
   /**
    * Clear the cache and return the number of items removed.
    */
-  clear = (): number => {
-    return this.#lru.clear();
-  };
+  clear = (): number => this.#lru.clear();
 }

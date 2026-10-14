@@ -1,29 +1,29 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 
-import { HttpException } from '../../base/HttpException';
-import { HttpBadRequest } from '../../client/HttpBadRequest';
-import { HttpInternalServerError } from '../../server/HttpInternalServerError';
-import { isHttpException } from '../isHttpException';
+import { HttpException } from "../../base/HttpException";
+import { HttpBadRequest } from "../../client/HttpBadRequest";
+import { HttpInternalServerError } from "../../server/HttpInternalServerError";
+import { isHttpException } from "../isHttpException";
 
-describe('isHttpException', () => {
-  it('should return true if HttpException', () => {
+describe("isHttpException", () => {
+  it("should return true if HttpException", () => {
     expect(isHttpException(new HttpException(500))).toBe(true);
   });
 
-  it('should return true if subclass of HttpServerException', () => {
+  it("should return true if subclass of HttpServerException", () => {
     const error = new HttpInternalServerError();
     expect(isHttpException(error)).toBe(true);
   });
 
-  it('should return true if subclass of HttpClientException', () => {
+  it("should return true if subclass of HttpClientException", () => {
     expect(isHttpException(new HttpBadRequest())).toBe(true);
   });
 
-  it('should return false if error is not instance of HttpError', () => {
+  it("should return false if error is not instance of HttpError", () => {
     expect(isHttpException(new Error())).toBe(false);
   });
-  describe('when statusCode checks are disabled', () => {
-    it('should be true even if the statusCode is not indicating a status error (4xx/5xx)', () => {
+  describe("when statusCode checks are disabled", () => {
+    it("should be true even if the statusCode is not indicating a status error (4xx/5xx)", () => {
       expect(
         isHttpException(
           new (class extends HttpException {
@@ -37,8 +37,8 @@ describe('isHttpException', () => {
     });
   });
 
-  describe('when statusCode checks are enabled', () => {
-    it('should be false if the statusCode is not indicating a status error (4xx/5xx)', () => {
+  describe("when statusCode checks are enabled", () => {
+    it("should be false if the statusCode is not indicating a status error (4xx/5xx)", () => {
       expect(
         isHttpException(
           new (class extends HttpException {

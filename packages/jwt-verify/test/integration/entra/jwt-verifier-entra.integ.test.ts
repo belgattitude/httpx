@@ -1,8 +1,8 @@
-import * as v from 'valibot';
+import * as v from "valibot";
 
-import { JwtVerifier } from '../../../src/jwt-verifier';
+import { JwtVerifier } from "../../../src/jwt-verifier";
 
-const isBrowser = typeof window !== 'undefined';
+const isBrowser = typeof window !== "undefined";
 
 /**
  * To run this test, you need to provide a valid token in the env var
@@ -17,9 +17,9 @@ const entraTenantId = isBrowser
   : process.env.TEST_INTEG_ENTRA_TENANT_ID!;
 
 describe.skipIf(entraJwtToken === undefined)(
-  'Microsoft entra integration test',
+  "Microsoft entra integration test",
   () => {
-    it('should parse', async () => {
+    test("should parse", async () => {
       const entraSchema = v.object({
         aio: v.string(), // "ASQA2/8ZAAAAsHFQOHLRysRcnpHLKr/dscVPztjPPAurvLaxtpEQvJM=",
         azp: v.string(), // "f273d9c0-e362-4062-a493-05a080884239",
@@ -34,7 +34,7 @@ describe.skipIf(entraJwtToken === undefined)(
       });
 
       const entraJwtVerifier = new JwtVerifier({
-        authorityHost: 'https://login.microsoftonline.com',
+        authorityHost: "https://login.microsoftonline.com",
         tenantId: `${entraTenantId}`,
         clockToleranceSec: 10_000_000, // allow to have a big clock tolerance for tests
       });

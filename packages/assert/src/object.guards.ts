@@ -1,8 +1,8 @@
 import type {
   BasePlainObject,
   DefaultBasePlainObject,
-} from './object.internal.types';
-import type { PlainObject } from './object.types';
+} from "./object.internal.types";
+import type { PlainObject } from "./object.types";
 
 /**
  * Check if a value is a plain object
@@ -71,7 +71,7 @@ export const isPlainObject = <
 ): v is TValue extends DefaultBasePlainObject
   ? BasePlainObject
   : PlainObject<TValue> => {
-  if (v === null || typeof v !== 'object') {
+  if (v === null || typeof v !== "object") {
     return false;
   }
 

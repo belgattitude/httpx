@@ -1,18 +1,18 @@
-import ky, { HTTPError, type KyResponse } from 'ky';
+import ky, { HTTPError, type KyResponse } from "ky";
 
-import { fail, type Result, success } from './base/result';
-import { InvalidOidcConfigError } from './error';
-import { FetchError } from './error/fetch-error';
-import { defaultFetchOptions, type FetchOptions } from './fetch-options';
+import { fail, type Result, success } from "./base/result";
+import { InvalidOidcConfigError } from "./error";
+import { FetchError } from "./error/fetch-error";
+import { defaultFetchOptions, type FetchOptions } from "./fetch-options";
 import {
   type DiscoveryPayload,
   isDiscoveryPayload,
-} from './utils/discovery-payload';
+} from "./utils/discovery-payload";
 
 export type OidcDiscoveryOptions = FetchOptions;
 
 export class OidcDiscoveryFetcher {
-  #options: NonNullable<OidcDiscoveryOptions>;
+  readonly #options: NonNullable<OidcDiscoveryOptions>;
   constructor(options?: OidcDiscoveryOptions) {
     this.#options = {
       timeoutMs: options?.timeoutMs ?? defaultFetchOptions.timeoutMs,
@@ -72,10 +72,10 @@ export class OidcDiscoveryFetcher {
     let response: KyResponse;
     try {
       response = await ky.get(wellKnownUrl, {
-        cache: 'no-store',
+        cache: "no-store",
         timeout: options?.timeoutMs ?? this.#options.timeoutMs,
         headers: {
-          accept: 'application/json',
+          accept: "application/json",
         },
         throwHttpErrors: true,
         retry: {
@@ -83,18 +83,19 @@ export class OidcDiscoveryFetcher {
           ...options?.retry,
         },
       });
-    } catch (e) {
-      const { status, statusText } = e instanceof HTTPError ? e.response : {};
+    } catch (error) {
+      const { status, statusText } =
+        error instanceof HTTPError ? error.response : {};
       return fail(
         new FetchError(
           {
             message: `Failed to fetch OIDC configuration at ${wellKnownUrl}`,
             url: wellKnownUrl,
-            statusText: statusText,
+            statusText,
             statusCode: status,
           },
           {
-            cause: e as Error | HTTPError,
+            cause: error as Error | HTTPError,
           }
         )
       );
@@ -103,17 +104,17 @@ export class OidcDiscoveryFetcher {
     let discoveryPayload: DiscoveryPayload;
     try {
       discoveryPayload = await response.json<DiscoveryPayload>();
-    } catch (e) {
+    } catch (error) {
       return fail(
-        new InvalidOidcConfigError('Json parsing error', {
-          cause: e as Error,
+        new InvalidOidcConfigError("Json parsing error", {
+          cause: error as Error,
         })
       );
     }
     if (!isDiscoveryPayload(discoveryPayload)) {
       return fail(
         new InvalidOidcConfigError(
-          'Fetched discovery payload is not a valid OIDC Discovery Payload'
+          "Fetched discovery payload is not a valid OIDC Discovery Payload"
         )
       );
     }

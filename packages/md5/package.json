@@ -1,24 +1,27 @@
 {
   "name": "@httpx/md5",
-  "description": "Fast md5 optimized for small strings (<4kb)",
   "version": "1.1.0",
+  "description": "Fast md5 optimized for small strings (<4kb)",
+  "keywords": [
+    "fast",
+    "md5"
+  ],
+  "homepage": "https://belgattitude.github.io/httpx/md5",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
     "url": "https://github.com/belgattitude"
   },
-  "homepage": "https://belgattitude.github.io/httpx/md5",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/belgattitude/httpx.git",
     "directory": "packages/md5"
   },
-  "keywords": [
-    "md5",
-    "fast"
+  "files": [
+    "dist"
   ],
-  "sideEffects": false,
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "httpx-monorepo-source": "./src/index.ts",
@@ -40,58 +43,53 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "?build-release": "When https://github.com/atlassian/changesets/issues/432 has a solution we can remove this trick",
-    "build": "run clean && tsdown",
-    "build-release": "run build",
     "bench": "vitest bench --run",
     "bench-bun": "bun --bun run vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
-    "docgen": "run-s docgen-typedoc",
-    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "build": "run clean && tsdown",
+    "build-release": "run build",
     "check-dist": "es-check --config=.escheckrc.json",
     "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
+    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-md5-unit --dir ./coverage",
     "clean": "rimraf ./dist ./build ./coverage ./_release",
     "dev": "tsdown --watch",
-    "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../../.cache/eslint/md5.eslintcache",
+    "docgen": "run-s docgen-typedoc",
+    "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
+    "format": "dx-oxfmt --write",
+    "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
+    "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
     "test": "vitest run",
     "test-unit": "vitest run",
-    "test-unit-bun": "bun --bun run vitest run",
-    "test-unit-deno": "deno run test-unit",
-    "test-unit-coverage": "vitest run --coverage",
-    "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-browser": "vitest --exclude 'test/compatibility.test.ts' run --browser",
+    "test-unit-bun": "bun --bun run vitest run",
     "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
+    "test-unit-coverage": "vitest run --coverage",
+    "test-unit-deno": "deno run test-unit",
+    "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-watch": "vitest --ui --api 4515",
-    "typecheck": "tsgo --project tsconfig.json --noEmit",
-    "typecheck-build": "tsgo --project tsconfig.build.json --noEmit",
-    "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-md5-unit --dir ./coverage"
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck-build": "tsc --project tsconfig.build.json --noEmit"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
-    "@belgattitude/eslint-config-bases": "8.19.1",
     "@httpx/devtools-vitest": "workspace:^",
+    "@httpx/dx": "workspace:^",
     "@size-limit/esbuild": "13.0.3",
     "@size-limit/file": "13.0.3",
     "@types/md5": "2.3.6",
     "@types/spark-md5": "3.0.5",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "browserslist": "4.28.8",
     "browserslist-to-esbuild": "2.1.1",
     "cross-env": "10.1.0",
     "es-check": "9.6.4",
     "esbuild": "0.28.2",
-    "eslint": "8.57.1",
     "hash-wasm": "4.12.0",
     "md5": "2.3.0",
     "npm-run-all2": "9.0.3",
-    "prettier": "3.9.6",
     "publint": "0.3.23",
     "rimraf": "6.1.3",
     "size-limit": "13.0.3",
@@ -99,7 +97,7 @@
     "tsdown": "0.22.14",
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.12.0",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "vitest": "4.1.10"
   },
   "engines": {

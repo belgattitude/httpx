@@ -1,15 +1,14 @@
-// eslint-disable-next-line import-x/no-extraneous-dependencies
-import { base64ToUint8Array } from 'uint8array-extras';
+import { base64ToUint8Array } from "uint8array-extras";
 
-import type { SupportedCompressionAlgorithm } from './compression-algorithm';
-import { globalCache } from './global-cache';
+import type { SupportedCompressionAlgorithm } from "./compression-algorithm";
+import { globalCache } from "./global-cache";
 import {
   type EncodeStringOptions,
   supportedStringEncodings,
-} from './string-encodings';
+} from "./string-encodings";
 
 export class Decompressor {
-  #algorithm: SupportedCompressionAlgorithm;
+  readonly #algorithm: SupportedCompressionAlgorithm;
 
   constructor(algorithm: SupportedCompressionAlgorithm) {
     this.#algorithm = algorithm;
@@ -62,7 +61,7 @@ export class Decompressor {
     compressedString: string,
     options?: EncodeStringOptions
   ): Promise<string> => {
-    const { encoding = 'base64' } = options ?? {};
+    const { encoding = "base64" } = options ?? {};
     if (!supportedStringEncodings.includes(encoding)) {
       throw new TypeError(`Unsupported string encoding: ${encoding}`);
     }

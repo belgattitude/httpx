@@ -1,17 +1,18 @@
 {
   "name": "httpx-docs",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "sirv ./out --cors --port 8888",
+    "clean": "rimraf ./.next ./out /coverage ./tsconfig.tsbuildinfo",
+    "dev": "next dev",
     "export": "next export",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts --cache --cache-location ../.cache/eslint/docs.eslintcache",
-    "lint-timing": "cross-env TIMING=1 run lint",
-    "typecheck": "tsgo --project ./tsconfig.json --noEmit",
-    "clean": "rimraf ./.next ./out /coverage ./tsconfig.tsbuildinfo"
+    "format": "dx-oxfmt --write",
+    "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
+    "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
+    "start": "sirv ./out --cors --port 8888",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
     "next": "16.3.0",
@@ -21,18 +22,15 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@belgattitude/eslint-config-bases": "8.19.1",
+    "@httpx/dx": "workspace:^",
     "@tailwindcss/postcss": "4.3.3",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
-    "eslint": "8.57.1",
     "postcss": "8.5.26",
-    "prettier": "3.9.6",
     "rimraf": "6.1.3",
     "sirv": "3.0.2",
     "sirv-cli": "3.0.1",
     "tailwindcss": "4.3.3",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   }
 }

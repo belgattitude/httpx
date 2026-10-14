@@ -1,22 +1,22 @@
-import { hashKey } from '@tanstack/query-core';
-import hash from 'stable-hash';
-import { hash as stableHashX } from 'stable-hash-x';
-import { bench } from 'vitest';
+import { hashKey } from "@tanstack/query-core";
+import hash from "stable-hash";
+import { hash as stableHashX } from "stable-hash-x";
+import { bench } from "vitest";
 
-import { createStableKeyOrThrow } from '../src';
-import { benchConfig } from './bench-config';
+import { createStableKeyOrThrow } from "../src";
+import { benchConfig } from "./bench-config";
 
-describe(`Comparison`, async () => {
+describe(`Comparison`, () => {
   const params = {
     key8: true,
-    key7: 'string',
+    key7: "string",
     strArr: Array.from({ length: 10 }, (_, i) => i.toString()).toReversed(),
     plainObject: {
-      key1: 'string',
+      key1: "string",
     },
   };
   bench(
-    '@httpx/stable-hash',
+    "@httpx/stable-hash",
     () => {
       createStableKeyOrThrow(params, {
         sortArrayValues: false,
@@ -25,21 +25,21 @@ describe(`Comparison`, async () => {
     benchConfig.benchOptions
   );
   bench(
-    'stable-hash',
+    "stable-hash",
     () => {
       hash(params);
     },
     benchConfig.benchOptions
   );
   bench(
-    'stable-hash-x',
+    "stable-hash-x",
     () => {
       stableHashX(params);
     },
     benchConfig.benchOptions
   );
   bench(
-    '@tanstack/query-core (hashKey)',
+    "@tanstack/query-core (hashKey)",
     () => {
       hashKey([params]);
     },

@@ -1,13 +1,13 @@
-import { Compressor, Decompressor } from '@httpx/compress';
+import { Compressor, Decompressor } from "@httpx/compress";
 
-import type { ICacheSerializer } from '../serializer/types';
-import { isTrivialValue } from './is-trivial-value';
-import type { CacheCompressResult, ICacheCompressor } from './types';
+import type { ICacheSerializer } from "../serializer/types";
+import { isTrivialValue } from "./is-trivial-value";
+import type { CacheCompressResult, ICacheCompressor } from "./types";
 
 export type CacheCompressOptions = {
   serializer: ICacheSerializer;
 
-  algorithm: 'gzip' | 'deflate';
+  algorithm: "gzip" | "deflate";
 
   /**
    * Minimum achieved compression ratio to consider compression effective
@@ -26,30 +26,30 @@ export type CacheCompressOptions = {
    * @default 16384 (16 KB)
    */
   minimumByteSaving?: number;
-  encoding?: 'base64' | 'base64_urlsafe';
+  encoding?: "base64" | "base64_urlsafe";
 };
 
 const defaultOptions: Required<
   Pick<
     CacheCompressOptions,
-    'minimumRatio' | 'minimumStringLength' | 'minimumByteSaving' | 'encoding'
+    "minimumRatio" | "minimumStringLength" | "minimumByteSaving" | "encoding"
   >
 > = {
   minimumRatio: 1.3,
   minimumStringLength: 1000,
   minimumByteSaving: 16_384, // 16 KB
-  encoding: 'base64',
+  encoding: "base64",
 } as const;
 
 export class CacheCompress implements ICacheCompressor {
-  #gzip: Compressor;
-  #gunzip: Decompressor;
-  #serializer: ICacheSerializer;
-  #options: {
+  readonly #gzip: Compressor;
+  readonly #gunzip: Decompressor;
+  readonly #serializer: ICacheSerializer;
+  readonly #options: {
     minimumRatio: number;
     minimumStringLength: number;
     minimumByteSaving: number;
-    encoding: 'base64' | 'base64_urlsafe';
+    encoding: "base64" | "base64_urlsafe";
   };
 
   /**
@@ -86,27 +86,26 @@ export class CacheCompress implements ICacheCompressor {
     this.#serializer = serializer;
     this.#options = restOptions;
   }
-  getIdentifier = (): string => {
-    return `cache-compress:${this.#serializer.getIdentifier()}`;
-  };
+  getIdentifier = (): string =>
+    `cache-compress:${this.#serializer.getIdentifier()}`;
 
   compress = async <T>(data: T): Promise<CacheCompressResult> => {
     const { minimumRatio, minimumStringLength, minimumByteSaving } =
       this.#options;
     if (!isTrivialValue(data)) {
       return {
-        status: 'skipped',
+        status: "skipped",
         meta: {
-          reason: 'trivial_value',
+          reason: "trivial_value",
         },
         data,
       };
     }
-    if (typeof data === 'string' && data.length < minimumStringLength) {
+    if (typeof data === "string" && data.length < minimumStringLength) {
       return {
-        status: 'skipped',
+        status: "skipped",
         meta: {
-          reason: 'minimum_string_length_not_met',
+          reason: "minimum_string_length_not_met",
         },
         data,
       };
@@ -120,9 +119,9 @@ export class CacheCompress implements ICacheCompressor {
       Math.max(serialized.length - compressed.length, 0) < minimumByteSaving
     ) {
       return {
-        status: 'skipped',
+        status: "skipped",
         meta: {
-          reason: 'minimum_byte_saving_not_met',
+          reason: "minimum_byte_saving_not_met",
         },
         data,
       };
@@ -134,16 +133,16 @@ export class CacheCompress implements ICacheCompressor {
 
     if (ratio < minimumRatio) {
       return {
-        status: 'skipped',
+        status: "skipped",
         meta: {
-          reason: 'minimum_ratio_not_met',
+          reason: "minimum_ratio_not_met",
         },
         data,
       };
     }
 
     return {
-      status: 'success',
+      status: "success",
       meta: {
         compressedSize: compressed.length,
         originalSize: serialized.length,
@@ -154,7 +153,7 @@ export class CacheCompress implements ICacheCompressor {
   };
 
   decompress = async <T = unknown>(data: CacheCompressResult): Promise<T> => {
-    if (data.status !== 'success') {
+    if (data.status !== "success") {
       return data.data as T;
     }
     const serialized = await this.#gunzip.fromEncodedString(data.data, {

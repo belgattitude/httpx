@@ -1,20 +1,12 @@
 // cause in peerDependencies
-// eslint-disable-next-line import-x/no-extraneous-dependencies
-import { parse, stringify } from 'superjson';
+import { parse, stringify } from "superjson";
 
-import type { ICacheSerializer } from './types';
+import type { ICacheSerializer } from "./types";
 
 export class SuperjsonSerializer implements ICacheSerializer {
-  getIdentifier = (): string => {
-    return 'superjson';
-  };
-  serialize = <T>(data: T): string => {
-    return stringify(data);
-  };
-  deserialize = <T = unknown>(serializedData: string): T => {
-    return parse<T>(serializedData);
-  };
-  toString = (): string => {
-    return this.getIdentifier();
-  };
+  getIdentifier = (): string => "superjson";
+  serialize = <T>(data: T): string => stringify(data);
+  deserialize = <T = unknown>(serializedData: string): T =>
+    parse<T>(serializedData);
+  toString = (): string => this.getIdentifier();
 }

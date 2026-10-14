@@ -1,7 +1,7 @@
-import { bench, describe } from 'vitest';
+import { bench, describe } from "vitest";
 
-import { benchOptions, benchSeeds } from '../../bench-options';
-import { getLruCaches } from '../../get-lru-caches';
+import { benchOptions, benchSeeds } from "../../bench-options";
+import { getLruCaches } from "../../get-lru-caches";
 
 const seeds = benchSeeds.getSeeds();
 
@@ -15,7 +15,7 @@ describe(`LruCache iterator - ${seeds.length} items`, async () => {
     `@httpx/lru - forEach - ts files (dev)`,
     () => {
       const results: string[] = [];
-      for (const [key, _value] of lrus['@httpx/lru'].cache) {
+      for (const [key, _value] of lrus["@httpx/lru"].cache) {
         results.push(key);
       }
     },
@@ -25,9 +25,9 @@ describe(`LruCache iterator - ${seeds.length} items`, async () => {
   bench(
     `@httpx/lru - forEach - compiled (dist)`,
     () => {
-      if ('@httpx/lru(compiled)' in lrus) {
+      if ("@httpx/lru(compiled)" in lrus) {
         const results: string[] = [];
-        for (const [key, _value] of lrus['@httpx/lru(compiled)'].cache) {
+        for (const [key, _value] of lrus["@httpx/lru(compiled)"].cache) {
           results.push(key);
         }
       }
@@ -36,10 +36,10 @@ describe(`LruCache iterator - ${seeds.length} items`, async () => {
   );
 
   bench(
-    `quick-lru@${lrus['quick-lru'].version} - forEach`,
+    `quick-lru@${lrus["quick-lru"].version} - forEach`,
     () => {
       const results: string[] = [];
-      for (const [key, _value] of lrus['quick-lru'].cache.entriesAscending()) {
+      for (const [key, _value] of lrus["quick-lru"].cache.entriesAscending()) {
         results.push(key as string);
       }
     },
@@ -47,10 +47,10 @@ describe(`LruCache iterator - ${seeds.length} items`, async () => {
   );
 
   bench(
-    `lru-cache@${lrus['lru-cache'].version} - forEach`,
+    `lru-cache@${lrus["lru-cache"].version} - forEach`,
     () => {
       const results: string[] = [];
-      for (const [key, _value] of lrus['lru-cache'].cache.entries()) {
+      for (const [key, _value] of lrus["lru-cache"].cache.entries()) {
         results.push(key as string);
       }
     },

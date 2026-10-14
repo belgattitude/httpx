@@ -5,9 +5,9 @@
  * @see http://www.myersdaily.org/joseph/javascript/md5-text.html
  */
 
-import { toUtf8 } from '../utils/to-utf8.ts';
+import { toUtf8 } from "../utils/to-utf8.ts";
 
-const hex_chr = '0123456789abcdef'.split('');
+const hex_chr = "0123456789abcdef".split("");
 type NumberQuadlets = [number, number, number, number];
 type SixteenNumberArray = [
   number,
@@ -29,10 +29,10 @@ type SixteenNumberArray = [
 ];
 
 function md5cycle(x: NumberQuadlets, k: SixteenNumberArray): void {
-  let a = x[0],
-    b = x[1],
-    c = x[2],
-    d = x[3];
+  let a = x[0];
+  let b = x[1];
+  let c = x[2];
+  let d = x[3];
 
   a += (((b & c) | (~b & d)) + k[0] - 680_876_936) | 0;
   a = (((a << 7) | (a >>> 25)) + b) | 0;
@@ -197,7 +197,7 @@ function md51(s: string): NumberQuadlets {
     md5cycle(state, md5blk(s.slice(i - 64, i)));
   }
   s = s.slice(Math.max(0, i - 64));
-  const length = s.length;
+  const { length } = s;
   const tail: SixteenNumberArray = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ];
@@ -228,10 +228,11 @@ function md51(s: string): NumberQuadlets {
 }
 
 function rhex(n: number): string {
-  let s = '';
+  let s = "";
   let j = 0;
-  for (; j < 4; j++)
+  for (; j < 4; j++) {
     s += hex_chr[(n >> (j * 8 + 4)) & 0x0f]! + hex_chr[(n >> (j * 8)) & 0x0f]!;
+  }
   return s;
 }
 
@@ -240,7 +241,7 @@ function hex(x: number[]): string {
   for (const element of x) {
     result.push(rhex(element));
   }
-  return result.join('');
+  return result.join("");
 }
 
 /**
@@ -260,8 +261,8 @@ function hex(x: number[]): string {
  * @throws TypeError if the input is not a string
  */
 export function md5(text: string): string {
-  if (typeof text != 'string') {
-    throw new TypeError('Expected a string');
+  if (typeof text != "string") {
+    throw new TypeError("Expected a string");
   }
   const hash = md51(toUtf8(text));
   return hex(hash);

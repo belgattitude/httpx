@@ -1,11 +1,11 @@
-import { serve } from '@hono/node-server';
-import { Hono } from 'hono';
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
 
-import { proxyCacheConfig } from '@/server/config/proxy-cache.config';
-import { ProxyCache } from '@/server/lib/proxy-cache';
+import { proxyCacheConfig } from "@/server/config/proxy-cache.config";
+import { ProxyCache } from "@/server/lib/proxy-cache";
 
 export const config = {
-  runtime: 'nodejs',
+  runtime: "nodejs",
   api: {
     bodyParser: false,
   },
@@ -16,9 +16,7 @@ const proxyCacheBasePath = proxyCacheConfig.proxy.basePath;
 
 const app = new Hono().basePath(proxyCacheBasePath);
 
-app.all('*', async (c) => {
-  return proxyCache.getResponse(c);
-});
+app.all("*", async (c) => await proxyCache.getResponse(c));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type HandlerTypeCompat = (req: any, res: any) => unknown;

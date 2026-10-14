@@ -1,44 +1,44 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 
-import { HttpException } from '../../../base';
-import { HttpBadRequest, HttpUnprocessableEntity } from '../../../client';
-import { isHttpException } from '../../../typeguards/isHttpException';
-import { convertToSerializable } from '../convertToSerializable';
-import { createFromSerializable } from '../createFromSerializable';
+import { HttpException } from "../../../base";
+import { HttpBadRequest, HttpUnprocessableEntity } from "../../../client";
+import { isHttpException } from "../../../typeguards/isHttpException";
+import { convertToSerializable } from "../convertToSerializable";
+import { createFromSerializable } from "../createFromSerializable";
 
-describe('createFromSerializable', () => {
-  describe('when an http exception is given', () => {
+describe("createFromSerializable", () => {
+  describe("when an http exception is given", () => {
     const httpExceptions: [label: string, error: HttpException][] = [
-      ['simple', new HttpException(500)],
-      ['withMsg', new HttpException(500, 'msg')],
+      ["simple", new HttpException(500)],
+      ["withMsg", new HttpException(500, "msg")],
       [
-        'withFullParams',
+        "withFullParams",
         new HttpException(500, {
-          code: 'NETWORK_UNAVAILABLE',
-          errorId: 'nanoid()',
-          message: 'msg',
-          method: 'PUT',
-          url: 'http://localhost',
+          code: "NETWORK_UNAVAILABLE",
+          errorId: "nanoid()",
+          message: "msg",
+          method: "PUT",
+          url: "http://localhost",
         }),
       ],
       [
-        'withCause',
+        "withCause",
         new HttpException(500, {
-          cause: new HttpException(500, 'msg'),
+          cause: new HttpException(500, "msg"),
         }),
       ],
       [
-        'HttpBadRequest',
+        "HttpBadRequest",
         new HttpBadRequest({
           cause: new EvalError(),
-          message: 'msg',
-          url: 'http://',
+          message: "msg",
+          url: "http://",
         }),
       ],
     ];
 
     it.each(httpExceptions)(
-      'should give the same after serialization (%s)',
+      "should give the same after serialization (%s)",
       (label, err) => {
         const converted = createFromSerializable(convertToSerializable(err));
         expect(converted).toStrictEqual(err);
@@ -52,21 +52,21 @@ describe('createFromSerializable', () => {
     );
   });
 
-  it('deserialize issues of HttpUnprocessableEntity', () => {
+  it("deserialize issues of HttpUnprocessableEntity", () => {
     const e422 = new HttpUnprocessableEntity({
       issues: [
         {
-          code: 'invalid_email',
-          message: 'Invalid email',
-          path: 'email',
+          code: "invalid_email",
+          message: "Invalid email",
+          path: "email",
         },
         {
-          code: 'empty_string',
-          message: 'Invalid address',
-          path: ['addresses', 0, 'line1'],
+          code: "empty_string",
+          message: "Invalid address",
+          path: ["addresses", 0, "line1"],
         },
       ],
-      message: 'Validation failed',
+      message: "Validation failed",
     });
 
     const converted = createFromSerializable(convertToSerializable(e422));
@@ -76,22 +76,23 @@ describe('createFromSerializable', () => {
     );
   });
 
-  describe('when native error is given', () => {
+  describe("when native error is given", () => {
     const natives: [label: string, err: Error][] = [
-      ['ErrorSimpleRange', new RangeError()],
-      ['ErrorSimple', new Error()],
-      ['ErrorSimpleRange', new RangeError()],
-      ['ErrorSimpleEval', new EvalError()],
-      ['ErrorMsg', new Error('msg')],
+      ["ErrorSimpleRange", new RangeError()],
+      ["ErrorSimple", new Error()],
+      ["ErrorSimpleRange", new RangeError()],
+      ["ErrorSimpleEval", new EvalError()],
+      ["ErrorMsg", new Error("msg")],
       [
-        'ErrorMsg',
-        new Error('msg', {
-          cause: new Error('msg'),
+        "ErrorMsg",
+        new Error("msg", {
+          cause: new Error("msg"),
         }),
       ],
     ];
+
     it.each(natives)(
-      'should give the same after serialization (%s)',
+      "should give the same after serialization (%s)",
       (label, err) => {
         const converted = createFromSerializable(convertToSerializable(err));
         expect(converted).toStrictEqual(err);
@@ -99,7 +100,7 @@ describe('createFromSerializable', () => {
     );
   });
 
-  describe('when non native error is given', () => {
+  describe("when non native error is given", () => {
     class NonNativeError extends Error {
       constructor(
         message: string,
@@ -109,37 +110,38 @@ describe('createFromSerializable', () => {
       ) {
         super(message, params);
         Object.setPrototypeOf(this, NonNativeError.prototype);
-        this.name = 'NonNativeError';
+        this.name = "NonNativeError";
       }
     }
-    it('should fallback to default Error', () => {
-      const e = new NonNativeError('msg', {
-        cause: new Error('cause'),
+
+    it("should fallback to default Error", () => {
+      const e = new NonNativeError("msg", {
+        cause: new Error("cause"),
       });
       const converted = createFromSerializable(convertToSerializable(e));
       expect(converted).toBeInstanceOf(Error);
-      expect(converted.name).toStrictEqual('Error');
+      expect(converted.name).toBe("Error");
       expect(converted.message).toStrictEqual(e.message);
       expect(converted.cause).toStrictEqual(e.cause);
     });
   });
 
-  describe('when a non error is given', () => {
-    it('switch to build-in Error with custom message', () => {
+  describe("when a non error is given", () => {
+    it("switch to build-in Error with custom message", () => {
       const e = new Date() as unknown as Error;
       const converted = createFromSerializable(convertToSerializable(e));
-      expect(converted.name).toStrictEqual('Error');
-      expect(converted.message).toStrictEqual(
+      expect(converted.name).toBe("Error");
+      expect(converted.message).toBe(
         `Can't serialize error at runtime. Received 'object'`
       );
     });
   });
 
-  describe('testing includeStack param', () => {
+  describe("testing includeStack param", () => {
     type CaseParams = {
       err: HttpException | Error;
       includeStack: boolean | undefined;
-      expectedReturnType: 'undefined' | 'string';
+      expectedReturnType: "undefined" | "string";
     };
     const createCase = ({
       err,
@@ -147,8 +149,8 @@ describe('createFromSerializable', () => {
       expectedReturnType,
     }: CaseParams): [label: string, params: CaseParams] => {
       const exceptionType = isHttpException(err)
-        ? 'HttpException'
-        : 'NativeError';
+        ? "HttpException"
+        : "NativeError";
       return [
         `{ includeStack: ${includeStack} } with '${exceptionType}' should return '${expectedReturnType}'`,
         {
@@ -163,57 +165,57 @@ describe('createFromSerializable', () => {
       createCase({
         err: new HttpException(500),
         includeStack: undefined,
-        expectedReturnType: 'undefined',
+        expectedReturnType: "undefined",
       }),
       createCase({
         err: new HttpException(500),
         includeStack: false,
-        expectedReturnType: 'undefined',
+        expectedReturnType: "undefined",
       }),
       createCase({
         err: new HttpException(500),
         includeStack: true,
-        expectedReturnType: 'string',
+        expectedReturnType: "string",
       }),
       createCase({
-        err: new Error('Err !'),
+        err: new Error("Err !"),
         includeStack: undefined,
-        expectedReturnType: 'undefined',
+        expectedReturnType: "undefined",
       }),
       createCase({
-        err: new Error('Err !'),
+        err: new Error("Err !"),
         includeStack: false,
-        expectedReturnType: 'undefined',
+        expectedReturnType: "undefined",
       }),
       createCase({
-        err: new Error('Err !'),
+        err: new Error("Err !"),
         includeStack: true,
-        expectedReturnType: 'string',
+        expectedReturnType: "string",
       }),
     ] as const satisfies ReturnType<typeof createCase>[];
 
-    describe('when initial error has a stack', () => {
+    describe("when initial error has a stack", () => {
       it.each(eachCases)('"%s"', (_label, caseParams) => {
         const { includeStack, err, expectedReturnType } = caseParams;
         const serialized = convertToSerializable(err, {
           includeStack: true,
         });
         const converted = createFromSerializable(serialized, {
-          includeStack: includeStack,
+          includeStack,
         });
         const { stack } = converted;
         expect(stack).toBeTypeOf(expectedReturnType);
       });
     });
 
-    describe('when initial error has an undefined stack', () => {
+    describe("when initial error has an undefined stack", () => {
       it.each(eachCases)('"%s"', (_label, caseParams) => {
         const { includeStack, err, expectedReturnType } = caseParams;
         const serialized = convertToSerializable(err, {
           includeStack: false,
         });
         const converted = createFromSerializable(serialized, {
-          includeStack: includeStack,
+          includeStack,
         });
         const { stack } = converted;
         expect(stack).toBeTypeOf(expectedReturnType);

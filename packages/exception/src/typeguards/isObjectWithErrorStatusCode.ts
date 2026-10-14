@@ -1,5 +1,5 @@
-import type { ObjectWithErrorStatusCode } from '../types/ObjectWithErrorStatusCode';
-import { isHttpErrorStatusCode } from './isHttpErrorStatusCode';
+import type { ObjectWithErrorStatusCode } from "../types/ObjectWithErrorStatusCode";
+import { isHttpErrorStatusCode } from "./isHttpErrorStatusCode";
 
 /**
  * Checks if a value is an object (or a plain object) and has a statusCode field
@@ -7,8 +7,7 @@ import { isHttpErrorStatusCode } from './isHttpErrorStatusCode';
  */
 export const isObjectWithErrorStatusCode = (
   objOrPlainObject: unknown
-): objOrPlainObject is ObjectWithErrorStatusCode => {
-  return isHttpErrorStatusCode(
+): objOrPlainObject is ObjectWithErrorStatusCode =>
+  isHttpErrorStatusCode(
     (objOrPlainObject as ObjectWithErrorStatusCode)?.statusCode
   );
-};

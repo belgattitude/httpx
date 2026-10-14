@@ -1,4 +1,4 @@
 const meta = {
-  index: 'Getting started',
+  index: "Getting started",
 };
 export default meta;

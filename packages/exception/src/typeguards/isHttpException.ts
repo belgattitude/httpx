@@ -1,4 +1,4 @@
-import { HttpException } from '../base/HttpException';
+import { HttpException } from "../base/HttpException";
 
 /**
  * Test whether a value is an instanceof HttpException
@@ -10,9 +10,6 @@ export const isHttpException = (
    * Ensure statusCode is in the error range [>=400, <600], true by default
    */,
   checkStatusCode = true
-): error is HttpException => {
-  return (
-    error instanceof HttpException &&
-    (!checkStatusCode || (error.statusCode > 399 && error.statusCode < 600))
-  );
-};
+): error is HttpException =>
+  error instanceof HttpException &&
+  (!checkStatusCode || (error.statusCode > 399 && error.statusCode < 600));

@@ -1,9 +1,8 @@
 {
   "name": "@httpx/devtools-vitest",
-  "description": "Shareable dev setups for vitest",
   "version": "0.0.2",
   "private": true,
-  "type": "module",
+  "description": "Shareable dev setups for vitest",
   "license": "MIT",
   "author": {
     "name": "Vanvelthem Sébastien",
@@ -14,6 +13,7 @@
     "url": "git+https://github.com/belgattitude/httpx.git",
     "directory": "devtools/vitest"
   },
+  "type": "module",
   "sideEffects": false,
   "exports": {
     ".": "./src/index.ts",
@@ -21,15 +21,15 @@
     "./wrangler.toml": "./wrangler.toml"
   },
   "scripts": {
-    "clean": "rimraf ./dist ./build ./coverage ./_release",
     "build": "tsdown",
-    "fix-staged": "lint-staged --allow-empty",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs,.cjs,.mts,.cts",
-    "typecheck": "tsc --project tsconfig.json --noEmit",
-    "install-playwright": "playwright install chromium"
+    "clean": "rimraf ./dist ./build ./coverage ./_release",
+    "format": "dx-oxfmt --write",
+    "install-playwright": "playwright install chromium",
+    "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
+    "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@belgattitude/eslint-config-bases": "8.19.1",
     "@cloudflare/vitest-pool-workers": "0.21.3",
     "@codspeed/vitest-plugin": "5.7.1",
     "@edge-runtime/vm": "5.0.0",
@@ -43,18 +43,17 @@
     "@vitest/ui": "4.1.10",
     "ci-info": "4.4.0",
     "esbuild": "0.28.2",
-    "eslint": "8.57.1",
     "is-ci": "4.1.0",
     "playwright": "1.62.1",
-    "prettier": "3.9.6",
     "tinybench": "6.1.3",
     "type-fest": "5.8.0",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "vite": "8.2.1",
     "vitest": "4.1.10",
     "vitest-browser-react": "2.2.0"
   },
   "devDependencies": {
+    "@httpx/dx": "workspace:^",
     "@types/node": "26.2.0",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",

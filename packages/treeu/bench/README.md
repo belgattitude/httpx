@@ -1,7 +1,6 @@
 ## @httpx/treeu benchmarks
 
-Benchmarks to measure [@httpx/treeu](../README.md) performance over
-popular libraries.
+Benchmarks to measure [@httpx/treeu](../README.md) performance over popular libraries.
 
 ### Run
 
@@ -11,4 +10,3 @@ cd packages/treeu
 yarn build
 yarn bench
 ```
-

@@ -1,4 +1,4 @@
-import type { TreeNode, TreeNodeValue } from '../tree.types';
+import type { TreeNode, TreeNodeValue } from "../tree.types";
 
 type TreeSearchFindParams = {
   includeChildren?: boolean;
@@ -6,8 +6,8 @@ type TreeSearchFindParams = {
 };
 
 type NativeNodeSearchKeys = [
-  key: 'id' | 'parentId',
-  equality: '===',
+  key: "id" | "parentId",
+  equality: "===",
   value: string,
 ];
 
@@ -31,7 +31,11 @@ export class DfsTreeSearch<
   TValue extends TreeNodeValue | undefined,
   TKey extends string | number = string,
 > {
-  constructor(private readonly treeNodes: TreeNode<TValue, TKey>[]) {}
+  private readonly treeNodes: TreeNode<TValue, TKey>[];
+
+  constructor(treeNodes: TreeNode<TValue, TKey>[]) {
+    this.treeNodes = treeNodes;
+  }
 
   /**
    * Find first matching node in the tree. The `reverse` parameter can be used
@@ -43,35 +47,41 @@ export class DfsTreeSearch<
       | NativeNodeSearchKeys
       | ((treeNode: TreeNode<TValue, TKey>) => boolean),
     params?: TreeSearchFindParams
-    // eslint-disable-next-line sonarjs/cognitive-complexity
   ): TreeNodeOptionalChildren<TValue, TKey> | undefined => {
     const { includeChildren = false, reverse = false } = { ...params };
-    if (!Array.isArray(this.treeNodes) || this.treeNodes.length === 0) return;
+    if (!Array.isArray(this.treeNodes) || this.treeNodes.length === 0) {
+      return undefined;
+    }
     let result;
 
     const isIdSearch =
-      typeof idOrConditionOrFn === 'string' ||
-      typeof idOrConditionOrFn === 'number';
+      typeof idOrConditionOrFn === "string" ||
+      typeof idOrConditionOrFn === "number";
 
     const isFnSearch = !Array.isArray(idOrConditionOrFn);
 
     for (const treeNode of this.treeNodes) {
       const stack = [treeNode] as TreeNodeOptionalChildren<TValue, TKey>[];
       while (stack.length > 0) {
-        const node = stack[reverse ? 'pop' : 'shift']()!;
-        const isFound = isIdSearch
-          ? node.id === idOrConditionOrFn
-          : // eslint-disable-next-line sonarjs/no-nested-conditional
-            isFnSearch
-            ? idOrConditionOrFn(node)
-            : idOrConditionOrFn[0] in node &&
-              // eslint-disable-next-line sonarjs/different-types-comparison
-              node[idOrConditionOrFn[0]] === idOrConditionOrFn[2];
+        const node = reverse ? stack.pop() : stack.shift();
+        if (node === undefined) {
+          break;
+        }
+        let isFound: boolean;
+        if (isIdSearch) {
+          isFound = node.id === idOrConditionOrFn;
+        } else if (isFnSearch) {
+          isFound = idOrConditionOrFn(node);
+        } else {
+          isFound =
+            idOrConditionOrFn[0] in node &&
+            node[idOrConditionOrFn[0]] === idOrConditionOrFn[2];
+        }
         if (isFound) {
           result = node;
           break;
         }
-        if (node.children) {
+        if (node.children !== undefined) {
           stack.push(
             ...(node.children as unknown as TreeNodeOptionalChildren<
               TValue,
@@ -80,7 +90,9 @@ export class DfsTreeSearch<
           );
         }
       }
-      if (result) break;
+      if (result !== undefined) {
+        break;
+      }
     }
     if (includeChildren !== true) {
       const { children: _children, ...rest } = result ?? {};

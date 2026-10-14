@@ -1,9 +1,9 @@
-import { vitestBenchOptionsConfig } from '@httpx/devtools-vitest';
-import type { bench } from 'vitest';
+import { vitestBenchOptionsConfig } from "@httpx/devtools-vitest";
+import type { bench } from "vitest";
 
 const isCiOrCodSpeed =
   vitestBenchOptionsConfig.isCiOrCodSpeed ||
-  ['true', '1'].includes(process.env?.CI ?? 'false');
+  ["true", "1"].includes(process.env?.CI ?? "false");
 
 export const benchConfig = {
   isCiOrCodSpeed,

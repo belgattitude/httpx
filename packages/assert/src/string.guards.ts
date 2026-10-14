@@ -1,18 +1,17 @@
-import { isNumberSafeInt } from './number.guards';
+import { isNumberSafeInt } from "./number.guards";
 import type {
   ParsableSafeInt,
   ParsableStrictIsoDateZ,
   StringNonEmpty,
-} from './string.types';
-import { isoDateTimeZRegexp } from './string.utils';
+} from "./string.types";
+import { isoDateTimeZRegexp } from "./string.utils";
 
-export const isStringNonEmpty = (v: unknown): v is StringNonEmpty => {
-  return typeof v === 'string' && v.trim().length > 0;
-};
+export const isStringNonEmpty = (v: unknown): v is StringNonEmpty =>
+  typeof v === "string" && v.trim().length > 0;
 
 const alphaRegexp = /^-?\d+$/;
 export const isParsableSafeInt = (v: unknown): v is ParsableSafeInt => {
-  if (typeof v !== 'string') {
+  if (typeof v !== "string") {
     return false;
   }
   const value = alphaRegexp.test(v) ? Number.parseInt(v, 10) : v;

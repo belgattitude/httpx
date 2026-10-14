@@ -1,23 +1,23 @@
-import type { SizeLimitConfig } from 'size-limit';
+import type { SizeLimitConfig } from "size-limit";
 
 const config = [
   {
-    name: 'Everything (ESM)',
-    path: ['dist/index.js'],
-    import: '*',
-    limit: '1050B',
+    name: "Everything (ESM)",
+    path: ["dist/index.js"],
+    import: "*",
+    limit: "1050B",
   },
   {
-    name: 'MIntl (ESM)',
-    path: ['dist/index.js'],
-    import: '{ MIntl }',
-    limit: '825B',
+    name: "MIntl (ESM)",
+    path: ["dist/index.js"],
+    import: "{ MIntl }",
+    limit: "825B",
   },
   {
-    name: 'Everything (CJS)',
-    import: '*',
-    path: ['dist/index.cjs'],
-    limit: '1.67KB',
+    name: "Everything (CJS)",
+    import: "*",
+    path: ["dist/index.cjs"],
+    limit: "1680B",
   },
 ] satisfies SizeLimitConfig;
 

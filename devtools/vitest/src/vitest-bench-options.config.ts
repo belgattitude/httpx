@@ -1,10 +1,10 @@
-import isCi from 'is-ci';
+import isCi from "is-ci";
 
-const isCodSpeedEnabled = process.env?.CODSPEED === '1';
+const isCodSpeedEnabled = process.env?.CODSPEED === "1";
 const isCiOrCodSpeedEnabled = isCi || isCodSpeedEnabled;
 
 export const vitestBenchOptionsConfig = {
-  isCi: isCi,
+  isCi,
   isCiOrCodSpeed: isCiOrCodSpeedEnabled,
   createBenchOptions: (options: {
     iterations: {

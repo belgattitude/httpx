@@ -1,12 +1,12 @@
-import { isPlainObject } from '../object.guards';
+import { isPlainObject } from "../object.guards";
 
-describe('Object typeguards tests', () => {
-  const isNodeLike = !('window' in globalThis);
-  const isCloudflareWorker = 'caches' in globalThis;
-  const isBun = isNodeLike && 'Bun' in globalThis;
+describe("Object typeguards tests", () => {
+  const isNodeLike = !("window" in globalThis);
+  const isCloudflareWorker = "caches" in globalThis;
+  const isBun = isNodeLike && "Bun" in globalThis;
 
-  describe('isPlainObject', () => {
-    const str = 'key';
+  describe("isPlainObject", () => {
+    const str = "key";
 
     function fnWithProto(x: number) {
       // @ts-expect-error for the sake of testing
@@ -20,24 +20,24 @@ describe('Object typeguards tests', () => {
     const validPlainObjects = [
       [{}, true],
       [Object.create(null), true],
-      [new Object({ key: 'new_object' }), true],
+      [new Object({ key: "new_object" }), true],
       [new Object({ key: new Date() }), true],
-      [{ 1: 'integer_key' }, true],
-      [{ name: 'string_key' }, true],
-      [{ [str]: 'dynamic_string_key' }, true],
-      [{ [Symbol('tag')]: 'value' }, true],
-      [{ children: [{ key: 'deep-children' }], name: 'deep-plain' }, true],
+      [{ 1: "integer_key" }, true],
+      [{ name: "string_key" }, true],
+      [{ [str]: "dynamic_string_key" }, true],
+      [{ [Symbol("tag")]: "value" }, true],
+      [{ children: [{ key: "deep-children" }], name: "deep-plain" }, true],
       [
-        { children: [{ key: new Date() }], name: 'deep-with-regular-object' },
+        { children: [{ key: new Date() }], name: "deep-with-regular-object" },
         true,
       ],
-      [{ constructor: { name: 'Object2' } }, true],
-      [JSON.parse('{}'), true],
+      [{ constructor: { name: "Object2" } }, true],
+      [JSON.parse("{}"), true],
       [new Proxy({}, {}), true],
-      [new Proxy({ key: 'proxied_key' }, {}), true],
+      [new Proxy({ key: "proxied_key" }, {}), true],
       [
         {
-          [Symbol.iterator]: function* () {
+          *[Symbol.iterator]() {
             yield 1;
           },
         },
@@ -45,14 +45,14 @@ describe('Object typeguards tests', () => {
       ],
       [
         {
-          [Symbol.toStringTag]: 'string-tagged',
+          [Symbol.toStringTag]: "string-tagged",
         },
         true,
       ],
     ] as const;
 
     const invalidPlainObjects = [
-      ['hello', false],
+      ["hello", false],
       [false, false],
       [undefined, false],
       [null, false],
@@ -60,26 +60,26 @@ describe('Object typeguards tests', () => {
       [[], false],
       [Number.NaN, false],
       // functions and objects
-      [() => 'cool', false],
+      [() => "cool", false],
       [new (class Cls {})(), false],
-      [new Intl.Locale('en'), false],
+      [new Intl.Locale("en"), false],
       [new (class extends Object {})(), false],
       [fnWithProto, false],
       // Symbols
-      [Symbol('cool'), false],
+      [Symbol("cool"), false],
       // Built-in classes
       [new Date(), false],
       [new Map(), false],
       [new Error(), false],
       [new Set(), false],
-      [new Request('http://localhost'), false],
+      [new Request("http://localhost"), false],
       [new Promise(() => {}), false],
       [Promise.resolve({}), false],
       [new Uint8Array([1, 2, 3]), false],
       [Object.create({}), false],
       [/(\d+)/, false],
       // eslint-disable-next-line prefer-regex-literals
-      [new RegExp('/d+/'), false],
+      [new RegExp("/d+/"), false],
       [/d+/, false],
       // Template literals
       [`cool`, false],
@@ -97,20 +97,20 @@ describe('Object typeguards tests', () => {
     ] as const;
 
     const cases = [...validPlainObjects, ...invalidPlainObjects] as const;
+
     it.each(cases)('when "%s" is given, should return %s', (v, expected) => {
       expect(isPlainObject(v)).toStrictEqual(expected);
     });
 
     it.skipIf(!isNodeLike)(
-      'should return false when node Buffer is given',
+      "should return false when node Buffer is given",
       () => {
-        // eslint-disable-next-line no-restricted-globals
-        expect(isPlainObject(Buffer.from('123123'))).toBe(false);
+        expect(isPlainObject(Buffer.from("123123"))).toBe(false);
       }
     );
   });
 
-  describe('Allowed edge cases for static built-ins', () => {
+  describe("Allowed edge cases for static built-ins", () => {
     const javascriptStaticBuiltIn = [
       // Static built-in classes
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
@@ -121,33 +121,32 @@ describe('Object typeguards tests', () => {
     ] as const;
 
     it.each(javascriptStaticBuiltIn)(
-      'should return true for static built-in classes',
+      "should return true for static built-in classes",
       (buildInCls) => {
         expect(isPlainObject(buildInCls)).toBe(true);
       }
     );
 
-    describe('globalThis edge case', () => {
-      it.skipIf(!isBun)('BUN: should return true for globalThis', () => {
+    describe("globalThis edge case", () => {
+      it.skipIf(!isBun)("BUN: should return true for globalThis", () => {
         expect(isPlainObject(globalThis)).toBe(true);
       });
-      it.skipIf(!isBun)('Not Bun: should return false for globalThis', () => {
+      it.skipIf(!isBun)("Not Bun: should return false for globalThis", () => {
         expect(isPlainObject(globalThis)).toBe(true);
       });
     });
   });
 
   describe.skipIf(!isNodeLike || isCloudflareWorker)(
-    'Support node:vm.runInNewContext',
+    "Support node:vm.runInNewContext",
     () => {
-      it('should support vm', async () => {
-        // eslint-disable-next-line import-x/no-nodejs-modules
-        const runInNewContext = await import('node:vm').then(
+      it("should support vm", async () => {
+        const runInNewContext = await import("node:vm").then(
           (mod) => mod.runInNewContext
         );
-        expect(isPlainObject(runInNewContext('({})'))).toBe(true);
-        expect(isPlainObject(runInNewContext('(false)'))).toBe(false);
-        expect(isPlainObject(runInNewContext('(new Date())'))).toBe(false);
+        expect(isPlainObject(runInNewContext("({})"))).toBe(true);
+        expect(isPlainObject(runInNewContext("(false)"))).toBe(false);
+        expect(isPlainObject(runInNewContext("(new Date())"))).toBe(false);
       });
     }
   );

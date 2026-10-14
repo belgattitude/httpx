@@ -1,8 +1,8 @@
-import { parseQueryParams } from '../query-param-parser';
+import { parseQueryParams } from "../query-param-parser";
 
-describe('parseQueryParams', () => {
-  it('should parse number, booleans and set true for undefined values', () => {
-    const qp = 'kNumeric=1&kTrue=true&kFalse=false&kUndefined&kString=hello';
+describe("parseQueryParams", () => {
+  it("should parse number, booleans and set true for undefined values", () => {
+    const qp = "kNumeric=1&kTrue=true&kFalse=false&kUndefined&kString=hello";
     expect(
       parseQueryParams(qp, {
         parseBooleans: true,
@@ -12,26 +12,26 @@ describe('parseQueryParams', () => {
     ).toStrictEqual({
       kFalse: false,
       kNumeric: 1,
-      kString: 'hello',
+      kString: "hello",
       kTrue: true,
       kUndefined: true,
     });
   });
 
-  it('should decode encore uri values', () => {
+  it("should decode encore uri values", () => {
     expect(
       parseQueryParams(
-        'kEncoded=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B&kQuestion=test%3F'
+        "kEncoded=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B&kQuestion=test%3F"
       )
     ).toStrictEqual({
-      kEncoded: 'шеллы',
-      kQuestion: 'test?',
+      kEncoded: "шеллы",
+      kQuestion: "test?",
     });
   });
 
-  it('should set null if setTrueForUndefinedValues is false', () => {
+  it("should set null if setTrueForUndefinedValues is false", () => {
     expect(
-      parseQueryParams('kUndefined', {
+      parseQueryParams("kUndefined", {
         setTrueForUndefinedValues: false,
       })
     ).toStrictEqual({
@@ -39,29 +39,29 @@ describe('parseQueryParams', () => {
     });
   });
 
-  it('should left number untouched if parseNumbers is false', () => {
+  it("should left number untouched if parseNumbers is false", () => {
     expect(
-      parseQueryParams('kNumeric=1', {
+      parseQueryParams("kNumeric=1", {
         parseNumbers: false,
       })
     ).toStrictEqual({
-      kNumeric: '1',
+      kNumeric: "1",
     });
   });
 
-  it('should left boolean untouched if parseBooleans is false', () => {
+  it("should left boolean untouched if parseBooleans is false", () => {
     expect(
-      parseQueryParams('kTrue=true&kFalse=false', {
+      parseQueryParams("kTrue=true&kFalse=false", {
         parseBooleans: false,
       })
     ).toStrictEqual({
-      kFalse: 'false',
-      kTrue: 'true',
+      kFalse: "false",
+      kTrue: "true",
     });
   });
 
-  it('should honour default options', () => {
-    const qp = 'kNumeric=1&kTrue=true&kFalse=false&kUndefined&kString=hello';
+  it("should honour default options", () => {
+    const qp = "kNumeric=1&kTrue=true&kFalse=false&kUndefined&kString=hello";
     expect(
       parseQueryParams(qp, {
         parseBooleans: true,

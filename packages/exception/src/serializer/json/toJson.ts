@@ -1,7 +1,7 @@
-import type { HttpException } from '../../base';
-import { SerializerError } from '../error/SerializerError';
-import { convertToSerializable } from '../mapper';
-import type { NativeError, SerializerParams } from '../types';
+import type { HttpException } from "../../base";
+import { SerializerError } from "../error/SerializerError";
+import { convertToSerializable } from "../mapper";
+import type { NativeError, SerializerParams } from "../types";
 
 export const toJson = (
   exception: Error | HttpException | NativeError,
@@ -11,10 +11,11 @@ export const toJson = (
   let v: string;
   try {
     v = JSON.stringify(serializable);
-  } catch (e) {
-    throw new SerializerError(`Can't encode into json`, {
-      ...(e instanceof Error ? { cause: e } : {}),
-    });
+  } catch (error) {
+    throw new SerializerError(
+      `Can't encode into json`,
+      error instanceof Error ? { cause: error } : {}
+    );
   }
   return v;
 };

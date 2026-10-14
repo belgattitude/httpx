@@ -2,15 +2,7 @@
 
 [Fast](#benchmarks) and lightweight ([~300B](#bundle-size)) utilities to work with trees.
 
-[![npm](https://img.shields.io/npm/v/@httpx/treeu?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/treeu)
-[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/treeu/CHANGELOG.md)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-treeu-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Ftreeu)
-[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/treeu/.size-limit.cjs)
-[![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![size](https://img.shields.io/bundlephobia/minzip/@httpx/treeu@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/treeu@latest)
-[![downloads](https://img.shields.io/npm/dm/@httpx/treeu?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/treeu)
-[![license](https://img.shields.io/npm/l/@httpx/treeu?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/@httpx/treeu?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/treeu) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/treeu/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-treeu-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Ftreeu) [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/treeu/.size-limit.cjs) [![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![size](https://img.shields.io/bundlephobia/minzip/@httpx/treeu@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/treeu@latest) [![downloads](https://img.shields.io/npm/dm/@httpx/treeu?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/treeu) [![license](https://img.shields.io/npm/l/@httpx/treeu?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
 ## Install
 
@@ -35,49 +27,44 @@ $ pnpm add @httpx/treeu
 
 #### DFSTreeSearch
 
-Depth-First Search (DFS) algorithm for tree structures. It uses a stack rather
-than recursion in order to support deeply nested trees without call-stack overflows.
-It is well suited for exploring a branch of a data structure in depth and
-usually preferred when memory usage is a concern or when the data
-structure has many nodes with few levels.
+Depth-First Search (DFS) algorithm for tree structures. It uses a stack rather than recursion in order to support deeply nested trees without call-stack overflows. It is well suited for exploring a branch of a data structure in depth and usually preferred when memory usage is a concern or when the data structure has many nodes with few levels.
 
 ```typescript
-import { Tree, type TreeNode } from '@httpx/treeu';
+import { Tree, type TreeNode } from "@httpx/treeu";
 
 type CustomValue =
-    | { type: 'folder'; size?: never }
-    | { type: 'file'; size: number };
+  | { type: "folder"; size?: never }
+  | { type: "file"; size: number };
 
 const treeNodes: TreeNode<CustomValue>[] = [
-    {
-        id: 'file2.ts',
-        parentId: null,
-        value: { size: 10, type: 'file' },
+  {
+    id: "file2.ts",
+    parentId: null,
+    value: { size: 10, type: "file" },
+    children: [],
+  },
+  {
+    id: "folder1",
+    parentId: null,
+    value: { type: "folder" },
+    children: [
+      {
+        id: "folder1/file1.ts",
+        parentId: "folder1",
+        value: { size: 30, type: "file" },
         children: [],
-    },
-    {
-        id: 'folder1',
-        parentId: null,
-        value: { type: 'folder' },
-        children: [
-            {
-                id: 'folder1/file1.ts',
-                parentId: 'folder1',
-                value: { size: 30, type: 'file' },
-                children: [],
-            },
-        ],
-    },
+      },
+    ],
+  },
 ];
 
 const search = new DfsTreeSearch<CustomValue>(treeNodes);
-const res1 = search.findOne('folder1/file1.ts');
-const res2 = search.findOne(['id', '===', 'folder1/file1.ts']);
+const res1 = search.findOne("folder1/file1.ts");
+const res2 = search.findOne(["id", "===", "folder1/file1.ts"]);
 const res3 = search.findOne((treeNode) => treeNode.value.size === 30);
-const res4 = search.findOne(['parentId', '===', 'folder1']);
+const res4 = search.findOne(["parentId", "===", "folder1"]);
 
 // res1 === res2 === res3 === res4
-
 ```
 
 ### Mapper
@@ -85,61 +72,60 @@ const res4 = search.findOne(['parentId', '===', 'folder1']);
 #### FlatTreeWsMapper
 
 | FlatTreeWsMapper | Description                                 |
-|------------------|---------------------------------------------|
+| ---------------- | ------------------------------------------- |
 | `toTreeNodes`    | Convert to flat map with separator          |
 | `fromTreeNodes`  | Convert a tree to a flat map with separator |
 
 ```typescript
-import { FlatTreeWsMapper, type FlatTreeWs } from '@httpx/treeu';
+import { FlatTreeWsMapper, type FlatTreeWs } from "@httpx/treeu";
 
 type CustomValue =
-    | { type: 'folder'; size?: never }
-    | { type: 'file'; size: number };
+  | { type: "folder"; size?: never }
+  | { type: "file"; size: number };
 
 // Use an object or a Record<string, CustomValue>
 const paths: FlatTreeWs<CustomValue> = new Map([
-    [ 'file1.ts', { type: 'file', size: 10 } ],
-    [ 'folder1', { type: 'folder' }],
-    [ 'folder1/file1.ts', { type: 'file', size: 30 }],
+  ["file1.ts", { type: "file", size: 10 }],
+  ["folder1", { type: "folder" }],
+  ["folder1/file1.ts", { type: "file", size: 30 }],
 ]);
 
 const mapper = new FlatTreeWsMapper<CustomValue>();
 
 const treeResult = mapper.toTreeNodes(paths, {
-    separator: '/',
+  separator: "/",
 });
 
-// Will return 
+// Will return
 const expected: TreeNode<CustomValue>[] = [
-    {
-        id: 'file1.ts',
-        parentId: null,
+  {
+    id: "file1.ts",
+    parentId: null,
+    value: {
+      size: 10,
+      type: "file",
+    },
+    children: [],
+  },
+  {
+    id: "folder1",
+    parentId: null,
+    value: {
+      type: "folder",
+    },
+    children: [
+      {
+        id: "folder1/file1.ts",
+        parentId: "folder1",
         value: {
-            size: 10,
-            type: 'file',
+          size: 30,
+          type: "file",
         },
         children: [],
-    },
-    {
-        id: 'folder1',
-        parentId: null,
-        value: {
-            type: 'folder',
-        },
-        children: [
-            {
-                id: 'folder1/file1.ts',
-                parentId: 'folder1',
-                value: {
-                    size: 30,
-                    type: 'file',
-                },
-                children: [],
-            },
-        ],
-    },
+      },
+    ],
+  },
 ];
-
 ```
 
 ### TreeNode
@@ -149,93 +135,93 @@ const expected: TreeNode<CustomValue>[] = [
 Example of `TreeNode[]` typing:
 
 ```typescript
-import { Tree, TreeNode } from '@httpx/treeu';
+import { Tree, TreeNode } from "@httpx/treeu";
 
 type CustomValue =
-    | { type: 'folder'; size?: never }
-    | { type: 'file'; size: number };
+  | { type: "folder"; size?: never }
+  | { type: "file"; size: number };
 
 const treeNodes: TreeNode<CustomValue>[] = [
-    {
-        id: 'file1.ts',
-        parentId: null,
+  {
+    id: "file1.ts",
+    parentId: null,
+    value: {
+      size: 10,
+      type: "file",
+    },
+    children: [],
+  },
+  {
+    id: "file2.ts",
+    parentId: null,
+    value: {
+      size: 20,
+      type: "file",
+    },
+    children: [],
+  },
+  {
+    id: "folder1",
+    parentId: null,
+    value: {
+      type: "folder",
+    },
+    children: [
+      {
+        id: "folder1/file1.ts",
+        parentId: "folder1",
         value: {
-            size: 10,
-            type: 'file',
+          size: 30,
+          type: "file",
         },
         children: [],
+      },
+    ],
+  },
+  {
+    id: "folder2",
+    parentId: null,
+    value: {
+      type: "folder",
     },
-    {
-        id: 'file2.ts',
-        parentId: null,
+    children: [
+      {
+        id: "folder2/file1.ts",
+        parentId: "folder2",
         value: {
-            size: 20,
-            type: 'file',
+          size: 40,
+          type: "file",
         },
         children: [],
-    },
-    {
-        id: 'folder1',
-        parentId: null,
+      },
+      {
+        id: "folder2/subfolder1",
+        parentId: "folder2",
         value: {
-            type: 'folder',
+          type: "folder",
         },
         children: [
-            {
-                id: 'folder1/file1.ts',
-                parentId: 'folder1',
-                value: {
-                    size: 30,
-                    type: 'file',
-                },
-                children: [],
+          {
+            id: "folder2/subfolder1/file1.ts",
+            parentId: "folder2/subfolder1",
+            value: {
+              size: 50,
+              type: "file",
             },
+            children: [],
+          },
         ],
+      },
+    ],
+  },
+  {
+    id: "folder3",
+    parentId: null,
+    value: {
+      type: "folder",
     },
-    {
-        id: 'folder2',
-        parentId: null,
-        value: {
-            type: 'folder',
-        },
-        children: [
-            {
-                id: 'folder2/file1.ts',
-                parentId: 'folder2',
-                value: {
-                    size: 40,
-                    type: 'file',
-                },
-                children: [],
-            },
-            {
-                id: 'folder2/subfolder1',
-                parentId: 'folder2',
-                value: {
-                    type: 'folder',
-                },
-                children: [
-                    {
-                        id: 'folder2/subfolder1/file1.ts',
-                        parentId: 'folder2/subfolder1',
-                        value: {
-                            size: 50,
-                            type: 'file',
-                        },
-                        children: [],
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        id: 'folder3',
-        parentId: null,
-        value: {
-            type: 'folder',
-        },
-        children: [],
-    },
+    children: [],
+  },
 ];
 ```
 
@@ -243,16 +229,16 @@ const treeNodes: TreeNode<CustomValue>[] = [
 
 ### Types
 
-| TreeNode<TValue, TId> | Type                            | Description                           |
-|-----------------------|---------------------------------|---------------------------------------|
-| id                    | `TValue extends string\|number` | Unique identifier of the node.        |
-| parentId              | `TValue extends string\|number` | Reference to the parent node          |
-| children              | `TreeNode<TValue, TId>[]`       | Children nodes                        |
-| value                 | `TValue\|undefined`             | Custom value associated with the node |
+| TreeNode<TValue, TId> | Type | Description |
+| --- | --- | --- |
+| id | `TValue extends string\|number` | Unique identifier of the node. |
+| parentId | `TValue extends string\|number` | Reference to the parent node |
+| children | `TreeNode<TValue, TId>[]` | Children nodes |
+| value | `TValue\|undefined` | Custom value associated with the node |
 
 ## Benchmarks
 
-> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx). 
+> Performance is continuously monitored thanks to [codspeed.io](https://codspeed.io/belgattitude/httpx).
 >
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
@@ -311,7 +297,6 @@ const treeNodes: TreeNode<CustomValue>[] = [
   FlatTreeWsMapper.toTreeNodesOrThrow - bench/mapper.bench.ts > Bench mapper (10_000 entries)
 ```
 
-
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/treeu/bench/README.md) for details.
 
 ## Bundle size
@@ -319,30 +304,28 @@ const treeNodes: TreeNode<CustomValue>[] = [
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/treeu/.size-limit.ts)
 
 | Scenario (esm)                                   | Size (compressed) |
-|--------------------------------------------------|------------------:|
+| ------------------------------------------------ | ----------------: |
 | `import { DfsTreeSearch } from '@httpx/treeu`    |            ~ 270B |
 | `import { FlatTreeWsMapper } from '@httpx/treeu` |            ~ 802B |
-
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/treeu@latest).
 
 ## Compatibility
 
-| Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                                |
-|--------------|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅ | CI for 20.x, 22.x, 24.x & 26.x.                                                                                                                                                                                                                                                                                                                                                                   |
-| Browser      | ✅ | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                              |
+| Level | CI | Description |
+| --- | --- | --- |
+| Node | ✅ | CI for 20.x, 22.x, 24.x & 26.x. |
+| Browser | ✅ | Tested with latest chrome (vitest/playwright) |
 | Browserslist | ✅ | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/treeu/.browserslistrc) |
-| Bun          | ✅ | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                              |
-| Edge         | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                         | 
-| Cloudflare   | ✅ | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                           |
-| Edge         | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                         | 
-| Typescript   | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                              |
-| ES2022       | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                               |
-| Performance  | ✅ | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                       |
+| Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
+| Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
+| Cloudflare | ✅ | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
+| Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
+| Typescript | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
+| ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
+| Performance | ✅ | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx) |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
-
 
 ## Contributors
 
@@ -350,9 +333,7 @@ Contributions are welcome. Have a look to the [CONTRIBUTING](https://github.com/
 
 ## Sponsors
 
-If my OSS work brightens your day, let's take it to new heights together!
-[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
-or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+If my OSS work brightens your day, let's take it to new heights together! [Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>), or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
 
 ### Special thanks to
 

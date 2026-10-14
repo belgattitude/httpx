@@ -1,28 +1,29 @@
-export const errPfx = 'Value is expected to be';
+export const errPfx = "Value is expected to be";
 export const getTypeInfo = (v: unknown): string => {
   let type: string = typeof v;
+  // oxlint-disable-next-line typescript/switch-exhaustiveness-check -- switch(true) pattern, the default branch keeps typeof
   switch (true) {
     case v instanceof Date: {
-      type = 'Date';
+      type = "Date";
       break;
     }
     case v instanceof Error: {
-      type = 'Error';
+      type = "Error";
       break;
     }
-    case typeof v === 'function': {
-      type = 'function';
+    case typeof v === "function": {
+      type = "function";
       break;
     }
     case v === null: {
-      type = 'null';
+      type = "null";
       break;
     }
     case v === undefined: {
-      type = 'undefined';
+      type = "undefined";
       break;
     }
-    case typeof v === 'bigint': {
+    case typeof v === "bigint": {
       type = `bigint(length:${v.toString().length})`;
       break;
     }
@@ -34,7 +35,7 @@ export const getTypeInfo = (v: unknown): string => {
       type = `NaN`;
       break;
     }
-    case typeof v === 'number': {
+    case typeof v === "number": {
       type = `number(length:${v.toString().length})`;
       break;
     }
@@ -42,7 +43,7 @@ export const getTypeInfo = (v: unknown): string => {
       type = `boolean(${v})`;
       break;
     }
-    case typeof v === 'string': {
+    case typeof v === "string": {
       type = `string(length:${v.length})`;
       break;
     }

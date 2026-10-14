@@ -1,8 +1,6 @@
 ## @httpx/assert benchmarks
 
-Benchmarks to measure [@httpx/assert](../../packages/assert/README.md) performance over
-popular libraries.
-
+Benchmarks to measure [@httpx/assert](../../packages/assert/README.md) performance over popular libraries.
 
 ### Run
 
@@ -17,7 +15,7 @@ yarn bench
 
 #### isPlainObject
 
-See the [source](./comparative.bench.ts). 
+See the [source](./comparative.bench.ts).
 
 ```
  RUN  v1.6.0 /home/sebastien/github/httpx/packages/assert
@@ -45,5 +43,5 @@ See the [source](./comparative.bench.ts).
     124.96x faster than zod: `z.record(z.string(), z.unknown())`
 
 
- 
+
 ```

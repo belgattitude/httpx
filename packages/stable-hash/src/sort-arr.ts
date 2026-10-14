@@ -1,8 +1,8 @@
-const supportedTypes = new Set(['string', 'number', 'bigint']);
+const supportedTypes = new Set(["string", "number", "bigint"]);
 
-const collator = new Intl.Collator('en', {
+const collator = new Intl.Collator("en", {
   numeric: false,
-  sensitivity: 'base',
+  sensitivity: "base",
 });
 
 /**
@@ -30,11 +30,14 @@ export const sortArr = <T>(arr: T[]): T[] => {
         // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw 0;
       }
-      uniqueType = t1 === 'bigint' ? 'number' : t1;
-      if (t1 === 'string') {
+      uniqueType = t1 === "bigint" ? "number" : t1;
+      if (t1 === "string") {
         return collator.compare(a as string, b as string);
-      } else if (t1 === 'number' || t1 === 'bigint') {
-        return a < b ? -1 : a > b ? 1 : 0;
+      } else if (t1 === "number" || t1 === "bigint") {
+        if (a < b) {
+          return -1;
+        }
+        return a > b ? 1 : 0;
       }
       // eslint-disable-next-line @typescript-eslint/only-throw-error
       throw 0;

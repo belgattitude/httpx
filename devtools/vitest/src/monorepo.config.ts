@@ -1,11 +1,5 @@
-import path from 'node:path';
-import * as url from 'node:url';
+import path from "node:path";
 
 export const monorepoConfig = {
-  root: path.resolve(
-    path.dirname(url.fileURLToPath(import.meta.url)),
-    '..',
-    '..',
-    '..'
-  ),
+  root: path.resolve(import.meta.dirname, "..", "..", ".."),
 } as const;

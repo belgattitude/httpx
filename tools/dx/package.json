@@ -1,0 +1,83 @@
+{
+  "name": "@httpx/dx",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Internal devtools for httpx monorepo",
+  "keywords": [],
+  "homepage": "https://github.com/belgattitude/httpx",
+  "license": "MIT",
+  "author": {
+    "name": "Vanvelthem Sébastien",
+    "url": "https://github.com/belgattitude"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/belgattitude/httpx.git",
+    "directory": "tools/dx"
+  },
+  "bin": {
+    "dx-oxfmt": "./bin/dx-oxfmt.mjs",
+    "dx-oxlint": "./bin/dx-oxlint.mjs"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "httpx-monorepo-source": "./src/index.ts",
+        "default": "./src/index.ts"
+      }
+    },
+    "./oxlint": {
+      "import": {
+        "httpx-monorepo-source": "./src/oxlint.ts",
+        "default": "./src/oxlint.ts"
+      }
+    },
+    "./oxfmt": {
+      "import": {
+        "httpx-monorepo-source": "./src/oxfmt.ts",
+        "default": "./src/oxfmt.ts"
+      }
+    },
+    "./typescript/tsconfig.base.json": "./src/typescript/tsconfig.base.json",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "clean": "rimraf --glob ./dist ./build ./coverage './tsconfig*.tsbuildinfo'",
+    "format": "oxfmt --write",
+    "lint": "ultracite check",
+    "lint-fix": "ultracite fix",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@tanstack/eslint-plugin-query": "5.104.2",
+    "eslint": "10.12.0",
+    "eslint-plugin-security": "4.2.0",
+    "oxfmt": "0.72.0",
+    "oxlint": "1.87.0",
+    "oxlint-plugin-import-zod": "1.0.1",
+    "oxlint-plugin-react-doctor": "0.9.17",
+    "oxlint-tailwindcss": "1.16.0",
+    "oxlint-tsgolint": "7.0.2004",
+    "ultracite": "8.0.0"
+  },
+  "devDependencies": {
+    "@codspeed/vitest-plugin": "5.7.1",
+    "@types/node": "26.6.5",
+    "@vitest/coverage-v8": "5.0.4",
+    "@vitest/ui": "5.0.4",
+    "browserslist": "4.29.3",
+    "browserslist-to-esbuild": "2.1.1",
+    "cross-env": "10.1.0",
+    "rimraf": "6.1.3",
+    "tsdown": "0.23.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.4",
+    "vitest": "5.0.4"
+  }
+}

@@ -1,7 +1,7 @@
-import prettyBytes from 'pretty-bytes';
-import { bench, describe } from 'vitest';
+import prettyBytes from "pretty-bytes";
+import { bench, describe } from "vitest";
 
-import { benchConfig } from './bench-config';
+import { benchConfig } from "./bench-config";
 
 const {
   deflateDecompressor,
@@ -16,13 +16,13 @@ describe(`Decompressor`, async () => {
   const size = prettyBytes(longString.length);
 
   const gzippedLongString = await gzipCompressor.toEncodedString(longString, {
-    encoding: 'base64',
+    encoding: "base64",
   });
 
   const deflatedLongString = await deflateCompressor.toEncodedString(
     longString,
     {
-      encoding: 'base64',
+      encoding: "base64",
     }
   );
 

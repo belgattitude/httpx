@@ -1,7 +1,7 @@
-import { HttpClientException } from '../base/HttpClientException';
-import type { HttpExceptionParams } from '../types/HttpExceptionParams';
-import { getNormalizedParams } from '../utils/getNormalizedParams';
-import { initProtoAndName } from '../utils/initProtoAndName';
+import { HttpClientException } from "../base/HttpClientException";
+import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { getNormalizedParams } from "../utils/getNormalizedParams";
+import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 451 Unavailable For Legal Reasons (client)
@@ -13,7 +13,7 @@ import { initProtoAndName } from '../utils/initProtoAndName';
  */
 
 const status = 451;
-const name = 'UnavailableForLegalReasons';
+const name = "UnavailableForLegalReasons";
 export class HttpUnavailableForLegalReasons extends HttpClientException {
   static readonly STATUS = status;
   constructor(msgOrParams?: HttpExceptionParams | string) {

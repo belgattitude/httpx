@@ -35,4 +35,5 @@ export type JsonApiSuccessResponse<T> = {
 } & JsonApiResponseMeta;
 
 export type JsonApiResponse<T> =
-  JsonApiErrorResponse | JsonApiSuccessResponse<T>;
+  | JsonApiErrorResponse
+  | JsonApiSuccessResponse<T>;

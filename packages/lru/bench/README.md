@@ -1,6 +1,6 @@
-## @httpx/lru 
-Benchmarks to measure [@httpx/lru](../README.md) performance over
-popular libraries.
+## @httpx/lru
+
+Benchmarks to measure [@httpx/lru](../README.md) performance over popular libraries.
 
 ### Run
 
@@ -10,4 +10,3 @@ cd packages/lru
 yarn build
 yarn bench
 ```
-

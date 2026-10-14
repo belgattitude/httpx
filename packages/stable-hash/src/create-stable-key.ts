@@ -1,5 +1,5 @@
-import { createStableKeyOrThrow } from './create-stable-key-or-throw';
-import type { CreateStableKeyOptions, SupportedDataTypesRW } from './types';
+import { createStableKeyOrThrow } from "./create-stable-key-or-throw";
+import type { CreateStableKeyOptions, SupportedDataTypesRW } from "./types";
 
 type Result = { success: true; key: string } | { success: false; error: Error };
 
@@ -45,7 +45,7 @@ export const createStableKey = <T extends SupportedDataTypesRW>(
       success: true,
       key,
     };
-  } catch (e) {
-    return { success: false, error: e as TypeError };
+  } catch (error) {
+    return { success: false, error: error as TypeError };
   }
 };

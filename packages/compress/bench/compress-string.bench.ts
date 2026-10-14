@@ -1,9 +1,9 @@
-import prettyBytes from 'pretty-bytes';
-import { bench, describe } from 'vitest';
+import prettyBytes from "pretty-bytes";
+import { bench, describe } from "vitest";
 
-import { benchConfig } from './bench-config';
+import { benchConfig } from "./bench-config";
 
-describe(`Compressor`, async () => {
+describe(`Compressor`, () => {
   const { gzipCompressor, deflateCompressor, benchOptions, longString } =
     benchConfig;
 
@@ -13,7 +13,7 @@ describe(`Compressor`, async () => {
     `Compressor('gzip').toEncodedString/base64 (original size: ${size})`,
     async () => {
       await gzipCompressor.toEncodedString(longString, {
-        encoding: 'base64',
+        encoding: "base64",
       });
     },
     benchOptions
@@ -23,7 +23,7 @@ describe(`Compressor`, async () => {
     `Compressor('gzip').toEncodedString/base64_urlsafe (original size: ${size})`,
     async () => {
       await gzipCompressor.toEncodedString(longString, {
-        encoding: 'base64_urlsafe',
+        encoding: "base64_urlsafe",
       });
     },
     benchOptions
@@ -33,7 +33,7 @@ describe(`Compressor`, async () => {
     `Compressor('deflate').toEncodedString/base64 (original size: ${size})`,
     async () => {
       await deflateCompressor.toEncodedString(longString, {
-        encoding: 'base64',
+        encoding: "base64",
       });
     },
     benchOptions
@@ -43,7 +43,7 @@ describe(`Compressor`, async () => {
     `Compressor('deflate').toEncodedString/base64-url_safe (original size: ${size})`,
     async () => {
       await deflateCompressor.toEncodedString(longString, {
-        encoding: 'base64_urlsafe',
+        encoding: "base64_urlsafe",
       });
     },
     benchOptions

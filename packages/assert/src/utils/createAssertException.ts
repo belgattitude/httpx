@@ -6,11 +6,11 @@ export const createAssertException = (
   fallbackMsg?: string
 ): TypeError | Error => {
   if (
-    typeof msgOrErrorFactory === 'string' ||
+    typeof msgOrErrorFactory === "string" ||
     msgOrErrorFactory === undefined
   ) {
     return new TypeError(
-      msgOrErrorFactory ?? fallbackMsg ?? 'Assertion did not pass.'
+      msgOrErrorFactory ?? fallbackMsg ?? "Assertion did not pass."
     );
   }
   return msgOrErrorFactory();

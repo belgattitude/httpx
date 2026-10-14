@@ -1,4 +1,4 @@
-import { getUuidVersion } from './uuid.helpers';
+import { getUuidVersion } from "./uuid.helpers";
 import type {
   Uuid,
   UuidV1,
@@ -7,27 +7,23 @@ import type {
   UuidV5,
   UuidV7,
   UuidVersion,
-} from './uuid.types';
-import { uuidRegexp, uuidSupportedVersions } from './uuid.utils';
+} from "./uuid.types";
+import { uuidRegexp, uuidSupportedVersions } from "./uuid.utils";
 
 /**
  * Check if a value is a valid uuid version: 1, 3, 4 or 5
  */
-export const isUuidVersion = (v: unknown): v is UuidVersion => {
-  return typeof v === 'number' && uuidSupportedVersions.has(v);
-};
+export const isUuidVersion = (v: unknown): v is UuidVersion =>
+  typeof v === "number" && uuidSupportedVersions.has(v);
 
 /**
  * Check whether a value is string and passes uuid validation with
  * optional given version
  */
-export const isUuid = (v: unknown, version?: UuidVersion): v is Uuid => {
-  return (
-    typeof v === 'string' &&
-    uuidRegexp.test(v) &&
-    (version === undefined || getUuidVersion(v) === version)
-  );
-};
+export const isUuid = (v: unknown, version?: UuidVersion): v is Uuid =>
+  typeof v === "string" &&
+  uuidRegexp.test(v) &&
+  (version === undefined || getUuidVersion(v) === version);
 
 export const isUuidV1 = (v: unknown): v is UuidV1 => isUuid(v, 1);
 

@@ -1,6 +1,5 @@
-import '../styles/global.css';
-
-import { fontInter } from '../components/fonts/FontInter';
+import "../styles/global.css";
+import { fontInter } from "../components/fonts/FontInter";
 
 export default function App({ Component, pageProps }) {
   return (

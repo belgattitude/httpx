@@ -1,4 +1,4 @@
-export type AsyncHashAlgorithms = 'SHA-256' | 'SHA-512';
+export type AsyncHashAlgorithms = "SHA-256" | "SHA-512";
 
 export type HashStrOptions = {
   /**
@@ -8,23 +8,23 @@ export type HashStrOptions = {
   /**
    * Encode the hash in hexadecimal
    */
-  encoding: 'hexa';
+  encoding: "hexa";
 };
 
 export const hashStr = async (
   message: string,
   options: HashStrOptions
 ): Promise<string> => {
-  const { algorithm = 'SHA-265', encoding = 'hexa' } = options;
+  const { algorithm, encoding } = options;
   const encoder = new TextEncoder();
   const data = encoder.encode(message);
   const hashBuffer = await globalThis.crypto.subtle.digest(algorithm, data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  if (encoding !== 'hexa') {
-    throw new Error(`Unsupported encoding: ${encoding}`);
+  const hashArray = [...new Uint8Array(hashBuffer)];
+  if (encoding !== "hexa") {
+    throw new Error(`Unsupported encoding: ${String(encoding)}`);
   }
   const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
   return hashHex;
 };

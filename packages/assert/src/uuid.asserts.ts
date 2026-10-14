@@ -1,7 +1,7 @@
-import { formatErrMsg } from './messages/errorMessages';
-import type { MsgOrErrorFactory } from './types/internal.types';
-import { createAssertException } from './utils/createAssertException';
-import { isUuid } from './uuid.guards';
+import { formatErrMsg } from "./messages/errorMessages";
+import type { MsgOrErrorFactory } from "./types/internal.types";
+import { createAssertException } from "./utils/createAssertException";
+import { isUuid } from "./uuid.guards";
 import type {
   Uuid,
   UuidV1,
@@ -9,12 +9,12 @@ import type {
   UuidV4,
   UuidV5,
   UuidVersion,
-} from './uuid.types';
+} from "./uuid.types";
 
 const errMsg = (version?: UuidVersion) =>
   [`uuid`, version === undefined ? undefined : `v${version}`]
     .filter(Boolean)
-    .join(' ');
+    .join(" ");
 
 /**
  * Asserts a value is a valid uuid v1, v3, v4 or v5

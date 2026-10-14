@@ -3,15 +3,15 @@
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#error_types
  * @see https://262.ecma-international.org/12.0/#sec-well-known-intrinsic-objects
  */
-import type { NativeError } from '../types';
+import type { NativeError } from "../types";
 
 export const nativeErrorMap = {
-  Error: Error,
-  EvalError: EvalError,
-  RangeError: RangeError,
-  ReferenceError: ReferenceError,
-  SyntaxError: SyntaxError,
-  TypeError: TypeError,
+  Error,
+  EvalError,
+  RangeError,
+  ReferenceError,
+  SyntaxError,
+  TypeError,
   UriError: URIError,
 };
 

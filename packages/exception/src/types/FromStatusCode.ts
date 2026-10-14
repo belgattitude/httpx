@@ -1,9 +1,9 @@
-import type { HttpClientException } from '../base/HttpClientException';
-import type { HttpException } from '../base/HttpException';
-import type { HttpServerException } from '../base/HttpServerException';
-import type { HttpUnprocessableEntity } from '../client/HttpUnprocessableEntity';
-import type { HttpExceptionParams } from './HttpExceptionParams';
-import type { HttpExceptionParamsWithIssues } from './HttpExceptionParamsWithIssues';
+import type { HttpClientException } from "../base/HttpClientException";
+import type { HttpException } from "../base/HttpException";
+import type { HttpServerException } from "../base/HttpServerException";
+import type { HttpUnprocessableEntity } from "../client/HttpUnprocessableEntity";
+import type { HttpExceptionParams } from "./HttpExceptionParams";
+import type { HttpExceptionParamsWithIssues } from "./HttpExceptionParamsWithIssues";
 
 export type HttpStatusCodesWithIssues = 422;
 

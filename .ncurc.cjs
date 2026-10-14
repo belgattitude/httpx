@@ -1,41 +1,39 @@
 // @ts-check
 
-const { defineConfig } = require('npm-check-updates');
+const { defineConfig } = require("npm-check-updates");
 
 // @todo read the content from .yarnrc.yml
 const npmPreapprovedPackages = [
-  'npm-check-updates',
-  '@belgattitude/*',
-  '@flowblade/*',
-  '@httpx/*',
-  'hono',
-  'vite',
-  '@vitejs/*',
+  "npm-check-updates",
+  "@belgattitude/*",
+  "@flowblade/*",
+  "@httpx/*",
+  "hono",
+  "vite",
+  "@vitejs/*",
   "vitest",
   "@vitest/*",
-  'esbuild',
-  '@esbuild/*',
-  'tsup',
-  'tsdown',
-  'prettier',
-  '@typescript-eslint/*',
-  'next',
-  '@next/*',
-  '@cloudflare/*',
-  'size-limit',
-  '@size-limit/*'
+  "esbuild",
+  "@esbuild/*",
+  "tsdown",
+  "prettier",
+  "@typescript-eslint/*",
+  "next",
+  "@next/*",
+  "@cloudflare/*",
+  "size-limit",
+  "@size-limit/*",
 ];
 
 module.exports = defineConfig({
   workspaces: true,
   mergeConfig: true,
   root: true,
-  packageManager: 'yarn',
+  packageManager: "yarn",
   cooldown: (packageName) => {
     if (
-      npmPreapprovedPackages.some((allowed) =>
-      {
-        if (allowed.endsWith('/*')) {
+      npmPreapprovedPackages.some((allowed) => {
+        if (allowed.endsWith("/*")) {
           return packageName.startsWith(allowed.slice(0, -1));
         } else {
           return packageName === allowed;
@@ -47,12 +45,9 @@ module.exports = defineConfig({
     return 2;
   },
   reject: [
-    // Cause v9 isn't yet supported
-    'eslint',
-    'typescript',
-    'primereact',
+    "primereact",
     // Till documentation website is upgraded
-    'nextra',
-    'nextra-theme-docs'
+    "nextra",
+    "nextra-theme-docs",
   ],
 });

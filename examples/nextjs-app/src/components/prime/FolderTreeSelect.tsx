@@ -1,8 +1,8 @@
-import { TreeSelect, type TreeSelectChangeEvent } from 'primereact/treeselect';
-import React, { type FC, useEffect, useState } from 'react';
+import { TreeSelect, type TreeSelectChangeEvent } from "primereact/treeselect";
+import React, { type FC, useEffect, useState } from "react";
 
-import { cn } from '../utils';
-import { NodeService } from './NodeService';
+import { cn } from "../utils";
+import { NodeService } from "./NodeService";
 
 type Props = {
   className?: string | undefined;
@@ -13,19 +13,22 @@ type Data = Awaited<ReturnType<typeof NodeService.getTreeNodes>>;
 export const FolderTreeSelect: FC<Props> = (props) => {
   const [nodes, setNodes] = useState<Data>([]);
   const [selectedNodeKeys, setSelectedNodeKeys] =
-    useState<TreeSelectChangeEvent['value']>(null);
+    useState<TreeSelectChangeEvent["value"]>(null);
   const { className } = props;
 
   useEffect(() => {
-    NodeService.getTreeNodes()
-      .then((data) => setNodes(data))
-      .catch((e) => {
-        console.error('Error fetching nodes:', e);
-      });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const loadNodes = async () => {
+      try {
+        setNodes(await NodeService.getTreeNodes());
+      } catch (error: unknown) {
+        console.error("Error fetching nodes:", error);
+      }
+    };
+    void loadNodes();
+  }, []);
 
   return (
-    <div className={cn('', className)}>
+    <div className={cn("", className)}>
       <TreeSelect
         value={selectedNodeKeys}
         options={nodes}

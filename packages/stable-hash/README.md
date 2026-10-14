@@ -2,15 +2,7 @@
 
 Create keys or hashes from javascript values, useful for memoization or cache key generation.
 
-[![npm](https://img.shields.io/npm/v/@httpx/stable-hash?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/stable-hash)
-[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/CHANGELOG.md)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-stable-hash-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fstable-hash)
-[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.size-limit.cjs)
-[![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![size](https://img.shields.io/bundlephobia/minzip/@httpx/stable-hash@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/stable-hash@latest)
-[![downloads](https://img.shields.io/npm/dm/@httpx/stable-hash?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/stable-hash)
-[![license](https://img.shields.io/npm/l/@httpx/stable-hash?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/@httpx/stable-hash?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/stable-hash) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-stable-hash-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fstable-hash) [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.size-limit.cjs) [![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![size](https://img.shields.io/bundlephobia/minzip/@httpx/stable-hash@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/stable-hash@latest) [![downloads](https://img.shields.io/npm/dm/@httpx/stable-hash?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/stable-hash) [![license](https://img.shields.io/npm/l/@httpx/stable-hash?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
 ## Install
 
@@ -43,16 +35,16 @@ $ pnpm add @httpx/stable-hash
 ### createStableKey
 
 ```typescript
-import { createStableKey } from '@httpx/stable-hash'
+import { createStableKey } from "@httpx/stable-hash";
 
 const params = {
-  key8: 'a string',
+  key8: "a string",
   key1: 1,
   key3: true,
   key2: [3, 2, 1],
   key7: {
     key2: true,
-    key1: new Date('2025-02-11T08:58:32.075Z'),
+    key1: new Date("2025-02-11T08:58:32.075Z"),
   },
 };
 
@@ -74,16 +66,16 @@ const key = result.key;
 ### createStableKeyOrThrow
 
 ```typescript
-import { createStableKeyOrThrow } from '@httpx/stable-hash'
+import { createStableKeyOrThrow } from "@httpx/stable-hash";
 
 const params = {
-  key8: 'a string',
+  key8: "a string",
   key1: 1,
   key3: true,
   key2: [3, 2, 1],
   key7: {
     key2: true,
-    key1: new Date('2025-02-11T08:58:32.075Z'),
+    key1: new Date("2025-02-11T08:58:32.075Z"),
   },
 };
 
@@ -99,24 +91,24 @@ const key = createStableKeyOrThrow(params);
 ### createStableHash
 
 ```typescript
-import { createStableHash } from '@httpx/stable-hash';
+import { createStableHash } from "@httpx/stable-hash";
 
 const value = {
-  key8: 'a string',
+  key8: "a string",
   key1: 1,
   key3: true,
   key2: [3, 2, 1],
   key7: {
     key2: true,
-    key1: new Date('2025-02-11T08:58:32.075Z'),
+    key1: new Date("2025-02-11T08:58:32.075Z"),
   },
 };
 
 const result = await createStableHash(value, {
   // By default SHA-256 is used (SHA-512 available)
-  algorithm: 'SHA-256',
+  algorithm: "SHA-256",
   // By default the hash is encoded in hexadecimal
-  encoding: 'hexa',
+  encoding: "hexa",
 });
 if (!result.success) {
   throw result.error;
@@ -128,25 +120,25 @@ const hash = result.hash;
 ### createStableHashOrThrow
 
 ```typescript
-import { createStableHashOrThrow } from '@httpx/stable-hash';
+import { createStableHashOrThrow } from "@httpx/stable-hash";
 
 const params = {
-  key8: 'a string',
+  key8: "a string",
   key1: 1,
   key3: true,
   key2: [3, 2, 1],
   key7: {
     key2: true,
-    key1: new Date('2025-02-11T08:58:32.075Z'),
+    key1: new Date("2025-02-11T08:58:32.075Z"),
   },
 };
 
 try {
   const hash = await createStableHashOrThrow(params, {
     // By default SHA-256 is used (SHA-512 available)
-    algorithm: 'SHA-256',
+    algorithm: "SHA-256",
     // By default the hash is encoded in hexadecimal
-    encoding: 'hexa',
+    encoding: "hexa",
   });
   // -> 'fb17a6300efcf62ae80708e2a672aee581b7f0dd7c6a9a7a748218846c679394'
 } catch (e) {
@@ -164,35 +156,32 @@ Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/htt
 
 [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
-
-See [bench](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/bench) for details. 
-
+See [bench](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/bench) for details.
 
 ## Bundle size
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.size-limit.ts)
 
-| Scenario                                                      | Size with deps (compressed) |
-|---------------------------------------------------------------|----------------------------:|
-| `import { createStableKeyOrThrow } from '@httpx/stable-hash'  |                      ~ 480B |
-| `import { createStableKey } from '@httpx/stable-hash'         |                      ~ 520B |
-| `import { createStableHashOrThrow } from '@httpx/stable-hash' |                      ~ 650B |
-| `import { createStableHash } from '@httpx/stable-hash'        |                      ~ 695B |
-
+| Scenario | Size with deps (compressed) |
+| --- | --: |
+| `import { createStableKeyOrThrow } from '@httpx/stable-hash' | ~ 480B |
+| `import { createStableKey } from '@httpx/stable-hash' | ~ 520B |
+| `import { createStableHashOrThrow } from '@httpx/stable-hash' | ~ 650B |
+| `import { createStableHash } from '@httpx/stable-hash' | ~ 695B |
 
 ## Compatibility
 
-| Level        | CI | Description                                                                                                                                                                                                                                                                                                                                                                                      |
-|--------------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| Node         | ✅  | CI for 20.x, 22.x, 24.x & 26.x.                                                                                                                                                                                                                                                                                                                                                                   |
-| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                    |
-| Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.browserslistrc) |
-| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                              |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                               | 
-| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                                 | 
-| Typescript   | ✅  | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                    |
-| ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                     |
-| Performance  | ✅  | Monitored with with [codspeed.io](https://codspeed.io/belgattitude/httpx)                                                                                                                                                                                                                                                                                                                        |
+| Level | CI | Description |
+| --- | --- | --- |
+| Node | ✅ | CI for 20.x, 22.x, 24.x & 26.x. |
+| Browser | ✅ | Tested with latest chrome (vitest/playwright) |
+| Browserslist | ✅ | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/.browserslistrc) |
+| Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
+| Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
+| Cloudflare | ✅ | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
+| Typescript | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
+| ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
+| Performance | ✅ | Monitored with with [codspeed.io](https://codspeed.io/belgattitude/httpx) |
 
 > For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
 
@@ -239,16 +228,13 @@ RUN  v4.1.4 /home/sebastien/github/httpx/packages/stable-hash
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/stable-hash/bench) for details.
 
-
 ## Contributors
 
 Contributions are warmly appreciated. Have a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) document.
 
 ## Sponsors
 
-If my OSS work brightens your day, let's take it to new heights together!
-[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
-or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+If my OSS work brightens your day, let's take it to new heights together! [Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>), or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
 
 ### Special thanks to
 

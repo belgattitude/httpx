@@ -1,19 +1,18 @@
-import { TimeLruCache } from '@httpx/lru';
-import { expect, expectTypeOf } from 'vitest';
+import { TimeLruCache } from "@httpx/lru";
+import { expect, expectTypeOf } from "vitest";
 
-import { XMemCache } from '../x-mem-cache';
+import { XMemCache } from "../x-mem-cache";
 
-describe('XMemCache', () => {
+describe("XMemCache", () => {
   type TestFnParams = {
     name: string;
   };
-  const fetchDataFn = async (params: TestFnParams) => {
-    return {
+  const fetchDataFn = (params: TestFnParams) =>
+    Promise.resolve({
       message: `Hello ${params.name}`,
-    };
-  };
+    });
 
-  describe('XMemCache.runAsync', () => {
+  describe("XMemCache.runAsync", () => {
     const lru = new TimeLruCache({
       maxSize: 50,
       defaultTTL: 50_000,
@@ -21,42 +20,41 @@ describe('XMemCache', () => {
 
     const xMemCache = new XMemCache({ lru });
 
-    it('should execute the function and cache the result', async () => {
-      const fn = vi.fn();
-      const runCached = async (params: TestFnParams) => {
-        return xMemCache.runAsync({
-          key: ['/api/test', params],
+    it("should execute the function and cache the result", async () => {
+      const fn = vi.fn<() => void>();
+      const runCached = async (params: TestFnParams) =>
+        await xMemCache.runAsync({
+          key: ["/api/test", params],
           fn: () => {
             fn();
             return fetchDataFn(params);
           },
         });
-      };
 
       const { data: firstRunData, meta: firstRunMeta } = await runCached({
-        name: 'test',
+        name: "test",
       });
-      expect(firstRunData).toStrictEqual({ message: 'Hello test' });
+      expect(firstRunData).toStrictEqual({ message: "Hello test" });
       expectTypeOf(firstRunData).toEqualTypeOf<{
         message: string;
       }>();
 
-      expect(firstRunMeta.cached).toStrictEqual(false);
-      expect(firstRunMeta.generatedKey).toStrictEqual(
+      expect(firstRunMeta.cached).toBe(false);
+      expect(firstRunMeta.generatedKey).toBe(
         '{"key":["/api/test",{"name":"test"}],"ns":"default"}'
       );
-      expect(lru.size).toStrictEqual(1);
+      expect(lru.size).toBe(1);
 
-      const { data: secondRunData } = await runCached({ name: 'test' });
-      expect(secondRunData).toStrictEqual({ message: 'Hello test' });
-      expect(lru.size).toStrictEqual(1);
+      const { data: secondRunData } = await runCached({ name: "test" });
+      expect(secondRunData).toStrictEqual({ message: "Hello test" });
+      expect(lru.size).toBe(1);
 
       expect(fn).toHaveBeenCalledExactlyOnceWith();
       const removed = lru.clear();
       expect(removed).toBe(1); // One item should be removed from the cache
     });
   });
-  describe('XMemCache.runAsync(forceRevalidate)', () => {
+  describe("XMemCache.runAsync(forceRevalidate)", () => {
     const lru = new TimeLruCache({
       maxSize: 50,
       defaultTTL: 50_000,
@@ -64,39 +62,38 @@ describe('XMemCache', () => {
 
     const xMemCache = new XMemCache({ lru });
 
-    it('should execute the function and force revalidation', async () => {
-      const fn = vi.fn();
-      const runCachedWithForceRevalidate = async (params: TestFnParams) => {
-        return xMemCache.runAsync({
-          key: ['/api/test', params],
+    it("should execute the function and force revalidation", async () => {
+      const fn = vi.fn<() => void>();
+      const runCachedWithForceRevalidate = async (params: TestFnParams) =>
+        await xMemCache.runAsync({
+          key: ["/api/test", params],
           fn: () => {
             fn();
             return fetchDataFn(params);
           },
           forceRevalidate: true,
         });
-      };
 
       const { data: firstRunData, meta: firstRunMeta } =
         await runCachedWithForceRevalidate({
-          name: 'test',
+          name: "test",
         });
-      expect(firstRunData).toStrictEqual({ message: 'Hello test' });
+      expect(firstRunData).toStrictEqual({ message: "Hello test" });
       expectTypeOf(firstRunData).toEqualTypeOf<{
         message: string;
       }>();
 
-      expect(firstRunMeta.cached).toStrictEqual(false);
-      expect(firstRunMeta.generatedKey).toStrictEqual(
+      expect(firstRunMeta.cached).toBe(false);
+      expect(firstRunMeta.generatedKey).toBe(
         '{"key":["/api/test",{"name":"test"}],"ns":"default"}'
       );
-      expect(lru.size).toStrictEqual(1);
+      expect(lru.size).toBe(1);
 
       const { data: secondRunData } = await runCachedWithForceRevalidate({
-        name: 'test',
+        name: "test",
       });
-      expect(secondRunData).toStrictEqual({ message: 'Hello test' });
-      expect(lru.size).toStrictEqual(1);
+      expect(secondRunData).toStrictEqual({ message: "Hello test" });
+      expect(lru.size).toBe(1);
 
       expect(fn).toHaveBeenCalledTimes(2);
       const removed = lru.clear();

@@ -1,18 +1,8 @@
 # @httpx/exception
 
-HTTP status errors with default message, instanceof, stack and nested error support.
-Lightweight, typical usage between [500b and 1300b](#bundle-size).
-Includes convenience typeguards, optional contextual info and a built-in serializer
-to cover cross-environments challenges (RSC, SSR...).
+HTTP status errors with default message, instanceof, stack and nested error support. Lightweight, typical usage between [500b and 1300b](#bundle-size). Includes convenience typeguards, optional contextual info and a built-in serializer to cover cross-environments challenges (RSC, SSR...).
 
-[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception)
-[![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md)
-[![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception)
-[![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs)
-[![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility)
-[![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E93%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3)
-[![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest)
-[![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
+[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception) [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs) [![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E93%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3) [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest) [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
 
 ## Highlights
 
@@ -73,9 +63,7 @@ pnpm add @httpx/exception     # via pnpm
 
 ### By named imports
 
-Explicit named imports are prefixed by `Http` to ease
-IDE experience. Message is optional and default to the [default message](#default-messages). Additional
-[parameters](#parameters) are supported.
+Explicit named imports are prefixed by `Http` to ease IDE experience. Message is optional and default to the [default message](#default-messages). Additional [parameters](#parameters) are supported.
 
 ```typescript
 import { HttpNotFound, HttpBadRequest } from "@httpx/exception";
@@ -92,8 +80,7 @@ const e400 = new HttpBadRequest("Problems parsing JSON");
 
 ### By status code
 
-The `createHttpException` function allows to create an exception from an
-arbitrary status code.
+The `createHttpException` function allows to create an exception from an arbitrary status code.
 
 ```typescript
 import { createHttpException } from "@httpx/exception";
@@ -118,25 +105,23 @@ const e500 = createHttpException(500, {
 
 ## Parameters
 
-Http exceptions and `createHttpException` accept a parameter of type `string | HttpExceptionParams`. If no parameter
-is provided the [default message](#default-messages) is used.
+Http exceptions and `createHttpException` accept a parameter of type `string | HttpExceptionParams`. If no parameter is provided the [default message](#default-messages) is used.
 
 ### Error context
 
-It's possible to attach informational context to an exception. This is particularly useful when used with
-centralized logging / error reporting.
+It's possible to attach informational context to an exception. This is particularly useful when used with centralized logging / error reporting.
 
-| HttpExceptionParams | Type                      | Description                                                                                                                        |
-| ------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| statusCode          | `number`                  | Http error status code (400-599).                                                                                                  |
-| message             | `string`                  | Default or provided message.                                                                                                       |
-| url                 | `string?`                 | Origin url..                                                                                                                       |
-| method              | `HttpMethod?`             | Origin http method.                                                                                                                |
-| code                | `string?`                 | Custom error code (not to be confused with statusCode).                                                                            |
-| errorId             | `string?`                 | Unique custom error id.                                                                                                            |
-| stack               | `string?`                 | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause               | `Error?`                  | @see [about error cause](#about-errorcause)                                                                                        |
-| issues              | `HttpValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+| HttpExceptionParams | Type | Description |
+| --- | --- | --- |
+| statusCode | `number` | Http error status code (400-599). |
+| message | `string` | Default or provided message. |
+| url | `string?` | Origin url.. |
+| method | `HttpMethod?` | Origin http method. |
+| code | `string?` | Custom error code (not to be confused with statusCode). |
+| errorId | `string?` | Unique custom error id. |
+| stack | `string?` | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause | `Error?` | @see [about error cause](#about-errorcause) |
+| issues | `HttpValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422) |
 
 Example:
 
@@ -160,17 +145,17 @@ const e500 = new HttpInternalServerError({
 
 All parameters are exposed as properties.
 
-| HttpException | Type                  | Description                                                                                                                        |
-| ------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| statusCode    | `number`              | Http error status code (400-599).                                                                                                  |
-| message       | `string`              | Default or provided message.                                                                                                       |
-| url           | `string?`             | Origin url..                                                                                                                       |
-| method        | `HttpMethod?`         | Origin http method.                                                                                                                |
-| code          | `string?`             | Custom error code (not to be confused with statusCode).                                                                            |
-| errorId       | `string?`             | Unique custom error id.                                                                                                            |
-| stack         | `string?`             | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause         | `Error?`              | @see [about nested errors](#nested-errors)                                                                                         |
-| issues        | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422)                                                                                    |
+| HttpException | Type | Description |
+| --- | --- | --- |
+| statusCode | `number` | Http error status code (400-599). |
+| message | `string` | Default or provided message. |
+| url | `string?` | Origin url.. |
+| method | `HttpMethod?` | Origin http method. |
+| code | `string?` | Custom error code (not to be confused with statusCode). |
+| errorId | `string?` | Unique custom error id. |
+| stack | `string?` | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
+| cause | `Error?` | @see [about nested errors](#nested-errors) |
+| issues | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422) |
 
 ```typescript
 import { HttpUnprocessableEntity } from "@httpx/exception";
@@ -196,9 +181,7 @@ const e422 = new HttpUnprocessableEntity({
 
 ## Nested errors
 
-When creating a http exception, it's possible to attach the original error
-to the native [Error.cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause)
-property.
+When creating a http exception, it's possible to attach the original error to the native [Error.cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) property.
 
 ```typescript
 const e = new HttpBadRequest({
@@ -211,10 +194,7 @@ const e = new HttpBadRequest({
 });
 ```
 
-> Error cause is supported by [>93% of browsers](https://caniuse.com/mdn-javascript_builtins_error_cause) as
-> of 12/2023. NodeJs supports it since 16.17. Nested cause will simply be discarded if not supported (no runtime error).
-> The [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) can be installed if not provided
-> already by your framework.
+> Error cause is supported by [>93% of browsers](https://caniuse.com/mdn-javascript_builtins_error_cause) as of 12/2023. NodeJs supports it since 16.17. Nested cause will simply be discarded if not supported (no runtime error). The [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) can be installed if not provided already by your framework.
 
 ## Static members
 
@@ -233,8 +213,7 @@ switch (statusCode) {
 
 ## Instanceof checks
 
-Http exceptions extends the native [Error class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
-through HttpException and either HttpServerException and HttpClientException.
+Http exceptions extends the native [Error class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) through HttpException and either HttpServerException and HttpClientException.
 
 ```typescript
 import { createHttpException } from "@httpx/exception";
@@ -270,9 +249,7 @@ classDiagram
 
 ### Instanceof alternatives
 
-While the usage of `instanceof` is preferred, the `isHttpException`, `isHttpClientException` and
-`isServerException` can be used in place. They will check for instance and will
-also ensure that the associated `statusCode` is actually valid.
+While the usage of `instanceof` is preferred, the `isHttpException`, `isHttpClientException` and `isServerException` can be used in place. They will check for instance and will also ensure that the associated `statusCode` is actually valid.
 
 ```typescript
 import {
@@ -312,23 +289,15 @@ isHttpErrorStatusCode(200);
 
 ## Serializer
 
-Exceptions can be (de-)serialized to json or other formats. Use cases varies from
-ssr-frameworks (ie: nextjs [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props))
-/ loggers (sentry, winston...).
+Exceptions can be (de-)serialized to json or other formats. Use cases varies from ssr-frameworks (ie: nextjs [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props)) / loggers (sentry, winston...).
 
-Nested error causes are supported but ignored [if not supported](#about-errorcause) by
-the runtime.
+Nested error causes are supported but ignored [if not supported](#about-errorcause) by the runtime.
 
-Additionally, you can pass any native errors (`Error`, `EvalError`, `RangeError`, `ReferenceError`,
-`SyntaxError`, `TypeError`, `URIError`) as well as a custom one (the later will be transformed to the base type Error).
+Additionally, you can pass any native errors (`Error`, `EvalError`, `RangeError`, `ReferenceError`, `SyntaxError`, `TypeError`, `URIError`) as well as a custom one (the later will be transformed to the base type Error).
 
 ⚠️ **Since v3.0.0**:
 
-For security reasons [stack traces](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack)
-won't be serialized anymore by default as they might contain sensitive information in production. To opt-in selectively
-for stack traces serialization (ie: development or logging)
-`convertToSerializable`, `createFromSerializable`, `toJson` and `fromJson` functions
-accepts a `SerializerParams.includeStack` param as second argument.
+For security reasons [stack traces](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) won't be serialized anymore by default as they might contain sensitive information in production. To opt-in selectively for stack traces serialization (ie: development or logging) `convertToSerializable`, `createFromSerializable`, `toJson` and `fromJson` functions accepts a `SerializerParams.includeStack` param as second argument.
 
 ### JSON
 
@@ -343,8 +312,7 @@ const deserialized = fromJson(json);
 // e === deserialized
 ```
 
-> **Tip**
-> See also how to integrate with [superjson](https://github.com/blitz-js/superjson#recipes)
+> **Tip** See also how to integrate with [superjson](https://github.com/blitz-js/superjson#recipes)
 
 <details>
 <summary>Example for stack traces serialization.</summary>
@@ -404,8 +372,7 @@ const deserialized = createFromSerializable(serializableObject, {
 
 ## Default messages
 
-Messages are inferred from the Http exception class name. They are
-[compatible](https://github.com/belgattitude/httpx/blob/main/packages/exception/test/specs/statuses-messages-compatibility.test.ts) with the popular [statuses](https://www.npmjs.com/package/statuses) package.
+Messages are inferred from the Http exception class name. They are [compatible](https://github.com/belgattitude/httpx/blob/main/packages/exception/test/specs/statuses-messages-compatibility.test.ts) with the popular [statuses](https://www.npmjs.com/package/statuses) package.
 
 | Status | Class                           | Message            |
 | ------ | ------------------------------- | ------------------ |
@@ -537,31 +504,27 @@ if (isObjectWithErrorStatusCode(noSuchUser)) {
 
 ### Compatibility
 
-| Level        | CI  | Description                                                                                                                                                                                                                                                                                                                                                                                    |
-|--------------| --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Node         | ✅   | CI for 20.x, 22.x, 24.x & 26.x.                                                                                                                                                                                                                                                                                                                                                                   |
-| Browser      | ✅  | Tested with latest chrome (vitest/playwright)                                                                                                                                                                                                                                                                                                                                                  |
-| Browserslist | ✅  | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
-| Bun          | ✅  | Tested with latest (at time of writing >= 1.3.3)                                                                                                                                                                                                                                                                                                                                              |
-| Edge         | ✅  | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime).                                                                                                                                                                                                                                                                                                             | 
-| Cloudflare   | ✅  | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml)                                                                                                                                                                                                                                               |
-| Typescript  | ✅  | TS 4.7+ / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI.                                                                                                                                                                                                                                                                                   |
-| ES2022       | ✅  | Dist files checked with [es-check](https://github.com/yowainwright/es-check)                                                                                                                                                                                                                                                                                                                   |
+| Level | CI | Description |
+| --- | --- | --- |
+| Node | ✅ | CI for 20.x, 22.x, 24.x & 26.x. |
+| Browser | ✅ | Tested with latest chrome (vitest/playwright) |
+| Browserslist | ✅ | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
+| Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
+| Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
+| Cloudflare | ✅ | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
+| Typescript | ✅ | TS 4.7+ / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
+| ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
 
 > For _older_ browsers:
 >
 > - 👉 Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
-> - 👉 You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support
->   nested errors (if not present they are simply discarded - no runtime errors).
+> - 👉 You might want to add the [error-cause-polyfill](https://github.com/ehmicky/error-cause-polyfill) to support nested errors (if not present they are simply discarded - no runtime errors).
 
 ### Bundle size
 
-Code and bundler have been tuned to target a minimal compressed footprint
-for the browser. In ESM, typical usage the bundle size will vary between 500b to 1300b compressed
-(including default messages for the 43 status codes).
+Code and bundler have been tuned to target a minimal compressed footprint for the browser. In ESM, typical usage the bundle size will vary between 500b to 1300b compressed (including default messages for the 43 status codes).
 
-ESM individual imports are tracked by a
-[size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs).
+ESM individual imports are tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs).
 
 | Scenario                                           | Size (compressed) |
 | -------------------------------------------------- | ----------------: |
@@ -577,8 +540,7 @@ ESM individual imports are tracked by a
 
 ### Packaging
 
-This library offers a dual cjs/esm bundle. The (optional) serializer code has been tuned to
-avoid issues with [dual package hazards](https://nodejs.org/api/packages.html#dual-package-hazard).
+This library offers a dual cjs/esm bundle. The (optional) serializer code has been tuned to avoid issues with [dual package hazards](https://nodejs.org/api/packages.html#dual-package-hazard).
 
 The export fields and the builds are checked on the CI with [are-the-types-wrong](https://arethetypeswrong.github.io/).
 
@@ -586,17 +548,16 @@ The export fields and the builds are checked on the CI with [are-the-types-wrong
 
 ### Typescript
 
-This library targets typescript 5+ with descriptions (see
-[the generated api docs](https://github.com/belgattitude/httpx/tree/main/packages/exception/docs/api)).
+This library targets typescript 5+ with descriptions (see [the generated api docs](https://github.com/belgattitude/httpx/tree/main/packages/exception/docs/api)).
 
 ## Upgrade
 
 > Refer to the [UPGRADE.md](https://github.com/belgattitude/httpx/blob/main/packages/exception/UPGRADE.md) for detailed information.
 
-| Version | Comment                                                             |
-| ------- | ------------------------------------------------------------------- |
-| 3.x     | Serializer functions don't include stack by default                 |
-| 2.x     | Node 18.x, modern browsers (see how to [transpile](#compatibility)) |
+| Version | Comment |
+| --- | --- |
+| 3.x | Serializer functions don't include stack by default |
+| 2.x | Node 18.x, modern browsers (see how to [transpile](#compatibility)) |
 
 ## Support
 
@@ -608,9 +569,7 @@ Contributions are warmly appreciated. Have a look to the [CONTRIBUTING](https://
 
 ## Sponsors
 
-If my OSS work brightens your day, let's take it to new heights together!
-[Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>),
-or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+If my OSS work brightens your day, let's take it to new heights together! [Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>), or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
 
 ### Special thanks to
 

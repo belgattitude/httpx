@@ -1,19 +1,23 @@
-import { sortObjKeys } from './sort-obj-keys';
+import { sortObjKeys } from "./sort-obj-keys";
 
-describe('sortObjKeys', () => {
-  const createObject = () => ({
-    z: 'z',
-    a: 'a',
-  });
-  it('should return a sorted object', () => {
+describe("sortObjKeys", () => {
+  const createObject = () => {
+    return {
+      z: "z",
+      a: "a",
+    };
+  };
+
+  it("should return a sorted object", () => {
     const obj = createObject();
     const sorted = sortObjKeys(obj);
     expect(sorted).toStrictEqual({
-      a: 'a',
-      z: 'z',
+      a: "a",
+      z: "z",
     });
   });
-  it('should not mutate the original object', () => {
+
+  it("should not mutate the original object", () => {
     const obj = createObject();
     const backup = JSON.stringify(obj);
     const _sorted = sortObjKeys(obj);

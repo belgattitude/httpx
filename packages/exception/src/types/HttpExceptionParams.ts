@@ -1,5 +1,5 @@
-import type { HttpException } from '../base';
-import type { HttpMethod } from './HttpMethod';
+import type { HttpException } from "../base";
+import type { HttpMethod } from "./HttpMethod";
 
 export type HttpExceptionParams = {
   /**

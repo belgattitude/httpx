@@ -1,3 +1,3 @@
-import { createVitestConfig } from '@httpx/devtools-vitest';
+import { createVitestConfig } from "@httpx/devtools-vitest";
 
 export default createVitestConfig();

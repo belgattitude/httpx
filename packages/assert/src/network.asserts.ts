@@ -1,8 +1,8 @@
-import { formatErrMsg } from './messages/errorMessages';
-import { isNetworkPort } from './network.guards';
-import type { NetworkPort } from './network.types';
-import type { MsgOrErrorFactory } from './types/internal.types';
-import { createAssertException } from './utils/createAssertException';
+import { formatErrMsg } from "./messages/errorMessages";
+import { isNetworkPort } from "./network.guards";
+import type { NetworkPort } from "./network.types";
+import type { MsgOrErrorFactory } from "./types/internal.types";
+import { createAssertException } from "./utils/createAssertException";
 /**
  * @throws TypeError
  */
@@ -13,7 +13,7 @@ export function assertNetworkPort(
   if (!isNetworkPort(v)) {
     throw createAssertException(
       msgOrErrorFactory,
-      formatErrMsg('network port', v)
+      formatErrMsg("network port", v)
     );
   }
 }

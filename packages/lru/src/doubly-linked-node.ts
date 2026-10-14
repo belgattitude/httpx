@@ -1,4 +1,4 @@
-import type { BaseCacheKeyTypes } from './types';
+import type { BaseCacheKeyTypes } from "./types";
 
 export class DoublyLinkedNode<TValue, TKey extends BaseCacheKeyTypes = string> {
   readonly key: TKey;

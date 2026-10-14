@@ -1,48 +1,48 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 
-import { HttpException } from '../../../base/HttpException';
-import { HttpBadRequest } from '../../../client/HttpBadRequest';
-import { HttpUnprocessableEntity } from '../../../client/HttpUnprocessableEntity';
-import type { SerializableHttpException } from '../../types';
-import { convertToSerializable } from '../convertToSerializable';
+import { HttpException } from "../../../base/HttpException";
+import { HttpBadRequest } from "../../../client/HttpBadRequest";
+import { HttpUnprocessableEntity } from "../../../client/HttpUnprocessableEntity";
+import type { SerializableHttpException } from "../../types";
+import { convertToSerializable } from "../convertToSerializable";
 
-describe('convertToSerializable', () => {
-  describe('when an http exception is given', () => {
+describe("convertToSerializable", () => {
+  describe("when an http exception is given", () => {
     const httpExceptions: [label: string, error: HttpException][] = [
-      ['simple', new HttpException(500)],
-      ['withMsg', new HttpException(500, 'msg')],
+      ["simple", new HttpException(500)],
+      ["withMsg", new HttpException(500, "msg")],
       [
-        'withFullParams',
+        "withFullParams",
         new HttpException(500, {
-          code: 'NETWORK_UNAVAILABLE',
-          errorId: 'nanoid()',
-          message: 'msg',
-          method: 'PUT',
-          url: 'http://localhost',
+          code: "NETWORK_UNAVAILABLE",
+          errorId: "nanoid()",
+          message: "msg",
+          method: "PUT",
+          url: "http://localhost",
         }),
       ],
       [
-        'withCause',
+        "withCause",
         new HttpException(500, {
-          cause: new HttpException(500, 'msg'),
+          cause: new HttpException(500, "msg"),
         }),
       ],
       [
-        'HttpBadRequest',
+        "HttpBadRequest",
         new HttpBadRequest({
           cause: new EvalError(),
-          message: 'msg',
-          url: 'http://',
+          message: "msg",
+          url: "http://",
         }),
       ],
     ];
 
-    it.each(httpExceptions)('works with %s', (label, err) => {
+    it.each(httpExceptions)("works with %s", (label, err) => {
       const serializable = convertToSerializable(
         err
       ) as SerializableHttpException;
 
-      expect(serializable.__type).toStrictEqual('HttpException');
+      expect(serializable.__type).toBe("HttpException");
       expect(serializable.message).toStrictEqual(err.message);
       expect(serializable.name).toStrictEqual(err.name);
       expect(serializable?.url).toStrictEqual(err?.url);
@@ -58,21 +58,21 @@ describe('convertToSerializable', () => {
     });
   });
 
-  it('serialize issues of HttpUnprocessableEntity', () => {
+  it("serialize issues of HttpUnprocessableEntity", () => {
     const e422 = new HttpUnprocessableEntity({
       issues: [
         {
-          code: 'invalid_email',
-          message: 'Invalid email',
-          path: 'email',
+          code: "invalid_email",
+          message: "Invalid email",
+          path: "email",
         },
         {
-          code: 'empty_string',
-          message: 'Invalid address',
-          path: ['addresses', 0, 'line1'],
+          code: "empty_string",
+          message: "Invalid address",
+          path: ["addresses", 0, "line1"],
         },
       ],
-      message: 'Validation failed',
+      message: "Validation failed",
     });
     const serializable = convertToSerializable(e422);
     expect(
@@ -80,22 +80,23 @@ describe('convertToSerializable', () => {
     ).toStrictEqual(e422?.issues);
   });
 
-  describe('when native error is given', () => {
+  describe("when native error is given", () => {
     const natives: [label: string, err: Error][] = [
-      ['ErrorSimple', new Error()],
-      ['ErrorSimpleRange', new RangeError()],
-      ['ErrorSimpleEval', new EvalError()],
-      ['ErrorMsg', new Error('msg')],
+      ["ErrorSimple", new Error()],
+      ["ErrorSimpleRange", new RangeError()],
+      ["ErrorSimpleEval", new EvalError()],
+      ["ErrorMsg", new Error("msg")],
       [
-        'ErrorMsg',
-        new Error('msg', {
-          cause: new Error('msg'),
+        "ErrorMsg",
+        new Error("msg", {
+          cause: new Error("msg"),
         }),
       ],
     ];
-    it.each(natives)('works with %s', (label, err) => {
+
+    it.each(natives)("works with %s", (label, err) => {
       const serializable = convertToSerializable(err);
-      expect(serializable.__type).toStrictEqual('NativeError');
+      expect(serializable.__type).toBe("NativeError");
       expect(serializable.message).toStrictEqual(err.message);
       expect(serializable.name).toStrictEqual(err.name);
       const {
@@ -107,19 +108,20 @@ describe('convertToSerializable', () => {
     });
   });
 
-  describe('when non native error is given', () => {
+  describe("when non native error is given", () => {
     class NonNativeError extends Error {
       constructor(message: string) {
         super(message);
         Object.setPrototypeOf(this, NonNativeError.prototype);
-        this.name = 'NonNativeError';
+        this.name = "NonNativeError";
       }
     }
-    it('set the type to NonNativeError', () => {
-      const e = new NonNativeError('msg');
+
+    it("set the type to NonNativeError", () => {
+      const e = new NonNativeError("msg");
       const serializable = convertToSerializable(e);
-      expect(e.name).toStrictEqual('NonNativeError');
-      expect(serializable.__type).toStrictEqual('NonNativeError');
+      expect(e.name).toBe("NonNativeError");
+      expect(serializable.__type).toBe("NonNativeError");
       const {
         cause: _cause,
         stack: _stack,
@@ -129,11 +131,11 @@ describe('convertToSerializable', () => {
     });
   });
 
-  describe('when a non error is given', () => {
-    it('switch to build-in Error with custom message', () => {
+  describe("when a non error is given", () => {
+    it("switch to build-in Error with custom message", () => {
       const e = new Date() as unknown as Error;
       const serializable = convertToSerializable(e);
-      expect(serializable.__type).toStrictEqual('NonNativeError');
+      expect(serializable.__type).toBe("NonNativeError");
       const {
         cause: _cause,
         stack: _stack,
@@ -143,38 +145,38 @@ describe('convertToSerializable', () => {
     });
   });
 
-  describe('when includeStack is set', () => {
+  describe("when includeStack is set", () => {
     const eachCases = [
       [
-        'http-exception-default-include-stack',
+        "http-exception-default-include-stack",
         undefined,
         false,
         new HttpException(500),
       ],
       [
-        'http-exception-with-include-stack=true',
+        "http-exception-with-include-stack=true",
         true,
         true,
         new HttpException(500),
       ],
       [
-        'http-exception-with-include-stack=false',
+        "http-exception-with-include-stack=false",
         false,
         false,
         new HttpException(500),
       ],
       [
-        'native-error-default-include-stack',
+        "native-error-default-include-stack",
         undefined,
         false,
-        new Error('test'),
+        new Error("test"),
       ],
-      ['native-error-with-include-stack=true', true, true, new Error('test')],
+      ["native-error-with-include-stack=true", true, true, new Error("test")],
       [
-        'native-error-with-include-stack=false',
+        "native-error-with-include-stack=false",
         false,
         false,
-        new Error('test'),
+        new Error("test"),
       ],
     ] as const satisfies [
       label: string,
@@ -187,7 +189,7 @@ describe('convertToSerializable', () => {
       'for "%s" with includeStack="%s", should return stack="%s"',
       (_label, includeStack, hasStack, error) => {
         const serializable = convertToSerializable(error, {
-          includeStack: includeStack,
+          includeStack,
         });
         const { stack } = serializable;
         expect(stack === undefined).toBe(!hasStack);

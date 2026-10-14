@@ -1,16 +1,23 @@
 ## Ecosystem
 
-
 ### Serialization
 
 #### Tupleson
 
-Example with [tupleson](https://github.com/trpc/tupleson) *experimental* serializer.
+Example with [tupleson](https://github.com/trpc/tupleson) _experimental_ serializer.
 
 ```typescript
 import { createTson, type TsonType } from "tupleson";
-import { createHttpException, HttpException, HttpUnprocessableEntity } from "@httpx/exception";
-import { fromJson, toJson, type SerializerError } from "@httpx/exception/serializer";
+import {
+  createHttpException,
+  HttpException,
+  HttpUnprocessableEntity,
+} from "@httpx/exception";
+import {
+  fromJson,
+  toJson,
+  type SerializerError,
+} from "@httpx/exception/serializer";
 
 const exceptionSerializer: TsonType<HttpException | SerializerError, string> = {
   deserialize: (v) => fromJson(v),
@@ -40,4 +47,3 @@ const serialized = tson.serialize(obj);
 const deserialized = tson.deserialize(serialized);
 expect(deserialized).toStrictEqual(obj);
 ```
-

@@ -1,4 +1,4 @@
-import { TimeLruCache } from '@httpx/lru';
+import { TimeLruCache } from "@httpx/lru";
 
 const timeLru = new TimeLruCache<string>({
   maxSize: 100,

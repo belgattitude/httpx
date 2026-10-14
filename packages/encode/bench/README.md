@@ -1,6 +1,6 @@
 ## @httpx/encode
 
-Benchmarks for [@httpx/encode](../README.md) 
+Benchmarks for [@httpx/encode](../README.md)
 
 ### Run
 
@@ -10,4 +10,3 @@ cd packages/encode
 yarn build
 yarn bench
 ```
-

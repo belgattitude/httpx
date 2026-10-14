@@ -1,10 +1,30 @@
-import { createStableKeyOrThrow } from '@httpx/stable-hash';
+import { createStableKeyOrThrow } from "@httpx/stable-hash";
 
 export type CacheStringKey = string & {
-  _brand: 'x-mem-cache-string-key';
+  _brand: "x-mem-cache-string-key";
 };
 
 export type CacheKeyTuple<T = unknown> = [string, ...T[]];
+
+export const isValidCacheKeyTuple = (v: unknown): v is CacheKeyTuple => {
+  if (
+    Array.isArray(v) &&
+    v.length > 0 &&
+    typeof v[0] === "string" &&
+    v[0].length > 0
+  ) {
+    return true;
+  }
+  return false;
+};
+
+export function assertValidCacheKeyTuple(
+  v: unknown
+): asserts v is CacheKeyTuple {
+  if (!isValidCacheKeyTuple(v)) {
+    throw new TypeError(`Invalid cache key type`);
+  }
+}
 
 /**
  * Generates a stable cache key string based on the provided parameters.
@@ -25,8 +45,10 @@ export const genCacheKeyString = <TKey extends CacheKeyTuple>(params: {
   assertValidCacheKeyTuple(key);
   return createStableKeyOrThrow(
     {
-      ...(namespace ? { ns: namespace } : {}),
-      ...(compressorId ? { compressorId } : {}),
+      ...(namespace !== undefined && namespace !== "" ? { ns: namespace } : {}),
+      ...(compressorId !== undefined && compressorId !== ""
+        ? { compressorId }
+        : {}),
       key,
     },
     {
@@ -34,23 +56,3 @@ export const genCacheKeyString = <TKey extends CacheKeyTuple>(params: {
     }
   ) as CacheStringKey;
 };
-
-export const isValidCacheKeyTuple = (v: unknown): v is CacheKeyTuple => {
-  if (
-    Array.isArray(v) &&
-    v.length > 0 &&
-    typeof v[0] === 'string' &&
-    v[0].length > 0
-  ) {
-    return true;
-  }
-  return false;
-};
-
-export function assertValidCacheKeyTuple(
-  v: unknown
-): asserts v is CacheKeyTuple {
-  if (!isValidCacheKeyTuple(v)) {
-    throw new TypeError(`Invalid cache key type`);
-  }
-}

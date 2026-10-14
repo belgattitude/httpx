@@ -1,11 +1,11 @@
-import { HttpClientException } from '../../base/HttpClientException';
-import { HttpException } from '../../base/HttpException';
-import { HttpServerException } from '../../base/HttpServerException';
+import { HttpClientException } from "../../base/HttpClientException";
+import { HttpException } from "../../base/HttpException";
+import { HttpServerException } from "../../base/HttpServerException";
 
 export const baseExceptionMap = {
-  HttpClientException: HttpClientException,
-  HttpException: HttpException,
-  HttpServerException: HttpServerException,
+  HttpClientException,
+  HttpException,
+  HttpServerException,
 };
 
 /**
@@ -13,6 +13,5 @@ export const baseExceptionMap = {
  */
 export const isBaseHttpException = (
   name: string
-): name is keyof typeof baseExceptionMap => {
-  return Object.keys(baseExceptionMap).includes(name);
-};
+): name is keyof typeof baseExceptionMap =>
+  Object.keys(baseExceptionMap).includes(name);

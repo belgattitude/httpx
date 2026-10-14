@@ -1,6 +1,6 @@
-import type { XXHash64DefaultOptions } from '../types/xxhash.type';
-import { getXXHashAPI } from './get-xxhash-api';
-import { XXHash64 } from './xxhash64';
+import type { XXHash64DefaultOptions } from "../types/xxhash.type";
+import { getXXHashAPI } from "./get-xxhash-api";
+import { XXHash64 } from "./xxhash64";
 
 /**
  * Helper function to initialize an instance of the `XXHash64` wasm hasher.

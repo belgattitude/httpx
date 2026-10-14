@@ -1,12 +1,14 @@
-import type { TreeNode, TreeNodeValue } from './tree.types';
+import type { TreeNode, TreeNodeValue } from "./tree.types";
 
 export class Tree<
   TValue extends TreeNodeValue | undefined,
   TKey extends string = string,
 > {
-  constructor(protected readonly treeNodes: TreeNode<TValue, TKey>[]) {}
+  protected readonly treeNodes: TreeNode<TValue, TKey>[];
 
-  getTreeNodes = (): TreeNode<TValue, TKey>[] => {
-    return this.treeNodes;
-  };
+  constructor(treeNodes: TreeNode<TValue, TKey>[]) {
+    this.treeNodes = treeNodes;
+  }
+
+  getTreeNodes = (): TreeNode<TValue, TKey>[] => this.treeNodes;
 }

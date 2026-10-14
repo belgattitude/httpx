@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import {
   HttpBadRequest,
   HttpConflict,
@@ -29,7 +28,7 @@ import {
   HttpUnsupportedMediaType,
   HttpUpgradeRequired,
   HttpUriTooLong,
-} from '../client';
+} from "../client";
 import {
   HttpBadGateway,
   HttpGatewayTimeout,
@@ -42,7 +41,7 @@ import {
   HttpServiceUnavailable,
   HttpVariantAlsoNegotiates,
   HttpVersionNotSupported,
-} from '../server';
+} from "../server";
 
 export const statusMap = {
   400: HttpBadRequest,

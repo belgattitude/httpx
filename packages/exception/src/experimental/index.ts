@@ -1,1 +1,1 @@
-export { tryOrFail } from './tryOrFail';
+export { tryOrFail } from "./tryOrFail";

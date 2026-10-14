@@ -2,18 +2,17 @@ import type {
   ParsedDsn,
   ParseDsnOptions,
   ParserResult,
-} from './dsn-parser.type';
+} from "./dsn-parser.type";
 import {
   createErrorResult,
   isNonEmptyString,
   isValidNetworkPort,
   mergeDsnOverrides,
   removeUndefined,
-} from './dsn-parser.util';
-import { parseQueryParams } from './query-param-parser';
+} from "./dsn-parser.util";
+import { parseQueryParams } from "./query-param-parser";
 
 const dsnRegexp =
-  // eslint-disable-next-line regexp/no-unused-capturing-group,regexp/no-misleading-capturing-group,sonarjs/regex-complexity,sonarjs/unused-named-groups
   /^(?<driver>([\w+-]{1,40})):\/\/((?<user>[^/:]{1,200})?(:(?<pass>.{0,200}))?@)?(?<host>[^/:]{1,200}?)(:(?<port>\d+)?)?(\/(?<db>([\w#$.@-])+))?(\?(?<params>.{1,1000}))?$/;
 
 const defaultOptions = {
@@ -27,28 +26,29 @@ export const parseDsn = (
 ): ParserResult => {
   if (!isNonEmptyString(dsn)) {
     return createErrorResult(
-      typeof dsn === 'string' ? 'EMPTY_DSN' : 'INVALID_ARGUMENT'
+      typeof dsn === "string" ? "EMPTY_DSN" : "INVALID_ARGUMENT"
     );
   }
   const opts = { ...defaultOptions, ...options };
+  // oxlint-disable-next-line typescript/no-useless-default-assignment -- js callers may pass `overrides: undefined`
   const { lowercaseDriver, overrides = {} } = opts;
   const matches = dsnRegexp.exec(dsn);
   if (!matches?.groups) {
-    return createErrorResult('PARSE_ERROR');
+    return createErrorResult("PARSE_ERROR");
   }
   const parsed: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(matches.groups)) {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       switch (key) {
-        case 'driver': {
+        case "driver": {
           parsed.driver = lowercaseDriver ? value.toLowerCase() : value;
           break;
         }
-        case 'port': {
+        case "port": {
           parsed.port = Number.parseInt(value, 10);
           break;
         }
-        case 'params': {
+        case "params": {
           parsed.params = parseQueryParams(value);
           break;
         }
@@ -61,9 +61,13 @@ export const parseDsn = (
   const val = removeUndefined(
     mergeDsnOverrides(parsed as ParsedDsn, overrides)
   ) as ParsedDsn;
-  if (val?.port && !isValidNetworkPort(val.port)) {
+  if (
+    val?.port !== undefined &&
+    Boolean(val.port) &&
+    !isValidNetworkPort(val.port)
+  ) {
     return createErrorResult(
-      'INVALID_PORT',
+      "INVALID_PORT",
       `Invalid port: ${val.port as unknown as number}`
     );
   }

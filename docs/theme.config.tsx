@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
-import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs';
+import { useRouter } from "next/router";
+import { type DocsThemeConfig, useConfig } from "nextra-theme-docs";
 
 const themeConfig: DocsThemeConfig = {
   logo: <span>@httpx</span>,
   project: {
-    link: 'https://github.com/belgattitude/httpx',
+    link: "https://github.com/belgattitude/httpx",
   },
-  docsRepositoryBase: 'https://github.com/belgattitude/httpx/tree/main/docs',
+  docsRepositoryBase: "https://github.com/belgattitude/httpx/tree/main/docs",
   editLink: {
-    content: 'Edit this page on GitHub',
+    content: "Edit this page on GitHub",
   },
   /*
   primaryHue: {
@@ -16,7 +16,7 @@ const themeConfig: DocsThemeConfig = {
     dark: 200,
   }, */
   nextThemes: {
-    defaultTheme: 'dark',
+    defaultTheme: "dark",
   },
   sidebar: {
     autoCollapse: true,
@@ -34,11 +34,11 @@ const themeConfig: DocsThemeConfig = {
         <meta property="og:url" content={url} />
         <meta
           property="og:title"
-          content={frontMatter.title ?? '@httpx documentation'}
+          content={frontMatter.title ?? "@httpx documentation"}
         />
         <meta
           property="og:description"
-          content={frontMatter.description ?? '@httpx documentation'}
+          content={frontMatter.description ?? "@httpx documentation"}
         />
       </>
     );

@@ -1,13 +1,13 @@
-import { Compressor, Decompressor } from '@httpx/compress';
-import type { ITimeLruCache } from '@httpx/lru';
-import { createStableHashOrThrow } from '@httpx/stable-hash';
-import type { Context } from 'hono';
-import { getCookie } from 'hono/cookie';
-import { proxy } from 'hono/proxy';
+import { Compressor, Decompressor } from "@httpx/compress";
+import type { ITimeLruCache } from "@httpx/lru";
+import { createStableHashOrThrow } from "@httpx/stable-hash";
+import type { Context } from "hono";
+import { getCookie } from "hono/cookie";
+import { proxy } from "hono/proxy";
 
 export type ProxyCacheConfig = {
   cache: ITimeLruCache<ProxyCacheItem>;
-  compressionAlgo: 'gzip' | 'identity';
+  compressionAlgo: "gzip" | "identity";
   proxy: {
     basePath: string;
     targetBaseUrl: string;
@@ -26,27 +26,27 @@ export type ProxyCacheItem = {
   responseText: string;
 };
 
-type CacheKeyParams = ProxyCacheItem['requestParams'] & {
+type CacheKeyParams = ProxyCacheItem["requestParams"] & {
   session: {
     userId: string | null;
   } | null;
 };
 
 export class ProxyCache {
-  #config: ProxyCacheConfig;
-  #compressor: Compressor | null;
-  #decompressor: Decompressor | null;
+  readonly #config: ProxyCacheConfig;
+  readonly #compressor: Compressor | null;
+  readonly #decompressor: Decompressor | null;
 
   constructor(config: ProxyCacheConfig) {
     this.#config = config;
     const algo = config.compressionAlgo;
-    this.#compressor = algo === 'identity' ? null : new Compressor(algo);
-    this.#decompressor = algo === 'identity' ? null : new Decompressor(algo);
+    this.#compressor = algo === "identity" ? null : new Compressor(algo);
+    this.#decompressor = algo === "identity" ? null : new Decompressor(algo);
   }
 
   getResponse = async (c: Context): Promise<Response> => {
     const targetUrl = this.#getTargetUrl(c);
-    const contentType = c.req.header('Content-Type');
+    const contentType = c.req.header("Content-Type");
 
     const cacheKeyParams: CacheKeyParams = {
       url: targetUrl,
@@ -55,19 +55,19 @@ export class ProxyCache {
       body: await c.req.parseBody(),
       contentType: contentType ?? null,
       session: {
-        userId: getCookie(c, 'muxData') ?? null,
+        userId: getCookie(c, "muxData") ?? null,
       },
     };
     const key = await createStableHashOrThrow(cacheKeyParams);
 
     const { cache } = this.#config;
-    if (cache.has(key)) {
-      const data = cache.get(key)!;
-      const text = await this.#decompress(data.responseText);
+    const cached = cache.get(key);
+    if (cached !== undefined) {
+      const text = await this.#decompress(cached.responseText);
       return c.body(text, {
         headers: {
-          'X-Proxy-Cached': '1',
-          'Content-Type': 'application/json;charset=utf-8',
+          "X-Proxy-Cached": "1",
+          "Content-Type": "application/json;charset=utf-8",
         },
       });
     }
@@ -75,7 +75,7 @@ export class ProxyCache {
       method: c.req.method,
       headers: {
         ...c.req.header(),
-        'X-Forwarded-For': targetUrl,
+        "X-Forwarded-For": targetUrl,
       },
     });
     const responseText = await res.clone().text();
@@ -88,22 +88,20 @@ export class ProxyCache {
     return res;
   };
 
-  #getTargetUrl = (c: Context) => {
+  readonly #getTargetUrl = (c: Context) => {
     const { basePath, targetBaseUrl } = this.#config.proxy;
     const path = c.req.path
-      .replace(basePath, '')
-      .split('/')
+      .replace(basePath, "")
+      .split("/")
       .filter(Boolean)
-      .join('/');
+      .join("/");
     return `${targetBaseUrl}/${path}`;
   };
 
-  #decompress = async (text: string): Promise<string> => {
-    return this.#decompressor
-      ? this.#decompressor.fromEncodedString(text)
+  readonly #decompress = async (text: string): Promise<string> =>
+    this.#decompressor
+      ? await this.#decompressor.fromEncodedString(text)
       : text;
-  };
-  #compress = async (text: string): Promise<string> => {
-    return this.#compressor ? this.#compressor.toEncodedString(text) : text;
-  };
+  readonly #compress = async (text: string): Promise<string> =>
+    this.#compressor ? await this.#compressor.toEncodedString(text) : text;
 }

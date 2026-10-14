@@ -5,27 +5,27 @@ export type CacheCompressSuccessMeta = {
 };
 
 export type CacheCompressSkippedReason =
-  | 'trivial_value'
-  | 'uncompressible_value'
-  | 'minimum_ratio_not_met'
-  | 'minimum_byte_saving_not_met'
-  | 'minimum_string_length_not_met';
+  | "trivial_value"
+  | "uncompressible_value"
+  | "minimum_ratio_not_met"
+  | "minimum_byte_saving_not_met"
+  | "minimum_string_length_not_met";
 
 export type CacheCompressResult<T = unknown> =
   | {
-      status: 'success';
+      status: "success";
       data: string;
       meta: CacheCompressSuccessMeta;
     }
   | {
-      status: 'failure';
+      status: "failure";
       meta: {
         reason?: string;
       };
       data: T;
     }
   | {
-      status: 'skipped';
+      status: "skipped";
       meta: {
         reason: CacheCompressSkippedReason;
       };

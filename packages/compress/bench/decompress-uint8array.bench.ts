@@ -1,7 +1,7 @@
-import prettyBytes from 'pretty-bytes';
-import { bench, describe } from 'vitest';
+import prettyBytes from "pretty-bytes";
+import { bench, describe } from "vitest";
 
-import { benchConfig } from './bench-config';
+import { benchConfig } from "./bench-config";
 
 const {
   deflateDecompressor,
