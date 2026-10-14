@@ -1,6 +1,6 @@
-import { vitestBenchOptionsConfig } from '@httpx/devtools-vitest';
+import { vitestBenchOptionsConfig } from "@httpx/devtools-vitest";
 
-const isCiOrCodSpeed = vitestBenchOptionsConfig.isCiOrCodSpeed;
+const { isCiOrCodSpeed } = vitestBenchOptionsConfig;
 
 export const benchConfig = {
   samples: isCiOrCodSpeed ? 1 : 1000,

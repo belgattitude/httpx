@@ -1,5 +1,4 @@
-import { LruCache } from '@httpx/lru';
-type CacheKey = string;
+import { LruCache } from "@httpx/lru";
 
 type IntlLocale = string; // `${string}-${string}`;
 
@@ -13,8 +12,7 @@ const _cacheIntl = new LruCache<
   | Intl.ListFormat
   | Intl.PluralRules
   | Intl.Segmenter
-  | Intl.Locale,
-  CacheKey
+  | Intl.Locale
 >({
   maxSize,
 });
@@ -40,11 +38,11 @@ export const MIntl = {
     locale: IntlLocale,
     options?: Intl.NumberFormatOptions
   ): Intl.NumberFormat => {
-    const key = `NumberFormat:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (!_cacheIntl.has(key)) {
-      _cacheIntl.set(key, new Intl.NumberFormat(locale, options));
-    }
-    return _cacheIntl.get(key)! as Intl.NumberFormat;
+    const key = `NumberFormat:${locale}${options === undefined ? "" : JSON.stringify(options)}`;
+    return _cacheIntl.getOrSet(
+      key,
+      () => new Intl.NumberFormat(locale, options)
+    );
   },
   /**
    * Return a memoized Intl.DateTimeFormatter instance
@@ -67,11 +65,11 @@ export const MIntl = {
     locale: IntlLocale,
     options?: Intl.DateTimeFormatOptions
   ): Intl.DateTimeFormat => {
-    const key = `DateTimeFormat:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (!_cacheIntl.has(key)) {
-      _cacheIntl.set(key, new Intl.DateTimeFormat(locale, options));
-    }
-    return _cacheIntl.get(key)! as Intl.DateTimeFormat;
+    const key = `DateTimeFormat:${locale}${options === undefined ? "" : JSON.stringify(options)}`;
+    return _cacheIntl.getOrSet(
+      key,
+      () => new Intl.DateTimeFormat(locale, options)
+    );
   },
 
   /**
@@ -91,11 +89,8 @@ export const MIntl = {
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale
    */
   Locale: (locale: string, options?: Intl.LocaleOptions): Intl.Locale => {
-    const key = `Locale:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (!_cacheIntl.has(key)) {
-      _cacheIntl.set(key, new Intl.Locale(locale, options));
-    }
-    return _cacheIntl.get(key)! as Intl.Locale;
+    const key = `Locale:${locale}${options === undefined ? "" : JSON.stringify(options)}`;
+    return _cacheIntl.getOrSet(key, () => new Intl.Locale(locale, options));
   },
 
   /**
@@ -117,11 +112,8 @@ export const MIntl = {
     locale: IntlLocale,
     options?: Intl.CollatorOptions
   ): Intl.Collator => {
-    const key = `Collator:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (!_cacheIntl.has(key)) {
-      _cacheIntl.set(key, new Intl.Collator(locale, options));
-    }
-    return _cacheIntl.get(key)! as Intl.Collator;
+    const key = `Collator:${locale}${options === undefined ? "" : JSON.stringify(options)}`;
+    return _cacheIntl.getOrSet(key, () => new Intl.Collator(locale, options));
   },
   /**
    * Return a memoized Intl.RelativeTimeFormat instance
@@ -138,11 +130,11 @@ export const MIntl = {
     locale: IntlLocale,
     options?: Intl.RelativeTimeFormatOptions
   ): Intl.RelativeTimeFormat => {
-    const key = `RelativeTimeFormat:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (!_cacheIntl.has(key)) {
-      _cacheIntl.set(key, new Intl.RelativeTimeFormat(locale, options));
-    }
-    return _cacheIntl.get(key)! as Intl.RelativeTimeFormat;
+    const key = `RelativeTimeFormat:${locale}${options === undefined ? "" : JSON.stringify(options)}`;
+    return _cacheIntl.getOrSet(
+      key,
+      () => new Intl.RelativeTimeFormat(locale, options)
+    );
   },
   /**
    * Return a memoized Intl.ListFormat instance
@@ -163,11 +155,8 @@ export const MIntl = {
     locale: IntlLocale,
     options?: Intl.ListFormatOptions
   ): Intl.ListFormat => {
-    const key = `ListFormat:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (!_cacheIntl.has(key)) {
-      _cacheIntl.set(key, new Intl.ListFormat(locale, options));
-    }
-    return _cacheIntl.get(key)! as Intl.ListFormat;
+    const key = `ListFormat:${locale}${options === undefined ? "" : JSON.stringify(options)}`;
+    return _cacheIntl.getOrSet(key, () => new Intl.ListFormat(locale, options));
   },
 
   /**
@@ -185,11 +174,11 @@ export const MIntl = {
     locale: IntlLocale,
     options?: Intl.PluralRulesOptions
   ): Intl.PluralRules => {
-    const key = `PluralRules:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (!_cacheIntl.has(key)) {
-      _cacheIntl.set(key, new Intl.PluralRules(locale, options));
-    }
-    return _cacheIntl.get(key)! as Intl.PluralRules;
+    const key = `PluralRules:${locale}${options === undefined ? "" : JSON.stringify(options)}`;
+    return _cacheIntl.getOrSet(
+      key,
+      () => new Intl.PluralRules(locale, options)
+    );
   },
 
   /**
@@ -209,11 +198,8 @@ export const MIntl = {
     locale: IntlLocale,
     options?: Intl.SegmenterOptions
   ): Intl.Segmenter => {
-    const key = `Segmenter:${locale}${options === undefined ? '' : JSON.stringify(options)}`;
-    if (!_cacheIntl.has(key)) {
-      _cacheIntl.set(key, new Intl.Segmenter(locale, options));
-    }
-    return _cacheIntl.get(key)! as Intl.Segmenter;
+    const key = `Segmenter:${locale}${options === undefined ? "" : JSON.stringify(options)}`;
+    return _cacheIntl.getOrSet(key, () => new Intl.Segmenter(locale, options));
   },
 
   cache: {

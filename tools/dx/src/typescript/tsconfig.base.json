@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "Bundler",
+    "customConditions": ["httpx-monorepo-source"],
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "allowImportingTsExtensions": true,
+    "incremental": true,
+    "lib": ["dom", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "resolvePackageJsonExports": true,
+    "resolvePackageJsonImports": true,
+    "types": ["@types/node", "vitest/globals"]
+  },
+  "exclude": [
+    "${configDir}/**/node_modules",
+    "${configDir}/**/.*/*",
+    "${configDir}/dist",
+    "${configDir}/coverage",
+    "${configDir}/_release"
+  ],
+  "include": [
+    "${configDir}/**/*.ts",
+    "${configDir}/**/*.tsx",
+    "${configDir}/**/*.js",
+    "${configDir}/**/*.jsx",
+    "${configDir}/**/*.cjs",
+    "${configDir}/**/*.mjs",
+    "${configDir}/**/*.json"
+  ]
+}

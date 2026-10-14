@@ -1,1 +1,1 @@
-export { MIntl } from './m-intl';
+export { MIntl } from "./m-intl";
