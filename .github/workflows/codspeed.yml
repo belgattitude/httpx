@@ -13,39 +13,37 @@ jobs:
   benchmarks:
     runs-on: ubuntu-latest
     env:
-      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+      PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
+      TURBO_API: "http://127.0.0.1:9080"
+      TURBO_TEAM: "httpx"
     steps:
       - uses: actions/checkout@v7
         with:
-          # Fetch all git history so that yarn workspaces --since can compare with the correct commits
+          # Fetch all git history so that workspace comparisons have with the correct commits
           # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
           fetch-depth: 0
 
-      - name: ⚙️ Use Node.js 24.x
-        uses: actions/setup-node@v7
+      - name: ⏩ TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@118f869397261f74bc39cb8565f2d02c0ed4209f # v4.1.1
         with:
-          node-version: '24.x'
-          package-manager-cache: false
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ secrets.CI_TURBO_SERVER_TOKEN }}
 
-      - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
-        id: nx-set-shas
-        uses: nrwl/nx-set-shas@v5
-
-      - run: |
-          echo "BASE: ${{ steps.nx-set-shas.outputs.base }}"
-          echo "HEAD: ${{ steps.nx-set-shas.outputs.head }}"
-
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
+      - name: ⚙️ Install pnpm and Node.js
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
+        with:
+          runtime: "node@24"
+          cache: false
+          node-version-file: false
 
       # this step avoids building inside of the codespeed action which throttles the CPU
       - name: 🏗 Pre-build packages
-        run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
+        run: pnpm turbo run build --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🌠 Run benchmarks
         uses: CodSpeedHQ/action@v5
         with:
-          run: yarn g:bench-codspeed
+          run: pnpm g:bench-codspeed
           mode: "simulation"
           cache-instruments: true
           instruments-cache-dir: ~/.cache/codspeed-action

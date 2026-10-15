@@ -5,8 +5,8 @@ Benchmarks for [@httpx/compress](../README.md)
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/compress
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```

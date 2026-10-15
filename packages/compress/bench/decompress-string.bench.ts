@@ -1,5 +1,5 @@
 import prettyBytes from "pretty-bytes";
-import { bench, describe } from "vitest";
+import { describe, test } from "vitest";
 
 import { benchConfig } from "./bench-config";
 
@@ -12,33 +12,29 @@ const {
   longString,
 } = benchConfig;
 
-describe(`Decompressor`, async () => {
+describe(`Decompressor`, () => {
   const size = prettyBytes(longString.length);
 
-  const gzippedLongString = await gzipCompressor.toEncodedString(longString, {
-    encoding: "base64",
-  });
-
-  const deflatedLongString = await deflateCompressor.toEncodedString(
-    longString,
-    {
+  test(`Decompressor.fromEncodedString`, async ({ bench }) => {
+    const gzippedLongString = await gzipCompressor.toEncodedString(longString, {
       encoding: "base64",
-    }
-  );
+    });
 
-  bench(
-    `Decompressor('gzip').fromEncodedString (compressed size: ${prettyBytes(gzippedLongString.length)} / total: ${size})`,
-    async () => {
-      await gzipDecompressor.fromEncodedString(gzippedLongString);
-    },
-    benchOptions
-  );
+    const deflatedLongString = await deflateCompressor.toEncodedString(
+      longString,
+      {
+        encoding: "base64",
+      }
+    );
 
-  bench(
-    `Decompressor('deflate').fromEncodedString (compressed size: ${prettyBytes(deflatedLongString.length)} / total: ${size})`,
-    async () => {
-      await deflateDecompressor.fromEncodedString(deflatedLongString);
-    },
-    benchOptions
-  );
+    await bench.compare(
+      bench(`Decompressor('gzip').fromEncodedString (compressed size: ${prettyBytes(gzippedLongString.length)} / total: ${size})`, async () => {
+        await gzipDecompressor.fromEncodedString(gzippedLongString);
+      }),
+      bench(`Decompressor('deflate').fromEncodedString (compressed size: ${prettyBytes(deflatedLongString.length)} / total: ${size})`, async () => {
+        await deflateDecompressor.fromEncodedString(deflatedLongString);
+      }),
+      benchOptions
+    );
+  });
 });

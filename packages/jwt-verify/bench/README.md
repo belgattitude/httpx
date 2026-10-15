@@ -5,8 +5,8 @@ Benchmarks to measure [@httpx/jwt-verify](../README.md) performance over popular
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/jwt-verify
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```

@@ -7,7 +7,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
-      - '**'
+      - "**"
 
 permissions:
   contents: read
@@ -17,24 +17,24 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [24.x]
+        node-version: [24]
+    env:
+      PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
     steps:
       - uses: actions/checkout@v7
 
-      - name: ⚙️ Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v7
+      - name: ⚙️ Install pnpm and Node.js
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
-          node-version: ${{ matrix.node-version }}
-          package-manager-cache: false
-
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
+          runtime: "node@${{ matrix.node-version }}"
+          cache: false
+          node-version-file: false
 
       - name: 👬🏽 Check for duplicates
-        run: yarn dedupe --check
+        run: pnpm dedupe --check
 
       #- name: 🛟 Check monorepo dependency graph
-      #  run: yarn check:install
+      #  run: pnpm doctor
 
       #- name: 🦺 Syncpack checks - packages - lint-semver-ranges
-      #  run: yarn syncpack:check
+      #  run: pnpm syncpack:check

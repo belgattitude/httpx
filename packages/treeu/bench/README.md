@@ -5,8 +5,8 @@ Benchmarks to measure [@httpx/treeu](../README.md) performance over popular libr
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/treeu
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```

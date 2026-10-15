@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 
 import {
   getVitestBaseConfig,
@@ -25,6 +25,11 @@ export const createVitestCloudflareConfig = (params?: Params) => {
   const baseConfig = getVitestBaseConfig(restParams);
   return {
     ...baseConfig,
+    test: {
+      ...baseConfig.test,
+      // workerd can't read vitest's persistent module cache (stored in the monorepo root node_modules)
+      fsModuleCache: false,
+    },
     plugins: [
       ...(baseConfig.plugins ?? []),
       cloudflareTest({

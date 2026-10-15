@@ -1,4 +1,4 @@
-import { bench, describe } from "vitest";
+import { describe, test } from "vitest";
 
 import { FlatTreeWsMapper } from "../src";
 import { DfsTreeSearch } from "../src/search/dfs-tree-search";
@@ -43,32 +43,21 @@ describe(`Bench search (10_000 entries)`, () => {
     "1/2": keyAt(ranges["1/2"]),
     "3/4": keyAt(ranges["3/4"]),
   };
-  bench(
-    `DfsTreeSearch.findOne(id_${ranges.first}) over ${arrData.length}`,
-    () => {
-      search.findOne(keys.first);
-    },
-    benchConfig.benchOptions
-  );
-  bench(
-    `DfsTreeSearch.findOne(id_${ranges["1/2"]}) over ${arrData.length}`,
-    () => {
-      search.findOne(keys["1/2"]);
-    },
-    benchConfig.benchOptions
-  );
-  bench(
-    `DfsTreeSearch.findOne(id_${ranges["3/4"]}) over ${arrData.length}`,
-    () => {
-      search.findOne(keys["3/4"]);
-    },
-    benchConfig.benchOptions
-  );
-  bench(
-    `DfsTreeSearch.findOne(id_NotExists) over ${arrData.length}`,
-    () => {
-      search.findOne("not-exists");
-    },
-    benchConfig.benchOptions
-  );
+  test(`DfsTreeSearch.findOne over ${arrData.length}`, async ({ bench }) => {
+    await bench.compare(
+      bench(`DfsTreeSearch.findOne(id_${ranges.first}) over ${arrData.length}`, () => {
+        search.findOne(keys.first);
+      }),
+      bench(`DfsTreeSearch.findOne(id_${ranges["1/2"]}) over ${arrData.length}`, () => {
+        search.findOne(keys["1/2"]);
+      }),
+      bench(`DfsTreeSearch.findOne(id_${ranges["3/4"]}) over ${arrData.length}`, () => {
+        search.findOne(keys["3/4"]);
+      }),
+      bench(`DfsTreeSearch.findOne(id_NotExists) over ${arrData.length}`, () => {
+        search.findOne("not-exists");
+      }),
+      benchConfig.benchOptions
+    );
+  });
 });

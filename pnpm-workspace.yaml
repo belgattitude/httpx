@@ -1,0 +1,102 @@
+packages:
+  - docs
+  - examples/*
+  - integrations/*
+  - packages/*
+  - devtools/*
+  - tools/*
+
+nodeLinker: isolated
+packageImportMethod: auto
+savePrefix: ""
+
+autoInstallPeers: false
+strictPeerDependencies: false
+resolvePeersFromWorkspaceRoot: true
+dedupePeers: true
+# This fixes most typescript errors because of missing peer @types/*
+addMissingPeerTypes: true
+
+forceIgnoresPlatform: false
+ignoreCompatibilityDb: false
+
+# Set it to true for deno
+preferSymlinkedExecutables: true
+resolutionMode: highest
+optimisticRepeatInstall: true
+trustPolicy: no-downgrade
+trustPolicyExcludePrune: true
+trustPolicyExclude:
+  - "semver@6.3.1"
+
+verifyDepsBeforeRun: install
+
+# pnpm 12.9.1 has an issue still that makes every run command
+# running postinstall scripts, even id virtualStoreType is project
+enableGlobalVirtualStore: false
+#https://github.com/pnpm/pnpm/issues/14972
+virtualStoreType: project
+
+supportedArchitectures:
+  os:
+    - current
+  cpu:
+    - current
+  libc:
+    - current
+
+allowBuilds:
+  "@swc/core": true
+  "@tailwindcss/oxide": true
+  esbuild: true
+  lefthook: false
+  workerd: true
+
+strictDepBuilds: false
+
+overrides:
+  # To prevent multiple versions
+  esbuild: ^0.28.2
+
+minimumReleaseAge: 2880
+minimumReleaseAgeExcludePrune: true
+minimumReleaseAgeExclude:
+  - "@belgattitude/*"
+  - "@cloudflare/*"
+  - "@esbuild/*"
+  - "@flowblade/*"
+  - "@httpx/*"
+  - "@napi-rs/*"
+  - "@next/*"
+  - "@oxc-project/*"
+  - "@rolldown/*"
+  - "@size-limit/*"
+  - "@tanstack/*"
+  - "@types/react"
+  - "@typescript-eslint/*"
+  - "@vitejs/*"
+  - "@vitest/*"
+  - baseline-browser-mapping
+  - es-check
+  - esbuild
+  - happy-dom
+  - hono
+  - import-without-cache
+  - lodash-es
+  - miniflare
+  - next
+  - npm-check-updates
+  - obug
+  - pino
+  - prettier
+  - rolldown
+  - rolldown-plugin-dts
+  - size-limit
+  - tsdown
+  - turbo
+  - "@turbo/*"
+  - unrun
+  - vite
+  - vitest
+  - workerd
+  - wrangler

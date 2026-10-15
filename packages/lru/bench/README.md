@@ -5,8 +5,8 @@ Benchmarks to measure [@httpx/lru](../README.md) performance over popular librar
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/lru
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```

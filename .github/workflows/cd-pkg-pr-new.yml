@@ -1,27 +1,33 @@
 name: CD-pkg-pr-new
 on: [push, pull_request]
 
-permissions: 
+permissions:
   contents: read
 
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
 
+    env:
+      PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
     steps:
       - uses: actions/checkout@v7
 
-      - name: ⚙️ Use Node.js 24.x
-        uses: actions/setup-node@v7
+      - name: ⏩ TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@118f869397261f74bc39cb8565f2d02c0ed4209f # v4.1.1
         with:
-          node-version: 24.x
-          package-manager-cache: false
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ secrets.CI_TURBO_SERVER_TOKEN }}
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
+      - name: ⚙️ Install pnpm and Node.js
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
+        with:
+          runtime: "node@24"
+          cache: false
+          node-version-file: false
 
       - name: 🏗 Build packages
-        run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
+        run: pnpm turbo run build --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 📦 Publish on pkg.pr.new
-        run: yarn exec pkg-pr-new publish "./packages/*"
+        run: pnpm exec pkg-pr-new publish "./packages/*"

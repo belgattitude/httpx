@@ -29,6 +29,7 @@ jobs:
     permissions:
       contents: write
     env:
+      PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
       NEXTJS_IGNORE_ESLINT: true
       NEXTJS_IGNORE_TYPECHECK: true
       NEXT_DISABLE_SOURCEMAPS: true
@@ -41,14 +42,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: ⚙️ Setup node 24.x
-        uses: actions/setup-node@v7
+      - name: ⚙️ Install pnpm and Node.js
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
-          node-version: "24.x"
-          package-manager-cache: false
-
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
+          runtime: "node@24"
+          cache: false
+          node-version-file: false
 
       - name: ♻️ Restore website docs build caches
         uses: actions/cache@v6
@@ -57,10 +56,10 @@ jobs:
             ${{ github.workspace }}/docs/.next/cache
             ${{ github.workspace }}/.cache
             ${{ github.workspace }}/docs/tsconfig.tsbuildinfo
-          key: website-docs-build-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          key: website-docs-build-cache-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: 🏗 Build docs
-        run: yarn website:build
+        run: pnpm website:build
         env:
           NEXT_BUILD_ENV_BASE_PATH: "/httpx"
           NEXT_BUILD_ENV_LINT: false
@@ -72,6 +71,6 @@ jobs:
         if: ${{ github.repository == 'belgattitude/httpx' && contains('refs/heads/main',github.ref)}}
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          yarn website:deploy -u "github-actions-bot <support+actions@github.com>"
+          pnpm website:deploy -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

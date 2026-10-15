@@ -67,10 +67,6 @@ export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
       typecheck: {
         enabled: false,
       },
-      benchmark: {
-        reporters: ["default"],
-        outputJson: "./bench/output/benchmark-results.json",
-      },
       pool: "forks",
       exclude: [
         "**/node_modules/**",

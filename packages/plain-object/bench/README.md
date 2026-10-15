@@ -5,10 +5,10 @@ Benchmarks to measure [@httpx/plain-object](../README.md) performance over popul
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/plain-object
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```
 
 ### Example

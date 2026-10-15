@@ -5,8 +5,8 @@ Benchmarks to measure [@httpx/hash](../README.md) performance over popular libra
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/hash
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```

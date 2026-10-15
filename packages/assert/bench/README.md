@@ -5,10 +5,10 @@ Benchmarks to measure [@httpx/assert](../../packages/assert/README.md) performan
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/assert
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```
 
 ### Example

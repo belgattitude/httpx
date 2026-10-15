@@ -5,8 +5,8 @@ Benchmarks for [@httpx/encode](../README.md)
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/encode
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```

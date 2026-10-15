@@ -8,9 +8,8 @@
 .env.*.local
 !.env.*.example
 
-# nx
-nx-cloud.env
-.nx
+# turbo
+.turbo
 
 # security: atlassian/changeset
 
@@ -21,13 +20,6 @@ nx-cloud.env
 
 # dependencies
 **/node_modules
-**/.yarn/*
-!**/.yarn/patches
-!**/.yarn/releases
-!**/.yarn/plugins
-!**/.yarn/sdks
-!**/.yarn/versions
-.pnp.*
 
 # testing
 **/coverage
@@ -52,6 +44,7 @@ nx-cloud.env
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 
 # IDE

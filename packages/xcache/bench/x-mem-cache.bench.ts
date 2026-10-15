@@ -2,7 +2,7 @@ import { setTimeout as sleep } from "node:timers/promises";
 
 import { TimeLruCache } from "@httpx/lru";
 import prettyBytes from "pretty-bytes";
-import { bench } from "vitest";
+import { describe, test } from "vitest";
 
 import {
   CacheCompress,
@@ -41,42 +41,12 @@ const defaultParams = {
   waitMs: isCiOrCodSpeed ? 100 : 400,
 } as const;
 
-describe(`XMemCache benchmarks with ${payloadSize}`, async () => {
+describe(`XMemCache benchmarks with ${payloadSize}`, () => {
   const algorithm = "deflate";
   const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 });
   const xMemCache = new XMemCache({
     lru,
   });
-  bench(
-    "original function",
-    async () => {
-      const _data = await asyncDataFetcher(defaultParams);
-    },
-    options
-  );
-
-  bench(
-    "with cache (just lru)",
-    async () => {
-      const testKey = "/bench/just-lru";
-      const cachedData = lru.get(testKey);
-      if (cachedData === undefined) {
-        lru.set(testKey, await asyncDataFetcher(defaultParams));
-      }
-    },
-    options
-  );
-
-  bench(
-    "with cache",
-    async () => {
-      const { data: _data } = await xMemCache.runAsync({
-        key: ["/bench/with-cache"],
-        fn: () => asyncDataFetcher(defaultParams),
-      });
-    },
-    options
-  );
 
   const cacheJsonGzip = new XMemCache({
     lru: new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 }),
@@ -86,22 +56,6 @@ describe(`XMemCache benchmarks with ${payloadSize}`, async () => {
     }),
   });
 
-  await cacheJsonGzip.runAsync({
-    key: ["/bench/cache-json-gzip-meta"],
-    fn: () => asyncDataFetcher(defaultParams),
-  });
-
-  bench(
-    `cache with json + gzip`,
-    async () => {
-      const { data: _data } = await cacheJsonGzip.runAsync({
-        key: ["/bench/cache-json-gzip"],
-        fn: () => asyncDataFetcher(defaultParams),
-      });
-    },
-    options
-  );
-
   const cacheSuperjsonGzip = new XMemCache({
     lru: new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 }),
     compressor: new CacheCompress({
@@ -110,16 +64,6 @@ describe(`XMemCache benchmarks with ${payloadSize}`, async () => {
     }),
   });
 
-  bench(
-    "cache with superjson + gzip",
-    async () => {
-      const { data: _data } = await cacheSuperjsonGzip.runAsync({
-        key: ["/bench/cache-superjson-gzip"],
-        fn: () => asyncDataFetcher(defaultParams),
-      });
-    },
-    options
-  );
   const cacheDevalueGzip = new XMemCache({
     lru: new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 }),
     compressor: new CacheCompress({
@@ -128,14 +72,48 @@ describe(`XMemCache benchmarks with ${payloadSize}`, async () => {
     }),
   });
 
-  bench(
-    "cache with devalue + gzip",
-    async () => {
-      const { data: _data } = await cacheDevalueGzip.runAsync({
-        key: ["/bench/cache-devalue-gzip"],
-        fn: () => asyncDataFetcher(defaultParams),
-      });
-    },
-    options
-  );
+  test("XMemCache vs original function", async ({ bench }) => {
+    await cacheJsonGzip.runAsync({
+      key: ["/bench/cache-json-gzip-meta"],
+      fn: () => asyncDataFetcher(defaultParams),
+    });
+
+    await bench.compare(
+      bench("original function", async () => {
+        const _data = await asyncDataFetcher(defaultParams);
+      }),
+      bench("with cache (just lru)", async () => {
+        const testKey = "/bench/just-lru";
+        const cachedData = lru.get(testKey);
+        if (cachedData === undefined) {
+          lru.set(testKey, await asyncDataFetcher(defaultParams));
+        }
+      }),
+      bench("with cache", async () => {
+        const { data: _data } = await xMemCache.runAsync({
+          key: ["/bench/with-cache"],
+          fn: () => asyncDataFetcher(defaultParams),
+        });
+      }),
+      bench(`cache with json + gzip`, async () => {
+        const { data: _data } = await cacheJsonGzip.runAsync({
+          key: ["/bench/cache-json-gzip"],
+          fn: () => asyncDataFetcher(defaultParams),
+        });
+      }),
+      bench("cache with superjson + gzip", async () => {
+        const { data: _data } = await cacheSuperjsonGzip.runAsync({
+          key: ["/bench/cache-superjson-gzip"],
+          fn: () => asyncDataFetcher(defaultParams),
+        });
+      }),
+      bench("cache with devalue + gzip", async () => {
+        const { data: _data } = await cacheDevalueGzip.runAsync({
+          key: ["/bench/cache-devalue-gzip"],
+          fn: () => asyncDataFetcher(defaultParams),
+        });
+      }),
+      options
+    );
+  });
 });

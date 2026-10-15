@@ -1,4 +1,4 @@
-import { bench, describe } from "vitest";
+import { describe, test } from "vitest";
 
 import { isParsableStrictIsoDateZ } from "../src";
 
@@ -14,13 +14,11 @@ const realLifeScenarios = [
 ];
 
 describe(`Compare calling ${realLifeScenarios.length}x i with mixed types values`, () => {
-  bench(
-    "test",
-    () => {
+  test("isParsableStrictIsoDateZ", async ({ bench }) => {
+    await bench("test", () => {
       for (const value of realLifeScenarios) {
         const _v8 = isParsableStrictIsoDateZ(value);
       }
-    },
-    { time: 1 }
-  );
+    }).run({ time: 1 });
+  });
 });
