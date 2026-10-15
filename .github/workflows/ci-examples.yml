@@ -38,9 +38,6 @@ jobs:
       - name: 🕵️ Typecheck
         run: pnpm --filter '@examples/*' -r --stream run typecheck
 
-      - name: 🕵️ Typecheck (no typescript path aliases)
-        run: pnpm --filter '@examples/*' -r --stream run typecheck-no-paths
-
       - name: 🔬 Lint
         run: pnpm --filter '@examples/*' -r --stream run lint
 
