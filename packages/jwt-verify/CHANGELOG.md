@@ -1,5 +1,15 @@
 # @httpx/jwt-verify
 
+## 0.4.1
+
+### Patch Changes
+
+- [#2824](https://github.com/belgattitude/httpx/pull/2824) [`b7c59da`](https://github.com/belgattitude/httpx/commit/b7c59da21e2be424292aaab104acddeb111a0007) Thanks [@belgattitude](https://github.com/belgattitude)! - Bump runtime dependencies (jose ^6.2.12, ky ^2.2.0, uint8array-extras ^1.6.0)
+
+- [#2824](https://github.com/belgattitude/httpx/pull/2824) [`b7c59da`](https://github.com/belgattitude/httpx/commit/b7c59da21e2be424292aaab104acddeb111a0007) Thanks [@belgattitude](https://github.com/belgattitude)! - Internal refactors (stricter boolean checks, loops instead of forEach/reduce), build with tsdown 0.23
+- Updated dependencies [[`b7c59da`](https://github.com/belgattitude/httpx/commit/b7c59da21e2be424292aaab104acddeb111a0007)]:
+  - @httpx/lru@0.15.1
+
 ## 0.4.0
 
 ### Minor Changes

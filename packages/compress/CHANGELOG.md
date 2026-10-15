@@ -1,5 +1,11 @@
 # @httpx/compress
 
+## 0.4.1
+
+### Patch Changes
+
+- [#2824](https://github.com/belgattitude/httpx/pull/2824) [`b7c59da`](https://github.com/belgattitude/httpx/commit/b7c59da21e2be424292aaab104acddeb111a0007) Thanks [@belgattitude](https://github.com/belgattitude)! - Bump runtime dependencies (jose ^6.2.12, ky ^2.2.0, uint8array-extras ^1.6.0)
+
 ## 0.4.0
 
 ### Minor Changes
