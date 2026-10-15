@@ -5,8 +5,8 @@ Benchmarks to measure [@httpx/xcache](../README.md) performance.
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/xcache
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```

@@ -1,4 +1,4 @@
-import { bench } from "vitest";
+import { describe, test } from "vitest";
 
 import { genCacheKeyString } from "../src/cache-key";
 import { benchConfig } from "./bench-config";
@@ -14,14 +14,12 @@ describe(`genCacheKey benches`, () => {
     boolean: true,
   };
 
-  bench(
-    "original function",
-    () => {
+  test("genCacheKeyString", async ({ bench }) => {
+    await bench("original function", () => {
       const _keyStr = genCacheKeyString({
         key: ["test", params],
         namespace: "test-namespace",
       });
-    },
-    options
-  );
+    }).run(options);
+  });
 });

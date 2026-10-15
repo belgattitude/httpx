@@ -3,11 +3,11 @@ name: CI-packages-deno
 on:
   push:
     branches:
-     - main
+      - main
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
-      - '**'
+      - "**"
 
 permissions:
   contents: read
@@ -17,31 +17,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        deno-version: ['lts']
+        deno-version: ["2"]
     env:
-      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+      PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
+      TURBO_API: "http://127.0.0.1:9080"
+      TURBO_TEAM: "httpx"
+      CI_RUNTIME: "deno@${{ matrix.deno-version }}"
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Fetch all git history so that yarn workspaces --since can compare with the correct commits
+          persist-credentials: false
+          # Fetch all git history so that workspace comparisons have with the correct commits
           # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
           fetch-depth: 0
 
-      - name: ⚙️ Use Deno ${{ matrix.bun-version }}
-        uses: denoland/setup-deno@v2
+      - name: ⏩ TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@118f869397261f74bc39cb8565f2d02c0ed4209f # v4.1.1
         with:
-          deno-version: ${{ matrix.bun-version }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ secrets.CI_TURBO_SERVER_TOKEN }}
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
-
-      - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
-        id: nx-set-shas
-        uses: nrwl/nx-set-shas@v5
-
-      - run: |
-          echo "BASE: ${{ steps.nx-set-shas.outputs.base }}"
-          echo "HEAD: ${{ steps.nx-set-shas.outputs.head }}"
+      - name: ⚙️ Install pnpm and Deno
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
+        with:
+          runtime: "deno@${{ matrix.deno-version }}"
+          cache: false
+          node-version-file: false
 
       - name: 🧪 Deno unit tests (no-coverage)
-        run: yarn nx run-many --target=test-unit-deno --exclude='examples/**' --exclude='docs'
+        run: pnpm turbo run test-unit-deno --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"

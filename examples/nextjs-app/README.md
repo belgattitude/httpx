@@ -3,9 +3,9 @@
 Example app based on nextjs demonstrate some interesting possible integrations.
 
 ```
-yarn install
+pnpm install
 cd ./examples/nextjs-app
-yarn dev
+pnpm dev
 ```
 
 ### Highlights
@@ -28,7 +28,7 @@ Links
 > Will use tsconfig path aliases, changes in @belgattitude/http-exception packages are immediately reflected
 
 ```
-yarn dev
+pnpm dev
 ```
 
 #### Build
@@ -36,7 +36,7 @@ yarn dev
 > Won't use tsconfig path aliases and thus requires a build of @belgattitude/http-exception packages.
 
 ```
-yarn g:build-packages
-yarn build
-yarn start
+pnpm g:build-packages
+pnpm build
+pnpm start
 ```

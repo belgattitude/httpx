@@ -1,7 +1,7 @@
 import { Type } from "@sinclair/typebox";
 import { Value } from "@sinclair/typebox/value";
 import * as v from "valibot";
-import { bench, describe } from "vitest";
+import { describe, test } from "vitest";
 import * as z from "zod";
 
 /**
@@ -23,61 +23,65 @@ const zodSchema = z.record(z.string(), z.unknown());
 const valibotSchema = v.record(v.string(), v.unknown());
 const typeboxSchema = Type.Record(Type.String(), Type.Unknown());
 
-describe(`Compare calling ${realLifeScenarios.length}x isPlainObject with mixed types values`, async () => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore to apply benchmarks assert must be built
-  const httpxIsPlainObject: (_v) => boolean = await import("@httpx/assert")
-    .then((mod) => mod.isPlainObject)
-    .catch(() => {
-      throw new Error(
-        "Comparative benchmarks requires httpx/assert to be built (yarn build)"
-      );
-    });
-  const is = await import("@sindresorhus/is").then((mod) => mod.default);
-  const isPlainObj = await import("is-plain-obj").then((mod) => mod.default);
-  const lodashIsPlainObject = await import("lodash-es").then(
-    (mod) => mod.isPlainObject
-  );
+describe(`Compare calling ${realLifeScenarios.length}x isPlainObject with mixed types values`, () => {
+  test("isPlainObject", async ({ bench }) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore to apply benchmarks assert must be built
+    const httpxIsPlainObject: (_v) => boolean = await import("@httpx/assert")
+      .then((mod) => mod.isPlainObject)
+      .catch(() => {
+        throw new Error(
+          "Comparative benchmarks requires httpx/assert to be built (pnpm build)"
+        );
+      });
+    const is = await import("@sindresorhus/is").then((mod) => mod.default);
+    const isPlainObj = await import("is-plain-obj").then((mod) => mod.default);
+    const lodashIsPlainObject = await import("lodash-es").then(
+      (mod) => mod.isPlainObject
+    );
 
-  bench("@httpx/assert: `isPlainObject(v)`", () => {
-    for (const value of realLifeScenarios) {
-      httpxIsPlainObject(value);
-    }
-  });
+    await bench.compare(
+      bench("@httpx/assert: `isPlainObject(v)`", () => {
+        for (const value of realLifeScenarios) {
+          httpxIsPlainObject(value);
+        }
+      }),
 
-  bench("is-plain-obj: `isPlainObj(v)`", () => {
-    for (const value of realLifeScenarios) {
-      isPlainObj(value);
-    }
-  });
+      bench("is-plain-obj: `isPlainObj(v)`", () => {
+        for (const value of realLifeScenarios) {
+          isPlainObj(value);
+        }
+      }),
 
-  bench("@sindresorhus/is: `is.plainObject(v)`", () => {
-    for (const value of realLifeScenarios) {
-      is.plainObject(value);
-    }
-  });
+      bench("@sindresorhus/is: `is.plainObject(v)`", () => {
+        for (const value of realLifeScenarios) {
+          is.plainObject(value);
+        }
+      }),
 
-  bench("lodash-es: `_.isPlainObject(v)`", () => {
-    for (const value of realLifeScenarios) {
-      lodashIsPlainObject(value);
-    }
-  });
+      bench("lodash-es: `_.isPlainObject(v)`", () => {
+        for (const value of realLifeScenarios) {
+          lodashIsPlainObject(value);
+        }
+      }),
 
-  bench("zod: `z.record(z.string(), z.unknown())`", () => {
-    for (const value of realLifeScenarios) {
-      zodSchema.safeParse(value);
-    }
-  });
+      bench("zod: `z.record(z.string(), z.unknown())`", () => {
+        for (const value of realLifeScenarios) {
+          zodSchema.safeParse(value);
+        }
+      }),
 
-  bench("valibot: `z.record(z.string(), z.unknown())`", () => {
-    for (const value of realLifeScenarios) {
-      v.safeParse(valibotSchema, value);
-    }
-  });
+      bench("valibot: `z.record(z.string(), z.unknown())`", () => {
+        for (const value of realLifeScenarios) {
+          v.safeParse(valibotSchema, value);
+        }
+      }),
 
-  bench("typebox: `Type.Record(Type.String(), Type.Unknown()) (check)`", () => {
-    for (const value of realLifeScenarios) {
-      Value.Check(typeboxSchema, value);
-    }
+      bench("typebox: `Type.Record(Type.String(), Type.Unknown()) (check)`", () => {
+        for (const value of realLifeScenarios) {
+          Value.Check(typeboxSchema, value);
+        }
+      })
+    );
   });
 });

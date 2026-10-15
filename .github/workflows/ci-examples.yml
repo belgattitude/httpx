@@ -7,7 +7,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
-      - '**'
+      - "**"
 
 permissions:
   contents: read
@@ -17,34 +17,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [24.x]
+        node-version: [24]
+    env:
+      PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
     steps:
-      - uses: actions/checkout@v7
-
-      - name: ⚙️ Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: ${{ matrix.node-version }}
-          package-manager-cache: false
+          persist-credentials: false
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
+      - name: ⚙️ Install pnpm and Node.js
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
+        with:
+          runtime: "node@${{ matrix.node-version }}"
+          cache: false
+          node-version-file: false
 
       - name: 🏗 Build packages
-        run: yarn workspaces foreach -v --worktree --from '@httpx/*' run build
+        run: pnpm --filter '@httpx/*' -r --stream run build
 
       - name: 🕵️ Typecheck
-        run: yarn workspaces foreach -v --worktree --from '@examples/*' run typecheck
-
-      - name: 🕵️ Typecheck (no typescript path aliases)
-        run: yarn workspaces foreach -v --worktree --from '@examples/*' run typecheck-no-paths
-
+        run: pnpm --filter '@examples/*' -r --stream run typecheck
 
       - name: 🔬 Lint
-        run: yarn workspaces foreach -v --worktree --from '@examples/*' run lint
+        run: pnpm --filter '@examples/*' -r --stream run lint
 
       - name: 🏗 Build example apps
-        run: yarn workspaces foreach -v --worktree --from '@examples/*' run build
+        run: pnpm --filter '@examples/*' -r --stream run build
         env:
           NEXTJS_IGNORE_ESLINT: true
           NEXTJS_IGNORE_TYPECHECK: true

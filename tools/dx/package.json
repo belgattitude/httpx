@@ -16,8 +16,17 @@
     "directory": "tools/dx"
   },
   "bin": {
+    "dx-bench": "./bin/dx-bench.mjs",
+    "dx-bench-codspeed": "./bin/dx-bench-codspeed.mjs",
+    "dx-build": "./bin/dx-build.mjs",
+    "dx-cache": "./bin/dx-cache.mjs",
+    "dx-escheck": "./bin/dx-escheck.mjs",
     "dx-oxfmt": "./bin/dx-oxfmt.mjs",
-    "dx-oxlint": "./bin/dx-oxlint.mjs"
+    "dx-oxlint": "./bin/dx-oxlint.mjs",
+    "dx-size-limit": "./bin/dx-size-limit.mjs",
+    "dx-typecheck": "./bin/dx-typecheck.mjs",
+    "dx-typecheck-bun": "./bin/dx-typecheck-bun.mjs",
+    "dx-vitest": "./bin/dx-vitest.mjs"
   },
   "files": [
     "bin",
@@ -44,7 +53,27 @@
         "default": "./src/oxfmt.ts"
       }
     },
+    "./tsdown": {
+      "import": {
+        "httpx-monorepo-source": "./src/tsdown.ts",
+        "default": "./src/tsdown.ts"
+      }
+    },
+    "./vite": {
+      "import": {
+        "httpx-monorepo-source": "./src/vite.ts",
+        "default": "./src/vite.ts"
+      }
+    },
+    "./vitest": {
+      "import": {
+        "httpx-monorepo-source": "./src/vitest.ts",
+        "default": "./src/vitest.ts"
+      }
+    },
     "./typescript/tsconfig.base.json": "./src/typescript/tsconfig.base.json",
+    "./typescript/tsconfig.react.json": "./src/typescript/tsconfig.react.json",
+    "./typescript/tsconfig.nextjs.json": "./src/typescript/tsconfig.nextjs.json",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -52,32 +81,44 @@
     "format": "oxfmt --write",
     "lint": "ultracite check",
     "lint-fix": "ultracite fix",
-    "typecheck": "tsc --project tsconfig.json --noEmit"
+    "test-unit": "vitest run",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck-bun": "node ./bin/dx-typecheck-bun.mjs --project tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@arethetypeswrong/core": "0.18.5",
+    "@codspeed/vitest-plugin": "6.0.1",
+    "@size-limit/esbuild": "14.2.0",
+    "@size-limit/file": "14.2.0",
     "@tanstack/eslint-plugin-query": "5.104.2",
-    "eslint": "10.12.0",
-    "eslint-plugin-security": "4.2.0",
-    "oxfmt": "0.72.0",
-    "oxlint": "1.87.0",
-    "oxlint-plugin-import-zod": "1.0.1",
-    "oxlint-plugin-react-doctor": "0.9.17",
-    "oxlint-tailwindcss": "1.16.0",
-    "oxlint-tsgolint": "7.0.2004",
-    "ultracite": "8.0.0"
-  },
-  "devDependencies": {
-    "@codspeed/vitest-plugin": "5.7.1",
-    "@types/node": "26.6.5",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/jest-dom": "7.0.1",
+    "@vitejs/plugin-react": "6.1.2",
     "@vitest/coverage-v8": "5.0.4",
     "@vitest/ui": "5.0.4",
     "browserslist": "4.29.3",
     "browserslist-to-esbuild": "2.1.1",
-    "cross-env": "10.1.0",
-    "rimraf": "6.1.3",
+    "es-check": "9.8.1",
+    "eslint": "10.12.0",
+    "eslint-plugin-security": "4.2.0",
+    "happy-dom": "21.0.1",
+    "oxfmt": "0.73.0",
+    "oxlint": "1.88.0",
+    "oxlint-plugin-import-zod": "1.0.1",
+    "oxlint-plugin-react-doctor": "0.9.18",
+    "oxlint-tailwindcss": "1.16.0",
+    "oxlint-tsgolint": "7.0.2004",
+    "publint": "0.3.25",
+    "size-limit": "14.2.0",
     "tsdown": "0.23.1",
     "typescript": "7.0.2",
+    "ultracite": "8.0.1",
     "vite": "8.3.4",
     "vitest": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "cross-env": "10.1.0",
+    "rimraf": "6.1.3"
   }
 }

@@ -147,7 +147,7 @@ The total size accounts for the dependency on [jose](https://github.com/panva/jo
 | Browserslist | ✅ | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/jwt-verify/.browserslistrc) |
 | Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
 | Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
-| Cloudflare | ✅ | Ensured with @cloudflare/vitest-pool-workers (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
+| Cloudflare | ✅ | Ensured with @cloudflare/vitest-plugin (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
 | Typescript | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
 | ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
 | Performance | ✅ | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx) |

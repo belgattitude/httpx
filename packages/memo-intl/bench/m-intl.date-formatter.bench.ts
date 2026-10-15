@@ -1,4 +1,4 @@
-import { bench } from "vitest";
+import { describe, test } from "vitest";
 
 import { MIntl } from "../src";
 import { benchConfig } from "./bench.config";
@@ -11,33 +11,29 @@ describe(`MIntl DateFormatter benchmarks (${nbRows} instances)`, () => {
     };
   });
 
-  bench(
-    "With memoization `MIntl.DateFormatter()`",
-    () => {
-      for (const row of dates) {
-        const formatter = MIntl.DateTimeFormat("fr-FR", {
-          dateStyle: "full",
-          timeStyle: "full",
-          timeZone: "UTC",
-        });
-        formatter.format(new Date(row.date));
-      }
-    },
-    benchConfig.benchOptions
-  );
-
-  bench(
-    "Without memoization `new Intl.DateFormatter()`",
-    () => {
-      for (const row of dates) {
-        const formatter = new Intl.DateTimeFormat("fr-FR", {
-          dateStyle: "full",
-          timeStyle: "full",
-          timeZone: "UTC",
-        });
-        formatter.format(new Date(row.date));
-      }
-    },
-    benchConfig.benchOptions
-  );
+  test("memoized vs not memoized", async ({ bench }) => {
+    await bench.compare(
+      bench("With memoization `MIntl.DateFormatter()`", () => {
+        for (const row of dates) {
+          const formatter = MIntl.DateTimeFormat("fr-FR", {
+            dateStyle: "full",
+            timeStyle: "full",
+            timeZone: "UTC",
+          });
+          formatter.format(new Date(row.date));
+        }
+      }),
+      bench("Without memoization `new Intl.DateFormatter()`", () => {
+        for (const row of dates) {
+          const formatter = new Intl.DateTimeFormat("fr-FR", {
+            dateStyle: "full",
+            timeStyle: "full",
+            timeZone: "UTC",
+          });
+          formatter.format(new Date(row.date));
+        }
+      }),
+      benchConfig.benchOptions
+    );
+  });
 });

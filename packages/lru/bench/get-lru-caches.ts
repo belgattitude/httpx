@@ -19,7 +19,7 @@ const asyncLoadCompiledLruCache = async (): Promise<typeof LruCache | null> =>
     // @ts-ignore this won't generally work if the project isn't built or built
     .then((mod: { LruCache: typeof LruCache }) => mod.LruCache)
     .catch((_e: unknown) => {
-      console.warn("Requires httpx/lru to be built (yarn build)");
+      console.warn("Requires httpx/lru to be built (pnpm build)");
       return null;
     });
 
@@ -35,7 +35,7 @@ const asyncLoadCompiledTimeLruCache = async (): Promise<
     // @ts-ignore this won't generally work if the project isn't built or built
     .then((mod: { TimeLruCache: typeof TimeLruCache }) => mod.TimeLruCache)
     .catch((_e: unknown) => {
-      console.warn("Requires httpx/lru to be built (yarn build)");
+      console.warn("Requires httpx/lru to be built (pnpm build)");
       return null;
     });
 

@@ -1,5 +1,5 @@
 import prettyBytes from "pretty-bytes";
-import { bench } from "vitest";
+import { describe, test } from "vitest";
 
 import {
   DevalueSerializer,
@@ -29,19 +29,17 @@ describe.each([
     const data = generateArrayOfData(rows, extendedTypeSupport);
     const serialized = serializer.serialize(data);
     const payloadSize = prettyBytes(serialized.length);
-    bench(
-      `${label}.serialize(${payloadSize}) - ${extendedTypeSupport ? "extended" : "native"} types`,
-      () => {
-        const _data = serializer.serialize(data);
-      },
-      options
-    );
-    bench(
-      `${label}.deserialize(${payloadSize}) - ${extendedTypeSupport ? "extended" : "native"} types`,
-      () => {
-        const _data = serializer.deserialize(serialized);
-      },
-      options
-    );
+    const types = extendedTypeSupport ? "extended" : "native";
+    test(`serialize / deserialize ${types} types`, async ({ bench }) => {
+      await bench.compare(
+        bench(`${label}.serialize(${payloadSize}) - ${types} types`, () => {
+          const _data = serializer.serialize(data);
+        }),
+        bench(`${label}.deserialize(${payloadSize}) - ${types} types`, () => {
+          const _data = serializer.deserialize(serialized);
+        }),
+        options
+      );
+    });
   }
 );

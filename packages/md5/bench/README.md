@@ -5,8 +5,8 @@ Benchmarks to measure [@httpx/md5](../README.md) performance over popular librar
 ### Run
 
 ```bash
-yarn install
+pnpm install
 cd packages/md5
-yarn build
-yarn bench
+pnpm build
+pnpm bench
 ```

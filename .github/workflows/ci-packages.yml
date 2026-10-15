@@ -17,32 +17,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x, 24.x, 26.x]
+        node-version: [22, 24, 26]
     env:
-      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+      PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
+      TURBO_API: "http://127.0.0.1:9080"
+      TURBO_TEAM: "httpx"
+      CI_RUNTIME: "node@${{ matrix.node-version }}"
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Fetch all git history so that yarn workspaces --since can compare with the correct commits
+          persist-credentials: false
+          # Fetch all git history so that workspace comparisons have with the correct commits
           # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
           fetch-depth: 0
 
-      - name: ⚙️ Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v7
+      - name: ⏩ TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@118f869397261f74bc39cb8565f2d02c0ed4209f # v4.1.1
         with:
-          node-version: ${{ matrix.node-version }}
-          package-manager-cache: false
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ secrets.CI_TURBO_SERVER_TOKEN }}
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/yarn-nm-install
-
-      - name: ⚙️ Nx setup - SHAs for base and head for `nx affected` commands
-        id: nx-set-shas
-        uses: nrwl/nx-set-shas@v5
-
-      - run: |
-          echo "BASE: ${{ steps.nx-set-shas.outputs.base }}"
-          echo "HEAD: ${{ steps.nx-set-shas.outputs.head }}"
+      - name: ⚙️ Install pnpm and Node.js
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
+        with:
+          runtime: "node@${{ matrix.node-version }}"
+          cache: false
+          node-version-file: false
 
       - name: Cache rotation keys
         id: cache-rotation
@@ -51,43 +51,43 @@ jobs:
           echo "YEAR_MONTH=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
 
       - name: ♻️ Restore packages cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             ${{ github.workspace }}/.cache
-          key: ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('packages/**.[jt]sx?', 'integrations/**.[jt]sx?') }}
+          key: ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('packages/**.[jt]sx?', 'integrations/**.[jt]sx?') }}
           restore-keys: |
-            ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('yarn.lock') }}-
+            ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('pnpm-lock.yaml') }}-
 
       - name: 🕵️ Typecheck
-        if: matrix.node-version == '24.x'
-        run: yarn nx run-many --target=typecheck --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version == 24
+        run: pnpm turbo run typecheck --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🔬 ESLint checks
-        if: matrix.node-version == '24.x'
-        run: yarn nx run-many --target=lint --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version == 24
+        run: pnpm turbo run lint --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🧪 Unit tests (no-coverage - node !== 20.x)
-        if: matrix.node-version != '20.x'
-        run: yarn nx run-many --target=test-unit --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version != 20
+        run: pnpm turbo run test-unit --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🧪 Unit tests (coverage - only node 24.x)
-        if: matrix.node-version == '24.x'
-        run: yarn nx run-many --target=test-unit-coverage --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version == 24
+        run: pnpm turbo run test-unit-coverage --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       #- name: ☂️ Codecov upload (only node-20)
       #  if: matrix.node-version == '20.x'
       #  working-directory: ${{ github.workspace }}
       #  run: |
       #    bash .github/scripts/install-codecov.sh
-      #    yarn g:ci-coverage-upload
+      #    pnpm g:ci-coverage-upload
       #  shell: bash
       #  env:
       #    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: ☂️ Codecov upload (only node-24)
-        uses: codecov/codecov-action@v7
-        if: matrix.node-version == '24.x'
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        if: matrix.node-version == 24
         with:
           fail_ci_if_error: true # optional (default = false)
           #files: ./coverage1.xml,./coverage2.xml # optional
@@ -99,37 +99,37 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: 🧪 Unit tests (edge-runtime)
-        if: matrix.node-version == '22.x'
-        run: yarn nx run-many --target=test-unit-edge --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version == 22
+        run: pnpm turbo run test-unit-edge --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🧪 Unit tests (cloudflare - only node 20.x)
-        if: matrix.node-version == '22.x'
-        run: yarn nx run-many --target=test-unit-cloudflare --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version == 22
+        run: pnpm turbo run test-unit-cloudflare --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: ⚙️ Install Playwright Chromium (only node 24.x)
-        if: matrix.node-version == '24.x'
-        run: yarn playwright install chromium
+        if: matrix.node-version == 24
+        run: pnpm exec playwright install chromium
 
       - name: 🧪 Unit tests (playwright chromium - only node 24.x)
-        if: matrix.node-version == '24.x'
-        run: yarn nx run-many --target=test-unit-browser --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version == 24
+        run: pnpm turbo run test-unit-browser --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🏗 Build packages
-        run: yarn nx run-many --target=build --exclude='examples/**' --exclude='docs'
+        run: pnpm turbo run build --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 📐 Check build for size-limits
-        if: matrix.node-version == '24.x'
-        run: yarn nx run-many --target=check-size --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version == 24
+        run: pnpm turbo run check-size --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🛟 Check build for ecmascript compliance
-        if: matrix.node-version == '24.x'
-        run: yarn nx run-many --target=check-dist --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version == 24
+        run: pnpm turbo run check-dist --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🛟 Check publishable dist (arethetypeswrong)
-        if: matrix.node-version == '24.x'
-        run: yarn nx run-many --target=check-pub --exclude='examples/**' --exclude='docs'
+        if: matrix.node-version == 24
+        run: pnpm turbo run check-pub --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       # Disabled: typedoc doesn't support typescript 7 yet
       - name: 📄 Check doc can be built
-        if: false && matrix.node-version == '24.x'
-        run: yarn nx run-many --target=docgen --exclude='examples/**' --exclude='docs'
+        if: false && matrix.node-version == 24
+        run: pnpm turbo run docgen --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"

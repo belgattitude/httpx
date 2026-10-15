@@ -1,0 +1,126 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "**/.env.*local",
+    "tsconfig.base.json",
+    "codecov.yml",
+    ".nvmrc",
+  ],
+  // Set by the CI matrix so cached test results are not shared between runtimes (node@22, node@24, bun...)
+  "globalEnv": ["CI_RUNTIME"],
+  "globalPassThroughEnv": [
+    "GITHUB_TOKEN",
+    "CODSPEED_TOKEN",
+    "CODECOV_TOKEN",
+    "PNPM_CONFIG_*",
+  ],
+  "cacheDir": ".turbo",
+  "cacheMaxSize": "7GB",
+  "cacheMaxAge": "10d",
+  "ui": "stream",
+  "tasks": {
+    "build": {
+      "description": "Compiles TypeScript and bundles the package with tsdown",
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "build/**"],
+    },
+    "build-release": {
+      "description": "Builds the package distribution for publishing",
+      "dependsOn": ["^build-release"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.changeset/*"],
+      "outputs": ["dist/**", "build/**"],
+      "cache": false,
+    },
+    "bench": {
+      "description": "Runs the vitest benchmarks",
+      "dependsOn": ["build"],
+      "outputs": ["bench/output/**"],
+      "cache": false,
+    },
+    "bench-codspeed": {
+      "description": "Runs the vitest benchmarks with CodSpeed instrumentation",
+      "cache": false,
+      // Set by the CodSpeed runner (CODSPEED_ENV, CODSPEED_RUNNER_MODE...), read by the CodSpeed plugin
+      "passThroughEnv": ["CODSPEED_*"],
+    },
+    "test": {
+      "description": "Runs the test suite once with vitest",
+    },
+    "test-unit": {
+      "description": "Runs the unit test suite without coverage",
+    },
+    "test-unit-coverage": {
+      "description": "Runs the unit test suite with coverage",
+      "outputs": ["coverage/**"],
+    },
+    "test-unit-edge": {
+      "description": "Runs the unit test suite in the edge-runtime environment",
+    },
+    "test-unit-cloudflare": {
+      "description": "Runs the unit test suite with the cloudflare workers pool",
+    },
+    "test-unit-bun": {
+      "description": "Runs the unit test suite with bun",
+    },
+    "test-unit-deno": {
+      "description": "Runs the unit test suite with deno",
+    },
+    "test-unit-browser": {
+      "description": "Runs the unit test with vitest playwright",
+    },
+    "lint": {
+      "description": "Checks lint and formatting with dx-oxlint and dx-oxfmt",
+      "cache": true,
+      "inputs": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.cjs",
+        "**/*.mjs",
+        "**/*.jsx",
+        "**/*.json",
+        "**/*.jsonc",
+        "**/*.md",
+        "**/*.mdx",
+      ],
+    },
+    "lint-fix": {
+      "description": "Fixes lint and formatting issues with dx-oxlint and dx-oxfmt",
+      "cache": false,
+    },
+    "format": {
+      "description": "Formats files with dx-oxfmt",
+      "cache": false,
+    },
+    "fix-all-files": {
+      "description": "Fixes lint and formatting issues on all files",
+      "cache": false,
+    },
+    "typecheck": {
+      "description": "Type checks the sources with tsc (no emit)",
+    },
+    "typecheck-bun": {
+      "description": "Type checks the sources with bun check (bun >= 1.4.3, no emit)",
+    },
+    "docgen": {
+      "description": "Generates the API documentation with typedoc into docs/api",
+      "outputs": ["docs/api/**"],
+    },
+    "clean": {
+      "description": "Removes build outputs, coverage and TypeScript build info",
+      "cache": false,
+    },
+    "check-dist": {
+      "description": "Checks the built files ES syntax (es-check)",
+      "dependsOn": ["build"],
+    },
+    "check-size": {
+      "description": "Checks the built bundle sizes against their limits (size-limit)",
+      "dependsOn": ["build"],
+    },
+    "check-pub": {
+      "description": "Checks the publishable package (arethetypeswrong and publint)",
+      "dependsOn": ["build"],
+    },
+  },
+}

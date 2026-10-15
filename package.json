@@ -8,97 +8,76 @@
     "url": "https://github.com/belgattitude"
   },
   "repository": "belgattitude/httpx",
-  "workspaces": [
-    "docs",
-    "examples/*",
-    "integrations/*",
-    "packages/*",
-    "devtools/*",
-    "tools/*"
-  ],
+  "type": "module",
   "scripts": {
-    "check:install": "yarn dlx @yarnpkg/doctor@3 .",
-    "check:security": "yarn npm audit --no-deprecations --all",
-    "clean:global-cache": "rimraf ./.cache",
-    "clean:nx": "nx reset",
-    "deps:check": "npm-check-updates --configFileName .ncurc.cjs",
-    "deps:update": "npm-check-updates --configFileName .ncurc.cjs -u",
-    "g:bench": "nx run-many --output-style=static --parallel=1 --target=bench --exclude='examples/**' --exclude='docs'",
-    "g:bench-codspeed": "yarn workspaces foreach -tv --worktree --from 'packages/*' run bench-codspeed",
-    "g:bench-codspeed-nx": "nx run-many --output-style=static --parallel=1 --target=bench-codspeed --exclude='examples/**' --exclude='docs'",
-    "g:build": "nx run-many --output-style=static --target=build --exclude='examples/**' --exclude='docs'",
-    "g:build-examples": "nx affected --output-style=static --target=build --include=examples/**",
-    "g:build-packages": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build",
-    "g:build-release": "yarn workspaces foreach -tv --worktree --from 'packages/*' run build-release",
+    "check:security": "pnpm audit",
+    "clean:global-cache": "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false dx-cache clean",
+    "clean:turbo": "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false rimraf .turbo",
+    "deps:check": "npm-check-updates --configFileName .ncurc.mjs",
+    "deps:update": "npm-check-updates --configFileName .ncurc.mjs -u",
+    "g:bench": "turbo run bench --concurrency 1 --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:bench-codspeed": "turbo run bench-codspeed --concurrency 1 --filter='./packages/*'",
+    "g:build": "turbo run build --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:build-examples": "turbo run build --filter='@examples/*'",
+    "g:build-packages": "pnpm --filter \"./packages/*\" -r --stream run build",
+    "g:build-release": "pnpm --filter \"./packages/*\" -r --stream run build-release",
     "g:changeset": "changeset",
-    "g:check-dist": "nx run-many --output-style=static --target=check-dist --exclude='examples/**' --exclude='docs'",
-    "g:check-pub": "nx run-many --output-style=static --target=check-pub --exclude='examples/**' --exclude='docs'",
-    "g:check-size": "nx run-many --output-style=static --target=check-size --exclude='examples/**' --exclude='docs'",
-    "g:ci-coverage-upload": "yarn workspaces foreach --all -tv run ci-coverage-upload",
-    "g:clean": "yarn clean:global-cache && yarn clean:nx && yarn workspaces foreach --all -pv run clean",
-    "g:docgen": "nx run-many --output-style=static --target=docgen --exclude='examples/**'",
-    "g:fix-all-files": "yarn workspaces foreach --all -ptv run fix-all-files",
-    "g:lint": "nx run-many --output-style=static --target=lint",
-    "g:release": "yarn g:build-release && yarn exec changeset publish",
-    "g:test": "yarn workspaces foreach --all -pv run test",
-    "g:test-unit": "nx run-many --output-style=static --target=test-unit --exclude='examples/**' --exclude='docs'",
-    "g:test-unit-browser": "nx run-many --output-style=static --target=test-unit-browser --exclude='examples/**' --exclude='docs'",
-    "g:test-unit-bun": "nx run-many --output-style=static --target=test-unit-bun --exclude='examples/**' --exclude='docs'",
-    "g:test-unit-cloudflare": "nx run-many --output-style=static --target=test-unit-cloudflare --exclude='examples/**' --exclude='docs'",
-    "g:test-unit-coverage": "nx run-many --output-style=static --target=test-unit-coverage --exclude='examples/**' --exclude='docs'",
-    "g:test-unit-edge": "nx run-many --output-style=static --target=test-unit-edge --exclude='examples/**' --exclude='docs'",
-    "g:typecheck": "nx run-many --output-style=static --target=typecheck",
-    "install:playwright": "yarn workspace @httpx/devtools-vitest install-playwright",
-    "nuke:node_modules": "rimraf --glob '**/node_modules'",
+    "g:check-dist": "turbo run check-dist --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:check-pub": "turbo run check-pub --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:check-size": "turbo run check-size --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:ci-coverage-upload": "pnpm -r --if-present --stream run ci-coverage-upload",
+    "g:clean": "pnpm clean:global-cache && pnpm -r --parallel --if-present run clean && pnpm clean:turbo",
+    "g:docgen": "turbo run docgen --filter='!@examples/*'",
+    "g:fix-all-files": "pnpm -r --parallel --if-present run fix-all-files",
+    "g:lint": "turbo run lint --continue",
+    "g:release": "pnpm run g:build-release && pnpm exec changeset publish",
+    "g:test": "pnpm -r --parallel --if-present run test",
+    "g:test-unit": "turbo run test-unit --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:test-unit-browser": "turbo run test-unit-browser --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:test-unit-bun": "turbo run test-unit-bun --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:test-unit-cloudflare": "turbo run test-unit-cloudflare --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:test-unit-coverage": "turbo run test-unit-coverage --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:test-unit-edge": "turbo run test-unit-edge --filter='!@examples/*' --filter='!httpx-docs'",
+    "g:typecheck": "turbo run typecheck",
+    "g:typecheck-bun": "turbo run typecheck-bun",
+    "install:playwright": "pnpm --filter @httpx/devtools-vitest run install-playwright",
+    "nuke:node_modules": "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false rimraf --glob \"**/node_modules\"",
+    "pnpm:reinstall": "pnpm pm clean --lockfile --config.verifyDepsBeforeRun=false && pnpm install",
     "postinstall": "lefthook install",
     "syncpack:check": "syncpack lint-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
     "syncpack:format": "syncpack format",
     "syncpack:list": "syncpack list-semver-ranges --types prod,dev --source \"package.json\" --source \"packages/*/package.json\"",
-    "website:build": "yarn workspace httpx-docs run build",
+    "website:build": "pnpm --filter httpx-docs run build",
     "website:deploy": "gh-pages -d ./docs/out -t"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.7.0",
-    "@changesets/cli": "2.31.1",
+    "@changesets/changelog-github": "1.0.1",
+    "@changesets/cli": "3.0.3",
     "@httpx/dx": "workspace:^",
+    "@types/node": "26.6.5",
     "cross-env": "10.1.0",
     "gh-pages": "6.3.0",
     "lefthook": "2.2.1",
-    "npm-check-updates": "23.0.2",
+    "npm-check-updates": "23.1.1",
     "npm-run-all2": "9.0.3",
-    "nx": "23.1.1",
-    "pkg-pr-new": "0.0.87",
-    "playwright": "1.62.1",
+    "pkg-pr-new": "0.0.91",
+    "playwright": "1.64.0",
     "rimraf": "6.1.3",
     "syncpack": "15.3.3",
+    "turbo": "2.11.8",
     "typescript": "7.0.2",
-    "vitest": "4.1.10"
+    "vite": "8.3.4",
+    "vitest": "5.0.4"
   },
-  "dependenciesMeta": {
-    "@swc/core": {
-      "built": true
-    },
-    "@tailwindcss/oxide": {
-      "built": true
-    },
-    "esbuild": {
-      "built": true
-    },
-    "nx": {
-      "built": true
-    },
-    "workerd": {
-      "built": true
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.13.0",
+      "onFail": "warn"
     }
-  },
-  "resolutions": {
-    "esbuild": "^0.28.2"
   },
   "engines": {
     "node": ">=22.18.0"
   },
-  "packageManager": "yarn@4.18.0",
-  "resolutionsHelp": {
-    "esbuild": "To prevent multiple versions"
-  }
+  "packageManager": "pnpm@12.13.0"
 }

@@ -286,16 +286,13 @@ describe("isPlainObject", () => {
       });
 
       describe.skip("Compatibility with jonschlinkert/is-plain-object", async () => {
-        // @ts-expect-error packaging of this lib is not compatible with latest ts / module
         const jonschlinkertIsPlainObject = await import("is-plain-object").then(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           (mod) => mod.isPlainObject
         );
 
         it.each(cases)(
           'compat when "%s" is given, should return %s',
           (v, _expected) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             expect(isPlainObject(v)).toBe(jonschlinkertIsPlainObject(v));
           }
         );

@@ -3,7 +3,6 @@
   "extends": ["config:recommended"],
   "enabled": true,
   "enabledManagers": ["npm", "docker-compose", "dockerfile", "github-actions"],
-  "postUpdateOptions": ["yarnDedupeHighest"],
   "minimumReleaseAge": "3 days",
   "packageRules": [
     {

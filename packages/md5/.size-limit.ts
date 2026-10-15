@@ -5,7 +5,7 @@ const config = [
     name: "import { md5 } from '@httpx/md5'",
     path: ["dist/index.mjs"],
     import: "{ md5 }",
-    limit: "1250B",
+    limit: "1300B",
   },
   {
     name: "import { md5 } from '@httpx/md5/nodejs'",

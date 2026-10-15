@@ -1,4 +1,4 @@
-import { bench, describe } from "vitest";
+import { describe, test } from "vitest";
 
 import { devDependencies } from "../package.json" with { type: "json" };
 import { immerIsPlainObject } from "../src/__tests__/comparison/immer-is-plain-object";
@@ -31,92 +31,92 @@ const realLifeScenarios = [
   ...Array.from({ length: 10 }).fill(Number.NaN),
 ] as const;
 
-describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed types values`, async () => {
-  const httpxIsPlainObject: (_v: unknown) => boolean = await import(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore to apply benchmarks assert must be built
-    "@httpx/plain-object"
-  )
-    .then((mod) => mod.isPlainObject)
-    .catch(() => {
-      throw new Error(
-        "Comparative benchmarks requires httpx/assert to be built (yarn build)"
-      );
-    });
-  const is = await import("@sindresorhus/is").then((mod) => mod.default);
-  const sindreIsIsPlainObject = is.plainObject;
-  const isPlainObj = await import("is-plain-obj").then((mod) => mod.default);
-  const zodIsPlainObject = await import("zod").then(
-    (mod) => mod.util.isPlainObject
-  );
-  const lodash = await import("lodash-es").then((mod) => mod);
-  const lodashIsPlainObject = lodash.isPlainObject;
-  const esToolkitIsPlainObject = await import("es-toolkit").then(
-    (mod) => mod.isPlainObject
-  );
+describe(`Compare calling isPlainObject with ${realLifeScenarios.length}x mixed types values`, () => {
+  test("isPlainObject", async ({ bench }) => {
+    const httpxIsPlainObject: (_v: unknown) => boolean = await import(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore to apply benchmarks assert must be built
+      "@httpx/plain-object"
+    )
+      .then((mod) => mod.isPlainObject)
+      .catch(() => {
+        throw new Error(
+          "Comparative benchmarks requires httpx/assert to be built (pnpm build)"
+        );
+      });
+    const is = await import("@sindresorhus/is").then((mod) => mod.default);
+    const sindreIsIsPlainObject = is.plainObject;
+    const isPlainObj = await import("is-plain-obj").then((mod) => mod.default);
+    const zodIsPlainObject = await import("zod").then(
+      (mod) => mod.util.isPlainObject
+    );
+    const lodash = await import("lodash-es").then((mod) => mod);
+    const lodashIsPlainObject = lodash.isPlainObject;
+    const esToolkitIsPlainObject = await import("es-toolkit").then(
+      (mod) => mod.isPlainObject
+    );
 
-  const redux = await import("redux").then((mod) => mod);
-  const reduxIsPlainObject = redux.isPlainObject;
+    const redux = await import("redux").then((mod) => mod);
+    const reduxIsPlainObject = redux.isPlainObject;
 
-  // @ts-expect-error packaging of this lib is not compatible with latest ts / module
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const jonschlinkertIsPlainObject = await import("is-plain-object").then(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-    (mod) => mod.isPlainObject
-  );
+    const jonschlinkertIsPlainObject = await import("is-plain-object").then(
+      (mod) => mod.isPlainObject
+    );
 
-  bench('"@httpx/plain-object": `isPlainObject(v)`', () => {
-    for (const value of realLifeScenarios) {
-      httpxIsPlainObject(value);
-    }
-  });
+    await bench.compare(
+      bench('"@httpx/plain-object": `isPlainObject(v)`', () => {
+        for (const value of realLifeScenarios) {
+          httpxIsPlainObject(value);
+        }
+      }),
 
-  bench(`"is-plain-obj":"${versions["is-plain-obj"]}": 'isPlainObj(v)'`, () => {
-    for (const value of realLifeScenarios) {
-      isPlainObj(value);
-    }
-  });
+      bench(`"is-plain-obj":"${versions["is-plain-obj"]}": 'isPlainObj(v)'`, () => {
+        for (const value of realLifeScenarios) {
+          isPlainObj(value);
+        }
+      }),
 
-  bench(`"@sindresorhus/is":"${versions["@sindresorhus/is"]}": 'is.plainObject(v)'`, () => {
-    for (const value of realLifeScenarios) {
-      sindreIsIsPlainObject(value);
-    }
-  });
+      bench(`"@sindresorhus/is":"${versions["@sindresorhus/is"]}": 'is.plainObject(v)'`, () => {
+        for (const value of realLifeScenarios) {
+          sindreIsIsPlainObject(value);
+        }
+      }),
 
-  bench(`"zod":"${versions.zod}": 'zod.util.isPlainObject(v)'`, () => {
-    for (const value of realLifeScenarios) {
-      zodIsPlainObject(value);
-    }
-  });
+      bench(`"zod":"${versions.zod}": 'zod.util.isPlainObject(v)'`, () => {
+        for (const value of realLifeScenarios) {
+          zodIsPlainObject(value);
+        }
+      }),
 
-  bench(`"es-toolkit":"${versions["es-toolkit"]}": 'isPlainObject(v)'`, () => {
-    for (const value of realLifeScenarios) {
-      esToolkitIsPlainObject(value);
-    }
-  });
+      bench(`"es-toolkit":"${versions["es-toolkit"]}": 'isPlainObject(v)'`, () => {
+        for (const value of realLifeScenarios) {
+          esToolkitIsPlainObject(value);
+        }
+      }),
 
-  bench(`"redux":"${versions.redux}": 'isPlainObject(v)'`, () => {
-    for (const value of realLifeScenarios) {
-      reduxIsPlainObject(value);
-    }
-  });
+      bench(`"redux":"${versions.redux}": 'isPlainObject(v)'`, () => {
+        for (const value of realLifeScenarios) {
+          reduxIsPlainObject(value);
+        }
+      }),
 
-  bench(`"is-plain-object":"${versions["is-plain-object"]}": 'isPlainObject(v)'`, () => {
-    for (const value of realLifeScenarios) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      jonschlinkertIsPlainObject(value);
-    }
-  });
+      bench(`"is-plain-object":"${versions["is-plain-object"]}": 'isPlainObject(v)'`, () => {
+        for (const value of realLifeScenarios) {
+          jonschlinkertIsPlainObject(value);
+        }
+      }),
 
-  bench(`"immer/is-plain-object":"4.2.0": 'isPlainObject(v)'`, () => {
-    for (const value of realLifeScenarios) {
-      immerIsPlainObject(value);
-    }
-  });
+      bench(`"immer/is-plain-object":"4.2.0": 'isPlainObject(v)'`, () => {
+        for (const value of realLifeScenarios) {
+          immerIsPlainObject(value);
+        }
+      }),
 
-  bench(`lodash-es:"${versions["lodash-es"]}": '_.isPlainObject(v)'`, () => {
-    for (const value of realLifeScenarios) {
-      lodashIsPlainObject(value);
-    }
+      bench(`lodash-es:"${versions["lodash-es"]}": '_.isPlainObject(v)'`, () => {
+        for (const value of realLifeScenarios) {
+          lodashIsPlainObject(value);
+        }
+      })
+    );
   });
 });

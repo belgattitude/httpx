@@ -4,7 +4,7 @@ import { md5 as httpxMd5NativeNodeJs } from "@httpx/md5/nodejs";
 import { md5 as npmHashWasmMd5 } from "hash-wasm";
 import NpmMd5 from "md5";
 import NpmSparkMd5 from "spark-md5";
-import { bench, describe } from "vitest";
+import { describe, test } from "vitest";
 
 const { isCiOrCodSpeed } = vitestBenchOptionsConfig;
 
@@ -28,50 +28,34 @@ describe(`@httpx/md5 compared`, () => {
   const [firstSeed = ""] = seeds;
   const hashLength = firstSeed.length;
   const text = `${hashLength} ascii chars x ${totalStrings}`;
-  bench(
-    `httpx/md5     - ${text} - ${isBun ? "bun" : "nodejs"}`,
-    () => {
-      for (const seed of seeds) {
-        httpxMd5NativeNodeJs(seed);
-      }
-    },
-    benchOptions
-  );
-  bench(
-    `httpx/md5     - ${text} - purejs`,
-    () => {
-      for (const seed of seeds) {
-        httpxMd5PureJs(seed);
-      }
-    },
-    benchOptions
-  );
-
-  bench(
-    `npm:md5       - ${text}`,
-    () => {
-      for (const seed of seeds) {
-        npmMd5(seed);
-      }
-    },
-    benchOptions
-  );
-  bench(
-    `npm:spark-md5 - ${text}`,
-    () => {
-      for (const seed of seeds) {
-        npmSparkMd5.hash(seed);
-      }
-    },
-    benchOptions
-  );
-  bench(
-    `npm:hash-wasm - ${text}`,
-    async () => {
-      for (const seed of seeds) {
-        await npmHashWasmMd5(seed);
-      }
-    },
-    benchOptions
-  );
+  test(`md5 - ${text}`, async ({ bench }) => {
+    await bench.compare(
+      bench(`httpx/md5     - ${text} - ${isBun ? "bun" : "nodejs"}`, () => {
+        for (const seed of seeds) {
+          httpxMd5NativeNodeJs(seed);
+        }
+      }),
+      bench(`httpx/md5     - ${text} - purejs`, () => {
+        for (const seed of seeds) {
+          httpxMd5PureJs(seed);
+        }
+      }),
+      bench(`npm:md5       - ${text}`, () => {
+        for (const seed of seeds) {
+          npmMd5(seed);
+        }
+      }),
+      bench(`npm:spark-md5 - ${text}`, () => {
+        for (const seed of seeds) {
+          npmSparkMd5.hash(seed);
+        }
+      }),
+      bench(`npm:hash-wasm - ${text}`, async () => {
+        for (const seed of seeds) {
+          await npmHashWasmMd5(seed);
+        }
+      }),
+      benchOptions
+    );
+  });
 });

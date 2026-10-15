@@ -16,6 +16,7 @@
     "exactOptionalPropertyTypes": true,
     "allowImportingTsExtensions": true,
     "incremental": true,
+    "tsBuildInfoFile": "${configDir}/node_modules/.cache/typescript/tsconfig.tsbuildinfo",
     "lib": ["dom", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -31,8 +32,7 @@
     "${configDir}/**/node_modules",
     "${configDir}/**/.*/*",
     "${configDir}/dist",
-    "${configDir}/coverage",
-    "${configDir}/_release"
+    "${configDir}/coverage"
   ],
   "include": [
     "${configDir}/**/*.ts",

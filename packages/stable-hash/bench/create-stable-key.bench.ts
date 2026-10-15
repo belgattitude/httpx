@@ -1,4 +1,4 @@
-import { bench } from "vitest";
+import { describe, test } from "vitest";
 
 import { createStableKeyOrThrow } from "../src";
 import { benchConfig } from "./bench-config";
@@ -12,20 +12,17 @@ describe(`createStableKeyOrThrow`, () => {
       key1: "string",
     },
   };
-  bench(
-    "createStableKeyOrThrow with array sorting",
-    () => {
-      createStableKeyOrThrow(params);
-    },
-    benchConfig.benchOptions
-  );
-  bench(
-    "createStableKeyOrThrow without array sorting",
-    () => {
-      createStableKeyOrThrow(params, {
-        sortArrayValues: false,
-      });
-    },
-    benchConfig.benchOptions
-  );
+  test("with and without array sorting", async ({ bench }) => {
+    await bench.compare(
+      bench("createStableKeyOrThrow with array sorting", () => {
+        createStableKeyOrThrow(params);
+      }),
+      bench("createStableKeyOrThrow without array sorting", () => {
+        createStableKeyOrThrow(params, {
+          sortArrayValues: false,
+        });
+      }),
+      benchConfig.benchOptions
+    );
+  });
 });
