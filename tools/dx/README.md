@@ -28,6 +28,7 @@ This package is private: it is only consumed inside the workspace.
   - [Options](#options)
   - [React and Testing Library](#react-and-testing-library)
   - [Package dependencies](#package-dependencies)
+  - [Benchmarks](#benchmarks)
 - [Caches](#caches)
   - [Locations](#locations)
   - [dx-cache](#dx-cache)
@@ -77,11 +78,15 @@ The bins run the tool versions pinned by @httpx/dx, forwarding the arguments, th
 | `dx-escheck` | runs es-check with the package `escheck.config.ts` |
 | `dx-size-limit` | runs size-limit with the `@size-limit/file` and `@size-limit/esbuild` plugins of @httpx/dx |
 | `dx-vitest` | runs vitest |
+| `dx-bench` | runs the vitest benchmarks, on node or bun (`--runtime`), see [Benchmarks](#benchmarks) |
+| `dx-bench-codspeed` | runs the vitest benchmarks with the CodSpeed instrumentation |
 | `dx-cache` | shows the number and size of the cached files (`stats`) or removes the caches (`clean`), see [dx-cache](#dx-cache) |
 
 ```json
 {
   "scripts": {
+    "bench": "dx-bench",
+    "bench-codspeed": "dx-bench-codspeed",
     "build": "dx-build",
     "dev": "dx-build --watch",
     "check-dist": "dx-escheck",
@@ -410,7 +415,7 @@ export default mergeConfig(
 | --- | --- | --- |
 | `react` | `false` | adds the `@vitejs/plugin-react` plugin and uses the `happy-dom` environment |
 | `testingLibrary` | `false` | adds a setup file extending `expect` with the `@testing-library/jest-dom` matchers (`toBeInTheDocument`...) |
-| `codspeed` | `process.env.CODSPEED === "1"` | adds the `@codspeed/vitest-plugin` |
+| `codspeed` | `process.env.CODSPEED === "1"` | adds the `@codspeed/vitest-plugin` (set by `dx-bench-codspeed`) |
 | `cache` | `<root>/.cache/vitest/<package path>` | directory of the vite (`vite`) and vitest (`modules`) caches, `false` for the vite and vitest defaults |
 
 ### React and Testing Library
@@ -443,6 +448,32 @@ The packages still depend on what their test files and tsconfig import:
 - `@testing-library/react`, `@testing-library/user-event` (imported by the tests) and `@testing-library/jest-dom`, at the version pinned by @httpx/dx (its types are enabled in the tsconfig: `"types": ["@testing-library/jest-dom/vitest"]`)
 
 `vite`, `@vitest/coverage-v8`, `@vitest/ui`, `happy-dom` and the plugins come from @httpx/dx.
+
+### Benchmarks
+
+`dx-bench` runs the vitest benchmarks once (`vitest bench --run`), forwarding the other vitest options (`--reporter=verbose`, `--config`...):
+
+| Option | Description |
+| --- | --- |
+| `--runtime=node` | runs vitest on node (default) |
+| `--runtime=bun` | runs vitest on bun (`bun --bun`, the bun of the `PATH`). Pass `--reporter=verbose` to get the results table |
+| `--watch`, `-w` | runs the benchmarks in watch mode |
+| `-h`, `--help` | shows the help |
+
+`dx-bench-codspeed` runs them once on node with `CODSPEED=1`: the vitest configs of @httpx/dx and of @httpx/devtools-vitest then add the `@codspeed/vitest-plugin`. Run it in the CodSpeed runner (CI) to get measurements: outside of it, the benchmarks run without instrumentation.
+
+```json
+{
+  "scripts": {
+    "bench": "dx-bench --reporter=verbose",
+    "bench-bun": "dx-bench --runtime=bun --reporter=verbose",
+    "bench-codspeed": "dx-bench-codspeed",
+    "bench-watch": "dx-bench --watch"
+  }
+}
+```
+
+Run them all with `pnpm g:bench` and `pnpm g:bench-codspeed` (turbo `bench` and `bench-codspeed` tasks, one package at a time). The `bench-codspeed` task isn't cached and passes the `CODSPEED_*` variables set by the CodSpeed runner (turbo strict env mode would filter them otherwise).
 
 ## Caches
 

@@ -37,10 +37,10 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "bench-bun-disabled": "bun --bun run vitest bench --run",
-    "bench-codspeed-disabled": "cross-env CODSPEED=1 vitest bench --run",
-    "bench-disabled": "vitest bench --run",
-    "bench-watch-disabled": "vitest bench",
+    "bench-bun-disabled": "dx-bench --runtime=bun",
+    "bench-codspeed-disabled": "dx-bench-codspeed",
+    "bench-disabled": "dx-bench",
+    "bench-watch-disabled": "dx-bench --watch",
     "build": "dx-build",
     "build-release": "pnpm run build",
     "check-dist": "es-check es2022 './dist/**/*.js' --not './dist/*.map.js' --module",
@@ -84,7 +84,6 @@
     "aws-jwt-verify": "5.2.1",
     "browserslist": "4.29.3",
     "browserslist-to-esbuild": "2.1.1",
-    "cross-env": "10.1.0",
     "es-check": "9.8.1",
     "nock": "15.0.1",
     "npm-run-all2": "9.0.3",

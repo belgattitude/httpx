@@ -36,7 +36,7 @@ export const resolvePackageJson = (pkgName) => {
  * @param {string} [binName]
  * @returns {string}
  */
-const resolvePackageBin = (pkgName, binName = pkgName) => {
+export const resolvePackageBin = (pkgName, binName = pkgName) => {
   const pkgJsonPath = resolvePackageJson(pkgName);
   /** @type {unknown} */
   const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf8"));

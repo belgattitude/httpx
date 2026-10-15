@@ -16,7 +16,7 @@
     "deps:check": "npm-check-updates --configFileName .ncurc.mjs",
     "deps:update": "npm-check-updates --configFileName .ncurc.mjs -u",
     "g:bench": "turbo run bench --concurrency 1 --filter='!@examples/*' --filter='!httpx-docs'",
-    "g:bench-codspeed": "pnpm --filter \"./packages/*\" -r --stream --if-present run bench-codspeed",
+    "g:bench-codspeed": "turbo run bench-codspeed --concurrency 1 --filter='./packages/*'",
     "g:build": "turbo run build --filter='!@examples/*' --filter='!httpx-docs'",
     "g:build-examples": "turbo run build --filter='@examples/*'",
     "g:build-packages": "pnpm --filter \"./packages/*\" -r --stream run build",

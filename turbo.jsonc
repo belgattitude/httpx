@@ -40,6 +40,8 @@
     "bench-codspeed": {
       "description": "Runs the vitest benchmarks with CodSpeed instrumentation",
       "cache": false,
+      // Set by the CodSpeed runner (CODSPEED_ENV, CODSPEED_RUNNER_MODE...), read by the CodSpeed plugin
+      "passThroughEnv": ["CODSPEED_*"],
     },
     "test": {
       "description": "Runs the test suite once with vitest",
