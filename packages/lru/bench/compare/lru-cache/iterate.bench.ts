@@ -7,7 +7,7 @@ const seeds = benchSeeds.getSeeds();
 
 describe(`LruCache iterator - ${seeds.length} items`, () => {
   test(`LruCache iterator - ${seeds.length} items`, async ({ bench }) => {
-    const lrus = await getLruCaches({
+    const lrus = getLruCaches({
       maxSize: seeds.length,
       prepopulate: seeds,
     });
@@ -17,14 +17,6 @@ describe(`LruCache iterator - ${seeds.length} items`, () => {
         const results: string[] = [];
         for (const [key, _value] of lrus["@httpx/lru"].cache) {
           results.push(key);
-        }
-      }),
-      bench(`@httpx/lru - forEach - compiled (dist)`, () => {
-        if ("@httpx/lru(compiled)" in lrus) {
-          const results: string[] = [];
-          for (const [key, _value] of lrus["@httpx/lru(compiled)"].cache) {
-            results.push(key);
-          }
         }
       }),
       bench(`quick-lru@${lrus["quick-lru"].version} - forEach`, () => {
