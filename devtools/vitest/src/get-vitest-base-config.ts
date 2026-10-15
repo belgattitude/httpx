@@ -1,57 +1,36 @@
-import path from "node:path";
-
-import codspeedPlugin from "@codspeed/vitest-plugin";
-import { getMonorepoCacheDir } from "@httpx/dx";
+import { createVitestConfig, mergeConfig } from "@httpx/dx/vitest";
 import { playwright } from "@vitest/browser-playwright";
-import type { ViteUserConfigExport } from "vitest/config";
+import type { ViteUserConfig } from "vitest/config";
 
-import { getPackageNameFromCwd } from "./get-package-name-from-cwd.ts";
-import { monorepoConfig } from "./monorepo.config.ts";
 import type { RequiredOptionals } from "./utils/type-utils.ts";
 
 export type VitestBaseConfigParams = {
-  packageName?: string;
   testFiles?: string[];
 };
 
 const getDefaultParams = () => {
   const defaultParams = {
-    packageName: getPackageNameFromCwd(),
     testFiles: ["./src/**/*.test.{js,ts,tsx}", "./test/**/*.test.{js,ts,tsx}"],
   } as const satisfies RequiredOptionals<VitestBaseConfigParams>;
   return defaultParams;
 };
 
-export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
-  const isCodeSpeedEnabled = process.env?.CODSPEED === "1";
-
-  const { packageName, testFiles } = {
+/**
+ * The @httpx/dx vitest config (source condition, node environment, v8
+ * coverage, codspeed plugin when CODSPEED=1, per package caches) plus what
+ * the httpx packages add: their test files, the vitest globals (describe,
+ * it, expect... without import), the browser provider (enabled by
+ * `--browser`) and the coverage reports uploaded to codecov.
+ */
+export const getVitestBaseConfig = (
+  params?: VitestBaseConfigParams
+): ViteUserConfig => {
+  const { testFiles } = {
     ...getDefaultParams(),
     ...params,
   };
-  // One vite and vitest cache per package (<root>/.cache/vitest/<package path>):
-  // the shared `node_modules/.vitest-cache` is cleared when the lockfile changes,
-  // making parallel runs fail with ENOTEMPTY.
-  const packageCacheDir =
-    getMonorepoCacheDir("vitest") ??
-    path.join(monorepoConfig.root, ".cache", "vitest", packageName);
-  const cacheDir = path.join(packageCacheDir, "vite");
 
-  const config = {
-    cacheDir,
-    plugins: [isCodeSpeedEnabled ? codspeedPlugin() : undefined].filter(
-      Boolean
-    ),
-    resolve: {
-      // tsconfigPaths: true,
-      conditions: ["httpx-monorepo-source"],
-    },
-    // https://vitest.dev/guide/common-errors.html#custom-package-conditions-are-not-resolved
-    ssr: {
-      resolve: {
-        conditions: ["httpx-monorepo-source", "import", "default"],
-      },
-    },
+  return mergeConfig(createVitestConfig(), {
     test: {
       browser: {
         provider: playwright({
@@ -63,33 +42,13 @@ export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
         // at least one instance is required
         instances: [{ browser: "chromium" }],
       },
-      fsModuleCachePath: path.join(packageCacheDir, "modules"),
-      // @link https://vitest.dev/config/#clearmocks
-      clearMocks: true,
       coverage: {
-        include: ["src/**/*.{js,jsx,ts,tsx}"],
         exclude: ["**/*.bench.ts"],
-        provider: "istanbul",
-        reporter: ["text", "json", "clover"],
+        // concatenated to the dx `text` reporter, read by codecov
+        reporter: ["json", "clover"],
       },
-      typecheck: {
-        enabled: false,
-      },
-      pool: "forks",
-      exclude: [
-        "**/node_modules/**",
-        "dist/**",
-        "build/**",
-        "**/coverage/**",
-        "**/.{idea,next,git,turbo,cache,output,temp}/**",
-      ],
-      globals: true,
       include: testFiles,
-      // To mimic Jest behaviour regarding mocks.
-      mockReset: true,
-      passWithNoTests: false,
-      restoreMocks: true,
+      globals: true,
     },
-  } satisfies ViteUserConfigExport;
-  return config;
+  } satisfies ViteUserConfig);
 };

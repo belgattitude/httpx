@@ -1,6 +1,7 @@
 import path from "node:path";
 
 import { cloudflareTest } from "@cloudflare/vitest-plugin";
+import type { ViteUserConfig } from "vitest/config";
 
 import {
   getVitestBaseConfig,
@@ -19,7 +20,9 @@ const defaultWranglerConfigPath = path.resolve(
   "wrangler.toml"
 );
 
-export const createVitestCloudflareConfig = (params?: Params) => {
+export const createVitestCloudflareConfig = (
+  params?: Params
+): ViteUserConfig => {
   const { wranglerConfigPath = defaultWranglerConfigPath, ...restParams } =
     params ?? {};
   const baseConfig = getVitestBaseConfig(restParams);
@@ -37,5 +40,4 @@ export const createVitestCloudflareConfig = (params?: Params) => {
       }),
     ],
   };
-  // }) as unknown as UserConfig;
 };
