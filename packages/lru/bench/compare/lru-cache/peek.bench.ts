@@ -15,7 +15,7 @@ describe(`LruCache.peek() - ${seeds.length} items / maxSize: ${seeds.length}`, (
     });
 
     await bench.compare(
-      bench(`@httpx/lru.peek() - ts files (dev)`, () => {
+      bench(`@httpx/lru.peek()`, () => {
         for (const { key } of seeds) {
           lrus["@httpx/lru"].cache.peek(key);
         }

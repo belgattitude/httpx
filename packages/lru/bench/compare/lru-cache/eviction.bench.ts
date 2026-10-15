@@ -16,12 +16,12 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, ()
     });
 
     await bench.compare(
-      bench(`@httpx/lru.set() - ts files (dev)`, () => {
+      bench(`@httpx/lru.set()`, () => {
         for (const { key, value } of seeds) {
           lrus["@httpx/lru"].cache.set(key, value);
         }
       }),
-      bench(`@httpx/time-lru.set() - ts file (dev)`, () => {
+      bench(`@httpx/time-lru.set()`, () => {
         for (const { key, value } of seeds) {
           lrus["@httpx/time-lru"].cache.set(key, value, benchTtl);
         }

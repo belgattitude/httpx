@@ -31,8 +31,15 @@
       "outputs": ["dist/**", "build/**"],
       "cache": false,
     },
+    // The benchmarks can run on the built files (dist), see packages/lru/bench
     "bench": {
       "description": "Runs the vitest benchmarks",
+      "dependsOn": ["build"],
+      "outputs": ["bench/output/**"],
+      "cache": false,
+    },
+    "bench-bun": {
+      "description": "Runs the vitest benchmarks with bun",
       "dependsOn": ["build"],
       "outputs": ["bench/output/**"],
       "cache": false,

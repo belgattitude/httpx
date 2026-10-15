@@ -7,5 +7,6 @@ Benchmarks to measure [@httpx/lru](../README.md) performance over popular librar
 ```bash
 pnpm install
 cd packages/lru
+pnpm build
 pnpm bench
 ```

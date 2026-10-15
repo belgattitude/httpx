@@ -5,7 +5,27 @@ import {
   devDependencies,
   version,
 } from "../package.json" with { type: "json" };
-import { LruCache, TimeLruCache } from "../src";
+import type * as LruSources from "../src";
+
+/**
+ * The built files (`pnpm build`), not `../src` nor the `@httpx/lru` package
+ * name (resolved to the sources by the `httpx-monorepo-source` condition):
+ * vitest runs the sources through the vite module runner, where every internal
+ * import is a getter that adds overhead to the measures.
+ * @link https://vitest.dev/guide/benchmarking#module-runner-overhead
+ */
+const { LruCache, TimeLruCache } = (await import(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore the dist only exists once built
+  "../dist/index.js"
+).catch((error: unknown) => {
+  throw new Error(
+    "The benchmarks require @httpx/lru to be built (pnpm build)",
+    {
+      cause: error,
+    }
+  );
+})) as unknown as typeof LruSources;
 
 const versions = devDependencies;
 

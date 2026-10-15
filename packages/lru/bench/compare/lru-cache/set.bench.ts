@@ -14,7 +14,7 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${seeds.length}`, () =
     });
 
     await bench.compare(
-      bench(`@httpx/lru.set() - ts files (dev)`, () => {
+      bench(`@httpx/lru.set()`, () => {
         for (const { key, value } of seeds) {
           lrus["@httpx/lru"].cache.set(key, value);
         }

@@ -13,7 +13,7 @@ describe(`LruCache iterator - ${seeds.length} items`, () => {
     });
 
     await bench.compare(
-      bench(`@httpx/lru - forEach - ts files (dev)`, () => {
+      bench(`@httpx/lru - forEach`, () => {
         const results: string[] = [];
         for (const [key, _value] of lrus["@httpx/lru"].cache) {
           results.push(key);
