@@ -17,7 +17,5 @@ export default {
     // Till documentation website is upgraded
     "nextra",
     "nextra-theme-docs",
-    "@changesets/changelog-github",
-    "@changesets/cli",
   ],
 };

@@ -55,8 +55,10 @@ allowBuilds:
 strictDepBuilds: false
 
 overrides:
+  "@xmldom/xmldom@>=0.9.0-beta.1 <=0.9.11": 0.9.12
   # To prevent multiple versions
   esbuild: ^0.28.2
+  katex@>=0.11.0 <0.18.2: 0.18.2
 
 minimumReleaseAge: 2880
 minimumReleaseAgeExcludePrune: true
@@ -94,7 +96,6 @@ minimumReleaseAgeExclude:
   - oxlint
   - oxlint-tsgolint
   - pino
-  - prettier
   - rolldown
   - rolldown-plugin-dts
   - size-limit
