@@ -9,7 +9,7 @@ describe(`LruCache.peek() - ${seeds.length} items / maxSize: ${seeds.length}`, (
   test(`LruCache.peek() - ${seeds.length} items / maxSize: ${seeds.length}`, async ({
     bench,
   }) => {
-    const lrus = await getLruCaches({
+    const lrus = getLruCaches({
       maxSize: seeds.length,
       prepopulate: seeds,
     });
@@ -18,13 +18,6 @@ describe(`LruCache.peek() - ${seeds.length} items / maxSize: ${seeds.length}`, (
       bench(`@httpx/lru.peek() - ts files (dev)`, () => {
         for (const { key } of seeds) {
           lrus["@httpx/lru"].cache.peek(key);
-        }
-      }),
-      bench(`@httpx/lru.peek() - compiled (dist)`, () => {
-        if ("@httpx/lru(compiled)" in lrus) {
-          for (const { key } of seeds) {
-            lrus["@httpx/lru(compiled)"].cache.peek(key);
-          }
         }
       }),
       bench(`quick-lru@${lrus["quick-lru"].version}.peek()`, () => {

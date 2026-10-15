@@ -11,7 +11,7 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, ()
   test(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, async ({
     bench,
   }) => {
-    const lrus = await getLruCaches({
+    const lrus = getLruCaches({
       maxSize: lruMaxSizeHalf,
     });
 
@@ -21,23 +21,9 @@ describe(`LruCache.set() ${seeds.length} items / maxSize: ${lruMaxSizeHalf}`, ()
           lrus["@httpx/lru"].cache.set(key, value);
         }
       }),
-      bench(`@httpx/lru.set() - compiled (dist)`, () => {
-        if ("@httpx/lru(compiled)" in lrus) {
-          for (const { key, value } of seeds) {
-            lrus["@httpx/lru(compiled)"].cache.set(key, value);
-          }
-        }
-      }),
       bench(`@httpx/time-lru.set() - ts file (dev)`, () => {
         for (const { key, value } of seeds) {
           lrus["@httpx/time-lru"].cache.set(key, value, benchTtl);
-        }
-      }),
-      bench(`@httpx/time-lru.set() - compiled (dist)`, () => {
-        if ("@httpx/time-lru(compiled)" in lrus) {
-          for (const { key, value } of seeds) {
-            lrus["@httpx/time-lru(compiled)"].cache.set(key, value, benchTtl);
-          }
         }
       }),
       bench(`quick-lru@${lrus["quick-lru"].version}.set()`, () => {
