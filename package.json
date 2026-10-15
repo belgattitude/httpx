@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "check:security": "pnpm audit",
-    "clean:global-cache": "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false rimraf ./.cache",
+    "clean:global-cache": "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false dx-cache clean",
     "clean:turbo": "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false rimraf .turbo",
     "deps:check": "npm-check-updates --configFileName .ncurc.mjs",
     "deps:update": "npm-check-updates --configFileName .ncurc.mjs -u",
@@ -39,6 +39,7 @@
     "g:test-unit-coverage": "turbo run test-unit-coverage --filter='!@examples/*' --filter='!httpx-docs'",
     "g:test-unit-edge": "turbo run test-unit-edge --filter='!@examples/*' --filter='!httpx-docs'",
     "g:typecheck": "turbo run typecheck",
+    "g:typecheck-bun": "turbo run typecheck-bun",
     "install:playwright": "pnpm --filter @httpx/devtools-vitest run install-playwright",
     "nuke:node_modules": "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false rimraf --glob \"**/node_modules\"",
     "pnpm:reinstall": "pnpm pm clean --lockfile --config.verifyDepsBeforeRun=false && pnpm install",

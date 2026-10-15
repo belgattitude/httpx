@@ -12,7 +12,7 @@
     "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
     "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
     "start": "sirv ./out --cors --port 8888",
-    "typecheck": "tsc --project ./tsconfig.json --noEmit"
+    "typecheck": "dx-typecheck --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "next": "16.4.1",

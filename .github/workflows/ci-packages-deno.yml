@@ -24,8 +24,9 @@ jobs:
       TURBO_TEAM: "httpx"
       CI_RUNTIME: "deno@${{ matrix.deno-version }}"
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           # Fetch all git history so that workspace comparisons have with the correct commits
           # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
           fetch-depth: 0

@@ -11,7 +11,9 @@ jobs:
     env:
       PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: ⏩ TurboRepo local server
         uses: felixmosh/turborepo-gh-artifacts@118f869397261f74bc39cb8565f2d02c0ed4209f # v4.1.1

@@ -1,6 +1,7 @@
 import path from "node:path";
 
 import codspeedPlugin from "@codspeed/vitest-plugin";
+import { getMonorepoCacheDir } from "@httpx/dx";
 import { playwright } from "@vitest/browser-playwright";
 import type { ViteUserConfigExport } from "vitest/config";
 
@@ -28,7 +29,13 @@ export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
     ...getDefaultParams(),
     ...params,
   };
-  const cacheDir = path.join(monorepoConfig.root, ".cache", packageName);
+  // One vite and vitest cache per package (<root>/.cache/vitest/<package path>):
+  // the shared `node_modules/.vitest-cache` is cleared when the lockfile changes,
+  // making parallel runs fail with ENOTEMPTY.
+  const packageCacheDir =
+    getMonorepoCacheDir("vitest") ??
+    path.join(monorepoConfig.root, ".cache", "vitest", packageName);
+  const cacheDir = path.join(packageCacheDir, "vite");
 
   const config = {
     cacheDir,
@@ -56,6 +63,7 @@ export const getVitestBaseConfig = (params?: VitestBaseConfigParams) => {
         // at least one instance is required
         instances: [{ browser: "chromium" }],
       },
+      fsModuleCachePath: path.join(packageCacheDir, "modules"),
       // @link https://vitest.dev/config/#clearmocks
       clearMocks: true,
       coverage: {

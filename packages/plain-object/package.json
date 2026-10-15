@@ -47,7 +47,7 @@
     "bench-bun": "bun --bun run vitest bench --run",
     "bench-codspeed": "cross-env CODSPEED=1 vitest bench --run",
     "bench-watch": "vitest bench",
-    "build": "pnpm run clean && tsdown",
+    "build": "pnpm run clean && dx-build",
     "build-release": "pnpm run build",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check es2022 './dist/**/*.cjs' --not './dist/*.map.js'",
@@ -55,8 +55,8 @@
     "check-pub": "attw --pack && publint",
     "check-size": "size-limit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-plain-object-unit --dir ./coverage",
-    "clean": "rimraf ./dist ./build ./coverage ./_release",
-    "dev": "tsdown --watch",
+    "clean": "rimraf --glob ./dist ./build ./coverage './tsconfig*.tsbuildinfo'",
+    "dev": "dx-build --watch",
     "docgen": "run-s docgen-typedoc",
     "docgen-typedoc": "rimraf ./docs/api && typedoc --plugin typedoc-plugin-markdown --out ./docs/api",
     "format": "dx-oxfmt --write",
@@ -71,8 +71,9 @@
     "test-unit-deno": "deno run test-unit",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-watch": "vitest --ui --api 4515",
-    "typecheck": "tsc --project tsconfig.json --noEmit",
-    "typecheck-build": "tsc --project tsconfig.build.json --noEmit"
+    "typecheck": "dx-typecheck --project tsconfig.json --noEmit",
+    "typecheck-build": "dx-typecheck --project tsconfig.build.json --noEmit",
+    "typecheck-bun": "dx-typecheck-bun --project tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",

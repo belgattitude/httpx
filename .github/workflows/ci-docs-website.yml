@@ -36,10 +36,11 @@ jobs:
       NEXT_TELEMETRY_DISABLED: true
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.13.1
+        uses: styfle/cancel-workflow-action@d07a454dad7609a92316b57b23c9ccfd4f59af66 # 0.13.1
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           fetch-depth: 0
 
       - name: ⚙️ Install pnpm and Node.js
@@ -50,7 +51,7 @@ jobs:
           node-version-file: false
 
       - name: ♻️ Restore website docs build caches
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             ${{ github.workspace }}/docs/.next/cache
@@ -68,7 +69,7 @@ jobs:
           NEXT_TELEMETRY_DISABLED: true
 
       - name: 🚀 Deploy
-        if: ${{ github.repository == 'belgattitude/httpx' && contains('refs/heads/main',github.ref)}}
+        if: ${{ github.repository == 'belgattitude/httpx' && github.ref == 'refs/heads/main'}}
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           pnpm website:deploy -u "github-actions-bot <support+actions@github.com>"

@@ -1,21 +1,53 @@
 import { spawn } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 
 const require = createRequire(import.meta.url);
 
 /**
- * Resolves `<pkg>/bin/<pkg>` from the @httpx/dx dependencies.
+ * @param {unknown} value
+ * @returns {value is Record<string, unknown>}
+ */
+const isRecord = (value) => typeof value === "object" && value !== null;
+
+/**
+ * Resolves the package.json of a @httpx/dx dependency, whether or not the
+ * package exports it (ie: es-check doesn't).
  *
  * @param {string} pkgName
  * @returns {string}
  */
-const resolvePackageBin = (pkgName) => {
-  const pkgJsonPath = require.resolve(`${pkgName}/package.json`);
-  const binPath = path.join(path.dirname(pkgJsonPath), "bin", pkgName);
+export const resolvePackageJson = (pkgName) => {
+  const pkgJsonPath = (require.resolve.paths(pkgName) ?? [])
+    .map((nodeModulesDir) => path.join(nodeModulesDir, pkgName, "package.json"))
+    .find((candidate) => existsSync(candidate));
+  if (pkgJsonPath === undefined) {
+    throw new Error(`unable to locate the ${pkgName} package`);
+  }
+  return pkgJsonPath;
+};
+
+/**
+ * Resolves a bin (`<pkg>` by default) declared in the package.json of
+ * a @httpx/dx dependency.
+ *
+ * @param {string} pkgName
+ * @param {string} [binName]
+ * @returns {string}
+ */
+const resolvePackageBin = (pkgName, binName = pkgName) => {
+  const pkgJsonPath = resolvePackageJson(pkgName);
+  /** @type {unknown} */
+  const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf8"));
+  const bin = isRecord(pkgJson) ? pkgJson.bin : undefined;
+  const binEntry = isRecord(bin) ? bin[binName] : bin;
+  if (typeof binEntry !== "string") {
+    throw new TypeError(`no ${binName} bin declared in ${pkgJsonPath}`);
+  }
+  const binPath = path.join(path.dirname(pkgJsonPath), binEntry);
   if (!existsSync(binPath)) {
-    throw new Error(`unable to locate the ${pkgName} bin (${binPath})`);
+    throw new Error(`unable to locate the ${binName} bin (${binPath})`);
   }
   return binPath;
 };
@@ -37,18 +69,19 @@ export const resolveTsgolintExecutable = () => {
 };
 
 /**
- * Runs the package bin pinned by @httpx/dx, forwarding all cli
- * arguments, signals and the exit code.
+ * Runs a command, forwarding the signals and the exit code (`options.onExit`
+ * is called before exiting).
  *
- * @param {string} pkgName
- * @param {{ env?: Record<string, string> }} [options]
+ * @param {string} command
+ * @param {string[]} args
+ * @param {{ env?: Record<string, string>, cwd?: string, onExit?: (code: number) => void }} [options]
  */
-export const runPackageBin = (pkgName, options = {}) => {
-  const child = spawn(
-    process.execPath,
-    [resolvePackageBin(pkgName), ...process.argv.slice(2)],
-    { stdio: "inherit", env: { ...process.env, ...options.env } }
-  );
+export const runCommand = (command, args, options = {}) => {
+  const child = spawn(command, args, {
+    stdio: "inherit",
+    cwd: options.cwd,
+    env: { ...process.env, ...options.env },
+  });
 
   for (const signal of ["SIGINT", "SIGTERM"]) {
     process.on(signal, () => {
@@ -57,7 +90,7 @@ export const runPackageBin = (pkgName, options = {}) => {
   }
 
   child.on("error", (error) => {
-    console.error(`dx: failed to run ${pkgName}: ${error.message}`);
+    console.error(`dx: failed to run ${command}: ${error.message}`);
     process.exit(1);
   });
 
@@ -66,6 +99,27 @@ export const runPackageBin = (pkgName, options = {}) => {
       process.kill(process.pid, signal);
       return;
     }
+    options.onExit?.(code ?? 1);
     process.exit(code ?? 1);
   });
+};
+
+/**
+ * Runs the package bin (`options.bin`, `<pkg>` by default) pinned by this
+ * package (@httpx/dx), forwarding the cli arguments (`options.argv`, all of
+ * them by default, after `options.args`), signals and the exit code.
+ *
+ * @param {string} pkgName
+ * @param {{ env?: Record<string, string>, args?: string[], argv?: string[], bin?: string, onExit?: (code: number) => void }} [options]
+ */
+export const runPackageBin = (pkgName, options = {}) => {
+  runCommand(
+    process.execPath,
+    [
+      resolvePackageBin(pkgName, options.bin),
+      ...(options.args ?? []),
+      ...(options.argv ?? process.argv.slice(2)),
+    ],
+    { env: options.env, onExit: options.onExit }
+  );
 };

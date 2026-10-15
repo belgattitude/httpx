@@ -24,8 +24,9 @@ jobs:
       TURBO_TEAM: "httpx"
       CI_RUNTIME: "node@${{ matrix.node-version }}"
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           # Fetch all git history so that workspace comparisons have with the correct commits
           # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
           fetch-depth: 0
@@ -50,7 +51,7 @@ jobs:
           echo "YEAR_MONTH=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
 
       - name: ♻️ Restore packages cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             ${{ github.workspace }}/.cache
@@ -85,7 +86,7 @@ jobs:
       #    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: ☂️ Codecov upload (only node-24)
-        uses: codecov/codecov-action@v7
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         if: matrix.node-version == 24
         with:
           fail_ci_if_error: true # optional (default = false)

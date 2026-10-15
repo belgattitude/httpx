@@ -69,6 +69,9 @@ minimumReleaseAgeExclude:
   - "@napi-rs/*"
   - "@next/*"
   - "@oxc-project/*"
+  - "@oxfmt/*"
+  - "@oxlint-tsgolint/*"
+  - "@oxlint/*"
   - "@rolldown/*"
   - "@size-limit/*"
   - "@tanstack/*"
@@ -87,6 +90,9 @@ minimumReleaseAgeExclude:
   - next
   - npm-check-updates
   - obug
+  - oxfmt
+  - oxlint
+  - oxlint-tsgolint
   - pino
   - prettier
   - rolldown
@@ -100,3 +106,4 @@ minimumReleaseAgeExclude:
   - vitest
   - workerd
   - wrangler
+  - ultracite@8.0.1

@@ -14,8 +14,7 @@
     "test": "vitest run",
     "test-unit": "vitest run",
     "test-unit-watch": "vitest --ui",
-    "typecheck": "next typegen && tsc --project tsconfig.json --noEmit",
-    "typecheck-no-paths": "next typegen && tsc --project tsconfig.no-paths.json --noEmit",
+    "typecheck": "next typegen && dx-typecheck --project tsconfig.json --noEmit",
     "typegen": "next typegen"
   },
   "dependencies": {

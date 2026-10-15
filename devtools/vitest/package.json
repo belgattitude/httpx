@@ -21,13 +21,14 @@
     "./wrangler.toml": "./wrangler.toml"
   },
   "scripts": {
-    "build": "tsdown",
-    "clean": "rimraf ./dist ./build ./coverage ./_release",
+    "build": "dx-build",
+    "clean": "rimraf --glob ./dist ./build ./coverage './tsconfig*.tsbuildinfo'",
     "format": "dx-oxfmt --write",
     "install-playwright": "playwright install chromium",
     "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
     "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
-    "typecheck": "tsc --project tsconfig.json --noEmit"
+    "typecheck": "dx-typecheck --project tsconfig.json --noEmit",
+    "typecheck-bun": "dx-typecheck-bun --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "@cloudflare/vitest-plugin": "1.4.2",

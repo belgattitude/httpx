@@ -83,7 +83,7 @@
     "bench": "vitest bench --run",
     "bench-bun": "bun --bun run vitest bench --run",
     "bench-watch": "vitest bench",
-    "build": "pnpm run clean && tsdown",
+    "build": "pnpm run clean && dx-build",
     "build-release": "pnpm run build",
     "check-dist": "run-s check-dist-esm check-dist-cjs",
     "check-dist-cjs": "es-check es2022 './dist/**/*.cjs' --not './dist/*.map.js'",
@@ -107,8 +107,9 @@
     "test-unit-coverage": "vitest run --coverage",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-watch": "vitest --ui  --api 4212",
-    "typecheck": "tsc --project ./tsconfig.json --noEmit",
-    "typecheck-build": "tsc --project tsconfig.build.json --noEmit"
+    "typecheck": "dx-typecheck --project tsconfig.json --noEmit",
+    "typecheck-build": "dx-typecheck --project tsconfig.build.json --noEmit",
+    "typecheck-bun": "dx-typecheck-bun --project tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
