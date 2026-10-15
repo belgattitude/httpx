@@ -1,5 +1,11 @@
 # @httpx/lru
 
+## 0.15.2
+
+### Patch Changes
+
+- [#2826](https://github.com/belgattitude/httpx/pull/2826) [`e09d64e`](https://github.com/belgattitude/httpx/commit/e09d64e277554aa49a8b2de7d06a5f3efb7b0714) Thanks [@belgattitude](https://github.com/belgattitude)! - Update benchmarks in README
+
 ## 0.15.1
 
 ### Patch Changes
