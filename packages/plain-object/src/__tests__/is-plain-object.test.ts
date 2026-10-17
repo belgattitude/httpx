@@ -161,6 +161,7 @@ describe("isPlainObject", () => {
     it.each(javascriptStaticBuiltIn)(
       "should return true for static built-in classes",
       (buildInCls) => {
+        // @ts-expect-error static built-in classes are rejected at typecheck
         expect(isPlainObject(buildInCls)).toBe(true);
       }
     );

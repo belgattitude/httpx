@@ -2,6 +2,7 @@ import type {
   BasePlainObject,
   DefaultBasePlainObject,
   MsgOrErrorFactory,
+  StaticBuiltInNamespaceCheck,
 } from "./internal.types";
 import { isPlainObject } from "./is-plain-object";
 import type { PlainObject } from "./plain-object.types";
@@ -43,13 +44,30 @@ import type { PlainObject } from "./plain-object.types";
  */
 export function assertPlainObject<
   TValue extends BasePlainObject = DefaultBasePlainObject,
+  TInput = unknown,
 >(
-  v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  // The asserted type is kept in the union to stay assignable to the parameter
+  v:
+    | TInput
+    | NoInfer<
+        TValue extends DefaultBasePlainObject
+          ? BasePlainObject
+          : PlainObject<TValue>
+      >,
+  ...rest: StaticBuiltInNamespaceCheck<TInput> extends []
+    ? [msgOrErrorFactory?: MsgOrErrorFactory]
+    : [
+        msgOrErrorFactory: MsgOrErrorFactory | undefined,
+        ...StaticBuiltInNamespaceCheck<TInput>,
+      ]
 ): asserts v is TValue extends DefaultBasePlainObject
   ? BasePlainObject
-  : PlainObject<TValue> {
-  if (!isPlainObject<TValue>(v)) {
+  : PlainObject<TValue>;
+export function assertPlainObject(
+  v: unknown,
+  msgOrErrorFactory?: MsgOrErrorFactory
+): void {
+  if (!isPlainObject(v)) {
     if (
       msgOrErrorFactory === undefined ||
       typeof msgOrErrorFactory === "string"

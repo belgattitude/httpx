@@ -132,4 +132,63 @@ describe("plain-object types tests", () => {
       expectTypeOf(po?.requiredDeep?.idReq).toBeUnknown();
     });
   });
+
+  describe("static built-in classes", () => {
+    it("should fail typecheck when a static built-in class is given", () => {
+      // @ts-expect-error Math is not a plain object
+      isPlainObject(Math);
+      // @ts-expect-error JSON is not a plain object
+      isPlainObject(JSON);
+      // @ts-expect-error Atomics is not a plain object
+      isPlainObject(Atomics);
+      // @ts-expect-error Reflect is not a plain object
+      isPlainObject(Reflect);
+      // @ts-expect-error Intl is not a plain object
+      isPlainObject(Intl);
+      // @ts-expect-error WebAssembly is not a plain object
+      isPlainObject(WebAssembly);
+      // @ts-expect-error Math is not a plain object
+      isPlainObject<{ a: string }, Math>(Math);
+      expect(() => {
+        // @ts-expect-error Math is not a plain object
+        assertPlainObject(Math);
+        // @ts-expect-error Intl is not a plain object
+        assertPlainObject(Intl, "message");
+      }).not.toThrow();
+    });
+
+    it("should not fail typecheck when the value isn't statically known", () => {
+      const unknownValue = Math as unknown;
+      // oxlint-disable-next-line typescript/no-explicit-any
+      const anyValue = Math as any;
+      const objectValue = Math as object;
+      expect(isPlainObject(unknownValue)).toBe(true);
+      expect(isPlainObject(anyValue)).toBe(true);
+      expect(isPlainObject(objectValue)).toBe(true);
+      expect(isPlainObject(null)).toBe(false);
+      expect(isPlainObject("str")).toBe(false);
+      expect(isPlainObject({ a: 1 })).toBe(true);
+    });
+
+    it("should keep working as a callback", () => {
+      const values: unknown[] = [{ a: 1 }, null, "str"];
+      const filtered = values.filter(isPlainObject);
+      expectTypeOf(filtered).toEqualTypeOf<Record<PropertyKey, unknown>[]>();
+      expect(filtered).toStrictEqual([{ a: 1 }]);
+    });
+
+    it("should accept assertPlainObject message or error factory", () => {
+      expect(() => assertPlainObject(null, "message")).toThrow("message");
+      expect(() => assertPlainObject(null, () => new Error("factory"))).toThrow(
+        "factory"
+      );
+    });
+
+    it("should preserve narrowing of unions", () => {
+      const value = { a: 1 } as string | { a: number } | null;
+      if (isPlainObject(value)) {
+        expectTypeOf(value).toEqualTypeOf<{ a: number }>();
+      }
+    });
+  });
 });
