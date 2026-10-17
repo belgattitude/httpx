@@ -19,5 +19,12 @@ export default defineConfig({
         "promise/avoid-new": "off",
       },
     },
+    {
+      // the deprecated isStaticBuiltInClass is still tested till its removal
+      files: ["src/__tests__/is-static-built-in-class.test.ts"],
+      rules: {
+        "typescript/no-deprecated": "off",
+      },
+    },
   ],
 });
