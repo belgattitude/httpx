@@ -23,20 +23,11 @@
   ],
   "type": "module",
   "sideEffects": false,
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "httpx-monorepo-source": "./src/index.ts",
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -47,10 +38,8 @@
     "bench-watch": "dx-bench --watch",
     "build": "pnpm run clean && dx-build",
     "build-release": "pnpm run build",
-    "check-dist": "run-s check-dist-esm check-dist-cjs",
-    "check-dist-cjs": "es-check es2022 './dist/**/*.cjs' --not './dist/*.map.js'",
-    "check-dist-esm": "es-check es2022 './dist/**/*.js' --not './dist/*.map.js' --module",
-    "check-pub": "attw --pack && publint",
+    "check-dist": "es-check es2022 './dist/**/*.js' --not './dist/*.map.js' --module",
+    "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-compress-unit --dir ./coverage",
     "clean": "rimraf --glob ./dist ./build ./coverage './tsconfig*.tsbuildinfo'",
@@ -73,7 +62,7 @@
     "typecheck-bun": "dx-typecheck-bun --project tsconfig.json --noEmit"
   },
   "dependencies": {
-    "uint8array-extras": "^1.6.0"
+    "@httpx/encode": "workspace:^"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
@@ -82,6 +71,7 @@
     "@sindresorhus/is": "8.1.0",
     "@size-limit/file": "14.2.0",
     "@size-limit/webpack": "14.2.0",
+    "@types/node": "26.6.5",
     "browserslist": "4.29.3",
     "browserslist-to-esbuild": "2.1.1",
     "es-check": "9.8.1",

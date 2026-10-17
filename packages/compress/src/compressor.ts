@@ -1,4 +1,4 @@
-import { uint8ArrayToBase64 } from "uint8array-extras";
+import { Base64 } from "@httpx/encode";
 
 import type { SupportedCompressionAlgorithm } from "./compression-algorithm";
 import { globalCache } from "./global-cache";
@@ -83,8 +83,11 @@ export class Compressor {
     if (!supportedStringEncodings.includes(encoding)) {
       throw new TypeError(`Unsupported string encoding: ${encoding}`);
     }
-    return uint8ArrayToBase64(await this.toUint8Array(data), {
-      urlSafe: encoding === "base64_urlsafe",
+    const urlSafe = encoding === "base64_urlsafe";
+    return Base64.fromUint8Array(await this.toUint8Array(data), {
+      alphabet: urlSafe ? "base64url" : "base64",
+      // uint8array-extras compatibility: url safe output is unpadded
+      omitPadding: urlSafe,
     });
   };
 }
