@@ -1,5 +1,48 @@
 # @httpx/exception
 
+## 4.0.0
+
+### Major Changes
+
+- [#2836](https://github.com/belgattitude/httpx/pull/2836) [`1a4c058`](https://github.com/belgattitude/httpx/commit/1a4c0580bfc5f4eaf7fe65f8dcfda8e279702fae) Thanks [@belgattitude](https://github.com/belgattitude)! - Harden deserialization and typeguards, require node >= 22.14.
+  
+  See the [UPGRADE.md](https://github.com/belgattitude/httpx/blob/main/packages/exception/UPGRADE.md) for details.
+  
+  **Breaking changes**
+  
+  - Requires node >= 22.14 (node 20 has reached end-of-life), dist files target `node22` / `es2022`.
+  - `isHttpException`, `isHttpClientException` and `isHttpServerException` now require a numeric `statusCode`, even when `checkStatusCode` is `false` (ie: `new HttpException("404")` is not an http exception anymore).
+  - `fromJson` never throws: unexpected payloads (ie: `null`, a number, an unknown `__type`, an invalid `cause`) now return a `SerializerError` instead of throwing a `TypeError` or an `Error`.
+  - `createFromSerializable` throws a `SerializerError` (instead of an `Error` or a `TypeError`) on unexpected payloads.
+  - Nested error causes deeper than 10 levels are dropped when (de-)serializing (prevents stack overflows on crafted payloads or cyclic causes).
+  
+  **Fixes**
+  
+  - Unserializing an error named after an inherited object key (ie: `constructor`, `toString`, `__proto__`) now falls back to `Error` (was returning a `String` object or throwing a `TypeError`).
+
+### Minor Changes
+
+- [#2836](https://github.com/belgattitude/httpx/pull/2836) [`1a4c058`](https://github.com/belgattitude/httpx/commit/1a4c0580bfc5f4eaf7fe65f8dcfda8e279702fae) Thanks [@belgattitude](https://github.com/belgattitude)! - Support `instanceof` across multiple copies of the same major version (ie: esm + cjs builds loaded side by side, duplicated installs).
+  
+  Exceptions are now branded with a global `Symbol.for("@httpx/exception-v{major}")` symbol (non-enumerable, not serialized) and `HttpException[Symbol.hasInstance]` falls back to it when the regular prototype check fails. Typeguards (`isHttpException`, `isHttpClientException`, `isHttpServerException`), the serializer and `tryOrFail` benefit from it.
+  
+  ```typescript
+  import { HttpNotFound, isHttpException } from "@httpx/exception";
+  const { HttpNotFound: CjsHttpNotFound } = require("@httpx/exception");
+  
+  const e = new CjsHttpNotFound();
+  e instanceof HttpNotFound; // 👉 true (was false)
+  isHttpException(e); // 👉 true (was false)
+  ```
+  
+  Exceptions from a different major version are intentionally not recognized. Bundle size increases by ~170b (compressed).
+
+### Patch Changes
+
+- [#2836](https://github.com/belgattitude/httpx/pull/2836) [`1a4c058`](https://github.com/belgattitude/httpx/commit/1a4c0580bfc5f4eaf7fe65f8dcfda8e279702fae) Thanks [@belgattitude](https://github.com/belgattitude)! - Remove official support for the Vercel edge-runtime.
+  
+  It is still expected to work, but compatibility is not enforced on CI anymore (`test-unit-edge` removed).
+
 ## 3.2.1
 
 ### Patch Changes
