@@ -12,7 +12,7 @@ import {
 } from "../../src";
 import { convertToSerializable } from "../../src/serializer";
 
-// not available in browsers, edge-runtime and cloudflare workerd
+// not available in browsers and cloudflare workerd
 const runInNewContext = await import("node:vm")
   .then((mod) => mod.runInNewContext)
   .catch(() => undefined);
