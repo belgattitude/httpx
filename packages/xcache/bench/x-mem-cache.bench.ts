@@ -15,8 +15,7 @@ import { benchConfig } from "./bench-config";
 import { generateArrayOfData } from "./data-generator";
 
 const options = benchConfig.benchOptions;
-const { isCiOrCodSpeed } = benchConfig;
-const rows = isCiOrCodSpeed ? 1000 : 500_000; // Adjust rows based on environment
+const { isCiOrCodSpeed, rows } = benchConfig;
 
 const waitMs = async (ms: number): Promise<void> => {
   await sleep(ms);
