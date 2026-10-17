@@ -1,4 +1,4 @@
-import { base64ToUint8Array } from "uint8array-extras";
+import { Base64 } from "@httpx/encode";
 
 import type { SupportedCompressionAlgorithm } from "./compression-algorithm";
 import { globalCache } from "./global-cache";
@@ -66,7 +66,7 @@ export class Decompressor {
       throw new TypeError(`Unsupported string encoding: ${encoding}`);
     }
     return globalCache.utf8TextDecoder.decode(
-      await this.fromUint8Array(base64ToUint8Array(compressedString))
+      await this.fromUint8Array(Base64.toUint8Array(compressedString))
     );
   };
 }

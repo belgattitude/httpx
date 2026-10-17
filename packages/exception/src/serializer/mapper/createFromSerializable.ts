@@ -1,6 +1,8 @@
 import type { HttpException } from "../../base";
 import { createHttpException } from "../../factory/createHttpException";
 import type { HttpExceptionParamsWithIssues } from "../../types/HttpExceptionParamsWithIssues";
+import { maxCauseDepth } from "../constants";
+import { SerializerError } from "../error/SerializerError";
 import {
   baseExceptionMap,
   isBaseHttpException,
@@ -17,17 +19,26 @@ import type {
 
 type MaskedUndefinedAsStringTillLibEs5SupportsExactTypes = string;
 
+const isCauseAllowed = (
+  cause: Serializable | undefined,
+  depth: number
+): cause is Serializable => Boolean(cause) && depth < maxCauseDepth;
+
 const createCustomError = (
   serializable: Omit<SerializableError | SerializableNonNativeError, "__type">,
-  params?: SerializerParams
+  params: SerializerParams | undefined,
+  depth: number
 ): Error | NativeError => {
   const { includeStack = false } = params ?? {};
   const { cause, message, name, stack } = serializable;
-  const cls = nativeErrorMap[name as keyof typeof nativeErrorMap] ?? Error;
-  const e: Error | NativeError = cause
+  // own keys only: inherited ones (ie: 'constructor', 'toString') are not error classes
+  const cls = Object.hasOwn(nativeErrorMap, name)
+    ? nativeErrorMap[name as keyof typeof nativeErrorMap]
+    : Error;
+  const e: Error | NativeError = isCauseAllowed(cause, depth)
     ? new cls(message, {
         // oxlint-disable-next-line no-use-before-define -- mutual recursion, only called once the module is initialized
-        cause: createFromSerializable(cause, params),
+        cause: fromSerializable(cause, params, depth + 1),
       })
     : new cls(message);
   if (!includeStack) {
@@ -41,7 +52,8 @@ const createCustomError = (
 
 const createHttpExceptionError = (
   serializable: SerializableHttpException,
-  params?: SerializerParams
+  params: SerializerParams | undefined,
+  depth: number
 ): Error | HttpException => {
   const { includeStack = false } = params ?? {};
   const {
@@ -57,11 +69,15 @@ const createHttpExceptionError = (
     issues,
   } = serializable;
   const exceptionParams = {
-    cause: cause
+    cause: isCauseAllowed(cause, depth)
       ? // oxlint-disable-next-line no-use-before-define -- mutual recursion, only called once the module is initialized
-        createFromSerializable(cause, {
-          includeStack,
-        })
+        fromSerializable(
+          cause,
+          {
+            includeStack,
+          },
+          depth + 1
+        )
       : undefined,
     code,
     errorId,
@@ -85,7 +101,8 @@ const createHttpExceptionError = (
       },
       {
         includeStack,
-      }
+      },
+      depth
     );
   }
   if (!includeStack) {
@@ -97,34 +114,48 @@ const createHttpExceptionError = (
   return e;
 };
 
+const fromSerializable = (
+  payload: Serializable,
+  params: SerializerParams | undefined,
+  depth: number
+): Error | HttpException | NativeError => {
+  // payloads usually come from untrusted json: never assume their shape
+  const type: unknown =
+    typeof payload === "object" && payload !== null
+      ? payload.__type
+      : undefined;
+  switch (type) {
+    case "HttpException": {
+      return createHttpExceptionError(
+        payload as SerializableHttpException,
+        params,
+        depth
+      );
+    }
+    case "NativeError":
+    case "NonNativeError": {
+      return createCustomError(payload, params, depth);
+    }
+    default: {
+      throw new SerializerError(
+        `Can't unserialize from unknown error (${String(
+          (payload as Partial<Serializable> | null)?.name
+        )})`
+      );
+    }
+  }
+};
+
 /**
  * create an Error, NativeError or any HttpException from a
- * serializable representation
+ * serializable representation.
  *
+ * Nested causes deeper than 10 levels are dropped.
+ *
+ * @throws {SerializerError} when the payload isn't a serializable error
  * @see {convertToSerializable}
  */
 export const createFromSerializable = (
   payload: Serializable,
   params?: SerializerParams
-): Error | HttpException | NativeError => {
-  let e: Error | HttpException | NativeError;
-  switch (payload.__type) {
-    case "HttpException": {
-      e = createHttpExceptionError(payload, params);
-      break;
-    }
-    case "NativeError":
-    case "NonNativeError": {
-      e = createCustomError(payload, params);
-      break;
-    }
-    default: {
-      throw new Error(
-        `Can't unserialize from unknown error (${
-          (payload as Serializable).name
-        })`
-      );
-    }
-  }
-  return e;
-};
+): Error | HttpException | NativeError => fromSerializable(payload, params, 0);

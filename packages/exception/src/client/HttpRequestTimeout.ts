@@ -1,5 +1,6 @@
 import { HttpClientException } from "../base/HttpClientException";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
+import { brandKey } from "../utils/brand";
 import { getNormalizedParams } from "../utils/getNormalizedParams";
 import { initProtoAndName } from "../utils/initProtoAndName";
 
@@ -18,6 +19,7 @@ const status = 408;
 const name = "RequestTimeout";
 export class HttpRequestTimeout extends HttpClientException {
   static readonly STATUS = status;
+  static override readonly [brandKey]: string = `Http${name}`;
   constructor(msgOrParams?: HttpExceptionParams | string) {
     super(status, getNormalizedParams(name, msgOrParams));
     initProtoAndName(this, name, HttpRequestTimeout);

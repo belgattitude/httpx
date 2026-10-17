@@ -364,6 +364,9 @@ importers:
       '@hono/node-server':
         specifier: 2.1.5
         version: 2.1.5(hono@4.13.13)
+      '@hono/vercel':
+        specifier: 1.0.1
+        version: 1.0.1(hono@4.13.13)
       '@httpx/assert':
         specifier: workspace:^
         version: link:../../packages/assert
@@ -660,9 +663,9 @@ importers:
 
   packages/compress:
     dependencies:
-      uint8array-extras:
-        specifier: ^1.6.0
-        version: 1.6.0
+      '@httpx/encode':
+        specifier: workspace:^
+        version: link:../encode
     devDependencies:
       '@arethetypeswrong/cli':
         specifier: 0.18.5
@@ -682,6 +685,9 @@ importers:
       '@size-limit/webpack':
         specifier: 14.2.0
         version: 14.2.0(@swc/core@1.16.18)(@types/webpack@5.28.5)(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.30)(sharp@0.35.5)(size-limit@14.2.0)
+      '@types/node':
+        specifier: 26.6.5
+        version: 26.6.5
       browserslist:
         specifier: 4.29.3
         version: 4.29.3
@@ -1684,6 +1690,9 @@ importers:
       '@size-limit/webpack':
         specifier: 14.2.0
         version: 14.2.0(@swc/core@1.16.18)(@types/webpack@5.28.5)(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.30)(sharp@0.35.5)(size-limit@14.2.0)
+      '@types/node':
+        specifier: 26.6.5
+        version: 26.6.5
       browserslist:
         specifier: 4.29.3
         version: 4.29.3
@@ -2464,6 +2473,16 @@ packages:
     peerDependencies:
       '@types/hono': '*'
       hono: ^4 || ^5.0.0-0
+    peerDependenciesMeta:
+      '@types/hono':
+        optional: true
+
+  '@hono/vercel@1.0.1':
+    resolution: {integrity: sha512-2g9P7VOHB7k99t20vZd6Mv8Pvq/PwgTYI29NBgDPohUy4KNceylHW7hCSrD7Q8XrbFo0p+Na2ScymTFDCRX3Uw==}
+    engines: {node: '>=16.9.0'}
+    peerDependencies:
+      '@types/hono': '*'
+      hono: '>=4.13.9 || ^5.0.0-0'
     peerDependenciesMeta:
       '@types/hono':
         optional: true
@@ -6920,8 +6939,8 @@ packages:
     resolution: {integrity: sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==}
     hasBin: true
 
-  node-releases@2.0.58:
-    resolution: {integrity: sha512-BdiKAgbfRlvfMq/XzO/AF9NPmaA8a+YpLAyAFTVFBj3gARrAIfWvNq7Q7NE4se3KgFu0KkrvQMxTS0XVnsGzHg==}
+  node-releases@2.0.59:
+    resolution: {integrity: sha512-5qr2okC4ItAI0hG5SaV0HoYMpnM/Y6+Oqr7AmPYy/2uEoGvS+GbSKLeRxSS1uAdu59yz0ouzcuXievSgg///WA==}
     engines: {node: '>=18'}
 
   npm-check-updates@23.1.1:
@@ -9324,6 +9343,10 @@ snapshots:
     dependencies:
       hono: 4.13.13
 
+  '@hono/vercel@1.0.1(hono@4.13.13)':
+    dependencies:
+      hono: 4.13.13
+
   '@humanfs/core@0.19.2':
     dependencies:
       '@humanfs/types': 0.15.0
@@ -11352,7 +11375,7 @@ snapshots:
       baseline-browser-mapping: 2.11.29
       caniuse-lite: 1.0.30001816
       electron-to-chromium: 1.5.456
-      node-releases: 2.0.58
+      node-releases: 2.0.59
       update-browserslist-db: 1.3.4(browserslist@4.29.0)
     transitivePeerDependencies:
       - '@types/browserslist'
@@ -11362,7 +11385,7 @@ snapshots:
       baseline-browser-mapping: 2.11.29
       caniuse-lite: 1.0.30001816
       electron-to-chromium: 1.5.456
-      node-releases: 2.0.58
+      node-releases: 2.0.59
       update-browserslist-db: 1.3.4(browserslist@4.29.3)
     transitivePeerDependencies:
       - '@types/browserslist'
@@ -13741,7 +13764,7 @@ snapshots:
 
   node-gyp-build@4.8.4: {}
 
-  node-releases@2.0.58: {}
+  node-releases@2.0.59: {}
 
   npm-check-updates@23.1.1: {}
 

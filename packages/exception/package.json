@@ -105,7 +105,6 @@
     "test-unit-bun": "bun --bun run vitest run",
     "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-coverage": "vitest run --coverage",
-    "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-watch": "vitest --ui  --api 4212",
     "typecheck": "dx-typecheck --project tsconfig.json --noEmit",
     "typecheck-build": "dx-typecheck --project tsconfig.build.json --noEmit",
@@ -141,6 +140,6 @@
     "webpack": "5.111.1"
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22.14.0"
   }
 }

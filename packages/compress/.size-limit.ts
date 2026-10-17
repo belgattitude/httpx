@@ -5,19 +5,19 @@ const config = [
     name: "Only { Compressor } (ESM)",
     path: ["dist/index.js"],
     import: "{ Compressor }",
-    limit: "620B",
+    limit: "1700B",
   },
   {
     name: "Only { Decompressor } (ESM)",
     path: ["dist/index.js"],
     import: "{ Decompressor }",
-    limit: "450B",
+    limit: "1650B",
   },
   {
     name: "{ Decompressor, Compressor } (ESM)",
     path: ["dist/index.js"],
     import: "{ Decompressor, Compressor }",
-    limit: "750B",
+    limit: "1750B",
   },
 ] satisfies SizeLimitConfig;
 

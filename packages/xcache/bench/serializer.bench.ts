@@ -11,8 +11,7 @@ import { benchConfig } from "./bench-config";
 import { generateArrayOfData } from "./data-generator";
 
 const options = benchConfig.benchOptions;
-const { isCiOrCodSpeed } = benchConfig;
-const rows = isCiOrCodSpeed ? 100 : 50_000; // Adjust rows based on environment
+const { rows } = benchConfig;
 describe.each([
   ["json", new JsonSerializer(), false],
   ["devalue", new DevalueSerializer(), false],

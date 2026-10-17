@@ -3,6 +3,11 @@ import { SerializerError } from "../error/SerializerError";
 import { createFromSerializable } from "../mapper";
 import type { SerializableError, SerializerParams } from "../types";
 
+/**
+ * Create an Error, NativeError or any HttpException from json.
+ *
+ * Never throws: invalid json or payloads return a SerializerError.
+ */
 export const fromJson = (
   json: string,
   params?: SerializerParams
@@ -16,5 +21,14 @@ export const fromJson = (
       error instanceof Error ? { cause: error } : {}
     );
   }
-  return createFromSerializable(v, params);
+  try {
+    return createFromSerializable(v, params);
+  } catch (error) {
+    return error instanceof SerializerError
+      ? error
+      : new SerializerError(
+          `Can't unserialize json`,
+          error instanceof Error ? { cause: error } : {}
+        );
+  }
 };
