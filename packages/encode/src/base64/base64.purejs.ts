@@ -72,7 +72,7 @@ const bytesToBase64 = (
 const base64ToBytes = (
   input: string,
   options?: Base64DecodeOptions
-): Uint8Array => {
+): Uint8Array<ArrayBuffer> => {
   // Validated, without whitespace / padding, standard alphabet
   const data = prepareBase64Input(input, options);
   const { length } = data;
@@ -177,6 +177,8 @@ export const Base64Purejs = {
    * @throws Error when the input is not valid base64 according to the options
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/fromBase64#options
    */
-  toUint8Array: (input: string, options?: Base64DecodeOptions): Uint8Array =>
-    base64ToBytes(input, options),
+  toUint8Array: (
+    input: string,
+    options?: Base64DecodeOptions
+  ): Uint8Array<ArrayBuffer> => base64ToBytes(input, options),
 } as const satisfies Base64Encoder;

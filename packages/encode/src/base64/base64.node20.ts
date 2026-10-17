@@ -56,9 +56,15 @@ const bytesToBase64 = isUint8ArrayBase64Supported
 // Returns a plain Uint8Array: small Buffers are slices of a shared memory
 // pool, exposing their `.buffer` would leak (and allow to corrupt) the
 // other allocations. Pooled buffers are small, the copy is cheap.
-const bufferToUint8Array = (buffer: Buffer): Uint8Array =>
+// Buffer.from(string, "base64") is always backed by an ArrayBuffer (never a
+// SharedArrayBuffer).
+const bufferToUint8Array = (buffer: Buffer): Uint8Array<ArrayBuffer> =>
   buffer.byteLength === buffer.buffer.byteLength
-    ? new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength)
+    ? new Uint8Array(
+        buffer.buffer as ArrayBuffer,
+        buffer.byteOffset,
+        buffer.byteLength
+      )
     : new Uint8Array(buffer);
 
 export const Base64Node20 = {
@@ -134,6 +140,6 @@ export const Base64Node20 = {
    */
   toUint8Array: isUint8ArrayBase64Supported
     ? fromBase64Native
-    : (input: string, options?: Base64DecodeOptions): Uint8Array =>
+    : (input: string, options?: Base64DecodeOptions): Uint8Array<ArrayBuffer> =>
         bufferToUint8Array(base64ToBuffer(input, options)),
 } as const satisfies Base64Encoder;

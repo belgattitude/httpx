@@ -108,7 +108,7 @@ export const prepareBase64Input = (
 export const fromBase64Native = (
   input: string,
   options?: Base64DecodeOptions
-): Uint8Array => {
+): Uint8Array<ArrayBuffer> => {
   try {
     const alphabet = options?.alphabet;
     return Uint8Array.fromBase64(

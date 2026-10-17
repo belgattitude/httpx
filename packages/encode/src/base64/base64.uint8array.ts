@@ -76,6 +76,8 @@ export const Base64Uint8Array = {
    * @throws Error when the input is not valid base64 according to the options
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/fromBase64#options
    */
-  toUint8Array: (input: string, options?: Base64DecodeOptions): Uint8Array =>
-    fromBase64Native(input, options),
+  toUint8Array: (
+    input: string,
+    options?: Base64DecodeOptions
+  ): Uint8Array<ArrayBuffer> => fromBase64Native(input, options),
 } as const satisfies Base64Encoder;

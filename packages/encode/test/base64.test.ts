@@ -1,38 +1,11 @@
 import * as jsBase64 from "js-base64";
 import prettyBytes from "pretty-bytes";
 
-import { Base64Purejs } from "../src/base64/base64.purejs.js";
 import type {
   Base64DecodeOptions,
   Base64EncodeOptions,
-  Base64Encoder,
 } from "../src/base64/base64.types";
-
-const isNodeLike = !("window" in globalThis);
-const hasAtob = typeof globalThis.atob === "function";
-
-const base64Node = isNodeLike
-  ? await import("../src/base64/base64.node20").then((mod) => mod.Base64Node20)
-  : null;
-
-const base64Atob = hasAtob
-  ? await import("../src/base64/base64.atob").then((mod) => mod.Base64Atob)
-  : null;
-
-const isUint8ArrayBase64Supported = typeof Uint8Array.fromBase64 === "function";
-
-const base64Uint8Array = isUint8ArrayBase64Supported
-  ? await import("../src/base64/base64.uint8array").then(
-      (mod) => mod.Base64Uint8Array
-    )
-  : null;
-
-const testRealms = [
-  ["pure-js", Base64Purejs],
-  base64Node ? ["node20", base64Node] : undefined,
-  base64Atob ? ["atob", base64Atob] : undefined,
-  base64Uint8Array ? ["uint8array", base64Uint8Array] : undefined,
-].filter(Boolean) as [string, Base64Encoder][];
+import { isUint8ArrayBase64Supported, run, testRealms } from "./test-realms";
 
 const textSamples = [
   ["ascii", "Hello, world!", "SGVsbG8sIHdvcmxkIQ=="],
@@ -50,15 +23,6 @@ const textSamples = [
   ],
   ["url unsafe", "?=:@&$+!#'()~*%/;:<>\\", "Pz06QCYkKyEjJygpfiolLzs6PD5c"],
 ] as const;
-
-// Captures the outcome of a decode/encode call, errors included
-const run = (fn: () => string): { value: string } | { error: true } => {
-  try {
-    return { value: fn() };
-  } catch {
-    return { error: true };
-  }
-};
 
 describe("Base64", () => {
   const string = textSamples
@@ -406,6 +370,14 @@ describe("Base64", () => {
       expect(encoder.toUint8Array("-_8")).toStrictEqual(
         new Uint8Array([0xfb, 0xff])
       );
+    });
+
+    it("should be typed as an ArrayBuffer backed Uint8Array (BufferSource)", () => {
+      // TS 5.7+: accepted by WebCrypto, Blob, fetch... without a cast
+      expectTypeOf(encoder.toUint8Array("+/8=")).toEqualTypeOf<
+        Uint8Array<ArrayBuffer>
+      >();
+      expectTypeOf(encoder.toUint8Array("+/8=")).toExtend<BufferSource>();
     });
 
     it("should not expose a shared (pooled) ArrayBuffer", () => {

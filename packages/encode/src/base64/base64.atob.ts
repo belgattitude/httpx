@@ -13,7 +13,10 @@ import type {
 
 // https://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings/77383580#77383580
 
-function base64ToBytes(base64: string, options?: Base64DecodeOptions) {
+function base64ToBytes(
+  base64: string,
+  options?: Base64DecodeOptions
+): Uint8Array<ArrayBuffer> {
   // atob() only accepts the standard alphabet and does not support the
   // decode options, validate and normalize the input upfront
   const binString = globalThis.atob(prepareBase64Input(base64, options));
@@ -111,6 +114,8 @@ export const Base64Atob = {
    * @throws Error when the input is not valid base64 according to the options
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/fromBase64#options
    */
-  toUint8Array: (input: string, options?: Base64DecodeOptions): Uint8Array =>
-    base64ToBytes(input, options),
+  toUint8Array: (
+    input: string,
+    options?: Base64DecodeOptions
+  ): Uint8Array<ArrayBuffer> => base64ToBytes(input, options),
 } as const satisfies Base64Encoder;

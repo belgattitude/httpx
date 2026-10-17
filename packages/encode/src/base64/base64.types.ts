@@ -92,5 +92,8 @@ export interface Base64Encoder {
   /** Encode bytes to base64 */
   fromUint8Array: (bytes: Uint8Array, options?: Base64EncodeOptions) => string;
   /** Decode a base64 string to bytes */
-  toUint8Array: (input: string, options?: Base64DecodeOptions) => Uint8Array;
+  toUint8Array: (
+    input: string,
+    options?: Base64DecodeOptions
+  ) => Uint8Array<ArrayBuffer>;
 }
