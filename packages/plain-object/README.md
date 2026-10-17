@@ -22,7 +22,7 @@ $ pnpm add @httpx/plain-object
 - 🦄&nbsp; Convenience [PlainObject](#plainobject-type) typescript typings.
 - 🚀&nbsp; Faster than most alternatives, see [benchmarks](#benchmarks).
 - 📐&nbsp; Lightweight (starts at [~80B](#bundle-size))
-- 🛡️&nbsp; Tested on [node 20-25, bun, browser, cloudflare workers and runtime/edge](#compatibility).
+- 🛡️&nbsp; Tested on [node 20-26, bun, browser, cloudflare workers and runtime/edge](#compatibility).
 - 🙏&nbsp; Works cross-realms (node:vm runInNewContext,...)
 - 🗝️&nbsp; Available in ESM and CJS formats.
 
@@ -81,16 +81,21 @@ isPlainObject(new (class Cls {})()); // ❌
 isPlainObject(globalThis); // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare, deno)
 isPlainObject(process.env); // ✅ with Bun and cloudflare ❌ otherwise (Nodejs, edge, deno)
 
-// 👇 Static built-in classes aren't properly checked. This is a trade-off
-//    to maintain the best performance and size. If you need to check for these,
-//    use a custom type guard. But in most cases, you won't need to check for these
-//    as the probability of writing a code that receives these as plain objects is low.
+// 👇 Static built-in namespaces aren't checked at runtime. This is a trade-off
+//    to maintain the best performance and size. When statically known, they
+//    are rejected at typecheck. If you need a runtime check, use a custom type
+//    guard. But in most cases, you won't need to check for these as the
+//    probability of writing a code that receives these as plain objects is low.
 //    and probably indicates an issue in your code.
 
-isPlainObject(Math); // ⚠️✅ return true, but Math is not a plain object
-isPlainObject(JSON); // ⚠️✅ return true, but JSON is not a plain object
-isPlainObject(Atomics); // ⚠️✅ return true, but Atomics is not a plain object
-isPlainObject(Reflect); // ⚠️✅ return true, but Reflect is not a plain object
+isPlainObject(Math); // ⚠️✅ return true, typecheck error
+isPlainObject(JSON); // ⚠️✅ return true, typecheck error
+isPlainObject(Atomics); // ⚠️✅ return true, typecheck error
+isPlainObject(Reflect); // ⚠️✅ return true, typecheck error
+isPlainObject(Intl); // ⚠️✅ return true, typecheck error
+isPlainObject(WebAssembly); // ⚠️✅ return true, typecheck error
+isPlainObject(Temporal); // ⚠️✅ return true, typecheck error
+isPlainObject(Temporal.Now); // ⚠️✅ return true, typecheck error
 ```
 
 ### assertPlainObject
@@ -182,72 +187,42 @@ someFn(value);
 >
 > [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/belgattitude/httpx)
 
-### NodeJs 24.x
+### NodeJs 26.x
 
 ```
- RUN  v4.1.5 /home/sebastien/github/httpx/packages/plain-object
+ RUN  v5.0.5 /Users/sebastien/github/httpx/packages/plain-object
 
 
- ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 7424ms
-     name                                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · "@httpx/plain-object": `isPlainObject(v)`            1,267,258.73  0.0007  0.8912  0.0008  0.0007  0.0015  0.0018  0.0102  ±0.67%   633631
-   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'              1,167,969.53  0.0007  2.5366  0.0009  0.0007  0.0015  0.0018  0.0104  ±1.27%   583985
-   · "@sindresorhus/is":"8.0.0": 'is.plainObject(v)'      1,176,458.30  0.0007  0.7647  0.0009  0.0007  0.0014  0.0018  0.0130  ±0.77%   588230
-   · "zod":"4.4.3": 'zod.util.isPlainObject(v)'             997,663.61  0.0008  1.8923  0.0010  0.0009  0.0017  0.0022  0.0143  ±1.08%   498832
-   · "es-toolkit":"1.46.1": 'isPlainObject(v)'            1,040,376.28  0.0008  0.5971  0.0010  0.0008  0.0020  0.0022  0.0155  ±0.67%   520189
-   · "redux":"5.0.1": 'isPlainObject(v)'                    406,199.96  0.0020  1.0312  0.0025  0.0021  0.0052  0.0061  0.0251  ±0.82%   203116
-   · "is-plain-object":"5.0.0": 'isPlainObject(v)'          583,263.88  0.0014  4.1774  0.0017  0.0015  0.0035  0.0040  0.0207  ±1.81%   291632
-   · "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'    477,915.74  0.0019  0.6726  0.0021  0.0019  0.0038  0.0050  0.0208  ±0.62%   238958
-   · lodash-es:"4.18.1": '_.isPlainObject(v)'                16,747.84  0.0467  1.8359  0.0597  0.0646  0.1725  0.2622  0.5797  ±1.46%     8375
-
- BENCH  Summary
-
-  "@httpx/plain-object": `isPlainObject(v)` - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
-    1.08x faster than "@sindresorhus/is":"8.0.0": 'is.plainObject(v)'
-    1.09x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
-    1.22x faster than "es-toolkit":"1.46.1": 'isPlainObject(v)'
-    1.27x faster than "zod":"4.4.3": 'zod.util.isPlainObject(v)'
-    2.17x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
-    2.65x faster than "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'
-    3.12x faster than "redux":"5.0.1": 'isPlainObject(v)'
-    75.67x faster than lodash-es:"4.18.1": '_.isPlainObject(v)'
-
+ ✓ |bench| bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values > isPlainObject 14170ms
+   name                                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   "zod":"4.6.7": 'zod.util.isPlainObject(v)'           2,263,343.78  0.0004  0.0855  0.0004  0.0005  0.0006  0.0006  0.0007  ±0.06%  2237029   fastest
+   "@sindresorhus/is":"8.1.0": 'is.plainObject(v)'      1,925,803.26  0.0004  0.0525  0.0005  0.0005  0.0008  0.0008  0.0009  ±0.06%  1891693
+   "is-plain-obj":"4.1.0": 'isPlainObj(v)'              1,919,024.52  0.0004  0.0567  0.0005  0.0005  0.0008  0.0008  0.0010  ±0.07%  1879232
+   "@httpx/plain-object": `isPlainObject(v)`            1,921,739.24  0.0004  0.0729  0.0005  0.0005  0.0008  0.0008  0.0020  ±0.09%  1870744
+   "es-toolkit":"1.52.0": 'isPlainObject(v)'            1,814,065.89  0.0005  0.0651  0.0006  0.0006  0.0007  0.0008  0.0009  ±0.05%  1790143
+   "is-plain-object":"5.1.0": 'isPlainObject(v)'        1,285,462.54  0.0007  2.9759  0.0008  0.0008  0.0011  0.0011  0.0059  ±0.59%  1253320
+   "redux":"5.0.1": 'isPlainObject(v)'                    633,144.10  0.0014  0.0631  0.0016  0.0016  0.0021  0.0022  0.0070  ±0.06%   625439
+   "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'    514,604.33  0.0017  0.0983  0.0020  0.0020  0.0027  0.0034  0.0125  ±0.11%   502725
+   lodash-es:"4.18.1": '_.isPlainObject(v)'                73,312.20  0.0128  2.4373  0.0139  0.0135  0.0220  0.0240  0.0416  ±0.51%    72115   slowest
 ```
 
-### Bun 1.3.13
+### Bun 1.4.3
 
 ```
-
-Benchmarking is an experimental feature.
-Breaking changes might not follow SemVer, please pin Vitest's version when using it.
-
- RUN  v4.1.5 /home/sebastien/github/httpx/packages/plain-object
+ RUN  v5.0.5 /Users/sebastien/github/httpx/packages/plain-object
 
 
- ✓ bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values 8270ms
-     name                                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · "@httpx/plain-object": `isPlainObject(v)`            3,035,494.74  0.0002  2.0300  0.0003  0.0003  0.0006  0.0007  0.0018  ±0.98%  1517748
-   · "is-plain-obj":"4.1.0": 'isPlainObj(v)'              2,910,611.34  0.0003  0.9960  0.0003  0.0003  0.0006  0.0007  0.0019  ±0.86%  1455306
-   · "@sindresorhus/is":"8.0.0": 'is.plainObject(v)'      3,195,461.39  0.0003  1.8672  0.0003  0.0003  0.0006  0.0007  0.0017  ±1.15%  1597731
-   · "zod":"4.4.3": 'zod.util.isPlainObject(v)'           1,158,960.66  0.0008  0.5257  0.0009  0.0008  0.0016  0.0020  0.0052  ±0.46%   579481
-   · "es-toolkit":"1.46.1": 'isPlainObject(v)'            1,096,506.16  0.0008  1.5147  0.0009  0.0008  0.0016  0.0020  0.0102  ±0.80%   548254
-   · "redux":"5.0.1": 'isPlainObject(v)'                  1,357,176.37  0.0005  2.1069  0.0007  0.0006  0.0013  0.0015  0.0067  ±1.31%   678589
-   · "is-plain-object":"5.0.0": 'isPlainObject(v)'          567,347.42  0.0014  4.8731  0.0018  0.0015  0.0036  0.0043  0.0184  ±3.94%   283674
-   · "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'  1,607,338.90  0.0005  1.3589  0.0006  0.0006  0.0011  0.0014  0.0058  ±0.92%   803670
-   · lodash-es:"4.18.1": '_.isPlainObject(v)'                40,471.25  0.0073  2.2837  0.0247  0.0289  0.1214  0.1528  0.3628  ±1.82%    20236
-
- BENCH  Summary
-
-  "@sindresorhus/is":"8.0.0": 'is.plainObject(v)' - bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values
-    1.05x faster than "@httpx/plain-object": `isPlainObject(v)`
-    1.10x faster than "is-plain-obj":"4.1.0": 'isPlainObj(v)'
-    1.99x faster than "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'
-    2.35x faster than "redux":"5.0.1": 'isPlainObject(v)'
-    2.76x faster than "zod":"4.4.3": 'zod.util.isPlainObject(v)'
-    2.91x faster than "es-toolkit":"1.46.1": 'isPlainObject(v)'
-    5.63x faster than "is-plain-object":"5.0.0": 'isPlainObject(v)'
-    78.96x faster than lodash-es:"4.18.1": '_.isPlainObject(v)'
-
+ ✓ |bench| bench/comparative.bench.ts > Compare calling isPlainObject with 110x mixed types values > isPlainObject 15707ms
+   name                                                           hz     min     max    mean     p75     p99    p995    p999     rme  samples
+   "@httpx/plain-object": `isPlainObject(v)`            7,689,806.89  0.0000  0.1057  0.0001  0.0001  0.0002  0.0002  0.0003  ±0.06%  7507457   fastest
+   "@sindresorhus/is":"8.1.0": 'is.plainObject(v)'      7,229,347.44  0.0001  0.0615  0.0001  0.0002  0.0002  0.0003  0.0003  ±0.07%  6953226
+   "is-plain-obj":"4.1.0": 'isPlainObj(v)'              4,350,985.40  0.0002  0.0631  0.0002  0.0003  0.0003  0.0004  0.0005  ±0.07%  4237214
+   "redux":"5.0.1": 'isPlainObject(v)'                  3,684,369.24  0.0002  0.0533  0.0003  0.0003  0.0004  0.0004  0.0005  ±0.06%  3608776
+   "es-toolkit":"1.52.0": 'isPlainObject(v)'            3,074,880.60  0.0002  0.0481  0.0003  0.0003  0.0005  0.0005  0.0006  ±0.05%  3023156
+   "zod":"4.6.7": 'zod.util.isPlainObject(v)'           2,289,090.91  0.0003  0.0606  0.0004  0.0005  0.0006  0.0006  0.0008  ±0.06%  2248832
+   "is-plain-object":"5.1.0": 'isPlainObject(v)'        1,770,925.19  0.0005  0.3979  0.0006  0.0006  0.0009  0.0010  0.0035  ±0.52%  1674197
+   "immer/is-plain-object":"4.2.0": 'isPlainObject(v)'  1,294,721.40  0.0007  0.0550  0.0008  0.0008  0.0010  0.0010  0.0012  ±0.06%  1280621
+   lodash-es:"4.18.1": '_.isPlainObject(v)'               296,159.72  0.0028  1.1251  0.0039  0.0034  0.0142  0.0163  0.0223  ±0.62%   259582   slowest
 ```
 
 > See [benchmark file](https://github.com/belgattitude/httpx/blob/main/packages/plain-object/bench/comparative.bench.ts) for details.
@@ -274,7 +249,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
 | Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
 | Cloudflare | ✅ | Ensured with @cloudflare/vitest-plugin (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
-| Typescript | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
+| Typescript | ✅ | TS 5.7 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
 | ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
 | Performance | ✅ | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx) |
 
@@ -287,11 +262,23 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | [is-plain-obj](https://github.com/sindresorhus/is-plain-obj) | Differences | 1.17x slower | No |
 | [es-toolkit](https://github.com/toss/es-toolkit) | No | 1.25x slower | Yes |
 | (@redux)[isPlainObject](https://github.com/reduxjs/redux) | ✅ 100% | 2.76x slower | Yes |
+| (zod)[util.isPlainObject](https://github.com/colinhacks/zod) | [Differences](#zodutilisplainobject) | 1.18x faster (node 26) | Yes |
 | (lodash)[isPlainObject](https://lodash.com/docs/4.17.15#isPlainObject) | No | 83.50x slower | No |
 
 ### redux/isPlainObject
 
 100% compatible see tests.
+
+### zod/util.isPlainObject
+
+Zod is faster on node because it relies on the `constructor` property (cheap inline-cached property reads) rather than walking the prototype chain with `Object.getPrototypeOf`. The trade-off is that it can be fooled by inherited or user-defined `constructor` keys:
+
+```typescript
+isPlainObject(Object.create({})); // ❌ false, zod ✅ true (prototype isn't Object.prototype)
+isPlainObject({ constructor: class Cls {} }); // ✅ true, zod ❌ false (a regular data key)
+```
+
+> See [zod proposal](https://github.com/colinhacks/zod/pull/5972)
 
 ### @sindresorhus/is-plain-obj
 
@@ -306,7 +293,7 @@ This library wouldn't be possible without [@sindresorhus](https://github.com/sin
 
 Since v2, it diverges from `is-plain-obj` by
 
-- [x] Static built-in classes are considered as plain objects (use [isStaticBuiltInClass](#isstaticbuiltinclass) to exclude).
+- [x] Static built-in namespaces (Math, JSON, Intl, Temporal...) are considered as plain objects at runtime, but rejected at typecheck when statically known.
 - [x] `[Symbol.iterator]` is considered as a valid property for plain objects.
 - [x] `[Symbol.toStringTag]` is considered as a valid property for plain objects.`
 

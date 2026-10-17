@@ -1,4 +1,8 @@
-import type { BasePlainObject, DefaultBasePlainObject } from "./internal.types";
+import type {
+  BasePlainObject,
+  DefaultBasePlainObject,
+  StaticBuiltInNamespaceCheck,
+} from "./internal.types";
 import type { PlainObject } from "./plain-object.types";
 
 /**
@@ -55,25 +59,40 @@ import type { PlainObject } from "./plain-object.types";
  * isPlainObject(globalThis);          // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare, deno)
  * isPlainObject(process.env);         // ✅ with Bun and cloudflare ❌ otherwise (Nodejs, edge, deno)
  *
- * // 👇 Static built-in classes aren't properly checked. This is a trade-off
- * //    to maintain the best performance and size. If you need to check for these,
- * //    use a custom type guard. But in most cases, you won't need to check for these
- * //    as the probability of writing a code that receives these as plain objects is low.
+ * // 👇 Static built-in namespaces aren't checked at runtime. This is a trade-off
+ * //    to maintain the best performance and size. When statically known, they
+ * //    are rejected at typecheck. If you need a runtime check, use a custom type
+ * //    guard. But in most cases, you won't need to check for these as the
+ * //    probability of writing a code that receives these as plain objects is low.
  * //    and probably indicates an issue in your code.
  *
- * isPlainObject(Math);                // ⚠️✅ return true, but Math is not a plain object
- * isPlainObject(JSON);                // ⚠️✅ return true, but JSON is not a plain object
- * isPlainObject(Atomics);             // ⚠️✅ return true, but Atomics is not a plain object
- * isPlainObject(Reflect);             // ⚠️✅ return true, but Reflect is not a plain object
+ * isPlainObject(Math);                // ⚠️✅ return true, typecheck error
+ * isPlainObject(JSON);                // ⚠️✅ return true, typecheck error
+ * isPlainObject(Atomics);             // ⚠️✅ return true, typecheck error
+ * isPlainObject(Reflect);             // ⚠️✅ return true, typecheck error
+ * isPlainObject(Intl);                // ⚠️✅ return true, typecheck error
+ * isPlainObject(WebAssembly);         // ⚠️✅ return true, typecheck error
+ * isPlainObject(Temporal);            // ⚠️✅ return true, typecheck error
+ * isPlainObject(Temporal.Now);        // ⚠️✅ return true, typecheck error
  * ```
  */
-export const isPlainObject = <
+export function isPlainObject<
   TValue extends BasePlainObject = DefaultBasePlainObject,
+  TInput = unknown,
 >(
-  v: unknown
+  // The predicate type is kept in the union to stay assignable to the parameter
+  v:
+    | TInput
+    | NoInfer<
+        TValue extends DefaultBasePlainObject
+          ? BasePlainObject
+          : PlainObject<TValue>
+      >,
+  ...staticBuiltInCheck: StaticBuiltInNamespaceCheck<TInput>
 ): v is TValue extends DefaultBasePlainObject
   ? BasePlainObject
-  : PlainObject<TValue> => {
+  : PlainObject<TValue>;
+export function isPlainObject(v: unknown): boolean {
   if (v === null || typeof v !== "object") {
     return false;
   }
@@ -85,4 +104,4 @@ export const isPlainObject = <
     // Required to support node:vm.runInNewContext({})
     Object.getPrototypeOf(proto) === null
   );
-};
+}
