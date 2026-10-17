@@ -7,6 +7,6 @@ export default defineConfig({
     ...(typeof oxfmtDefaultConfig.sortTailwindcss === "object"
       ? oxfmtDefaultConfig.sortTailwindcss
       : {}),
-    stylesheet: "./src/styles/global.css",
+    stylesheet: "./src/app/global.css",
   },
 });

@@ -1,4 +1,6 @@
-## License
+---
+title: "License"
+---
 
 MIT License
 
