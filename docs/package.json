@@ -7,23 +7,25 @@
     "build": "next build",
     "clean": "rimraf ./.next ./out /coverage ./tsconfig.tsbuildinfo",
     "dev": "next dev",
-    "export": "next export",
     "format": "dx-oxfmt --write",
-    "lint": "dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
+    "lint": "next typegen && dx-oxfmt --check --no-error-on-unmatched-pattern && dx-oxlint",
     "lint-fix": "dx-oxlint --fix && dx-oxfmt --write",
     "start": "sirv ./out --cors --port 8888",
-    "typecheck": "dx-typecheck --project tsconfig.json --noEmit"
+    "typecheck": "next typegen && dx-typecheck --project tsconfig.json --noEmit"
   },
   "dependencies": {
+    "fumadocs-core": "16.17.3",
+    "fumadocs-mdx": "15.4.7",
+    "fumadocs-ui": "npm:@fumadocs/base-ui@16.17.3",
     "next": "16.4.2",
-    "nextra": "3.3.1",
-    "nextra-theme-docs": "3.3.1",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@httpx/dx": "workspace:^",
     "@tailwindcss/postcss": "4.3.3",
+    "@types/mdx": "2.0.14",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "postcss": "8.5.30",

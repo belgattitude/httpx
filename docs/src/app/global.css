@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
+
+@layer components {
+  .shields-ctn {
+    @apply mt-5;
+    & > p {
+      @apply flex flex-row flex-wrap gap-1;
+      zoom: 0.93;
+    }
+  }
+}
+
+/* unlayered: the fumadocs prose (a later layer) adds a vertical margin to images */
+.shields-ctn img {
+  margin-block: 0;
+}
