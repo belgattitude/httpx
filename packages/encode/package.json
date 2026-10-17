@@ -28,28 +28,39 @@
       "import": {
         "httpx-monorepo-source": "./src/index.ts",
         "types": "./dist/index.d.ts",
-        "node": "./dist/index.nodejs.js",
-        "deno": "./dist/index.nodejs.js",
+        "bun": "./dist/index.uint8.js",
+        "deno": "./dist/index.uint8.js",
+        "node": "./dist/index.node20.js",
         "browser": "./dist/index.browser.js",
-        "default": "./dist/index.purejs.js"
+        "default": "./dist/index.default.js"
       }
     },
     "./base64/base64.purejs": {
       "import": {
+        "httpx-monorepo-source": "./src/base64/base64.purejs.ts",
         "types": "./dist/base64/base64.purejs.d.ts",
         "default": "./dist/base64/base64.purejs.js"
       }
     },
-    "./base64/base64.browser": {
+    "./base64/base64.atob": {
       "import": {
-        "types": "./dist/base64/base64.browser.d.ts",
-        "default": "./dist/base64/base64.browser.js"
+        "httpx-monorepo-source": "./src/base64/base64.atob.ts",
+        "types": "./dist/base64/base64.atob.d.ts",
+        "default": "./dist/base64/base64.atob.js"
       }
     },
-    "./base64/base64.nodejs": {
+    "./base64/base64.uint8array": {
       "import": {
-        "types": "./dist/base64/base64.nodejs.d.ts",
-        "default": "./dist/base64/base64.nodejs.js"
+        "httpx-monorepo-source": "./src/base64/base64.uint8array.ts",
+        "types": "./dist/base64/base64.uint8array.d.ts",
+        "default": "./dist/base64/base64.uint8array.js"
+      }
+    },
+    "./base64/base64.node20": {
+      "import": {
+        "httpx-monorepo-source": "./src/base64/base64.node20.ts",
+        "types": "./dist/base64/base64.node20.d.ts",
+        "default": "./dist/base64/base64.node20.js"
       }
     },
     "./package.json": "./package.json"
@@ -79,6 +90,7 @@
     "test-unit-bun": "bun --bun run vitest run",
     "test-unit-cloudflare": "vitest run --config ./vitest.cloudflare.config.ts",
     "test-unit-coverage": "vitest run --coverage",
+    "test-unit-deno": "deno run test-unit",
     "test-unit-edge": "vitest run --environment edge-runtime",
     "test-unit-watch": "vitest --ui --api 4515",
     "typecheck": "dx-typecheck --project tsconfig.json --noEmit",
@@ -116,6 +128,6 @@
     "webpack": "5.111.1"
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22.14.0"
   }
 }

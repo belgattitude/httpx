@@ -60,73 +60,46 @@ jobs:
             ${{ runner.os }}-packages-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('pnpm-lock.yaml') }}-
 
       - name: 🕵️ Typecheck
-        if: matrix.node-version == 24
+        if: matrix.node-version == 26
         run: pnpm turbo run typecheck --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
-      - name: 🔬 ESLint checks
-        if: matrix.node-version == 24
+      - name: 🔬 Lint checks
+        if: matrix.node-version == 26
         run: pnpm turbo run lint --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
-      - name: 🧪 Unit tests (no-coverage - node !== 20.x)
-        if: matrix.node-version != 20
-        run: pnpm turbo run test-unit --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
-
-      - name: 🧪 Unit tests (coverage - only node 24.x)
-        if: matrix.node-version == 24
+      - name: 🧪 Unit tests
+        if: matrix.node-version == 26
         run: pnpm turbo run test-unit-coverage --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
-
-      #- name: ☂️ Codecov upload (only node-20)
-      #  if: matrix.node-version == '20.x'
-      #  working-directory: ${{ github.workspace }}
-      #  run: |
-      #    bash .github/scripts/install-codecov.sh
-      #    pnpm g:ci-coverage-upload
-      #  shell: bash
-      #  env:
-      #    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: ☂️ Codecov upload (only node-24)
-        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
-        if: matrix.node-version == 24
-        with:
-          fail_ci_if_error: true # optional (default = false)
-          #files: ./coverage1.xml,./coverage2.xml # optional
-          #flags: unittests # optional
-          flags: httpx-exception-unit,httpx-dsn-parser-unit,httpx-memo-intl-unit,httpx-plain-object-unit,httpx-assert-unit,httpx-json-api-unit,httpx-treeu-unit
-          #name: codecov-umbrella # optional
-          verbose: true # optional (default = false)
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: 🧪 Unit tests (edge-runtime)
         if: matrix.node-version == 22
         run: pnpm turbo run test-unit-edge --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
-      - name: 🧪 Unit tests (cloudflare - only node 20.x)
+      - name: 🧪 Unit tests (cloudflare - only node 22.x)
         if: matrix.node-version == 22
         run: pnpm turbo run test-unit-cloudflare --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
-      - name: ⚙️ Install Playwright Chromium (only node 24.x)
-        if: matrix.node-version == 24
+      - name: ⚙️ Install Playwright Chromium (only node 26.x)
+        if: matrix.node-version == 26
         run: pnpm exec playwright install chromium
 
-      - name: 🧪 Unit tests (playwright chromium - only node 24.x)
-        if: matrix.node-version == 24
+      - name: 🧪 Unit tests (playwright chromium - only node 26.x)
+        if: matrix.node-version == 26
         run: pnpm turbo run test-unit-browser --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🏗 Build packages
         run: pnpm turbo run build --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 📐 Check build for size-limits
-        if: matrix.node-version == 24
+        if: matrix.node-version == 26
         run: pnpm turbo run check-size --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🛟 Check build for ecmascript compliance
-        if: matrix.node-version == 24
+        if: matrix.node-version == 26
         run: pnpm turbo run check-dist --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       - name: 🛟 Check publishable dist (arethetypeswrong)
-        if: matrix.node-version == 24
+        if: matrix.node-version == 26
         run: pnpm turbo run check-pub --filter='!@examples/*' --filter='!httpx-docs' --token="${{ secrets.CI_TURBO_SERVER_TOKEN }}"
 
       # Disabled: typedoc doesn't support typescript 7 yet
