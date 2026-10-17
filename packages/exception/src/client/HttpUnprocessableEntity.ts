@@ -1,6 +1,7 @@
 import { HttpClientException } from "../base/HttpClientException";
 import type { HttpExceptionParamsWithIssues } from "../types/HttpExceptionParamsWithIssues";
 import type { HttpValidationIssue } from "../types/HttpValidationIssue";
+import { brandKey } from "../utils/brand";
 import { getNormalizedParams } from "../utils/getNormalizedParams";
 import { initProtoAndName } from "../utils/initProtoAndName";
 
@@ -24,6 +25,7 @@ const status = 422;
 const name = "UnprocessableEntity";
 export class HttpUnprocessableEntity extends HttpClientException {
   static readonly STATUS = status;
+  static override readonly [brandKey]: string = `Http${name}`;
   public readonly issues: HttpValidationIssue[];
   constructor(msgOrParams?: HttpExceptionParamsWithIssues | string) {
     const { issues = [], ...restParams } =

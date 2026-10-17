@@ -1,21 +1,17 @@
 import type { HttpException } from "../../base";
 import { HttpUnprocessableEntity } from "../../client/HttpUnprocessableEntity";
 import { isHttpException } from "../../typeguards/isHttpException";
+import { maxCauseDepth } from "../constants";
 import { isNativeError } from "../typeguard";
 import type { NativeError, Serializable, SerializerParams } from "../types";
 
 const isNonEmptyString = (v: unknown): v is string =>
   typeof v === "string" && v !== "";
 
-/**
- * Convert an Error, NativeError or any HttpException to
- * an object suitable for serialization (a serializable version).
- *
- * @see {createFromSerializable}
- */
-export const convertToSerializable = (
+const convert = (
   e: Error | HttpException | NativeError,
-  params?: SerializerParams
+  params: SerializerParams | undefined,
+  depth: number
 ): Serializable => {
   const { includeStack = false } = params ?? {};
   const {
@@ -34,7 +30,10 @@ export const convertToSerializable = (
           name: "Error",
         }
   ) as Error;
-  const cause = c instanceof Error ? convertToSerializable(c) : null;
+  const cause =
+    c instanceof Error && depth < maxCauseDepth
+      ? convert(c, undefined, depth + 1)
+      : null;
   const common = {
     message,
     name,
@@ -58,3 +57,14 @@ export const convertToSerializable = (
     ...common,
   };
 };
+
+/**
+ * Convert an Error, NativeError or any HttpException to
+ * an object suitable for serialization (a serializable version).
+ *
+ * @see {createFromSerializable}
+ */
+export const convertToSerializable = (
+  e: Error | HttpException | NativeError,
+  params?: SerializerParams
+): Serializable => convert(e, params, 0);

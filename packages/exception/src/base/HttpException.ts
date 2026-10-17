@@ -2,10 +2,24 @@ import { supportsErrorCause } from "../support/supportsErrorCause";
 import type { HttpErrorStatusCodeOrNumber } from "../types";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import type { HttpMethod } from "../types/HttpMethod";
+import { brandKey, hasBrand } from "../utils/brand";
 import { getNormalizedParams } from "../utils/getNormalizedParams";
 import { initProtoAndName } from "../utils/initProtoAndName";
 
 export class HttpException extends Error implements HttpExceptionParams {
+  static readonly [brandKey]: string = "HttpException";
+
+  /**
+   * Also recognize instances created by another copy of the same
+   * @httpx/exception major version (ie: esm and cjs builds, duplicated installs).
+   */
+  static override [Symbol.hasInstance](value: unknown): boolean {
+    return (
+      Function.prototype[Symbol.hasInstance].call(this, value) ||
+      hasBrand(value, this)
+    );
+  }
+
   /**
    * If set and the runtime (browser or node) supports it
    * you can get back the error cause

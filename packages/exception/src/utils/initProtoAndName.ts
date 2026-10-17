@@ -1,4 +1,5 @@
 import type { HttpException } from "../base/HttpException";
+import { addBrand } from "./brand";
 
 /**
  * @internal
@@ -10,4 +11,5 @@ export const initProtoAndName = (
 ) => {
   Object.setPrototypeOf(obj, cls.prototype);
   obj.name = `Http${name}`;
+  addBrand(obj, obj.name);
 };

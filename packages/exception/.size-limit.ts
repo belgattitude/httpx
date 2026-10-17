@@ -1,7 +1,7 @@
 import type { SizeLimitConfig } from "size-limit";
 
-const fullEsmMaxSize = "2030B";
-const fullCjsMaxSize = "2550B";
+const fullEsmMaxSize = "2205B";
+const fullCjsMaxSize = "2679B";
 
 const config = [
   // ###################################################
@@ -17,87 +17,87 @@ const config = [
     name: "ESM (only HttpException exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpException }",
-    limit: "360B",
+    limit: "539B",
   },
   {
     name: "ESM (only HttpClientException exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpClientException }",
-    limit: "390B",
+    limit: "564B",
   },
   {
     name: "ESM (only HttpNotFound exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound }",
-    limit: "425B",
+    limit: "614B",
   },
   {
     name: "ESM (2 client exceptions: HttpNotFound + HttpRequestTimeout)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound, HttpRequestTimeout }",
-    limit: "447B",
+    limit: "636B",
   },
   {
     name: "ESM (6 client exceptions: NotFound + RequestTimeout + HttpConflict...)",
     path: ["dist/index.mjs"],
     import:
       "{ HttpNotFound, HttpRequestTimeout, HttpConflict, HttpGone, HttpMethodNotAllowed, HttpForbidden }",
-    limit: "520B",
+    limit: "738B",
   },
   {
     name: "ESM (1 client and 1 server exception)",
     path: ["dist/index.mjs"],
     import: "{ HttpNotFound, HttpInternalServerError }",
-    limit: "460B",
+    limit: "660B",
   },
   {
     name: "ESM (only isHttpException)",
     path: ["dist/index.mjs"],
     import: "{ isHttpException }",
-    limit: "392B",
+    limit: "570B",
   },
   {
     name: "ESM (only createHttpException)",
     path: ["dist/index.mjs"],
     import: "{ createHttpException }",
-    limit: "1240B", // Will import all server/client exceptions
+    limit: "1674B",
   },
   {
     name: "ESM (createHttpException + isHttpException)",
     path: ["dist/index.mjs"],
     import: "{ createHttpException, isHttpException }",
-    limit: "1280B",
+    limit: "1691B",
   },
   {
     name: "ESM (createHttpException + isHttpException + isHttpClientException )",
     path: ["dist/index.mjs"],
     import: "{ createHttpException, isHttpException, isHttpClientException }",
-    limit: "1271B",
+    limit: "1696B",
   },
   {
     name: "ESM serializer ({ toJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ toJson }",
-    limit: "945B",
+    limit: "1140B",
   },
   {
     name: "ESM serializer ({ fromJson })",
     path: ["dist/serializer/index.mjs"],
     import: "{ fromJson }",
-    limit: "1740B",
+    limit: "2239B",
   },
   {
     name: "ESM all serializer ({ fromJson, toJson, convertToSerializable, createFromSerializable })",
     path: ["dist/serializer/index.mjs"],
     import:
       "{ fromJson, toJson, createFromSerializable, convertToSerializable }",
-    limit: "2060B",
+    limit: "2554B",
   },
   {
     name: "ESM experimental ({ tryOrFail })",
     path: ["dist/experimental/index.mjs"],
     import: "{ tryOrFail }",
-    limit: "1400B",
+    limit: "1795B",
   },
   // ###################################################
   // Commonjs full bundle
@@ -114,7 +114,7 @@ const config = [
     path: ["dist/index.cjs"],
     import: "{ isHttpException }",
     webpack: true,
-    limit: "2160B", // tsdown cjs output (getter based exports) is ~400B bigger than tsup once bundled by webpack
+    limit: "2391B",
   },
 ] satisfies SizeLimitConfig;
 

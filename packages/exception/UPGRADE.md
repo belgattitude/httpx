@@ -1,5 +1,31 @@
 ## Upgrade
 
+### From v3.x to v4.x
+
+Minimum node version is 22.14.
+
+#### Typeguards
+
+`isHttpException`, `isHttpClientException` and `isHttpServerException` now require a numeric `statusCode`, even when `checkStatusCode` is set to `false`.
+
+```typescript
+isHttpException(new HttpException("404" as unknown as number)); // 👉 false (was true)
+```
+
+#### Serializer
+
+- `fromJson` never throws anymore: unexpected payloads return a `SerializerError`.
+
+  ```typescript
+  const e = fromJson("null"); // 👉 SerializerError (was throwing a TypeError)
+  if (e instanceof SerializerError) {
+    // invalid payload
+  }
+  ```
+
+- `createFromSerializable` throws a `SerializerError` on unexpected payloads (was an `Error` or a `TypeError`).
+- Nested error causes deeper than 10 levels are dropped when (de-)serializing.
+
 ### From v2.x to v3.x
 
 The param `HttpUnprocesssableEntity.errors` have been deprecated since v2.x, `issues` should be used in place.

@@ -13,4 +13,5 @@ export const isHttpClientException = (
   checkStatusCode = true
 ): error is HttpClientException =>
   error instanceof HttpClientException &&
+  typeof error.statusCode === "number" &&
   (!checkStatusCode || (error.statusCode > 399 && error.statusCode < 500));
