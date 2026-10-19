@@ -1,5 +1,173 @@
 # @httpx/xcache
 
+## 0.10.0
+
+### Minor Changes
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Performance improvements for `XMemCache` and `CacheCompress`.
+  
+  - Faster cache key generation (~40% faster), `runAsync` cache hits are ~25% faster. Generated keys are unchanged.
+  - `CacheCompress` now stores the compressed data as a `Uint8Array` by default (new `encoding: "binary"` option), saving ~25% memory and the base64 encoding/decoding cost. Use `encoding: "base64"` or `"base64_urlsafe"` to keep the previous string output.
+  
+  **Breaking (types)**: `CacheCompressResult.data` on success is now `string | Uint8Array`.
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Raise `CacheCompress` defaults to avoid compressing small payloads, where the cpu cost outweighs the memory saving:
+  
+  - `minimumByteSaving`: 32 KB (was 16 KB), compression is skipped when it saves less than 32 KB.
+  - `minimumStringLength`: 16K characters (was 1000). It's now also checked on the serialized data (not only on string data): payloads serializing to less than this are never compressed.
+  
+  Small payloads are skipped before compression (no gzip/deflate work) when the serialized data is shorter than `minimumStringLength`, or shorter than `minimumByteSaving` (the saving can't exceed it).
+  
+  To keep the previous behaviour:
+  
+  ```typescript
+  new CacheCompress({
+    serializer,
+    algorithm: "gzip",
+    minimumByteSaving: 16_384,
+    minimumStringLength: 1000,
+  });
+  ```
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Store compression meta with compressed cache entries and prevent reading incompatible entries.
+  
+  - Compressed entries now record the `algorithm`, `encoding`, `serializer`, `originalSize`, `compressedSize` and `ratio` used to store them. They are returned by `XMemCache.runAsync()` in `meta.compression`.
+  - On a cache hit, an existing compressed entry created with a different algorithm, encoding or serializer is treated as a cache miss (function executed again, entry replaced) instead of being decoded with the wrong settings.
+  - New optional `ICacheCompressor.isCompatible(meta)` method, implemented by `CacheCompress`. `CacheCompress.decompress()` throws a `TypeError` for incompatible data.
+  - New exported types: `CacheCompressAlgorithm`, `CacheCompressEncoding`, `CacheCompressResult`, `CacheCompressSuccessMeta`.
+  
+  **Breaking (types)**: `CacheCompressSuccessMeta` now requires `algorithm`, `encoding` and `serializer` (only relevant for custom `ICacheCompressor` implementations).
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Add global and per call `enabled` / `compressionEnabled` options to `XMemCache` and `createHonoXCache`.
+  
+  ```typescript
+  const xMemCache = new XMemCache({
+    lru,
+    compressor,
+    // Global
+    enabled: process.env.XCACHE_ENABLED !== "false",
+    compressionEnabled: process.env.NODE_ENV === "production",
+  });
+  
+  const { data, meta } = await xMemCache.runAsync({
+    key: ["/api/data", params],
+    fn: () => fetchThings(params),
+    // Per call, overrides the global options
+    enabled: !params.preview,
+    compressionEnabled: false,
+  });
+  ```
+  
+  - `enabled: false`: the function is always executed and the cache is neither read nor written. `runAsync` returns `meta.bypassed: true`, `runAsyncEntry` returns `bypassed`, the hono helper sends `X-XCache: BYPASS` (debug headers) and no `ETag`.
+  - `compressionEnabled: false`: entries are stored as-is (reported with `skippedReason: "compression_disabled"` in stats). Cache keys are unchanged and existing compressed entries can still be read.
+  - New readonly `XMemCache.enabled` and `XMemCache.compressionEnabled` getters.
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Add a `cacheControl` option to the hono helper (global or per call). No `Cache-Control` header is sent by default.
+  
+  ```typescript
+  const xcache = createHonoXCache({
+    lru,
+    // max-age = remaining ttl of the server cache entry
+    cacheControl: { maxAge: "ttl", scope: "private", staleWhileRevalidate: 30 },
+  });
+  
+  app.get("/api/products/:id", (c) =>
+    xcache.json(c, {
+      key: ["/api/products", { id: c.req.param("id") }],
+      fn: () => fetchProduct(c.req.param("id")),
+      cacheControl: "public, max-age=60", // per call override
+    })
+  );
+  ```
+  
+  - `false` (default): no header, `string`: sent as-is, `{ maxAge: number | "ttl", scope?: "private" | "public", staleWhileRevalidate?: number }`: built header, `scope` defaults to `private`.
+  - A `Cache-Control` provided in `headers` takes precedence. Nothing is sent when the cache is bypassed, `304` responses keep the header.
+  - `XMemCache.runAsyncEntry()` now also returns `expiresIn`, the remaining time to live of the entry.
+  - New exported types: `HonoXCacheControl`, `HonoXCacheControlOptions`.
+  
+  Documented error handling: errors thrown by `fn` are not cached (retried on the next call) and an existing entry is kept when a revalidation fails.
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - `createHonoXCache` accepts an existing `XMemCache` instance, and hono cache keys now include their origin.
+  
+  ```typescript
+  const xcache = createHonoXCache({ cache: xMemCache });
+  ```
+  
+  - With an instance, its lru, namespace, compressor and enabled options are used. Compressed entries created with the same serializer are sent as-is (base64 entries are decoded first), entries compressed with another serializer are re-serialized with the helper serializer.
+  - Keys created by the hono helper include an `"origin":"hono"` part, so routes and `runAsync()` calls with the same key on the same instance don't share entries. Keys created by `runAsync()` are unchanged.
+  - New `origin` param on `runAsync()`, `runAsyncEntry()` and `getEntryInfo()`, new `XMemCache.readEntry(entry)` to get the data of an entry returned by `runAsyncEntry()`, new `HonoXCache.getEntryInfo()`.
+  - New exports: `honoXCacheOrigin`, `HonoXCacheLruOptions`, `HonoXCacheInstanceOptions` types.
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Add a hono helper, exported from `@httpx/xcache/hono` (`hono` is an optional peer dependency).
+  
+  ```typescript
+  import { TimeLruCache } from "@httpx/xcache";
+  import { createHonoXCache } from "@httpx/xcache/hono";
+  import { Hono } from "hono";
+  
+  const xcache = createHonoXCache({
+    lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+  });
+  
+  const app = new Hono();
+  
+  app.get("/api/products/:id", (c) =>
+    xcache.json(c, {
+      key: ["/api/products", { id: c.req.param("id") }],
+      fn: () => fetchProduct(c.req.param("id")),
+    })
+  );
+  ```
+  
+  - Compressed entries are sent as-is (`Content-Encoding: gzip|deflate`) when the client accepts the algorithm, without decompression nor serialization. Otherwise they are decompressed.
+  - Weak `ETag` with `304 Not Modified` support (`If-None-Match`), `Vary: Accept-Encoding`, optional `X-XCache: HIT|MISS` debug header.
+  - Works with any serializer (`contentType` option), compression can be disabled.
+  
+  Also new in the core:
+  
+  - `XMemCache.runAsyncEntry()` returns the stored entry as-is (compressed data is not decompressed).
+  - Cache entries record their creation time (`createdAt`), also returned by `getStats()` and `getEntryInfo()`.
+  - New exported types: `XMemCacheRunAsyncParams`, `XMemCacheRunAsyncEntryResult`.
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `XMemCache.getStats()` and `XMemCache.getEntryInfo()`.
+  
+  ```typescript
+  const {
+    items,
+    nativeItems,
+    compressedItems,
+    compressedSize,
+    originalSize,
+    entries,
+  } = xMemCache.getStats();
+  
+  const info = xMemCache.getEntryInfo({ key: ["/api/data", params] });
+  // { key, format: "compressed", size, compression: { algorithm, encoding, serializer, originalSize, compressedSize, ratio } }
+  ```
+  
+  - Each entry exposes its generated key, its format (`native` or `compressed`), its size and compression meta when compressed, or the reason compression was skipped, and its remaining time to live (`expiresIn`, from the new `TimeLruCache.expiresIn()`).
+  - Expired entries are ignored, the lru order is not affected.
+  - Values stored by `XMemCache` are now branded: when the lru is shared with other code, values not created by `XMemCache` (even if they look alike) are ignored by the stats and treated as a cache miss by `runAsync()`. The `isXMemCacheEntry()` typeguard is exported.
+  - New exported types: `XMemCacheStats`, `XMemCacheEntryInfo`, `XMemCacheEntry`.
+
+### Patch Changes
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Faster `runAsync()` / `runAsyncEntry()` cache hits (~+25%): the hit is resolved without awaiting an intermediate async function, and the result meta is built without object spreads.
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Hono helper fixes (from review):
+  
+  - `Vary: Accept-Encoding` is now merged with a caller-provided `Vary` header (any casing) instead of overwriting it, ie: `Vary: Cookie` becomes `Vary: Cookie, Accept-Encoding`.
+  - A replacement cache entry (ie: `forceRevalidate`) always gets a more recent `createdAt` than the entry it replaces, so the ETag changes even when revalidated within the same millisecond (no stale `304`).
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Document how to choose a serializer in the README.
+  
+  - A serializer is only needed when compression is enabled, without a compressor values are stored as-is.
+  - Memory gains per serializer (json, superjson, superjson+dedupe, devalue) versus uncompressed live objects: from -86% to -96% on the benchmarked datasets.
+  - Performance and size comparison table with recommendations, advantages and drawbacks of each serializer, and how to enable superjson `dedupe` with a custom serializer.
+  - Benchmarks updated for Node 26.12.0 and Bun 1.4.3.
+- Updated dependencies [[`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a)]:
+  - @httpx/lru@0.16.0
+
 ## 0.9.0
 
 ### Minor Changes
