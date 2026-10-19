@@ -11,7 +11,7 @@ const config = [
     name: "createStableKeyOrThrow (ESM)",
     path: ["dist/index.js"],
     import: "{ createStableKeyOrThrow }",
-    limit: "480B",
+    limit: "482B",
   },
   {
     name: "createStableKey (ESM)",

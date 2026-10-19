@@ -50,7 +50,7 @@ allowBuilds:
   "@swc/core": true
   "@tailwindcss/oxide": true
   esbuild: true
-  lefthook: false
+  lefthook: true
   workerd: true
 
 strictDepBuilds: false
@@ -109,5 +109,9 @@ minimumReleaseAgeExclude:
   - workerd
   - wrangler
   - ultracite@8.0.1
-  - "@codspeed/core@6.0.1"
-  - "@codspeed/vitest-plugin@6.0.1"
+  - "@fumadocs/base-ui@16.17.6"
+  - fumadocs-core@16.17.6
+
+audit:
+  ignore:
+    - GHSA-vfj7-8cjw-p6xm

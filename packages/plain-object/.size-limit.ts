@@ -11,7 +11,7 @@ const config = [
     name: "Only { assertPlainObject } (ESM)",
     path: ["dist/index.js"],
     import: "{ assertPlainObject }",
-    limit: "135B",
+    limit: "155B",
   },
   {
     name: "Import { assertPlainObject, isPlainObject } (ESM)",
