@@ -34,7 +34,7 @@ type Result<TResult> = {
 type LRUCacheValue<T> =
   | {
       format: "compressed";
-      data: string;
+      data: string | Uint8Array;
       meta: CacheCompressSuccessMeta;
     }
   | {

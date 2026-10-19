@@ -14,7 +14,7 @@ export type CacheCompressSkippedReason =
 export type CacheCompressResult<T = unknown> =
   | {
       status: "success";
-      data: string;
+      data: string | Uint8Array;
       meta: CacheCompressSuccessMeta;
     }
   | {

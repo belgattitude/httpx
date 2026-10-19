@@ -78,6 +78,11 @@ const xMemCache = new XMemCache({
     // Skip compression if the achieved byte saving is less than 16 KB
     // @default 16_384
     minimumByteSaving: 16_384,
+
+    // Compressed bytes are kept as Uint8Array ("binary"), use "base64"
+    // or "base64_urlsafe" if a string is required (~33% larger)
+    // @default "binary"
+    encoding: "binary",
   }),
 });
 

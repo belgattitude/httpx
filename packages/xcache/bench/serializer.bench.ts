@@ -12,31 +12,57 @@ import { generateArrayOfData } from "./data-generator";
 
 const options = benchConfig.benchOptions;
 const { rows } = benchConfig;
+
+const nativeSerializers: [label: string, serializer: ICacheSerializer][] = [
+  ["json", new JsonSerializer()],
+  ["devalue", new DevalueSerializer()],
+  ["superjson", new SuperjsonSerializer()],
+];
+
+// json does not support extended types (Date, BigInt, undefined, NaN...)
+const extendedSerializers = nativeSerializers.filter(
+  ([label]) => label !== "json"
+);
+
 describe.each([
-  ["json", new JsonSerializer(), false],
-  ["devalue", new DevalueSerializer(), false],
-  ["superjson", new SuperjsonSerializer(), false],
-  ["devalue", new DevalueSerializer(), true],
-  ["superjson", new SuperjsonSerializer(), true],
+  ["native", false, nativeSerializers],
+  ["extended", true, extendedSerializers],
 ] satisfies [
-  label: string,
-  serializer: ICacheSerializer,
+  types: string,
   extendedTypeSupport: boolean,
+  serializers: [label: string, serializer: ICacheSerializer][],
 ][])(
-  `Serializer benchmarks with %s`,
-  (label, serializer, extendedTypeSupport) => {
+  "Serializer benchmarks with %s types",
+  (types, extendedTypeSupport, serializers) => {
     const data = generateArrayOfData(rows, extendedTypeSupport);
-    const serialized = serializer.serialize(data);
-    const payloadSize = prettyBytes(serialized.length);
-    const types = extendedTypeSupport ? "extended" : "native";
-    test(`serialize / deserialize ${types} types`, async ({ bench }) => {
+    const cases = serializers.map(([label, serializer]) => {
+      const serialized = serializer.serialize(data);
+      return {
+        label,
+        serializer,
+        serialized,
+        payloadSize: prettyBytes(serialized.length),
+      };
+    });
+
+    test(`serialize ${types} types`, async ({ bench }) => {
       await bench.compare(
-        bench(`${label}.serialize(${payloadSize}) - ${types} types`, () => {
-          const _data = serializer.serialize(data);
-        }),
-        bench(`${label}.deserialize(${payloadSize}) - ${types} types`, () => {
-          const _data = serializer.deserialize(serialized);
-        }),
+        ...cases.map(({ label, serializer, payloadSize }) =>
+          bench(`${label}.serialize(${payloadSize}) - ${types} types`, () => {
+            const _data = serializer.serialize(data);
+          })
+        ),
+        options
+      );
+    });
+
+    test(`deserialize ${types} types`, async ({ bench }) => {
+      await bench.compare(
+        ...cases.map(({ label, serializer, serialized, payloadSize }) =>
+          bench(`${label}.deserialize(${payloadSize}) - ${types} types`, () => {
+            const _data = serializer.deserialize(serialized);
+          })
+        ),
         options
       );
     });

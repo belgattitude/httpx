@@ -2,7 +2,7 @@ import { DevalueSerializer } from "../serializer/devalue-serializer";
 import { JsonSerializer } from "../serializer/json-serializer";
 import { SuperjsonSerializer } from "../serializer/superjson-serializer";
 import type { ICacheSerializer } from "../serializer/types";
-import { CacheCompress } from "./cache-compress";
+import { CacheCompress, type CacheCompressEncoding } from "./cache-compress";
 import type {
   CacheCompressSkippedReason,
   CacheCompressSuccessMeta,
@@ -44,24 +44,39 @@ describe.each([
 ][])(
   "CacheCompress tests with %s serializer",
   (serializer, algorithm, extendedTypeSupport) => {
-    it(`should compress and decompress data correctly (${extendedTypeSupport ? "extendedTypeSupport" : "nativeTypes"}))`, async () => {
-      const cacheGzip = new CacheCompress({
-        algorithm,
-        minimumRatio: 1,
-        minimumByteSaving: 4096,
-        serializer,
-      });
+    it.each([
+      [undefined, "uint8array"],
+      ["binary", "uint8array"],
+      ["base64", "string"],
+      ["base64_urlsafe", "string"],
+    ] satisfies [CacheCompressEncoding | undefined, "uint8array" | "string"][])(
+      `should compress and decompress data correctly (${extendedTypeSupport ? "extendedTypeSupport" : "nativeTypes"}) with "%s" encoding`,
+      async (encoding, expectedDataType) => {
+        const cacheGzip = new CacheCompress({
+          algorithm,
+          minimumRatio: 1,
+          minimumByteSaving: 4096,
+          serializer,
+          ...(encoding === undefined ? {} : { encoding }),
+        });
 
-      const generatedData = generateArrayOfRecords(1000, extendedTypeSupport);
+        const generatedData = generateArrayOfRecords(1000, extendedTypeSupport);
 
-      const result = await cacheGzip.compress(generatedData);
-      const { meta, status } = result;
-      expect(status).toBe("success");
-      expect((meta as CacheCompressSuccessMeta).ratio).toBeGreaterThan(2);
+        const result = await cacheGzip.compress(generatedData);
+        const { meta, status } = result;
+        expect(status).toBe("success");
+        expect((meta as CacheCompressSuccessMeta).ratio).toBeGreaterThan(2);
+        expect(
+          result.data instanceof Uint8Array ? "uint8array" : typeof result.data
+        ).toBe(expectedDataType);
+        expect((meta as CacheCompressSuccessMeta).compressedSize).toBe(
+          (result.data as string | Uint8Array).length
+        );
 
-      const decompressedData = await cacheGzip.decompress(result);
-      expect(decompressedData).toStrictEqual(generatedData);
-    });
+        const decompressedData = await cacheGzip.decompress(result);
+        expect(decompressedData).toStrictEqual(generatedData);
+      }
+    );
 
     it("should skip compression for strings not meeting minimum length", async () => {
       const cacheGzip = new CacheCompress({

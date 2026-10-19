@@ -26,8 +26,19 @@ export type CacheCompressOptions = {
    * @default 16384 (16 KB)
    */
   minimumByteSaving?: number;
-  encoding?: "base64" | "base64_urlsafe";
+
+  /**
+   * How the compressed bytes are stored.
+   * - "binary": raw Uint8Array, smallest memory footprint and no encoding cost.
+   * - "base64" | "base64_urlsafe": string (~33% larger), when a string is required.
+   * @default "binary"
+   */
+  encoding?: CacheCompressEncoding;
 };
+
+export type CacheCompressEncoding = "binary" | "base64" | "base64_urlsafe";
+
+const textDecoder = new TextDecoder();
 
 const defaultOptions: Required<
   Pick<
@@ -38,7 +49,7 @@ const defaultOptions: Required<
   minimumRatio: 1.3,
   minimumStringLength: 1000,
   minimumByteSaving: 16_384, // 16 KB
-  encoding: "base64",
+  encoding: "binary",
 } as const;
 
 export class CacheCompress implements ICacheCompressor {
@@ -49,7 +60,7 @@ export class CacheCompress implements ICacheCompressor {
     minimumRatio: number;
     minimumStringLength: number;
     minimumByteSaving: number;
-    encoding: "base64" | "base64_urlsafe";
+    encoding: CacheCompressEncoding;
   };
 
   /**
@@ -73,6 +84,9 @@ export class CacheCompress implements ICacheCompressor {
    *   // Skip compression if the achieved byte saving is less than 16 KB
    *   // @default 16_384
    *   minimumByteSaving: 16_384,
+   *   // Store compressed bytes as Uint8Array (or 'base64', 'base64_urlsafe')
+   *   // @default 'binary'
+   *   encoding: 'binary',
    * });
    * ```
    */
@@ -111,10 +125,13 @@ export class CacheCompress implements ICacheCompressor {
       };
     }
 
+    const { encoding } = this.#options;
+    // Compress the serialized string first, then optionally encode the bytes
     const serialized = this.#serializer.serialize(data);
-    const compressed = await this.#gzip.toEncodedString(serialized, {
-      encoding: this.#options.encoding,
-    });
+    const compressed =
+      encoding === "binary"
+        ? await this.#gzip.toUint8Array(serialized)
+        : await this.#gzip.toEncodedString(serialized, { encoding });
     if (
       Math.max(serialized.length - compressed.length, 0) < minimumByteSaving
     ) {
@@ -156,9 +173,15 @@ export class CacheCompress implements ICacheCompressor {
     if (data.status !== "success") {
       return data.data as T;
     }
-    const serialized = await this.#gunzip.fromEncodedString(data.data, {
-      encoding: this.#options.encoding,
-    });
+    const serialized =
+      typeof data.data === "string"
+        ? await this.#gunzip.fromEncodedString(data.data, {
+            encoding:
+              this.#options.encoding === "base64_urlsafe"
+                ? "base64_urlsafe"
+                : "base64",
+          })
+        : textDecoder.decode(await this.#gunzip.fromUint8Array(data.data));
     return this.#serializer.deserialize<T>(serialized);
   };
 }
