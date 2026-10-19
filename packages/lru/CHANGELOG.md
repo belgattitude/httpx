@@ -1,5 +1,24 @@
 # @httpx/lru
 
+## 0.16.0
+
+### Minor Changes
+
+- [#2846](https://github.com/belgattitude/httpx/pull/2846) [`18951cb`](https://github.com/belgattitude/httpx/commit/18951cb6240c7b364607a93e963f13bc3c65c11a) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `TimeLruCache.expiresIn(key)` returning the remaining time to live of an entry in milliseconds, or `undefined` if the entry doesn't exist or has expired.
+  
+  ```typescript
+  import { TimeLruCache } from "@httpx/lru";
+  
+  const lru = new TimeLruCache({ maxSize: 10, defaultTTL: 1000 });
+  lru.set("key1", "value1", 500);
+  lru.expiresIn("key1"); // 👈 500 (or slightly less as time passes)
+  lru.expiresIn("unknown"); // 👈 undefined
+  ```
+  
+  Like `peek()`, it doesn't mark the entry as recently used and doesn't evict expired entries. Also available on `NullTimeLruCache` (always `undefined`).
+  
+  **Breaking (types)**: `expiresIn` is a new required member of the `ITimeLruCache` interface (only relevant for custom implementations).
+
 ## 0.15.2
 
 ### Patch Changes
