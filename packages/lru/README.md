@@ -109,6 +109,25 @@ const value = lru.get("key1"); // 👈 'value1' (item is present and is not expi
 lru.has("key1"); // 👈 false (item is present but expired - 👋 onEviction will be called)
 ```
 
+### TimeLruCache.expiresIn()
+
+Returns the remaining time to live of an entry in milliseconds, or `undefined` if the entry doesn't exist or has expired. Like `peek()`, it doesn't mark the entry as recently used and doesn't evict expired entries.
+
+```typescript
+import { TimeLruCache } from "@httpx/lru";
+
+const lru = new TimeLruCache({ maxSize: 10, defaultTTL: 1000 });
+
+lru.set("key1", "value1", 500);
+
+lru.expiresIn("key1"); // 👈 500 (or slightly less as time passes)
+lru.expiresIn("unknown"); // 👈 undefined (item does not exist)
+
+// 🕛 wait 1 second, time for the item to expire
+
+lru.expiresIn("key1"); // 👈 undefined (item is present but expired)
+```
+
 ## LruCache
 
 LruCache provides a base LRU implementation. It is a simple cache with a fixed capacity. When the cache is full, the least recently used item is removed. Under the hood it uses a doubly linked list implementation to allow `get()` in O(1). If you're looking for a cache with expiry time (TTL) consider using [TimeLruCache](#timelrucache) instead.
@@ -325,9 +344,9 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | Scenario (esm)                                        | Size (brotli) |
 | ----------------------------------------------------- | ------------: |
 | `import { LruCache } from '@httpx/lru`                |        ~ 570B |
-| `import { TimeLruCache } from '@httpx/lru`            |        ~ 670B |
+| `import { TimeLruCache } from '@httpx/lru`            |        ~ 705B |
 | `import { getOrCreateLruCache } from '@httpx/lru`     |        ~ 695B |
-| `import { getOrCreateTimeLruCache } from '@httpx/lru` |        ~ 750B |
+| `import { getOrCreateTimeLruCache } from '@httpx/lru` |        ~ 785B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
 

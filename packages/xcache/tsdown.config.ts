@@ -7,7 +7,10 @@ export default defineConfig((_options) => {
   return {
     clean: true,
     dts: { tsconfig: "./tsconfig.build.json" },
-    entry: ["src/index.ts"],
+    entry: {
+      index: "src/index.ts",
+      "hono/index": "src/hono/index.ts",
+    },
     minify: "dce-only",
     platform: "neutral",
     treeshake: true,

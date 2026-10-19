@@ -14,6 +14,59 @@ describe("TimeLruCache", () => {
     vi.useRealTimers();
   });
 
+  describe("expiresIn", () => {
+    it("should return the remaining ttl", () => {
+      const lru = new TimeLruCache({
+        maxSize: 2,
+        defaultTTL: HUNDRED_MILLIS,
+      });
+      lru.set("key1", "value1");
+      lru.set("key2", "value2", 4 * HUNDRED_MILLIS);
+      expect(lru.expiresIn("key1")).toBe(HUNDRED_MILLIS);
+      expect(lru.expiresIn("key2")).toBe(4 * HUNDRED_MILLIS);
+      vi.setSystemTime(Date.now() + SIXTY_MILLIS);
+      expect(lru.expiresIn("key1")).toBe(HUNDRED_MILLIS - SIXTY_MILLIS);
+      expect(lru.expiresIn("unknown")).toBeUndefined();
+    });
+
+    it("should return undefined for expired items without evicting them", () => {
+      const fn = vi.fn<(key: string, value: unknown) => void>();
+      const lru = new TimeLruCache({
+        maxSize: 2,
+        defaultTTL: HUNDRED_MILLIS,
+        onEviction: fn,
+      });
+      lru.set("key1", "value1");
+      vi.setSystemTime(Date.now() + HUNDRED_MILLIS + 1);
+      expect(lru.expiresIn("key1")).toBeUndefined();
+      expect(lru.size).toBe(1);
+      expect(fn).not.toHaveBeenCalled();
+    });
+
+    it("should not mark the item as recently used", () => {
+      const lru = new TimeLruCache({
+        maxSize: 2,
+        defaultTTL: HUNDRED_MILLIS,
+      });
+      lru.set("key1", "value1");
+      lru.set("key2", "value2");
+      lru.expiresIn("key1");
+      lru.set("key3", "value3");
+      expect(lru.has("key1")).toBe(false);
+    });
+
+    it("should be updated when the item is set again", () => {
+      const lru = new TimeLruCache({
+        maxSize: 2,
+        defaultTTL: HUNDRED_MILLIS,
+      });
+      lru.set("key1", "value1");
+      vi.setSystemTime(Date.now() + SIXTY_MILLIS);
+      lru.set("key1", "value1", 2 * HUNDRED_MILLIS);
+      expect(lru.expiresIn("key1")).toBe(2 * HUNDRED_MILLIS);
+    });
+  });
+
   describe("eviction", () => {
     it("should evict items based on ttl", () => {
       const lru = new TimeLruCache({

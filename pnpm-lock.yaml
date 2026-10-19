@@ -1680,6 +1680,9 @@ importers:
       '@httpx/compress':
         specifier: workspace:^
         version: link:../compress
+      '@httpx/encode':
+        specifier: workspace:^
+        version: link:../encode
       '@httpx/lru':
         specifier: workspace:^
         version: link:../lru
@@ -1723,6 +1726,9 @@ importers:
       fflate:
         specifier: 0.8.3
         version: 0.8.3
+      hono:
+        specifier: 4.13.13
+        version: 4.13.13
       npm-run-all2:
         specifier: 9.0.3
         version: 9.0.3

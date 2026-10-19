@@ -15,7 +15,7 @@ import { benchConfig } from "./bench-config";
 import { generateArrayOfData } from "./data-generator";
 
 const options = benchConfig.benchOptions;
-const { isCiOrCodSpeed, rows } = benchConfig;
+const { fetchWaitMs, rows } = benchConfig;
 
 const waitMs = async (ms: number): Promise<void> => {
   await sleep(ms);
@@ -37,7 +37,7 @@ const payloadSize = prettyBytes(
 );
 
 const defaultParams = {
-  waitMs: isCiOrCodSpeed ? 100 : 400,
+  waitMs: fetchWaitMs,
 } as const;
 
 describe(`XMemCache benchmarks with ${payloadSize}`, () => {
@@ -72,10 +72,23 @@ describe(`XMemCache benchmarks with ${payloadSize}`, () => {
   });
 
   test("XMemCache vs original function", async ({ bench }) => {
-    await cacheJsonGzip.runAsync({
-      key: ["/bench/cache-json-gzip-meta"],
-      fn: () => asyncDataFetcher(defaultParams),
-    });
+    // Ensure the compression benches measure compressed entries (ie: the
+    // payload is above the CacheCompress default thresholds)
+    for (const [label, cache] of [
+      ["json", cacheJsonGzip],
+      ["superjson", cacheSuperjsonGzip],
+      ["devalue", cacheDevalueGzip],
+    ] as const) {
+      const { meta } = await cache.runAsync({
+        key: ["/bench/check-compression"],
+        fn: () => asyncDataFetcher({ waitMs: 0 }),
+      });
+      if (meta.compression === undefined) {
+        throw new Error(
+          `${label} + ${algorithm}: payload not compressed, increase the bench rows`
+        );
+      }
+    }
 
     await bench.compare(
       bench("original function", async () => {
@@ -94,19 +107,19 @@ describe(`XMemCache benchmarks with ${payloadSize}`, () => {
           fn: () => asyncDataFetcher(defaultParams),
         });
       }),
-      bench(`cache with json + gzip`, async () => {
+      bench(`cache with json + ${algorithm}`, async () => {
         const { data: _data } = await cacheJsonGzip.runAsync({
           key: ["/bench/cache-json-gzip"],
           fn: () => asyncDataFetcher(defaultParams),
         });
       }),
-      bench("cache with superjson + gzip", async () => {
+      bench(`cache with superjson + ${algorithm}`, async () => {
         const { data: _data } = await cacheSuperjsonGzip.runAsync({
           key: ["/bench/cache-superjson-gzip"],
           fn: () => asyncDataFetcher(defaultParams),
         });
       }),
-      bench("cache with devalue + gzip", async () => {
+      bench(`cache with devalue + ${algorithm}`, async () => {
         const { data: _data } = await cacheDevalueGzip.runAsync({
           key: ["/bench/cache-devalue-gzip"],
           fn: () => asyncDataFetcher(defaultParams),
