@@ -375,6 +375,50 @@ describe("createHonoXCache", () => {
     expect(lru.size).toBe(1);
   });
 
+  it("should preserve the caller-provided Vary header", async () => {
+    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+    const xcache = createHonoXCache({ lru });
+    const app = new Hono();
+    app.get("/data", (c) =>
+      xcache.json(c, {
+        key: ["/data"],
+        fn: () => Promise.resolve(payload),
+        headers: { vary: "Cookie", "Cache-Control": "public, max-age=60" },
+      })
+    );
+    const res = await app.request("/data");
+    expect(res.headers.get("Vary")).toBe("Cookie, Accept-Encoding");
+  });
+
+  it("should change the ETag when revalidated in the same millisecond", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(1000);
+    try {
+      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+      const xcache = createHonoXCache({ lru });
+      let version = 0;
+      const app = new Hono();
+      app.get("/data", (c) =>
+        xcache.json(c, {
+          key: ["/data"],
+          fn: () => Promise.resolve({ version: ++version }),
+          forceRevalidate: c.req.query("refresh") !== undefined,
+        })
+      );
+      const first = await app.request("/data");
+      const etag = first.headers.get("ETag") ?? "";
+      // same millisecond, content changed by the revalidation
+      const refreshed = await app.request("/data?refresh", {
+        headers: { "If-None-Match": etag },
+      });
+      expect(refreshed.status).toBe(200);
+      expect(refreshed.headers.get("ETag")).not.toBe(etag);
+      await expect(refreshed.json()).resolves.toStrictEqual({ version: 2 });
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it("should not send an ETag when disabled", async () => {
     const { app } = createApp({ etag: false });
     const res = await app.request("/data");

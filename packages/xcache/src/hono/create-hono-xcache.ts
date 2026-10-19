@@ -18,6 +18,7 @@ import {
 } from "../x-mem-cache";
 import {
   acceptsEncoding,
+  appendVary,
   buildCacheControl,
   createWeakEtag,
   type HonoXCacheControl,
@@ -295,7 +296,7 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
       }
     }
     if (cache.compressionEnabled || entry.format === "compressed") {
-      headers.Vary = "Accept-Encoding";
+      appendVary(headers, "Accept-Encoding");
     }
     if (debugHeaders) {
       let status = cached ? "HIT" : "MISS";

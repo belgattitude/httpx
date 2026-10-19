@@ -250,4 +250,37 @@ describe("XMemCache enable / disable", () => {
       );
     });
   });
+
+  describe("createdAt", () => {
+    it("should be monotonic when an entry is replaced in the same millisecond", async () => {
+      vi.useFakeTimers({ toFake: ["Date"] });
+      vi.setSystemTime(1000);
+      try {
+        const { cache, fn } = createCache();
+        const first = await cache.runAsyncEntry({ key: ["/data"], fn });
+        const second = await cache.runAsyncEntry({
+          key: ["/data"],
+          fn,
+          forceRevalidate: true,
+        });
+        const third = await cache.runAsyncEntry({
+          key: ["/data"],
+          fn,
+          forceRevalidate: true,
+        });
+        expect(first.entry.createdAt).toBe(1000);
+        expect(second.entry.createdAt).toBe(1001);
+        expect(third.entry.createdAt).toBe(1002);
+        vi.setSystemTime(5000);
+        const later = await cache.runAsyncEntry({
+          key: ["/data"],
+          fn,
+          forceRevalidate: true,
+        });
+        expect(later.entry.createdAt).toBe(5000);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+  });
 });

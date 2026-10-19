@@ -75,7 +75,7 @@ isPlainObject(new (class Cls {})()); // ❌
 //    (browser, Nodejs, edge, cloudflare, deno), it's not.
 //
 // 👇 process.env isn't properly portable across all JS environments
-//    In Bun && cloudlfare, process.env is a plain object, but in other environments
+//    In Bun && cloudflare, process.env is a plain object, but in other environments
 //    (browser, Nodejs, edge, cloudflare, deno), it's not.
 
 isPlainObject(globalThis); // ✅ with Bun ❌ otherwise (browser, Nodejs, edge, cloudflare, deno)
@@ -132,7 +132,7 @@ try {
 
 #### Generic
 
-`ìsPlainObject` and `assertPlainObject` accepts a generic to provide type autocompletion. Be aware that no runtime check are done. If you're looking for runtime validation, check zod, valibot or other alternatives.
+`isPlainObject` and `assertPlainObject` accepts a generic to provide type autocompletion. Be aware that no runtime check are done. If you're looking for runtime validation, check zod, valibot or other alternatives.
 
 ```typescript
 import { isPlainObject } from "@httpx/plain-object";
@@ -257,13 +257,16 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 ## Comparison with other libraries
 
-| Library | Compat | Perf | CJS+ESM |
+| Library | Compat | Perf (node 26 / bun 1.4) | CJS+ESM |
 | --- | --- | --- | --- |
-| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj) | Differences | 1.17x slower | No |
-| [es-toolkit](https://github.com/toss/es-toolkit) | No | 1.25x slower | Yes |
-| (@redux)[isPlainObject](https://github.com/reduxjs/redux) | ✅ 100% | 2.76x slower | Yes |
-| (zod)[util.isPlainObject](https://github.com/colinhacks/zod) | [Differences](#zodutilisplainobject) | 1.18x faster (node 26) | Yes |
-| (lodash)[isPlainObject](https://lodash.com/docs/4.17.15#isPlainObject) | No | 83.50x slower | No |
+| [is-plain-obj](https://github.com/sindresorhus/is-plain-obj) | Differences | on par / 1.77x slower | No |
+| [@sindresorhus/is](https://github.com/sindresorhus/is) | Differences | on par / 1.06x slower | No |
+| [es-toolkit](https://github.com/toss/es-toolkit) | No | 1.06x slower / 2.50x slower | Yes |
+| (@redux)[isPlainObject](https://github.com/reduxjs/redux) | ✅ 100% | 3.04x slower / 2.09x slower | Yes |
+| (zod)[util.isPlainObject](https://github.com/colinhacks/zod) | [Differences](#zodutilisplainobject) | 1.18x faster / 3.36x slower | Yes |
+| (lodash)[isPlainObject](https://lodash.com/docs/4.17.15#isPlainObject) | No | 26.21x slower / 25.97x slower | No |
+
+> Measured with the [benchmarks](#benchmarks) above (110 mixed values per call).
 
 ### redux/isPlainObject
 
@@ -284,7 +287,7 @@ isPlainObject({ constructor: class Cls {} }); // ✅ true, zod ❌ false (a regu
 
 This library wouldn't be possible without [@sindresorhus](https://github.com/sindresorhus) [is-plain-obj](https://github.com/sindresorhus/is-plain-obj). Notable differences:
 
-- [x] Slightly faster (10%) and lighter
+- [x] Faster on bun (1.77x), on par on node, and lighter
 - [x] ESM and CJS formats.
 - [x] Named export.
 - [x] Smaller bundle size.

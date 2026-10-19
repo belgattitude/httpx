@@ -66,6 +66,39 @@ export const matchesIfNoneMatch = (
 };
 
 /**
+ * Add a field to the Vary header of a headers record, preserving the
+ * caller-provided values (whatever the header name casing). Nothing is added
+ * when the field (or "*") is already present.
+ *
+ * @example
+ * ```typescript
+ * const headers = { vary: "Cookie" };
+ * appendVary(headers, "Accept-Encoding");
+ * // headers: { vary: "Cookie, Accept-Encoding" }
+ * ```
+ */
+export const appendVary = (
+  headers: Record<string, string>,
+  field: string
+): void => {
+  const name =
+    Object.keys(headers).find((key) => key.toLowerCase() === "vary") ?? "Vary";
+  const current = headers[name]?.trim() ?? "";
+  if (current === "") {
+    headers[name] = field;
+    return;
+  }
+  const lowerField = field.toLowerCase();
+  const isCovered = current.split(",").some((value) => {
+    const token = value.trim().toLowerCase();
+    return token === lowerField || token === "*";
+  });
+  if (!isCovered) {
+    headers[name] = `${current}, ${field}`;
+  }
+};
+
+/**
  * Fast non-cryptographic 32-bit hash (FNV-1a) of a string.
  */
 export const fnv1a32 = (str: string): number => {

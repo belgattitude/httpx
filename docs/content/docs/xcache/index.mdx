@@ -1,0 +1,333 @@
+---
+title: "@httpx/xcache"
+description: "In-memory cache for async functions, with optional compression, statistics and a hono integration."
+---
+
+<div className={"shadow-md -ml-2 mt-[30px] mb-[5px] border p-5 rounded "}>
+  In-memory cache for async functions, with optional compression (gzip,
+  deflate), statistics, enable / disable switches and a [hono](/xcache/hono)
+  integration.
+</div>
+
+<div className="shields-ctn">
+  [![npm](https://img.shields.io/npm/v/@httpx/xcache?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/xcache)
+  [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/xcache/CHANGELOG.md)
+  [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-xcache-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fxcache)
+  [![bundles](https://img.shields.io/static/v1?label=&message=esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/xcache/.size-limit.ts)
+  [![node](https://img.shields.io/static/v1?label=Node&message=22%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](/xcache#compatibility)
+  [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](/xcache#compatibility)
+  [![downloads](https://img.shields.io/npm/dm/@httpx/xcache?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/xcache)
+  [![license](https://img.shields.io/npm/l/@httpx/xcache?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+</div>
+
+## Features
+
+- 🗝️&nbsp; Stable cache keys from any serializable params ([@httpx/stable-hash](https://github.com/belgattitude/httpx/tree/main/packages/stable-hash)).
+- 🗜️&nbsp; Optional [compression](#with-compression) (gzip/deflate) with json, superjson or devalue serializers.
+- 📊&nbsp; [Statistics](/xcache#statistics), [enable / disable](#enable--disable) globally or per call.
+- 🔥&nbsp; [Hono](/xcache/hono) helper: compressed responses sent as-is, ETag, Cache-Control.
+- 📐&nbsp; Lightweight (starts at [~1.7kB](/xcache#bundle-size)).
+- 🛡️&nbsp; Tested on [node 22-26, bun, browser and cloudflare workers](/xcache#compatibility).
+- 🗝️&nbsp; Available in ESM.
+
+## Install
+
+<Tabs items={["pnpm", "yarn", "npm"]}>
+<Tab value="pnpm">
+
+```bash
+pnpm add @httpx/xcache
+```
+
+</Tab>
+<Tab value="yarn">
+
+```bash
+yarn add @httpx/xcache
+```
+
+</Tab>
+<Tab value="npm">
+
+```bash
+npm install @httpx/xcache
+```
+
+</Tab>
+</Tabs>
+
+## Simple usage
+
+```typescript
+import { XMemCache, TimeLruCache } from "@httpx/xcache";
+
+const xMemCache = new XMemCache({
+  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+  namespace: "default",
+});
+
+const fetchSmth = async (params: { id: number }) => {
+  return { id: params.id, data: `Data for ${params.id}` };
+};
+
+const params = { id: 1 };
+
+const { data } = await xMemCache.runAsync({
+  key: ["/api/data", params],
+  fn: () => fetchSmth(params),
+});
+
+// data: { id: 1, data: 'Data for 1' }
+```
+
+`runAsync` options and result:
+
+```typescript
+const { data, meta } = await xMemCache.runAsync({
+  // Cache key: a non-empty string followed by any serializable values
+  // (objects keys are sorted, so { a: 1, b: 2 } and { b: 2, a: 1 } give the same key)
+  key: ["/api/data", params],
+  // Executed on cache miss, errors are not cached
+  fn: () => fetchSmth(params),
+  // Optional: time to live in milliseconds (default: the lru defaultTTL)
+  ttl: 30_000,
+  // Optional: override the default namespace
+  namespace: "other",
+  // Optional: execute the function and refresh the entry even if cached
+  forceRevalidate: false,
+  // Optional: see "Enable / disable"
+  enabled: true,
+  compressionEnabled: true,
+});
+
+// meta.cached: true when served from the cache
+// meta.generatedKey: '{"key":["/api/data",{"id":1}],"ns":"other"}'
+```
+
+Or with `createCacheFn` to get a bound `runAsync` function:
+
+```typescript
+import { createCacheFn, TimeLruCache } from "@httpx/xcache";
+
+const cacheFn = createCacheFn({
+  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+});
+
+const { data } = await cacheFn({
+  key: ["/api/data", params],
+  fn: () => fetchSmth(params),
+});
+```
+
+## With compression
+
+You can use compression to reduce the size of the cached data. The library supports `gzip` and `deflate` compression algorithms. To be able to serialize and deserialize the data, you can use adapters like `DevalueSerializer`, `SuperjsonSerializer` or `JsonSerializer`.
+
+<Callout type="info">
+
+A serializer is only needed with compression. Without a compressor, `XMemCache` keeps the values as-is in the LRU (no serialization cost, all types supported, same instance returned on each hit). See [choosing a serializer](/xcache/serializers) for the memory gains.
+
+</Callout>
+
+```typescript
+import {
+  XMemCache,
+  TimeLruCache,
+  CacheCompress,
+  SuperjsonSerializer,
+} from "@httpx/xcache";
+
+const xMemCache = new XMemCache({
+  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+
+  compressor: new CacheCompress({
+    // To enable compression the data needs to be serialized
+    // Choose between SuperjsonSerializer, DevalueSerializer, JsonSerializer
+    // (see "Choosing a serializer")
+    serializer: new SuperjsonSerializer(),
+    algorithm: "gzip", // or 'deflate'
+
+    // Skip compression if the achieved compression ratio is less than
+    // the provided ratio. 1.3 means that the compression will be skipped
+    // if the ratio does not give at least 30% memory reduction
+    // @default 1.3
+    minimumRatio: 1.3,
+
+    // Skip compression if the data (or its serialized form) is shorter
+    // than 16K characters: small payloads are never compressed
+    // @default 16_384
+    minimumStringLength: 16_384,
+
+    // Skip compression if the achieved byte saving is less than 32 KB
+    // @default 32_768
+    minimumByteSaving: 32_768,
+
+    // Compressed bytes are kept as Uint8Array ("binary"), use "base64"
+    // or "base64_urlsafe" if a string is required (~33% larger)
+    // @default "binary"
+    encoding: "binary",
+  }),
+});
+
+const fetchThings = async (params: { name: string }) => {
+  return {
+    message: `Hello ${params.name}`,
+    bigint: BigInt("1234567890123456789012345678901234567890"),
+    date: new Date(),
+  };
+};
+
+// Params are converted into a stable key (@httpx/stable-hash)
+const params = { name: "cool", createdAt: new Date() };
+
+const { data } = await xMemCache.runAsync({
+  key: ["/api/data", params],
+  fn: () => fetchThings(params),
+});
+```
+
+### Compression meta
+
+Compressed entries keep a meta describing how they were stored. It's returned by `runAsync` in `meta.compression` (when the data was stored compressed):
+
+```typescript
+const { data, meta } = await xMemCache.runAsync({
+  key: ["/api/data", params],
+  fn: () => fetchThings(params),
+});
+
+// meta.compression
+// {
+//   algorithm: "gzip",        // "gzip" | "deflate"
+//   encoding: "binary",       // "binary" | "base64" | "base64_urlsafe"
+//   serializer: "superjson",  // serializer identifier
+//   originalSize: 974025,     // serialized string length
+//   compressedSize: 90333,    // compressed length
+//   ratio: 10.78,
+// }
+```
+
+On a cache hit, the meta is checked against the current compressor options. An existing entry created with a different algorithm, encoding or serializer (ie: a shared lru or changed options) is never decoded with the wrong settings, it's treated as a cache miss: the function is executed again and the entry is replaced.
+
+## Enable / disable
+
+The cache and the compression can be enabled or disabled globally, and overridden per call.
+
+| Option | Default | When disabled |
+| --- | --- | --- |
+| `enabled` | `true` | The function is always executed, the cache is neither read nor written (`meta.bypassed: true`). |
+| `compressionEnabled` | `true` | Entries are stored as-is (no serialization cost). Cache keys are unchanged and compressed entries still read. |
+
+```typescript
+const xMemCache = new XMemCache({
+  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+  compressor: new CacheCompress({
+    algorithm: "gzip",
+    serializer: new SuperjsonSerializer(),
+  }),
+  // 👇 Global: ie: disable the cache with an env variable
+  enabled: process.env.XCACHE_ENABLED !== "false",
+  // 👇 Global: ie: no compression in development
+  compressionEnabled: process.env.NODE_ENV === "production",
+});
+
+const isPreview = true;
+
+const { data, meta } = await xMemCache.runAsync({
+  key: ["/api/data", params],
+  fn: () => fetchThings(params),
+  // 👇 Per call: overrides the global options
+  enabled: !isPreview,
+  compressionEnabled: false,
+});
+
+// meta.bypassed === true when the cache was disabled for this call
+xMemCache.enabled; // global state (readonly)
+xMemCache.compressionEnabled; // false when disabled or without compressor
+```
+
+<Callout type="info">
+
+Disabling the cache for a call doesn't remove an existing entry, use `forceRevalidate: true` to refresh it. Entries stored while compression is disabled are reported with `skippedReason: "compression_disabled"` in the [statistics](/xcache#statistics).
+
+</Callout>
+
+## Statistics
+
+`getStats()` returns statistics about the cached entries, and `getEntryInfo()` the info of a single entry. Expired entries are ignored and the lru order is not affected.
+
+```typescript
+const stats = xMemCache.getStats();
+// {
+//   items: 3,                // non-expired entries
+//   nativeItems: 1,          // stored as-is (no compressor or compression skipped)
+//   compressedItems: 2,
+//   compressedSize: 180666,  // total size of the compressed entries
+//   originalSize: 1948050,   // same entries, serialized size before compression
+//   entries: [               // least recently used first
+//     {
+//       key: '{"compressorId":"cache-compress:superjson","key":["/api/data",{"name":"cool"}],"ns":"default"}',
+//       format: "compressed",
+//       size: 90333,
+//       compression: { algorithm: "gzip", encoding: "binary", serializer: "superjson", originalSize: 974025, compressedSize: 90333, ratio: 10.78 },
+//       createdAt: 1792411200000,
+//       expiresIn: 118500,   // remaining ttl in milliseconds
+//     },
+//     {
+//       key: '{"compressorId":"cache-compress:superjson","key":["/api/small"],"ns":"default"}',
+//       format: "native",
+//       skippedReason: "minimum_byte_saving_not_met",
+//       createdAt: 1792411123000,
+//       expiresIn: 42000,
+//     },
+//     // ...
+//   ],
+// }
+
+const info = xMemCache.getEntryInfo({ key: ["/api/data", params] });
+// same shape as an entry above, or undefined when not cached
+```
+
+<Callout type="info">
+
+Native (uncompressed) entries are live objects, their size can't be measured and is not included in the totals. If the lru is shared, entries of other `XMemCache` instances are included.
+
+</Callout>
+
+### Sharing the lru
+
+Every value stored by `XMemCache` is branded, so the lru can safely be shared with other code: values not created by `XMemCache` (even if they look alike) are ignored by `getStats()` / `getEntryInfo()` and treated as a cache miss by `runAsync()`. The `isXMemCacheEntry` typeguard is exported:
+
+```typescript
+import { isXMemCacheEntry } from "@httpx/xcache";
+
+for (const [key, value] of lru) {
+  if (isXMemCacheEntry(value)) {
+    console.log(key, value.format); // "native" | "compressed"
+  }
+}
+```
+
+## Bundle size
+
+Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/xcache/.size-limit.ts)
+
+| Scenario (esm)                                         | Size (compressed) |
+| ------------------------------------------------------ | ----------------: |
+| `import { XMemCache } from '@httpx/xcache`             |          ~ 1.79kB |
+| `import { createHonoXCache } from '@httpx/xcache/hono` |          ~ 4.86kB |
+
+## Compatibility
+
+| Level | CI | Description |
+| --- | --- | --- |
+| Node | ✅ | CI for 22.x, 24.x & 26.x. |
+| Browser | ✅ | Tested with latest chrome (vitest/playwright) |
+| Browserslist | ✅ | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/xcache/.browserslistrc) |
+| Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
+| Cloudflare | ✅ | Ensured with @cloudflare/vitest-plugin (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
+| Typescript | ✅ | TS 5.0 + / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
+| ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
+| Performance | ✅ | Monitored with [codspeed.io](https://codspeed.io/belgattitude/httpx) |
+
+> For _older_ browsers: most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)

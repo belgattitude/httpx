@@ -1,5 +1,6 @@
 import {
   acceptsEncoding,
+  appendVary,
   buildCacheControl,
   createWeakEtag,
   fnv1a32,
@@ -81,6 +82,28 @@ describe("buildCacheControl", () => {
     "buildCacheControl(%j, %s) should be %j",
     (option, expiresIn, expected) => {
       expect(buildCacheControl(option, expiresIn)).toBe(expected);
+    }
+  );
+});
+
+describe("appendVary", () => {
+  it.each([
+    [{}, { Vary: "Accept-Encoding" }],
+    [{ Vary: "" }, { Vary: "Accept-Encoding" }],
+    [{ Vary: "Cookie" }, { Vary: "Cookie, Accept-Encoding" }],
+    [
+      { vary: "Cookie, Authorization" },
+      { vary: "Cookie, Authorization, Accept-Encoding" },
+    ],
+    [{ VARY: "accept-encoding" }, { VARY: "accept-encoding" }],
+    [{ Vary: "Cookie, Accept-Encoding" }, { Vary: "Cookie, Accept-Encoding" }],
+    [{ Vary: "*" }, { Vary: "*" }],
+  ] satisfies [Record<string, string>, Record<string, string>][])(
+    "appendVary(%j) should give %j",
+    (headers, expected) => {
+      const result = { ...headers };
+      appendVary(result, "Accept-Encoding");
+      expect(result).toStrictEqual(expected);
     }
   );
 });

@@ -302,28 +302,39 @@ export class XMemCache {
   >(
     params: XMemCacheRunAsyncParams<TResult, TKey>
   ): Promise<Result<TResult>> => {
-    const { entry, cached, bypassed, generatedKey, freshData } =
-      await this.#runEntry(params);
-    let data: TResult;
-    let compression: CacheCompressSuccessMeta | undefined;
-    if (entry.format === "compressed") {
-      compression = entry.meta;
-      // on a miss, avoid decompressing what was just compressed
-      data = cached ? await this.readEntry(entry) : (freshData as TResult);
-    } else {
-      ({ data } = entry);
+    // Hot path: the cache hit is resolved synchronously, without awaiting
+    // another async function (each await adds a promise and a microtask)
+    const generatedKey = this.#genKey(params);
+    const enabled = params.enabled ?? this.#enabled;
+    if (enabled && params.forceRevalidate !== true) {
+      const entry = this.#getReadable<TResult>(generatedKey);
+      if (entry !== undefined) {
+        if (entry.format === "native") {
+          return {
+            data: entry.data,
+            meta: this.#createMeta(true, false, generatedKey, undefined),
+          };
+        }
+        return {
+          data: await this.readEntry(entry),
+          meta: this.#createMeta(true, false, generatedKey, entry.meta),
+        };
+      }
     }
+    const { entry, data } = await this.#fetchAndStore(
+      params,
+      generatedKey,
+      enabled
+    );
     return {
+      // on a miss, the function result is returned (not decompressed)
       data,
-      meta: {
-        cached,
-        ...(bypassed ? { bypassed } : {}),
+      meta: this.#createMeta(
+        false,
+        !enabled,
         generatedKey,
-        ...(this.#compressorId === undefined
-          ? {}
-          : { compressorId: this.#compressorId }),
-        ...(compression === undefined ? {} : { compression }),
-      },
+        entry.format === "compressed" ? entry.meta : undefined
+      ),
     };
   };
 
@@ -377,69 +388,79 @@ export class XMemCache {
   >(
     params: XMemCacheRunAsyncParams<TResult, TKey>
   ): Promise<XMemCacheRunAsyncEntryResult<TResult>> => {
-    const { entry, cached, bypassed, generatedKey } =
-      await this.#runEntry(params);
-    const expiresIn = bypassed ? undefined : this.#lru.expiresIn(generatedKey);
-    return {
+    const generatedKey = this.#genKey(params);
+    const enabled = params.enabled ?? this.#enabled;
+    let entry: XMemCacheEntry<TResult> | undefined;
+    let cached = false;
+    if (enabled && params.forceRevalidate !== true) {
+      entry = this.#getReadable<TResult>(generatedKey);
+      cached = entry !== undefined;
+    }
+    if (entry === undefined) {
+      ({ entry } = await this.#fetchAndStore(params, generatedKey, enabled));
+    }
+    const result: XMemCacheRunAsyncEntryResult<TResult> = {
       entry,
       cached,
-      bypassed,
+      bypassed: !enabled,
       generatedKey,
-      ...(expiresIn === undefined ? {} : { expiresIn }),
     };
+    const expiresIn = enabled ? this.#lru.expiresIn(generatedKey) : undefined;
+    if (expiresIn !== undefined) {
+      result.expiresIn = expiresIn;
+    }
+    return result;
   };
 
   /**
-   * Return the cached entry, or execute the function and store its result.
-   * freshData is the function result on a cache miss.
+   * Generate the cache key of a runAsync / runAsyncEntry call.
    */
-  readonly #runEntry = async <
+  readonly #genKey = <
     TResult extends SupportedCacheValues,
     TKey extends CacheKeyTuple,
   >(
     params: XMemCacheRunAsyncParams<TResult, TKey>
-  ): Promise<
-    XMemCacheRunAsyncEntryResult<TResult> & { freshData?: TResult }
-  > => {
-    const {
-      fn,
-      key,
-      ttl,
-      namespace,
-      forceRevalidate = false,
-      enabled = this.#enabled,
-      compressionEnabled = this.#compressionEnabled,
-    } = params;
-
-    const generatedKey = genCacheKeyString({
-      key,
-      namespace: namespace ?? this.#defaultNs,
+  ): CacheStringKey =>
+    genCacheKeyString({
+      key: params.key,
+      namespace: params.namespace ?? this.#defaultNs,
       compressorId: this.#compressorId,
       origin: params.origin,
     });
 
-    if (!enabled) {
-      const data = await fn({ key });
-      return {
-        entry: createNativeEntry(data),
-        cached: false,
-        bypassed: true,
-        generatedKey,
-        freshData: data,
-      };
-    }
-
+  /**
+   * Return the cached entry if it exists and can be read by this instance
+   * (created by XMemCache, compatible compressor), otherwise undefined.
+   */
+  readonly #getReadable = <TResult>(
+    generatedKey: CacheStringKey
+  ): XMemCacheEntry<TResult> | undefined => {
     const existing = this.#lru.get(generatedKey);
-    if (
-      forceRevalidate !== true &&
-      // ignore values not created by XMemCache (ie: shared lru)
-      isXMemCacheEntry<TResult>(existing) &&
-      this.#canRead(existing)
-    ) {
-      return { entry: existing, cached: true, bypassed: false, generatedKey };
-    }
+    // ignore values not created by XMemCache (ie: shared lru)
+    return isXMemCacheEntry<TResult>(existing) && this.#canRead(existing)
+      ? existing
+      : undefined;
+  };
 
+  /**
+   * Execute the function and store its result (compressed when possible),
+   * or only execute it when the cache is disabled (bypass).
+   */
+  readonly #fetchAndStore = async <
+    TResult extends SupportedCacheValues,
+    TKey extends CacheKeyTuple,
+  >(
+    params: XMemCacheRunAsyncParams<TResult, TKey>,
+    generatedKey: CacheStringKey,
+    enabled: boolean
+  ): Promise<{ entry: XMemCacheEntry<TResult>; data: TResult }> => {
+    const { fn, key, ttl } = params;
+    const compressionEnabled =
+      params.compressionEnabled ?? this.#compressionEnabled;
     const data = await fn({ key });
+    if (!enabled) {
+      return { entry: createNativeEntry(data), data };
+    }
     let entry: XMemCacheEntry<TResult>;
     if (this.#compressor !== undefined && !compressionEnabled) {
       entry = createNativeEntry(data, "compression_disabled");
@@ -456,14 +477,37 @@ export class XMemCache {
     } else {
       entry = createNativeEntry(data);
     }
+    // A replacement entry must be more recent than the one it replaces (ie:
+    // forceRevalidate in the same millisecond), so that createdAt based
+    // validators (ie: ETag) change when the content may have changed.
+    const previous = this.#lru.peek(generatedKey);
+    if (isXMemCacheEntry(previous) && entry.createdAt <= previous.createdAt) {
+      entry.createdAt = previous.createdAt + 1;
+    }
     this.#lru.set(generatedKey, entry, ttl);
-    return {
-      entry,
-      cached: false,
-      bypassed: false,
-      generatedKey,
-      freshData: data,
-    };
+    return { entry, data };
+  };
+
+  /**
+   * Create the runAsync result meta (without object spreads, hot path).
+   */
+  readonly #createMeta = (
+    cached: boolean,
+    bypassed: boolean,
+    generatedKey: CacheStringKey,
+    compression: CacheCompressSuccessMeta | undefined
+  ): Result<unknown>["meta"] => {
+    const meta: Result<unknown>["meta"] = { cached, generatedKey };
+    if (bypassed) {
+      meta.bypassed = true;
+    }
+    if (this.#compressorId !== undefined) {
+      meta.compressorId = this.#compressorId;
+    }
+    if (compression !== undefined) {
+      meta.compression = compression;
+    }
+    return meta;
   };
 
   /**
