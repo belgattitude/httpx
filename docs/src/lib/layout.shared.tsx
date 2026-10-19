@@ -7,6 +7,7 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: appName,
     },
+    links: [{ text: "Sponsors", url: "/sponsors", active: "url" }],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
   };
 }
