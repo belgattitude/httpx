@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@httpx/xcache?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/xcache) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/xcache/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-xcache-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fxcache) [![bundles](https://img.shields.io/static/v1?label=&message=esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/xcache/.size-limit.ts) [![node](https://img.shields.io/static/v1?label=Node&message=22%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![downloads](https://img.shields.io/npm/dm/@httpx/xcache?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/xcache) [![license](https://img.shields.io/npm/l/@httpx/xcache?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
-In memory cache utility
+In-memory cache for async functions, with optional compression, statistics and a hono integration.
 
 ## Install
 
@@ -14,11 +14,17 @@ $ pnpm add @httpx/xcache
 
 ## Features
 
-- 📐&nbsp; Lightweight (starts at [~800B](#bundle-size))
+- 🗝️&nbsp; Stable cache keys from any serializable params ([@httpx/stable-hash](https://github.com/belgattitude/httpx/tree/main/packages/stable-hash)).
+- 🗜️&nbsp; Optional [compression](#with-compression) (gzip/deflate) with json, superjson or devalue serializers.
+- 📊&nbsp; [Statistics](#statistics), [enable / disable](#enable--disable) globally or per call.
+- 🔥&nbsp; [Hono](#hono) helper: compressed responses sent as-is, ETag, Cache-Control.
+- 📐&nbsp; Lightweight (starts at [~1.7kB](#bundle-size)).
 - 🛡️&nbsp; Tested on [node 22-26, bun, browser and cloudflare workers](#compatibility).
 - 🗝️&nbsp; Available in ESM.
 
 ## Documentation
+
+👉 [Official website](https://belgattitude.github.io/httpx/xcache) or [GitHub Readme](https://github.com/belgattitude/httpx/tree/main/packages/xcache#readme)
 
 ## Simple usage
 
@@ -44,6 +50,45 @@ const { data } = await xMemCache.runAsync({
 // data: { id: 1, data: 'Data for 1' }
 ```
 
+`runAsync` options and result:
+
+```typescript
+const { data, meta } = await xMemCache.runAsync({
+  // Cache key: a non-empty string followed by any serializable values
+  // (objects keys are sorted, so { a: 1, b: 2 } and { b: 2, a: 1 } give the same key)
+  key: ["/api/data", params],
+  // Executed on cache miss, errors are not cached
+  fn: () => fetchSmth(params),
+  // Optional: time to live in milliseconds (default: the lru defaultTTL)
+  ttl: 30_000,
+  // Optional: override the default namespace
+  namespace: "other",
+  // Optional: execute the function and refresh the entry even if cached
+  forceRevalidate: false,
+  // Optional: see "Enable / disable"
+  enabled: true,
+  compressionEnabled: true,
+});
+
+// meta.cached: true when served from the cache
+// meta.generatedKey: '{"key":["/api/data",{"id":1}],"ns":"other"}'
+```
+
+Or with `createCacheFn` to get a bound `runAsync` function:
+
+```typescript
+import { createCacheFn, TimeLruCache } from "@httpx/xcache";
+
+const cacheFn = createCacheFn({
+  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+});
+
+const { data } = await cacheFn({
+  key: ["/api/data", params],
+  fn: () => fetchSmth(params),
+});
+```
+
 ## With compression
 
 You can use compression to reduce the size of the cached data. The library supports `gzip` and `deflate` compression algorithms. To be able to serialize and deserialize the data, you can use adapters like `DevalueSerializer`, `SuperjsonSerializer` or `JsonSerializer`.
@@ -64,7 +109,8 @@ const xMemCache = new XMemCache({
 
   compressor: new CacheCompress({
     // To enable compression the data needs to be serialized
-    // Choose between SuperJsonSerializer, DevalueSerializer, JsonSerializer
+    // Choose between SuperjsonSerializer, DevalueSerializer, JsonSerializer
+    // (see "Choosing a serializer")
     serializer: new SuperjsonSerializer(),
     algorithm: "gzip", // or 'deflate'
 
@@ -74,13 +120,13 @@ const xMemCache = new XMemCache({
     // @default 1.3
     minimumRatio: 1.3,
 
-    // Skip compression if the result is a string shorter than 1000 characters
+    // Skip compression if the data is a string shorter than 1000 characters
     // @default 1000
     minimumStringLength: 1000,
 
-    // Skip compression if the achieved byte saving is less than 16 KB
-    // @default 16_384
-    minimumByteSaving: 16_384,
+    // Skip compression if the achieved byte saving is less than 32 KB
+    // @default 32_768
+    minimumByteSaving: 32_768,
 
     // Compressed bytes are kept as Uint8Array ("binary"), use "base64"
     // or "base64_urlsafe" if a string is required (~33% larger)
@@ -97,7 +143,7 @@ const fetchThings = async (params: { name: string }) => {
   };
 };
 
-// Params will be hashed through @httpx/stable-hash
+// Params are converted into a stable key (@httpx/stable-hash)
 const params = { name: "cool", createdAt: new Date() };
 
 const { data } = await xMemCache.runAsync({
@@ -151,11 +197,13 @@ const xMemCache = new XMemCache({
   compressionEnabled: process.env.NODE_ENV === "production",
 });
 
+const isPreview = true;
+
 const { data, meta } = await xMemCache.runAsync({
   key: ["/api/data", params],
   fn: () => fetchThings(params),
   // 👇 Per call: overrides the global options
-  enabled: !params.preview,
+  enabled: !isPreview,
   compressionEnabled: false,
 });
 
@@ -256,6 +304,8 @@ Options:
 
 ```typescript
 createHonoXCache({
+  // A dedicated XMemCache is created with this lru (or use an existing
+  // instance, see "With an existing XMemCache instance")
   lru,
   namespace: "default",
   // The serialized string is the response body
@@ -266,7 +316,7 @@ createHonoXCache({
     algorithm: "gzip", // or "deflate"
     minimumRatio: 1.3,
     minimumStringLength: 1000,
-    minimumByteSaving: 16_384,
+    minimumByteSaving: 32_768,
   },
   etag: true,
   cacheControl: false, // see "Cache-Control"
@@ -303,7 +353,7 @@ const xcache = createHonoXCache({ cache: xMemCache });
 | native | serialized with the helper serializer |
 
 > [!TIP]
-> To benefit from sending compressed bytes as-is, use the same serializer in the instance compressor and in the helper (`JsonSerializer` by default), and `encoding: "binary"` (default).
+> To benefit from sending compressed bytes as-is, use the same serializer in the instance compressor and in the helper (`JsonSerializer` by default), and `encoding: "binary"` (default). The `lru`, `namespace`, `compression`, `enabled` and `compressionEnabled` options can't be used with `cache` (the instance ones are used, `namespace`, `enabled` and `compressionEnabled` can still be set per call).
 
 #### Cache keys origin
 
@@ -362,6 +412,7 @@ When `fn` throws, nothing is cached and the error is propagated: the next reques
 
 ```typescript
 import { HttpNotFound, isHttpException } from "@httpx/exception";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 
 const fetchProduct = async (id: string) => {
   const product = await db.products.find(id);
@@ -381,7 +432,10 @@ app.get("/api/products/:id", (c) =>
 
 app.onError((err, c) => {
   if (isHttpException(err)) {
-    return c.json({ error: err.message }, err.statusCode);
+    return c.json(
+      { error: err.message },
+      err.statusCode as ContentfulStatusCode
+    );
   }
   return c.json({ error: "Internal Server Error" }, 500);
 });
@@ -417,7 +471,7 @@ Estimated memory used by one cached entry (~11k rows, Node 26.12.0, V8 heap for 
 | Extended types (Date, BigInt...) | 3.95 MB | n/a | 322 kB (-92%) | 🥇 286 kB (-93%) | 359 kB (-91%) |
 | Repeated objects (10 shared refs) | 973 kB | 65 kB (-93%) ¹ | 121 kB (-88%) | 🥇 83 kB (-91%) | 136 kB (-86%) |
 
-¹ json does not preserve shared references: each row gets its own copy once deserialized.
+¹ json does not preserve shared references: each row gets its own copy once deserialized. superjson, superjson+dedupe and devalue restore them.
 
 Compression trades CPU for memory: each cache hit pays gunzip + deserialize (see below) and returns a new copy of the data. With `encoding: "base64"`, add ~33% to the compressed sizes.
 
@@ -429,7 +483,7 @@ Measured on Node 26.12.0 with ~11k rows (see [benchmarks](#benchmarks)), gzip si
 | --- | --- | --- | --- | --- |
 | **Recommended for** | JSON-safe data (default choice) | Extended types, read-heavy caches | Extended types with repeated objects, using compression | Extended types, write-heavy caches |
 | Extended types (Date, BigInt, Map...) | ❌ | ✅ | ✅ | ✅ |
-| Preserves shared references | ❌ (duplicated) | ❌ (duplicated) | ✅ | ✅ |
+| Preserves shared references | ❌ (duplicated) | ✅ (duplicated in output) | ✅ | ✅ |
 | _Native types (974 kB json)_ |  |  |  |  |
 | Serialize | 🥇 1.6 ms | 12.3 ms (~8x slower) | 12.2 ms (~8x slower) | 9.0 ms (~6x slower) |
 | Deserialize | 🥇 1.2 ms | 🥇 1.1 ms | 🥇 1.1 ms | 3.0 ms |
@@ -443,7 +497,7 @@ Measured on Node 26.12.0 with ~11k rows (see [benchmarks](#benchmarks)), gzip si
 | Deserialize | 3.6 ms | 14.0 ms | 3.1 ms | 🥇 2.3 ms |
 | Size raw / gzip | 2.15 MB / 🥇 65 kB | 2.82 MB / 121 kB | 754 kB / 83 kB | 🥇 688 kB / 136 kB |
 | **Advantages** | Fastest, smallest, no dependency | Fast deserialize, compresses well | Best gzip size for extended types, fast deserialize | Fastest with extended types, smallest raw |
-| **Drawbacks** | No extended types, references are lost | Slowest serialize, large raw output | Slow serialize | Compresses poorly (~2.4x larger gzip) |
+| **Drawbacks** | No extended types, shared references are lost | Slowest serialize, large raw output with shared references | Slow serialize | Compresses poorly (~2.4x larger gzip) |
 
 > [!TIP]
 > Dedupe is a superjson option, use a custom serializer to enable it:

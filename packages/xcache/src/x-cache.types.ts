@@ -18,8 +18,12 @@ export type CacheableAsyncFunction = (
 export interface XCacheRunAsyncParams<
   TFunction extends CacheableAsyncFunction,
 > {
+  /** Cache key, first element must be a non-empty string */
   key: CacheKeyTuple;
+  /** Function executed on cache miss */
   fn: (key: CacheKeyTuple) => Awaited<ReturnType<TFunction>>;
+  /** Override the default namespace */
   namespace?: string;
+  /** Time to live in milliseconds */
   ttl?: number;
 }

@@ -79,6 +79,7 @@ type HonoXCacheBaseOptions = {
 export type HonoXCacheLruOptions = HonoXCacheBaseOptions & {
   /** The lru used to store the cache entries */
   lru: ITimeLruCache;
+  /** Not available with lru, use HonoXCacheInstanceOptions */
   cache?: never;
   /**
    * Default namespace of the cache keys.
@@ -122,10 +123,15 @@ export type HonoXCacheLruOptions = HonoXCacheBaseOptions & {
 export type HonoXCacheInstanceOptions = HonoXCacheBaseOptions & {
   /** An existing XMemCache instance */
   cache: XMemCache;
+  /** Not available, the lru of the instance is used */
   lru?: never;
+  /** Not available, the namespace of the instance is used (or per call) */
   namespace?: never;
+  /** Not available, the compressor of the instance is used */
   compression?: never;
+  /** Not available, the enabled option of the instance is used (or per call) */
   enabled?: never;
+  /** Not available, the instance option is used (or per call) */
   compressionEnabled?: never;
 };
 
@@ -164,7 +170,9 @@ export type HonoXCache = {
    * XMemCache.getEntryInfo, with the hono origin).
    */
   getEntryInfo: <TKey extends CacheKeyTuple>(params: {
+    /** Cache key, as provided to json() */
     key: TKey;
+    /** Namespace, if overridden in json() */
     namespace?: string;
   }) => XMemCacheEntryInfo | undefined;
   /**
@@ -186,29 +194,8 @@ export type HonoXCache = {
 const textDecoder = new TextDecoder();
 
 /**
- * Create a cache helper for hono route handlers.
- *
- * @example
- * ```typescript
- * import { Hono } from 'hono';
- * import { TimeLruCache } from '@httpx/xcache';
- * import { createHonoXCache } from '@httpx/xcache/hono';
- *
- * const xcache = createHonoXCache({
- *   lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
- * });
- * // or with an existing XMemCache instance
- * // const xcache = createHonoXCache({ cache: xMemCache });
- *
- * const app = new Hono();
- *
- * app.get('/api/products/:id', (c) =>
- *   xcache.json(c, {
- *     key: ['/api/products', { id: c.req.param('id') }],
- *     fn: () => fetchProduct(c.req.param('id')),
- *   })
- * );
- * ```
+ * Create the dedicated XMemCache instance of the helper, storing compressed
+ * entries as raw bytes (binary encoding) so they can be sent as-is.
  */
 const createXMemCache = (
   options: HonoXCacheLruOptions,
@@ -240,6 +227,31 @@ const createXMemCache = (
   });
 };
 
+/**
+ * Create a cache helper for hono route handlers.
+ *
+ * @example
+ * ```typescript
+ * import { Hono } from 'hono';
+ * import { TimeLruCache } from '@httpx/xcache';
+ * import { createHonoXCache } from '@httpx/xcache/hono';
+ *
+ * const xcache = createHonoXCache({
+ *   lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+ * });
+ * // or with an existing XMemCache instance
+ * // const xcache = createHonoXCache({ cache: xMemCache });
+ *
+ * const app = new Hono();
+ *
+ * app.get('/api/products/:id', (c) =>
+ *   xcache.json(c, {
+ *     key: ['/api/products', { id: c.req.param('id') }],
+ *     fn: () => fetchProduct(c.req.param('id')),
+ *   })
+ * );
+ * ```
+ */
 export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
   const {
     serializer = new JsonSerializer(),

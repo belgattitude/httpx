@@ -130,6 +130,7 @@ export type XMemCacheRunAsyncEntryResult<TResult> = {
 type Result<TResult> = {
   /** The (cached) data returned by the function */
   data: TResult;
+  /** Info about how the data was served */
   meta: {
     /** Whether the data was served from the cache */
     cached: boolean;
@@ -239,6 +240,9 @@ export class XMemCache {
   readonly #enabled: boolean;
   readonly #compressionEnabled: boolean;
 
+  /**
+   * @param options - lru, namespace, compressor and enabled options
+   */
   constructor(options: XMemCacheOptions) {
     const {
       lru,
@@ -475,7 +479,9 @@ export class XMemCache {
    * @throws TypeError if the key is not a valid stable key.
    */
   getEntryInfo = <TKey extends CacheKeyTuple>(params: {
+    /** Cache key, as provided to runAsync */
     key: TKey;
+    /** Namespace, if overridden in runAsync */
     namespace?: string;
     /** Origin used when the entry was created (ie: "hono") */
     origin?: string;

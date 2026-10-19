@@ -13,5 +13,6 @@ export interface ICacheSerializer {
    * cache keys and stored in the compression meta.
    */
   getIdentifier: () => string;
+  /** Same as getIdentifier */
   toString: () => string;
 }
