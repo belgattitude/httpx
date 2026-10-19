@@ -106,6 +106,29 @@ const { data } = await xMemCache.runAsync({
 });
 ```
 
+### Compression meta
+
+Compressed entries keep a meta describing how they were stored. It's returned by `runAsync` in `meta.compression` (when the data was stored compressed):
+
+```typescript
+const { data, meta } = await xMemCache.runAsync({
+  key: ["/api/data", params],
+  fn: () => fetchThings(params),
+});
+
+// meta.compression
+// {
+//   algorithm: "gzip",        // "gzip" | "deflate"
+//   encoding: "binary",       // "binary" | "base64" | "base64_urlsafe"
+//   serializer: "superjson",  // serializer identifier
+//   originalSize: 974025,     // serialized string length
+//   compressedSize: 90333,    // compressed length
+//   ratio: 10.78,
+// }
+```
+
+On a cache hit, the meta is checked against the current compressor options. An existing entry created with a different algorithm, encoding or serializer (ie: a shared lru or changed options) is never decoded with the wrong settings, it's treated as a cache miss: the function is executed again and the entry is replaced.
+
 ## Choosing a serializer
 
 A serializer is only used when compression is enabled. Without a compressor, values are stored as live objects in memory, so no serializer is involved.

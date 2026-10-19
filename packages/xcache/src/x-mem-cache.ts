@@ -28,6 +28,8 @@ type Result<TResult> = {
     cached: boolean;
     generatedKey: CacheStringKey;
     compressorId?: string;
+    /** Set when the returned data was stored compressed */
+    compression?: CacheCompressSuccessMeta;
   };
 };
 
@@ -102,13 +104,18 @@ export class XMemCache {
       compressorId: this.#compressorId,
     });
     let cached = true;
+    let compression: CacheCompressSuccessMeta | undefined;
     const result = this.#lru.get(cacheKey) as
       | LRUCacheValue<TResult>
       | undefined;
 
     let data = result?.data as TResult | undefined;
 
-    if (result === undefined || forceRevalidate === true) {
+    if (
+      result === undefined ||
+      forceRevalidate === true ||
+      !this.#canRead(result)
+    ) {
       cached = false;
       data = await fn({ key });
       if (
@@ -118,6 +125,7 @@ export class XMemCache {
       ) {
         const compressed = await this.#compressor.compress(data);
         if (compressed.status === "success") {
+          compression = compressed.meta;
           this.#lru.set(
             cacheKey,
             {
@@ -144,6 +152,7 @@ export class XMemCache {
       this.#compressor !== undefined &&
       result.format === "compressed"
     ) {
+      compression = result.meta;
       data = await this.#compressor.decompress<TResult>({
         status: "success",
         data: result.data,
@@ -158,8 +167,23 @@ export class XMemCache {
         ...(this.#compressorId === undefined
           ? {}
           : { compressorId: this.#compressorId }),
+        ...(compression === undefined ? {} : { compression }),
       },
     };
+  };
+
+  /**
+   * A compressed entry can only be read by a compressor with the same
+   * options (algorithm, encoding, serializer), otherwise it's a cache miss.
+   */
+  readonly #canRead = <T>(entry: LRUCacheValue<T>): boolean => {
+    if (entry.format !== "compressed") {
+      return true;
+    }
+    if (this.#compressor === undefined) {
+      return false;
+    }
+    return this.#compressor.isCompatible?.(entry.meta) ?? true;
   };
 
   /**

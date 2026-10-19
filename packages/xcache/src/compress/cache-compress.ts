@@ -2,12 +2,20 @@ import { Compressor, Decompressor } from "@httpx/compress";
 
 import type { ICacheSerializer } from "../serializer/types";
 import { isTrivialValue } from "./is-trivial-value";
-import type { CacheCompressResult, ICacheCompressor } from "./types";
+import type {
+  CacheCompressAlgorithm,
+  CacheCompressEncoding,
+  CacheCompressResult,
+  CacheCompressSuccessMeta,
+  ICacheCompressor,
+} from "./types";
+
+export type { CacheCompressEncoding } from "./types";
 
 export type CacheCompressOptions = {
   serializer: ICacheSerializer;
 
-  algorithm: "gzip" | "deflate";
+  algorithm: CacheCompressAlgorithm;
 
   /**
    * Minimum achieved compression ratio to consider compression effective
@@ -36,8 +44,6 @@ export type CacheCompressOptions = {
   encoding?: CacheCompressEncoding;
 };
 
-export type CacheCompressEncoding = "binary" | "base64" | "base64_urlsafe";
-
 const textDecoder = new TextDecoder();
 
 const defaultOptions: Required<
@@ -56,6 +62,8 @@ export class CacheCompress implements ICacheCompressor {
   readonly #gzip: Compressor;
   readonly #gunzip: Decompressor;
   readonly #serializer: ICacheSerializer;
+  readonly #serializerId: string;
+  readonly #algorithm: CacheCompressAlgorithm;
   readonly #options: {
     minimumRatio: number;
     minimumStringLength: number;
@@ -98,10 +106,16 @@ export class CacheCompress implements ICacheCompressor {
     this.#gzip = new Compressor(algorithm);
     this.#gunzip = new Decompressor(algorithm);
     this.#serializer = serializer;
+    this.#serializerId = serializer.getIdentifier();
+    this.#algorithm = algorithm;
     this.#options = restOptions;
   }
-  getIdentifier = (): string =>
-    `cache-compress:${this.#serializer.getIdentifier()}`;
+  getIdentifier = (): string => `cache-compress:${this.#serializerId}`;
+
+  isCompatible = (meta: CacheCompressSuccessMeta): boolean =>
+    meta.algorithm === this.#algorithm &&
+    meta.encoding === this.#options.encoding &&
+    meta.serializer === this.#serializerId;
 
   compress = async <T>(data: T): Promise<CacheCompressResult> => {
     const { minimumRatio, minimumStringLength, minimumByteSaving } =
@@ -161,6 +175,9 @@ export class CacheCompress implements ICacheCompressor {
     return {
       status: "success",
       meta: {
+        algorithm: this.#algorithm,
+        encoding,
+        serializer: this.#serializerId,
         compressedSize: compressed.length,
         originalSize: serialized.length,
         ratio,
@@ -172,6 +189,11 @@ export class CacheCompress implements ICacheCompressor {
   decompress = async <T = unknown>(data: CacheCompressResult): Promise<T> => {
     if (data.status !== "success") {
       return data.data as T;
+    }
+    if (!this.isCompatible(data.meta)) {
+      throw new TypeError(
+        `Incompatible compressed data (${data.meta.algorithm}/${data.meta.encoding}/${data.meta.serializer}), expected ${this.#algorithm}/${this.#options.encoding}/${this.#serializerId}`
+      );
     }
     const serialized =
       typeof data.data === "string"

@@ -78,6 +78,50 @@ describe.each([
       }
     );
 
+    it("should include algorithm, encoding and serializer in meta", async () => {
+      const cacheCompress = new CacheCompress({
+        algorithm,
+        serializer,
+        encoding: "base64",
+        minimumRatio: 1,
+        minimumByteSaving: 0,
+      });
+      const result = await cacheCompress.compress(
+        generateArrayOfRecords(100, extendedTypeSupport)
+      );
+      expect(result.status).toBe("success");
+      expect(result.meta).toMatchObject({
+        algorithm,
+        encoding: "base64",
+        serializer: serializer.getIdentifier(),
+      });
+      expect(
+        cacheCompress.isCompatible(result.meta as CacheCompressSuccessMeta)
+      ).toBe(true);
+    });
+
+    it("should refuse to decompress incompatible data", async () => {
+      const writer = new CacheCompress({
+        algorithm,
+        serializer,
+        encoding: "base64",
+        minimumRatio: 1,
+        minimumByteSaving: 0,
+      });
+      const reader = new CacheCompress({
+        algorithm,
+        serializer,
+        encoding: "binary",
+      });
+      const result = await writer.compress(
+        generateArrayOfRecords(100, extendedTypeSupport)
+      );
+      expect(reader.isCompatible(result.meta as CacheCompressSuccessMeta)).toBe(
+        false
+      );
+      await expect(reader.decompress(result)).rejects.toThrow(TypeError);
+    });
+
     it("should skip compression for strings not meeting minimum length", async () => {
       const cacheGzip = new CacheCompress({
         algorithm,
