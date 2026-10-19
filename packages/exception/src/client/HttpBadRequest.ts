@@ -1,8 +1,6 @@
 import { HttpClientException } from "../base/HttpClientException";
 import type { HttpExceptionParams } from "../types";
 import { brandKey } from "../utils/brand";
-import { getNormalizedParams } from "../utils/getNormalizedParams";
-import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 400 Bad Request (client)
@@ -17,12 +15,10 @@ import { initProtoAndName } from "../utils/initProtoAndName";
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
  */
 const status = 400;
-const name = "BadRequest";
 export class HttpBadRequest extends HttpClientException {
   static readonly STATUS = status;
-  static override readonly [brandKey]: string = `Http${name}`;
+  static override readonly [brandKey]: string = "HttpBadRequest";
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName(this, name, HttpBadRequest);
+    super(status, msgOrParams);
   }
 }

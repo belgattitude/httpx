@@ -1,8 +1,6 @@
 import { HttpServerException } from "../base/HttpServerException";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import { brandKey } from "../utils/brand";
-import { getNormalizedParams } from "../utils/getNormalizedParams";
-import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 500 Internal Server Error (server)
@@ -14,12 +12,10 @@ import { initProtoAndName } from "../utils/initProtoAndName";
  */
 
 const status = 500;
-const name = "InternalServerError";
 export class HttpInternalServerError extends HttpServerException {
   static readonly STATUS = status;
-  static override readonly [brandKey]: string = `Http${name}`;
+  static override readonly [brandKey]: string = "HttpInternalServerError";
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName(this, name, HttpInternalServerError);
+    super(status, msgOrParams);
   }
 }

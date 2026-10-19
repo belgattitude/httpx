@@ -1,8 +1,6 @@
 import { HttpClientException } from "../base/HttpClientException";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import { brandKey } from "../utils/brand";
-import { getNormalizedParams } from "../utils/getNormalizedParams";
-import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 404 - Not found (client)
@@ -16,12 +14,10 @@ import { initProtoAndName } from "../utils/initProtoAndName";
  * @see https://httpstatus.in/404/
  */
 const status = 404;
-const name = "NotFound";
 export class HttpNotFound extends HttpClientException {
   static readonly STATUS = status;
-  static override readonly [brandKey]: string = `Http${name}`;
+  static override readonly [brandKey]: string = "HttpNotFound";
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName(this, name, HttpNotFound);
+    super(status, msgOrParams);
   }
 }

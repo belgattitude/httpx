@@ -1,8 +1,6 @@
 import { HttpClientException } from "../base/HttpClientException";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import { brandKey } from "../utils/brand";
-import { getNormalizedParams } from "../utils/getNormalizedParams";
-import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 410 Gone (client)
@@ -17,13 +15,10 @@ import { initProtoAndName } from "../utils/initProtoAndName";
  * @see https://httpstatus.in/410/
  */
 const status = 410;
-const name = "Gone";
 export class HttpGone extends HttpClientException {
   static readonly STATUS = status;
-  static override readonly [brandKey]: string = `Http${name}`;
-  // static override readonly name = 'HttpNotFound';
+  static override readonly [brandKey]: string = "HttpGone";
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName(this, name, HttpGone);
+    super(status, msgOrParams);
   }
 }

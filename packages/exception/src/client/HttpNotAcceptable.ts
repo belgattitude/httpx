@@ -1,8 +1,6 @@
 import { HttpClientException } from "../base/HttpClientException";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import { brandKey } from "../utils/brand";
-import { getNormalizedParams } from "../utils/getNormalizedParams";
-import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 406 Not acceptable (client)
@@ -14,12 +12,10 @@ import { initProtoAndName } from "../utils/initProtoAndName";
  * @see https://httpstatus.in/406/
  */
 const status = 406;
-const name = "NotAcceptable";
 export class HttpNotAcceptable extends HttpClientException {
   static readonly STATUS = status;
-  static override readonly [brandKey]: string = `Http${name}`;
+  static override readonly [brandKey]: string = "HttpNotAcceptable";
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName(this, name, HttpNotAcceptable);
+    super(status, msgOrParams);
   }
 }

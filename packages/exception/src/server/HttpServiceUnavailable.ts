@@ -1,8 +1,6 @@
 import { HttpServerException } from "../base/HttpServerException";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import { brandKey } from "../utils/brand";
-import { getNormalizedParams } from "../utils/getNormalizedParams";
-import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 503 Service Unavailable
@@ -20,12 +18,10 @@ import { initProtoAndName } from "../utils/initProtoAndName";
  * @see https://httpstatus.in/503/
  */
 const status = 503;
-const name = "ServiceUnavailable";
 export class HttpServiceUnavailable extends HttpServerException {
   static readonly STATUS = status;
-  static override readonly [brandKey]: string = `Http${name}`;
+  static override readonly [brandKey]: string = "HttpServiceUnavailable";
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName(this, name, HttpServiceUnavailable);
+    super(status, msgOrParams);
   }
 }
