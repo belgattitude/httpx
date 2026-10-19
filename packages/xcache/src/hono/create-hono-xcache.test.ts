@@ -436,6 +436,7 @@ describe("createHonoXCache", () => {
           serializer,
           encoding,
           minimumByteSaving: 0,
+          minimumStringLength: 0,
         }),
       });
 

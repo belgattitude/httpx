@@ -64,6 +64,7 @@ describe.each([["gzip", "deflate"]])("XMemCache compression", () => {
           algorithm: "gzip",
           serializer: new DevalueSerializer(),
           minimumByteSaving: 0,
+          minimumStringLength: 0,
         }),
       });
       const runCached = async () =>
@@ -107,6 +108,7 @@ describe.each([["gzip", "deflate"]])("XMemCache compression", () => {
           ...options,
           serializer: new DevalueSerializer(),
           minimumByteSaving: 0,
+          minimumStringLength: 0,
         }),
       });
 

@@ -21,6 +21,7 @@ const createCache = (
       algorithm: "gzip",
       serializer: new JsonSerializer(),
       minimumByteSaving: 0,
+      minimumStringLength: 0,
     }),
     ...options,
   });

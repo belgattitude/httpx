@@ -56,6 +56,7 @@ describe.each([
           algorithm,
           minimumRatio: 1,
           minimumByteSaving: 4096,
+          minimumStringLength: 0,
           serializer,
           ...(encoding === undefined ? {} : { encoding }),
         });
@@ -85,6 +86,7 @@ describe.each([
         encoding: "base64",
         minimumRatio: 1,
         minimumByteSaving: 0,
+        minimumStringLength: 0,
       });
       const result = await cacheCompress.compress(
         generateArrayOfRecords(100, extendedTypeSupport)
@@ -107,6 +109,7 @@ describe.each([
         encoding: "base64",
         minimumRatio: 1,
         minimumByteSaving: 0,
+        minimumStringLength: 0,
       });
       const reader = new CacheCompress({
         algorithm,
@@ -197,6 +200,78 @@ describe.each([
       });
       const result = await cacheGzip.compress("ab".repeat(256));
       expect(result.status).toBe("success");
+    });
+
+    describe("small payloads should never be compressed", () => {
+      afterEach(() => {
+        vi.restoreAllMocks();
+      });
+
+      it("should skip when the serialized data is shorter than minimumStringLength", async () => {
+        const compressionSpy = vi.spyOn(globalThis, "CompressionStream");
+        const cacheGzip = new CacheCompress({
+          serializer,
+          algorithm,
+          minimumByteSaving: 0,
+        });
+        // ~13 KB serialized, below the 16K default
+        const data = generateArrayOfRecords(150, false);
+        expect(serializer.serialize(data).length).toBeLessThan(16_384);
+        const result = await cacheGzip.compress(data);
+        expect(result).toStrictEqual({
+          status: "skipped",
+          meta: { reason: "minimum_string_length_not_met" },
+          data,
+        });
+        expect(compressionSpy).not.toHaveBeenCalled();
+      });
+
+      it("should skip when the serialized data is shorter than minimumByteSaving", async () => {
+        const compressionSpy = vi.spyOn(globalThis, "CompressionStream");
+        const cacheGzip = new CacheCompress({
+          serializer,
+          algorithm,
+          minimumStringLength: 0,
+          minimumByteSaving: 1_000_000,
+        });
+        const data = generateArrayOfRecords(150, false);
+        const result = await cacheGzip.compress(data);
+        expect(result.meta).toStrictEqual({
+          reason: "minimum_byte_saving_not_met",
+        });
+        expect(compressionSpy).not.toHaveBeenCalled();
+      });
+
+      it("should compress when the serialized data is long enough", async () => {
+        const compressionSpy = vi.spyOn(globalThis, "CompressionStream");
+        const cacheGzip = new CacheCompress({ serializer, algorithm });
+        const result = await cacheGzip.compress(
+          generateArrayOfRecords(2000, false)
+        );
+        expect(result.status).toBe("success");
+        expect(compressionSpy).toHaveBeenCalledOnce();
+      });
+    });
+
+    it("should skip compression for strings shorter than 16K characters by default", async () => {
+      const cacheGzip = new CacheCompress({ serializer, algorithm });
+      const result = await cacheGzip.compress("a".repeat(16_383));
+      expect(result.status).toBe("skipped");
+      expect((result.meta as { reason?: string }).reason).toBe(
+        "minimum_string_length_not_met"
+      );
+    });
+
+    it("should skip compression when saving less than 32 KB by default", async () => {
+      const cacheGzip = new CacheCompress({ serializer, algorithm });
+      // highly compressible: the saving is close to the serialized length
+      const below = await cacheGzip.compress("a".repeat(25_000));
+      expect(below.status).toBe("skipped");
+      expect((below.meta as { reason?: string }).reason).toBe(
+        "minimum_byte_saving_not_met"
+      );
+      const above = await cacheGzip.compress("a".repeat(40_000));
+      expect(above.status).toBe("success");
     });
 
     it("should skip compression when minimum byte saving is not met", async () => {

@@ -21,6 +21,7 @@ describe("XMemCache stats", () => {
         algorithm: "gzip",
         serializer: new JsonSerializer(),
         minimumByteSaving: 1024,
+        minimumStringLength: 0,
       }),
     });
     return { lru, cache };

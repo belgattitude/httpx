@@ -32,6 +32,7 @@ const cases = await Promise.all(
       // Always compress to compare apples to apples
       minimumRatio: 0,
       minimumByteSaving: 0,
+      minimumStringLength: 0,
     });
     const compressed = await compressor.compress(data);
     if (compressed.status !== "success") {

@@ -34,14 +34,16 @@ export type CacheCompressOptions = {
    */
   minimumRatio?: number;
   /**
-   * If data is a string, minimum string length to activate compression.
-   * @default: 1000
+   * Minimum length to activate compression, checked on string data before
+   * serialization and on the serialized string before compression, so
+   * small payloads are never compressed.
+   * @default 16384 (16K characters)
    */
   minimumStringLength?: number;
 
   /**
    * Skip compression if the achieved byte saving is less than this value.
-   * @default 16384 (16 KB)
+   * @default 32768 (32 KB)
    */
   minimumByteSaving?: number;
 
@@ -63,8 +65,8 @@ const defaultOptions: Required<
   >
 > = {
   minimumRatio: 1.3,
-  minimumStringLength: 1000,
-  minimumByteSaving: 16_384, // 16 KB
+  minimumStringLength: 16_384, // 16K characters
+  minimumByteSaving: 32_768, // 32 KB
   encoding: "binary",
 } as const;
 
@@ -100,12 +102,13 @@ export class CacheCompress implements ICacheCompressor {
    *   // if the ratio does not give at least 30 memory reduction
    *   // @default 1.3
    *   minimumRatio: 1.3,
-   *   // Skip compression if the result is a string shorter than 1000 characters
-   *   // @default 1000
-   *   minimumStringLength: 1000,
-   *   // Skip compression if the achieved byte saving is less than 16 KB
+   *   // Skip compression if the data (or its serialized form) is shorter
+   *   // than 16K characters
    *   // @default 16_384
-   *   minimumByteSaving: 16_384,
+   *   minimumStringLength: 16_384,
+   *   // Skip compression if the achieved byte saving is less than 32 KB
+   *   // @default 32_768
+   *   minimumByteSaving: 32_768,
    *   // Store compressed bytes as Uint8Array (or 'base64', 'base64_urlsafe')
    *   // @default 'binary'
    *   encoding: 'binary',
@@ -140,8 +143,9 @@ export class CacheCompress implements ICacheCompressor {
 
   /**
    * Serialize and compress the data. Compression is skipped (data returned
-   * as-is) for trivial values or when the minimum length, ratio or byte
-   * saving are not met.
+   * as-is) for trivial values, when the data or its serialized form is
+   * shorter than minimumStringLength (or minimumByteSaving, as the saving
+   * can't exceed it), or when the minimum ratio or byte saving are not met.
    */
   compress = async <T>(data: T): Promise<CacheCompressResult> => {
     const { minimumRatio, minimumStringLength, minimumByteSaving } =
@@ -166,8 +170,28 @@ export class CacheCompress implements ICacheCompressor {
     }
 
     const { encoding } = this.#options;
-    // Compress the serialized string first, then optionally encode the bytes
     const serialized = this.#serializer.serialize(data);
+    // Don't even try to compress small payloads
+    if (serialized.length < minimumStringLength) {
+      return {
+        status: "skipped",
+        meta: {
+          reason: "minimum_string_length_not_met",
+        },
+        data,
+      };
+    }
+    // The byte saving can't exceed the serialized length
+    if (serialized.length < minimumByteSaving) {
+      return {
+        status: "skipped",
+        meta: {
+          reason: "minimum_byte_saving_not_met",
+        },
+        data,
+      };
+    }
+    // Compress the serialized string first, then optionally encode the bytes
     const compressed =
       encoding === "binary"
         ? await this.#gzip.toUint8Array(serialized)
