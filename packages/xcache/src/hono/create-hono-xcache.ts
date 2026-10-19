@@ -1,4 +1,5 @@
 import { Decompressor } from "@httpx/compress";
+import { Base64 } from "@httpx/encode";
 import type { ITimeLruCache, SupportedCacheValues } from "@httpx/lru";
 import type { Context } from "hono";
 
@@ -10,7 +11,11 @@ import {
 import type { CacheCompressAlgorithm } from "../compress/types";
 import { JsonSerializer } from "../serializer/json-serializer";
 import type { ICacheSerializer } from "../serializer/types";
-import { XMemCache, type XMemCacheRunAsyncParams } from "../x-mem-cache";
+import {
+  XMemCache,
+  type XMemCacheEntryInfo,
+  type XMemCacheRunAsyncParams,
+} from "../x-mem-cache";
 import {
   acceptsEncoding,
   buildCacheControl,
@@ -20,19 +25,20 @@ import {
 } from "./http-utils";
 
 /**
- * createHonoXCache options.
+ * Origin added to the cache keys created by the hono helper, to separate
+ * them from the ones created by XMemCache.runAsync for the same key.
  */
-export type HonoXCacheOptions = {
-  /** The lru used to store the cache entries */
-  lru: ITimeLruCache;
-  /**
-   * Default namespace of the cache keys.
-   * @default "default"
-   */
-  namespace?: string;
+export const honoXCacheOrigin = "hono";
+
+/**
+ * Options shared by both createHonoXCache variants.
+ */
+type HonoXCacheBaseOptions = {
   /**
    * Serializer used to create the response body. The serialized string is
    * sent as-is, so the client must be able to parse it (see contentType).
+   * Compressed entries are only sent as-is when they were created with a
+   * serializer having the same identifier.
    * @default JsonSerializer
    */
   serializer?: ICacheSerializer;
@@ -41,34 +47,6 @@ export type HonoXCacheOptions = {
    * @default "application/json; charset=utf-8"
    */
   contentType?: string;
-  /**
-   * Compression options, or false to disable compression. Compressed
-   * entries are sent as-is (Content-Encoding) to clients accepting the
-   * algorithm, without decompression nor serialization.
-   * @default { algorithm: "gzip" }
-   */
-  compression?:
-    | false
-    | (Pick<
-        CacheCompressOptions,
-        "minimumRatio" | "minimumStringLength" | "minimumByteSaving"
-      > & {
-        /** @default "gzip" */
-        algorithm?: CacheCompressAlgorithm;
-      });
-  /**
-   * Enable or disable the cache globally (overridable per call with the
-   * `enabled` param). When disabled, the function is always executed.
-   * @default true
-   */
-  enabled?: boolean;
-  /**
-   * Enable or disable compression globally (overridable per call with the
-   * `compressionEnabled` param), ie: `process.env.NODE_ENV === 'production'`.
-   * Unlike `compression: false`, cache keys are kept the same.
-   * @default true
-   */
-  compressionEnabled?: boolean;
   /**
    * Send a weak ETag and answer 304 Not Modified when the request
    * If-None-Match header matches.
@@ -96,12 +74,76 @@ export type HonoXCacheOptions = {
 };
 
 /**
+ * createHonoXCache options creating a dedicated XMemCache instance.
+ */
+export type HonoXCacheLruOptions = HonoXCacheBaseOptions & {
+  /** The lru used to store the cache entries */
+  lru: ITimeLruCache;
+  cache?: never;
+  /**
+   * Default namespace of the cache keys.
+   * @default "default"
+   */
+  namespace?: string;
+  /**
+   * Compression options, or false to disable compression. Compressed
+   * entries are stored as raw bytes, and sent as-is (Content-Encoding) to
+   * clients accepting the algorithm.
+   * @default { algorithm: "gzip" }
+   */
+  compression?:
+    | false
+    | (Pick<
+        CacheCompressOptions,
+        "minimumRatio" | "minimumStringLength" | "minimumByteSaving"
+      > & {
+        /** @default "gzip" */
+        algorithm?: CacheCompressAlgorithm;
+      });
+  /**
+   * Enable or disable the cache globally (overridable per call with the
+   * `enabled` param). When disabled, the function is always executed.
+   * @default true
+   */
+  enabled?: boolean;
+  /**
+   * Enable or disable compression globally (overridable per call with the
+   * `compressionEnabled` param), ie: `process.env.NODE_ENV === 'production'`.
+   * Unlike `compression: false`, cache keys are kept the same.
+   * @default true
+   */
+  compressionEnabled?: boolean;
+};
+
+/**
+ * createHonoXCache options using an existing XMemCache instance (its lru,
+ * namespace, compressor and enabled options are used).
+ */
+export type HonoXCacheInstanceOptions = HonoXCacheBaseOptions & {
+  /** An existing XMemCache instance */
+  cache: XMemCache;
+  lru?: never;
+  namespace?: never;
+  compression?: never;
+  enabled?: never;
+  compressionEnabled?: never;
+};
+
+/**
+ * createHonoXCache options: either an lru (a dedicated XMemCache is
+ * created) or an existing XMemCache instance.
+ */
+export type HonoXCacheOptions =
+  | HonoXCacheLruOptions
+  | HonoXCacheInstanceOptions;
+
+/**
  * Parameters of HonoXCache.json, same as XMemCache.runAsync.
  */
 export type HonoXCacheRespondParams<
   TResult extends SupportedCacheValues,
   TKey extends CacheKeyTuple,
-> = XMemCacheRunAsyncParams<TResult, TKey> & {
+> = Omit<XMemCacheRunAsyncParams<TResult, TKey>, "origin"> & {
   /**
    * Additional response headers. A Cache-Control header provided here takes
    * precedence over the cacheControl option.
@@ -117,6 +159,14 @@ export type HonoXCacheRespondParams<
 export type HonoXCache = {
   /** The underlying XMemCache instance */
   cache: XMemCache;
+  /**
+   * Info about an entry created by the hono helper (same as
+   * XMemCache.getEntryInfo, with the hono origin).
+   */
+  getEntryInfo: <TKey extends CacheKeyTuple>(params: {
+    key: TKey;
+    namespace?: string;
+  }) => XMemCacheEntryInfo | undefined;
   /**
    * Return a cached response for the async function result.
    *
@@ -147,6 +197,8 @@ const textDecoder = new TextDecoder();
  * const xcache = createHonoXCache({
  *   lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
  * });
+ * // or with an existing XMemCache instance
+ * // const xcache = createHonoXCache({ cache: xMemCache });
  *
  * const app = new Hono();
  *
@@ -158,21 +210,18 @@ const textDecoder = new TextDecoder();
  * );
  * ```
  */
-export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
+const createXMemCache = (
+  options: HonoXCacheLruOptions,
+  serializer: ICacheSerializer
+): XMemCache => {
   const {
     lru,
     namespace,
-    serializer = new JsonSerializer(),
-    contentType = "application/json; charset=utf-8",
     compression = {},
-    etag = true,
-    debugHeaders = false,
     enabled = true,
     compressionEnabled = true,
-    cacheControl: defaultCacheControl = false,
   } = options;
-
-  const cache = new XMemCache({
+  return new XMemCache({
     lru,
     enabled,
     compressionEnabled,
@@ -189,6 +238,19 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
           }),
         }),
   });
+};
+
+export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
+  const {
+    serializer = new JsonSerializer(),
+    contentType = "application/json; charset=utf-8",
+    etag = true,
+    debugHeaders = false,
+    cacheControl: defaultCacheControl = false,
+  } = options;
+  const serializerId = serializer.getIdentifier();
+
+  const cache = options.cache ?? createXMemCache(options, serializer);
 
   const decompressors = new Map<CacheCompressAlgorithm, Decompressor>();
   const getDecompressor = (algorithm: CacheCompressAlgorithm): Decompressor => {
@@ -207,7 +269,7 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
       ...runParams
     } = params;
     const { entry, cached, bypassed, generatedKey, expiresIn } =
-      await cache.runAsyncEntry(runParams);
+      await cache.runAsyncEntry({ ...runParams, origin: honoXCacheOrigin });
 
     const headers: Record<string, string> = { ...extraHeaders };
     const hasCacheControlHeader = Object.keys(headers).some(
@@ -220,7 +282,7 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
         headers["Cache-Control"] = value;
       }
     }
-    if (compression !== false) {
+    if (cache.compressionEnabled || entry.format === "compressed") {
       headers.Vary = "Accept-Encoding";
     }
     if (debugHeaders) {
@@ -240,9 +302,17 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
     }
     headers["Content-Type"] = contentType;
 
-    if (entry.format === "compressed") {
+    // compressed with the same serializer: the bytes are the response body
+    if (
+      entry.format === "compressed" &&
+      entry.meta.serializer === serializerId
+    ) {
       const { algorithm } = entry.meta;
-      const bytes = entry.data as Uint8Array<ArrayBuffer>;
+      const bytes = (
+        typeof entry.data === "string"
+          ? Base64.toUint8Array(entry.data)
+          : entry.data
+      ) as Uint8Array<ArrayBuffer>;
       if (acceptsEncoding(c.req.header("Accept-Encoding"), algorithm)) {
         headers["Content-Encoding"] = algorithm;
         headers["Content-Length"] = String(bytes.byteLength);
@@ -253,8 +323,13 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
       );
       return c.body(body, 200, headers);
     }
-    return c.body(serializer.serialize(entry.data), 200, headers);
+    // native entries, or compressed with another serializer
+    const data = await cache.readEntry(entry);
+    return c.body(serializer.serialize(data), 200, headers);
   };
 
-  return { cache, json };
+  const getEntryInfo: HonoXCache["getEntryInfo"] = (params) =>
+    cache.getEntryInfo({ ...params, origin: honoXCacheOrigin });
+
+  return { cache, json, getEntryInfo };
 };

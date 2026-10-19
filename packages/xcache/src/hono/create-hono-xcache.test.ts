@@ -4,8 +4,11 @@ import { Hono } from "hono";
 import { compress } from "hono/compress";
 import { expect, vi } from "vitest";
 
+import { CacheCompress } from "../compress/cache-compress";
+import { JsonSerializer } from "../serializer/json-serializer";
 import { SuperjsonSerializer } from "../serializer/superjson-serializer";
-import { createHonoXCache, type HonoXCacheOptions } from "./index";
+import { XMemCache } from "../x-mem-cache";
+import { createHonoXCache, type HonoXCacheLruOptions } from "./index";
 
 const payload = {
   rows: Array.from({ length: 2000 }, (_, i) => {
@@ -14,7 +17,7 @@ const payload = {
 };
 const smallPayload = { id: 1 };
 
-const createApp = (options: Omit<HonoXCacheOptions, "lru"> = {}) => {
+const createApp = (options: Omit<HonoXCacheLruOptions, "lru"> = {}) => {
   const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
   const xcache = createHonoXCache({ lru, debugHeaders: true, ...options });
   const fetchData = vi.fn<() => Promise<typeof payload>>(() =>
@@ -47,30 +50,43 @@ const decompressBody = async (
   return JSON.parse(new TextDecoder().decode(bytes)) as unknown;
 };
 
+/**
+ * Accept-Encoding is a forbidden request header in browsers, it's silently
+ * dropped from Request objects: compressed responses can't be tested there.
+ */
+const canSetAcceptEncoding = new Request("http://localhost", {
+  headers: { "Accept-Encoding": "gzip" },
+}).headers.has("Accept-Encoding");
+
 describe("createHonoXCache", () => {
-  it("should cache and send compressed bytes as-is when gzip is accepted", async () => {
-    const { app, fetchData } = createApp();
-    const headers = { "Accept-Encoding": "gzip, deflate, br" };
+  it.runIf(canSetAcceptEncoding)(
+    "should cache and send compressed bytes as-is when gzip is accepted",
+    async () => {
+      const { app, fetchData } = createApp();
+      const headers = { "Accept-Encoding": "gzip, deflate, br" };
 
-    const miss = await app.request("/data", { headers });
-    expect(miss.status).toBe(200);
-    expect(miss.headers.get("X-XCache")).toBe("MISS");
-    expect(miss.headers.get("Content-Encoding")).toBe("gzip");
-    expect(miss.headers.get("Content-Type")).toBe(
-      "application/json; charset=utf-8"
-    );
-    expect(miss.headers.get("Vary")).toBe("Accept-Encoding");
-    await expect(decompressBody(miss, "gzip")).resolves.toStrictEqual(payload);
+      const miss = await app.request("/data", { headers });
+      expect(miss.status).toBe(200);
+      expect(miss.headers.get("X-XCache")).toBe("MISS");
+      expect(miss.headers.get("Content-Encoding")).toBe("gzip");
+      expect(miss.headers.get("Content-Type")).toBe(
+        "application/json; charset=utf-8"
+      );
+      expect(miss.headers.get("Vary")).toBe("Accept-Encoding");
+      await expect(decompressBody(miss, "gzip")).resolves.toStrictEqual(
+        payload
+      );
 
-    const hit = await app.request("/data", { headers });
-    expect(hit.headers.get("X-XCache")).toBe("HIT");
-    expect(hit.headers.get("Content-Encoding")).toBe("gzip");
-    const bytes = new Uint8Array(await hit.clone().arrayBuffer());
-    expect(hit.headers.get("Content-Length")).toBe(String(bytes.byteLength));
-    expect(bytes.byteLength).toBeLessThan(JSON.stringify(payload).length / 5);
-    await expect(decompressBody(hit, "gzip")).resolves.toStrictEqual(payload);
-    expect(fetchData).toHaveBeenCalledOnce();
-  });
+      const hit = await app.request("/data", { headers });
+      expect(hit.headers.get("X-XCache")).toBe("HIT");
+      expect(hit.headers.get("Content-Encoding")).toBe("gzip");
+      const bytes = new Uint8Array(await hit.clone().arrayBuffer());
+      expect(hit.headers.get("Content-Length")).toBe(String(bytes.byteLength));
+      expect(bytes.byteLength).toBeLessThan(JSON.stringify(payload).length / 5);
+      await expect(decompressBody(hit, "gzip")).resolves.toStrictEqual(payload);
+      expect(fetchData).toHaveBeenCalledOnce();
+    }
+  );
 
   it.each([[undefined], ["br"], ["gzip;q=0"]])(
     "should decompress when the client does not accept the encoding (Accept-Encoding: %s)",
@@ -89,7 +105,7 @@ describe("createHonoXCache", () => {
     }
   );
 
-  it("should support deflate", async () => {
+  it.runIf(canSetAcceptEncoding)("should support deflate", async () => {
     const { app } = createApp({ compression: { algorithm: "deflate" } });
     await app.request("/data");
     const res = await app.request("/data", {
@@ -365,23 +381,26 @@ describe("createHonoXCache", () => {
     expect(res.headers.get("ETag")).toBeNull();
   });
 
-  it("should not be compressed twice by hono compress middleware", async () => {
-    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
-    const xcache = createHonoXCache({ lru });
-    const app = new Hono();
-    app.use(compress());
-    app.get("/data", (c) =>
-      xcache.json(c, {
-        key: ["/data"],
-        fn: () => Promise.resolve(payload),
-      })
-    );
-    const headers = { "Accept-Encoding": "gzip" };
-    await app.request("/data", { headers });
-    const res = await app.request("/data", { headers });
-    expect(res.headers.get("Content-Encoding")).toBe("gzip");
-    await expect(decompressBody(res, "gzip")).resolves.toStrictEqual(payload);
-  });
+  it.runIf(canSetAcceptEncoding)(
+    "should not be compressed twice by hono compress middleware",
+    async () => {
+      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+      const xcache = createHonoXCache({ lru });
+      const app = new Hono();
+      app.use(compress());
+      app.get("/data", (c) =>
+        xcache.json(c, {
+          key: ["/data"],
+          fn: () => Promise.resolve(payload),
+        })
+      );
+      const headers = { "Accept-Encoding": "gzip" };
+      await app.request("/data", { headers });
+      const res = await app.request("/data", { headers });
+      expect(res.headers.get("Content-Encoding")).toBe("gzip");
+      await expect(decompressBody(res, "gzip")).resolves.toStrictEqual(payload);
+    }
+  );
 
   it("should support other serializers with a custom content type", async () => {
     const data = {
@@ -403,5 +422,110 @@ describe("createHonoXCache", () => {
     const res = await app.request("/sj");
     expect(res.headers.get("Content-Type")).toBe("application/superjson+json");
     expect(serializer.deserialize(await res.text())).toStrictEqual(data);
+  });
+
+  describe("with an existing XMemCache instance", () => {
+    const createInstance = (
+      serializer: JsonSerializer | SuperjsonSerializer,
+      encoding: "binary" | "base64"
+    ) =>
+      new XMemCache({
+        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+        compressor: new CacheCompress({
+          algorithm: "gzip",
+          serializer,
+          encoding,
+          minimumByteSaving: 0,
+        }),
+      });
+
+    it("should add the hono origin to the cache keys", async () => {
+      const cache = createInstance(new JsonSerializer(), "binary");
+      const xcache = createHonoXCache({ cache });
+      const app = new Hono();
+      app.get("/data", (c) =>
+        xcache.json(c, {
+          key: ["/data"],
+          fn: () => Promise.resolve({ from: "hono", rows: payload.rows }),
+        })
+      );
+      const { meta } = await cache.runAsync({
+        key: ["/data"],
+        fn: () => Promise.resolve({ from: "runAsync", rows: payload.rows }),
+      });
+      const res = await app.request("/data");
+      // not served from the runAsync entry
+      await expect(res.json()).resolves.toMatchObject({ from: "hono" });
+      expect(cache.getStats().items).toBe(2);
+      expect(meta.generatedKey).not.toContain('"origin"');
+      expect(xcache.getEntryInfo({ key: ["/data"] })?.key).toBe(
+        '{"compressorId":"cache-compress:json","key":["/data"],"ns":"default","origin":"hono"}'
+      );
+      expect(cache.getEntryInfo({ key: ["/data"] })?.key).toBe(
+        meta.generatedKey
+      );
+    });
+
+    it.runIf(canSetAcceptEncoding)(
+      "should send base64 entries as-is (decoded) with the same serializer",
+      async () => {
+        const cache = createInstance(new JsonSerializer(), "base64");
+        const xcache = createHonoXCache({ cache, debugHeaders: true });
+        const app = new Hono();
+        app.get("/data", (c) =>
+          xcache.json(c, { key: ["/data"], fn: () => Promise.resolve(payload) })
+        );
+        const headers = { "Accept-Encoding": "gzip" };
+        await app.request("/data", { headers });
+        const res = await app.request("/data", { headers });
+        expect(res.headers.get("X-XCache")).toBe("HIT");
+        expect(res.headers.get("Content-Encoding")).toBe("gzip");
+        expect(res.headers.get("Vary")).toBe("Accept-Encoding");
+        await expect(decompressBody(res, "gzip")).resolves.toStrictEqual(
+          payload
+        );
+        const plain = await app.request("/data");
+        await expect(plain.json()).resolves.toStrictEqual(payload);
+      }
+    );
+
+    it("should re-serialize entries compressed with another serializer", async () => {
+      const cache = createInstance(new SuperjsonSerializer(), "binary");
+      const xcache = createHonoXCache({ cache, debugHeaders: true });
+      const data = {
+        date: new Date("2026-01-01T00:00:00.000Z"),
+        rows: payload.rows,
+      };
+      const app = new Hono();
+      app.get("/data", (c) =>
+        xcache.json(c, { key: ["/data"], fn: () => Promise.resolve(data) })
+      );
+      const headers = { "Accept-Encoding": "gzip" };
+      await app.request("/data", { headers });
+      const res = await app.request("/data", { headers });
+      expect(res.headers.get("X-XCache")).toBe("HIT");
+      // superjson bytes can't be sent as json
+      expect(res.headers.get("Content-Encoding")).toBeNull();
+      await expect(res.json()).resolves.toStrictEqual({
+        date: "2026-01-01T00:00:00.000Z",
+        rows: payload.rows,
+      });
+    });
+
+    it("should use the instance enabled option", async () => {
+      const cache = new XMemCache({
+        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+        enabled: false,
+      });
+      const xcache = createHonoXCache({ cache, debugHeaders: true });
+      const app = new Hono();
+      app.get("/data", (c) =>
+        xcache.json(c, { key: ["/data"], fn: () => Promise.resolve(payload) })
+      );
+      const res = await app.request("/data");
+      expect(res.headers.get("X-XCache")).toBe("BYPASS");
+      expect(res.headers.get("Vary")).toBeNull();
+      expect(xcache.cache).toBe(cache);
+    });
   });
 });

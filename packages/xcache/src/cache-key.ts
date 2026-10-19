@@ -64,7 +64,7 @@ const stringifyKeyTuple = (key: CacheKeyTuple): string =>
 /**
  * Generates a stable cache key string based on the provided parameters.
  *
- * The output is equivalent to `createStableKeyOrThrow({ compressorId, key, ns })`
+ * The output is equivalent to `createStableKeyOrThrow({ compressorId, key, ns, origin })`
  * (object keys sorted), but built by concatenation to avoid sorting and
  * re-serializing the wrapper object on every call (hot path on cache hits).
  *
@@ -72,6 +72,8 @@ const stringifyKeyTuple = (key: CacheKeyTuple): string =>
  * @param params.key - The key components to be used for generating the cache key.
  * @param params.namespace - An optional namespace to prefix the cache key.
  * @param params.compressorId - An optional compressor identifier.
+ * @param params.origin - An optional origin (ie: "hono") to separate the keys
+ * created by integrations from the ones created by XMemCache.runAsync.
  * @returns A stable cache key string.
  *
  * @throws TypeError if the key is not a valid key.
@@ -80,8 +82,9 @@ export const genCacheKeyString = <TKey extends CacheKeyTuple>(params: {
   key: TKey;
   namespace?: string | undefined;
   compressorId?: string | undefined;
+  origin?: string | undefined;
 }): CacheStringKey => {
-  const { key, namespace, compressorId } = params;
+  const { key, namespace, compressorId, origin } = params;
   assertValidCacheKeyTuple(key);
   const compressorPart =
     compressorId !== undefined && compressorId !== ""
@@ -91,5 +94,9 @@ export const genCacheKeyString = <TKey extends CacheKeyTuple>(params: {
     namespace !== undefined && namespace !== ""
       ? `,"ns":${JSON.stringify(namespace)}`
       : "";
-  return `{${compressorPart}"key":${stringifyKeyTuple(key)}${nsPart}}` as CacheStringKey;
+  const originPart =
+    origin !== undefined && origin !== ""
+      ? `,"origin":${JSON.stringify(origin)}`
+      : "";
+  return `{${compressorPart}"key":${stringifyKeyTuple(key)}${nsPart}${originPart}}` as CacheStringKey;
 };

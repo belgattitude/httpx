@@ -94,6 +94,12 @@ export type XMemCacheRunAsyncParams<
    * `compressionEnabled` option). When disabled, the entry is stored as-is.
    */
   compressionEnabled?: boolean;
+  /**
+   * Origin of the call, added to the generated cache key to separate the
+   * entries created by integrations (ie: "hono") from the ones created by
+   * runAsync for the same key. Not set by default.
+   */
+  origin?: string;
 };
 
 /**
@@ -299,14 +305,7 @@ export class XMemCache {
     if (entry.format === "compressed") {
       compression = entry.meta;
       // on a miss, avoid decompressing what was just compressed
-      data = cached
-        ? // oxlint-disable-next-line typescript/no-non-null-assertion -- compressed entries are only readable with a compressor
-          await this.#compressor!.decompress<TResult>({
-            status: "success",
-            data: entry.data,
-            meta: entry.meta,
-          })
-        : (freshData as TResult);
+      data = cached ? await this.readEntry(entry) : (freshData as TResult);
     } else {
       ({ data } = entry);
     }
@@ -322,6 +321,29 @@ export class XMemCache {
         ...(compression === undefined ? {} : { compression }),
       },
     };
+  };
+
+  /**
+   * Return the data of an entry (ie: from runAsyncEntry), decompressed and
+   * deserialized when compressed.
+   *
+   * @throws TypeError if the entry is compressed and can't be decompressed
+   * by the compressor of this instance.
+   */
+  readEntry = async <TResult>(
+    entry: XMemCacheEntry<TResult>
+  ): Promise<TResult> => {
+    if (entry.format === "native") {
+      return entry.data;
+    }
+    if (this.#compressor === undefined) {
+      throw new TypeError("Cannot read a compressed entry without compressor");
+    }
+    return await this.#compressor.decompress<TResult>({
+      status: "success",
+      data: entry.data,
+      meta: entry.meta,
+    });
   };
 
   /**
@@ -389,6 +411,7 @@ export class XMemCache {
       key,
       namespace: namespace ?? this.#defaultNs,
       compressorId: this.#compressorId,
+      origin: params.origin,
     });
 
     if (!enabled) {
@@ -454,11 +477,14 @@ export class XMemCache {
   getEntryInfo = <TKey extends CacheKeyTuple>(params: {
     key: TKey;
     namespace?: string;
+    /** Origin used when the entry was created (ie: "hono") */
+    origin?: string;
   }): XMemCacheEntryInfo | undefined => {
     const cacheKey = genCacheKeyString({
       key: params.key,
       namespace: params.namespace ?? this.#defaultNs,
       compressorId: this.#compressorId,
+      origin: params.origin,
     });
     const value = this.#lru.peek(cacheKey);
     return isXMemCacheEntry(value)

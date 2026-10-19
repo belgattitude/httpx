@@ -280,6 +280,47 @@ createHonoXCache({
 > [!NOTE]
 > The response body is the serialized string. With `SuperjsonSerializer` or `DevalueSerializer`, set a matching `contentType` (ie: `application/superjson+json`), the client will need to deserialize it.
 
+### With an existing XMemCache instance
+
+Instead of an `lru`, an existing `XMemCache` instance can be provided. Its lru, namespace, compressor and enabled options are used:
+
+```typescript
+const xMemCache = new XMemCache({
+  lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+  compressor: new CacheCompress({
+    algorithm: "gzip",
+    serializer: new JsonSerializer(),
+  }),
+});
+
+const xcache = createHonoXCache({ cache: xMemCache });
+```
+
+| Entry stored by the instance | Response |
+| --- | --- |
+| compressed, same serializer as the helper (`json`) | sent as-is with `Content-Encoding` (base64 entries are decoded first) |
+| compressed with another serializer (ie: `superjson`) | decompressed, deserialized and re-serialized with the helper serializer |
+| native | serialized with the helper serializer |
+
+> [!TIP]
+> To benefit from sending compressed bytes as-is, use the same serializer in the instance compressor and in the helper (`JsonSerializer` by default), and `encoding: "binary"` (default).
+
+#### Cache keys origin
+
+Keys created by the hono helper include an `"origin":"hono"` part, so a route and a service calling `xMemCache.runAsync()` with the same key on the same instance don't share (or overwrite) entries, as the cached data and the route response may differ:
+
+```typescript
+// '{"compressorId":"cache-compress:json","key":["/api/products",{"id":"1"}],"ns":"default"}'
+await xMemCache.runAsync({ key: ["/api/products", { id: "1" }], fn });
+
+// '{"compressorId":"cache-compress:json","key":["/api/products",{"id":"1"}],"ns":"default","origin":"hono"}'
+await xcache.json(c, { key: ["/api/products", { id: "1" }], fn });
+
+xcache.getEntryInfo({ key: ["/api/products", { id: "1" }] }); // hono entry info
+```
+
+The `origin` param is also available on `runAsync()`, `runAsyncEntry()` and `getEntryInfo()` for other integrations.
+
 ### Cache-Control
 
 By default no `Cache-Control` header is sent: a server memory cache shouldn't make browsers or CDNs cache data that might be private. Use the `cacheControl` option, globally or per call:
@@ -360,7 +401,7 @@ app.onError((err, c) => {
 > });
 > ```
 
-To use compressed entries in other contexts, `XMemCache.runAsyncEntry()` returns the stored entry as-is (`{ entry, cached, bypassed, generatedKey, expiresIn }`), with `entry.format` being `"compressed"` (`entry.data` is the compressed `Uint8Array`, `entry.meta` the compression meta) or `"native"`.
+To use compressed entries in other contexts, `XMemCache.runAsyncEntry()` returns the stored entry as-is (`{ entry, cached, bypassed, generatedKey, expiresIn }`), with `entry.format` being `"compressed"` (`entry.data` is the compressed `Uint8Array`, `entry.meta` the compression meta) or `"native"`. Use `xMemCache.readEntry(entry)` to get the decompressed data.
 
 ## Choosing a serializer
 
@@ -523,8 +564,8 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                         | Size (compressed) |
 | ------------------------------------------------------ | ----------------: |
-| `import { XMemCache } from '@httpx/xcache`             |          ~ 1.64kB |
-| `import { createHonoXCache } from '@httpx/xcache/hono` |          ~ 4.56kB |
+| `import { XMemCache } from '@httpx/xcache`             |          ~ 1.71kB |
+| `import { createHonoXCache } from '@httpx/xcache/hono` |           ~ 4.7kB |
 
 ## Compatibility
 

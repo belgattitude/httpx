@@ -36,16 +36,21 @@ describe("genCacheKeyString equivalence with createStableKeyOrThrow", () => {
   ] satisfies [CacheKeyTuple][])("should match for case %#", (key) => {
     for (const namespace of [undefined, "", "ns-1"]) {
       for (const compressorId of [undefined, "", "cache-compress:devalue"]) {
-        expect(genCacheKeyString({ key, namespace, compressorId })).toBe(
-          createStableKeyOrThrow(
-            {
-              ...(namespace ? { ns: namespace } : {}),
-              ...(compressorId ? { compressorId } : {}),
-              key,
-            },
-            { sortArrayValues: false }
-          )
-        );
+        for (const origin of [undefined, "", "hono"]) {
+          expect(
+            genCacheKeyString({ key, namespace, compressorId, origin })
+          ).toBe(
+            createStableKeyOrThrow(
+              {
+                ...(namespace ? { ns: namespace } : {}),
+                ...(compressorId ? { compressorId } : {}),
+                ...(origin ? { origin } : {}),
+                key,
+              },
+              { sortArrayValues: false }
+            )
+          );
+        }
       }
     }
   });

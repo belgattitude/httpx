@@ -203,4 +203,50 @@ describe("XMemCache enable / disable", () => {
       expect(data).toStrictEqual(payload);
     });
   });
+
+  describe("readEntry", () => {
+    it("should read native and compressed entries", async () => {
+      const { cache, fn } = createCache();
+      const compressed = await cache.runAsyncEntry({ key: ["/c"], fn });
+      expect(compressed.entry.format).toBe("compressed");
+      await expect(cache.readEntry(compressed.entry)).resolves.toStrictEqual(
+        payload
+      );
+      const native = await cache.runAsyncEntry({
+        key: ["/n"],
+        fn,
+        compressionEnabled: false,
+      });
+      expect(native.entry.format).toBe("native");
+      await expect(cache.readEntry(native.entry)).resolves.toStrictEqual(
+        payload
+      );
+    });
+
+    it("should throw for compressed entries without compressor", async () => {
+      const { cache, fn } = createCache();
+      const { entry } = await cache.runAsyncEntry({ key: ["/c"], fn });
+      const noCompressor = new XMemCache({
+        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      });
+      await expect(noCompressor.readEntry(entry)).rejects.toThrow(TypeError);
+    });
+  });
+
+  describe("origin", () => {
+    it("should separate entries by origin", async () => {
+      const { cache, lru, fn } = createCache();
+      const a = await cache.runAsync({ key: ["/data"], fn });
+      const b = await cache.runAsync({ key: ["/data"], fn, origin: "other" });
+      expect(b.meta.cached).toBe(false);
+      expect(b.meta.generatedKey).toBe(
+        '{"compressorId":"cache-compress:json","key":["/data"],"ns":"default","origin":"other"}'
+      );
+      expect(a.meta.generatedKey).not.toBe(b.meta.generatedKey);
+      expect(lru.size).toBe(2);
+      expect(cache.getEntryInfo({ key: ["/data"], origin: "other" })?.key).toBe(
+        b.meta.generatedKey
+      );
+    });
+  });
 });

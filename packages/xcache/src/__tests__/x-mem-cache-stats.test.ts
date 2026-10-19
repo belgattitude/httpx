@@ -1,7 +1,5 @@
-import { setTimeout as sleep } from "node:timers/promises";
-
 import { TimeLruCache } from "@httpx/lru";
-import { expect, vi } from "vitest";
+import { expect, onTestFinished, vi } from "vitest";
 
 import { CacheCompress } from "../compress/cache-compress";
 import { JsonSerializer } from "../serializer/json-serializer";
@@ -112,6 +110,11 @@ describe("XMemCache stats", () => {
   });
 
   it("should ignore expired entries and non XMemCache values", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(0);
+    onTestFinished(() => {
+      vi.useRealTimers();
+    });
     const { cache, lru } = createCache();
     await cache.runAsync({
       key: ["/expired"],
@@ -123,7 +126,7 @@ describe("XMemCache stats", () => {
       fn: () => Promise.resolve(smallPayload),
     });
     lru.set("not-xmem", "raw value");
-    await sleep(5);
+    vi.setSystemTime(5);
     const stats = cache.getStats();
     expect(stats.items).toBe(1);
     expect(stats.entries.map((e) => e.key)).toStrictEqual([
