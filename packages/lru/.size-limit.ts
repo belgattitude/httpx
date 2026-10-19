@@ -17,13 +17,13 @@ const config = [
     name: "import { TimeLruCache } (ESM)",
     path: ["dist/index.js"],
     import: "{ TimeLruCache }",
-    limit: "687B",
+    limit: "710B",
   },
   {
     name: "import { getOrCreateTimeLruCache } (ESM)",
     path: ["dist/index.js"],
     import: "{ getOrCreateTimeLruCache }",
-    limit: "770B",
+    limit: "790B",
   },
 ] satisfies SizeLimitConfig;
 

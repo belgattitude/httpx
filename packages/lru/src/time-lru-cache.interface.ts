@@ -185,6 +185,25 @@ export interface ITimeLruCache<
   peek: (key: TKey) => TValue | undefined;
 
   /**
+   * Return the remaining time to live of an item in milliseconds, or
+   * undefined if the item doesn't exist or has expired.
+   *
+   * Like peek, it doesn't mark the item as recently used nor evict
+   * expired items.
+   *
+   * @example
+   * ```typescript
+   * import { TimeLruCache } from '@httpx/lru';
+   *
+   * const lru = new TimeLruCache({ maxSize: 10, defaultTTL: 1000 });
+   * lru.set('key1', 'value1', 500);
+   * lru.expiresIn('key1'); // 👈 ~500
+   * lru.expiresIn('unknown'); // 👈 undefined
+   * ```
+   */
+  expiresIn: (key: TKey) => Milliseconds | undefined;
+
+  /**
    * Delete an item from the cache and return a boolean indicating
    * if the item was actually deleted in case it exist.
    */

@@ -27,6 +27,11 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./hono": {
+      "httpx-monorepo-source": "./src/hono/index.ts",
+      "types": "./dist/hono/index.d.ts",
+      "default": "./dist/hono/index.js"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -76,6 +81,7 @@
     "es-check": "9.8.1",
     "esbuild": "0.28.2",
     "fflate": "0.8.3",
+    "hono": "4.13.13",
     "npm-run-all2": "9.0.3",
     "pretty-bytes": "7.2.0",
     "publint": "0.3.25",
@@ -92,10 +98,14 @@
   },
   "peerDependencies": {
     "devalue": "^5.4.2 || ^6.0.0",
+    "hono": "^4.0.0",
     "superjson": "^2.2.5"
   },
   "peerDependenciesMeta": {
     "devalue": {
+      "optional": true
+    },
+    "hono": {
       "optional": true
     },
     "superjson": {

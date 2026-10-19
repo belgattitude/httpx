@@ -1,11 +1,22 @@
 import { createStableKeyOrThrow } from "@httpx/stable-hash";
 
+/**
+ * Generated cache key string (stable serialization of namespace, compressor
+ * identifier and key tuple).
+ */
 export type CacheStringKey = string & {
   _brand: "x-mem-cache-string-key";
 };
 
+/**
+ * Cache key provided to runAsync, the first element must be a non-empty
+ * string (ie: ['/api/user', { id: 1 }]).
+ */
 export type CacheKeyTuple<T = unknown> = [string, ...T[]];
 
+/**
+ * Typeguard to check if a value is a valid cache key tuple.
+ */
 export const isValidCacheKeyTuple = (v: unknown): v is CacheKeyTuple => {
   if (
     Array.isArray(v) &&
@@ -18,6 +29,11 @@ export const isValidCacheKeyTuple = (v: unknown): v is CacheKeyTuple => {
   return false;
 };
 
+/**
+ * Assert that a value is a valid cache key tuple.
+ *
+ * @throws TypeError if the value is not a valid cache key tuple.
+ */
 export function assertValidCacheKeyTuple(
   v: unknown
 ): asserts v is CacheKeyTuple {
@@ -27,14 +43,8 @@ export function assertValidCacheKeyTuple(
 }
 
 /**
- * Generates a stable cache key string based on the provided parameters.
- *
- * @param params - The parameters to generate the cache key.
- * @param params.key - The key components to be used for generating the cache key.
- * @param params.namespace - An optional namespace to prefix the cache key.
- * @returns A stable cache key string.
- *
- * @throws TypeError if the key is not a valid key.
+ * Whether a key part can be stringified with JSON.stringify and give the same
+ * result as createStableKeyOrThrow (string, number, boolean or null).
  */
 const isPrimitiveKeyPart = (v: unknown): boolean => {
   const t = typeof v;
@@ -61,6 +71,7 @@ const stringifyKeyTuple = (key: CacheKeyTuple): string =>
  * @param params - The parameters to generate the cache key.
  * @param params.key - The key components to be used for generating the cache key.
  * @param params.namespace - An optional namespace to prefix the cache key.
+ * @param params.compressorId - An optional compressor identifier.
  * @returns A stable cache key string.
  *
  * @throws TypeError if the key is not a valid key.

@@ -15,6 +15,14 @@ export type {
   CacheableAsyncFunction,
   XCacheRunAsyncParams,
 } from "./x-cache.types";
-export type { XMemCacheOptions } from "./x-mem-cache";
+export type {
+  XMemCacheEntryInfo,
+  XMemCacheOptions,
+  XMemCacheRunAsyncEntryResult,
+  XMemCacheRunAsyncParams,
+  XMemCacheStats,
+} from "./x-mem-cache";
 export { XMemCache } from "./x-mem-cache";
+export { isXMemCacheEntry } from "./x-mem-cache-entry";
+export type { XMemCacheEntry } from "./x-mem-cache-entry";
 export { TimeLruCache } from "@httpx/lru";

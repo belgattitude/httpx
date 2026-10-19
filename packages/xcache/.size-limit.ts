@@ -5,13 +5,19 @@ const config = [
     name: "import { XMemCache } (ESM)",
     path: ["dist/index.js"],
     import: "{ XMemCache }",
-    limit: "1200B",
+    limit: "1660B",
   },
   {
     name: "import { TimeLruCache } (ESM)",
     path: ["dist/index.js"],
     import: "{ TimeLruCache }",
-    limit: "710B",
+    limit: "720B",
+  },
+  {
+    name: "import { createHonoXCache } (ESM)",
+    path: ["dist/hono/index.js"],
+    import: "{ createHonoXCache }",
+    limit: "4600B",
   },
 ] satisfies SizeLimitConfig;
 

@@ -129,6 +129,239 @@ const { data, meta } = await xMemCache.runAsync({
 
 On a cache hit, the meta is checked against the current compressor options. An existing entry created with a different algorithm, encoding or serializer (ie: a shared lru or changed options) is never decoded with the wrong settings, it's treated as a cache miss: the function is executed again and the entry is replaced.
 
+## Enable / disable
+
+The cache and the compression can be enabled or disabled globally, and overridden per call.
+
+| Option | Default | When disabled |
+| --- | --- | --- |
+| `enabled` | `true` | The function is always executed, the cache is neither read nor written (`meta.bypassed: true`). |
+| `compressionEnabled` | `true` | Entries are stored as-is (no serialization cost). Cache keys are unchanged and compressed entries still read. |
+
+```typescript
+const xMemCache = new XMemCache({
+  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+  compressor: new CacheCompress({
+    algorithm: "gzip",
+    serializer: new SuperjsonSerializer(),
+  }),
+  // 👇 Global: ie: disable the cache with an env variable
+  enabled: process.env.XCACHE_ENABLED !== "false",
+  // 👇 Global: ie: no compression in development
+  compressionEnabled: process.env.NODE_ENV === "production",
+});
+
+const { data, meta } = await xMemCache.runAsync({
+  key: ["/api/data", params],
+  fn: () => fetchThings(params),
+  // 👇 Per call: overrides the global options
+  enabled: !params.preview,
+  compressionEnabled: false,
+});
+
+// meta.bypassed === true when the cache was disabled for this call
+xMemCache.enabled; // global state (readonly)
+xMemCache.compressionEnabled; // false when disabled or without compressor
+```
+
+> [!TIP]
+> Disabling the cache for a call doesn't remove an existing entry, use `forceRevalidate: true` to refresh it. Entries stored while compression is disabled are reported with `skippedReason: "compression_disabled"` in the [statistics](#statistics).
+
+## Statistics
+
+`getStats()` returns statistics about the cached entries, and `getEntryInfo()` the info of a single entry. Expired entries are ignored and the lru order is not affected.
+
+```typescript
+const stats = xMemCache.getStats();
+// {
+//   items: 3,                // non-expired entries
+//   nativeItems: 1,          // stored as-is (no compressor or compression skipped)
+//   compressedItems: 2,
+//   compressedSize: 180666,  // total size of the compressed entries
+//   originalSize: 1948050,   // same entries, serialized size before compression
+//   entries: [               // least recently used first
+//     {
+//       key: '{"compressorId":"cache-compress:superjson","key":["/api/data",{"name":"cool"}],"ns":"default"}',
+//       format: "compressed",
+//       size: 90333,
+//       compression: { algorithm: "gzip", encoding: "binary", serializer: "superjson", originalSize: 974025, compressedSize: 90333, ratio: 10.78 },
+//       createdAt: 1792411200000,
+//       expiresIn: 118500,   // remaining ttl in milliseconds
+//     },
+//     {
+//       key: '{"compressorId":"cache-compress:superjson","key":["/api/small"],"ns":"default"}',
+//       format: "native",
+//       skippedReason: "minimum_byte_saving_not_met",
+//       createdAt: 1792411123000,
+//       expiresIn: 42000,
+//     },
+//     // ...
+//   ],
+// }
+
+const info = xMemCache.getEntryInfo({ key: ["/api/data", params] });
+// same shape as an entry above, or undefined when not cached
+```
+
+> [!NOTE]
+> Native (uncompressed) entries are live objects, their size can't be measured and is not included in the totals. If the lru is shared, entries of other `XMemCache` instances are included.
+
+### Sharing the lru
+
+Every value stored by `XMemCache` is branded, so the lru can safely be shared with other code: values not created by `XMemCache` (even if they look alike) are ignored by `getStats()` / `getEntryInfo()` and treated as a cache miss by `runAsync()`. The `isXMemCacheEntry` typeguard is exported:
+
+```typescript
+import { isXMemCacheEntry } from "@httpx/xcache";
+
+for (const [key, value] of lru) {
+  if (isXMemCacheEntry(value)) {
+    console.log(key, value.format); // "native" | "compressed"
+  }
+}
+```
+
+## Hono
+
+`@httpx/xcache/hono` provides a helper to cache [hono](https://hono.dev) route responses (`hono` is an optional peer dependency).
+
+```typescript
+import { TimeLruCache } from "@httpx/xcache";
+import { createHonoXCache } from "@httpx/xcache/hono";
+import { Hono } from "hono";
+
+// One instance per app (JsonSerializer + gzip by default)
+const xcache = createHonoXCache({
+  lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+});
+
+const app = new Hono();
+
+app.get("/api/products/:id", (c) =>
+  xcache.json(c, {
+    key: ["/api/products", { id: c.req.param("id") }],
+    fn: () => fetchProduct(c.req.param("id")),
+    ttl: 30_000, // optional
+  })
+);
+```
+
+- **Compressed entries are sent as-is**: when the client accepts the compression algorithm (`Accept-Encoding`), the stored gzip/deflate bytes are sent with `Content-Encoding`, without decompression nor serialization. Otherwise they are decompressed (but not deserialized).
+- **ETag**: a weak `ETag` is sent, and `304 Not Modified` is returned when `If-None-Match` matches. It changes every time the entry is refreshed.
+- **Enable / disable**: `enabled` and `compressionEnabled` work as for `XMemCache`, globally or per call (ie: `xcache.json(c, { key, fn, enabled: c.req.query("nocache") === undefined })`). When the cache is bypassed, no `ETag` is sent. Prefer `compressionEnabled: false` over `compression: false` to toggle compression, as it keeps the same cache keys.
+- **Cache-Control**: none by default, the data is only cached on the server (see [Cache-Control](#cache-control)).
+- **Errors are not cached**: see [error handling](#error-handling).
+- `Vary: Accept-Encoding` is sent when compression is enabled. Hono's `compress()` middleware skips responses already having a `Content-Encoding`.
+
+Options:
+
+```typescript
+createHonoXCache({
+  lru,
+  namespace: "default",
+  // The serialized string is the response body
+  serializer: new JsonSerializer(),
+  contentType: "application/json; charset=utf-8",
+  // or false to disable compression
+  compression: {
+    algorithm: "gzip", // or "deflate"
+    minimumRatio: 1.3,
+    minimumStringLength: 1000,
+    minimumByteSaving: 16_384,
+  },
+  etag: true,
+  cacheControl: false, // see "Cache-Control"
+  debugHeaders: false, // "X-XCache: HIT|MISS|BYPASS" header
+  // Global enable / disable (see "Enable / disable")
+  enabled: true,
+  compressionEnabled: process.env.NODE_ENV === "production",
+});
+```
+
+> [!NOTE]
+> The response body is the serialized string. With `SuperjsonSerializer` or `DevalueSerializer`, set a matching `contentType` (ie: `application/superjson+json`), the client will need to deserialize it.
+
+### Cache-Control
+
+By default no `Cache-Control` header is sent: a server memory cache shouldn't make browsers or CDNs cache data that might be private. Use the `cacheControl` option, globally or per call:
+
+```typescript
+const xcache = createHonoXCache({
+  lru,
+  // 👇 max-age = remaining ttl of the server cache entry, so clients
+  //    never keep the response longer than the server does
+  cacheControl: { maxAge: "ttl", scope: "private", staleWhileRevalidate: 30 },
+  // → "Cache-Control: private, max-age=<remaining ttl>, stale-while-revalidate=30"
+});
+
+app.get("/api/products/:id", (c) =>
+  xcache.json(c, {
+    key: ["/api/products", { id: c.req.param("id") }],
+    fn: () => fetchProduct(c.req.param("id")),
+    // 👇 Per call override: false, a string or options
+    cacheControl: "public, max-age=60",
+  })
+);
+```
+
+| `cacheControl` | Cache-Control header |
+| --- | --- |
+| `false` (default) | none |
+| `"public, max-age=60"` | sent as-is |
+| `{ maxAge: 60 }` | `private, max-age=60` |
+| `{ maxAge: "ttl", scope: "public" }` | `public, max-age=<remaining server ttl in seconds>` |
+| `{ maxAge: "ttl", staleWhileRevalidate: 30 }` | `private, max-age=<remaining ttl>, stale-while-revalidate=30` |
+
+- `scope` defaults to `private`, shared caches (CDN) only cache when explicitly `public`.
+- A `Cache-Control` provided in `headers` always takes precedence.
+- Nothing is sent when the cache is bypassed (`enabled: false`). `304` responses keep the header.
+
+### Error handling
+
+When `fn` throws, nothing is cached and the error is propagated: the next request will retry, and an existing entry is kept if a revalidation (`forceRevalidate`) fails. Handle errors as usual with hono, ie: with [@httpx/exception](https://github.com/belgattitude/httpx/tree/main/packages/exception):
+
+```typescript
+import { HttpNotFound, isHttpException } from "@httpx/exception";
+
+const fetchProduct = async (id: string) => {
+  const product = await db.products.find(id);
+  if (product === undefined) {
+    // 👇 Not cached, retried on the next request
+    throw new HttpNotFound(`Product ${id} not found`);
+  }
+  return product;
+};
+
+app.get("/api/products/:id", (c) =>
+  xcache.json(c, {
+    key: ["/api/products", { id: c.req.param("id") }],
+    fn: () => fetchProduct(c.req.param("id")),
+  })
+);
+
+app.onError((err, c) => {
+  if (isHttpException(err)) {
+    return c.json({ error: err.message }, err.statusCode);
+  }
+  return c.json({ error: "Internal Server Error" }, 500);
+});
+```
+
+> [!TIP]
+> To cache "not found" results too (ie: to protect the database), return a value instead of throwing and build the response with the underlying cache:
+>
+> ```typescript
+> app.get("/api/products/:id", async (c) => {
+>   const id = c.req.param("id");
+>   const { data } = await xcache.cache.runAsync({
+>     key: ["/api/products", { id }],
+>     fn: async () => (await db.products.find(id)) ?? null,
+>   });
+>   return data === null ? c.json({ error: "Not found" }, 404) : c.json(data);
+> });
+> ```
+
+To use compressed entries in other contexts, `XMemCache.runAsyncEntry()` returns the stored entry as-is (`{ entry, cached, bypassed, generatedKey, expiresIn }`), with `entry.format` being `"compressed"` (`entry.data` is the compressed `Uint8Array`, `entry.meta` the compression meta) or `"native"`.
+
 ## Choosing a serializer
 
 A serializer is only used when compression is enabled. Without a compressor, values are stored as live objects in memory, so no serializer is involved.
@@ -288,9 +521,10 @@ Measured on Node 26.12.0 with ~11k rows (see [benchmarks](#benchmarks)), gzip si
 
 Bundle size is tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/xcache/.size-limit.ts)
 
-| Scenario (esm)                             | Size (compressed) |
-| ------------------------------------------ | ----------------: |
-| `import { XMemCache } from '@httpx/xcache` |            ~ 800B |
+| Scenario (esm)                                         | Size (compressed) |
+| ------------------------------------------------------ | ----------------: |
+| `import { XMemCache } from '@httpx/xcache`             |          ~ 1.64kB |
+| `import { createHonoXCache } from '@httpx/xcache/hono` |          ~ 4.56kB |
 
 ## Compatibility
 

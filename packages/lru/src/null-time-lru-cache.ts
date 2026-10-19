@@ -70,6 +70,13 @@ export class NullTimeLruCache<
     return undefined;
   }
 
+  /**
+   * Always undefined (nothing is cached).
+   */
+  expiresIn(_key: TKey): undefined {
+    return undefined;
+  }
+
   delete(_key: TKey): boolean {
     return false;
   }
