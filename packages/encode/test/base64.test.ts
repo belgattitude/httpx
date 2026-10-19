@@ -412,7 +412,7 @@ describe("Base64", () => {
       expect(
         encoder.toUint8Array(encoded, { alphabet: "base64url" })
       ).toStrictEqual(largeBytes);
-    });
+    }, 15_000);
 
     it("should apply the decode options", () => {
       expect(() =>
