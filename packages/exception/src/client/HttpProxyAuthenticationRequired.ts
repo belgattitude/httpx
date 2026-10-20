@@ -1,8 +1,6 @@
 import { HttpClientException } from "../base/HttpClientException";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import { brandKey } from "../utils/brand";
-import { getNormalizedParams } from "../utils/getNormalizedParams";
-import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 407 Proxy authentication required (client)
@@ -13,12 +11,11 @@ import { initProtoAndName } from "../utils/initProtoAndName";
  * @see https://httpstatus.in/407/
  */
 const status = 407;
-const name = "ProxyAuthenticationRequired";
 export class HttpProxyAuthenticationRequired extends HttpClientException {
   static readonly STATUS = status;
-  static override readonly [brandKey]: string = `Http${name}`;
+  static override readonly [brandKey]: string =
+    "HttpProxyAuthenticationRequired";
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName(this, name, HttpProxyAuthenticationRequired);
+    super(status, msgOrParams);
   }
 }

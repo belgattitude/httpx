@@ -5,7 +5,7 @@ import {
   HttpException,
   HttpServerException,
 } from "../../base";
-import { statusMap } from "../../status";
+import { getStatusMap } from "../../status";
 import type { HttpExceptionParams } from "../../types/HttpExceptionParams";
 import { createHttpException } from "../createHttpException";
 
@@ -15,7 +15,7 @@ describe("createHttpException tests", () => {
       params: HttpExceptionParams | string
     ) => HttpException;
 
-    const all = Object.entries(statusMap).map(([code, cls]) => {
+    const all = Object.entries(getStatusMap()).map(([code, cls]) => {
       const obj = new cls();
       return [obj.name, Number.parseInt(code, 10), cls];
     }) as [className: string, status: number, cls: AnyExceptionClass][];

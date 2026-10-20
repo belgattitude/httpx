@@ -1,8 +1,6 @@
 import { HttpServerException } from "../base/HttpServerException";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import { brandKey } from "../utils/brand";
-import { getNormalizedParams } from "../utils/getNormalizedParams";
-import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 510 Not Extended (server)
@@ -14,12 +12,10 @@ import { initProtoAndName } from "../utils/initProtoAndName";
  */
 
 const status = 510;
-const name = "NotExtended";
 export class HttpNotExtended extends HttpServerException {
   static readonly STATUS = status;
-  static override readonly [brandKey]: string = `Http${name}`;
+  static override readonly [brandKey]: string = "HttpNotExtended";
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName(this, name, HttpNotExtended);
+    super(status, msgOrParams);
   }
 }

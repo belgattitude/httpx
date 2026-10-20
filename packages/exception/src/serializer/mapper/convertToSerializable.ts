@@ -1,12 +1,25 @@
 import type { HttpException } from "../../base";
-import { HttpUnprocessableEntity } from "../../client/HttpUnprocessableEntity";
 import { isHttpException } from "../../typeguards/isHttpException";
+import type { HttpValidationIssue } from "../../types/HttpValidationIssue";
+import { isBrandedAs } from "../../utils/brand";
 import { maxCauseDepth } from "../constants";
 import { isNativeError } from "../typeguard";
 import type { NativeError, Serializable, SerializerParams } from "../types";
 
 const isNonEmptyString = (v: unknown): v is string =>
   typeof v === "string" && v !== "";
+
+/**
+ * Whether the exception is an HttpUnprocessableEntity (or a subclass, from any
+ * copy of the same major version) carrying validation issues.
+ * Checks the brand rather than `instanceof HttpUnprocessableEntity` to keep
+ * the class out of the bundle when unused.
+ */
+const hasIssues = (
+  e: HttpException
+): e is HttpException & { issues: HttpValidationIssue[] } =>
+  isBrandedAs(e, "HttpUnprocessableEntity") &&
+  Array.isArray((e as { issues?: unknown }).issues);
 
 const convert = (
   e: Error | HttpException | NativeError,
@@ -49,7 +62,7 @@ const convert = (
       ...(isNonEmptyString(e.code) ? { code: e.code } : {}),
       ...(isNonEmptyString(e.method) ? { method: e.method } : {}),
       ...(isNonEmptyString(e.errorId) ? { errorId: e.errorId } : {}),
-      ...(e instanceof HttpUnprocessableEntity ? { issues: e.issues } : {}),
+      ...(hasIssues(e) ? { issues: e.issues } : {}),
     };
   }
   return {

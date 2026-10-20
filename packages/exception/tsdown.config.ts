@@ -1,3 +1,4 @@
+import browserslistToEsbuild from "browserslist-to-esbuild";
 import { defineConfig } from "tsdown";
 
 import pkg from "./package.json" with { type: "json" };
@@ -15,17 +16,13 @@ export default defineConfig({
     "serializer/index": "src/serializer/index.ts",
   },
   minify: true,
-  // keep the published file names (.mjs / .cjs, .d.ts / .d.cts)
-  outExtensions: ({ format }) =>
-    format === "cjs"
-      ? { js: ".cjs", dts: ".d.cts" }
-      : { js: ".mjs", dts: ".d.ts" },
   platform: "neutral",
   sourcemap: true,
-  // es2022 (not the browserslist targets): oxc lowers class fields for safari 15, and the
-  // resulting top-level defineProperty calls on `static STATUS` break tree-shaking
-  target: ["node22", "es2022"],
+  // targets must support class fields natively (safari >= 16): lowered class fields
+  // become top-level defineProperty calls on `static STATUS` that break tree-shaking
+  // (checked by scripts/check-treeshake.mjs)
+  target: ["node22", ...browserslistToEsbuild()],
   treeshake: true,
-  format: ["esm", "cjs"],
+  format: ["esm"],
   exports: false,
 });

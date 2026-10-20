@@ -2,7 +2,7 @@
 
 HTTP status errors with default message, instanceof, stack and nested error support. Lightweight, typical usage between [600b and 1700b](#bundle-size). Includes convenience typeguards, optional contextual info and a built-in serializer to cover cross-environments challenges (RSC, SSR...).
 
-[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception) [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs) [![node](https://img.shields.io/static/v1?label=Node&message=22.14%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E93%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3) [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest) [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
+[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception) [![bundles](https://img.shields.io/static/v1?label=&message=esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.ts) [![node](https://img.shields.io/static/v1?label=Node&message=22%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E87%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsID4gMC4yOCUsIGxhc3QgMiB2ZXJzaW9ucywgRmlyZWZveCBFU1IsIG5vdCBkZWFkLCBub3QgaW9zIDw9IDE1) [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest) [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
 
 ## Highlights
 
@@ -249,14 +249,14 @@ classDiagram
 
 ### Multiple copies
 
-An app can end up with multiple copies of `@httpx/exception`: the ESM and CJS builds loaded side by side (ie: one dependency `import` it, another `require` it) or duplicated installs in `node_modules`. Each copy has its own classes, so a plain `instanceof` would fail and an `HttpNotFound` thrown by a dependency could end up handled as a generic error (500).
+An app can end up with multiple copies of `@httpx/exception` (ie: duplicated installs in `node_modules`, a dependency bundling its own copy...). Each copy has its own classes, so a plain `instanceof` would fail and an `HttpNotFound` thrown by a dependency could end up handled as a generic error (500).
 
-To prevent this, exceptions are branded with a global symbol scoped to the major version (ie: `Symbol.for("@httpx/exception-v3")`) and `instanceof` (thus the [typeguards](#typeguards) and the [serializer](#serializer)) also recognizes instances created by another copy of the same major version.
+To prevent this, exceptions (classes and instances) are branded with a global symbol scoped to the major version (ie: `Symbol.for("@httpx/exception-v4")`) and `instanceof` (thus the [typeguards](#typeguards) and the [serializer](#serializer)) also recognizes instances created by another copy of the same major version.
 
 ```typescript
 import { HttpNotFound, isHttpException } from "@httpx/exception";
-// ie: a dependency using a cjs build or a duplicated install
-const { HttpNotFound: OtherHttpNotFound } = require("@httpx/exception");
+// ie: another copy of @httpx/exception v4 used by a dependency
+import { HttpNotFound as OtherHttpNotFound } from "some-dependency";
 
 const e = new OtherHttpNotFound();
 // 👉 e instanceof HttpNotFound === true
@@ -528,9 +528,9 @@ if (isObjectWithErrorStatusCode(noSuchUser)) {
 
 | Level | CI | Description |
 | --- | --- | --- |
-| Node | ✅ | Node >= 22.14. CI for 22.x, 24.x & 26.x. |
+| Node | ✅ | Node 22+. CI for 22.x, 24.x & 26.x. |
 | Browser | ✅ | Tested with latest chrome (vitest/playwright) |
-| Browserslist | ✅ | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
+| Browserslist | ✅ | [> 87%](https://browserslist.dev/?q=ZGVmYXVsdHMsID4gMC4yOCUsIGxhc3QgMiB2ZXJzaW9ucywgRmlyZWZveCBFU1IsIG5vdCBkZWFkLCBub3QgaW9zIDw9IDE1) on 10/2026. [defaults, > 0.28%, last 2 versions, Firefox ESR, not dead, not ios <= 15](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
 | Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
 | Cloudflare | ✅ | Ensured with @cloudflare/vitest-plugin (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
 | Typescript | ✅ | TS 5.7+ / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
@@ -545,7 +545,7 @@ if (isObjectWithErrorStatusCode(noSuchUser)) {
 
 Code and bundler have been tuned to target a minimal compressed footprint for the browser. In ESM, typical usage the bundle size will vary between 600b to 1700b compressed (including default messages for the 43 status codes).
 
-ESM individual imports are tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs).
+ESM individual imports are tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.ts).
 
 | Scenario                                           | Size (compressed) |
 | -------------------------------------------------- | ----------------: |
@@ -557,15 +557,11 @@ ESM individual imports are tracked by a [size-limit configuration](https://githu
 | Import `fromJson` (incl all + createHttpException) |           ~ 2168b |
 | All serializer functions + exceptions + typeguards |           ~ 2439b |
 
-> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/exception@latest).
-
 ### Packaging
 
-This library offers a dual cjs/esm bundle. The (optional) serializer code has been tuned to avoid issues with [dual package hazards](https://nodejs.org/api/packages.html#dual-package-hazard).
+This library is ESM only. CommonJS code can still load it with `require()` on Node 22+ (see [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require)), bun and bundlers.
 
 The export fields and the builds are checked on the CI with [are-the-types-wrong](https://arethetypeswrong.github.io/).
-
-> PS: Plans to remove cjs support might land in a next major version.
 
 ### Typescript
 

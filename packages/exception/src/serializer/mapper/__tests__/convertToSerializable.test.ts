@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { HttpClientException } from "../../../base/HttpClientException";
 import { HttpException } from "../../../base/HttpException";
 import { HttpBadRequest } from "../../../client/HttpBadRequest";
 import { HttpUnprocessableEntity } from "../../../client/HttpUnprocessableEntity";
@@ -78,6 +79,49 @@ describe("convertToSerializable", () => {
     expect(
       (serializable as unknown as HttpUnprocessableEntity)?.issues
     ).toStrictEqual(e422?.issues);
+  });
+
+  it("serialize empty issues of HttpUnprocessableEntity", () => {
+    expect(
+      convertToSerializable(new HttpUnprocessableEntity()) as {
+        issues?: unknown;
+      }
+    ).toHaveProperty("issues", []);
+  });
+
+  it("serialize issues of an HttpUnprocessableEntity revived without its constructor", () => {
+    // ie: superjson registerClass, class-transformer...
+    const issues = [{ message: "Invalid email", path: "email" }];
+    const revived = Object.assign(
+      Object.create(
+        HttpUnprocessableEntity.prototype
+      ) as HttpUnprocessableEntity,
+      { message: "Unprocessable entity", statusCode: 422, issues }
+    );
+    expect(revived).toBeInstanceOf(HttpUnprocessableEntity);
+    expect(convertToSerializable(revived)).toHaveProperty("issues", issues);
+  });
+
+  it("serialize issues of an HttpUnprocessableEntity subclass", () => {
+    class ValidationException extends HttpUnprocessableEntity {}
+    const issues = [{ message: "Invalid email", path: "email" }];
+    expect(
+      convertToSerializable(new ValidationException({ issues }))
+    ).toHaveProperty("issues", issues);
+  });
+
+  it.each([
+    ["HttpClientException(422)", new HttpClientException(422)],
+    [
+      "a 422 HttpClientException with issues",
+      Object.assign(new HttpClientException(422), { issues: [] }),
+    ],
+    [
+      "a non 422 exception with issues",
+      Object.assign(new HttpClientException(400), { issues: [] }),
+    ],
+  ])("should not serialize issues of %s", (_label, e) => {
+    expect(convertToSerializable(e)).not.toHaveProperty("issues");
   });
 
   describe("when native error is given", () => {

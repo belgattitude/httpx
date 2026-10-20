@@ -1,5 +1,5 @@
 /**
- * Native ecmascript errors
+ * Native ecmascript errors, keyed by their name
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#error_types
  * @see https://262.ecma-international.org/12.0/#sec-well-known-intrinsic-objects
  */
@@ -12,19 +12,10 @@ export const nativeErrorMap = {
   ReferenceError,
   SyntaxError,
   TypeError,
-  UriError: URIError,
+  URIError,
 };
 
-export const nativeErrors = Object.values(nativeErrorMap);
-
-export const isNativeError = (error: Error): error is NativeError => {
-  if (!((error as unknown) instanceof Error)) {
-    return false;
-  }
-  for (const e of nativeErrors) {
-    if (error.name === e.name) {
-      return true;
-    }
-  }
-  return false;
-};
+export const isNativeError = (error: Error): error is NativeError =>
+  (error as unknown) instanceof Error &&
+  // own keys only: inherited ones (ie: 'constructor', 'toString') are not error classes
+  Object.hasOwn(nativeErrorMap, error.name);

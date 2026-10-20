@@ -1,6 +1,5 @@
 import { HttpException } from "../base/HttpException";
 import { createHttpException } from "../factory/createHttpException";
-import { HttpInternalServerError } from "../server/HttpInternalServerError";
 import { isErrorWithErrorStatusCode } from "../typeguards/isErrorWithErrorStatusCode";
 import { isObjectWithErrorStatusCode } from "../typeguards/isObjectWithErrorStatusCode";
 
@@ -18,9 +17,7 @@ export const tryOrFail = async <T extends AsyncFn<unknown[], unknown>>(
       throw error;
     }
     const { statusCode, cause } = {
-      statusCode: isObjectWithErrorStatusCode(error)
-        ? error.statusCode
-        : HttpInternalServerError.STATUS,
+      statusCode: isObjectWithErrorStatusCode(error) ? error.statusCode : 500,
       ...(isErrorWithErrorStatusCode(error)
         ? {
             cause: error,

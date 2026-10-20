@@ -14,4 +14,5 @@ export const baseExceptionMap = {
 export const isBaseHttpException = (
   name: string
 ): name is keyof typeof baseExceptionMap =>
-  Object.keys(baseExceptionMap).includes(name);
+  // own keys only: inherited ones (ie: 'constructor', 'toString') are not exception classes
+  Object.hasOwn(baseExceptionMap, name);

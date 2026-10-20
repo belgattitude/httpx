@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
 import type { NativeError } from "../../types";
-import { isNativeError, nativeErrors } from "../isNativeError";
+import { isNativeError, nativeErrorMap } from "../isNativeError";
 
 describe("isNativeError", () => {
   describe("when a native error is provided", () => {
-    const native = nativeErrors.map((errorCls) => {
+    const native = Object.values(nativeErrorMap).map((errorCls) => {
       const err = new errorCls();
       return [err.name, err];
     }) as [name: string, err: NativeError][];
