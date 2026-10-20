@@ -111,8 +111,29 @@ describe("Serializer hardening", () => {
       expect(countCauses(e)).toBe(10);
     });
 
+    /**
+     * Same shape as createDeepPayload, but built as a string: native
+     * JSON.stringify is recursive and overflows the stack at such depths.
+     */
+    const createDeepJson = (depth: number) => {
+      const prefixes: string[] = [];
+      const suffixes: string[] = [];
+      for (let i = depth - 1; i >= 0; i--) {
+        const isHttp = i % 2 === 0;
+        prefixes.push(
+          `{"__type":"${isHttp ? "HttpException" : "NativeError"}","cause":`
+        );
+        suffixes.push(
+          `,"message":"level ${i}","name":"${isHttp ? "HttpNotFound" : "Error"}","statusCode":404}`
+        );
+      }
+      const leaf = '{"__type":"NativeError","message":"leaf","name":"Error"}';
+      return `${prefixes.join("")}${leaf}${suffixes.toReversed().join("")}`;
+    };
+
     it("should not overflow the stack on deeply nested json", () => {
-      const e = fromJson(JSON.stringify(createDeepPayload(20_001)));
+      expect(createDeepJson(3)).toBe(JSON.stringify(createDeepPayload(3)));
+      const e = fromJson(createDeepJson(20_001));
       expect(e).toBeInstanceOf(HttpNotFound);
       expect(countCauses(e)).toBe(10);
     });
