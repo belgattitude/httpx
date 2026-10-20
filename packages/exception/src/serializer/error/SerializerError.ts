@@ -1,5 +1,3 @@
-import { supportsErrorCause } from "../../support/supportsErrorCause";
-
 export class SerializerError extends Error {
   constructor(
     message: string,
@@ -8,11 +6,8 @@ export class SerializerError extends Error {
     }
   ) {
     const { cause } = params ?? {};
-    super(message);
-    if (supportsErrorCause() && cause instanceof Error) {
-      this.cause = cause;
-    }
-    Object.setPrototypeOf(this, SerializerError.prototype);
+    // the native cause option is ignored by runtimes not supporting it
+    super(message, cause instanceof Error ? { cause } : undefined);
     this.name = "SerializerError";
   }
 }

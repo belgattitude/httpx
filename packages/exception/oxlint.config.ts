@@ -6,7 +6,7 @@ export default defineConfig({
   ignorePatterns: ["**/_release", "**/docs"],
   overrides: [
     {
-      // HttpException is public api: its class name and the `name` set by initProtoAndName must not change
+      // HttpException is public api: its class name and the `name` set in its constructor must not change
       files: ["src/base/HttpException.ts"],
       rules: {
         "unicorn/custom-error-definition": "off",

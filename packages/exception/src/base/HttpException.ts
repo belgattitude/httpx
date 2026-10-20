@@ -1,7 +1,7 @@
 import type { HttpErrorStatusCodeOrNumber } from "../types";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import type { HttpMethod } from "../types/HttpMethod";
-import { brandKey, hasBrand } from "../utils/brand";
+import { addBrand, brandKey, hasBrand } from "../utils/brand";
 import { getMsgFromCls } from "../utils/getMsgFromCls";
 
 export class HttpException extends Error implements HttpExceptionParams {
@@ -9,7 +9,7 @@ export class HttpException extends Error implements HttpExceptionParams {
 
   /**
    * Also recognize instances created by another copy of the same
-   * @httpx/exception major version (ie: esm and cjs builds, duplicated installs).
+   * @httpx/exception major version (ie: duplicated installs, bundled copies).
    */
   static override [Symbol.hasInstance](value: unknown): boolean {
     return super[Symbol.hasInstance](value) || hasBrand(value, this);
@@ -79,5 +79,6 @@ export class HttpException extends Error implements HttpExceptionParams {
     this.statusCode = statusCode;
     this.url = url;
     this.name = name;
+    addBrand(this, new.target);
   }
 }

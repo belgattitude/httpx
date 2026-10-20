@@ -130,6 +130,32 @@ describe("Cross-realm specs", () => {
       expect(Object.getOwnPropertySymbols(err)).toHaveLength(0);
       expect(JSON.stringify(err)).not.toContain("httpx");
     });
+
+    it.each([HttpException, HttpClientException, HttpNotFound])(
+      "should not leak the brand in %o enumerable statics",
+      (cls) => {
+        expect(Object.keys(cls).some((key) => key.startsWith("@httpx"))).toBe(
+          false
+        );
+        const keys: string[] = [];
+        // oxlint-disable-next-line guard-for-in -- inherited statics on purpose
+        for (const key in cls) {
+          keys.push(key);
+        }
+        expect(keys.some((key) => key.startsWith("@httpx"))).toBe(false);
+      }
+    );
+
+    it("should brand instances with the names of their class hierarchy", () => {
+      const brandKey = Object.getOwnPropertySymbols(new HttpNotFound())[0]!;
+      expect(
+        (new HttpNotFound() as unknown as Record<symbol, unknown>)[brandKey]
+      ).toStrictEqual(["HttpException", "HttpClientException", "HttpNotFound"]);
+      class UserException extends HttpNotFound {}
+      expect(
+        (new UserException() as unknown as Record<symbol, unknown>)[brandKey]
+      ).toStrictEqual(["HttpException", "HttpClientException", "HttpNotFound"]);
+    });
   });
 
   // the brand lives on the classes (statics), instances are matched

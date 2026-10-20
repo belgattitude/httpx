@@ -12,14 +12,9 @@ export default defineConfig({
   treeshake: true,
   format: {
     esm: {
-      target: ["node20", ...browserslistToEsbuild()],
+      target: ["node22", ...browserslistToEsbuild()],
       unbundle: false,
       sourcemap: true,
-    },
-    cjs: {
-      target: ["node20", ...browserslistToEsbuild()],
-      unbundle: false,
-      sourcemap: false,
     },
   },
 });

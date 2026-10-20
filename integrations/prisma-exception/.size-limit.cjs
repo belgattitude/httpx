@@ -5,7 +5,7 @@
 module.exports = [
   {
     name: "Everything (ESM)",
-    path: ["dist/index.mjs"],
+    path: ["dist/index.js"],
     import: "*",
     limit: "1.15KB",
   },

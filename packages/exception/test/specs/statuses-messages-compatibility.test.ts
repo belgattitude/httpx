@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import type { HttpException } from "../../src/base";
 import { createHttpException } from "../../src/factory/createHttpException";
-import { statusMap } from "../../src/status";
+import { getStatusMap } from "../../src/status";
 
 const isCloudflareWorker = "caches" in globalThis;
 
@@ -25,7 +25,7 @@ describe.skipIf(isCloudflareWorker)(
         status: number,
         npmStatusMsg: string,
         exception: HttpException,
-      ][] = Object.entries(statusMap).map(([code]) => {
+      ][] = Object.entries(getStatusMap()).map(([code]) => {
         const exception = createHttpException(Number.parseInt(code, 10));
         const status = Number.parseInt(code, 10);
         const npmStatusesMsg = statuses(status);
