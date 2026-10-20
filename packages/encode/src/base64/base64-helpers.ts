@@ -28,7 +28,7 @@ export const formatBase64Output = (
   options?: Base64EncodeOptions
 ): string => {
   let output =
-    options?.omitPadding === true ? base64.replace(/={1,2}$/, "") : base64;
+    options?.omitPadding === true ? base64.replace(/[=]{1,2}$/, "") : base64;
   if (options?.alphabet === "base64url") {
     output = output.replaceAll("+", "-").replaceAll("/", "_");
   }
@@ -61,7 +61,7 @@ export const prepareBase64Input = (
     compact = compact.replaceAll("-", "+").replaceAll("_", "/");
   }
   // the regexp guarantees at most 2 trailing '='
-  const data = compact.replace(/={1,2}$/, "");
+  const data = compact.replace(/[=]{1,2}$/, "");
   const padding = compact.length - data.length;
   const remainder = data.length % 4;
   const withoutLastChunk = (): string => data.slice(0, -remainder);

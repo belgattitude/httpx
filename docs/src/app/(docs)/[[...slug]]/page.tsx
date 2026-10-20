@@ -1,3 +1,5 @@
+import { findNeighbour } from "fumadocs-core/page-tree";
+import type { Item } from "fumadocs-core/page-tree";
 import {
   DocsBody,
   DocsDescription,
@@ -5,7 +7,7 @@ import {
   DocsTitle,
   MarkdownCopyButton,
   ViewOptionsPopover,
-} from "fumadocs-ui/layouts/docs/page";
+} from "fumadocs-ui/layouts/notebook/page";
 import { createRelativeLink } from "fumadocs-ui/mdx";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -13,6 +15,14 @@ import { notFound } from "next/navigation";
 import { getMDXComponents } from "@/components/mdx";
 import { getPageMarkdownUrl, gitConfig } from "@/lib/shared";
 import { source } from "@/lib/source";
+
+// package main pages are labelled "Overview" in the sidebar, use their
+// title (ie: "@httpx/exception") in the previous / next links
+const withPageTitle = (item?: Item) =>
+  item && {
+    ...item,
+    name: source.getNodePage(item)?.data.title ?? item.name,
+  };
 
 export default async function Page(props: PageProps<"/[[...slug]]">) {
   const params = await props.params;
@@ -25,8 +35,19 @@ export default async function Page(props: PageProps<"/[[...slug]]">) {
   const markdownUrl = getPageMarkdownUrl(page).url;
   const { user, repo, branch, contentDir } = gitConfig;
 
+  const neighbours = findNeighbour(source.getPageTree(), page.url);
+
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      footer={{
+        items: {
+          previous: withPageTitle(neighbours.previous),
+          next: withPageTitle(neighbours.next),
+        },
+      }}
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">
         {page.data.description}
