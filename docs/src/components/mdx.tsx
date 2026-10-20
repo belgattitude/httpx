@@ -1,4 +1,4 @@
-import Link from "fumadocs-core/link";
+import { Link } from "fumadocs-core/link";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { getLayoutTabs } from "fumadocs-ui/layouts/shared";
 import defaultMdxComponents from "fumadocs-ui/mdx";

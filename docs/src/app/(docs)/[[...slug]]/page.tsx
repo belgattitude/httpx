@@ -16,6 +16,14 @@ import { getMDXComponents } from "@/components/mdx";
 import { getPageMarkdownUrl, gitConfig } from "@/lib/shared";
 import { source } from "@/lib/source";
 
+// package main pages are labelled "Overview" in the sidebar, use their
+// title (ie: "@httpx/exception") in the previous / next links
+const withPageTitle = (item?: Item) =>
+  item && {
+    ...item,
+    name: source.getNodePage(item)?.data.title ?? item.name,
+  };
+
 export default async function Page(props: PageProps<"/[[...slug]]">) {
   const params = await props.params;
   const page = source.getPage(params.slug);
@@ -27,13 +35,6 @@ export default async function Page(props: PageProps<"/[[...slug]]">) {
   const markdownUrl = getPageMarkdownUrl(page).url;
   const { user, repo, branch, contentDir } = gitConfig;
 
-  // package main pages are labelled "Overview" in the sidebar, use their
-  // title (ie: "@httpx/exception") in the previous / next links
-  const withPageTitle = (item?: Item) =>
-    item && {
-      ...item,
-      name: source.getNodePage(item)?.data.title ?? item.name,
-    };
   const neighbours = findNeighbour(source.getPageTree(), page.url);
 
   return (

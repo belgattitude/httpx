@@ -28,7 +28,9 @@ await rm(outputDir, { recursive: true, force: true });
 
 const generated: string[] = [];
 
-for (const name of (await readdir(packagesDir)).toSorted()) {
+const packageNames = await readdir(packagesDir);
+
+for (const name of packageNames.toSorted()) {
   const readmePath = path.join(packagesDir, name, "README.md");
   const pkgPath = path.join(packagesDir, name, "package.json");
   if (
