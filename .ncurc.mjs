@@ -11,6 +11,7 @@ export default {
   workspaces: true,
   mergeConfig: true,
   root: true,
+  deprecated: false,
   packageManager: "pnpm",
   reject: [
     "primereact",
