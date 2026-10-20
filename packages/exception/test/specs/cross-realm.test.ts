@@ -125,9 +125,13 @@ describe("Cross-realm specs", () => {
       });
     });
 
-    it("should not leak the brand in instances", () => {
+    it("should not leak the brand in enumerable properties", () => {
       const err = new HttpNotFound();
-      expect(Object.getOwnPropertySymbols(err)).toHaveLength(0);
+      const symbols = Object.getOwnPropertySymbols(err);
+      expect(symbols).toHaveLength(1);
+      expect(
+        Object.getOwnPropertyDescriptor(err, symbols[0]!)?.enumerable
+      ).toBe(false);
       expect(JSON.stringify(err)).not.toContain("httpx");
     });
 
@@ -158,34 +162,14 @@ describe("Cross-realm specs", () => {
     });
   });
 
-  // the brand lives on the classes (statics), instances are matched
-  // through the constructors of their prototype chain
-  const brandKey = Object.getOwnPropertySymbols(HttpNotFound).find((s) =>
-    Symbol.keyFor(s)?.startsWith("@httpx/exception-v")
-  )!;
-
-  /**
-   * Create an instance of a class carrying a brand (ie: forged by a third-party)
-   */
-  const createBranded = (
-    Base: new (msg?: string) => object,
-    props: Record<string, unknown>,
-    brand: unknown = "HttpNotFound",
-    key: symbol = brandKey
-  ) => {
-    class Forged extends Base {}
-    Object.defineProperty(Forged, key, { value: brand });
-    return Object.assign(new Forged("Not found"), props);
-  };
-
   describe("Different major versions", () => {
     it("should not match exceptions branded with another major version", () => {
-      expect(Symbol.keyFor(brandKey)).toMatch(/^@httpx\/exception-v\w+$/);
-      const fromOtherMajor = createBranded(
-        Error,
-        { statusCode: 404 },
-        "HttpNotFound",
-        Symbol.for("@httpx/exception-v999999")
+      const brandKey = Object.getOwnPropertySymbols(new HttpNotFound())[0]!;
+      expect(Symbol.keyFor(brandKey)).toMatch(/^@httpx\/exception-v\d+$/);
+      const fromOtherMajor = Object.defineProperty(
+        Object.assign(new Error("Not found"), { statusCode: 404 }),
+        Symbol.for("@httpx/exception-v999999"),
+        { value: ["HttpException", "HttpClientException", "HttpNotFound"] }
       );
       expect(fromOtherMajor).not.toBeInstanceOf(HttpNotFound);
       expect(fromOtherMajor).not.toBeInstanceOf(HttpException);
@@ -194,17 +178,20 @@ describe("Cross-realm specs", () => {
   });
 
   describe("Brand hardening", () => {
+    const brandKey = Object.getOwnPropertySymbols(new HttpNotFound())[0]!;
+    const brands = ["HttpException", "HttpClientException", "HttpNotFound"];
+    const withBrand = <T extends object>(obj: T) =>
+      Object.defineProperty(obj, brandKey, { value: brands });
+
     it("should match a branded error with a numeric statusCode", () => {
-      const branded = createBranded(Error, { statusCode: 404 });
+      const branded = withBrand(
+        Object.assign(new Error("Not found"), { statusCode: 404 })
+      );
       expect(branded).toBeInstanceOf(HttpNotFound);
-      expect(branded).not.toBeInstanceOf(HttpException);
     });
 
     it("should not match a branded plain object", () => {
-      const branded = createBranded(Object, {
-        message: "Not found",
-        statusCode: 404,
-      });
+      const branded = withBrand({ message: "Not found", statusCode: 404 });
       expect(branded).not.toBeInstanceOf(HttpNotFound);
       expect(branded).not.toBeInstanceOf(HttpException);
       expect(isHttpException(branded)).toBe(false);
@@ -213,20 +200,15 @@ describe("Cross-realm specs", () => {
     it.each([undefined, "404", null])(
       "should not match a branded error with statusCode %s",
       (statusCode) => {
-        const branded = createBranded(Error, { statusCode });
+        const branded = withBrand(
+          Object.assign(new Error("Not found"), { statusCode })
+        );
         expect(branded).not.toBeInstanceOf(HttpNotFound);
         expect(branded).not.toBeInstanceOf(HttpException);
       }
     );
 
-    it("should not match a branded error with a non-string brand", () => {
-      const branded = createBranded(Error, { statusCode: 404 }, [
-        "HttpNotFound",
-      ]);
-      expect(branded).not.toBeInstanceOf(HttpNotFound);
-    });
-
-    it("should not match a brand only present on the instance", () => {
+    it("should not match a branded error with a non-array brand", () => {
       const branded = Object.defineProperty(
         Object.assign(new Error("Not found"), { statusCode: 404 }),
         brandKey,
