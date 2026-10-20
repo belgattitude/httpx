@@ -1,8 +1,6 @@
 import { HttpClientException } from "../base/HttpClientException";
 import type { HttpExceptionParams } from "../types/HttpExceptionParams";
 import { brandKey } from "../utils/brand";
-import { getNormalizedParams } from "../utils/getNormalizedParams";
-import { initProtoAndName } from "../utils/initProtoAndName";
 
 /**
  * 431 Request Header Fields Too Large (client)
@@ -14,12 +12,11 @@ import { initProtoAndName } from "../utils/initProtoAndName";
  * @see https://httpstatus.in/431/
  */
 const status = 431;
-const name = "RequestHeaderFieldsTooLarge";
 export class HttpRequestHeaderFieldsTooLarge extends HttpClientException {
   static readonly STATUS = status;
-  static override readonly [brandKey]: string = `Http${name}`;
+  static override readonly [brandKey]: string =
+    "HttpRequestHeaderFieldsTooLarge";
   constructor(msgOrParams?: HttpExceptionParams | string) {
-    super(status, getNormalizedParams(name, msgOrParams));
-    initProtoAndName(this, name, HttpRequestHeaderFieldsTooLarge);
+    super(status, msgOrParams);
   }
 }

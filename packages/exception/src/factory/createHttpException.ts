@@ -1,7 +1,7 @@
 import { HttpClientException } from "../base/HttpClientException";
 import { HttpException } from "../base/HttpException";
 import { HttpServerException } from "../base/HttpServerException";
-import { statusMap } from "../status";
+import { getStatusMap } from "../status";
 import { isHttpErrorStatusCode } from "../typeguards/isHttpErrorStatusCode";
 import type { AssignedErrorStatusCodes } from "../types/AssignedErrorStatusCodes";
 import type {
@@ -29,7 +29,7 @@ export const createHttpException = <T extends HttpErrorStatusCodeOrNumber>(
   msgOrParams?: HttpExceptionParamsFromStatus<T> | string
 ): HttpExceptionFromStatus<T> => {
   if (isHttpErrorStatusCode<AssignedErrorStatusCodes>(statusCode)) {
-    const cls = statusMap?.[statusCode];
+    const cls = getStatusMap()[statusCode];
     if (cls !== undefined) {
       return new cls(msgOrParams) as HttpExceptionFromStatus<T>;
     }

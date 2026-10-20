@@ -98,6 +98,23 @@ describe("createFromSerializable", () => {
         expect(converted).toStrictEqual(err);
       }
     );
+
+    it.each([
+      Error,
+      EvalError,
+      RangeError,
+      ReferenceError,
+      SyntaxError,
+      TypeError,
+      URIError,
+    ])("should restore the native error class (%o)", (errorCls) => {
+      const converted = createFromSerializable(
+        convertToSerializable(new errorCls("msg"))
+      );
+      expect(converted).toBeInstanceOf(errorCls);
+      expect(converted.constructor).toBe(errorCls);
+      expect(converted.name).toBe(errorCls.name);
+    });
   });
 
   describe("when non native error is given", () => {

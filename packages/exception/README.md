@@ -1,8 +1,8 @@
 # @httpx/exception
 
-HTTP status errors with default message, instanceof, stack and nested error support. Lightweight, typical usage between [600b and 1700b](#bundle-size). Includes convenience typeguards, optional contextual info and a built-in serializer to cover cross-environments challenges (RSC, SSR...).
+HTTP status errors with default message, instanceof, stack and nested error support. Lightweight, typical usage between [450b and 1750b](#bundle-size). Includes convenience typeguards, optional contextual info and a built-in serializer to cover cross-environments challenges (RSC, SSR...).
 
-[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception) [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs) [![node](https://img.shields.io/static/v1?label=Node&message=22.14%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E93%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsY2hyb21lID49IDk2LGZpcmVmb3ggPj0gOTAsZWRnZSA%2BPSA5MSxzYWZhcmkgPj0gMTUsaW9zID49IDE1LG9wZXJhID49IDc3) [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest) [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
+[![npm](https://img.shields.io/npm/v/@httpx/exception?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/exception) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-exception-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fexception) [![bundles](https://img.shields.io/static/v1?label=&message=esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.ts) [![node](https://img.shields.io/static/v1?label=Node&message=22%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E87%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](https://browserslist.dev/?q=ZGVmYXVsdHMsID4gMC4yOCUsIGxhc3QgMiB2ZXJzaW9ucywgRmlyZWZveCBFU1IsIG5vdCBkZWFkLCBub3QgaW9zIDw9IDE1) [![size](https://img.shields.io/bundlephobia/minzip/@httpx/exception@latest?label=Max&style=for-the-badge&labelColor=444&color=informational)](https://bundlephobia.com/package/@httpx/exception@latest) [![downloads](https://img.shields.io/npm/dm/@httpx/exception?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/exception)
 
 ## Highlights
 
@@ -10,7 +10,7 @@ HTTP status errors with default message, instanceof, stack and nested error supp
 - 👉&nbsp; If message not provided, defaults to [http error message](#default-messages)
 - 👉&nbsp; Supports pre-defined [contextual](#error-context) information.
 - 👉&nbsp; Built-in [serializer](#serializer) to allow cross-env uses (ssr, rsc, superjson, logs...).
-- 👉&nbsp; Supports [nested error](#nested-errors) through native [Error.cause](https://belgattitude.github.io/httpx/#/?id=about-errorcause) support.
+- 👉&nbsp; Supports [nested error](#nested-errors) through native [Error.cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) support.
 - 👉&nbsp; Reliable [instanceof](#instanceof-checks), even [across multiple copies](#multiple-copies) of the package.
 - 👉&nbsp; [Extends](#class-diagram) native Error class with [stacktrace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) support.
 - 👉&nbsp; No deps. [Node, bun and modern browsers compatibility](#compatibility),
@@ -91,7 +91,7 @@ const e404 = createHttpException(404); // e404 instanceof HttpClientException
 const e500 = createHttpException(500); // e500 instanceof HttpServerException
 ```
 
-Additional [parameters](#httpexception-parameters) can be provided as a second argument.
+Additional [parameters](#parameters) can be provided as a second argument.
 
 ```typescript
 import { createHttpException, HttpNotImplemented } from "@httpx/exception";
@@ -115,15 +115,13 @@ It's possible to attach informational context to an exception. This is particula
 
 | HttpExceptionParams | Type | Description |
 | --- | --- | --- |
-| statusCode | `number` | Http error status code (400-599). |
-| message | `string` | Default or provided message. |
-| url | `string?` | Origin url.. |
+| message | `string?` | Message, defaults to the [default message](#default-messages). |
+| url | `string?` | Origin url. |
 | method | `HttpMethod?` | Origin http method. |
 | code | `string?` | Custom error code (not to be confused with statusCode). |
 | errorId | `string?` | Unique custom error id. |
-| stack | `string?` | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
-| cause | `Error?` | @see [about error cause](#about-errorcause) |
-| issues | `HttpValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422) |
+| cause | `Error?` | @see [nested errors](#nested-errors) |
+| issues | `HttpValidationIssue[]?` | Only supported by HttpUnprocessableEntity (422) |
 
 Example:
 
@@ -151,13 +149,13 @@ All parameters are exposed as properties.
 | --- | --- | --- |
 | statusCode | `number` | Http error status code (400-599). |
 | message | `string` | Default or provided message. |
-| url | `string?` | Origin url.. |
+| url | `string?` | Origin url. |
 | method | `HttpMethod?` | Origin http method. |
 | code | `string?` | Custom error code (not to be confused with statusCode). |
 | errorId | `string?` | Unique custom error id. |
 | stack | `string?` | @see [Error.prototype.stack](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) on MDN. |
 | cause | `Error?` | @see [about nested errors](#nested-errors) |
-| issues | `ValidationIssues[]?` | Only supported by HttpUnprocessableEntity (422) |
+| issues | `HttpValidationIssue[]?` | Only supported by HttpUnprocessableEntity (422) |
 
 ```typescript
 import { HttpUnprocessableEntity } from "@httpx/exception";
@@ -167,7 +165,7 @@ const e422 = new HttpUnprocessableEntity({
   url: "https://acme.org/api/user/create",
   method: "POST",
   issues: [
-    // typed as ValidationIssues[]
+    // typed as HttpValidationIssue[]
     {
       message: "Invalid address",
       path: ["addresses", 0, "line1"],
@@ -188,8 +186,7 @@ When creating a http exception, it's possible to attach the original error to th
 ```typescript
 const e = new HttpBadRequest({
   // 👉 nesting
-  cause: new TypeError({
-    message: "Param validation failed",
+  cause: new TypeError("Param validation failed", {
     // 👉 nesting: multiple levels are supported
     cause: new NoSuchUser("User id is invalid"),
   }),
@@ -249,14 +246,14 @@ classDiagram
 
 ### Multiple copies
 
-An app can end up with multiple copies of `@httpx/exception`: the ESM and CJS builds loaded side by side (ie: one dependency `import` it, another `require` it) or duplicated installs in `node_modules`. Each copy has its own classes, so a plain `instanceof` would fail and an `HttpNotFound` thrown by a dependency could end up handled as a generic error (500).
+An app can end up with multiple copies of `@httpx/exception` (ie: duplicated installs in `node_modules`, a dependency bundling its own copy...). Each copy has its own classes, so a plain `instanceof` would fail and an `HttpNotFound` thrown by a dependency could end up handled as a generic error (500).
 
-To prevent this, exceptions are branded with a global symbol scoped to the major version (ie: `Symbol.for("@httpx/exception-v3")`) and `instanceof` (thus the [typeguards](#typeguards) and the [serializer](#serializer)) also recognizes instances created by another copy of the same major version.
+To prevent this, exceptions (classes and instances) are branded with a global symbol scoped to the major version (ie: `Symbol.for("@httpx/exception-v4")`) and `instanceof` (thus the [typeguards](#typeguards) and the [serializer](#serializer)) also recognizes instances created by another copy of the same major version.
 
 ```typescript
 import { HttpNotFound, isHttpException } from "@httpx/exception";
-// ie: a dependency using a cjs build or a duplicated install
-const { HttpNotFound: OtherHttpNotFound } = require("@httpx/exception");
+// ie: another copy of @httpx/exception v4 used by a dependency
+import { HttpNotFound as OtherHttpNotFound } from "some-dependency";
 
 const e = new OtherHttpNotFound();
 // 👉 e instanceof HttpNotFound === true
@@ -269,7 +266,7 @@ const e = new OtherHttpNotFound();
 
 ### Instanceof alternatives
 
-While the usage of `instanceof` is preferred, the `isHttpException`, `isHttpClientException` and `isServerException` can be used in place. They will check for instance and will also ensure that the associated `statusCode` is actually valid.
+While the usage of `instanceof` is preferred, the `isHttpException`, `isHttpClientException` and `isHttpServerException` can be used in place. They will check for instance and will also ensure that the associated `statusCode` is actually valid.
 
 ```typescript
 import {
@@ -311,7 +308,7 @@ isHttpErrorStatusCode(200);
 
 Exceptions can be (de-)serialized to json or other formats. Use cases varies from ssr-frameworks (ie: nextjs [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props)) / loggers (sentry, winston...).
 
-Nested error causes are supported but ignored [if not supported](#about-errorcause) by the runtime. Causes deeper than 10 levels are dropped.
+Nested error causes are supported but ignored [if not supported](#nested-errors) by the runtime. Causes deeper than 10 levels are dropped.
 
 Payloads might come from untrusted sources: `fromJson` never throws and returns a `SerializerError` when the json or the payload is invalid (`createFromSerializable` throws a `SerializerError`).
 
@@ -347,7 +344,7 @@ const jsonWithStack = toJson(new HttpException(500), {
   includeStack: process.env.NODE_ENV === "development",
 });
 
-const eWithStrack = fromJson(json, {
+const eWithStack = fromJson(jsonWithStack, {
   includeStack: process.env.NODE_ENV === "development",
 });
 ```
@@ -466,8 +463,7 @@ const e = createHttpException(509, {
 // e instanceof HttpServerException
 
 // alternatively
-const alternate = new HttpServerException({
-  statusCode: 509,
+const alternate = new HttpServerException(509, {
   message: "Bandwidth limit exceeded",
   // ... others properties
 });
@@ -483,7 +479,7 @@ This typeguard is based on a convention and might help to convert a native error
 import {
   isErrorWithErrorStatusCode,
   createHttpException,
-  type isErrorWithErrorStatusCode,
+  type ErrorWithErrorStatusCode,
 } from "@httpx/exception";
 
 try {
@@ -518,7 +514,7 @@ class NoSuchItem extends DomainError implements ObjectWithErrorStatusCode {
 }
 
 if (isObjectWithErrorStatusCode(noSuchUser)) {
-  throw createHttpException(e.statusCode, "Nothing");
+  throw createHttpException(noSuchUser.statusCode, "Nothing");
 }
 ```
 
@@ -528,9 +524,9 @@ if (isObjectWithErrorStatusCode(noSuchUser)) {
 
 | Level | CI | Description |
 | --- | --- | --- |
-| Node | ✅ | Node >= 22.14. CI for 22.x, 24.x & 26.x. |
+| Node | ✅ | Node 22+. CI for 22.x, 24.x & 26.x. |
 | Browser | ✅ | Tested with latest chrome (vitest/playwright) |
-| Browserslist | ✅ | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
+| Browserslist | ✅ | [> 87%](https://browserslist.dev/?q=ZGVmYXVsdHMsID4gMC4yOCUsIGxhc3QgMiB2ZXJzaW9ucywgRmlyZWZveCBFU1IsIG5vdCBkZWFkLCBub3QgaW9zIDw9IDE1) on 10/2026. [defaults, > 0.28%, last 2 versions, Firefox ESR, not dead, not ios <= 15](https://github.com/belgattitude/httpx/blob/main/packages/exception/.browserslistrc) |
 | Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
 | Cloudflare | ✅ | Ensured with @cloudflare/vitest-plugin (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
 | Typescript | ✅ | TS 5.7+ / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
@@ -543,29 +539,26 @@ if (isObjectWithErrorStatusCode(noSuchUser)) {
 
 ### Bundle size
 
-Code and bundler have been tuned to target a minimal compressed footprint for the browser. In ESM, typical usage the bundle size will vary between 600b to 1700b compressed (including default messages for the 43 status codes).
+Code and bundler have been tuned to target a minimal compressed footprint for the browser. Typical usage will add between 450b and 1750b compressed to your bundle (including default messages for the 40 status codes).
 
-ESM individual imports are tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.cjs).
+ESM individual imports are tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/exception/.size-limit.ts).
 
 | Scenario                                           | Size (compressed) |
 | -------------------------------------------------- | ----------------: |
-| Import generic exception (`HttpClientException`)   |            ~ 550b |
-| Import 1 client exception                          |            ~ 595b |
-| Import 2 client exceptions                         |            ~ 616b |
-| Import 6 client exceptions                         |            ~ 719b |
-| Import `createHttpException` (all 43 exceptions)   |           ~ 1647b |
-| Import `fromJson` (incl all + createHttpException) |           ~ 2168b |
-| All serializer functions + exceptions + typeguards |           ~ 2439b |
-
-> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/exception@latest).
+| Import generic exception (`HttpClientException`)   |            ~ 445b |
+| Import 1 client exception                          |            ~ 480b |
+| Import 2 client exceptions                         |            ~ 500b |
+| Import 6 client exceptions                         |            ~ 555b |
+| Import `createHttpException` (all 43 exceptions)   |           ~ 1120b |
+| Import `fromJson` (incl all + createHttpException) |           ~ 1645b |
+| Import everything (exceptions + typeguards)        |           ~ 1730b |
+| All serializer functions + exceptions              |           ~ 2045b |
 
 ### Packaging
 
-This library offers a dual cjs/esm bundle. The (optional) serializer code has been tuned to avoid issues with [dual package hazards](https://nodejs.org/api/packages.html#dual-package-hazard).
+This library is ESM only. CommonJS code can still load it with `require()` on Node 22+ (see [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require)), bun and bundlers.
 
 The export fields and the builds are checked on the CI with [are-the-types-wrong](https://arethetypeswrong.github.io/).
-
-> PS: Plans to remove cjs support might land in a next major version.
 
 ### Typescript
 
@@ -577,7 +570,7 @@ This library targets typescript 5.7+ with descriptions (see [the generated api d
 
 | Version | Comment |
 | --- | --- |
-| 4.x | Node 22.14+, typeguards require a numeric statusCode, `fromJson` never throws |
+| 4.x | Node 22.14+, typeguards require a numeric statusCode, `fromJson` never throws, ESM only since 4.1 |
 | 3.x | Serializer functions don't include stack by default |
 | 2.x | Node 18.x, modern browsers (see how to [transpile](#compatibility)) |
 

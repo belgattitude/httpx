@@ -8,13 +8,6 @@ const config = [
     limit: "1.15KB",
     webpack: false,
   },
-  {
-    name: "Everything (CJS)",
-    path: ["dist/index.cjs"],
-    import: "*",
-    limit: "1.15KB",
-    webpack: false,
-  },
 ] satisfies SizeLimitConfig;
 
 export default config;

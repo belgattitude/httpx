@@ -5,7 +5,7 @@ declare const __HTTPX_EXCEPTION_MAJOR__: string | undefined;
 
 /**
  * Global registry symbol shared by every copy of the same @httpx/exception
- * major version loaded in a realm (esm + cjs builds, duplicated installs...).
+ * major version loaded in a realm (duplicated installs, bundled copies...).
  *
  * - on classes, holds the class name (ie: 'HttpNotFound')
  * - on instances, holds the names of the class hierarchy (ie: ['HttpException', 'HttpClientException', 'HttpNotFound'])
@@ -19,17 +19,19 @@ export const brandKey: unique symbol = Symbol.for(
 type Branded = { [brandKey]?: string[] };
 
 /**
- * Add the class name to the instance brand
+ * Brand an instance with the names of its class hierarchy (same shape
+ * as in all 4.x versions, so they recognize each other's instances).
  * @internal
  */
-export const addBrand = (obj: object, name: string) => {
-  const brands = (obj as Branded)[brandKey];
-  if (brands === undefined) {
-    // not enumerable: must not leak in serialization, equality checks...
-    Object.defineProperty(obj, brandKey, { value: [name] });
-  } else {
-    brands.push(name);
+export const addBrand = (obj: object, cls: unknown) => {
+  const brands: string[] = [];
+  for (let c = cls; typeof c === "function"; c = Object.getPrototypeOf(c)) {
+    if (Object.hasOwn(c, brandKey)) {
+      brands.unshift((c as unknown as { [brandKey]: string })[brandKey]);
+    }
   }
+  // not enumerable: must not leak in serialization, equality checks...
+  Object.defineProperty(obj, brandKey, { value: brands });
 };
 
 /**
@@ -53,4 +55,40 @@ export const hasBrand = (value: unknown, cls: object): boolean => {
     Array.isArray(brands) &&
     brands.includes((cls as { [brandKey]: string })[brandKey])
   );
+};
+
+/**
+ * Test whether a value is branded with a class name (ie: 'HttpUnprocessableEntity'),
+ * from any copy of the same @httpx/exception major version:
+ *
+ * - by the brand set on the instance at construction
+ * - or, when absent, by a branded class in its prototype chain (ie: instances
+ *   revived with `Object.create(cls.prototype)` that never ran the constructor)
+ * @internal
+ */
+export const isBrandedAs = (value: unknown, name: string): boolean => {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  const brands = (value as Branded)[brandKey];
+  if (Array.isArray(brands)) {
+    return brands.includes(name);
+  }
+  for (
+    let proto = Object.getPrototypeOf(value) as object | null;
+    proto !== null;
+    proto = Object.getPrototypeOf(proto) as object | null
+  ) {
+    const cls: unknown = Object.hasOwn(proto, "constructor")
+      ? (proto as { constructor: unknown }).constructor
+      : undefined;
+    if (
+      typeof cls === "function" &&
+      Object.hasOwn(cls, brandKey) &&
+      (cls as unknown as { [brandKey]: unknown })[brandKey] === name
+    ) {
+      return true;
+    }
+  }
+  return false;
 };

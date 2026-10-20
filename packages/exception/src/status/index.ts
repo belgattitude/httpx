@@ -43,49 +43,49 @@ import {
   HttpVersionNotSupported,
 } from "../server";
 
-export const statusMap = {
-  400: HttpBadRequest,
-  401: HttpUnauthorized,
-  402: HttpPaymentRequired,
-  403: HttpForbidden,
-  404: HttpNotFound,
-  405: HttpMethodNotAllowed,
-  406: HttpNotAcceptable,
-  407: HttpProxyAuthenticationRequired,
-  408: HttpRequestTimeout,
-  409: HttpConflict,
-  410: HttpGone,
-  411: HttpLengthRequired,
-  412: HttpPreconditionFailed,
-  413: HttpPayloadTooLarge,
-  414: HttpUriTooLong,
-  415: HttpUnsupportedMediaType,
-  416: HttpRangeNotSatisfiable,
-  417: HttpExpectationFailed,
-  418: HttpImATeapot,
-  421: HttpMisdirectedRequest,
-  422: HttpUnprocessableEntity,
-  423: HttpLocked,
-  424: HttpFailedDependency,
-  425: HttpTooEarly,
-  426: HttpUpgradeRequired,
-  428: HttpPreconditionRequired,
-  429: HttpTooManyRequests,
-  431: HttpRequestHeaderFieldsTooLarge,
-  451: HttpUnavailableForLegalReasons,
-  500: HttpInternalServerError,
-  501: HttpNotImplemented,
-  502: HttpBadGateway,
-  503: HttpServiceUnavailable,
-  504: HttpGatewayTimeout,
-  505: HttpVersionNotSupported,
-  506: HttpVariantAlsoNegotiates,
-  507: HttpInsufficientStorage, // webdav
-  508: HttpLoopDetected, // webdav
+const classes = [
+  HttpBadRequest,
+  HttpUnauthorized,
+  HttpPaymentRequired,
+  HttpForbidden,
+  HttpNotFound,
+  HttpMethodNotAllowed,
+  HttpNotAcceptable,
+  HttpProxyAuthenticationRequired,
+  HttpRequestTimeout,
+  HttpConflict,
+  HttpGone,
+  HttpLengthRequired,
+  HttpPreconditionFailed,
+  HttpPayloadTooLarge,
+  HttpUriTooLong,
+  HttpUnsupportedMediaType,
+  HttpRangeNotSatisfiable,
+  HttpExpectationFailed,
+  HttpImATeapot,
+  HttpMisdirectedRequest,
+  HttpUnprocessableEntity,
+  HttpLocked,
+  HttpFailedDependency,
+  HttpTooEarly,
+  HttpUpgradeRequired,
+  HttpPreconditionRequired,
+  HttpTooManyRequests,
+  HttpRequestHeaderFieldsTooLarge,
+  HttpUnavailableForLegalReasons,
+  HttpInternalServerError,
+  HttpNotImplemented,
+  HttpBadGateway,
+  HttpServiceUnavailable,
+  HttpGatewayTimeout,
+  HttpVersionNotSupported,
+  HttpVariantAlsoNegotiates,
+  HttpInsufficientStorage, // webdav
+  HttpLoopDetected, // webdav
   // Well-known (unassigned by ietf https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
   // 509: 'BandwidthLimitExceeded',
-  510: HttpNotExtended,
-  511: HttpNetworkAuthenticationRequired,
+  HttpNotExtended,
+  HttpNetworkAuthenticationRequired,
   // Well-known Cloudflare (unassigned by ietf https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
   /*
   520: 'Unknown Error',
@@ -96,4 +96,22 @@ export const statusMap = {
   525: 'SSL Handshake Failed',
   526: 'Invalid SSL Certificate',
    */
-};
+];
+
+type StatusClass = (typeof classes)[number];
+
+/**
+ * Concrete exception classes keyed by their status code
+ */
+export type StatusMap = { [Cls in StatusClass as Cls["STATUS"]]: Cls };
+
+let statusMap: StatusMap | undefined;
+
+/**
+ * Return the concrete exception classes keyed by their status code (built from
+ * their STATUS on first call: no top-level code, so unused classes stay tree-shakeable)
+ */
+export const getStatusMap = (): StatusMap =>
+  (statusMap ??= Object.fromEntries(
+    classes.map((cls) => [cls.STATUS, cls])
+  ) as StatusMap);
