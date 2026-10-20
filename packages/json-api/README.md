@@ -16,21 +16,16 @@ Don't hesitate and open [an issue](https://github.com/belgattitude/httpx/issues)
 | --- | --- | --- |
 | Node | ✅ | Node 22+. CI for 22.x, 24.x & 26.x. |
 | Browser | ✅ | Tested with latest chrome (vitest/playwright) |
-| Browserslist | ✅ | [> 95%](https://browserslist.dev/?q=ZGVmYXVsdHMsIGNocm9tZSA%2BPSA5NiwgZmlyZWZveCA%2BPSAxMDUsIGVkZ2UgPj0gMTEzLCBzYWZhcmkgPj0gMTUsIGlvcyA%2BPSAxNSwgb3BlcmEgPj0gMTAzLCBub3QgZGVhZA%3D%3D) on 01/2025. [defaults, chrome >= 96, firefox >= 105, edge >= 113, safari >= 15, ios >= 15, opera >= 103, not dead](https://github.com/belgattitude/httpx/blob/main/packages/json-api/.browserslistrc) |
+| Browserslist | ✅ | [> 87%](https://browserslist.dev/?q=ZGVmYXVsdHMsID4gMC4yOCUsIGxhc3QgMiB2ZXJzaW9ucywgRmlyZWZveCBFU1IsIG5vdCBkZWFkLCBub3QgaW9zIDw9IDE1) on 10/2026. [defaults, > 0.28%, last 2 versions, Firefox ESR, not dead, not ios <= 15](https://github.com/belgattitude/httpx/blob/main/packages/json-api/.browserslistrc) |
 | Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
 | Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
 | Cloudflare | ✅ | Ensured with @cloudflare/vitest-plugin (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
-| Edge | ✅ | Ensured on CI with [@vercel/edge-runtime](https://github.com/vercel/edge-runtime). |
 | Typescript | ✅ | TS 5.0+ / [are-the-type-wrong](https://github.com/arethetypeswrong/arethetypeswrong.github.io) checks on CI. |
 | ES2022 | ✅ | Dist files checked with [es-check](https://github.com/yowainwright/es-check) |
 
 > For _older_ browsers:
 >
 > - 👉 Most frontend frameworks can transpile the library (ie: [nextjs](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)...)
-
-## Contributors
-
-Contributions are warmly appreciated. Have a look to the [CONTRIBUTING](https://github.com/belgattitude/httpx/blob/main/CONTRIBUTING.md) document.
 
 ## Contributors
 
