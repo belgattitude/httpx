@@ -1,5 +1,64 @@
 # @httpx/exception
 
+## 4.1.0
+
+### Minor Changes
+
+- [#2848](https://github.com/belgattitude/httpx/pull/2848) [`d726f51`](https://github.com/belgattitude/httpx/commit/d726f5102b84f1bb960d81a6eeb88f265800bc21) Thanks [@belgattitude](https://github.com/belgattitude)! - ESM only (drop CJS).
+  
+  CommonJS code can still load it with `require()` on node >= 22.12 (see [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require)), bun and bundlers. The package already requires node >= 22.14.
+  
+  **Packaging changes**
+  
+  - Dist files are now `.js` / `.d.ts` (were `.mjs` / `.cjs`, `.d.ts` / `.d.cts`), only reachable through the `exports` map.
+  - The `main`, `module`, `types` and `typesVersions` fields are removed: typescript projects still using `moduleResolution: "node"` (node10) can't resolve `@httpx/exception/serializer` and `@httpx/exception/experimental` types anymore, use `"bundler"`, `"node16"` or `"nodenext"`.
+  - Runtimes without `require(esm)` support (ie: jest in CJS mode) must use a dynamic `import()`.
+  
+  Exceptions keep the same `Symbol.for("@httpx/exception-v4")` brand: `instanceof` and the typeguards still recognize exceptions created by a 4.0.0 copy, and the other way around.
+
+- [#2848](https://github.com/belgattitude/httpx/pull/2848) [`d726f51`](https://github.com/belgattitude/httpx/commit/d726f5102b84f1bb960d81a6eeb88f265800bc21) Thanks [@belgattitude](https://github.com/belgattitude)! - Lighter bundles and faster construction.
+  
+  The class hierarchy has been reworked: the `HttpException` constructor now does all the work once (default message, params, brand), concrete exceptions are reduced to their status and name. Constructing an exception doesn't allocate a throwaway `Error` anymore to detect `cause` support.
+  
+  | Import (webpack, brotli) |  4.0.0 |  4.1.0 |    Δ |
+  | ------------------------ | -----: | -----: | ---: |
+  | `HttpNotFound`           |  644 B |  516 B | -20% |
+  | `HttpException`          |  572 B |  470 B | -18% |
+  | `isHttpException`        |  606 B |  508 B | -16% |
+  | `createHttpException`    | 1697 B | 1167 B | -31% |
+  | everything               | 2217 B | 1773 B | -20% |
+  | `toJson`                 | 1171 B | 1037 B | -11% |
+  | `fromJson`               | 2261 B | 1673 B | -26% |
+  | `tryOrFail`              | 1824 B | 1286 B | -29% |
+  
+  - `toJson` / `convertToSerializable` don't bundle `HttpUnprocessableEntity` anymore.
+  - Tree-shaking of unused exception classes is now checked on CI for rolldown (vite, tsdown...) and webpack.
+  
+  **Behavior changes**
+  
+  - `cause` is now set through the native `Error` option: like with native errors it is not an enumerable own property anymore (ie: absent from `Object.keys()` and spreads), the same applies to `SerializerError`.
+  - Exception instances don't have an own `cause: undefined` property anymore when no cause is given.
+
+### Patch Changes
+
+- [#2848](https://github.com/belgattitude/httpx/pull/2848) [`d726f51`](https://github.com/belgattitude/httpx/commit/d726f5102b84f1bb960d81a6eeb88f265800bc21) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix subclassing, `URIError` deserialization and `HttpUnprocessableEntity` string messages.
+  
+  - Extending an exception in userland now keeps the subclass prototype (methods and `instanceof` were lost):
+  
+    ```typescript
+    class MyNotFound extends HttpNotFound {
+      hint() {
+        return "check the url";
+      }
+    }
+    const e = new MyNotFound();
+    e instanceof MyNotFound; // 👉 true (was false)
+    e.hint(); // 👉 "check the url" (was a TypeError)
+    ```
+  
+  - `fromJson(toJson(new URIError()))` now returns a `URIError` (was a plain `Error`).
+  - `new HttpUnprocessableEntity("Invalid form")` now keeps the message (was replaced by the default "Unprocessable entity").
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,5 +1,18 @@
 # @httpx/json-api
 
+## 0.9.0
+
+### Minor Changes
+
+- [#2848](https://github.com/belgattitude/httpx/pull/2848) [`d726f51`](https://github.com/belgattitude/httpx/commit/d726f5102b84f1bb960d81a6eeb88f265800bc21) Thanks [@belgattitude](https://github.com/belgattitude)! - ESM only (drop CJS) and require node >= 22.14.
+  
+  CommonJS code can still load it with `require()` (see [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require)), bun and bundlers. The `main`, `module` and `types` fields are removed, the package is only reachable through its `exports` map.
+
+### Patch Changes
+
+- Updated dependencies [[`d726f51`](https://github.com/belgattitude/httpx/commit/d726f5102b84f1bb960d81a6eeb88f265800bc21), [`d726f51`](https://github.com/belgattitude/httpx/commit/d726f5102b84f1bb960d81a6eeb88f265800bc21), [`d726f51`](https://github.com/belgattitude/httpx/commit/d726f5102b84f1bb960d81a6eeb88f265800bc21)]:
+  - @httpx/exception@4.1.0
+
 ## 0.8.2
 
 ### Patch Changes
