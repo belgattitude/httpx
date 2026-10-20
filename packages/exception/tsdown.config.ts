@@ -15,9 +15,8 @@ export default defineConfig({
     "experimental/index": "src/experimental/index.ts",
     "serializer/index": "src/serializer/index.ts",
   },
-  minify: true,
+  minify: "dce-only",
   platform: "neutral",
-  sourcemap: true,
   // targets must support class fields natively (safari >= 16): lowered class fields
   // become top-level defineProperty calls on `static STATUS` that break tree-shaking
   // (checked by scripts/check-treeshake.mjs)

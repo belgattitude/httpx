@@ -90,7 +90,7 @@ const config = [
     path: ["dist/serializer/index.js"],
     import:
       "{ fromJson, toJson, createFromSerializable, convertToSerializable }",
-    limit: "2030B",
+    limit: "2058B",
   },
   {
     name: "ESM experimental ({ tryOrFail })",
