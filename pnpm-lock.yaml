@@ -322,8 +322,8 @@ importers:
         specifier: 15.4.7
         version: 15.4.7(@types/mdast@4.0.4)(@types/mdx@2.0.14)(@types/react@19.3.0)(fumadocs-core@16.17.6)(next@16.4.2)(react@19.3.1)(rolldown@1.2.14)(supports-color@10.2.2)(vite@8.3.4)
       fumadocs-ui:
-        specifier: npm:@fumadocs/base-ui@16.17.6
-        version: '@fumadocs/base-ui@16.17.6(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.6)(next@16.4.2)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(tailwindcss@4.3.3)'
+        specifier: npm:@fumadocs/base-ui@16.17.7
+        version: '@fumadocs/base-ui@16.17.7(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.6)(next@16.4.2)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(tailwindcss@4.3.3)'
       next:
         specifier: 16.4.2
         version: 16.4.2(@babel/core@7.29.7)(@types/node@26.6.5)(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
@@ -2504,8 +2504,8 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@fumadocs/base-ui@16.17.6':
-    resolution: {integrity: sha512-z3lu06OUm8VDFrH2xlq2tlXQFvT5q8G7ik3BYJ6drZXOc+vn+PxmMZrBpEyjSuahvK/r3MibD+QLoNOtE4yRnQ==}
+  '@fumadocs/base-ui@16.17.7':
+    resolution: {integrity: sha512-t9Am0mxPrGuAG9BeC/ACLhNbBtxXbc+JIbTTzr7j5apnCFRQSDxGaZT9/+BRWG6DqltnsccGqGB1x3kPz7WaYw==}
     peerDependencies:
       '@types/fumadocs-core': '*'
       '@types/mdx': '*'
@@ -2513,7 +2513,7 @@ packages:
       '@types/react': '*'
       '@types/react-dom': '*'
       '@types/takumi-js': '*'
-      fumadocs-core: 16.17.6
+      fumadocs-core: 16.17.7
       next: 16.x.x
       react: ^19.2.0
       react-dom: ^19.2.0
@@ -8891,7 +8891,7 @@ snapshots:
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
 
-  '@fumadocs/base-ui@16.17.6(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.6)(next@16.4.2)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(tailwindcss@4.3.3)':
+  '@fumadocs/base-ui@16.17.7(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.6)(next@16.4.2)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(tailwindcss@4.3.3)':
     dependencies:
       '@base-ui/react': 1.9.0(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
       '@fuma-translate/react': 1.0.2(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
