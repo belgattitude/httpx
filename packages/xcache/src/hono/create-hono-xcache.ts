@@ -68,7 +68,8 @@ type HonoXCacheBaseOptions = {
    */
   cacheControl?: HonoXCacheControl;
   /**
-   * Add a "X-XCache: HIT|MISS|BYPASS" response header.
+   * Add a "X-XCache: HIT|MISS|DEDUPED|BYPASS" response header (DEDUPED:
+   * served by the in-flight execution of a concurrent request).
    * @default false
    */
   debugHeaders?: boolean;
@@ -115,6 +116,12 @@ export type HonoXCacheLruOptions = HonoXCacheBaseOptions & {
    * @default true
    */
   compressionEnabled?: boolean;
+  /**
+   * Share the in-flight function execution between concurrent requests
+   * having the same key (overridable per call with the `dedupe` param).
+   * @default true
+   */
+  dedupe?: boolean;
 };
 
 /**
@@ -134,6 +141,8 @@ export type HonoXCacheInstanceOptions = HonoXCacheBaseOptions & {
   enabled?: never;
   /** Not available, the instance option is used (or per call) */
   compressionEnabled?: never;
+  /** Not available, the instance option is used (or per call) */
+  dedupe?: never;
 };
 
 /**
@@ -182,6 +191,8 @@ export type HonoXCache = {
    * - Compressed entries are sent as-is when the client accepts the
    *   compression algorithm (Content-Encoding), otherwise decompressed.
    * - With etag enabled, returns 304 when If-None-Match matches.
+   * - Concurrent requests missing the cache for the same key share the
+   *   same function execution (`dedupe` option or param).
    * - The cache and compression can be disabled per call with the
    *   `enabled` and `compressionEnabled` params.
    * - No Cache-Control header by default (see the cacheControl option).
@@ -208,11 +219,13 @@ const createXMemCache = (
     compression = {},
     enabled = true,
     compressionEnabled = true,
+    dedupe = true,
   } = options;
   return new XMemCache({
     lru,
     enabled,
     compressionEnabled,
+    dedupe,
     ...(namespace === undefined ? {} : { namespace }),
     ...(compression === false
       ? {}
@@ -281,7 +294,7 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
       cacheControl = defaultCacheControl,
       ...runParams
     } = params;
-    const { entry, cached, bypassed, generatedKey, expiresIn } =
+    const { entry, cached, bypassed, deduped, generatedKey, expiresIn } =
       await cache.runAsyncEntry({ ...runParams, origin: honoXCacheOrigin });
 
     const headers: Record<string, string> = { ...extraHeaders };
@@ -300,6 +313,9 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
     }
     if (debugHeaders) {
       let status = cached ? "HIT" : "MISS";
+      if (deduped) {
+        status = "DEDUPED";
+      }
       if (bypassed) {
         status = "BYPASS";
       }

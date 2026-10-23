@@ -64,6 +64,14 @@ export type XMemCacheOptions = {
    * @default true
    */
   compressionEnabled?: boolean;
+  /**
+   * Share the in-flight function execution between concurrent calls having
+   * the same generated key (cache stampede protection): on a cache miss, the
+   * function is executed once and its result (or error) is returned to all
+   * the callers. Can be overridden per call (runAsync `dedupe` param).
+   * @default true
+   */
+  dedupe?: boolean;
 };
 
 /**
@@ -95,6 +103,14 @@ export type XMemCacheRunAsyncParams<
    */
   compressionEnabled?: boolean;
   /**
+   * Enable or disable the deduplication of concurrent calls for this call
+   * (overrides the global `dedupe` option). When enabled, a call missing the
+   * cache waits for the in-flight execution of the same key, if any. Calls
+   * with `forceRevalidate` never wait for an in-flight execution, and
+   * bypassed calls (cache disabled) are never deduplicated.
+   */
+  dedupe?: boolean;
+  /**
    * Origin of the call, added to the generated cache key to separate the
    * entries created by integrations (ie: "hono") from the ones created by
    * runAsync for the same key. Not set by default.
@@ -115,6 +131,11 @@ export type XMemCacheRunAsyncEntryResult<TResult> = {
    * call): the entry was created from the function result but not stored.
    */
   bypassed: boolean;
+  /**
+   * Whether the entry was created by the in-flight execution of a concurrent
+   * call with the same key (see the `dedupe` option).
+   */
+  deduped: boolean;
   /** Generated cache key */
   generatedKey: CacheStringKey;
   /**
@@ -136,6 +157,11 @@ type Result<TResult> = {
     cached: boolean;
     /** Set when the cache was bypassed (disabled globally or for this call) */
     bypassed?: true;
+    /**
+     * Set when the data was returned by the in-flight execution of a
+     * concurrent call with the same key (see the `dedupe` option)
+     */
+    deduped?: true;
     /** Generated cache key */
     generatedKey: CacheStringKey;
     /** Identifier of the compressor, when set */
@@ -143,6 +169,15 @@ type Result<TResult> = {
     /** Set when the returned data was stored compressed */
     compression?: CacheCompressSuccessMeta;
   };
+};
+
+/**
+ * Result of a function execution (entry stored in the lru and the function
+ * result).
+ */
+type FetchResult<TResult> = {
+  entry: XMemCacheEntry<TResult>;
+  data: TResult;
 };
 
 /**
@@ -239,6 +274,11 @@ export class XMemCache {
   readonly #compressorId?: string | undefined;
   readonly #enabled: boolean;
   readonly #compressionEnabled: boolean;
+  readonly #dedupe: boolean;
+  /**
+   * In-flight executions by generated key (dedupe).
+   */
+  readonly #inflight = new Map<CacheStringKey, Promise<FetchResult<unknown>>>();
 
   /**
    * @param options - lru, namespace, compressor and enabled options
@@ -250,6 +290,7 @@ export class XMemCache {
       namespace = "default",
       enabled = true,
       compressionEnabled = true,
+      dedupe = true,
     } = options;
     this.#lru = lru;
     this.#defaultNs = namespace;
@@ -257,6 +298,7 @@ export class XMemCache {
     this.#compressorId = compressor?.getIdentifier() ?? undefined;
     this.#enabled = enabled;
     this.#compressionEnabled = compressionEnabled;
+    this.#dedupe = dedupe;
   }
 
   /**
@@ -312,16 +354,16 @@ export class XMemCache {
         if (entry.format === "native") {
           return {
             data: entry.data,
-            meta: this.#createMeta(true, false, generatedKey, undefined),
+            meta: this.#createMeta(true, false, false, generatedKey, undefined),
           };
         }
         return {
           data: await this.readEntry(entry),
-          meta: this.#createMeta(true, false, generatedKey, entry.meta),
+          meta: this.#createMeta(true, false, false, generatedKey, entry.meta),
         };
       }
     }
-    const { entry, data } = await this.#fetchAndStore(
+    const { entry, data, deduped } = await this.#fetchOrJoin(
       params,
       generatedKey,
       enabled
@@ -332,6 +374,7 @@ export class XMemCache {
       meta: this.#createMeta(
         false,
         !enabled,
+        deduped,
         generatedKey,
         entry.format === "compressed" ? entry.meta : undefined
       ),
@@ -392,17 +435,23 @@ export class XMemCache {
     const enabled = params.enabled ?? this.#enabled;
     let entry: XMemCacheEntry<TResult> | undefined;
     let cached = false;
+    let deduped = false;
     if (enabled && params.forceRevalidate !== true) {
       entry = this.#getReadable<TResult>(generatedKey);
       cached = entry !== undefined;
     }
     if (entry === undefined) {
-      ({ entry } = await this.#fetchAndStore(params, generatedKey, enabled));
+      ({ entry, deduped } = await this.#fetchOrJoin(
+        params,
+        generatedKey,
+        enabled
+      ));
     }
     const result: XMemCacheRunAsyncEntryResult<TResult> = {
       entry,
       cached,
       bypassed: !enabled,
+      deduped,
       generatedKey,
     };
     const expiresIn = enabled ? this.#lru.expiresIn(generatedKey) : undefined;
@@ -443,6 +492,44 @@ export class XMemCache {
   };
 
   /**
+   * Execute the function and store its result, or wait for the in-flight
+   * execution of a concurrent call with the same key (dedupe).
+   */
+  readonly #fetchOrJoin = async <
+    TResult extends SupportedCacheValues,
+    TKey extends CacheKeyTuple,
+  >(
+    params: XMemCacheRunAsyncParams<TResult, TKey>,
+    generatedKey: CacheStringKey,
+    enabled: boolean
+  ): Promise<FetchResult<TResult> & { deduped: boolean }> => {
+    // bypassed calls behave as if there was no cache
+    if (!enabled || !(params.dedupe ?? this.#dedupe)) {
+      const result = await this.#fetchAndStore(params, generatedKey, enabled);
+      return { ...result, deduped: false };
+    }
+    // a forced revalidation must not reuse an execution started before it
+    if (params.forceRevalidate !== true) {
+      const pending = this.#inflight.get(generatedKey) as
+        | Promise<FetchResult<TResult>>
+        | undefined;
+      if (pending !== undefined) {
+        return { ...(await pending), deduped: true };
+      }
+    }
+    const promise = this.#fetchAndStore(params, generatedKey, enabled);
+    this.#inflight.set(generatedKey, promise);
+    try {
+      return { ...(await promise), deduped: false };
+    } finally {
+      // a forced revalidation may have replaced it in the meantime
+      if (this.#inflight.get(generatedKey) === promise) {
+        this.#inflight.delete(generatedKey);
+      }
+    }
+  };
+
+  /**
    * Execute the function and store its result (compressed when possible),
    * or only execute it when the cache is disabled (bypass).
    */
@@ -453,7 +540,7 @@ export class XMemCache {
     params: XMemCacheRunAsyncParams<TResult, TKey>,
     generatedKey: CacheStringKey,
     enabled: boolean
-  ): Promise<{ entry: XMemCacheEntry<TResult>; data: TResult }> => {
+  ): Promise<FetchResult<TResult>> => {
     const { fn, key, ttl } = params;
     const compressionEnabled =
       params.compressionEnabled ?? this.#compressionEnabled;
@@ -494,12 +581,16 @@ export class XMemCache {
   readonly #createMeta = (
     cached: boolean,
     bypassed: boolean,
+    deduped: boolean,
     generatedKey: CacheStringKey,
     compression: CacheCompressSuccessMeta | undefined
   ): Result<unknown>["meta"] => {
     const meta: Result<unknown>["meta"] = { cached, generatedKey };
     if (bypassed) {
       meta.bypassed = true;
+    }
+    if (deduped) {
+      meta.deduped = true;
     }
     if (this.#compressorId !== undefined) {
       meta.compressorId = this.#compressorId;
