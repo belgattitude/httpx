@@ -1,5 +1,51 @@
 # @httpx/xcache
 
+## 0.11.0
+
+### Minor Changes
+
+- [#2861](https://github.com/belgattitude/httpx/pull/2861) [`5223157`](https://github.com/belgattitude/httpx/commit/52231572a445a470c6f947c84b02babf614e53cb) Thanks [@belgattitude](https://github.com/belgattitude)! - Add abort signal support to `runAsync` and `runAsyncEntry`.
+  
+  ```typescript
+  const { data } = await xMemCache.runAsync({
+    key: ["/api/products", { id }],
+    // 👇 the function receives the signal
+    fn: ({ signal }) =>
+      fetch(`/api/products/${id}`, { signal }).then((r) => r.json()),
+    signal: AbortSignal.timeout(5_000),
+  });
+  ```
+  
+  - The call rejects with the signal reason as soon as it's aborted (even if the function ignores the signal), already aborted signals reject immediately, cache hits included.
+  - Results of aborted executions are never stored.
+  - With dedupe, aborting a call only rejects that call: the shared execution is aborted when all the waiting calls are aborted, and an aborted execution is never joined.
+  - Hono: pass `signal: c.req.raw.signal` to abort when the client disconnects, a `499` response is returned instead of throwing.
+
+- [#2859](https://github.com/belgattitude/httpx/pull/2859) [`0153ce9`](https://github.com/belgattitude/httpx/commit/0153ce9402cf1b2fdf7ea51ee7506f5986c49ba6) Thanks [@belgattitude](https://github.com/belgattitude)! - Deduplicate concurrent calls (cache stampede protection), enabled by default.
+  
+  On a cache miss, concurrent calls having the same generated key now share the in-flight function execution: the function runs once and all the callers get its result (or its error, errors are still not cached).
+  
+  ```typescript
+  const xMemCache = new XMemCache({
+    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+    dedupe: true, // 👈 default, can be disabled globally
+  });
+  
+  const [a, b] = await Promise.all([
+    xMemCache.runAsync({ key: ["/api/data"], fn: () => fetchThings() }),
+    xMemCache.runAsync({ key: ["/api/data"], fn: () => fetchThings() }),
+  ]);
+  // 👆 fetchThings is called once, b.meta.deduped === true
+  
+  // 👇 or per call
+  await xMemCache.runAsync({ key: ["/api/data"], fn, dedupe: false });
+  ```
+  
+  - `runAsync` returns `meta.deduped: true` and `runAsyncEntry` returns `deduped: boolean`.
+  - Calls with `forceRevalidate: true` never wait for an in-flight execution, and bypassed calls (`enabled: false`) are never deduplicated.
+  - Hono: `createHonoXCache` accepts the `dedupe` option (and `dedupe` param per call). With `debugHeaders`, deduplicated responses have a `X-XCache: DEDUPED` header. They share the entry of the original response (same `ETag`), and are sent compressed only when their own `Accept-Encoding` allows it.
+  - Docs: browsers don't allow setting `Accept-Encoding` (forbidden header), requests created in a browser (ie: hono in a service worker, `app.request()` in browser tests) never get a `Content-Encoding` response.
+
 ## 0.10.0
 
 ### Minor Changes
