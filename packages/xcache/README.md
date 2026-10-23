@@ -350,7 +350,7 @@ app.get("/api/products/:id", (c) =>
 );
 ```
 
-- **Compressed entries are sent as-is**: when the client accepts the compression algorithm (`Accept-Encoding`), the stored gzip/deflate bytes are sent with `Content-Encoding`, without decompression nor serialization. Otherwise they are decompressed (but not deserialized).
+- **Compressed entries are sent as-is**: when the client accepts the compression algorithm (`Accept-Encoding`), the stored gzip/deflate bytes are sent with `Content-Encoding`, without decompression nor serialization. Otherwise they are decompressed (but not deserialized). Note that browsers don't allow setting `Accept-Encoding` (forbidden header): requests created in a browser (ie: hono in a service worker, `app.request()` in browser tests) never get a `Content-Encoding` response.
 - **ETag**: a weak `ETag` is sent, and `304 Not Modified` is returned when `If-None-Match` matches. It changes every time the entry is refreshed.
 - **Deduplication**: concurrent requests missing the cache for the same key share one function execution (see [deduplication](#deduplication)).
 - **Enable / disable**: `enabled` and `compressionEnabled` work as for `XMemCache`, globally or per call (ie: `xcache.json(c, { key, fn, enabled: c.req.query("nocache") === undefined })`). When the cache is bypassed, no `ETag` is sent. Prefer `compressionEnabled: false` over `compression: false` to toggle compression, as it keeps the same cache keys.

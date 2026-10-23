@@ -24,4 +24,5 @@ await xMemCache.runAsync({ key: ["/api/data"], fn, dedupe: false });
 
 - `runAsync` returns `meta.deduped: true` and `runAsyncEntry` returns `deduped: boolean`.
 - Calls with `forceRevalidate: true` never wait for an in-flight execution, and bypassed calls (`enabled: false`) are never deduplicated.
-- Hono: `createHonoXCache` accepts the `dedupe` option (and `dedupe` param per call). With `debugHeaders`, deduplicated responses have a `X-XCache: DEDUPED` header.
+- Hono: `createHonoXCache` accepts the `dedupe` option (and `dedupe` param per call). With `debugHeaders`, deduplicated responses have a `X-XCache: DEDUPED` header. They share the entry of the original response (same `ETag`), and are sent compressed only when their own `Accept-Encoding` allows it.
+- Docs: browsers don't allow setting `Accept-Encoding` (forbidden header), requests created in a browser (ie: hono in a service worker, `app.request()` in browser tests) never get a `Content-Encoding` response.
