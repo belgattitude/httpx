@@ -17,6 +17,7 @@ $ pnpm add @httpx/xcache
 - 🗝️&nbsp; Stable cache keys from any serializable params ([@httpx/stable-hash](https://github.com/belgattitude/httpx/tree/main/packages/stable-hash)).
 - 🗜️&nbsp; Optional [compression](#with-compression) (gzip/deflate) with json, superjson or devalue serializers.
 - 📊&nbsp; [Statistics](#statistics), [enable / disable](#enable--disable) globally or per call.
+- 🐘&nbsp; [Deduplication](#deduplication) of concurrent calls (cache stampede protection).
 - 🔥&nbsp; [Hono](#hono) helper: compressed responses sent as-is, ETag, Cache-Control.
 - 📐&nbsp; Lightweight (starts at [~1.7kB](#bundle-size)).
 - 🛡️&nbsp; Tested on [node 22-26, bun, browser and cloudflare workers](#compatibility).
@@ -216,6 +217,41 @@ xMemCache.compressionEnabled; // false when disabled or without compressor
 > [!TIP]
 > Disabling the cache for a call doesn't remove an existing entry, use `forceRevalidate: true` to refresh it. Entries stored while compression is disabled are reported with `skippedReason: "compression_disabled"` in the [statistics](#statistics).
 
+## Deduplication
+
+On a cache miss, concurrent calls having the same key share the in-flight function execution: the function runs once, and all the callers get its result (or its error). This protects the data source when many requests miss the cache at the same time (ie: after expiration).
+
+```typescript
+const xMemCache = new XMemCache({
+  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+  // 👇 Global, enabled by default
+  dedupe: true,
+});
+
+const [a, b] = await Promise.all([
+  xMemCache.runAsync({
+    key: ["/api/data", params],
+    fn: () => fetchThings(params),
+  }),
+  xMemCache.runAsync({
+    key: ["/api/data", params],
+    fn: () => fetchThings(params),
+  }),
+]);
+// 👆 fetchThings is called once
+// a.meta: { cached: false }
+// b.meta: { cached: false, deduped: true }
+
+// 👇 Per call: overrides the global option
+await xMemCache.runAsync({ key: ["/api/data"], fn, dedupe: false });
+```
+
+- Errors are not cached: all the waiting callers get the same error, and the next call executes the function again.
+- Calls with `forceRevalidate: true` never wait for an in-flight execution (it may have started before the data changed), but the following calls wait for theirs.
+- Bypassed calls (`enabled: false`) are never deduplicated.
+- The first caller's `ttl` (and `fn`) is used, and all the callers get the same data reference (as with cache hits).
+- Deduplication is done per `XMemCache` instance, not per lru.
+
 ## Statistics
 
 `getStats()` returns statistics about the cached entries, and `getEntryInfo()` the info of a single entry. Expired entries are ignored and the lru order is not affected.
@@ -296,6 +332,7 @@ app.get("/api/products/:id", (c) =>
 
 - **Compressed entries are sent as-is**: when the client accepts the compression algorithm (`Accept-Encoding`), the stored gzip/deflate bytes are sent with `Content-Encoding`, without decompression nor serialization. Otherwise they are decompressed (but not deserialized).
 - **ETag**: a weak `ETag` is sent, and `304 Not Modified` is returned when `If-None-Match` matches. It changes every time the entry is refreshed.
+- **Deduplication**: concurrent requests missing the cache for the same key share one function execution (see [deduplication](#deduplication)).
 - **Enable / disable**: `enabled` and `compressionEnabled` work as for `XMemCache`, globally or per call (ie: `xcache.json(c, { key, fn, enabled: c.req.query("nocache") === undefined })`). When the cache is bypassed, no `ETag` is sent. Prefer `compressionEnabled: false` over `compression: false` to toggle compression, as it keeps the same cache keys.
 - **Cache-Control**: none by default, the data is only cached on the server (see [Cache-Control](#cache-control)).
 - **Errors are not cached**: see [error handling](#error-handling).
@@ -321,9 +358,11 @@ createHonoXCache({
   },
   etag: true,
   cacheControl: false, // see "Cache-Control"
-  debugHeaders: false, // "X-XCache: HIT|MISS|BYPASS" header
+  debugHeaders: false, // "X-XCache: HIT|MISS|DEDUPED|BYPASS" header
   // Global enable / disable (see "Enable / disable")
   enabled: true,
+  // Share the in-flight execution of concurrent requests (see "Deduplication")
+  dedupe: true,
   compressionEnabled: process.env.NODE_ENV === "production",
 });
 ```

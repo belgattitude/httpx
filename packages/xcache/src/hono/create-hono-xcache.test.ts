@@ -212,6 +212,50 @@ describe("createHonoXCache", () => {
     expect(bypass.headers.get("X-XCache")).toBe("BYPASS");
   });
 
+  it("should dedupe concurrent requests", async () => {
+    const { app, fetchData } = createApp();
+    const headers = { "Accept-Encoding": "gzip" };
+    const [a, b] = await Promise.all([
+      app.request("/data", { headers }),
+      app.request("/data", { headers }),
+    ]);
+    expect(fetchData).toHaveBeenCalledOnce();
+    expect(a.headers.get("X-XCache")).toBe("MISS");
+    expect(b.headers.get("X-XCache")).toBe("DEDUPED");
+    expect(b.headers.get("ETag")).toBe(a.headers.get("ETag"));
+    expect(b.headers.get("Content-Encoding")).toBe("gzip");
+  });
+
+  it("should not dedupe concurrent requests when disabled", async () => {
+    const { app, fetchData } = createApp({ dedupe: false });
+    const responses = await Promise.all([
+      app.request("/data"),
+      app.request("/data"),
+    ]);
+    expect(fetchData).toHaveBeenCalledTimes(2);
+    for (const res of responses) {
+      expect(res.headers.get("X-XCache")).toBe("MISS");
+    }
+  });
+
+  it("should not dedupe concurrent requests disabling it per call", async () => {
+    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+    const xcache = createHonoXCache({ lru, debugHeaders: true });
+    const fetchData = vi.fn<() => Promise<typeof payload>>(() =>
+      Promise.resolve(payload)
+    );
+    const app = new Hono();
+    app.get("/data", (c) =>
+      xcache.json(c, {
+        key: ["/data"],
+        fn: () => fetchData(),
+        dedupe: c.req.query("nodedupe") === undefined,
+      })
+    );
+    await Promise.all([app.request("/data"), app.request("/data?nodedupe")]);
+    expect(fetchData).toHaveBeenCalledTimes(2);
+  });
+
   it("should not compress when compression is disabled", async () => {
     const { app, fetchData } = createApp({ compressionEnabled: false });
     const headers = { "Accept-Encoding": "gzip" };
