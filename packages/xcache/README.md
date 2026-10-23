@@ -18,6 +18,7 @@ $ pnpm add @httpx/xcache
 - 🗜️&nbsp; Optional [compression](#with-compression) (gzip/deflate) with json, superjson or devalue serializers.
 - 📊&nbsp; [Statistics](#statistics), [enable / disable](#enable--disable) globally or per call.
 - 🐘&nbsp; [Deduplication](#deduplication) of concurrent calls (cache stampede protection).
+- 🛑&nbsp; [Abort signal](#abort-signal) support (AbortController, timeouts, client disconnects).
 - 🔥&nbsp; [Hono](#hono) helper: compressed responses sent as-is, ETag, Cache-Control.
 - 📐&nbsp; Lightweight (starts at [~1.7kB](#bundle-size)).
 - 🛡️&nbsp; Tested on [node 22-26, bun, browser and cloudflare workers](#compatibility).
@@ -252,6 +253,25 @@ await xMemCache.runAsync({ key: ["/api/data"], fn, dedupe: false });
 - The first caller's `ttl` (and `fn`) is used, and all the callers get the same data reference (as with cache hits).
 - Deduplication is done per `XMemCache` instance, not per lru.
 
+## Abort signal
+
+Pass a `signal` to abort a call (ie: `AbortController`, `AbortSignal.timeout()`). The function receives it to cancel its own work (ie: `fetch`).
+
+```typescript
+const { data } = await xMemCache.runAsync({
+  key: ["/api/products", { id }],
+  fn: ({ signal }) =>
+    fetch(`/api/products/${id}`, { signal }).then((r) => r.json()),
+  // 👇 ie: abort after 5 seconds
+  signal: AbortSignal.timeout(5_000),
+});
+```
+
+- The call rejects with the signal reason (ie: `AbortError`, `TimeoutError`) as soon as it's aborted, even if the function ignores the signal. An already aborted signal rejects immediately, cache hits included.
+- The result of an aborted execution is never stored (ie: a function returning a fallback value when aborted).
+- With [deduplication](#deduplication), the execution is shared: aborting a call only rejects that call, and the function's signal is aborted when **all** the waiting calls are aborted (an aborted execution is never joined). Calls without a signal keep the execution alive.
+- The function receives no signal when the call has none.
+
 ## Statistics
 
 `getStats()` returns statistics about the cached entries, and `getEntryInfo()` the info of a single entry. Expired entries are ignored and the lru order is not affected.
@@ -330,12 +350,13 @@ app.get("/api/products/:id", (c) =>
 );
 ```
 
-- **Compressed entries are sent as-is**: when the client accepts the compression algorithm (`Accept-Encoding`), the stored gzip/deflate bytes are sent with `Content-Encoding`, without decompression nor serialization. Otherwise they are decompressed (but not deserialized).
+- **Compressed entries are sent as-is**: when the client accepts the compression algorithm (`Accept-Encoding`), the stored gzip/deflate bytes are sent with `Content-Encoding`, without decompression nor serialization. Otherwise they are decompressed (but not deserialized). Note that browsers don't allow setting `Accept-Encoding` (forbidden header): requests created in a browser (ie: hono in a service worker, `app.request()` in browser tests) never get a `Content-Encoding` response.
 - **ETag**: a weak `ETag` is sent, and `304 Not Modified` is returned when `If-None-Match` matches. It changes every time the entry is refreshed.
 - **Deduplication**: concurrent requests missing the cache for the same key share one function execution (see [deduplication](#deduplication)).
 - **Enable / disable**: `enabled` and `compressionEnabled` work as for `XMemCache`, globally or per call (ie: `xcache.json(c, { key, fn, enabled: c.req.query("nocache") === undefined })`). When the cache is bypassed, no `ETag` is sent. Prefer `compressionEnabled: false` over `compression: false` to toggle compression, as it keeps the same cache keys.
 - **Cache-Control**: none by default, the data is only cached on the server (see [Cache-Control](#cache-control)).
 - **Errors are not cached**: see [error handling](#error-handling).
+- **Abort**: see [client disconnects and timeouts](#client-disconnects-and-timeouts).
 - `Vary: Accept-Encoding` is sent when compression is enabled. Hono's `compress()` middleware skips responses already having a `Content-Encoding`.
 
 Options:
@@ -445,6 +466,25 @@ app.get("/api/products/:id", (c) =>
 - `scope` defaults to `private`, shared caches (CDN) only cache when explicitly `public`.
 - A `Cache-Control` provided in `headers` always takes precedence.
 - Nothing is sent when the cache is bypassed (`enabled: false`). `304` responses keep the header.
+
+### Client disconnects and timeouts
+
+Pass the request signal to abort the function when the client disconnects. A `499` response (nobody reads it) is returned instead of throwing. Combine it with a timeout with `AbortSignal.any()`, a timeout error is propagated as usual (see [error handling](#error-handling)).
+
+```typescript
+app.get("/api/products/:id", (c) =>
+  xcache.json(c, {
+    key: ["/api/products", { id: c.req.param("id") }],
+    fn: ({ signal }) => fetchProduct(c.req.param("id"), { signal }),
+    signal: c.req.raw.signal,
+    // or with a timeout
+    // signal: AbortSignal.any([c.req.raw.signal, AbortSignal.timeout(5_000)]),
+  })
+);
+```
+
+> [!TIP]
+> Not aborting is a valid choice: an expensive execution completed after the client has left still populates the cache for the next requests. With deduplication, a disconnecting client only aborts the execution when all the other waiting clients are gone too.
 
 ### Error handling
 

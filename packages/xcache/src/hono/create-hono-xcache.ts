@@ -2,6 +2,7 @@ import { Decompressor } from "@httpx/compress";
 import { Base64 } from "@httpx/encode";
 import type { ITimeLruCache, SupportedCacheValues } from "@httpx/lru";
 import type { Context } from "hono";
+import type { UnofficialStatusCode } from "hono/utils/http-status";
 
 import type { CacheKeyTuple } from "../cache-key";
 import {
@@ -191,6 +192,8 @@ export type HonoXCache = {
    * - Compressed entries are sent as-is when the client accepts the
    *   compression algorithm (Content-Encoding), otherwise decompressed.
    * - With etag enabled, returns 304 when If-None-Match matches.
+   * - Pass `signal: c.req.raw.signal` to abort when the client disconnects
+   *   (a 499 response is returned).
    * - Concurrent requests missing the cache for the same key share the
    *   same function execution (`dedupe` option or param).
    * - The cache and compression can be disabled per call with the
@@ -294,8 +297,25 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
       cacheControl = defaultCacheControl,
       ...runParams
     } = params;
+    let result: Awaited<ReturnType<typeof cache.runAsyncEntry>>;
+    try {
+      result = await cache.runAsyncEntry({
+        ...runParams,
+        origin: honoXCacheOrigin,
+      });
+    } catch (error) {
+      // aborted because the client disconnected: nobody reads the response
+      if (
+        c.req.raw.signal.aborted &&
+        error === runParams.signal?.reason &&
+        error !== undefined
+      ) {
+        return c.body(null, 499 as UnofficialStatusCode);
+      }
+      throw error;
+    }
     const { entry, cached, bypassed, deduped, generatedKey, expiresIn } =
-      await cache.runAsyncEntry({ ...runParams, origin: honoXCacheOrigin });
+      result;
 
     const headers: Record<string, string> = { ...extraHeaders };
     const hasCacheControlHeader = Object.keys(headers).some(
