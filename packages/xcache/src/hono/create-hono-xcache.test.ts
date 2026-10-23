@@ -256,6 +256,93 @@ describe("createHonoXCache", () => {
     expect(fetchData).toHaveBeenCalledTimes(2);
   });
 
+  describe("abort signal", () => {
+    const createAbortApp = (
+      getSignal: (c: { req: { raw: Request } }) => AbortSignal
+    ) => {
+      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+      const xcache = createHonoXCache({ lru, debugHeaders: true });
+      const fetchData = vi.fn<
+        (params: {
+          signal?: AbortSignal | undefined;
+        }) => Promise<typeof payload>
+      >(
+        ({ signal }) =>
+          // oxlint-disable-next-line promise/avoid-new
+          new Promise((resolve, reject) => {
+            signal?.addEventListener(
+              "abort",
+              () => reject(signal.reason as Error),
+              {
+                once: true,
+              }
+            );
+            setTimeout(() => resolve(payload), 50);
+          })
+      );
+      const app = new Hono();
+      app.get("/data", (c) =>
+        xcache.json(c, {
+          key: ["/data"],
+          fn: ({ signal }) => fetchData({ signal }),
+          signal: getSignal(c),
+        })
+      );
+      return { app, lru, fetchData };
+    };
+
+    it("should return 499 when the client disconnects", async () => {
+      const { app, lru, fetchData } = createAbortApp((c) => c.req.raw.signal);
+      const ac = new AbortController();
+      const res = app.request("/data", { signal: ac.signal });
+      ac.abort();
+      const response = await res;
+      expect(response.status).toBe(499);
+      await expect(response.text()).resolves.toBe("");
+      expect(fetchData.mock.calls[0]?.[0].signal?.aborted).toBe(true);
+      expect(lru.size).toBe(0);
+    });
+
+    it("should not call the function when already disconnected", async () => {
+      const { app, fetchData } = createAbortApp((c) => c.req.raw.signal);
+      const res = await app.request("/data", { signal: AbortSignal.abort() });
+      expect(res.status).toBe(499);
+      expect(fetchData).not.toHaveBeenCalled();
+    });
+
+    it("should serve the data when not aborted", async () => {
+      const { app, lru } = createAbortApp((c) => c.req.raw.signal);
+      const res = await app.request("/data");
+      expect(res.status).toBe(200);
+      await expect(res.json()).resolves.toStrictEqual(payload);
+      expect(lru.size).toBe(1);
+    });
+
+    it("should keep the execution while another client waits", async () => {
+      const { app, lru, fetchData } = createAbortApp((c) => c.req.raw.signal);
+      const ac = new AbortController();
+      const disconnected = app.request("/data", { signal: ac.signal });
+      const connected = app.request("/data");
+      ac.abort();
+      const disconnectedRes = await disconnected;
+      expect(disconnectedRes.status).toBe(499);
+      const res = await connected;
+      expect(res.status).toBe(200);
+      expect(res.headers.get("X-XCache")).toBe("DEDUPED");
+      expect(fetchData).toHaveBeenCalledOnce();
+      expect(lru.size).toBe(1);
+    });
+
+    it("should propagate a timeout when the client is still connected", async () => {
+      const { app } = createAbortApp((c) =>
+        AbortSignal.any([c.req.raw.signal, AbortSignal.timeout(5)])
+      );
+      const res = await app.request("/data");
+      // default hono error handler
+      expect(res.status).toBe(500);
+    });
+  });
+
   it("should not compress when compression is disabled", async () => {
     const { app, fetchData } = createApp({ compressionEnabled: false });
     const headers = { "Accept-Encoding": "gzip" };

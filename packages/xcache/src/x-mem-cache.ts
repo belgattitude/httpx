@@ -83,8 +83,12 @@ export type XMemCacheRunAsyncParams<
 > = {
   /** Cache key, first element must be a non-empty string */
   key: TKey;
-  /** Async function to execute on cache miss */
-  fn: (params: { key: TKey }) => Promise<TResult>;
+  /**
+   * Async function to execute on cache miss. The signal (when provided)
+   * aborts when the call is aborted, or with dedupe when all the waiting
+   * calls are aborted.
+   */
+  fn: (params: { key: TKey; signal?: AbortSignal }) => Promise<TResult>;
   /** Override the default namespace */
   namespace?: string;
   /** Time to live in milliseconds, defaults to the lru defaultTTL */
@@ -110,6 +114,14 @@ export type XMemCacheRunAsyncParams<
    * bypassed calls (cache disabled) are never deduplicated.
    */
   dedupe?: boolean;
+  /**
+   * Abort the call (ie: AbortController signal, AbortSignal.timeout()): the
+   * call rejects with the signal reason as soon as it's aborted, even if the
+   * function ignores the signal. Results of aborted executions are not
+   * stored. With dedupe, the shared execution is only aborted when all the
+   * waiting calls are aborted.
+   */
+  signal?: AbortSignal;
   /**
    * Origin of the call, added to the generated cache key to separate the
    * entries created by integrations (ie: "hono") from the ones created by
@@ -178,6 +190,47 @@ type Result<TResult> = {
 type FetchResult<TResult> = {
   entry: XMemCacheEntry<TResult>;
   data: TResult;
+};
+
+/**
+ * In-flight execution shared by concurrent calls (dedupe).
+ */
+type Inflight<TResult> = {
+  promise: Promise<FetchResult<TResult>>;
+  /** Aborts the execution, created when the first caller has a signal */
+  controller: AbortController | undefined;
+  /** Number of calls waiting for the execution */
+  waiters: number;
+};
+
+/**
+ * Return a promise rejecting with the signal reason as soon as it aborts,
+ * without waiting for the provided promise.
+ */
+const raceAbort = async <T>(
+  promise: Promise<T>,
+  signal: AbortSignal | undefined,
+  onAbort?: () => void
+): Promise<T> => {
+  if (signal === undefined) {
+    return await promise;
+  }
+  let rejectAborted: ((reason: unknown) => void) | undefined;
+  // oxlint-disable-next-line promise/avoid-new
+  const aborted = new Promise<never>((_resolve, reject) => {
+    rejectAborted = reject;
+  });
+  const listener = () => {
+    onAbort?.();
+    // the reason is kept as-is (ie: DOMException AbortError)
+    rejectAborted?.(signal.reason);
+  };
+  signal.addEventListener("abort", listener, { once: true });
+  try {
+    return await Promise.race([promise, aborted]);
+  } finally {
+    signal.removeEventListener("abort", listener);
+  }
 };
 
 /**
@@ -278,7 +331,7 @@ export class XMemCache {
   /**
    * In-flight executions by generated key (dedupe).
    */
-  readonly #inflight = new Map<CacheStringKey, Promise<FetchResult<unknown>>>();
+  readonly #inflight = new Map<CacheStringKey, Inflight<unknown>>();
 
   /**
    * @param options - lru, namespace, compressor and enabled options
@@ -337,6 +390,7 @@ export class XMemCache {
    * ```
    *
    * @throws TypeError if the key is not a valid stable key.
+   * @throws the signal reason (ie: AbortError) when aborted.
    */
   runAsync = async <
     TResult extends SupportedCacheValues,
@@ -346,6 +400,7 @@ export class XMemCache {
   ): Promise<Result<TResult>> => {
     // Hot path: the cache hit is resolved synchronously, without awaiting
     // another async function (each await adds a promise and a microtask)
+    params.signal?.throwIfAborted();
     const generatedKey = this.#genKey(params);
     const enabled = params.enabled ?? this.#enabled;
     if (enabled && params.forceRevalidate !== true) {
@@ -424,6 +479,7 @@ export class XMemCache {
    * ```
    *
    * @throws TypeError if the key is not a valid stable key.
+   * @throws the signal reason (ie: AbortError) when aborted.
    */
   runAsyncEntry = async <
     TResult extends SupportedCacheValues,
@@ -431,6 +487,7 @@ export class XMemCache {
   >(
     params: XMemCacheRunAsyncParams<TResult, TKey>
   ): Promise<XMemCacheRunAsyncEntryResult<TResult>> => {
+    params.signal?.throwIfAborted();
     const generatedKey = this.#genKey(params);
     const enabled = params.enabled ?? this.#enabled;
     let entry: XMemCacheEntry<TResult> | undefined;
@@ -503,35 +560,75 @@ export class XMemCache {
     generatedKey: CacheStringKey,
     enabled: boolean
   ): Promise<FetchResult<TResult> & { deduped: boolean }> => {
+    const { signal } = params;
     // bypassed calls behave as if there was no cache
     if (!enabled || !(params.dedupe ?? this.#dedupe)) {
-      const result = await this.#fetchAndStore(params, generatedKey, enabled);
+      const result = await raceAbort(
+        this.#fetchAndStore(params, generatedKey, enabled, signal),
+        signal
+      );
       return { ...result, deduped: false };
     }
     // a forced revalidation must not reuse an execution started before it
     if (params.forceRevalidate !== true) {
-      const pending = this.#inflight.get(generatedKey) as
-        | Promise<FetchResult<TResult>>
+      const inflight = this.#inflight.get(generatedKey) as
+        | Inflight<TResult>
         | undefined;
-      if (pending !== undefined) {
-        return { ...(await pending), deduped: true };
+      if (inflight !== undefined) {
+        const result = await this.#wait(inflight, generatedKey, signal);
+        return { ...result, deduped: true };
       }
     }
-    const promise = this.#fetchAndStore(params, generatedKey, enabled);
-    this.#inflight.set(generatedKey, promise);
-    try {
-      return { ...(await promise), deduped: false };
-    } finally {
-      // a forced revalidation may have replaced it in the meantime
-      if (this.#inflight.get(generatedKey) === promise) {
-        this.#inflight.delete(generatedKey);
+    // the execution is shared: it's aborted when all the callers are
+    const controller = signal === undefined ? undefined : new AbortController();
+    const fetchAndRemove = async (inflight: Inflight<TResult>) => {
+      try {
+        return await this.#fetchAndStore(
+          params,
+          generatedKey,
+          enabled,
+          controller?.signal
+        );
+      } finally {
+        // a forced revalidation may have replaced it in the meantime
+        if (this.#inflight.get(generatedKey) === inflight) {
+          this.#inflight.delete(generatedKey);
+        }
       }
-    }
+    };
+    // Rejections are always handled: Promise.race in raceAbort keeps its
+    // handlers even when all the callers have been aborted.
+    const inflight = { controller, waiters: 0 } as Inflight<TResult>;
+    inflight.promise = fetchAndRemove(inflight);
+    this.#inflight.set(generatedKey, inflight);
+    const result = await this.#wait(inflight, generatedKey, signal);
+    return { ...result, deduped: false };
+  };
+
+  /**
+   * Wait for an in-flight execution. When the last waiting call is aborted,
+   * the execution is aborted and can't be joined anymore.
+   */
+  readonly #wait = <TResult>(
+    inflight: Inflight<TResult>,
+    generatedKey: CacheStringKey,
+    signal: AbortSignal | undefined
+  ): Promise<FetchResult<TResult>> => {
+    inflight.waiters++;
+    return raceAbort(inflight.promise, signal, () => {
+      if (--inflight.waiters === 0) {
+        inflight.controller?.abort(signal?.reason);
+        if (this.#inflight.get(generatedKey) === inflight) {
+          this.#inflight.delete(generatedKey);
+        }
+      }
+    });
   };
 
   /**
    * Execute the function and store its result (compressed when possible),
-   * or only execute it when the cache is disabled (bypass).
+   * or only execute it when the cache is disabled (bypass). Results of
+   * aborted executions are not stored.
    */
   readonly #fetchAndStore = async <
     TResult extends SupportedCacheValues,
@@ -539,12 +636,15 @@ export class XMemCache {
   >(
     params: XMemCacheRunAsyncParams<TResult, TKey>,
     generatedKey: CacheStringKey,
-    enabled: boolean
+    enabled: boolean,
+    signal: AbortSignal | undefined
   ): Promise<FetchResult<TResult>> => {
     const { fn, key, ttl } = params;
     const compressionEnabled =
       params.compressionEnabled ?? this.#compressionEnabled;
-    const data = await fn({ key });
+    const data = await (signal === undefined
+      ? fn({ key })
+      : fn({ key, signal }));
     if (!enabled) {
       return { entry: createNativeEntry(data), data };
     }
@@ -571,7 +671,10 @@ export class XMemCache {
     if (isXMemCacheEntry(previous) && entry.createdAt <= previous.createdAt) {
       entry.createdAt = previous.createdAt + 1;
     }
-    this.#lru.set(generatedKey, entry, ttl);
+    // ie: a function returning a fallback value when aborted
+    if (signal?.aborted !== true) {
+      this.#lru.set(generatedKey, entry, ttl);
+    }
     return { entry, data };
   };
 
