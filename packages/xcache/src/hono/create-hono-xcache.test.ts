@@ -223,7 +223,10 @@ describe("createHonoXCache", () => {
     expect(a.headers.get("X-XCache")).toBe("MISS");
     expect(b.headers.get("X-XCache")).toBe("DEDUPED");
     expect(b.headers.get("ETag")).toBe(a.headers.get("ETag"));
-    expect(b.headers.get("Content-Encoding")).toBe("gzip");
+    // browsers drop Accept-Encoding (forbidden header): no Content-Encoding
+    expect(b.headers.get("Content-Encoding")).toBe(
+      a.headers.get("Content-Encoding")
+    );
   });
 
   it("should not dedupe concurrent requests when disabled", async () => {
