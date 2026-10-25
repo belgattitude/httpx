@@ -76,6 +76,7 @@ const { data, meta } = await xMemCache.runAsync({
 // meta.timings: { fn: 152.37, serialize: 3.12, compress: 8.4 } (ms, see Statistics)
 // meta.readTimings: { decompress: 1.05, deserialize: 2.3 } (compressed cache hits)
 // meta.generatedKey: '{"key":["/api/data",{"id":1}],"ns":"other"}'
+// meta.namespace: "other" (undefined for an empty namespace)
 ```
 
 Or with `createCacheFn` to get a bound `runAsync` function:
@@ -316,6 +317,7 @@ const stats = xMemCache.getStats();
 //   entries: [               // least recently used first
 //     {
 //       key: '{"compressorId":"cache-compress:superjson","key":["/api/data",{"name":"cool"}],"ns":"default"}',
+//       namespace: "default",
 //       format: "compressed",
 //       size: 90333,
 //       compression: { algorithm: "gzip", encoding: "binary", serializer: "superjson", originalSize: 974025, compressedSize: 90333, ratio: 10.78 },
@@ -326,6 +328,7 @@ const stats = xMemCache.getStats();
 //     },
 //     {
 //       key: '{"compressorId":"cache-compress:superjson","key":["/api/small"],"ns":"default"}',
+//       namespace: "default",
 //       format: "native",
 //       skippedReason: "minimum_byte_saving_not_met",
 //       createdAt: 1792411123000,
@@ -382,7 +385,7 @@ xMemCache.resetStats(); // ie: after a deployment warmup
 
 ### Sharing the lru
 
-Every value stored by `XMemCache` is branded, so the lru can safely be shared with other code: values not created by `XMemCache` (even if they look alike) are ignored by `getStats()` / `getEntryInfo()` and treated as a cache miss by `runAsync()`. The `isXMemCacheEntry` typeguard is exported:
+Every value stored by `XMemCache` is branded, so the lru can safely be shared with other code: values not created by `XMemCache` (even if they look alike) are ignored by `getStats()` / `getEntryInfo()` and treated as a cache miss by `runAsync()`. `getStats()` lists the entries of every `XMemCache` instance sharing the lru: use a namespace per instance to tell them apart (`entries[].namespace`). The `isXMemCacheEntry` typeguard is exported:
 
 ```typescript
 import { isXMemCacheEntry } from "@httpx/xcache";
@@ -607,7 +610,7 @@ app.onError((err, c) => {
 > });
 > ```
 
-To use compressed entries in other contexts, `XMemCache.runAsyncEntry()` returns the stored entry as-is (`{ entry, cached, bypassed, generatedKey, expiresIn }`), with `entry.format` being `"compressed"` (`entry.data` is the compressed `Uint8Array`, `entry.meta` the compression meta) or `"native"`. Use `xMemCache.readEntry(entry)` to get the decompressed data.
+To use compressed entries in other contexts, `XMemCache.runAsyncEntry()` returns the stored entry as-is (`{ entry, cached, bypassed, generatedKey, namespace, expiresIn }`), with `entry.format` being `"compressed"` (`entry.data` is the compressed `Uint8Array`, `entry.meta` the compression meta) or `"native"`. Use `xMemCache.readEntry(entry)` to get the decompressed data.
 
 ## Choosing a serializer
 

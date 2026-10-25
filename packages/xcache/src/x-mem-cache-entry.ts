@@ -57,6 +57,11 @@ export type XMemCacheEntry<T = unknown> = {
   timings: XMemCacheTimings;
   /** Usage counters (hits, deduped calls, read time) */
   usage: XMemCacheEntryUsage;
+  /**
+   * Namespace of the cache key, undefined for an empty namespace or entries
+   * created by older versions (shared lru).
+   */
+  namespace?: string;
 } & (
   | {
       format: "compressed";

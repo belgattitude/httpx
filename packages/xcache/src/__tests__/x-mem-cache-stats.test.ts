@@ -72,6 +72,7 @@ describe("XMemCache stats", () => {
     expect(stats.entries).toStrictEqual([
       {
         key: big1.meta.generatedKey,
+        namespace: "default",
         format: "compressed",
         size: meta1.compressedSize,
         compression: meta1,
@@ -91,6 +92,7 @@ describe("XMemCache stats", () => {
       },
       {
         key: big2.meta.generatedKey,
+        namespace: "default",
         format: "compressed",
         size: meta2.compressedSize,
         compression: meta2,
@@ -110,6 +112,7 @@ describe("XMemCache stats", () => {
       },
       {
         key: small.meta.generatedKey,
+        namespace: "default",
         format: "native",
         skippedReason: "minimum_byte_saving_not_met",
         createdAt: expect.any(Number),
@@ -202,6 +205,7 @@ describe("XMemCache stats", () => {
     });
     expect(cache.getEntryInfo({ key: ["/big"] })).toStrictEqual({
       key: meta.generatedKey,
+      namespace: "default",
       format: "compressed",
       size: meta.compression?.compressedSize,
       compression: meta.compression,
@@ -450,6 +454,7 @@ describe("XMemCache stats", () => {
     });
     expect(cache.getEntryInfo({ key: ["/native"] })).toStrictEqual({
       key: meta.generatedKey,
+      namespace: "default",
       format: "native",
       createdAt: expect.any(Number),
       timings: { fn: expect.any(Number) },

@@ -154,6 +154,8 @@ export type XMemCacheRunAsyncEntryResult<TResult> = {
   deduped: boolean;
   /** Generated cache key */
   generatedKey: CacheStringKey;
+  /** Namespace of the cache key (undefined for an empty namespace) */
+  namespace?: string;
   /**
    * Remaining time to live of the stored entry in milliseconds (undefined
    * when bypassed).
@@ -180,6 +182,8 @@ type Result<TResult> = {
     deduped?: true;
     /** Generated cache key */
     generatedKey: CacheStringKey;
+    /** Namespace of the cache key (undefined for an empty namespace) */
+    namespace?: string;
     /** Identifier of the compressor, when set */
     compressorId?: string;
     /** Set when the returned data was stored compressed */
@@ -254,6 +258,11 @@ const raceAbort = async <T>(
 export type XMemCacheEntryInfo = {
   /** Generated cache key, as returned by runAsync in meta.generatedKey */
   key: CacheStringKey;
+  /**
+   * Namespace of the cache key, undefined for an empty namespace or entries
+   * created by older versions (shared lru).
+   */
+  namespace?: string;
   /** "compressed" or "native" (stored as-is) */
   format: "native" | "compressed";
   /**
@@ -376,6 +385,9 @@ const toEntryInfo = (
   expiresIn: number | undefined
 ): XMemCacheEntryInfo => {
   const ttl = {
+    ...(typeof value.namespace === "string"
+      ? { namespace: value.namespace }
+      : {}),
     createdAt: value.createdAt,
     // entries created by older versions (shared lru) have no timings
     ...(typeof value.timings === "object" ? { timings: value.timings } : {}),
@@ -419,7 +431,7 @@ export class XMemCache {
   /**
    * Default namespace for the cache key.
    */
-  readonly #defaultNs?: string;
+  readonly #defaultNs: string;
   readonly #compressor?: ICacheCompressor | undefined;
   readonly #compressorId?: string | undefined;
   readonly #enabled: boolean;
@@ -499,7 +511,8 @@ export class XMemCache {
     // Hot path: the cache hit is resolved synchronously, without awaiting
     // another async function (each await adds a promise and a microtask)
     params.signal?.throwIfAborted();
-    const generatedKey = this.#genKey(params);
+    const namespace = params.namespace ?? this.#defaultNs;
+    const generatedKey = this.#genKey(params, namespace);
     const enabled = params.enabled ?? this.#enabled;
     if (enabled && params.forceRevalidate !== true) {
       const entry = this.#getReadable<TResult>(generatedKey);
@@ -508,12 +521,26 @@ export class XMemCache {
           this.#trackHit(entry, 0);
           return {
             data: entry.data,
-            meta: this.#createMeta(true, false, false, generatedKey, entry),
+            meta: this.#createMeta(
+              true,
+              false,
+              false,
+              generatedKey,
+              entry,
+              namespace
+            ),
           };
         }
         const readTimings: CacheDecompressTimings = {};
         const data = await this.readEntry<TResult>(entry, readTimings);
-        const meta = this.#createMeta(true, false, false, generatedKey, entry);
+        const meta = this.#createMeta(
+          true,
+          false,
+          false,
+          generatedKey,
+          entry,
+          namespace
+        );
         const { decompress, deserialize } = readTimings;
         if (decompress !== undefined || deserialize !== undefined) {
           meta.readTimings = readTimings;
@@ -531,7 +558,14 @@ export class XMemCache {
     return {
       // on a miss, the function result is returned (not decompressed)
       data,
-      meta: this.#createMeta(false, !enabled, deduped, generatedKey, entry),
+      meta: this.#createMeta(
+        false,
+        !enabled,
+        deduped,
+        generatedKey,
+        entry,
+        namespace
+      ),
     };
   };
 
@@ -600,7 +634,8 @@ export class XMemCache {
     params: XMemCacheRunAsyncParams<TResult, TKey>
   ): Promise<XMemCacheRunAsyncEntryResult<TResult>> => {
     params.signal?.throwIfAborted();
-    const generatedKey = this.#genKey(params);
+    const namespace = params.namespace ?? this.#defaultNs;
+    const generatedKey = this.#genKey(params, namespace);
     const enabled = params.enabled ?? this.#enabled;
     let entry: XMemCacheEntry<TResult> | undefined;
     let cached = false;
@@ -627,6 +662,9 @@ export class XMemCache {
       deduped,
       generatedKey,
     };
+    if (namespace !== "") {
+      result.namespace = namespace;
+    }
     const expiresIn = enabled ? this.#lru.expiresIn(generatedKey) : undefined;
     if (expiresIn !== undefined) {
       result.expiresIn = expiresIn;
@@ -678,11 +716,12 @@ export class XMemCache {
     TResult extends SupportedCacheValues,
     TKey extends CacheKeyTuple,
   >(
-    params: XMemCacheRunAsyncParams<TResult, TKey>
+    params: XMemCacheRunAsyncParams<TResult, TKey>,
+    namespace: string
   ): CacheStringKey =>
     genCacheKeyString({
       key: params.key,
-      namespace: params.namespace ?? this.#defaultNs,
+      namespace,
       compressorId: this.#compressorId,
       origin: params.origin,
     });
@@ -800,11 +839,10 @@ export class XMemCache {
       ? fn({ key })
       : fn({ key, signal }));
     const timings: XMemCacheTimings = { fn: elapsedSince(start) };
-    if (!enabled) {
-      return { entry: createNativeEntry(data, timings), data };
-    }
     let entry: XMemCacheEntry<TResult>;
-    if (this.#compressor !== undefined && !compressionEnabled) {
+    if (!enabled) {
+      entry = createNativeEntry(data, timings);
+    } else if (this.#compressor !== undefined && !compressionEnabled) {
       entry = createNativeEntry(data, timings, "compression_disabled");
     } else if (
       this.#compressor !== undefined &&
@@ -826,6 +864,14 @@ export class XMemCache {
           : createNativeEntry(data, timings, compressed.meta.reason);
     } else {
       entry = createNativeEntry(data, timings);
+    }
+    const namespace = params.namespace ?? this.#defaultNs;
+    if (namespace !== "") {
+      entry.namespace = namespace;
+    }
+    // bypassed: the entry is not stored
+    if (!enabled) {
+      return { entry, data };
     }
     // A replacement entry must be more recent than the one it replaces (ie:
     // forceRevalidate in the same millisecond), so that createdAt based
@@ -849,9 +895,13 @@ export class XMemCache {
     bypassed: boolean,
     deduped: boolean,
     generatedKey: CacheStringKey,
-    entry: XMemCacheEntry
+    entry: XMemCacheEntry,
+    namespace: string
   ): Result<unknown>["meta"] => {
     const meta: Result<unknown>["meta"] = { cached, generatedKey };
+    if (namespace !== "") {
+      meta.namespace = namespace;
+    }
     if (bypassed) {
       meta.bypassed = true;
     }

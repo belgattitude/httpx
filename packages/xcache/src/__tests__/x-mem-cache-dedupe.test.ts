@@ -50,6 +50,7 @@ describe("XMemCache dedupe", () => {
         cached: false,
         deduped: true,
         generatedKey: first?.meta.generatedKey,
+        namespace: "default",
         // shared execution: same timings
         timings: first?.meta.timings,
       });
