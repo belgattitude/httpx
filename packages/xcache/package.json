@@ -32,6 +32,21 @@
       "types": "./dist/hono/index.d.ts",
       "default": "./dist/hono/index.js"
     },
+    "./superjson": {
+      "httpx-monorepo-source": "./src/superjson.ts",
+      "types": "./dist/superjson.d.ts",
+      "default": "./dist/superjson.js"
+    },
+    "./devalue": {
+      "httpx-monorepo-source": "./src/devalue.ts",
+      "types": "./dist/devalue.d.ts",
+      "default": "./dist/devalue.js"
+    },
+    "./cbor-x": {
+      "httpx-monorepo-source": "./src/cbor-x.ts",
+      "types": "./dist/cbor-x.d.ts",
+      "default": "./dist/cbor-x.js"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {

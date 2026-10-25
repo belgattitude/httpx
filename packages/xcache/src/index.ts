@@ -10,13 +10,9 @@ export type {
   ICacheCompressor,
 } from "./compress/types";
 export { createCacheFn } from "./create-cache-fn";
-export {
-  CborxSerializer,
-  type CborxSerializerOptions,
-} from "./serializer/cborx-serializer";
-export { DevalueSerializer } from "./serializer/devalue-serializer";
+// serializers requiring an optional peer dependency have their own entry
+// (@httpx/xcache/superjson, /devalue, /cbor-x)
 export { JsonSerializer } from "./serializer/json-serializer";
-export { SuperjsonSerializer } from "./serializer/superjson-serializer";
 export type {
   ICacheBinarySerializer,
   ICacheSerializer,

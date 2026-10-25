@@ -19,6 +19,27 @@ const config = [
     import: "{ createHonoXCache }",
     limit: "5960B",
   },
+  {
+    name: "import { SuperjsonSerializer } (ESM)",
+    path: ["dist/superjson.js"],
+    import: "{ SuperjsonSerializer }",
+    ignore: ["superjson"],
+    limit: "180B",
+  },
+  {
+    name: "import { DevalueSerializer } (ESM)",
+    path: ["dist/devalue.js"],
+    import: "{ DevalueSerializer }",
+    ignore: ["devalue"],
+    limit: "110B",
+  },
+  {
+    name: "import { CborxSerializer } (ESM)",
+    path: ["dist/cbor-x.js"],
+    import: "{ CborxSerializer }",
+    ignore: ["cbor-x"],
+    limit: "160B",
+  },
 ] satisfies SizeLimitConfig;
 
 export default config;

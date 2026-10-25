@@ -134,11 +134,12 @@ export class CacheCompress implements ICacheCompressor {
   /**
    * @example
    * ```typescript
-   * import { CacheCompress, SuperjsonSerializer } from '@httpx/xcache';
+   * import { CacheCompress } from '@httpx/xcache';
+   * import { SuperjsonSerializer } from '@httpx/xcache/superjson';
    *
    * const customCacheCompressor = new CacheCompress({
    *   // Compression requires the data to be serialized (into a string)
-   *   // JsonSerializer, SuperjsonSerialier, DevalueSerializer
+   *   // JsonSerializer, SuperjsonSerializer, DevalueSerializer
    *   serializer: new SuperjsonSerializer(),
    *   algorithm: 'gzip', // or 'deflate'
    *   // Skip compression if the achieved compression ratio is less than

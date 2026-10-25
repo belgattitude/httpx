@@ -1,12 +1,12 @@
 import {
   CacheCompress,
-  CborxSerializer,
-  DevalueSerializer,
   type ICacheBinarySerializer,
   type ICacheSerializer,
   JsonSerializer,
-  SuperjsonSerializer,
 } from "@httpx/xcache";
+import { CborxSerializer } from "@httpx/xcache/cbor-x";
+import { DevalueSerializer } from "@httpx/xcache/devalue";
+import { SuperjsonSerializer } from "@httpx/xcache/superjson";
 
 import { generateArrayOfData } from "../data-generator.ts";
 

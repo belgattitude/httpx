@@ -5,7 +5,8 @@
 Add `CborxSerializer`, a binary serializer based on [cbor-x](https://github.com/kriszyp/cbor-x) (optional peer dependency).
 
 ```typescript
-import { CacheCompress, CborxSerializer } from "@httpx/xcache";
+import { CacheCompress } from "@httpx/xcache";
+import { CborxSerializer } from "@httpx/xcache/cbor-x";
 
 const compressor = new CacheCompress({
   serializer: new CborxSerializer(),

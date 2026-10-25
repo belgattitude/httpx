@@ -23,7 +23,8 @@ export class CborxSerializer implements ICacheBinarySerializer {
   /**
    * @example
    * ```typescript
-   * import { CacheCompress, CborxSerializer } from '@httpx/xcache';
+   * import { CacheCompress } from '@httpx/xcache';
+   * import { CborxSerializer } from '@httpx/xcache/cbor-x';
    *
    * const compressor = new CacheCompress({
    *   serializer: new CborxSerializer(),

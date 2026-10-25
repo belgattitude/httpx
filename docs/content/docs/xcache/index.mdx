@@ -121,7 +121,7 @@ const { data } = await cacheFn({
 
 ## With compression
 
-You can use compression to reduce the size of the cached data. The library supports `gzip` and `deflate` compression algorithms. To be able to serialize and deserialize the data, you can use adapters like `DevalueSerializer`, `SuperjsonSerializer` or `JsonSerializer`.
+You can use compression to reduce the size of the cached data. The library supports `gzip` and `deflate` compression algorithms. To be able to serialize and deserialize the data, you can use adapters like `JsonSerializer` (`@httpx/xcache`) or, with their optional peer dependency installed, `SuperjsonSerializer` (`@httpx/xcache/superjson`), `DevalueSerializer` (`@httpx/xcache/devalue`) and `CborxSerializer` (`@httpx/xcache/cbor-x`).
 
 <Callout type="info">
 
@@ -130,12 +130,9 @@ A serializer is only needed with compression. Without a compressor, `XMemCache` 
 </Callout>
 
 ```typescript
-import {
-  XMemCache,
-  TimeLruCache,
-  CacheCompress,
-  SuperjsonSerializer,
-} from "@httpx/xcache";
+import { XMemCache, TimeLruCache, CacheCompress } from "@httpx/xcache";
+// serializers with a peer dependency have their own entry
+import { SuperjsonSerializer } from "@httpx/xcache/superjson";
 
 const xMemCache = new XMemCache({
   lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),

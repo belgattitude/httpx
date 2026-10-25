@@ -18,7 +18,11 @@ const outputDir = new URL("output/", import.meta.url);
 
 const engineIds = ["node", "bun"] as const;
 
+// BENCH_ENGINES (set by index.ts): ignore results of engines not run
+const selectedEngines = process.env.BENCH_ENGINES?.split(",");
+
 const loaded = engineIds
+  .filter((id) => selectedEngines?.includes(id) ?? true)
   .map((id) => new URL(`${id}.json`, outputDir))
   .filter((file) => existsSync(file))
   .map((file) => JSON.parse(readFileSync(file, "utf8")) as EngineResults);

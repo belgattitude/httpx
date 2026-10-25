@@ -2,13 +2,13 @@ import prettyBytes from "pretty-bytes";
 import { describe, test } from "vitest";
 
 import {
-  CborxSerializer,
-  DevalueSerializer,
   type ICacheBinarySerializer,
   type ICacheSerializer,
   JsonSerializer,
-  SuperjsonSerializer,
 } from "../src";
+import { CborxSerializer } from "../src/cbor-x";
+import { DevalueSerializer } from "../src/devalue";
+import { SuperjsonSerializer } from "../src/superjson";
 import { benchConfig } from "./bench-config";
 import { generateArrayOfData } from "./data-generator";
 

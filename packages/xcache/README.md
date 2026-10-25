@@ -95,18 +95,22 @@ const { data } = await cacheFn({
 
 ## With compression
 
-You can use compression to reduce the size of the cached data. The library supports `gzip` and `deflate` compression algorithms. To be able to serialize and deserialize the data, you can use adapters like `CborxSerializer`, `DevalueSerializer`, `SuperjsonSerializer` or `JsonSerializer`.
+You can use compression to reduce the size of the cached data. The library supports `gzip` and `deflate` compression algorithms. To be able to serialize and deserialize the data, you can use adapters like `JsonSerializer` or, with their optional peer dependency installed, `SuperjsonSerializer`, `DevalueSerializer` and `CborxSerializer`:
+
+| Serializer            | Import                    | Peer dependency |
+| --------------------- | ------------------------- | --------------- |
+| `JsonSerializer`      | `@httpx/xcache`           | none            |
+| `SuperjsonSerializer` | `@httpx/xcache/superjson` | `superjson`     |
+| `DevalueSerializer`   | `@httpx/xcache/devalue`   | `devalue`       |
+| `CborxSerializer`     | `@httpx/xcache/cbor-x`    | `cbor-x`        |
 
 > [!NOTE]
 > A serializer is only needed with compression. Without a compressor, `XMemCache` keeps the values as-is in the LRU (no serialization cost, all types supported, same instance returned on each hit). See [choosing a serializer](#choosing-a-serializer) for the memory gains.
 
 ```typescript
-import {
-  XMemCache,
-  TimeLruCache,
-  CacheCompress,
-  SuperjsonSerializer,
-} from "@httpx/xcache";
+import { XMemCache, TimeLruCache, CacheCompress } from "@httpx/xcache";
+// serializers with a peer dependency have their own entry
+import { SuperjsonSerializer } from "@httpx/xcache/superjson";
 
 const xMemCache = new XMemCache({
   lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
@@ -673,7 +677,8 @@ Measured on Node 26.12.0 with ~11k rows (see [benchmarks](#benchmarks)), gzip si
 `CborxSerializer` is a binary serializer based on [cbor-x](https://github.com/kriszyp/cbor-x) (`npm install cbor-x`). It's the fastest and smallest with extended types: Date, BigInt, Map, Set, undefined, NaN, typed arrays, shared and cyclic references are supported.
 
 ```typescript
-import { CacheCompress, CborxSerializer } from "@httpx/xcache";
+import { CacheCompress } from "@httpx/xcache";
+import { CborxSerializer } from "@httpx/xcache/cbor-x";
 
 const compressor = new CacheCompress({
   serializer: new CborxSerializer(),
