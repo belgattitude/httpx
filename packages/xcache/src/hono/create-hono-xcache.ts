@@ -352,9 +352,11 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
     headers["Content-Type"] = contentType;
 
     // compressed with the same serializer: the bytes are the response body
+    // (raw strings were not serialized)
     if (
       entry.format === "compressed" &&
-      entry.meta.serializer === serializerId
+      entry.meta.serializer === serializerId &&
+      entry.meta.raw !== true
     ) {
       const { algorithm } = entry.meta;
       const bytes = (

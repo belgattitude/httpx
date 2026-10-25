@@ -1,5 +1,4 @@
-import browserslistToEsbuild from "browserslist-to-esbuild";
-import { defineConfig } from "tsdown";
+import { browserslistToEsbuild, defineConfig } from "@httpx/dx/tsdown";
 
 export default defineConfig({
   clean: true,

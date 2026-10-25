@@ -13,13 +13,17 @@ describe("isXMemCacheEntry", () => {
     compressedSize: 5,
     ratio: 2,
   } as const;
+  const timings = { fn: 1 };
 
   it.each([
-    ["native", createNativeEntry({ id: 1 })],
-    ["native with undefined data", createNativeEntry(undefined)],
-    ["native skipped", createNativeEntry("data", "trivial_value")],
-    ["compressed binary", createCompressedEntry(new Uint8Array([1, 2]), meta)],
-    ["compressed base64", createCompressedEntry("H4sI", meta)],
+    ["native", createNativeEntry({ id: 1 }, timings)],
+    ["native with undefined data", createNativeEntry(undefined, timings)],
+    ["native skipped", createNativeEntry("data", timings, "trivial_value")],
+    [
+      "compressed binary",
+      createCompressedEntry(new Uint8Array([1, 2]), meta, timings),
+    ],
+    ["compressed base64", createCompressedEntry("H4sI", meta, timings)],
   ])("should return true for %s entries", (_label, entry) => {
     expect(isXMemCacheEntry(entry)).toBe(true);
   });
@@ -34,15 +38,15 @@ describe("isXMemCacheEntry", () => {
     ["lookalike compressed", { format: "compressed", data: "H4sI", meta }],
     [
       "branded with invalid format",
-      { ...createNativeEntry(1), format: "other" },
+      { ...createNativeEntry(1, timings), format: "other" },
     ],
     [
       "branded compressed with invalid data",
-      { ...createCompressedEntry("H4sI", meta), data: 1 },
+      { ...createCompressedEntry("H4sI", meta, timings), data: 1 },
     ],
     [
       "branded compressed without meta",
-      { ...createCompressedEntry("H4sI", meta), meta: null },
+      { ...createCompressedEntry("H4sI", meta, timings), meta: null },
     ],
   ])("should return false for %s", (_label, value) => {
     expect(isXMemCacheEntry(value)).toBe(false);

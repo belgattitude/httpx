@@ -1,12 +1,16 @@
 import { Compressor, Decompressor } from "@httpx/compress";
 
 import type { ICacheSerializer } from "../serializer/types";
+import { elapsedSince, now } from "../timing";
 import { isTrivialValue } from "./is-trivial-value";
 import type {
   CacheCompressAlgorithm,
   CacheCompressEncoding,
   CacheCompressResult,
+  CacheCompressSkippedReason,
   CacheCompressSuccessMeta,
+  CacheCompressTimings,
+  CacheDecompressTimings,
   ICacheCompressor,
 } from "./types";
 
@@ -69,6 +73,25 @@ const defaultOptions: Required<
   minimumByteSaving: 32_768, // 32 KB
   encoding: "binary",
 } as const;
+
+/**
+ * Create a skipped result, with timings when something was measured.
+ */
+const skipped = <T>(
+  data: T,
+  reason: CacheCompressSkippedReason,
+  timings: CacheCompressTimings
+): CacheCompressResult => {
+  const result: CacheCompressResult = {
+    status: "skipped",
+    meta: { reason },
+    data,
+  };
+  if (timings.serialize !== undefined || timings.compress !== undefined) {
+    result.timings = timings;
+  }
+  return result;
+};
 
 /**
  * Compressor for XMemCache: serialize the data, compress it (gzip or deflate)
@@ -142,10 +165,12 @@ export class CacheCompress implements ICacheCompressor {
     meta.serializer === this.#serializerId;
 
   /**
-   * Serialize and compress the data. Compression is skipped (data returned
-   * as-is) for trivial values, when the data or its serialized form is
+   * Serialize and compress the data. Strings are compressed as-is, without
+   * serializer (meta.raw: true). Compression is skipped (data
+   * returned as-is) for trivial values (ie: numbers), when the data or its serialized form is
    * shorter than minimumStringLength (or minimumByteSaving, as the saving
    * can't exceed it), or when the minimum ratio or byte saving are not met.
+   * The time spent serializing and compressing is returned in timings.
    */
   compress = async <T>(data: T): Promise<CacheCompressResult> => {
     const { minimumRatio, minimumStringLength, minimumByteSaving } =
@@ -159,53 +184,38 @@ export class CacheCompress implements ICacheCompressor {
         data,
       };
     }
-    if (typeof data === "string" && data.length < minimumStringLength) {
-      return {
-        status: "skipped",
-        meta: {
-          reason: "minimum_string_length_not_met",
-        },
-        data,
-      };
-    }
 
     const { encoding } = this.#options;
-    const serialized = this.#serializer.serialize(data);
+    const timings: CacheCompressTimings = {};
+    const isString = typeof data === "string";
+    let serialized: string;
+    // strings don't need to be serialized
+    if (isString) {
+      serialized = data;
+    } else {
+      const start = now();
+      serialized = this.#serializer.serialize(data);
+      timings.serialize = elapsedSince(start);
+    }
     // Don't even try to compress small payloads
     if (serialized.length < minimumStringLength) {
-      return {
-        status: "skipped",
-        meta: {
-          reason: "minimum_string_length_not_met",
-        },
-        data,
-      };
+      return skipped(data, "minimum_string_length_not_met", timings);
     }
     // The byte saving can't exceed the serialized length
     if (serialized.length < minimumByteSaving) {
-      return {
-        status: "skipped",
-        meta: {
-          reason: "minimum_byte_saving_not_met",
-        },
-        data,
-      };
+      return skipped(data, "minimum_byte_saving_not_met", timings);
     }
     // Compress the serialized string first, then optionally encode the bytes
+    const start = now();
     const compressed =
       encoding === "binary"
         ? await this.#gzip.toUint8Array(serialized)
         : await this.#gzip.toEncodedString(serialized, { encoding });
+    timings.compress = elapsedSince(start);
     if (
       Math.max(serialized.length - compressed.length, 0) < minimumByteSaving
     ) {
-      return {
-        status: "skipped",
-        meta: {
-          reason: "minimum_byte_saving_not_met",
-        },
-        data,
-      };
+      return skipped(data, "minimum_byte_saving_not_met", timings);
     }
     const ratio =
       compressed.length > 0
@@ -213,37 +223,35 @@ export class CacheCompress implements ICacheCompressor {
         : 0;
 
     if (ratio < minimumRatio) {
-      return {
-        status: "skipped",
-        meta: {
-          reason: "minimum_ratio_not_met",
-        },
-        data,
-      };
+      return skipped(data, "minimum_ratio_not_met", timings);
     }
 
-    return {
-      status: "success",
-      meta: {
-        algorithm: this.#algorithm,
-        encoding,
-        serializer: this.#serializerId,
-        compressedSize: compressed.length,
-        originalSize: serialized.length,
-        ratio,
-      },
-      data: compressed,
+    const meta: CacheCompressSuccessMeta = {
+      algorithm: this.#algorithm,
+      encoding,
+      serializer: this.#serializerId,
+      compressedSize: compressed.length,
+      originalSize: serialized.length,
+      ratio,
     };
+    if (isString) {
+      meta.raw = true;
+    }
+    return { status: "success", meta, data: compressed, timings };
   };
 
   /**
    * Decompress and deserialize the data. Skipped or failed results are
-   * returned as-is.
+   * returned as-is. When provided, timings is filled with the time spent
+   * decompressing and deserializing (strings are not deserialized).
    *
    * @throws TypeError if the data was compressed with incompatible options
    * (algorithm, encoding or serializer).
    */
-  decompress = async <T = unknown>(data: CacheCompressResult): Promise<T> => {
+  decompress = async <T = unknown>(
+    data: CacheCompressResult,
+    timings?: CacheDecompressTimings
+  ): Promise<T> => {
     if (data.status !== "success") {
       return data.data as T;
     }
@@ -252,6 +260,7 @@ export class CacheCompress implements ICacheCompressor {
         `Incompatible compressed data (${data.meta.algorithm}/${data.meta.encoding}/${data.meta.serializer}), expected ${this.#algorithm}/${this.#options.encoding}/${this.#serializerId}`
       );
     }
+    let start = now();
     const serialized =
       typeof data.data === "string"
         ? await this.#gunzip.fromEncodedString(data.data, {
@@ -261,6 +270,17 @@ export class CacheCompress implements ICacheCompressor {
                 : "base64",
           })
         : textDecoder.decode(await this.#gunzip.fromUint8Array(data.data));
-    return this.#serializer.deserialize<T>(serialized);
+    if (timings !== undefined) {
+      timings.decompress = elapsedSince(start);
+    }
+    if (data.meta.raw === true) {
+      return serialized as T;
+    }
+    start = now();
+    const deserialized = this.#serializer.deserialize<T>(serialized);
+    if (timings !== undefined) {
+      timings.deserialize = elapsedSince(start);
+    }
+    return deserialized;
   };
 }

@@ -135,6 +135,26 @@ describe("createHonoXCache", () => {
     expect(fetchSmall).toHaveBeenCalledOnce();
   });
 
+  it("should serialize compressed raw strings", async () => {
+    const { xcache } = createApp();
+    const text = "<li>Hello world</li>".repeat(5000);
+    const app = new Hono();
+    app.get("/text", (c) =>
+      xcache.json(c, { key: ["/text"], fn: () => Promise.resolve(text) })
+    );
+    const headers = { "Accept-Encoding": "gzip" };
+    await app.request("/text", { headers });
+    expect(xcache.getEntryInfo({ key: ["/text"] })?.compression).toMatchObject({
+      serializer: "json",
+      raw: true,
+    });
+    const res = await app.request("/text", { headers });
+    expect(res.headers.get("X-XCache")).toBe("HIT");
+    // the compressed bytes are the raw string, not a json body
+    expect(res.headers.get("Content-Encoding")).toBeNull();
+    await expect(res.json()).resolves.toBe(text);
+  });
+
   it("should work without compression", async () => {
     const { app } = createApp({ compression: false });
     const headers = { "Accept-Encoding": "gzip" };
