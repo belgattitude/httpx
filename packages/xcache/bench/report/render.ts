@@ -7,6 +7,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 import prettyBytes from "pretty-bytes";
 
+import { formatBytes, formatTime } from "./format.ts";
 import type {
   CaseResult,
   HonoCaseResult,
@@ -45,19 +46,6 @@ const findResult = (
     (result) => result.scenario === scenario && result.config === config
   );
 
-const formatTime = (ms: number): string => {
-  if (ms < 0.001) {
-    return `${Math.round(ms * 1e6)} ns`;
-  }
-  if (ms < 1) {
-    return `${(ms * 1000).toFixed(1)} µs`;
-  }
-  if (ms < 10) {
-    return `${ms.toFixed(2)} ms`;
-  }
-  return ms < 100 ? `${ms.toFixed(1)} ms` : `${Math.round(ms)} ms`;
-};
-
 /** Icons of the best value per column */
 const icons = {
   miss: "⚡",
@@ -72,9 +60,6 @@ const markBest = (
   format: (value: number) => string,
   icon: string
 ): string => (value === best ? `${icon} **${format(value)}**` : format(value));
-
-const formatBytes = (bytes: number): string =>
-  prettyBytes(bytes, { maximumFractionDigits: 1 });
 
 /** "1.85× faster" or "1.20× slower" (ratio = reference / compared) */
 const formatGain = (ratio: number, better: string, worse: string): string => {
@@ -290,48 +275,6 @@ table(
 );
 
 push("## Summary", "");
-if (node && bun) {
-  const overall = compareEngines(pairedCases());
-  push(
-    `Bun ${bun.engine.version} vs Node.js ${node.engine.version} (geometric mean of the median times of all serializers, memory is indicative: each engine accounts memory differently).`,
-    ""
-  );
-  table(
-    ["Scenario", "Cache miss", "Cache hit", "Memory per entry"],
-    [
-      ...reference.scenarios.map((scenario) => {
-        const ratios = compareEngines(pairedCases(scenario.id));
-        return [
-          scenario.title,
-          formatGain(ratios.miss, "faster", "slower"),
-          formatGain(ratios.hit, "faster", "slower"),
-          formatGain(ratios.memory, "less", "more"),
-        ];
-      }),
-      (() => {
-        const hono = compareHono();
-        return [
-          `Hono, ${reference.hono.scenario} payload (requests)`,
-          formatGain(hono.miss, "faster", "slower"),
-          formatGain(hono.hit, "faster", "slower"),
-          "-",
-        ];
-      })(),
-      [
-        "**Overall** (cache)",
-        formatGain(overall.miss, "faster", "slower"),
-        formatGain(overall.hit, "faster", "slower"),
-        formatGain(overall.memory, "less", "more"),
-      ],
-    ],
-    ["---", "--:", "--:", "--:"]
-  );
-} else {
-  push(
-    `Only ${engines.map(({ name }) => name).join(", ")} results found: run the bench with both Node.js and Bun to compare them.`,
-    ""
-  );
-}
 
 const best = (
   results: EngineResults,
@@ -354,6 +297,11 @@ const best = (
 };
 
 push(
+  "![Medium payload: cache miss, cache hit, memory and hono](./medium.svg)",
+  ""
+);
+
+push(
   `Best serializer per scenario (${reference.engine.name}, excluding "No compression"):`,
   ""
 );
@@ -368,7 +316,12 @@ table(
     scenario.title,
     best(reference, scenario.id, (result) => result.miss.median),
     best(reference, scenario.id, (result) => result.hit.median),
-    best(reference, scenario.id, (result) => result.memoryPerEntry),
+    // 0: not measured
+    best(reference, scenario.id, (result) =>
+      result.memoryPerEntry > 0
+        ? result.memoryPerEntry
+        : Number.POSITIVE_INFINITY
+    ),
   ])
 );
 
@@ -379,7 +332,7 @@ push(
   "- **Cache miss**: cache key generation, serialization, compression and storage (a new key each time).",
   "- **Cache hit**: lookup, decompression and deserialization of the same key.",
   "- Times are medians (mean, p99 and sample count in `report.json`).",
-  '- **Memory per entry**: growth of `heapUsed + external` after a forced GC, between a half-full and a full cache of fresh payloads (fixed costs excluded), median of 3 runs. "No compression" keeps the live objects.',
+  '- **Memory per entry**: growth of `heapUsed + external` after a forced GC, when adding fresh payloads to a cache already holding 2 entries (fixed costs excluded), median of 3 runs (5 on Bun, runs without growth ignored, "n/a" when none). It includes the entry overhead (meta, key, lru node), not only the compressed bytes. "No compression" keeps the live objects.',
   "- Compression: `CacheCompress` with `gzip` and the default options (compressed from 16K characters and 32 KB saved), `binary` encoding.",
   ""
 );
@@ -420,14 +373,16 @@ for (const [index, scenario] of reference.scenarios.entries()) {
       const found = findResult(results, scenario.id, result.config);
       return found === undefined ? undefined : pick(found);
     });
-    // "No compression" is the baseline, not a candidate
+    // "No compression" is the baseline, not a candidate, 0: not measured
     const candidates = values.filter(
       (value, i): value is number =>
-        value !== undefined && scenarioResults[i]?.config !== "none"
+        value !== undefined &&
+        value > 0 &&
+        scenarioResults[i]?.config !== "none"
     );
     const min = Math.min(...candidates);
     return values.map((value) => {
-      if (value === undefined) {
+      if (value === undefined || value === 0) {
         return "n/a";
       }
       return markBest(value, min, format, icon);
@@ -544,6 +499,52 @@ push(
   '"Hit gzip": client accepting gzip (`Accept-Encoding: gzip`), "Hit identity": client not accepting it (the compressed bytes are decompressed). "No cache" is the baseline (same time for miss and hits), not a candidate for the icons.',
   ""
 );
+
+// ---------------------------------------------------------------- bun vs node
+
+push("## Bun vs Node.js", "");
+if (node && bun) {
+  const overall = compareEngines(pairedCases());
+  push(
+    `Bun ${bun.engine.version} vs Node.js ${node.engine.version} (geometric mean of the median times of all serializers, memory is indicative: each engine accounts memory differently).`,
+    ""
+  );
+  table(
+    ["Scenario", "Cache miss", "Cache hit", "Memory per entry"],
+    [
+      ...reference.scenarios.map((scenario) => {
+        const ratios = compareEngines(pairedCases(scenario.id));
+        return [
+          scenario.title,
+          formatGain(ratios.miss, "faster", "slower"),
+          formatGain(ratios.hit, "faster", "slower"),
+          formatGain(ratios.memory, "less", "more"),
+        ];
+      }),
+      (() => {
+        const hono = compareHono();
+        return [
+          `Hono, ${reference.hono.scenario} payload (requests)`,
+          formatGain(hono.miss, "faster", "slower"),
+          formatGain(hono.hit, "faster", "slower"),
+          "-",
+        ];
+      })(),
+      [
+        "**Overall** (cache)",
+        formatGain(overall.miss, "faster", "slower"),
+        formatGain(overall.hit, "faster", "slower"),
+        formatGain(overall.memory, "less", "more"),
+      ],
+    ],
+    ["---", "--:", "--:", "--:"]
+  );
+} else {
+  push(
+    `Only ${engines.map(({ name }) => name).join(", ")} results found: run the bench with both Node.js and Bun to compare them.`,
+    ""
+  );
+}
 
 writeFileSync(new URL("../report.md", outputDir), lines.join("\n"));
 console.log(

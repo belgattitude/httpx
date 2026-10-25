@@ -40,8 +40,8 @@ type BunGlobal = {
 const bun = (globalThis as { Bun?: BunGlobal }).Bun;
 
 /** Time budget per measured operation */
-const timeMs = Number(process.env.BENCH_TIME_MS ?? 1000);
-const minSamples = 10;
+const timeMs = Number(process.env.BENCH_TIME_MS ?? 300);
+const minSamples = 5;
 
 const outputDir = new URL("output/", import.meta.url);
 
@@ -107,7 +107,11 @@ const getPlatform = (): PlatformInfo => {
 };
 
 const measure = async (fn: () => Promise<unknown>): Promise<TimingResult> => {
-  for (let i = 0; i < 3; i++) {
+  // warmup: 3 calls, 1 for slow operations
+  const warmupStart = performance.now();
+  await fn();
+  if (performance.now() - warmupStart < 50) {
+    await fn();
     await fn();
   }
   const samples: number[] = [];
@@ -139,17 +143,24 @@ const createCache = (config: CacheConfig, maxSize: number): XMemCache => {
 };
 
 /**
- * Memory per entry: growth between half and full cache (fresh payloads),
- * so fixed costs (serializer buffers, lru) are excluded. Median of 3 runs,
- * measured first so that the speed tests caches can't be collected between.
+ * Memory per entry: growth when adding memoryEntries fresh payloads to a
+ * cache holding 2 entries, so fixed costs (serializer buffers grown by the
+ * first encodings, lru) are excluded. Median of the runs with a growth (3,
+ * 5 on bun: noisier), measured first so that the speed tests caches can't
+ * be collected in between. 0 when no run measured a growth.
  */
 const measureMemoryPerEntry = async (
   scenario: Scenario,
   config: CacheConfig
 ): Promise<number> => {
-  const half = Math.ceil(scenario.memoryEntries / 2);
-  const fill = async (cache: XMemCache, from: number): Promise<void> => {
-    for (let n = from; n < from + half; n++) {
+  const entries = scenario.memoryEntries;
+  const warmupEntries = 2;
+  const fill = async (
+    cache: XMemCache,
+    from: number,
+    count: number
+  ): Promise<void> => {
+    for (let n = from; n < from + count; n++) {
       await cache.runAsync({
         key: ["memory", n],
         fn: () => Promise.resolve(scenario.createPayload()),
@@ -157,24 +168,36 @@ const measureMemoryPerEntry = async (
     }
   };
   const runs: number[] = [];
-  for (let run = 0; run < 3; run++) {
-    const cache = createCache(config, half * 2);
-    await fill(cache, 0);
+  const runCount = bun === undefined ? 3 : 5;
+  for (let run = 0; run < runCount; run++) {
+    const cache = createCache(config, entries + warmupEntries);
+    await fill(cache, 0, warmupEntries);
     const before = await usedMemory();
-    await fill(cache, half);
+    await fill(cache, warmupEntries, entries);
     const after = await usedMemory();
     cache.clear();
-    runs.push(Math.max(0, (after - before) / half));
+    runs.push(Math.max(0, (after - before) / entries));
   }
   runs.sort((x, y) => x - y);
-  return runs[1] ?? 0;
+  if (process.env.BENCH_DEBUG !== undefined) {
+    console.log(
+      `  memory runs ${scenario.id}/${config.id}: ${runs.map((run) => Math.round(run / 1024)).join(", ")} KiB`
+    );
+  }
+  // a run without growth: freed garbage hid the entries
+  const grown = runs.filter((run) => run > 0);
+  return grown[Math.floor(grown.length / 2)] ?? 0;
 };
 
 const runCase = async (
   scenario: Scenario,
   config: CacheConfig
 ): Promise<CaseResult> => {
+  const memoryStart = performance.now();
   const memoryPerEntry = await measureMemoryPerEntry(scenario, config);
+  if (process.env.BENCH_DEBUG !== undefined) {
+    console.log(`  memory ${Math.round(performance.now() - memoryStart)} ms`);
+  }
 
   const payload = scenario.createPayload();
   const fn = () => Promise.resolve(payload);
@@ -280,9 +303,11 @@ for (const scenario of scenarios) {
     if (scenario.extendedTypes && config.nativeTypesOnly) {
       continue;
     }
+    const start = performance.now();
     const result = await runCase(scenario, config);
+    const elapsed = Math.round(performance.now() - start);
     console.log(
-      `[${engine.name}] ${scenario.id} / ${config.label}: miss ${result.miss.median.toFixed(3)} ms, hit ${result.hit.median.toFixed(3)} ms`
+      `[${engine.name}] ${scenario.id} / ${config.label}: miss ${result.miss.median.toFixed(3)} ms, hit ${result.hit.median.toFixed(3)} ms (${elapsed} ms)`
     );
     results.push(result);
   }

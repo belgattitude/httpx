@@ -1,11 +1,12 @@
 /**
  * Run the xcache benchmark report with Node.js and Bun, then render
- * bench/report/report.md and report.json.
+ * bench/report/report.md, report.json and the medium.svg chart.
  *
  * pnpm bench-report
  * NODE_BIN=~/.nvm/versions/node/v26.12.0/bin/node BUN_BIN=bun pnpm bench-report
  * BENCH_ENGINES=node pnpm bench-report (node only)
- * BENCH_TIME_MS=200 pnpm bench-report (faster, less accurate)
+ * BENCH_TIME_MS=1000 pnpm bench-report (slower, more samples, default 300)
+ * BENCH_DEBUG=1 pnpm bench-report (time per case and memory runs)
  */
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
@@ -33,3 +34,4 @@ if (engines.includes("bun")) {
   run(bunBin, [script("run.ts")]);
 }
 run(nodeBin, [script("render.ts")]);
+run(nodeBin, [script("chart.ts")]);

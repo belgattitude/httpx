@@ -16,7 +16,7 @@ export type Scenario = {
   description: string;
   rows: number;
   extendedTypes: boolean;
-  /** Number of entries cached to measure the memory per entry */
+  /** Number of entries added to measure the memory per entry */
   memoryEntries: number;
   createPayload: () => ReturnType<typeof generateArrayOfData>;
 };
@@ -39,7 +39,7 @@ export const scenarios: Scenario[] = [
       "Array of small records, under the compression minimum size (stored as-is)",
     rows: 20,
     extendedTypes: false,
-    memoryEntries: 500,
+    memoryEntries: 200,
   }),
   createScenario({
     id: "medium",
@@ -47,7 +47,7 @@ export const scenarios: Scenario[] = [
     description: "Array of records, compressed with the default options",
     rows: 3400,
     extendedTypes: false,
-    memoryEntries: 40,
+    memoryEntries: 20,
   }),
   createScenario({
     id: "large",
@@ -55,7 +55,7 @@ export const scenarios: Scenario[] = [
     description: "Array of records, compressed with the default options",
     rows: 44_000,
     extendedTypes: false,
-    memoryEntries: 10,
+    memoryEntries: 2,
   }),
   createScenario({
     id: "large-extended",
@@ -64,7 +64,7 @@ export const scenarios: Scenario[] = [
       "Same as large, with Date, BigInt, undefined and NaN values (json is not supported)",
     rows: 44_000,
     extendedTypes: true,
-    memoryEntries: 10,
+    memoryEntries: 2,
   }),
 ];
 
