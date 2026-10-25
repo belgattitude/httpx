@@ -18,11 +18,13 @@ export type CacheCompressSuccessMeta = {
   algorithm: CacheCompressAlgorithm;
   /** How the compressed bytes are stored */
   encoding: CacheCompressEncoding;
-  /**
-   * Identifier of the serializer used (ie: "json", "superjson", "devalue"),
-   * "none" for strings (compressed as-is)
-   */
+  /** Identifier of the serializer (ie: "json", "superjson", "devalue") */
   serializer: string;
+  /**
+   * Set when the data is a string compressed as-is: it was not serialized
+   * and is not deserialized
+   */
+  raw?: true;
   /** Length of the serialized string (or string) before compression */
   originalSize: number;
   /** Length of the compressed data (bytes for binary, chars for base64) */

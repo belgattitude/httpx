@@ -171,7 +171,8 @@ const { data, meta } = await xMemCache.runAsync({
 // {
 //   algorithm: "gzip",        // "gzip" | "deflate"
 //   encoding: "binary",       // "binary" | "base64" | "base64_urlsafe"
-//   serializer: "superjson",  // serializer identifier ("none" for strings, compressed as-is)
+//   serializer: "superjson",  // serializer identifier
+//   raw: true,                // only for strings, compressed as-is (not serialized)
 //   originalSize: 974025,     // serialized string length
 //   compressedSize: 90333,    // compressed length
 //   ratio: 10.78,

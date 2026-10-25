@@ -194,7 +194,10 @@ describe.each([["gzip", "deflate"]])("XMemCache compression", () => {
       const run = () =>
         cache.runAsync({ key: ["/api/html"], fn: () => Promise.resolve(html) });
       const miss = await run();
-      expect(miss.meta.compression?.serializer).toBe("none");
+      expect(miss.meta.compression).toMatchObject({
+        serializer: "devalue",
+        raw: true,
+      });
       const hit = await run();
       expect(hit.meta.cached).toBe(true);
       expect(hit.data).toBe(html);

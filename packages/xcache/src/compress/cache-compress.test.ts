@@ -206,6 +206,28 @@ describe.each([
       expect(stringTimings).toStrictEqual({ decompress: expect.any(Number) });
     });
 
+    it("should not confuse serialized data with raw strings, whatever the serializer identifier", async () => {
+      // ie: a custom serializer named like a raw string marker
+      const noneSerializer: ICacheSerializer = {
+        getIdentifier: () => "none",
+        serialize: serializer.serialize,
+        deserialize: serializer.deserialize,
+      };
+      const cacheGzip = new CacheCompress({
+        serializer: noneSerializer,
+        algorithm,
+        minimumStringLength: 0,
+        minimumByteSaving: 0,
+      });
+      const data = generateArrayOfRecords(100, extendedTypeSupport);
+      const compressed = await cacheGzip.compress(data);
+      expect(compressed.status).toBe("success");
+      expect(compressed.meta).not.toHaveProperty("raw");
+      await expect(cacheGzip.decompress(compressed)).resolves.toStrictEqual(
+        data
+      );
+    });
+
     describe("strings and numbers should never be serialized", () => {
       afterEach(() => {
         vi.restoreAllMocks();
@@ -227,7 +249,8 @@ describe.each([
           const result = await cacheGzip.compress(str);
           expect(result.status).toBe("success");
           expect(result.meta).toMatchObject({
-            serializer: "none",
+            serializer: serializer.getIdentifier(),
+            raw: true,
             originalSize: str.length,
           });
           expect(result.timings).toStrictEqual({

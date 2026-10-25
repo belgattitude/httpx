@@ -62,12 +62,6 @@ export type CacheCompressOptions = {
 
 const textDecoder = new TextDecoder();
 
-/**
- * Serializer identifier stored in the meta of strings compressed as-is
- * (strings are never serialized).
- */
-const noSerializerId = "none";
-
 const defaultOptions: Required<
   Pick<
     CacheCompressOptions,
@@ -163,18 +157,16 @@ export class CacheCompress implements ICacheCompressor {
 
   /**
    * Whether previously compressed data (from its meta) can be decompressed
-   * with the current options: same algorithm, encoding and serializer (or
-   * no serializer for strings).
+   * with the current options: same algorithm, encoding and serializer.
    */
   isCompatible = (meta: CacheCompressSuccessMeta): boolean =>
     meta.algorithm === this.#algorithm &&
     meta.encoding === this.#options.encoding &&
-    (meta.serializer === this.#serializerId ||
-      meta.serializer === noSerializerId);
+    meta.serializer === this.#serializerId;
 
   /**
    * Serialize and compress the data. Strings are compressed as-is, without
-   * serializer (meta.serializer: "none"). Compression is skipped (data
+   * serializer (meta.raw: true). Compression is skipped (data
    * returned as-is) for trivial values (ie: numbers), when the data or its serialized form is
    * shorter than minimumStringLength (or minimumByteSaving, as the saving
    * can't exceed it), or when the minimum ratio or byte saving are not met.
@@ -234,19 +226,18 @@ export class CacheCompress implements ICacheCompressor {
       return skipped(data, "minimum_ratio_not_met", timings);
     }
 
-    return {
-      status: "success",
-      meta: {
-        algorithm: this.#algorithm,
-        encoding,
-        serializer: isString ? noSerializerId : this.#serializerId,
-        compressedSize: compressed.length,
-        originalSize: serialized.length,
-        ratio,
-      },
-      data: compressed,
-      timings,
+    const meta: CacheCompressSuccessMeta = {
+      algorithm: this.#algorithm,
+      encoding,
+      serializer: this.#serializerId,
+      compressedSize: compressed.length,
+      originalSize: serialized.length,
+      ratio,
     };
+    if (isString) {
+      meta.raw = true;
+    }
+    return { status: "success", meta, data: compressed, timings };
   };
 
   /**
@@ -282,7 +273,7 @@ export class CacheCompress implements ICacheCompressor {
     if (timings !== undefined) {
       timings.decompress = elapsedSince(start);
     }
-    if (data.meta.serializer === noSerializerId) {
+    if (data.meta.raw === true) {
       return serialized as T;
     }
     start = now();
