@@ -1,7 +1,7 @@
 // cause in peerDependencies
-import { parse, stringify } from "superjson";
+import { parse, serialize, stringify } from "superjson";
 
-import type { ICacheSerializer } from "./types";
+import type { ICacheSerializer, ICacheSerializerJsonDetection } from "./types";
 
 /**
  * Superjson serializer (requires the "superjson" peer dependency).
@@ -13,6 +13,17 @@ export class SuperjsonSerializer implements ICacheSerializer {
   getIdentifier = (): string => "superjson";
   /** Serialize the data into a string */
   serialize = <T>(data: T): string => stringify(data);
+  /**
+   * Serialize the data and detect plain JSON at no extra cost: superjson
+   * only adds a meta when extended types (Date, Map, undefined...) or
+   * shared references were found.
+   */
+  serializeWithJsonDetection = <T>(data: T): ICacheSerializerJsonDetection => {
+    const result = serialize(data);
+    return result.meta === undefined
+      ? { serialized: JSON.stringify(result.json), json: true }
+      : { serialized: JSON.stringify(result), json: false };
+  };
   /** Deserialize a string created by serialize */
   deserialize = <T = unknown>(serializedData: string): T =>
     parse<T>(serializedData);

@@ -1,10 +1,15 @@
 import { Compressor, Decompressor } from "@httpx/compress";
+import { Base64 } from "@httpx/encode";
 
-import type { ICacheSerializer } from "../serializer/types";
+import type {
+  ICacheBinarySerializer,
+  ICacheSerializer,
+} from "../serializer/types";
 import { elapsedSince, now } from "../timing";
 import { isTrivialValue } from "./is-trivial-value";
 import type {
   CacheCompressAlgorithm,
+  CacheCompressContent,
   CacheCompressEncoding,
   CacheCompressResult,
   CacheCompressSkippedReason,
@@ -21,10 +26,11 @@ export type { CacheCompressEncoding } from "./types";
  */
 export type CacheCompressOptions = {
   /**
-   * Serializer used to convert the data into a string before compression
-   * (JsonSerializer, SuperjsonSerializer, DevalueSerializer...).
+   * Serializer used to convert the data into a string (or bytes for binary
+   * serializers) before compression (JsonSerializer, SuperjsonSerializer,
+   * DevalueSerializer, CborxSerializer...).
    */
-  serializer: ICacheSerializer;
+  serializer: ICacheSerializer | ICacheBinarySerializer;
 
   /**
    * Compression algorithm.
@@ -39,8 +45,8 @@ export type CacheCompressOptions = {
   minimumRatio?: number;
   /**
    * Minimum length to activate compression, checked on string data before
-   * serialization and on the serialized string before compression, so
-   * small payloads are never compressed.
+   * serialization and on the serialized string (bytes for binary
+   * serializers) before compression, so small payloads are never compressed.
    * @default 16384 (16K characters)
    */
   minimumStringLength?: number;
@@ -58,6 +64,15 @@ export type CacheCompressOptions = {
    * @default "binary"
    */
   encoding?: CacheCompressEncoding;
+
+  /**
+   * Store plain JSON data (without extended types) as JSON and read it with
+   * JSON.parse (meta.content: "json"), when the serializer supports it
+   * (SuperjsonSerializer, at no extra cost). Not supported by
+   * DevalueSerializer, useless with JsonSerializer.
+   * @default true
+   */
+  detectJson?: boolean;
 };
 
 const textDecoder = new TextDecoder();
@@ -65,13 +80,18 @@ const textDecoder = new TextDecoder();
 const defaultOptions: Required<
   Pick<
     CacheCompressOptions,
-    "minimumRatio" | "minimumStringLength" | "minimumByteSaving" | "encoding"
+    | "minimumRatio"
+    | "minimumStringLength"
+    | "minimumByteSaving"
+    | "encoding"
+    | "detectJson"
   >
 > = {
   minimumRatio: 1.3,
   minimumStringLength: 16_384, // 16K characters
   minimumByteSaving: 32_768, // 32 KB
   encoding: "binary",
+  detectJson: true,
 } as const;
 
 /**
@@ -100,7 +120,7 @@ const skipped = <T>(
 export class CacheCompress implements ICacheCompressor {
   readonly #gzip: Compressor;
   readonly #gunzip: Decompressor;
-  readonly #serializer: ICacheSerializer;
+  readonly #serializer: ICacheSerializer | ICacheBinarySerializer;
   readonly #serializerId: string;
   readonly #algorithm: CacheCompressAlgorithm;
   readonly #options: {
@@ -108,16 +128,18 @@ export class CacheCompress implements ICacheCompressor {
     minimumStringLength: number;
     minimumByteSaving: number;
     encoding: CacheCompressEncoding;
+    detectJson: boolean;
   };
 
   /**
    * @example
    * ```typescript
-   * import { CacheCompress, SuperjsonSerializer } from '@httpx/xcache';
+   * import { CacheCompress } from '@httpx/xcache';
+   * import { SuperjsonSerializer } from '@httpx/xcache/superjson';
    *
    * const customCacheCompressor = new CacheCompress({
    *   // Compression requires the data to be serialized (into a string)
-   *   // JsonSerializer, SuperjsonSerialier, DevalueSerializer
+   *   // JsonSerializer, SuperjsonSerializer, DevalueSerializer
    *   serializer: new SuperjsonSerializer(),
    *   algorithm: 'gzip', // or 'deflate'
    *   // Skip compression if the achieved compression ratio is less than
@@ -165,8 +187,18 @@ export class CacheCompress implements ICacheCompressor {
     meta.serializer === this.#serializerId;
 
   /**
+   * Whether plain JSON data is detected and stored as JSON (detectJson
+   * option and serializer supporting it, ie: SuperjsonSerializer).
+   */
+  supportsJsonDetection = (): boolean =>
+    this.#options.detectJson &&
+    this.#serializer.binary !== true &&
+    this.#serializer.serializeWithJsonDetection !== undefined;
+
+  /**
    * Serialize and compress the data. Strings are compressed as-is, without
-   * serializer (meta.raw: true). Compression is skipped (data
+   * serializer (meta.content: "string"), plain JSON is stored as JSON when
+   * detected (meta.content: "json", see detectJson). Compression is skipped (data
    * returned as-is) for trivial values (ie: numbers), when the data or its serialized form is
    * shorter than minimumStringLength (or minimumByteSaving, as the saving
    * can't exceed it), or when the minimum ratio or byte saving are not met.
@@ -187,14 +219,27 @@ export class CacheCompress implements ICacheCompressor {
 
     const { encoding } = this.#options;
     const timings: CacheCompressTimings = {};
-    const isString = typeof data === "string";
-    let serialized: string;
+    let content: CacheCompressContent | undefined;
+    let serialized: string | Uint8Array;
     // strings don't need to be serialized
-    if (isString) {
+    if (typeof data === "string") {
+      content = "string";
       serialized = data;
     } else {
       const start = now();
-      serialized = this.#serializer.serialize(data);
+      const serializer = this.#serializer;
+      const detected =
+        this.#options.detectJson && serializer.binary !== true
+          ? serializer.serializeWithJsonDetection?.(data)
+          : undefined;
+      if (detected === undefined) {
+        serialized = serializer.serialize(data);
+      } else {
+        ({ serialized } = detected);
+        if (detected.json) {
+          content = "json";
+        }
+      }
       timings.serialize = elapsedSince(start);
     }
     // Don't even try to compress small payloads
@@ -234,8 +279,8 @@ export class CacheCompress implements ICacheCompressor {
       originalSize: serialized.length,
       ratio,
     };
-    if (isString) {
-      meta.raw = true;
+    if (content !== undefined) {
+      meta.content = content;
     }
     return { status: "success", meta, data: compressed, timings };
   };
@@ -243,7 +288,8 @@ export class CacheCompress implements ICacheCompressor {
   /**
    * Decompress and deserialize the data. Skipped or failed results are
    * returned as-is. When provided, timings is filled with the time spent
-   * decompressing and deserializing (strings are not deserialized).
+   * decompressing and deserializing (strings are not deserialized, plain
+   * JSON is parsed with JSON.parse).
    *
    * @throws TypeError if the data was compressed with incompatible options
    * (algorithm, encoding or serializer).
@@ -261,23 +307,31 @@ export class CacheCompress implements ICacheCompressor {
       );
     }
     let start = now();
-    const serialized =
-      typeof data.data === "string"
-        ? await this.#gunzip.fromEncodedString(data.data, {
-            encoding:
-              this.#options.encoding === "base64_urlsafe"
-                ? "base64_urlsafe"
-                : "base64",
-          })
-        : textDecoder.decode(await this.#gunzip.fromUint8Array(data.data));
+    const bytes = await this.#gunzip.fromUint8Array(
+      typeof data.data === "string" ? Base64.toUint8Array(data.data) : data.data
+    );
+    const { content } = data.meta;
+    const serializer = this.#serializer;
+    // binary serializers read the bytes, others the decoded string
+    const text =
+      serializer.binary === true && content === undefined
+        ? ""
+        : textDecoder.decode(bytes);
     if (timings !== undefined) {
       timings.decompress = elapsedSince(start);
     }
-    if (data.meta.raw === true) {
-      return serialized as T;
+    if (content === "string") {
+      return text as T;
     }
     start = now();
-    const deserialized = this.#serializer.deserialize<T>(serialized);
+    let deserialized: T;
+    if (content === "json") {
+      deserialized = JSON.parse(text) as T;
+    } else if (serializer.binary === true) {
+      deserialized = serializer.deserialize<T>(bytes);
+    } else {
+      deserialized = serializer.deserialize<T>(text);
+    }
     if (timings !== undefined) {
       timings.deserialize = elapsedSince(start);
     }

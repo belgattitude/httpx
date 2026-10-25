@@ -32,12 +32,29 @@
       "types": "./dist/hono/index.d.ts",
       "default": "./dist/hono/index.js"
     },
+    "./superjson": {
+      "httpx-monorepo-source": "./src/superjson.ts",
+      "types": "./dist/superjson.d.ts",
+      "default": "./dist/superjson.js"
+    },
+    "./devalue": {
+      "httpx-monorepo-source": "./src/devalue.ts",
+      "types": "./dist/devalue.d.ts",
+      "default": "./dist/devalue.js"
+    },
+    "./cbor-x": {
+      "httpx-monorepo-source": "./src/cbor-x.ts",
+      "types": "./dist/cbor-x.d.ts",
+      "default": "./dist/cbor-x.js"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
     "bench": "dx-bench",
     "bench-bun": "dx-bench --runtime=bun",
     "bench-codspeed": "dx-bench-codspeed",
+    "bench-report": "node bench/report/index.ts",
+    "bench-report-chart": "node bench/report/chart.ts",
     "bench-watch": "dx-bench --watch",
     "build": "pnpm run clean && dx-build",
     "build-release": "pnpm run build",
@@ -75,8 +92,10 @@
     "@httpx/dx": "workspace:^",
     "@size-limit/file": "14.3.0",
     "@size-limit/webpack": "14.3.0",
+    "@tanstack/charts": "1.1.0",
     "@types/node": "26.6.5",
     "browserslist": "4.29.4",
+    "cbor-x": "1.6.8",
     "devalue": "6.0.3",
     "es-check": "9.8.1",
     "esbuild": "0.28.2",
@@ -96,11 +115,15 @@
     "webpack": "5.112.1"
   },
   "peerDependencies": {
+    "cbor-x": "^1.6.0",
     "devalue": "^5.4.2 || ^6.0.0",
     "hono": "^4.0.0",
     "superjson": "^2.2.5"
   },
   "peerDependenciesMeta": {
+    "cbor-x": {
+      "optional": true
+    },
     "devalue": {
       "optional": true
     },

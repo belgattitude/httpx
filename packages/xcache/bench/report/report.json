@@ -1,0 +1,1175 @@
+{
+  "generatedAt": "2026-10-25T21:39:35.406Z",
+  "packageVersion": "0.11.0",
+  "platform": {
+    "os": "macOS 27.0.1 (Darwin 27.0.0)",
+    "arch": "arm64",
+    "cpu": "Apple M5 Pro",
+    "cores": 18,
+    "totalMemory": 25769803776
+  },
+  "engines": [
+    {
+      "id": "node",
+      "name": "Node.js",
+      "version": "26.12.0",
+      "jsEngine": "V8 14.6.202.34-node.39",
+      "date": "2026-10-25T21:25:32.081Z"
+    },
+    {
+      "id": "bun",
+      "name": "Bun",
+      "version": "1.4.4",
+      "jsEngine": "JavaScriptCore (WebKit d6375c72affe)",
+      "date": "2026-10-25T21:26:32.646Z"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "small",
+      "title": "Small payload",
+      "description": "Array of small records, under the compression minimum size (stored as-is)",
+      "rows": 20,
+      "jsonSize": 1785
+    },
+    {
+      "id": "medium",
+      "title": "Medium payload",
+      "description": "Array of records, compressed with the default options",
+      "rows": 3400,
+      "jsonSize": 299225
+    },
+    {
+      "id": "large",
+      "title": "Large payload",
+      "description": "Array of records, compressed with the default options",
+      "rows": 44000,
+      "jsonSize": 3977025
+    },
+    {
+      "id": "large-extended",
+      "title": "Large payload with extended types",
+      "description": "Same as large, with Date, BigInt, undefined and NaN values (json is not supported)",
+      "rows": 44000,
+      "jsonSize": 6960025
+    }
+  ],
+  "configs": [
+    {
+      "id": "none",
+      "label": "No compression"
+    },
+    {
+      "id": "json",
+      "label": "json + gzip"
+    },
+    {
+      "id": "superjson",
+      "label": "superjson + gzip"
+    },
+    {
+      "id": "devalue",
+      "label": "devalue + gzip"
+    },
+    {
+      "id": "cbor-x",
+      "label": "cbor-x + gzip"
+    }
+  ],
+  "results": [
+    {
+      "scenario": "small",
+      "config": "none",
+      "engines": {
+        "node": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0008749999999508873,
+            "mean": 0.0010825501937572193,
+            "p99": 0.002791000000115673,
+            "samples": 262184
+          },
+          "hitMs": {
+            "median": 0.0002500000000509317,
+            "mean": 0.0002721975431467366,
+            "p99": 0.0003749999998490239,
+            "samples": 911654
+          },
+          "memoryPerEntryBytes": 4123
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0006249999998999556,
+            "mean": 0.0008799891601695928,
+            "p99": 0.0025420000001759036,
+            "samples": 311813
+          },
+          "hitMs": {
+            "median": 0.00020799999992959783,
+            "mean": 0.00022331963573566244,
+            "p99": 0.0006670000000212895,
+            "samples": 990709
+          },
+          "memoryPerEntryBytes": 3021
+        }
+      }
+    },
+    {
+      "scenario": "small",
+      "config": "json",
+      "engines": {
+        "node": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.00483299999996234,
+            "mean": 0.005378435134791659,
+            "p99": 0.010832999999820458,
+            "samples": 54937
+          },
+          "hitMs": {
+            "median": 0.0003329999999550637,
+            "mean": 0.00032900690832499396,
+            "p99": 0.0004170000001977314,
+            "samples": 777323
+          },
+          "memoryPerEntryBytes": 4670
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.002207999999882304,
+            "mean": 0.002875044726545749,
+            "p99": 0.006917000000157714,
+            "samples": 101461
+          },
+          "hitMs": {
+            "median": 0.00020899999981338624,
+            "mean": 0.00028500082926181063,
+            "p99": 0.0011249999997744453,
+            "samples": 826036
+          },
+          "memoryPerEntryBytes": 5369
+        }
+      }
+    },
+    {
+      "scenario": "small",
+      "config": "superjson",
+      "engines": {
+        "node": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.032499999999345164,
+            "mean": 0.034370994377514376,
+            "p99": 0.06733400000030088,
+            "samples": 8715
+          },
+          "hitMs": {
+            "median": 0.0003329999999550637,
+            "mean": 0.00033676718632599486,
+            "p99": 0.00045899999986431794,
+            "samples": 763834
+          },
+          "memoryPerEntryBytes": 4711
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.027584000000388187,
+            "mean": 0.03216777445710939,
+            "p99": 0.2504589999998643,
+            "samples": 9302
+          },
+          "hitMs": {
+            "median": 0.00020899999981338624,
+            "mean": 0.0002887717549055746,
+            "p99": 0.0013330000001587905,
+            "samples": 815816
+          },
+          "memoryPerEntryBytes": 5469
+        }
+      }
+    },
+    {
+      "scenario": "small",
+      "config": "devalue",
+      "engines": {
+        "node": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0194999999994252,
+            "mean": 0.020501692181181995,
+            "p99": 0.03620800000044255,
+            "samples": 14593
+          },
+          "hitMs": {
+            "median": 0.0003329999999550637,
+            "mean": 0.00033213057630534435,
+            "p99": 0.0004170000001977314,
+            "samples": 775110
+          },
+          "memoryPerEntryBytes": 2107
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.01025000000026921,
+            "mean": 0.012096520418928428,
+            "p99": 0.019458000000668108,
+            "samples": 24634
+          },
+          "hitMs": {
+            "median": 0.00020899999981338624,
+            "mean": 0.0002788670372569459,
+            "p99": 0.0013340000004973263,
+            "samples": 840100
+          },
+          "memoryPerEntryBytes": 5350
+        }
+      }
+    },
+    {
+      "scenario": "small",
+      "config": "cbor-x",
+      "engines": {
+        "node": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.007000000000516593,
+            "mean": 0.007384620151771954,
+            "p99": 0.013207999999394815,
+            "samples": 40324
+          },
+          "hitMs": {
+            "median": 0.0003329999999550637,
+            "mean": 0.00034488170533526736,
+            "p99": 0.0004579999995257822,
+            "samples": 748639
+          },
+          "memoryPerEntryBytes": 4795
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.004457999999431195,
+            "mean": 0.005267735498591143,
+            "p99": 0.009584000001268578,
+            "samples": 56098
+          },
+          "hitMs": {
+            "median": 0.00020899999981338624,
+            "mean": 0.00028574758247005666,
+            "p99": 0.0012500000011641532,
+            "samples": 824705
+          },
+          "memoryPerEntryBytes": 5509
+        }
+      }
+    },
+    {
+      "scenario": "medium",
+      "config": "none",
+      "engines": {
+        "node": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0009169999993901001,
+            "mean": 0.0010065202590165711,
+            "p99": 0.001624999998966814,
+            "samples": 282146
+          },
+          "hitMs": {
+            "median": 0.0002919999988080235,
+            "mean": 0.0002937592223096506,
+            "p99": 0.0003749999996216502,
+            "samples": 860603
+          },
+          "memoryPerEntryBytes": 575799
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0006250000005820766,
+            "mean": 0.0008876435850657102,
+            "p99": 0.0026669999988371274,
+            "samples": 310276
+          },
+          "hitMs": {
+            "median": 0.00020799999947485048,
+            "mean": 0.00024079708506491058,
+            "p99": 0.0011249999988649506,
+            "samples": 944721
+          },
+          "memoryPerEntryBytes": 486739
+        }
+      }
+    },
+    {
+      "scenario": "medium",
+      "config": "json",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 27891,
+          "missMs": {
+            "median": 1.9193749999994907,
+            "mean": 1.9766721118421031,
+            "p99": 3.4388340000004973,
+            "samples": 152
+          },
+          "hitMs": {
+            "median": 1.0324999999993452,
+            "mean": 1.1605706332046508,
+            "p99": 2.684332999999242,
+            "samples": 259
+          },
+          "memoryPerEntryBytes": 30151
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 27941,
+          "missMs": {
+            "median": 0.8864159999993717,
+            "mean": 0.9276958549382505,
+            "p99": 1.3453749999989668,
+            "samples": 324
+          },
+          "hitMs": {
+            "median": 0.6386670000010781,
+            "mean": 0.712619173396698,
+            "p99": 1.5447089999997843,
+            "samples": 421
+          },
+          "memoryPerEntryBytes": 57504
+        }
+      }
+    },
+    {
+      "scenario": "medium",
+      "config": "superjson",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 27891,
+          "missMs": {
+            "median": 6.001874999999927,
+            "mean": 6.13429765306107,
+            "p99": 8.30370799999946,
+            "samples": 49
+          },
+          "hitMs": {
+            "median": 1.0348340000000462,
+            "mean": 1.1690094591438907,
+            "p99": 2.7987909999992553,
+            "samples": 257
+          },
+          "memoryPerEntryBytes": 28746
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 27941,
+          "missMs": {
+            "median": 5.997042000000874,
+            "mean": 5.945018705882296,
+            "p99": 6.693457999999737,
+            "samples": 51
+          },
+          "hitMs": {
+            "median": 0.6256659999999101,
+            "mean": 0.7010418878504705,
+            "p99": 1.649834000001647,
+            "samples": 428
+          },
+          "memoryPerEntryBytes": 56846
+        }
+      }
+    },
+    {
+      "scenario": "medium",
+      "config": "devalue",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 66821,
+          "missMs": {
+            "median": 5.615832999999839,
+            "mean": 5.947356215686323,
+            "p99": 9.32195799999863,
+            "samples": 51
+          },
+          "hitMs": {
+            "median": 2.1895000000004075,
+            "mean": 2.5117954499998327,
+            "p99": 5.563625000000684,
+            "samples": 120
+          },
+          "memoryPerEntryBytes": 67655
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 68881,
+          "missMs": {
+            "median": 4.027291999998852,
+            "mean": 4.31102859999997,
+            "p99": 5.777083000000857,
+            "samples": 70
+          },
+          "hitMs": {
+            "median": 1.1582500000004075,
+            "mean": 1.2414604834711482,
+            "p99": 2.14862500000163,
+            "samples": 242
+          },
+          "memoryPerEntryBytes": 138534
+        }
+      }
+    },
+    {
+      "scenario": "medium",
+      "config": "cbor-x",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 22902,
+          "missMs": {
+            "median": 2.50945800000045,
+            "mean": 2.5424184621848984,
+            "p99": 3.243749999999636,
+            "samples": 119
+          },
+          "hitMs": {
+            "median": 1.1017499999998108,
+            "mean": 1.199304290836624,
+            "p99": 2.9541250000002037,
+            "samples": 251
+          },
+          "memoryPerEntryBytes": 24886
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 27048,
+          "missMs": {
+            "median": 1.039875000002212,
+            "mean": 1.0974370912409825,
+            "p99": 1.9105409999974654,
+            "samples": 274
+          },
+          "hitMs": {
+            "median": 0.6572080000005371,
+            "mean": 0.7058358847058844,
+            "p99": 1.349500000000262,
+            "samples": 425
+          },
+          "memoryPerEntryBytes": 55084
+        }
+      }
+    },
+    {
+      "scenario": "large",
+      "config": "none",
+      "engines": {
+        "node": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0009160000008705538,
+            "mean": 0.0010455158955678982,
+            "p99": 0.00225000000136788,
+            "samples": 272340
+          },
+          "hitMs": {
+            "median": 0.0002920000006270129,
+            "mean": 0.00031117945075439656,
+            "p99": 0.000375000003259629,
+            "samples": 816575
+          },
+          "memoryPerEntryBytes": 8448492
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0006670000002486631,
+            "mean": 0.0008862558474345755,
+            "p99": 0.002958000000944594,
+            "samples": 309794
+          },
+          "hitMs": {
+            "median": 0.0002080000012938399,
+            "mean": 0.0002530654799953372,
+            "p99": 0.0012500000011641532,
+            "samples": 903818
+          },
+          "memoryPerEntryBytes": 6406086
+        }
+      }
+    },
+    {
+      "scenario": "large",
+      "config": "json",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 360165,
+          "missMs": {
+            "median": 22.78741599999921,
+            "mean": 23.26624992307692,
+            "p99": 25.809625000001688,
+            "samples": 13
+          },
+          "hitMs": {
+            "median": 12.891665999999532,
+            "mean": 13.28604700000031,
+            "p99": 14.573749999999563,
+            "samples": 23
+          },
+          "memoryPerEntryBytes": 360949
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 360362,
+          "missMs": {
+            "median": 11.764250000000175,
+            "mean": 11.735506423076982,
+            "p99": 12.538417000003392,
+            "samples": 26
+          },
+          "hitMs": {
+            "median": 9.494417000001704,
+            "mean": 9.80858187096777,
+            "p99": 12.578125,
+            "samples": 31
+          },
+          "memoryPerEntryBytes": 721556
+        }
+      }
+    },
+    {
+      "scenario": "large",
+      "config": "superjson",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 360165,
+          "missMs": {
+            "median": 88.3450840000005,
+            "mean": 88.29158339999921,
+            "p99": 90.66749999999956,
+            "samples": 5
+          },
+          "hitMs": {
+            "median": 12.854917000000569,
+            "mean": 13.304610521739011,
+            "p99": 14.91766700000153,
+            "samples": 23
+          },
+          "memoryPerEntryBytes": 360717
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 360362,
+          "missMs": {
+            "median": 76.14579099999901,
+            "mean": 76.64782479999921,
+            "p99": 78.61562499999854,
+            "samples": 5
+          },
+          "hitMs": {
+            "median": 8.877542000001995,
+            "mean": 8.957698617647004,
+            "p99": 10.167124999999942,
+            "samples": 34
+          },
+          "memoryPerEntryBytes": 721566
+        }
+      }
+    },
+    {
+      "scenario": "large",
+      "config": "devalue",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 848627,
+          "missMs": {
+            "median": 100.99383400000079,
+            "mean": 99.41965039999923,
+            "p99": 102.35704199999964,
+            "samples": 5
+          },
+          "hitMs": {
+            "median": 30.31500000000233,
+            "mean": 30.70019600000014,
+            "p99": 35.528708999998344,
+            "samples": 10
+          },
+          "memoryPerEntryBytes": 848851
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 857891,
+          "missMs": {
+            "median": 74.32941600000049,
+            "mean": 73.26516640000045,
+            "p99": 75.4317919999994,
+            "samples": 5
+          },
+          "hitMs": {
+            "median": 16.917207999998936,
+            "mean": 17.17114122222261,
+            "p99": 19.46875,
+            "samples": 18
+          },
+          "memoryPerEntryBytes": 1716548
+        }
+      }
+    },
+    {
+      "scenario": "large",
+      "config": "cbor-x",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 297327,
+          "missMs": {
+            "median": 31.16095800000039,
+            "mean": 31.449862500000016,
+            "p99": 34.9096669999999,
+            "samples": 10
+          },
+          "hitMs": {
+            "median": 13.582041000001482,
+            "mean": 14.129265181818482,
+            "p99": 16.325082999999722,
+            "samples": 22
+          },
+          "memoryPerEntryBytes": 308163
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 350788,
+          "missMs": {
+            "median": 13.756416999996873,
+            "mean": 13.74774804545483,
+            "p99": 15.211082999994687,
+            "samples": 22
+          },
+          "hitMs": {
+            "median": 8.605208000000857,
+            "mean": 8.734163085713641,
+            "p99": 10.247208000000683,
+            "samples": 35
+          },
+          "memoryPerEntryBytes": 703273
+        }
+      }
+    },
+    {
+      "scenario": "large-extended",
+      "config": "none",
+      "engines": {
+        "node": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0011249999988649506,
+            "mean": 0.0012264356565606753,
+            "p99": 0.0019579999971028883,
+            "samples": 233870
+          },
+          "hitMs": {
+            "median": 0.00029100000028847717,
+            "mean": 0.0002856178200379248,
+            "p99": 0.0003749999996216502,
+            "samples": 878034
+          },
+          "memoryPerEntryBytes": 16192480
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0006250000005820766,
+            "mean": 0.0008126675921133769,
+            "p99": 0.0026670000006561168,
+            "samples": 336415
+          },
+          "hitMs": {
+            "median": 0.00020799999765586108,
+            "mean": 0.0002504336533166352,
+            "p99": 0.0012500000011641532,
+            "samples": 911304
+          },
+          "memoryPerEntryBytes": 11334030
+        }
+      }
+    },
+    {
+      "scenario": "large-extended",
+      "config": "superjson",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 1280347,
+          "missMs": {
+            "median": 598.4927499999976,
+            "mean": 602.5936000000002,
+            "p99": 661.9141670000026,
+            "samples": 5
+          },
+          "hitMs": {
+            "median": 233.80370799999946,
+            "mean": 234.4913077999983,
+            "p99": 248.3927909999984,
+            "samples": 5
+          },
+          "memoryPerEntryBytes": 1281899
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 1216072,
+          "missMs": {
+            "median": 325.79841700000543,
+            "mean": 324.27086680000065,
+            "p99": 347.3579170000012,
+            "samples": 5
+          },
+          "hitMs": {
+            "median": 159.66970800000126,
+            "mean": 161.72096640000092,
+            "p99": 172.5352090000015,
+            "samples": 5
+          },
+          "memoryPerEntryBytes": 2433019
+        }
+      }
+    },
+    {
+      "scenario": "large-extended",
+      "config": "devalue",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 1422033,
+          "missMs": {
+            "median": 213.3036659999998,
+            "mean": 214.07591639999882,
+            "p99": 219.0065409999952,
+            "samples": 5
+          },
+          "hitMs": {
+            "median": 72.17816599999787,
+            "mean": 71.68477500000154,
+            "p99": 76.02066700000432,
+            "samples": 5
+          },
+          "memoryPerEntryBytes": 1422283
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 1474725,
+          "missMs": {
+            "median": 134.9723329999979,
+            "mean": 135.10435019999858,
+            "p99": 143.35245900000155,
+            "samples": 5
+          },
+          "hitMs": {
+            "median": 45.896749999999884,
+            "mean": 46.467381142856276,
+            "p99": 48.70625000000291,
+            "samples": 7
+          },
+          "memoryPerEntryBytes": 2950616
+        }
+      }
+    },
+    {
+      "scenario": "large-extended",
+      "config": "cbor-x",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 588660,
+          "missMs": {
+            "median": 56.35912500000268,
+            "mean": 56.4166876666665,
+            "p99": 60.414292000001296,
+            "samples": 6
+          },
+          "hitMs": {
+            "median": 21.023541000002297,
+            "mean": 20.969136066665428,
+            "p99": 22.465041999996174,
+            "samples": 15
+          },
+          "memoryPerEntryBytes": 599574
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 638313,
+          "missMs": {
+            "median": 31.123749999998836,
+            "mean": 31.399512299999333,
+            "p99": 33.24604099999851,
+            "samples": 10
+          },
+          "hitMs": {
+            "median": 12.388333999995666,
+            "mean": 12.469683359999326,
+            "p99": 13.33966700000019,
+            "samples": 25
+          },
+          "memoryPerEntryBytes": 1277472
+        }
+      }
+    }
+  ],
+  "hono": {
+    "scenario": "medium",
+    "configs": [
+      {
+        "id": "none",
+        "label": "No cache (c.json)",
+        "description": "Hono c.json(payload) on each request, baseline (the payload is already in memory, a real handler also pays the data fetching)"
+      },
+      {
+        "id": "json",
+        "label": "json + gzip",
+        "description": "Compressed JSON, sent as-is"
+      },
+      {
+        "id": "superjson",
+        "label": "superjson + gzip",
+        "description": "Plain data detected and stored as JSON (detectJson), sent as-is"
+      },
+      {
+        "id": "superjson-no-detect",
+        "label": "superjson + gzip (detectJson: false)",
+        "description": "Stored in the superjson format: decompressed, deserialized and serialized to JSON"
+      },
+      {
+        "id": "cbor-x",
+        "label": "cbor-x + gzip",
+        "description": "Stored as CBOR: decompressed, deserialized and serialized to JSON"
+      }
+    ],
+    "results": [
+      {
+        "config": "none",
+        "engines": {
+          "node": {
+            "storedAs": "none",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 1.0091659999961848,
+              "mean": 1.043362725694629,
+              "p99": 2.235333000004175,
+              "samples": 288
+            },
+            "hitGzipMs": {
+              "median": 0.9633329999996931,
+              "mean": 0.9925684785479636,
+              "p99": 2.1762910000034026,
+              "samples": 303
+            },
+            "hitIdentityMs": {
+              "median": 0.9633749999993597,
+              "mean": 0.9942234801324861,
+              "p99": 2.175583000003826,
+              "samples": 302
+            }
+          },
+          "bun": {
+            "storedAs": "none",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 0.2868339999986347,
+              "mean": 0.3014909778894645,
+              "p99": 0.568874999997206,
+              "samples": 995
+            },
+            "hitGzipMs": {
+              "median": 0.2802499999961583,
+              "mean": 0.28643743361969165,
+              "p99": 0.5261660000032862,
+              "samples": 1047
+            },
+            "hitIdentityMs": {
+              "median": 0.2805000000007567,
+              "mean": 0.2861738683206415,
+              "p99": 0.5319999999992433,
+              "samples": 1048
+            }
+          }
+        }
+      },
+      {
+        "config": "json",
+        "engines": {
+          "node": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": true,
+            "missMs": {
+              "median": 1.93895799999882,
+              "mean": 1.9800455000003192,
+              "p99": 2.5035419999985606,
+              "samples": 152
+            },
+            "hitGzipMs": {
+              "median": 0.015166999997745734,
+              "mean": 0.022920049169029663,
+              "p99": 0.11862500000279397,
+              "samples": 13057
+            },
+            "hitIdentityMs": {
+              "median": 0.6998749999984284,
+              "mean": 0.8893283934912096,
+              "p99": 2.4925829999992857,
+              "samples": 338
+            }
+          },
+          "bun": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": true,
+            "missMs": {
+              "median": 0.8829589999950258,
+              "mean": 0.899165772455212,
+              "p99": 1.0577080000002752,
+              "samples": 334
+            },
+            "hitGzipMs": {
+              "median": 0.002542000001994893,
+              "mean": 0.0031462330695369773,
+              "p99": 0.00849999999627471,
+              "samples": 92998
+            },
+            "hitIdentityMs": {
+              "median": 0.29437500000494765,
+              "mean": 0.3071617645854677,
+              "p99": 0.6017090000023018,
+              "samples": 977
+            }
+          }
+        }
+      },
+      {
+        "config": "superjson",
+        "engines": {
+          "node": {
+            "storedAs": "compressed",
+            "content": "json",
+            "sentAsIs": true,
+            "missMs": {
+              "median": 6.192291000006662,
+              "mean": 6.203672612244228,
+              "p99": 6.759375000001455,
+              "samples": 49
+            },
+            "hitGzipMs": {
+              "median": 0.012750000001688022,
+              "mean": 0.017288550625280383,
+              "p99": 0.052416999998968095,
+              "samples": 17353
+            },
+            "hitIdentityMs": {
+              "median": 0.6402909999960684,
+              "mean": 0.7720250179487965,
+              "p99": 2.246291999996174,
+              "samples": 390
+            }
+          },
+          "bun": {
+            "storedAs": "compressed",
+            "content": "json",
+            "sentAsIs": true,
+            "missMs": {
+              "median": 4.61737500000163,
+              "mean": 4.646982092308463,
+              "p99": 5.018334000000323,
+              "samples": 65
+            },
+            "hitGzipMs": {
+              "median": 0.0026250000009895302,
+              "mean": 0.003215652801131605,
+              "p99": 0.008874999999534339,
+              "samples": 91017
+            },
+            "hitIdentityMs": {
+              "median": 0.29416700000001583,
+              "mean": 0.3068816104295122,
+              "p99": 0.6124170000039157,
+              "samples": 978
+            }
+          }
+        }
+      },
+      {
+        "config": "superjson-no-detect",
+        "engines": {
+          "node": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 7.767541999994137,
+              "mean": 7.823209307692125,
+              "p99": 8.486250000001746,
+              "samples": 39
+            },
+            "hitGzipMs": {
+              "median": 1.8270829999964917,
+              "mean": 2.0383665675673073,
+              "p99": 6.251208000001498,
+              "samples": 148
+            },
+            "hitIdentityMs": {
+              "median": 1.7842910000035772,
+              "mean": 1.9537624220782683,
+              "p99": 5.760042000001704,
+              "samples": 154
+            }
+          },
+          "bun": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 5.633500000003551,
+              "mean": 5.671071509433908,
+              "p99": 6.23475000000326,
+              "samples": 53
+            },
+            "hitGzipMs": {
+              "median": 0.9096669999998994,
+              "mean": 0.943918254716864,
+              "p99": 1.4474170000030426,
+              "samples": 318
+            },
+            "hitIdentityMs": {
+              "median": 0.9066250000032596,
+              "mean": 0.9363900560747538,
+              "p99": 1.4708749999990687,
+              "samples": 321
+            }
+          }
+        }
+      },
+      {
+        "config": "cbor-x",
+        "engines": {
+          "node": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 4.689165999996476,
+              "mean": 4.839836677419366,
+              "p99": 6.79237500000454,
+              "samples": 62
+            },
+            "hitGzipMs": {
+              "median": 1.8830830000006245,
+              "mean": 1.9738859276319425,
+              "p99": 3.8511250000010477,
+              "samples": 152
+            },
+            "hitIdentityMs": {
+              "median": 1.8942920000044978,
+              "mean": 1.9886569867550186,
+              "p99": 4.308541999998852,
+              "samples": 151
+            }
+          },
+          "bun": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 2.339124999998603,
+              "mean": 2.4625713688527884,
+              "p99": 4.465167000002111,
+              "samples": 122
+            },
+            "hitGzipMs": {
+              "median": 0.963833000001614,
+              "mean": 0.9854121278688744,
+              "p99": 1.4958330000008573,
+              "samples": 305
+            },
+            "hitIdentityMs": {
+              "median": 0.9526669999977457,
+              "mean": 0.97161285760496,
+              "p99": 1.4278750000012224,
+              "samples": 309
+            }
+          }
+        }
+      }
+    ]
+  },
+  "summary": {
+    "bunVsNode": {
+      "overall": {
+        "miss": 1.6269060020780317,
+        "hit": 1.5459473523046898,
+        "memory": 0.651956560008585
+      },
+      "scenarios": [
+        {
+          "scenario": "small",
+          "bunVsNode": {
+            "miss": 1.6090447405436976,
+            "hit": 1.5059608887568432,
+            "memory": 0.810856367005603
+          }
+        },
+        {
+          "scenario": "medium",
+          "bunVsNode": {
+            "miss": 1.606468654468125,
+            "hit": 1.6408814992067715,
+            "memory": 0.586178151969101
+          }
+        },
+        {
+          "scenario": "large",
+          "bunVsNode": {
+            "miss": 1.568683446870717,
+            "hit": 1.508321318750925,
+            "memory": 0.5899523952882962
+          }
+        },
+        {
+          "scenario": "large-extended",
+          "bunVsNode": {
+            "miss": 1.7538888986676062,
+            "hit": 1.5291280255741173,
+            "memory": 0.642392517573628
+          }
+        }
+      ],
+      "hono": {
+        "miss": 1.956107457102074,
+        "hit": 2.7761240260242475
+      }
+    }
+  }
+}

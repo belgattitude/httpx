@@ -9,6 +9,9 @@ export default defineConfig((_options) => {
     entry: {
       index: "src/index.ts",
       "hono/index": "src/hono/index.ts",
+      superjson: "src/superjson.ts",
+      devalue: "src/devalue.ts",
+      "cbor-x": "src/cbor-x.ts",
     },
     minify: "dce-only",
     platform: "neutral",

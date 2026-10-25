@@ -1,7 +1,11 @@
+import { CborxSerializer } from "../serializer/cborx-serializer";
 import { DevalueSerializer } from "../serializer/devalue-serializer";
 import { JsonSerializer } from "../serializer/json-serializer";
 import { SuperjsonSerializer } from "../serializer/superjson-serializer";
-import type { ICacheSerializer } from "../serializer/types";
+import type {
+  ICacheBinarySerializer,
+  ICacheSerializer,
+} from "../serializer/types";
 import { CacheCompress, type CacheCompressEncoding } from "./cache-compress";
 import type {
   CacheCompressSkippedReason,
@@ -34,11 +38,13 @@ describe.each([
   [new DevalueSerializer(), "gzip", true],
   [new JsonSerializer(), "gzip", false],
   [new SuperjsonSerializer(), "gzip", true],
+  [new CborxSerializer(), "gzip", true],
   [new DevalueSerializer(), "deflate", true],
   [new JsonSerializer(), "deflate", false],
   [new SuperjsonSerializer(), "deflate", true],
+  [new CborxSerializer(), "deflate", true],
 ] satisfies [
-  serializer: ICacheSerializer,
+  serializer: ICacheSerializer | ICacheBinarySerializer,
   algo: "gzip" | "deflate",
   extendedTypeSupport: boolean,
 ][])(
@@ -206,13 +212,21 @@ describe.each([
       expect(stringTimings).toStrictEqual({ decompress: expect.any(Number) });
     });
 
-    it("should not confuse serialized data with raw strings, whatever the serializer identifier", async () => {
-      // ie: a custom serializer named like a raw string marker
-      const noneSerializer: ICacheSerializer = {
-        getIdentifier: () => "none",
-        serialize: serializer.serialize,
-        deserialize: serializer.deserialize,
-      };
+    it("should not confuse serialized data with strings, whatever the serializer identifier", async () => {
+      // ie: a custom serializer named like a string marker
+      const noneSerializer: ICacheSerializer | ICacheBinarySerializer =
+        serializer instanceof CborxSerializer
+          ? {
+              binary: true,
+              getIdentifier: () => "none",
+              serialize: serializer.serialize,
+              deserialize: serializer.deserialize,
+            }
+          : {
+              getIdentifier: () => "none",
+              serialize: serializer.serialize,
+              deserialize: serializer.deserialize,
+            };
       const cacheGzip = new CacheCompress({
         serializer: noneSerializer,
         algorithm,
@@ -222,7 +236,7 @@ describe.each([
       const data = generateArrayOfRecords(100, extendedTypeSupport);
       const compressed = await cacheGzip.compress(data);
       expect(compressed.status).toBe("success");
-      expect(compressed.meta).not.toHaveProperty("raw");
+      expect(compressed.meta).not.toHaveProperty("content");
       await expect(cacheGzip.decompress(compressed)).resolves.toStrictEqual(
         data
       );
@@ -250,7 +264,7 @@ describe.each([
           expect(result.status).toBe("success");
           expect(result.meta).toMatchObject({
             serializer: serializer.getIdentifier(),
-            raw: true,
+            content: "string",
             originalSize: str.length,
           });
           expect(result.timings).toStrictEqual({
@@ -422,3 +436,115 @@ describe.each([
     });
   }
 );
+
+describe("CacheCompress JSON detection", () => {
+  const createCompressor = (
+    serializer: ICacheSerializer,
+    detectJson?: boolean
+  ) =>
+    new CacheCompress({
+      algorithm: "gzip",
+      serializer,
+      minimumByteSaving: 0,
+      minimumStringLength: 0,
+      ...(detectJson === undefined ? {} : { detectJson }),
+    });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it.each([
+    ["superjson", new SuperjsonSerializer(), undefined, true],
+    ["superjson (detectJson: false)", new SuperjsonSerializer(), false, false],
+    ["devalue", new DevalueSerializer(), undefined, false],
+    ["json", new JsonSerializer(), undefined, false],
+  ] satisfies [string, ICacheSerializer, boolean | undefined, boolean][])(
+    "should tell whether json detection is supported with %s",
+    (_name, serializer, detectJson, expected) => {
+      expect(
+        createCompressor(serializer, detectJson).supportsJsonDetection()
+      ).toBe(expected);
+    }
+  );
+
+  it("should store plain data as json and read it with JSON.parse", async () => {
+    const serializer = new SuperjsonSerializer();
+    const cacheCompress = createCompressor(serializer);
+    const deserializeSpy = vi.spyOn(serializer, "deserialize");
+    const data = generateArrayOfRecords(100, false);
+    const result = await cacheCompress.compress(data);
+    expect(result.status).toBe("success");
+    expect(result.meta).toMatchObject({
+      serializer: "superjson",
+      content: "json",
+      originalSize: JSON.stringify(data).length,
+    });
+    expect(
+      cacheCompress.isCompatible(result.meta as CacheCompressSuccessMeta)
+    ).toBe(true);
+    const timings = {};
+    await expect(
+      cacheCompress.decompress(result, timings)
+    ).resolves.toStrictEqual(data);
+    expect(timings).toStrictEqual({
+      decompress: expect.any(Number),
+      deserialize: expect.any(Number),
+    });
+    expect(deserializeSpy).not.toHaveBeenCalled();
+  });
+
+  it("should use the serializer format with extended types", async () => {
+    const serializer = new SuperjsonSerializer();
+    const cacheCompress = createCompressor(serializer);
+    const data = generateArrayOfRecords(100, true);
+    const result = await cacheCompress.compress(data);
+    expect(result.status).toBe("success");
+    expect(result.meta).not.toHaveProperty("content");
+    await expect(cacheCompress.decompress(result)).resolves.toStrictEqual(data);
+  });
+
+  it("should not detect json when disabled", async () => {
+    const serializer = new SuperjsonSerializer();
+    const detectSpy = vi.spyOn(serializer, "serializeWithJsonDetection");
+    const cacheCompress = createCompressor(serializer, false);
+    const data = generateArrayOfRecords(100, false);
+    const result = await cacheCompress.compress(data);
+    expect(result.meta).not.toHaveProperty("content");
+    expect(detectSpy).not.toHaveBeenCalled();
+    await expect(cacheCompress.decompress(result)).resolves.toStrictEqual(data);
+  });
+
+  it("should read plain json entries whatever the detectJson option", async () => {
+    const data = generateArrayOfRecords(100, false);
+    const result = await createCompressor(new SuperjsonSerializer()).compress(
+      data
+    );
+    await expect(
+      createCompressor(new SuperjsonSerializer(), false).decompress(result)
+    ).resolves.toStrictEqual(data);
+  });
+});
+
+describe("SuperjsonSerializer.serializeWithJsonDetection", () => {
+  const serializer = new SuperjsonSerializer();
+
+  it.each([
+    ["plain object", { a: 1, b: ["x", null], c: { d: true } }, true],
+    ["string", "hello", true],
+    ["date", { d: new Date(0) }, false],
+    ["undefined value", { a: undefined }, false],
+    ["map", new Map([["a", 1]]), false],
+  ] satisfies [string, unknown, boolean][])(
+    "should detect %s",
+    (_name, data, json) => {
+      const result = serializer.serializeWithJsonDetection(data);
+      expect(result.json).toBe(json);
+      expect(
+        json
+          ? JSON.parse(result.serialized)
+          : serializer.deserialize(result.serialized)
+      ).toStrictEqual(data);
+    }
+  );
+});

@@ -349,7 +349,7 @@ describe("XMemCache stats", () => {
     // strings are not deserialized
     await run("/string", "a".repeat(5000));
     const stringHit = await run("/string", "a".repeat(5000));
-    expect(stringHit.meta.compression?.raw).toBe(true);
+    expect(stringHit.meta.compression?.content).toBe("string");
     expect(stringHit.meta.readTimings).toStrictEqual({
       decompress: expect.any(Number),
     });

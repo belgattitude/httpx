@@ -1,6 +1,7 @@
 export { CacheCompress } from "./compress/cache-compress";
 export type {
   CacheCompressAlgorithm,
+  CacheCompressContent,
   CacheCompressEncoding,
   CacheCompressResult,
   CacheCompressSuccessMeta,
@@ -9,10 +10,14 @@ export type {
   ICacheCompressor,
 } from "./compress/types";
 export { createCacheFn } from "./create-cache-fn";
-export { DevalueSerializer } from "./serializer/devalue-serializer";
+// serializers requiring an optional peer dependency have their own entry
+// (@httpx/xcache/superjson, /devalue, /cbor-x)
 export { JsonSerializer } from "./serializer/json-serializer";
-export { SuperjsonSerializer } from "./serializer/superjson-serializer";
-export type { ICacheSerializer } from "./serializer/types";
+export type {
+  ICacheBinarySerializer,
+  ICacheSerializer,
+  ICacheSerializerJsonDetection,
+} from "./serializer/types";
 export type {
   CacheableAsyncFunction,
   XCacheRunAsyncParams,

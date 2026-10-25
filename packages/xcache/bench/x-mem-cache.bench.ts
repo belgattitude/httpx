@@ -4,13 +4,9 @@ import { TimeLruCache } from "@httpx/lru";
 import prettyBytes from "pretty-bytes";
 import { describe, test } from "vitest";
 
-import {
-  CacheCompress,
-  DevalueSerializer,
-  JsonSerializer,
-  SuperjsonSerializer,
-  XMemCache,
-} from "../src";
+import { CacheCompress, JsonSerializer, XMemCache } from "../src";
+import { DevalueSerializer } from "../src/devalue";
+import { SuperjsonSerializer } from "../src/superjson";
 import { benchConfig } from "./bench-config";
 import { generateArrayOfData } from "./data-generator";
 

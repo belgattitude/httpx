@@ -1,5 +1,10 @@
 {
-  "entryPoints": ["src/index.ts"],
+  "entryPoints": [
+    "src/index.ts",
+    "src/superjson.ts",
+    "src/devalue.ts",
+    "src/cbor-x.ts"
+  ],
   "out": "./docs/api/lru",
   "excludePrivate": true,
   "excludeProtected": true,
