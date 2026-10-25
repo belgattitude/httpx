@@ -2,7 +2,9 @@ import prettyBytes from "pretty-bytes";
 import { describe, test } from "vitest";
 
 import {
+  CborxSerializer,
   DevalueSerializer,
+  type ICacheBinarySerializer,
   type ICacheSerializer,
   JsonSerializer,
   SuperjsonSerializer,
@@ -13,10 +15,13 @@ import { generateArrayOfData } from "./data-generator";
 const options = benchConfig.benchOptions;
 const { rows } = benchConfig;
 
-const nativeSerializers: [label: string, serializer: ICacheSerializer][] = [
+type Serializer = ICacheSerializer | ICacheBinarySerializer;
+
+const nativeSerializers: [label: string, serializer: Serializer][] = [
   ["json", new JsonSerializer()],
   ["devalue", new DevalueSerializer()],
   ["superjson", new SuperjsonSerializer()],
+  ["cbor-x", new CborxSerializer()],
 ];
 
 // json does not support extended types (Date, BigInt, undefined, NaN...)
@@ -30,18 +35,29 @@ describe.each([
 ] satisfies [
   types: string,
   extendedTypeSupport: boolean,
-  serializers: [label: string, serializer: ICacheSerializer][],
+  serializers: [label: string, serializer: Serializer][],
 ][])(
   "Serializer benchmarks with %s types",
   (types, extendedTypeSupport, serializers) => {
     const data = generateArrayOfData(rows, extendedTypeSupport);
     const cases = serializers.map(([label, serializer]) => {
-      const serialized = serializer.serialize(data);
+      let size: number;
+      let deserialize: () => unknown;
+      // binary serializers deserialize bytes
+      if (serializer.binary === true) {
+        const serialized = serializer.serialize(data);
+        size = serialized.length;
+        deserialize = () => serializer.deserialize(serialized);
+      } else {
+        const serialized = serializer.serialize(data);
+        size = serialized.length;
+        deserialize = () => serializer.deserialize(serialized);
+      }
       return {
         label,
         serializer,
-        serialized,
-        payloadSize: prettyBytes(serialized.length),
+        deserialize,
+        payloadSize: prettyBytes(size),
       };
     });
 
@@ -58,9 +74,9 @@ describe.each([
 
     test(`deserialize ${types} types`, async ({ bench }) => {
       await bench.compare(
-        ...cases.map(({ label, serializer, serialized, payloadSize }) =>
+        ...cases.map(({ label, deserialize, payloadSize }) =>
           bench(`${label}.deserialize(${payloadSize}) - ${types} types`, () => {
-            const _data = serializer.deserialize(serialized);
+            const _data = deserialize();
           })
         ),
         options

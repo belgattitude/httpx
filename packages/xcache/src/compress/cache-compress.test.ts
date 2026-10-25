@@ -1,7 +1,11 @@
+import { CborxSerializer } from "../serializer/cborx-serializer";
 import { DevalueSerializer } from "../serializer/devalue-serializer";
 import { JsonSerializer } from "../serializer/json-serializer";
 import { SuperjsonSerializer } from "../serializer/superjson-serializer";
-import type { ICacheSerializer } from "../serializer/types";
+import type {
+  ICacheBinarySerializer,
+  ICacheSerializer,
+} from "../serializer/types";
 import { CacheCompress, type CacheCompressEncoding } from "./cache-compress";
 import type {
   CacheCompressSkippedReason,
@@ -34,11 +38,13 @@ describe.each([
   [new DevalueSerializer(), "gzip", true],
   [new JsonSerializer(), "gzip", false],
   [new SuperjsonSerializer(), "gzip", true],
+  [new CborxSerializer(), "gzip", true],
   [new DevalueSerializer(), "deflate", true],
   [new JsonSerializer(), "deflate", false],
   [new SuperjsonSerializer(), "deflate", true],
+  [new CborxSerializer(), "deflate", true],
 ] satisfies [
-  serializer: ICacheSerializer,
+  serializer: ICacheSerializer | ICacheBinarySerializer,
   algo: "gzip" | "deflate",
   extendedTypeSupport: boolean,
 ][])(
@@ -208,11 +214,19 @@ describe.each([
 
     it("should not confuse serialized data with strings, whatever the serializer identifier", async () => {
       // ie: a custom serializer named like a string marker
-      const noneSerializer: ICacheSerializer = {
-        getIdentifier: () => "none",
-        serialize: serializer.serialize,
-        deserialize: serializer.deserialize,
-      };
+      const noneSerializer: ICacheSerializer | ICacheBinarySerializer =
+        serializer instanceof CborxSerializer
+          ? {
+              binary: true,
+              getIdentifier: () => "none",
+              serialize: serializer.serialize,
+              deserialize: serializer.deserialize,
+            }
+          : {
+              getIdentifier: () => "none",
+              serialize: serializer.serialize,
+              deserialize: serializer.deserialize,
+            };
       const cacheGzip = new CacheCompress({
         serializer: noneSerializer,
         algorithm,

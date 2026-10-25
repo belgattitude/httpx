@@ -15,7 +15,7 @@ $ pnpm add @httpx/xcache
 ## Features
 
 - 🗝️&nbsp; Stable cache keys from any serializable params ([@httpx/stable-hash](https://github.com/belgattitude/httpx/tree/main/packages/stable-hash)).
-- 🗜️&nbsp; Optional [compression](#with-compression) (gzip/deflate) with json, superjson or devalue serializers.
+- 🗜️&nbsp; Optional [compression](#with-compression) (gzip/deflate) with json, superjson, devalue or cbor-x serializers.
 - 📊&nbsp; [Statistics](#statistics), [enable / disable](#enable--disable) globally or per call.
 - 🐘&nbsp; [Deduplication](#deduplication) of concurrent calls (cache stampede protection).
 - 🛑&nbsp; [Abort signal](#abort-signal) support (AbortController, timeouts, client disconnects).
@@ -95,7 +95,7 @@ const { data } = await cacheFn({
 
 ## With compression
 
-You can use compression to reduce the size of the cached data. The library supports `gzip` and `deflate` compression algorithms. To be able to serialize and deserialize the data, you can use adapters like `DevalueSerializer`, `SuperjsonSerializer` or `JsonSerializer`.
+You can use compression to reduce the size of the cached data. The library supports `gzip` and `deflate` compression algorithms. To be able to serialize and deserialize the data, you can use adapters like `CborxSerializer`, `DevalueSerializer`, `SuperjsonSerializer` or `JsonSerializer`.
 
 > [!NOTE]
 > A serializer is only needed with compression. Without a compressor, `XMemCache` keeps the values as-is in the LRU (no serialization cost, all types supported, same instance returned on each hit). See [choosing a serializer](#choosing-a-serializer) for the memory gains.
@@ -113,7 +113,8 @@ const xMemCache = new XMemCache({
 
   compressor: new CacheCompress({
     // To enable compression the data needs to be serialized
-    // Choose between SuperjsonSerializer, DevalueSerializer, JsonSerializer
+    // Choose between SuperjsonSerializer, CborxSerializer, DevalueSerializer,
+    // JsonSerializer
     // (see "Choosing a serializer")
     serializer: new SuperjsonSerializer(),
     algorithm: "gzip", // or 'deflate'
@@ -612,13 +613,15 @@ A serializer is only used when compression is enabled. Without a compressor, val
 
 Estimated memory used by one cached entry (~11k rows, Node 26.12.0, V8 heap for live objects, gzip with `encoding: "binary"`):
 
-| Data | No compression (live objects) | json | superjson | superjson+dedupe | devalue |
-| --- | --: | --: | --: | --: | --: |
-| Native types | 2.01 MB | 🥇 90 kB (-96%) | 🥇 90 kB (-96%) | 🥇 90 kB (-96%) | 214 kB (-89%) |
-| Extended types (Date, BigInt...) | 3.95 MB | n/a | 322 kB (-92%) | 🥇 286 kB (-93%) | 359 kB (-91%) |
-| Repeated objects (10 shared refs) | 973 kB | 65 kB (-93%) ¹ | 121 kB (-88%) | 🥇 83 kB (-91%) | 136 kB (-86%) |
+| Data | No compression (live objects) | json | superjson | superjson+dedupe | devalue | cbor-x ² |
+| --- | --: | --: | --: | --: | --: | --: |
+| Native types | 2.01 MB | 90 kB (-96%) | 90 kB (-96%) | 90 kB (-96%) | 214 kB (-89%) | 🥇 74 kB (-96%) |
+| Extended types (Date, BigInt...) | 3.95 MB | n/a | 322 kB (-92%) | 286 kB (-93%) | 359 kB (-91%) | 🥇 147 kB (-96%) |
+| Repeated objects (10 shared refs) | 973 kB | 65 kB (-93%) ¹ | 121 kB (-88%) | 83 kB (-91%) | 136 kB (-86%) | 🥇 41 kB (-96%) |
 
-¹ json does not preserve shared references: each row gets its own copy once deserialized. superjson, superjson+dedupe and devalue restore them.
+¹ json does not preserve shared references: each row gets its own copy once deserialized. superjson, superjson+dedupe, devalue and cbor-x restore them.
+
+² cbor-x measured separately on Node 24.21.0 (same data, `CborxSerializer` defaults: records and structuredClone).
 
 Compression trades CPU for memory: each cache hit pays gunzip + deserialize (see below) and returns a new copy of the data. With `encoding: "base64"`, add ~33% to the compressed sizes.
 
@@ -626,25 +629,27 @@ Compression trades CPU for memory: each cache hit pays gunzip + deserialize (see
 
 Measured on Node 26.12.0 with ~11k rows (see [benchmarks](#benchmarks)), gzip sizes with `encoding: "binary"`. Bun 1.4.3 shows the same ranking, with faster json and devalue.
 
-|  | json | superjson | superjson+dedupe | devalue |
-| --- | --- | --- | --- | --- |
-| **Recommended for** | JSON-safe data (default choice) | Extended types, read-heavy caches | Extended types with repeated objects, using compression | Extended types, write-heavy caches |
-| Extended types (Date, BigInt, Map...) | ❌ | ✅ | ✅ | ✅ |
-| Preserves shared references | ❌ (duplicated) | ✅ (duplicated in output) | ✅ | ✅ |
-| _Native types (974 kB json)_ |  |  |  |  |
-| Serialize | 🥇 1.6 ms | 12.3 ms (~8x slower) | 12.2 ms (~8x slower) | 9.0 ms (~6x slower) |
-| Deserialize | 🥇 1.2 ms | 🥇 1.1 ms | 🥇 1.1 ms | 3.0 ms |
-| Size raw / gzip | 🥇 974 kB / 90 kB | 🥇 974 kB / 90 kB | 🥇 974 kB / 90 kB | 1.19 MB / 214 kB (~2.4x larger) |
-| _Extended types_ |  |  |  |  |
-| Serialize | n/a | 78 ms | 67 ms | 🥇 21 ms |
-| Deserialize | n/a | 32 ms | 24 ms | 🥇 9 ms |
-| Size raw / gzip | n/a | 3.62 MB / 322 kB | 3.24 MB / 🥇 286 kB | 🥇 2.47 MB / 359 kB |
-| _Repeated objects (10 shared refs)_ |  |  |  |  |
-| Serialize | 8.1 ms | 29.8 ms | 14.8 ms | 🥇 7.0 ms |
-| Deserialize | 3.6 ms | 14.0 ms | 3.1 ms | 🥇 2.3 ms |
-| Size raw / gzip | 2.15 MB / 🥇 65 kB | 2.82 MB / 121 kB | 754 kB / 83 kB | 🥇 688 kB / 136 kB |
-| **Advantages** | Fastest, smallest, no dependency | Fast deserialize, compresses well | Best gzip size for extended types, fast deserialize | Fastest with extended types, smallest raw |
-| **Drawbacks** | No extended types, shared references are lost | Slowest serialize, large raw output with shared references | Slow serialize | Compresses poorly (~2.4x larger gzip) |
+|  | json | superjson | superjson+dedupe | devalue | cbor-x ³ |
+| --- | --- | --- | --- | --- | --- |
+| **Recommended for** | JSON-safe data (default choice) | Extended types, read-heavy caches | Extended types with repeated objects, using compression | Extended types, write-heavy caches | Extended types, fastest and smallest (binary) |
+| Extended types (Date, BigInt, Map...) | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Preserves shared references | ❌ (duplicated) | ✅ (duplicated in output) | ✅ | ✅ | ✅ |
+| _Native types (974 kB json)_ |  |  |  |  |  |
+| Serialize | 🥇 1.6 ms | 12.3 ms (~8x slower) | 12.2 ms (~8x slower) | 9.0 ms (~6x slower) | 2.7 ms |
+| Deserialize | 🥇 1.2 ms | 🥇 1.1 ms | 🥇 1.1 ms | 3.0 ms | 1.3 ms |
+| Size raw / gzip | 974 kB / 90 kB | 974 kB / 90 kB | 974 kB / 90 kB | 1.19 MB / 214 kB (~2.4x larger) | 🥇 510 kB / 🥇 74 kB |
+| _Extended types_ |  |  |  |  |  |
+| Serialize | n/a | 78 ms | 67 ms | 21 ms | 🥇 4.7 ms |
+| Deserialize | n/a | 32 ms | 24 ms | 9 ms | 🥇 2.0 ms |
+| Size raw / gzip | n/a | 3.62 MB / 322 kB | 3.24 MB / 286 kB | 2.47 MB / 359 kB | 🥇 829 kB / 🥇 147 kB |
+| _Repeated objects (10 shared refs)_ |  |  |  |  |  |
+| Serialize | 8.1 ms | 29.8 ms | 14.8 ms | 7.0 ms | 🥇 2.6 ms |
+| Deserialize | 3.6 ms | 14.0 ms | 3.1 ms | 2.3 ms | 🥇 0.9 ms |
+| Size raw / gzip | 2.15 MB / 65 kB | 2.82 MB / 121 kB | 754 kB / 83 kB | 688 kB / 136 kB | 🥇 245 kB / 🥇 41 kB |
+| **Advantages** | Fastest on native types, readable, no dependency | Fast deserialize, compresses well | Best gzip size of the text serializers with extended types, fast deserialize | Fast serialize with extended types, small raw output | Fastest with extended types, smallest raw and gzip |
+| **Drawbacks** | No extended types, shared references are lost | Slowest serialize, large raw output with shared references | Slow serialize | Compresses poorly (~2.4x larger gzip) | Binary (not readable), records only readable by cbor-x, peer dependency |
+
+³ cbor-x measured separately on Node 24.21.0 with the native decoder (`cbor-extract`, optional dependency of cbor-x). For reference, json serialize / deserialize took 1.8 ms / 1.8 ms on native types in the same run. Without the native decoder (browsers, bun...), deserialization is ~30-50% slower.
 
 > [!TIP]
 > Dedupe is a superjson option, use a custom serializer to enable it:
@@ -662,6 +667,24 @@ Measured on Node 26.12.0 with ~11k rows (see [benchmarks](#benchmarks)), gzip si
 >   toString: () => "superjson-dedupe",
 > };
 > ```
+
+### CborxSerializer
+
+`CborxSerializer` is a binary serializer based on [cbor-x](https://github.com/kriszyp/cbor-x) (`npm install cbor-x`). It's the fastest and smallest with extended types: Date, BigInt, Map, Set, undefined, NaN, typed arrays, shared and cyclic references are supported.
+
+```typescript
+import { CacheCompress, CborxSerializer } from "@httpx/xcache";
+
+const compressor = new CacheCompress({
+  serializer: new CborxSerializer(),
+  algorithm: "gzip",
+});
+```
+
+By default it uses cbor-x record extensions (`useRecords: true`, object keys are stored once, only readable by cbor-x) and `structuredClone: true` (shared and cyclic references). Other [cbor-x options](https://github.com/kriszyp/cbor-x#options) can be passed to the constructor, ie: `new CborxSerializer({ structuredClone: false })` for a faster serialize when the data has no shared references.
+
+> [!NOTE]
+> Binary serializers (`ICacheBinarySerializer`) are only supported by `CacheCompress`, not as the `createHonoXCache` response serializer. A `CborxSerializer` compressor can still be used with [an existing XMemCache instance](#with-an-existing-xmemcache-instance): the entries are decompressed and serialized for the responses. JSON detection doesn't apply to binary serializers.
 
 ## Benchmarks
 

@@ -1,6 +1,10 @@
 import { Compressor, Decompressor } from "@httpx/compress";
+import { Base64 } from "@httpx/encode";
 
-import type { ICacheSerializer } from "../serializer/types";
+import type {
+  ICacheBinarySerializer,
+  ICacheSerializer,
+} from "../serializer/types";
 import { elapsedSince, now } from "../timing";
 import { isTrivialValue } from "./is-trivial-value";
 import type {
@@ -22,10 +26,11 @@ export type { CacheCompressEncoding } from "./types";
  */
 export type CacheCompressOptions = {
   /**
-   * Serializer used to convert the data into a string before compression
-   * (JsonSerializer, SuperjsonSerializer, DevalueSerializer...).
+   * Serializer used to convert the data into a string (or bytes for binary
+   * serializers) before compression (JsonSerializer, SuperjsonSerializer,
+   * DevalueSerializer, CborxSerializer...).
    */
-  serializer: ICacheSerializer;
+  serializer: ICacheSerializer | ICacheBinarySerializer;
 
   /**
    * Compression algorithm.
@@ -40,8 +45,8 @@ export type CacheCompressOptions = {
   minimumRatio?: number;
   /**
    * Minimum length to activate compression, checked on string data before
-   * serialization and on the serialized string before compression, so
-   * small payloads are never compressed.
+   * serialization and on the serialized string (bytes for binary
+   * serializers) before compression, so small payloads are never compressed.
    * @default 16384 (16K characters)
    */
   minimumStringLength?: number;
@@ -115,7 +120,7 @@ const skipped = <T>(
 export class CacheCompress implements ICacheCompressor {
   readonly #gzip: Compressor;
   readonly #gunzip: Decompressor;
-  readonly #serializer: ICacheSerializer;
+  readonly #serializer: ICacheSerializer | ICacheBinarySerializer;
   readonly #serializerId: string;
   readonly #algorithm: CacheCompressAlgorithm;
   readonly #options: {
@@ -186,6 +191,7 @@ export class CacheCompress implements ICacheCompressor {
    */
   supportsJsonDetection = (): boolean =>
     this.#options.detectJson &&
+    this.#serializer.binary !== true &&
     this.#serializer.serializeWithJsonDetection !== undefined;
 
   /**
@@ -213,18 +219,20 @@ export class CacheCompress implements ICacheCompressor {
     const { encoding } = this.#options;
     const timings: CacheCompressTimings = {};
     let content: CacheCompressContent | undefined;
-    let serialized: string;
+    let serialized: string | Uint8Array;
     // strings don't need to be serialized
     if (typeof data === "string") {
       content = "string";
       serialized = data;
     } else {
       const start = now();
-      const detected = this.#options.detectJson
-        ? this.#serializer.serializeWithJsonDetection?.(data)
-        : undefined;
+      const serializer = this.#serializer;
+      const detected =
+        this.#options.detectJson && serializer.binary !== true
+          ? serializer.serializeWithJsonDetection?.(data)
+          : undefined;
       if (detected === undefined) {
-        serialized = this.#serializer.serialize(data);
+        serialized = serializer.serialize(data);
       } else {
         ({ serialized } = detected);
         if (detected.json) {
@@ -298,27 +306,31 @@ export class CacheCompress implements ICacheCompressor {
       );
     }
     let start = now();
-    const serialized =
-      typeof data.data === "string"
-        ? await this.#gunzip.fromEncodedString(data.data, {
-            encoding:
-              this.#options.encoding === "base64_urlsafe"
-                ? "base64_urlsafe"
-                : "base64",
-          })
-        : textDecoder.decode(await this.#gunzip.fromUint8Array(data.data));
+    const bytes = await this.#gunzip.fromUint8Array(
+      typeof data.data === "string" ? Base64.toUint8Array(data.data) : data.data
+    );
+    const { content } = data.meta;
+    const serializer = this.#serializer;
+    // binary serializers read the bytes, others the decoded string
+    const text =
+      serializer.binary === true && content === undefined
+        ? ""
+        : textDecoder.decode(bytes);
     if (timings !== undefined) {
       timings.decompress = elapsedSince(start);
     }
-    const { content } = data.meta;
     if (content === "string") {
-      return serialized as T;
+      return text as T;
     }
     start = now();
-    const deserialized =
-      content === "json"
-        ? (JSON.parse(serialized) as T)
-        : this.#serializer.deserialize<T>(serialized);
+    let deserialized: T;
+    if (content === "json") {
+      deserialized = JSON.parse(text) as T;
+    } else if (serializer.binary === true) {
+      deserialized = serializer.deserialize<T>(bytes);
+    } else {
+      deserialized = serializer.deserialize<T>(text);
+    }
     if (timings !== undefined) {
       timings.deserialize = elapsedSince(start);
     }

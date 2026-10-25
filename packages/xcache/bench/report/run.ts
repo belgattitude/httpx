@@ -1,0 +1,249 @@
+/**
+ * Run the xcache scenarios in the current runtime (node or bun) and write
+ * the results to bench/report/output/<engine>.json.
+ *
+ * node --expose-gc bench/report/run.ts
+ * bun bench/report/run.ts
+ */
+import { execSync } from "node:child_process";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import os from "node:os";
+import { setTimeout as sleep } from "node:timers/promises";
+
+import { TimeLruCache, XMemCache } from "@httpx/xcache";
+
+import {
+  type CacheConfig,
+  configs,
+  type Scenario,
+  scenarios,
+} from "./scenarios.ts";
+import type {
+  CaseResult,
+  EngineInfo,
+  EngineResults,
+  PlatformInfo,
+  TimingResult,
+} from "./types.ts";
+
+type BunGlobal = {
+  version: string;
+  gc: (force: boolean) => void;
+};
+
+const bun = (globalThis as { Bun?: BunGlobal }).Bun;
+
+/** Time budget per measured operation */
+const timeMs = Number(process.env.BENCH_TIME_MS ?? 1000);
+const minSamples = 10;
+
+const outputDir = new URL("output/", import.meta.url);
+
+const gc = (): void => {
+  if (bun !== undefined) {
+    bun.gc(true);
+    return;
+  }
+  const { gc: nodeGc } = globalThis as { gc?: () => void };
+  if (nodeGc === undefined) {
+    throw new Error("Run node with --expose-gc");
+  }
+  nodeGc();
+  nodeGc();
+};
+
+const usedMemory = async (): Promise<number> => {
+  // external buffers (streams, Uint8Array) are released after finalization
+  for (let i = 0; i < 5; i++) {
+    gc();
+    await sleep(20);
+  }
+  const { heapUsed, external } = process.memoryUsage();
+  return heapUsed + external;
+};
+
+const getEngine = (): EngineInfo => {
+  if (bun !== undefined) {
+    const { webkit } = process.versions as { webkit?: string };
+    return {
+      id: "bun",
+      name: "Bun",
+      version: bun.version,
+      jsEngine: `JavaScriptCore${webkit === undefined ? "" : ` (WebKit ${webkit.slice(0, 12)})`}`,
+    };
+  }
+  return {
+    id: "node",
+    name: "Node.js",
+    version: process.versions.node,
+    jsEngine: `V8 ${process.versions.v8}`,
+  };
+};
+
+const getPlatform = (): PlatformInfo => {
+  let osName = `${os.type()} ${os.release()}`;
+  if (process.platform === "darwin") {
+    try {
+      const version = execSync("sw_vers -productVersion").toString().trim();
+      osName = `macOS ${version} (${osName})`;
+    } catch {
+      // keep the kernel name
+    }
+  }
+  const cpus = os.cpus();
+  return {
+    os: osName,
+    arch: process.arch,
+    cpu: cpus[0]?.model.trim() ?? "unknown",
+    cores: cpus.length,
+    totalMemory: os.totalmem(),
+  };
+};
+
+const measure = async (fn: () => Promise<unknown>): Promise<TimingResult> => {
+  for (let i = 0; i < 3; i++) {
+    await fn();
+  }
+  const samples: number[] = [];
+  const end = performance.now() + timeMs;
+  while (performance.now() < end || samples.length < minSamples) {
+    const start = performance.now();
+    await fn();
+    samples.push(performance.now() - start);
+  }
+  samples.sort((a, b) => a - b);
+  const sum = samples.reduce((acc, value) => acc + value, 0);
+  return {
+    median: samples[Math.floor(samples.length / 2)] ?? 0,
+    mean: sum / samples.length,
+    p99:
+      samples[
+        Math.min(samples.length - 1, Math.floor(samples.length * 0.99))
+      ] ?? 0,
+    samples: samples.length,
+  };
+};
+
+const createCache = (config: CacheConfig, maxSize: number): XMemCache => {
+  const compressor = config.createCompressor();
+  return new XMemCache({
+    lru: new TimeLruCache({ maxSize, defaultTTL: 3_600_000 }),
+    ...(compressor === undefined ? {} : { compressor }),
+  });
+};
+
+/**
+ * Memory per entry: growth between half and full cache (fresh payloads),
+ * so fixed costs (serializer buffers, lru) are excluded. Median of 3 runs,
+ * measured first so that the speed tests caches can't be collected between.
+ */
+const measureMemoryPerEntry = async (
+  scenario: Scenario,
+  config: CacheConfig
+): Promise<number> => {
+  const half = Math.ceil(scenario.memoryEntries / 2);
+  const fill = async (cache: XMemCache, from: number): Promise<void> => {
+    for (let n = from; n < from + half; n++) {
+      await cache.runAsync({
+        key: ["memory", n],
+        fn: () => Promise.resolve(scenario.createPayload()),
+      });
+    }
+  };
+  const runs: number[] = [];
+  for (let run = 0; run < 3; run++) {
+    const cache = createCache(config, half * 2);
+    await fill(cache, 0);
+    const before = await usedMemory();
+    await fill(cache, half);
+    const after = await usedMemory();
+    cache.clear();
+    runs.push(Math.max(0, (after - before) / half));
+  }
+  runs.sort((x, y) => x - y);
+  return runs[1] ?? 0;
+};
+
+const runCase = async (
+  scenario: Scenario,
+  config: CacheConfig
+): Promise<CaseResult> => {
+  const memoryPerEntry = await measureMemoryPerEntry(scenario, config);
+
+  const payload = scenario.createPayload();
+  const fn = () => Promise.resolve(payload);
+
+  // miss: key generation, serialization, compression and storage
+  const missCache = createCache(config, 20);
+  let i = 0;
+  const miss = await measure(() =>
+    missCache.runAsync({ key: ["miss", i++], fn })
+  );
+
+  // hit: lookup, decompression and deserialization
+  const hitCache = createCache(config, 20);
+  const { meta } = await hitCache.runAsync({ key: ["hit"], fn });
+  const hit = await measure(() => hitCache.runAsync({ key: ["hit"], fn }));
+
+  const result: CaseResult = {
+    scenario: scenario.id,
+    config: config.id,
+    storedAs: meta.compression === undefined ? "native" : "compressed",
+    miss,
+    hit,
+    memoryPerEntry,
+  };
+  if (meta.compression !== undefined) {
+    result.compressedSize = meta.compression.compressedSize;
+  }
+  return result;
+};
+
+const engine = getEngine();
+const packageJson = JSON.parse(
+  readFileSync(new URL("../../package.json", import.meta.url), "utf8")
+) as { version: string };
+
+const results: CaseResult[] = [];
+for (const scenario of scenarios) {
+  for (const config of configs) {
+    if (scenario.extendedTypes && config.nativeTypesOnly) {
+      continue;
+    }
+    const result = await runCase(scenario, config);
+    console.log(
+      `[${engine.name}] ${scenario.id} / ${config.label}: miss ${result.miss.median.toFixed(3)} ms, hit ${result.hit.median.toFixed(3)} ms`
+    );
+    results.push(result);
+  }
+}
+
+const output: EngineResults = {
+  date: new Date().toISOString(),
+  packageVersion: packageJson.version,
+  platform: getPlatform(),
+  engine,
+  scenarios: scenarios.map((scenario) => {
+    return {
+      id: scenario.id,
+      title: scenario.title,
+      description: scenario.description,
+      rows: scenario.rows,
+      // bigint as string for the extended types
+      jsonSize: JSON.stringify(
+        scenario.createPayload(),
+        (_key, value: unknown) =>
+          typeof value === "bigint" ? String(value) : value
+      ).length,
+    };
+  }),
+  configs: configs.map(({ id, label }) => {
+    return { id, label };
+  }),
+  results,
+};
+
+mkdirSync(outputDir, { recursive: true });
+const file = new URL(`${engine.id}.json`, outputDir);
+writeFileSync(file, `${JSON.stringify(output, null, 2)}\n`);
+console.log(`Results written to ${file.pathname}`);

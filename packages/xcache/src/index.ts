@@ -10,10 +10,15 @@ export type {
   ICacheCompressor,
 } from "./compress/types";
 export { createCacheFn } from "./create-cache-fn";
+export {
+  CborxSerializer,
+  type CborxSerializerOptions,
+} from "./serializer/cborx-serializer";
 export { DevalueSerializer } from "./serializer/devalue-serializer";
 export { JsonSerializer } from "./serializer/json-serializer";
 export { SuperjsonSerializer } from "./serializer/superjson-serializer";
 export type {
+  ICacheBinarySerializer,
   ICacheSerializer,
   ICacheSerializerJsonDetection,
 } from "./serializer/types";

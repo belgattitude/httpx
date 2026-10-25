@@ -24,7 +24,7 @@ export type CacheCompressSuccessMeta = {
   algorithm: CacheCompressAlgorithm;
   /** How the compressed bytes are stored */
   encoding: CacheCompressEncoding;
-  /** Identifier of the serializer (ie: "json", "superjson", "devalue") */
+  /** Identifier of the serializer (ie: "json", "superjson", "devalue", "cbor-x") */
   serializer: string;
   /**
    * How the compressed content was created, when not by the serializer:
@@ -33,7 +33,7 @@ export type CacheCompressSuccessMeta = {
    *   deserialized with JSON.parse.
    */
   content?: CacheCompressContent;
-  /** Length of the serialized string (or string) before compression */
+  /** Length of the serialized string (bytes for binary serializers) before compression */
   originalSize: number;
   /** Length of the compressed data (bytes for binary, chars for base64) */
   compressedSize: number;
