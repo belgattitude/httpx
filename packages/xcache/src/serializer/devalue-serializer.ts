@@ -7,6 +7,7 @@ import type { ICacheSerializer } from "./types";
  * Devalue serializer (requires the "devalue" peer dependency).
  * Supports Date, BigInt, Map, Set, undefined, NaN, repeated and cyclic
  * references... Fastest with extended types, but compresses less well.
+ * Does not support JSON detection (CacheCompress detectJson option).
  */
 export class DevalueSerializer implements ICacheSerializer {
   /** Identifier of the serializer, stored in the compression meta */

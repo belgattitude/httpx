@@ -5,6 +5,7 @@ import { elapsedSince, now } from "../timing";
 import { isTrivialValue } from "./is-trivial-value";
 import type {
   CacheCompressAlgorithm,
+  CacheCompressContent,
   CacheCompressEncoding,
   CacheCompressResult,
   CacheCompressSkippedReason,
@@ -58,6 +59,15 @@ export type CacheCompressOptions = {
    * @default "binary"
    */
   encoding?: CacheCompressEncoding;
+
+  /**
+   * Store plain JSON data (without extended types) as JSON and read it with
+   * JSON.parse (meta.content: "json"), when the serializer supports it
+   * (SuperjsonSerializer, at no extra cost). Not supported by
+   * DevalueSerializer, useless with JsonSerializer.
+   * @default true
+   */
+  detectJson?: boolean;
 };
 
 const textDecoder = new TextDecoder();
@@ -65,13 +75,18 @@ const textDecoder = new TextDecoder();
 const defaultOptions: Required<
   Pick<
     CacheCompressOptions,
-    "minimumRatio" | "minimumStringLength" | "minimumByteSaving" | "encoding"
+    | "minimumRatio"
+    | "minimumStringLength"
+    | "minimumByteSaving"
+    | "encoding"
+    | "detectJson"
   >
 > = {
   minimumRatio: 1.3,
   minimumStringLength: 16_384, // 16K characters
   minimumByteSaving: 32_768, // 32 KB
   encoding: "binary",
+  detectJson: true,
 } as const;
 
 /**
@@ -108,6 +123,7 @@ export class CacheCompress implements ICacheCompressor {
     minimumStringLength: number;
     minimumByteSaving: number;
     encoding: CacheCompressEncoding;
+    detectJson: boolean;
   };
 
   /**
@@ -165,8 +181,17 @@ export class CacheCompress implements ICacheCompressor {
     meta.serializer === this.#serializerId;
 
   /**
+   * Whether plain JSON data is detected and stored as JSON (detectJson
+   * option and serializer supporting it, ie: SuperjsonSerializer).
+   */
+  supportsJsonDetection = (): boolean =>
+    this.#options.detectJson &&
+    this.#serializer.serializeWithJsonDetection !== undefined;
+
+  /**
    * Serialize and compress the data. Strings are compressed as-is, without
-   * serializer (meta.raw: true). Compression is skipped (data
+   * serializer (meta.content: "string"), plain JSON is stored as JSON when
+   * detected (meta.content: "json", see detectJson). Compression is skipped (data
    * returned as-is) for trivial values (ie: numbers), when the data or its serialized form is
    * shorter than minimumStringLength (or minimumByteSaving, as the saving
    * can't exceed it), or when the minimum ratio or byte saving are not met.
@@ -187,14 +212,25 @@ export class CacheCompress implements ICacheCompressor {
 
     const { encoding } = this.#options;
     const timings: CacheCompressTimings = {};
-    const isString = typeof data === "string";
+    let content: CacheCompressContent | undefined;
     let serialized: string;
     // strings don't need to be serialized
-    if (isString) {
+    if (typeof data === "string") {
+      content = "string";
       serialized = data;
     } else {
       const start = now();
-      serialized = this.#serializer.serialize(data);
+      const detected = this.#options.detectJson
+        ? this.#serializer.serializeWithJsonDetection?.(data)
+        : undefined;
+      if (detected === undefined) {
+        serialized = this.#serializer.serialize(data);
+      } else {
+        ({ serialized } = detected);
+        if (detected.json) {
+          content = "json";
+        }
+      }
       timings.serialize = elapsedSince(start);
     }
     // Don't even try to compress small payloads
@@ -234,8 +270,8 @@ export class CacheCompress implements ICacheCompressor {
       originalSize: serialized.length,
       ratio,
     };
-    if (isString) {
-      meta.raw = true;
+    if (content !== undefined) {
+      meta.content = content;
     }
     return { status: "success", meta, data: compressed, timings };
   };
@@ -243,7 +279,8 @@ export class CacheCompress implements ICacheCompressor {
   /**
    * Decompress and deserialize the data. Skipped or failed results are
    * returned as-is. When provided, timings is filled with the time spent
-   * decompressing and deserializing (strings are not deserialized).
+   * decompressing and deserializing (strings are not deserialized, plain
+   * JSON is parsed with JSON.parse).
    *
    * @throws TypeError if the data was compressed with incompatible options
    * (algorithm, encoding or serializer).
@@ -273,11 +310,15 @@ export class CacheCompress implements ICacheCompressor {
     if (timings !== undefined) {
       timings.decompress = elapsedSince(start);
     }
-    if (data.meta.raw === true) {
+    const { content } = data.meta;
+    if (content === "string") {
       return serialized as T;
     }
     start = now();
-    const deserialized = this.#serializer.deserialize<T>(serialized);
+    const deserialized =
+      content === "json"
+        ? (JSON.parse(serialized) as T)
+        : this.#serializer.deserialize<T>(serialized);
     if (timings !== undefined) {
       timings.deserialize = elapsedSince(start);
     }

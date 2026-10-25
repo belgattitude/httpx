@@ -11,6 +11,12 @@ export type CacheCompressAlgorithm = "gzip" | "deflate";
 export type CacheCompressEncoding = "binary" | "base64" | "base64_urlsafe";
 
 /**
+ * Compressed content not created by the serializer (see
+ * CacheCompressSuccessMeta.content).
+ */
+export type CacheCompressContent = "string" | "json";
+
+/**
  * Meta of successfully compressed data, stored with the cache entry.
  */
 export type CacheCompressSuccessMeta = {
@@ -21,10 +27,12 @@ export type CacheCompressSuccessMeta = {
   /** Identifier of the serializer (ie: "json", "superjson", "devalue") */
   serializer: string;
   /**
-   * Set when the data is a string compressed as-is: it was not serialized
-   * and is not deserialized
+   * How the compressed content was created, when not by the serializer:
+   * - "string": a string compressed as-is (not serialized, not deserialized).
+   * - "json": plain JSON detected by the serializer (detectJson option),
+   *   deserialized with JSON.parse.
    */
-  raw?: true;
+  content?: CacheCompressContent;
   /** Length of the serialized string (or string) before compression */
   originalSize: number;
   /** Length of the compressed data (bytes for binary, chars for base64) */
@@ -119,4 +127,10 @@ export interface ICacheCompressor {
    * are considered as cache misses by XMemCache.
    */
   isCompatible?: (meta: CacheCompressSuccessMeta) => boolean;
+  /**
+   * Whether plain JSON data is detected and stored as JSON (meta.content:
+   * "json"), ie: CacheCompress with the detectJson option and a serializer
+   * supporting it (SuperjsonSerializer).
+   */
+  supportsJsonDetection?: () => boolean;
 }

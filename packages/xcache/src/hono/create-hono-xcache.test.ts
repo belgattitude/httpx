@@ -135,7 +135,7 @@ describe("createHonoXCache", () => {
     expect(fetchSmall).toHaveBeenCalledOnce();
   });
 
-  it("should serialize compressed raw strings", async () => {
+  it("should serialize compressed strings", async () => {
     const { xcache } = createApp();
     const text = "<li>Hello world</li>".repeat(5000);
     const app = new Hono();
@@ -146,11 +146,11 @@ describe("createHonoXCache", () => {
     await app.request("/text", { headers });
     expect(xcache.getEntryInfo({ key: ["/text"] })?.compression).toMatchObject({
       serializer: "json",
-      raw: true,
+      content: "string",
     });
     const res = await app.request("/text", { headers });
     expect(res.headers.get("X-XCache")).toBe("HIT");
-    // the compressed bytes are the raw string, not a json body
+    // the compressed bytes are the string, not a json body
     expect(res.headers.get("Content-Encoding")).toBeNull();
     await expect(res.json()).resolves.toBe(text);
   });
@@ -622,6 +622,32 @@ describe("createHonoXCache", () => {
     expect(serializer.deserialize(await res.text())).toStrictEqual(data);
   });
 
+  it.runIf(canSetAcceptEncoding)(
+    "should send plain data as-is with other serializers (no json detection)",
+    async () => {
+      const serializer = new SuperjsonSerializer();
+      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+      const xcache = createHonoXCache({ lru, serializer });
+      const app = new Hono();
+      app.get("/sj", (c) =>
+        xcache.json(c, { key: ["/sj"], fn: () => Promise.resolve(payload) })
+      );
+      const headers = { "Accept-Encoding": "gzip" };
+      await app.request("/sj", { headers });
+      expect(
+        xcache.getEntryInfo({ key: ["/sj"] })?.compression
+      ).not.toHaveProperty("content");
+      const res = await app.request("/sj", { headers });
+      expect(res.headers.get("Content-Encoding")).toBe("gzip");
+      const bytes = await new Decompressor("gzip").fromUint8Array(
+        new Uint8Array(await res.arrayBuffer())
+      );
+      expect(
+        serializer.deserialize(new TextDecoder().decode(bytes))
+      ).toStrictEqual(payload);
+    }
+  );
+
   describe("with an existing XMemCache instance", () => {
     const createInstance = (
       serializer: JsonSerializer | SuperjsonSerializer,
@@ -709,6 +735,52 @@ describe("createHonoXCache", () => {
         date: "2026-01-01T00:00:00.000Z",
         rows: payload.rows,
       });
+    });
+
+    it.runIf(canSetAcceptEncoding)(
+      "should send plain json entries detected by superjson as-is",
+      async () => {
+        const cache = createInstance(new SuperjsonSerializer(), "binary");
+        const xcache = createHonoXCache({ cache, debugHeaders: true });
+        const app = new Hono();
+        app.get("/data", (c) =>
+          xcache.json(c, { key: ["/data"], fn: () => Promise.resolve(payload) })
+        );
+        const headers = { "Accept-Encoding": "gzip" };
+        await app.request("/data", { headers });
+        expect(
+          xcache.getEntryInfo({ key: ["/data"] })?.compression
+        ).toMatchObject({ serializer: "superjson", content: "json" });
+        const res = await app.request("/data", { headers });
+        expect(res.headers.get("X-XCache")).toBe("HIT");
+        expect(res.headers.get("Content-Encoding")).toBe("gzip");
+        await expect(decompressBody(res, "gzip")).resolves.toStrictEqual(
+          payload
+        );
+        const plain = await app.request("/data");
+        await expect(plain.json()).resolves.toStrictEqual(payload);
+      }
+    );
+
+    it("should serialize plain json entries for other response serializers", async () => {
+      const serializer = new SuperjsonSerializer();
+      const cache = createInstance(serializer, "binary");
+      const xcache = createHonoXCache({
+        cache,
+        serializer,
+        debugHeaders: true,
+      });
+      const app = new Hono();
+      app.get("/data", (c) =>
+        xcache.json(c, { key: ["/data"], fn: () => Promise.resolve(payload) })
+      );
+      const headers = { "Accept-Encoding": "gzip" };
+      await app.request("/data", { headers });
+      const res = await app.request("/data", { headers });
+      expect(res.headers.get("X-XCache")).toBe("HIT");
+      // the json bytes are not in the superjson format
+      expect(res.headers.get("Content-Encoding")).toBeNull();
+      expect(serializer.deserialize(await res.text())).toStrictEqual(payload);
     });
 
     it("should use the instance enabled option", async () => {

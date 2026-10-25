@@ -196,7 +196,7 @@ describe.each([["gzip", "deflate"]])("XMemCache compression", () => {
       const miss = await run();
       expect(miss.meta.compression).toMatchObject({
         serializer: "devalue",
-        raw: true,
+        content: "string",
       });
       const hit = await run();
       expect(hit.meta.cached).toBe(true);

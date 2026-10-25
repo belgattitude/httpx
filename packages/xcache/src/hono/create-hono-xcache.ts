@@ -32,6 +32,9 @@ import {
  */
 export const honoXCacheOrigin = "hono";
 
+// identifier of JsonSerializer
+const jsonSerializerId = "json";
+
 /**
  * Options shared by both createHonoXCache variants.
  */
@@ -239,6 +242,9 @@ const createXMemCache = (
             serializer,
             // raw bytes can be sent as-is
             encoding: "binary",
+            // the responses use the same serializer: its bytes can be sent
+            // as-is, plain JSON can't with another serializer (ie: superjson)
+            detectJson: false,
           }),
         }),
   });
@@ -351,12 +357,13 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
     }
     headers["Content-Type"] = contentType;
 
-    // compressed with the same serializer: the bytes are the response body
-    // (raw strings were not serialized)
+    // the compressed bytes are the response body when they were created by
+    // the same serializer, or are plain JSON (detectJson) for a json response
     if (
       entry.format === "compressed" &&
-      entry.meta.serializer === serializerId &&
-      entry.meta.raw !== true
+      (entry.meta.content === undefined
+        ? entry.meta.serializer === serializerId
+        : entry.meta.content === "json" && serializerId === jsonSerializerId)
     ) {
       const { algorithm } = entry.meta;
       const bytes = (

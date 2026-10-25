@@ -17,7 +17,7 @@ const config = [
     name: "import { createHonoXCache } (ESM)",
     path: ["dist/hono/index.js"],
     import: "{ createHonoXCache }",
-    limit: "5860B",
+    limit: "5960B",
   },
 ] satisfies SizeLimitConfig;
 

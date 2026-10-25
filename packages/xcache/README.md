@@ -137,6 +137,12 @@ const xMemCache = new XMemCache({
     // or "base64_urlsafe" if a string is required (~33% larger)
     // @default "binary"
     encoding: "binary",
+
+    // Store plain data (without extended types) as JSON, read with
+    // JSON.parse (meta.content: "json"). Supported by SuperjsonSerializer
+    // at no extra cost, not by DevalueSerializer (see "JSON detection")
+    // @default true
+    detectJson: true,
   }),
 });
 
@@ -172,7 +178,8 @@ const { data, meta } = await xMemCache.runAsync({
 //   algorithm: "gzip",        // "gzip" | "deflate"
 //   encoding: "binary",       // "binary" | "base64" | "base64_urlsafe"
 //   serializer: "superjson",  // serializer identifier
-//   raw: true,                // only for strings, compressed as-is (not serialized)
+//   content: "json",          // "string": compressed as-is (not serialized)
+//                             // "json": plain JSON detected (see "JSON detection")
 //   originalSize: 974025,     // serialized string length
 //   compressedSize: 90333,    // compressed length
 //   ratio: 10.78,
@@ -180,6 +187,20 @@ const { data, meta } = await xMemCache.runAsync({
 ```
 
 On a cache hit, the meta is checked against the current compressor options. An existing entry created with a different algorithm, encoding or serializer (ie: a shared lru or changed options) is never decoded with the wrong settings, it's treated as a cache miss: the function is executed again and the entry is replaced.
+
+### JSON detection
+
+With `SuperjsonSerializer`, data without extended types (no `Date`, `Map`, `undefined`, shared references...) is stored as plain JSON (`meta.content: "json"`) and read with `JSON.parse`. The detection has no extra cost: superjson only adds a meta when it encountered extended types. Plain JSON is slightly smaller (no superjson envelope) and can be sent as-is by [createHonoXCache](#hono) to json responses.
+
+`DevalueSerializer` doesn't support it: its output is never plain JSON and it doesn't tell whether extended types were found. Disable it with `detectJson: false`. Custom serializers can support it by implementing `serializeWithJsonDetection`, and `cacheCompress.supportsJsonDetection()` tells whether it's active.
+
+```typescript
+const compressor = new CacheCompress({
+  serializer: new SuperjsonSerializer(),
+  algorithm: "gzip",
+});
+compressor.supportsJsonDetection(); // true (false with DevalueSerializer)
+```
 
 ## Enable / disable
 
@@ -437,6 +458,9 @@ createHonoXCache({
 ### With an existing XMemCache instance
 
 Instead of an `lru`, an existing `XMemCache` instance can be provided. Its lru, namespace, compressor and enabled options are used:
+
+> [!TIP]
+> Compressed entries are sent as-is (`Content-Encoding`) when created with the response serializer, or when stored as plain JSON ([JSON detection](#json-detection)) for a `JsonSerializer` response. When the instance compressor and the responses use the same `SuperjsonSerializer`, set `detectJson: false`: plain JSON entries would need to be re-serialized for superjson responses.
 
 ```typescript
 const xMemCache = new XMemCache({

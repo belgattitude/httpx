@@ -13,6 +13,24 @@ export interface ICacheSerializer {
    * cache keys and stored in the compression meta.
    */
   getIdentifier: () => string;
+  /**
+   * Optional JSON detection: serialize the data and tell whether the result
+   * is plain JSON (no extended types), so it can be stored as JSON and read
+   * with JSON.parse. Supported by SuperjsonSerializer at no extra cost.
+   * DevalueSerializer can't support it (its format is never plain JSON and
+   * it doesn't tell whether extended types were found).
+   */
+  serializeWithJsonDetection?: <T>(data: T) => ICacheSerializerJsonDetection;
   /** Same as getIdentifier */
   toString: () => string;
 }
+
+/**
+ * Result of ICacheSerializer.serializeWithJsonDetection.
+ */
+export type ICacheSerializerJsonDetection = {
+  /** Serialized data: plain JSON when json is true */
+  serialized: string;
+  /** Whether serialized is plain JSON (readable with JSON.parse) */
+  json: boolean;
+};
