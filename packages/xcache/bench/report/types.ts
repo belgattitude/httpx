@@ -19,6 +19,22 @@ export type CaseResult = {
   memoryPerEntry: number;
 };
 
+export type HonoCaseResult = {
+  config: string;
+  /** "compressed" or "native" (no cache: "none") */
+  storedAs: "compressed" | "native" | "none";
+  /** Compression meta content ("json" with JSON detection) */
+  content?: string;
+  /** Whether the compressed bytes are sent as-is to a gzip client */
+  sentAsIs: boolean;
+  /** Request on a new key (gzip client) */
+  miss: TimingResult;
+  /** Cached request from a client accepting gzip */
+  hitGzip: TimingResult;
+  /** Cached request from a client not accepting gzip */
+  hitIdentity: TimingResult;
+};
+
 export type PlatformInfo = {
   os: string;
   arch: string;
@@ -48,4 +64,9 @@ export type EngineResults = {
   }[];
   configs: { id: string; label: string }[];
   results: CaseResult[];
+  hono: {
+    scenario: string;
+    configs: { id: string; label: string; description: string }[];
+    results: HonoCaseResult[];
+  };
 };

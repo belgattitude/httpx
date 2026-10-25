@@ -9,6 +9,7 @@ import prettyBytes from "pretty-bytes";
 
 import type {
   CaseResult,
+  HonoCaseResult,
   EngineInfo,
   EngineResults,
   TimingResult,
@@ -114,6 +115,34 @@ const compareEngines = (cases: { node: CaseResult; bun: CaseResult }[]) => {
   };
 };
 
+const findHonoResult = (
+  results: EngineResults | undefined,
+  config: string
+): HonoCaseResult | undefined =>
+  results?.hono.results.find((result) => result.config === config);
+
+/** Bun vs Node ratios of the hono requests (> 1: bun is faster) */
+const compareHono = () => {
+  const cases = reference.hono.results.flatMap(({ config }) => {
+    const nodeResult = findHonoResult(node, config);
+    const bunResult = findHonoResult(bun, config);
+    return nodeResult === undefined || bunResult === undefined
+      ? []
+      : [{ node: nodeResult, bun: bunResult }];
+  });
+  return {
+    miss: geometricMean(
+      cases.map(({ node, bun }) => node.miss.median / bun.miss.median)
+    ),
+    hit: geometricMean(
+      cases.flatMap(({ node, bun }) => [
+        node.hitGzip.median / bun.hitGzip.median,
+        node.hitIdentity.median / bun.hitIdentity.median,
+      ])
+    ),
+  };
+};
+
 const pairedCases = (scenario?: string) =>
   reference.results
     .filter((result) => scenario === undefined || result.scenario === scenario)
@@ -174,6 +203,35 @@ const report = {
       ),
     };
   }),
+  hono: {
+    scenario: reference.hono.scenario,
+    configs: reference.hono.configs,
+    results: reference.hono.results.map(({ config }) => {
+      return {
+        config,
+        engines: Object.fromEntries(
+          loaded.flatMap((results) => {
+            const result = findHonoResult(results, config);
+            return result === undefined
+              ? []
+              : [
+                  [
+                    results.engine.id,
+                    {
+                      storedAs: result.storedAs,
+                      content: result.content ?? null,
+                      sentAsIs: result.sentAsIs,
+                      missMs: timing(result.miss),
+                      hitGzipMs: timing(result.hitGzip),
+                      hitIdentityMs: timing(result.hitIdentity),
+                    },
+                  ],
+                ];
+          })
+        ),
+      };
+    }),
+  },
   summary: {
     // ratios > 1: bun is faster (miss, hit) or uses less memory
     bunVsNode:
@@ -181,6 +239,7 @@ const report = {
         ? {
             overall: compareEngines(pairedCases()),
             scenarios: scenarioSummaries,
+            hono: compareHono(),
           }
         : null,
   },
@@ -249,8 +308,17 @@ if (node && bun) {
           formatGain(ratios.memory, "less", "more"),
         ];
       }),
+      (() => {
+        const hono = compareHono();
+        return [
+          `Hono, ${reference.hono.scenario} payload (requests)`,
+          formatGain(hono.miss, "faster", "slower"),
+          formatGain(hono.hit, "faster", "slower"),
+          "-",
+        ];
+      })(),
       [
-        "**Overall**",
+        "**Overall** (cache)",
         formatGain(overall.miss, "faster", "slower"),
         formatGain(overall.hit, "faster", "slower"),
         formatGain(overall.memory, "less", "more"),
@@ -403,6 +471,79 @@ for (const [index, scenario] of reference.scenarios.entries()) {
     headers.map((_, i) => (i < 2 ? "---" : "--:"))
   );
 }
+
+// ---------------------------------------------------------------- hono
+
+const honoScenario = reference.scenarios.find(
+  ({ id }) => id === reference.hono.scenario
+);
+push(
+  `## Hono (${honoScenario?.title.toLowerCase() ?? reference.hono.scenario})`,
+  "",
+  `\`createHonoXCache\` with a JSON response (\`JsonSerializer\`) and an \`XMemCache\` instance compressing with different serializers, ${honoScenario === undefined ? "" : `${formatBytes(honoScenario.jsonSize)} as JSON, `}response body read by the client. Compressed entries are sent as-is (\`Content-Encoding: gzip\`) when their bytes are JSON: \`JsonSerializer\`, or superjson with JSON detection (\`detectJson\`, default) when the data has no extended types. Otherwise they are decompressed, deserialized and serialized to JSON on each request.`,
+  ""
+);
+const honoHeaders = ["Setup", "Hit sent as-is"];
+for (const label of ["Miss", "Hit gzip", "Hit identity"]) {
+  for (const engine of engines) {
+    honoHeaders.push(`${label} ${engine.name}`);
+  }
+}
+const honoColumn = (
+  results: EngineResults,
+  pick: (result: HonoCaseResult) => number,
+  icon: string
+) => {
+  const values = reference.hono.results.map(({ config }) => {
+    const found = findHonoResult(results, config);
+    return found === undefined ? undefined : pick(found);
+  });
+  // the "No cache" baseline is not a candidate
+  const candidates = values.filter(
+    (value, i): value is number =>
+      value !== undefined && reference.hono.results[i]?.config !== "none"
+  );
+  const min = Math.min(...candidates);
+  return values.map((value) =>
+    value === undefined ? "n/a" : markBest(value, min, formatTime, icon)
+  );
+};
+const honoColumns = [
+  ...loaded.map((results) =>
+    honoColumn(results, (result) => result.miss.median, icons.miss)
+  ),
+  ...loaded.map((results) =>
+    honoColumn(results, (result) => result.hitGzip.median, icons.hit)
+  ),
+  ...loaded.map((results) =>
+    honoColumn(results, (result) => result.hitIdentity.median, icons.hit)
+  ),
+];
+const honoLabel = (id: string): string =>
+  reference.hono.configs.find((config) => config.id === id)?.label ?? id;
+table(
+  honoHeaders,
+  reference.hono.results.map((result, row) => {
+    let sentAsIs = "-";
+    if (result.storedAs !== "none") {
+      sentAsIs = result.sentAsIs ? "✅ yes" : "❌ no";
+    }
+    return [
+      honoLabel(result.config),
+      sentAsIs,
+      ...honoColumns.map((values) => values[row] ?? "n/a"),
+    ];
+  }),
+  honoHeaders.map((_, i) => (i < 2 ? "---" : "--:"))
+);
+push(
+  ...reference.hono.configs.map(
+    ({ label, description }) => `- **${label}**: ${description}.`
+  ),
+  "",
+  '"Hit gzip": client accepting gzip (`Accept-Encoding: gzip`), "Hit identity": client not accepting it (the compressed bytes are decompressed). "No cache" is the baseline (same time for miss and hits), not a candidate for the icons.',
+  ""
+);
 
 writeFileSync(new URL("../report.md", outputDir), lines.join("\n"));
 console.log(

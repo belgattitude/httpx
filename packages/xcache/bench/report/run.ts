@@ -11,10 +11,15 @@ import os from "node:os";
 import { setTimeout as sleep } from "node:timers/promises";
 
 import { TimeLruCache, XMemCache } from "@httpx/xcache";
+import { createHonoXCache } from "@httpx/xcache/hono";
+import { Hono } from "hono";
 
 import {
   type CacheConfig,
   configs,
+  type HonoConfig,
+  honoConfigs,
+  honoScenarioId,
   type Scenario,
   scenarios,
 } from "./scenarios.ts";
@@ -22,6 +27,7 @@ import type {
   CaseResult,
   EngineInfo,
   EngineResults,
+  HonoCaseResult,
   PlatformInfo,
   TimingResult,
 } from "./types.ts";
@@ -199,6 +205,70 @@ const runCase = async (
   return result;
 };
 
+/**
+ * createHonoXCache with a JSON response, the response body is read.
+ */
+const runHonoCase = async (
+  scenario: Scenario,
+  config: HonoConfig
+): Promise<HonoCaseResult> => {
+  const payload = scenario.createPayload();
+  const app = new Hono();
+  let xcache: ReturnType<typeof createHonoXCache> | undefined;
+  if (config.createCompressor === undefined) {
+    app.get("/data/:id", (c) => c.json(payload));
+  } else {
+    const honoXCache = createHonoXCache({
+      cache: new XMemCache({
+        lru: new TimeLruCache({ maxSize: 20, defaultTTL: 3_600_000 }),
+        compressor: config.createCompressor(),
+      }),
+    });
+    xcache = honoXCache;
+    app.get("/data/:id", (c) =>
+      honoXCache.json(c, {
+        key: ["/data", c.req.param("id")],
+        fn: () => Promise.resolve(payload),
+      })
+    );
+  }
+  const request = async (id: string, gzip: boolean): Promise<Response> => {
+    const res = await app.request(
+      `/data/${id}`,
+      gzip ? { headers: { "Accept-Encoding": "gzip" } } : {}
+    );
+    await res.arrayBuffer();
+    return res;
+  };
+
+  let i = 0;
+  const miss = await measure(() => request(`miss-${i++}`, true));
+  await request("hit", true);
+  const hit = await request("hit", true);
+  const hitGzip = await measure(() => request("hit", true));
+  const hitIdentity = await measure(() => request("hit", false));
+
+  const compression = xcache?.getEntryInfo({
+    key: ["/data", "hit"],
+  })?.compression;
+  let storedAs: HonoCaseResult["storedAs"] = "none";
+  if (xcache !== undefined) {
+    storedAs = compression === undefined ? "native" : "compressed";
+  }
+  const result: HonoCaseResult = {
+    config: config.id,
+    storedAs,
+    sentAsIs: hit.headers.get("Content-Encoding") === "gzip",
+    miss,
+    hitGzip,
+    hitIdentity,
+  };
+  if (compression?.content !== undefined) {
+    result.content = compression.content;
+  }
+  return result;
+};
+
 const engine = getEngine();
 const packageJson = JSON.parse(
   readFileSync(new URL("../../package.json", import.meta.url), "utf8")
@@ -216,6 +286,19 @@ for (const scenario of scenarios) {
     );
     results.push(result);
   }
+}
+
+const honoScenario = scenarios.find(({ id }) => id === honoScenarioId);
+if (honoScenario === undefined) {
+  throw new Error(`Unknown hono scenario ${honoScenarioId}`);
+}
+const honoResults: HonoCaseResult[] = [];
+for (const config of honoConfigs) {
+  const result = await runHonoCase(honoScenario, config);
+  console.log(
+    `[${engine.name}] hono ${honoScenario.id} / ${config.label}: miss ${result.miss.median.toFixed(3)} ms, hit ${result.hitGzip.median.toFixed(3)} ms (gzip), ${result.hitIdentity.median.toFixed(3)} ms (identity)`
+  );
+  honoResults.push(result);
 }
 
 const output: EngineResults = {
@@ -241,6 +324,13 @@ const output: EngineResults = {
     return { id, label };
   }),
   results,
+  hono: {
+    scenario: honoScenario.id,
+    configs: honoConfigs.map(({ id, label, description }) => {
+      return { id, label, description };
+    }),
+    results: honoResults,
+  },
 };
 
 mkdirSync(outputDir, { recursive: true });

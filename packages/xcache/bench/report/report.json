@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T13:27:50.700Z",
+  "generatedAt": "2026-10-25T14:32:36.614Z",
   "packageVersion": "0.11.0",
   "platform": {
     "os": "macOS 27.0.1 (Darwin 27.0.0)",
@@ -14,14 +14,14 @@
       "name": "Node.js",
       "version": "26.12.0",
       "jsEngine": "V8 14.6.202.34-node.39",
-      "date": "2026-10-25T12:51:22.592Z"
+      "date": "2026-10-25T14:31:05.589Z"
     },
     {
       "id": "bun",
       "name": "Bun",
       "version": "1.4.4",
       "jsEngine": "JavaScriptCore (WebKit d6375c72affe)",
-      "date": "2026-10-25T12:52:29.852Z"
+      "date": "2026-10-25T14:32:36.421Z"
     }
   ],
   "scenarios": [
@@ -36,22 +36,22 @@
       "id": "medium",
       "title": "Medium payload",
       "description": "Array of records, compressed with the default options",
-      "rows": 1000,
-      "jsonSize": 88025
+      "rows": 3400,
+      "jsonSize": 299225
     },
     {
       "id": "large",
       "title": "Large payload",
       "description": "Array of records, compressed with the default options",
-      "rows": 11000,
-      "jsonSize": 974025
+      "rows": 44000,
+      "jsonSize": 3977025
     },
     {
       "id": "large-extended",
       "title": "Large payload with extended types",
       "description": "Same as large, with Date, BigInt, undefined and NaN values (json is not supported)",
-      "rows": 11000,
-      "jsonSize": 1713025
+      "rows": 44000,
+      "jsonSize": 6960025
     }
   ],
   "configs": [
@@ -85,35 +85,35 @@
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.0008749999999508873,
-            "mean": 0.0010618627543012953,
-            "p99": 0.002208000000109678,
-            "samples": 892691
+            "median": 0.0005830000000059954,
+            "mean": 0.0007077416970511205,
+            "p99": 0.0013750000000527507,
+            "samples": 1341150
           },
           "hitMs": {
-            "median": 0.0002500000000509317,
-            "mean": 0.0002764981204307738,
-            "p99": 0.0003749999996216502,
-            "samples": 3004944
+            "median": 0.00016700000014679972,
+            "mean": 0.00017451229897569542,
+            "p99": 0.0002500000000509317,
+            "samples": 4757388
           },
-          "memoryPerEntryBytes": 3894
+          "memoryPerEntryBytes": 3855
         },
         "bun": {
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.0006249999998999556,
-            "mean": 0.000851091681182862,
-            "p99": 0.0026670000000876826,
-            "samples": 1075237
+            "median": 0.00041600000008656934,
+            "mean": 0.0005782712923267919,
+            "p99": 0.0017499999999017746,
+            "samples": 1582448
           },
           "hitMs": {
-            "median": 0.00020799999992959783,
-            "mean": 0.0002197380343832597,
-            "p99": 0.0007080000000314612,
-            "samples": 3350684
+            "median": 0.00012500000002546585,
+            "mean": 0.00014525864726681862,
+            "p99": 0.00037500000007639755,
+            "samples": 5107423
           },
-          "memoryPerEntryBytes": 3209
+          "memoryPerEntryBytes": 3228
         }
       }
     },
@@ -125,16 +125,16 @@
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.004708999999820662,
-            "mean": 0.0050012241199258135,
-            "p99": 0.00858299999981682,
-            "samples": 197256
+            "median": 0.0029999999997016857,
+            "mean": 0.0032107331418358767,
+            "p99": 0.006790999999793712,
+            "samples": 307403
           },
           "hitMs": {
-            "median": 0.0003329999999550637,
-            "mean": 0.00034278833245122314,
-            "p99": 0.0004170000001977314,
-            "samples": 2507399
+            "median": 0.00020899999981338624,
+            "mean": 0.0002272890952006126,
+            "p99": 0.0002920000006270129,
+            "samples": 3806535
           },
           "memoryPerEntryBytes": 4621
         },
@@ -142,18 +142,18 @@
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.002124999999978172,
-            "mean": 0.002689984799757109,
-            "p99": 0.006250000000363798,
-            "samples": 361310
+            "median": 0.0014170000004014582,
+            "mean": 0.0018350237377751436,
+            "p99": 0.004667000000154076,
+            "samples": 529957
           },
           "hitMs": {
-            "median": 0.00020899999981338624,
-            "mean": 0.0002674099849121826,
-            "p99": 0.0011669999994410318,
-            "samples": 2896370
+            "median": 0.0001250000004802132,
+            "mean": 0.00017395552342101464,
+            "p99": 0.0008749999997235136,
+            "samples": 4463158
           },
-          "memoryPerEntryBytes": 5481
+          "memoryPerEntryBytes": 5487
         }
       }
     },
@@ -165,35 +165,35 @@
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.03241600000001199,
-            "mean": 0.03314343084787996,
-            "p99": 0.044874999999592546,
-            "samples": 30122
+            "median": 0.020375000000058208,
+            "mean": 0.021449099948437356,
+            "p99": 0.042083000000275206,
+            "samples": 46544
           },
           "hitMs": {
-            "median": 0.00033400000029359944,
-            "mean": 0.00035517174595808506,
-            "p99": 0.0004580000004352769,
-            "samples": 2433804
+            "median": 0.0002080000012938399,
+            "mean": 0.00022155062408700873,
+            "p99": 0.0002920000006270129,
+            "samples": 3877502
           },
-          "memoryPerEntryBytes": 4033
+          "memoryPerEntryBytes": 4030
         },
         "bun": {
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.02841699999953562,
-            "mean": 0.031801072339474344,
-            "p99": 0.22229199999947014,
-            "samples": 31366
+            "median": 0.01820800000041345,
+            "mean": 0.020542449576805472,
+            "p99": 0.15425000000050204,
+            "samples": 48559
           },
           "hitMs": {
-            "median": 0.00020899999981338624,
-            "mean": 0.00029417258860306276,
-            "p99": 0.0013330000001587905,
-            "samples": 2676208
+            "median": 0.0001250000004802132,
+            "mean": 0.00017355859947288977,
+            "p99": 0.0008339999985764734,
+            "samples": 4478257
           },
-          "memoryPerEntryBytes": 5440
+          "memoryPerEntryBytes": 5443
         }
       }
     },
@@ -205,16 +205,16 @@
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.019041999999899417,
-            "mean": 0.019569686159450986,
-            "p99": 0.028040999999575433,
-            "samples": 50959
+            "median": 0.012083999999958905,
+            "mean": 0.012782736840757732,
+            "p99": 0.02504199999930279,
+            "samples": 78006
           },
           "hitMs": {
-            "median": 0.0003329999999550637,
-            "mean": 0.00034961781974813535,
-            "p99": 0.0004579999986162875,
-            "samples": 2470439
+            "median": 0.0002080000012938399,
+            "mean": 0.0002233203416636298,
+            "p99": 0.0003329999999550637,
+            "samples": 3846234
           },
           "memoryPerEntryBytes": 2061
         },
@@ -222,16 +222,16 @@
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.010249999999359716,
-            "mean": 0.011991294570654409,
-            "p99": 0.017916999999215477,
-            "samples": 82846
+            "median": 0.006417000000510598,
+            "mean": 0.00766987390357979,
+            "p99": 0.01620800000091549,
+            "samples": 129512
           },
           "hitMs": {
-            "median": 0.00020899999981338624,
-            "mean": 0.00028643131612246124,
-            "p99": 0.0015829999993002275,
-            "samples": 2734419
+            "median": 0.0001250000004802132,
+            "mean": 0.00017330974470678722,
+            "p99": 0.0008330000000569271,
+            "samples": 4497139
           },
           "memoryPerEntryBytes": 5438
         }
@@ -245,395 +245,395 @@
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.006666999999652035,
-            "mean": 0.006919393444340507,
-            "p99": 0.011000000000422006,
-            "samples": 143357
-          },
-          "hitMs": {
-            "median": 0.00033400000029359944,
-            "mean": 0.0003540600005807106,
-            "p99": 0.0004580000004352769,
-            "samples": 2442643
-          },
-          "memoryPerEntryBytes": 4621
-        },
-        "bun": {
-          "storedAs": "native",
-          "compressedSize": null,
-          "missMs": {
             "median": 0.004333000000769971,
-            "mean": 0.005004527138050697,
-            "p99": 0.008874999999534339,
-            "samples": 196698
-          },
-          "hitMs": {
-            "median": 0.00020899999981338624,
-            "mean": 0.0002670879937641475,
-            "p99": 0.0010839999995368998,
-            "samples": 2901717
-          },
-          "memoryPerEntryBytes": 5342
-        }
-      }
-    },
-    {
-      "scenario": "medium",
-      "config": "none",
-      "engines": {
-        "node": {
-          "storedAs": "native",
-          "compressedSize": null,
-          "missMs": {
-            "median": 0.0009160000008705538,
-            "mean": 0.000999364720208878,
-            "p99": 0.001374999999825377,
-            "samples": 947636
-          },
-          "hitMs": {
-            "median": 0.0002920000006270129,
-            "mean": 0.00029484606428075154,
-            "p99": 0.0003749999996216502,
-            "samples": 2859973
-          },
-          "memoryPerEntryBytes": 169025
-        },
-        "bun": {
-          "storedAs": "native",
-          "compressedSize": null,
-          "missMs": {
-            "median": 0.0006250000005820766,
-            "mean": 0.0008629703486200469,
-            "p99": 0.002458999999362277,
-            "samples": 1061738
+            "mean": 0.0045479762833857745,
+            "p99": 0.008708999999726075,
+            "samples": 218075
           },
           "hitMs": {
             "median": 0.0002080000012938399,
-            "mean": 0.00022530656311334386,
-            "p99": 0.001083000002836343,
-            "samples": 3318837
+            "mean": 0.00022213795964573296,
+            "p99": 0.0002920000006270129,
+            "samples": 3862702
           },
-          "memoryPerEntryBytes": 136207
+          "memoryPerEntryBytes": 4630
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0028340000008029165,
+            "mean": 0.0033362704961930945,
+            "p99": 0.006624999999985448,
+            "samples": 295006
+          },
+          "hitMs": {
+            "median": 0.0001250000004802132,
+            "mean": 0.00017039448843116935,
+            "p99": 0.0007499999992433004,
+            "samples": 4541284
+          },
+          "memoryPerEntryBytes": 5492
         }
       }
     },
     {
       "scenario": "medium",
-      "config": "json",
-      "engines": {
-        "node": {
-          "storedAs": "compressed",
-          "compressedSize": 8310,
-          "missMs": {
-            "median": 0.5591670000030717,
-            "mean": 0.5830350297376173,
-            "p99": 1.185750000000553,
-            "samples": 1715
-          },
-          "hitMs": {
-            "median": 0.32683299999916926,
-            "mean": 0.3645115446591263,
-            "p99": 1.1773749999993015,
-            "samples": 2743
-          },
-          "memoryPerEntryBytes": 9625
-        },
-        "bun": {
-          "storedAs": "compressed",
-          "compressedSize": 8310,
-          "missMs": {
-            "median": 0.22491599999921164,
-            "mean": 0.24186257910013637,
-            "p99": 0.5431250000001455,
-            "samples": 4134
-          },
-          "hitMs": {
-            "median": 0.17945899999904213,
-            "mean": 0.2049017690100304,
-            "p99": 0.551499999997759,
-            "samples": 4879
-          },
-          "memoryPerEntryBytes": 13011
-        }
-      }
-    },
-    {
-      "scenario": "medium",
-      "config": "superjson",
-      "engines": {
-        "node": {
-          "storedAs": "compressed",
-          "compressedSize": 8310,
-          "missMs": {
-            "median": 1.7532499999979336,
-            "mean": 1.8044012972973285,
-            "p99": 2.4586249999993015,
-            "samples": 555
-          },
-          "hitMs": {
-            "median": 0.3335829999996349,
-            "mean": 0.37195882893267534,
-            "p99": 1.1407079999989946,
-            "samples": 2689
-          },
-          "memoryPerEntryBytes": 9180
-        },
-        "bun": {
-          "storedAs": "compressed",
-          "compressedSize": 8310,
-          "missMs": {
-            "median": 1.6486249999979918,
-            "mean": 1.6487722981878272,
-            "p99": 2.205167000000074,
-            "samples": 607
-          },
-          "hitMs": {
-            "median": 0.18287499999860302,
-            "mean": 0.20751816192648018,
-            "p99": 0.5528330000015558,
-            "samples": 4817
-          },
-          "memoryPerEntryBytes": 12933
-        }
-      }
-    },
-    {
-      "scenario": "medium",
-      "config": "devalue",
-      "engines": {
-        "node": {
-          "storedAs": "compressed",
-          "compressedSize": 19691,
-          "missMs": {
-            "median": 1.5841250000012224,
-            "mean": 1.67839532718121,
-            "p99": 2.751958000000741,
-            "samples": 596
-          },
-          "hitMs": {
-            "median": 0.660916000000725,
-            "mean": 0.7259172706821493,
-            "p99": 1.829249999998865,
-            "samples": 1378
-          },
-          "memoryPerEntryBytes": 20533
-        },
-        "bun": {
-          "storedAs": "compressed",
-          "compressedSize": 20284,
-          "missMs": {
-            "median": 1.0023330000003625,
-            "mean": 1.114789904124823,
-            "p99": 2.0403750000004948,
-            "samples": 897
-          },
-          "hitMs": {
-            "median": 0.3401250000024447,
-            "mean": 0.3760844539299707,
-            "p99": 0.7740840000005846,
-            "samples": 2659
-          },
-          "memoryPerEntryBytes": 41564
-        }
-      }
-    },
-    {
-      "scenario": "medium",
-      "config": "cbor-x",
-      "engines": {
-        "node": {
-          "storedAs": "compressed",
-          "compressedSize": 6799,
-          "missMs": {
-            "median": 0.7258330000004207,
-            "mean": 0.7413514684951676,
-            "p99": 0.9715840000026219,
-            "samples": 1349
-          },
-          "hitMs": {
-            "median": 0.34216599999854225,
-            "mean": 0.3715606399107396,
-            "p99": 1.0412920000017039,
-            "samples": 2691
-          },
-          "memoryPerEntryBytes": 8033
-        },
-        "bun": {
-          "storedAs": "compressed",
-          "compressedSize": 7715,
-          "missMs": {
-            "median": 0.31137500000113505,
-            "mean": 0.3234588463280701,
-            "p99": 0.6441660000018601,
-            "samples": 3091
-          },
-          "hitMs": {
-            "median": 0.19187500000043656,
-            "mean": 0.20565437996297278,
-            "p99": 0.5392920000012964,
-            "samples": 4861
-          },
-          "memoryPerEntryBytes": 16664
-        }
-      }
-    },
-    {
-      "scenario": "large",
       "config": "none",
       "engines": {
         "node": {
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.0009169999975711107,
-            "mean": 0.0010259921523371317,
-            "p99": 0.002165999998396728,
-            "samples": 924224
+            "median": 0.0005840000012540258,
+            "mean": 0.0006772002928336226,
+            "p99": 0.0009580000005371403,
+            "samples": 1400789
           },
           "hitMs": {
-            "median": 0.0002919999969890341,
-            "mean": 0.0003028136135588883,
-            "p99": 0.000375000003259629,
-            "samples": 2796051
+            "median": 0.00016700000196578912,
+            "mean": 0.00018754624579753055,
+            "p99": 0.0002500000009604264,
+            "samples": 4460135
           },
-          "memoryPerEntryBytes": 1996254
+          "memoryPerEntryBytes": 575807
         },
         "bun": {
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.0006250000005820766,
-            "mean": 0.000851704998812112,
-            "p99": 0.0027079999999841675,
-            "samples": 1076816
+            "median": 0.0004169999992882367,
+            "mean": 0.0005898212647107949,
+            "p99": 0.0017919999991136137,
+            "samples": 1558159
           },
           "hitMs": {
-            "median": 0.00020799999765586108,
-            "mean": 0.00022633120689667115,
-            "p99": 0.001083000002836343,
-            "samples": 3315091
+            "median": 0.0001249999986612238,
+            "mean": 0.00015207261603508322,
+            "p99": 0.000583999997616047,
+            "samples": 4953231
           },
-          "memoryPerEntryBytes": 1588075
+          "memoryPerEntryBytes": 486774
         }
       }
     },
     {
-      "scenario": "large",
+      "scenario": "medium",
       "config": "json",
       "engines": {
         "node": {
           "storedAs": "compressed",
-          "compressedSize": 90333,
+          "compressedSize": 27891,
           "missMs": {
-            "median": 5.94062500000291,
-            "mean": 6.079580296969983,
-            "p99": 7.667083000000275,
-            "samples": 165
+            "median": 1.1725829999995767,
+            "mean": 1.2265197561274255,
+            "p99": 2.1754580000015267,
+            "samples": 816
           },
           "hitMs": {
-            "median": 3.0841250000012224,
-            "mean": 3.3964980203389996,
-            "p99": 5.486333000000741,
-            "samples": 295
+            "median": 0.6390420000025188,
+            "mean": 0.7162955250716503,
+            "p99": 1.937167000000045,
+            "samples": 1396
           },
-          "memoryPerEntryBytes": 91167
+          "memoryPerEntryBytes": 29376
         },
         "bun": {
           "storedAs": "compressed",
-          "compressedSize": 90477,
+          "compressedSize": 27941,
           "missMs": {
-            "median": 2.7412919999987935,
-            "mean": 2.813274331460715,
-            "p99": 3.8321670000004815,
-            "samples": 356
+            "median": 0.573541000001569,
+            "mean": 0.6052942052057659,
+            "p99": 1.066584000000148,
+            "samples": 1652
           },
           "hitMs": {
-            "median": 1.982041000002937,
-            "mean": 2.1047450798318508,
-            "p99": 3.0131249999976717,
-            "samples": 476
+            "median": 0.40041700000074343,
+            "mean": 0.44713642556998706,
+            "p99": 0.9025420000034501,
+            "samples": 2237
           },
-          "memoryPerEntryBytes": 181967
+          "memoryPerEntryBytes": 57055
         }
       }
     },
     {
-      "scenario": "large",
+      "scenario": "medium",
       "config": "superjson",
       "engines": {
         "node": {
           "storedAs": "compressed",
-          "compressedSize": 90333,
+          "compressedSize": 27891,
           "missMs": {
-            "median": 21.825417000000016,
-            "mean": 22.367872288889906,
-            "p99": 25.33070900000166,
-            "samples": 45
-          },
-          "hitMs": {
-            "median": 3.078125,
-            "mean": 3.3621246845634976,
-            "p99": 5.834125000001222,
-            "samples": 298
-          },
-          "memoryPerEntryBytes": 91210
-        },
-        "bun": {
-          "storedAs": "compressed",
-          "compressedSize": 90477,
-          "missMs": {
-            "median": 18.357499999998254,
-            "mean": 18.386050818180692,
-            "p99": 20.03349999999773,
-            "samples": 55
-          },
-          "hitMs": {
-            "median": 1.9700410000004922,
-            "mean": 2.101365218029305,
-            "p99": 3.0604159999929834,
-            "samples": 477
-          },
-          "memoryPerEntryBytes": 181977
-        }
-      }
-    },
-    {
-      "scenario": "large",
-      "config": "devalue",
-      "engines": {
-        "node": {
-          "storedAs": "compressed",
-          "compressedSize": 213574,
-          "missMs": {
-            "median": 21.53587499999412,
-            "mean": 21.43068431914899,
-            "p99": 26.524291999994603,
-            "samples": 47
-          },
-          "hitMs": {
-            "median": 6.815083000001323,
-            "mean": 7.683411671755834,
-            "p99": 12.753875000002154,
-            "samples": 131
-          },
-          "memoryPerEntryBytes": 214339
-        },
-        "bun": {
-          "storedAs": "compressed",
-          "compressedSize": 216184,
-          "missMs": {
-            "median": 15.314000000005763,
-            "mean": 15.903061523809493,
-            "p99": 20.60320800000045,
-            "samples": 63
-          },
-          "hitMs": {
-            "median": 3.9477500000066357,
-            "mean": 4.111092258196505,
-            "p99": 5.2054169999973965,
+            "median": 3.926707999999053,
+            "mean": 4.103964487704765,
+            "p99": 7.259417000001122,
             "samples": 244
           },
-          "memoryPerEntryBytes": 421933
+          "hitMs": {
+            "median": 0.6381669999973383,
+            "mean": 0.7147217007143029,
+            "p99": 2.0007499999992433,
+            "samples": 1400
+          },
+          "memoryPerEntryBytes": 28768
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 27941,
+          "missMs": {
+            "median": 3.8515409999999974,
+            "mean": 3.892230050583734,
+            "p99": 5.1929589999999735,
+            "samples": 257
+          },
+          "hitMs": {
+            "median": 0.39174999999886495,
+            "mean": 0.43879090960950046,
+            "p99": 0.9032499999993888,
+            "samples": 2279
+          },
+          "memoryPerEntryBytes": 56698
+        }
+      }
+    },
+    {
+      "scenario": "medium",
+      "config": "devalue",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 66821,
+          "missMs": {
+            "median": 3.6455000000023574,
+            "mean": 3.89260972373533,
+            "p99": 5.904290999998921,
+            "samples": 257
+          },
+          "hitMs": {
+            "median": 1.3316669999985606,
+            "mean": 1.52108847416419,
+            "p99": 3.6694170000009763,
+            "samples": 658
+          },
+          "memoryPerEntryBytes": 67649
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 68881,
+          "missMs": {
+            "median": 2.690042000001995,
+            "mean": 2.898867046376815,
+            "p99": 3.9607920000016748,
+            "samples": 345
+          },
+          "hitMs": {
+            "median": 0.7398749999993015,
+            "mean": 0.8028173483146653,
+            "p99": 1.4452079999973648,
+            "samples": 1246
+          },
+          "memoryPerEntryBytes": 98812
+        }
+      }
+    },
+    {
+      "scenario": "medium",
+      "config": "cbor-x",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 22902,
+          "missMs": {
+            "median": 1.5687920000018494,
+            "mean": 1.6252826769480504,
+            "p99": 2.2427499999976135,
+            "samples": 616
+          },
+          "hitMs": {
+            "median": 0.6778750000012224,
+            "mean": 0.73607392273724,
+            "p99": 1.9340420000007725,
+            "samples": 1359
+          },
+          "memoryPerEntryBytes": 24754
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 27048,
+          "missMs": {
+            "median": 0.6749170000002778,
+            "mean": 0.7096091099290324,
+            "p99": 1.2821250000015425,
+            "samples": 1410
+          },
+          "hitMs": {
+            "median": 0.41016599999784376,
+            "mean": 0.43129882492450644,
+            "p99": 0.7817919999979495,
+            "samples": 2319
+          },
+          "memoryPerEntryBytes": 54934
+        }
+      }
+    },
+    {
+      "scenario": "large",
+      "config": "none",
+      "engines": {
+        "node": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0006250000005820766,
+            "mean": 0.000699181425750245,
+            "p99": 0.0012080000014975667,
+            "samples": 1357966
+          },
+          "hitMs": {
+            "median": 0.00020799999765586108,
+            "mean": 0.0001960293494284012,
+            "p99": 0.0002500000045984052,
+            "samples": 4304479
+          },
+          "memoryPerEntryBytes": 8448530
+        },
+        "bun": {
+          "storedAs": "native",
+          "compressedSize": null,
+          "missMs": {
+            "median": 0.0004169999992882367,
+            "mean": 0.0005814122903090446,
+            "p99": 0.0018339999987802003,
+            "samples": 1577682
+          },
+          "hitMs": {
+            "median": 0.0001249999986612238,
+            "mean": 0.00014606393477074384,
+            "p99": 0.0007499999992433004,
+            "samples": 5067493
+          },
+          "memoryPerEntryBytes": 6405942
+        }
+      }
+    },
+    {
+      "scenario": "large",
+      "config": "json",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 360165,
+          "missMs": {
+            "median": 15.20166700000118,
+            "mean": 15.430253861538613,
+            "p99": 17.73962500000198,
+            "samples": 65
+          },
+          "hitMs": {
+            "median": 8.76170799999818,
+            "mean": 8.891044557522632,
+            "p99": 11.0091670000038,
+            "samples": 113
+          },
+          "memoryPerEntryBytes": 361005
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 360362,
+          "missMs": {
+            "median": 7.447124999998778,
+            "mean": 7.567494451127534,
+            "p99": 9.017207999997481,
+            "samples": 133
+          },
+          "hitMs": {
+            "median": 5.675541999997222,
+            "mean": 5.76687379885058,
+            "p99": 7.5720409999994445,
+            "samples": 174
+          },
+          "memoryPerEntryBytes": 0
+        }
+      }
+    },
+    {
+      "scenario": "large",
+      "config": "superjson",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 360165,
+          "missMs": {
+            "median": 59.27599999999802,
+            "mean": 59.19716658823574,
+            "p99": 64.59674999999697,
+            "samples": 17
+          },
+          "hitMs": {
+            "median": 8.465875000001688,
+            "mean": 8.513078779661479,
+            "p99": 9.757832999996026,
+            "samples": 118
+          },
+          "memoryPerEntryBytes": 360957
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 360362,
+          "missMs": {
+            "median": 50.19341699999495,
+            "mean": 49.78414895238079,
+            "p99": 53.99725000000035,
+            "samples": 21
+          },
+          "hitMs": {
+            "median": 5.716667000000598,
+            "mean": 5.817014348837442,
+            "p99": 7.247749999994994,
+            "samples": 172
+          },
+          "memoryPerEntryBytes": 721566
+        }
+      }
+    },
+    {
+      "scenario": "large",
+      "config": "devalue",
+      "engines": {
+        "node": {
+          "storedAs": "compressed",
+          "compressedSize": 848627,
+          "missMs": {
+            "median": 66.46279199999844,
+            "mean": 66.27622137499975,
+            "p99": 70.05545900000288,
+            "samples": 16
+          },
+          "hitMs": {
+            "median": 22.286375000003318,
+            "mean": 22.021034434782727,
+            "p99": 25.743625000002794,
+            "samples": 46
+          },
+          "memoryPerEntryBytes": 849379
+        },
+        "bun": {
+          "storedAs": "compressed",
+          "compressedSize": 857891,
+          "missMs": {
+            "median": 49.64058300000033,
+            "mean": 50.05368114999874,
+            "p99": 59.65629099999933,
+            "samples": 20
+          },
+          "hitMs": {
+            "median": 10.960707999998704,
+            "mean": 11.293468202247066,
+            "p99": 17.82329100000061,
+            "samples": 89
+          },
+          "memoryPerEntryBytes": 1716620
         }
       }
     },
@@ -643,37 +643,37 @@
       "engines": {
         "node": {
           "storedAs": "compressed",
-          "compressedSize": 74492,
+          "compressedSize": 297327,
           "missMs": {
-            "median": 7.887624999995751,
-            "mean": 7.983312166666904,
-            "p99": 9.132708999997703,
-            "samples": 126
+            "median": 19.820291999996698,
+            "mean": 20.08481574000005,
+            "p99": 22.798541999996814,
+            "samples": 50
           },
           "hitMs": {
-            "median": 3.36454099999537,
-            "mean": 3.5997615503597675,
-            "p99": 5.5040829999998095,
-            "samples": 278
+            "median": 8.164333999993687,
+            "mean": 8.7569090434786,
+            "p99": 11.433334000001196,
+            "samples": 115
           },
-          "memoryPerEntryBytes": 77476
+          "memoryPerEntryBytes": 302181
         },
         "bun": {
           "storedAs": "compressed",
-          "compressedSize": 87363,
+          "compressedSize": 350788,
           "missMs": {
-            "median": 3.2241250000006403,
-            "mean": 3.280807386885004,
-            "p99": 4.302500000005239,
-            "samples": 305
+            "median": 8.452666999997746,
+            "mean": 8.556569871794855,
+            "p99": 10.166250000002037,
+            "samples": 117
           },
           "hitMs": {
-            "median": 2.0239999999976135,
-            "mean": 2.085021083333307,
-            "p99": 2.852707999998529,
-            "samples": 480
+            "median": 5.475333000002138,
+            "mean": 5.577345827777794,
+            "p99": 6.943542000000889,
+            "samples": 180
           },
-          "memoryPerEntryBytes": 175716
+          "memoryPerEntryBytes": 702324
         }
       }
     },
@@ -685,35 +685,35 @@
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.0009170000048470683,
-            "mean": 0.0010099777395787394,
-            "p99": 0.0014579999988200143,
-            "samples": 938302
+            "median": 0.0007909999985713512,
+            "mean": 0.0008354406613911498,
+            "p99": 0.001167000002169516,
+            "samples": 1147339
           },
           "hitMs": {
-            "median": 0.0002919999969890341,
-            "mean": 0.0003008713508993528,
-            "p99": 0.000375000003259629,
-            "samples": 2811617
+            "median": 0.00016699999832781032,
+            "mean": 0.0001869963935031946,
+            "p99": 0.0002500000045984052,
+            "samples": 4475811
           },
-          "memoryPerEntryBytes": 3932233
+          "memoryPerEntryBytes": 16192525
         },
         "bun": {
           "storedAs": "native",
           "compressedSize": null,
           "missMs": {
-            "median": 0.0006250000005820766,
-            "mean": 0.0008188525683141023,
-            "p99": 0.0027910000062547624,
-            "samples": 1112461
+            "median": 0.0004169999956502579,
+            "mean": 0.0005579830814927349,
+            "p99": 0.0019170000014128163,
+            "samples": 1639211
           },
           "hitMs": {
-            "median": 0.00020799999765586108,
-            "mean": 0.00023878235011657843,
-            "p99": 0.0012500000011641532,
-            "samples": 3151171
+            "median": 0.0001249999986612238,
+            "mean": 0.00015156097696767052,
+            "p99": 0.0007920000061858445,
+            "samples": 4917660
           },
-          "memoryPerEntryBytes": 2820046
+          "memoryPerEntryBytes": 11333942
         }
       }
     },
@@ -723,37 +723,37 @@
       "engines": {
         "node": {
           "storedAs": "compressed",
-          "compressedSize": 321945,
+          "compressedSize": 1280186,
           "missMs": {
-            "median": 138.87900000000081,
-            "mean": 135.37016670000156,
-            "p99": 140.4847499999887,
+            "median": 407.7910419999971,
+            "mean": 408.5152791000015,
+            "p99": 441.56062499999825,
             "samples": 10
           },
           "hitMs": {
-            "median": 52.552625000011176,
-            "mean": 53.86226536842035,
-            "p99": 59.627624999993714,
-            "samples": 19
+            "median": 154.40491700000712,
+            "mean": 157.40394589999923,
+            "p99": 170.19529200000397,
+            "samples": 10
           },
-          "memoryPerEntryBytes": 322742
+          "memoryPerEntryBytes": 1280930
         },
         "bun": {
           "storedAs": "compressed",
-          "compressedSize": 307629,
+          "compressedSize": 1216966,
           "missMs": {
-            "median": 74.77520799999911,
-            "mean": 73.7826667857137,
-            "p99": 78.3002090000009,
-            "samples": 14
+            "median": 229.78270899999916,
+            "mean": 226.2891875000001,
+            "p99": 242.2657920000056,
+            "samples": 10
           },
           "hitMs": {
-            "median": 35.44166699999914,
-            "mean": 35.56608482758647,
-            "p99": 39.67104200000176,
-            "samples": 29
+            "median": 105.89233299999614,
+            "mean": 106.07207090000011,
+            "p99": 110.65187499999593,
+            "samples": 10
           },
-          "memoryPerEntryBytes": 616146
+          "memoryPerEntryBytes": 2434974
         }
       }
     },
@@ -763,37 +763,37 @@
       "engines": {
         "node": {
           "storedAs": "compressed",
-          "compressedSize": 359475,
+          "compressedSize": 1421312,
           "missMs": {
-            "median": 44.91987499999232,
-            "mean": 46.78650390909024,
-            "p99": 54.918250000002445,
-            "samples": 22
+            "median": 138.63995900000737,
+            "mean": 141.05423749999756,
+            "p99": 151.51149999999325,
+            "samples": 10
           },
           "hitMs": {
-            "median": 18.424792000005255,
-            "mean": 18.12304246428643,
-            "p99": 21.864208000013605,
-            "samples": 56
+            "median": 48.987999999997555,
+            "mean": 48.272785666667566,
+            "p99": 51.27470800001174,
+            "samples": 21
           },
-          "memoryPerEntryBytes": 360292
+          "memoryPerEntryBytes": 1421916
         },
         "bun": {
           "storedAs": "compressed",
-          "compressedSize": 370206,
+          "compressedSize": 1475731,
           "missMs": {
-            "median": 27.91033299999981,
-            "mean": 27.899323055556025,
-            "p99": 32.07195900000079,
-            "samples": 36
+            "median": 89.75483299999905,
+            "mean": 91.41794318181796,
+            "p99": 100.70120799999859,
+            "samples": 11
           },
           "hitMs": {
-            "median": 10.778209000003699,
-            "mean": 10.861456118279744,
-            "p99": 12.18554099999892,
-            "samples": 93
+            "median": 26.75741600000765,
+            "mean": 27.305334459462067,
+            "p99": 31.96433299999626,
+            "samples": 37
           },
-          "memoryPerEntryBytes": 359453
+          "memoryPerEntryBytes": 2951996
         }
       }
     },
@@ -803,82 +803,373 @@
       "engines": {
         "node": {
           "storedAs": "compressed",
-          "compressedSize": 147174,
+          "compressedSize": 588729,
           "missMs": {
-            "median": 13.268624999996973,
-            "mean": 13.45032666666666,
-            "p99": 16.86066700000083,
-            "samples": 75
+            "median": 36.660333000007086,
+            "mean": 37.21093055555819,
+            "p99": 43.69866599999659,
+            "samples": 27
           },
           "hitMs": {
-            "median": 4.792749999993248,
-            "mean": 5.277960310525975,
-            "p99": 9.287083999995957,
-            "samples": 190
+            "median": 13.584999999991851,
+            "mean": 13.677249391893014,
+            "p99": 17.588000000003376,
+            "samples": 74
           },
-          "memoryPerEntryBytes": 150566
+          "memoryPerEntryBytes": 593782
         },
         "bun": {
           "storedAs": "compressed",
-          "compressedSize": 158661,
+          "compressedSize": 638560,
           "missMs": {
-            "median": 7.981832999998005,
-            "mean": 8.058146239999973,
-            "p99": 10.017375000003085,
-            "samples": 125
+            "median": 20.94566599999962,
+            "mean": 21.19568318749892,
+            "p99": 25.307333999997354,
+            "samples": 48
           },
           "hitMs": {
-            "median": 3.058082999996259,
-            "mean": 3.1546090851733073,
-            "p99": 4.344417000000249,
-            "samples": 317
+            "median": 8.000708000006853,
+            "mean": 8.110758362903477,
+            "p99": 9.782999999995809,
+            "samples": 124
           },
-          "memoryPerEntryBytes": 318249
+          "memoryPerEntryBytes": 1277919
         }
       }
     }
   ],
+  "hono": {
+    "scenario": "medium",
+    "configs": [
+      {
+        "id": "none",
+        "label": "No cache (c.json)",
+        "description": "Hono c.json(payload) on each request, baseline (the payload is already in memory, a real handler also pays the data fetching)"
+      },
+      {
+        "id": "json",
+        "label": "json + gzip",
+        "description": "Compressed JSON, sent as-is"
+      },
+      {
+        "id": "superjson",
+        "label": "superjson + gzip",
+        "description": "Plain data detected and stored as JSON (detectJson), sent as-is"
+      },
+      {
+        "id": "superjson-no-detect",
+        "label": "superjson + gzip (detectJson: false)",
+        "description": "Stored in the superjson format: decompressed, deserialized and serialized to JSON"
+      },
+      {
+        "id": "cbor-x",
+        "label": "cbor-x + gzip",
+        "description": "Stored as CBOR: decompressed, deserialized and serialized to JSON"
+      }
+    ],
+    "results": [
+      {
+        "config": "none",
+        "engines": {
+          "node": {
+            "storedAs": "none",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 0.6153749999939464,
+              "mean": 0.6406835919282676,
+              "p99": 1.5167079999955604,
+              "samples": 1561
+            },
+            "hitGzipMs": {
+              "median": 0.6028749999968568,
+              "mean": 0.622029728855618,
+              "p99": 1.3812499999912689,
+              "samples": 1608
+            },
+            "hitIdentityMs": {
+              "median": 0.604708999991999,
+              "mean": 0.6253108893750323,
+              "p99": 1.4123339999932796,
+              "samples": 1600
+            }
+          },
+          "bun": {
+            "storedAs": "none",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 0.18891700000676792,
+              "mean": 0.1938836850882051,
+              "p99": 0.3639580000017304,
+              "samples": 5157
+            },
+            "hitGzipMs": {
+              "median": 0.1910409999982221,
+              "mean": 0.19611662259694657,
+              "p99": 0.3965829999942798,
+              "samples": 5098
+            },
+            "hitIdentityMs": {
+              "median": 0.1895829999994021,
+              "mean": 0.19414709029132354,
+              "p99": 0.38933400000678375,
+              "samples": 5150
+            }
+          }
+        }
+      },
+      {
+        "config": "json",
+        "engines": {
+          "node": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": true,
+            "missMs": {
+              "median": 1.2301660000084667,
+              "mean": 1.2907283225805957,
+              "p99": 3.596666000012192,
+              "samples": 775
+            },
+            "hitGzipMs": {
+              "median": 0.00812499999301508,
+              "mean": 0.010293752836136939,
+              "p99": 0.02262499999778811,
+              "samples": 96786
+            },
+            "hitIdentityMs": {
+              "median": 0.4142500000016298,
+              "mean": 0.5162147423850316,
+              "p99": 3.1126249999942956,
+              "samples": 1937
+            }
+          },
+          "bun": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": true,
+            "missMs": {
+              "median": 0.5929579999938142,
+              "mean": 0.6033113839660112,
+              "p99": 0.8885000000009313,
+              "samples": 1659
+            },
+            "hitGzipMs": {
+              "median": 0.0016250000044237822,
+              "mean": 0.0019465804062929557,
+              "p99": 0.0053340000013122335,
+              "samples": 500620
+            },
+            "hitIdentityMs": {
+              "median": 0.1894579999934649,
+              "mean": 0.19671132126694868,
+              "p99": 0.4198749999923166,
+              "samples": 5083
+            }
+          }
+        }
+      },
+      {
+        "config": "superjson",
+        "engines": {
+          "node": {
+            "storedAs": "compressed",
+            "content": "json",
+            "sentAsIs": true,
+            "missMs": {
+              "median": 3.9303339999896707,
+              "mean": 4.045327451613458,
+              "p99": 7.743207999999868,
+              "samples": 248
+            },
+            "hitGzipMs": {
+              "median": 0.007792000003973953,
+              "mean": 0.009784594159748704,
+              "p99": 0.01958300000114832,
+              "samples": 101811
+            },
+            "hitIdentityMs": {
+              "median": 0.4082500000076834,
+              "mean": 0.5022971953791694,
+              "p99": 1.734958999993978,
+              "samples": 1991
+            }
+          },
+          "bun": {
+            "storedAs": "compressed",
+            "content": "json",
+            "sentAsIs": true,
+            "missMs": {
+              "median": 3.345541000002413,
+              "mean": 3.3539297725756816,
+              "p99": 3.8397079999995185,
+              "samples": 299
+            },
+            "hitGzipMs": {
+              "median": 0.0016670000040903687,
+              "mean": 0.0020134141293179576,
+              "p99": 0.005499999999301508,
+              "samples": 484298
+            },
+            "hitIdentityMs": {
+              "median": 0.1869589999987511,
+              "mean": 0.19526047109382602,
+              "p99": 0.4188750000030268,
+              "samples": 5120
+            }
+          }
+        }
+      },
+      {
+        "config": "superjson-no-detect",
+        "engines": {
+          "node": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 5.121583000000101,
+              "mean": 5.288133952631937,
+              "p99": 9.158624999996391,
+              "samples": 190
+            },
+            "hitGzipMs": {
+              "median": 1.152791000000434,
+              "mean": 1.3067242154045235,
+              "p99": 3.9264580000017304,
+              "samples": 766
+            },
+            "hitIdentityMs": {
+              "median": 1.157666999992216,
+              "mean": 1.2706429428210393,
+              "p99": 3.9654169999994338,
+              "samples": 787
+            }
+          },
+          "bun": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 3.9597499999945285,
+              "mean": 3.972002436507734,
+              "p99": 4.706208000003244,
+              "samples": 252
+            },
+            "hitGzipMs": {
+              "median": 0.6041250000125729,
+              "mean": 0.6190575872524188,
+              "p99": 0.9767920000012964,
+              "samples": 1616
+            },
+            "hitIdentityMs": {
+              "median": 0.6003329999948619,
+              "mean": 0.6159069544333635,
+              "p99": 1.0270409999939147,
+              "samples": 1624
+            }
+          }
+        }
+      },
+      {
+        "config": "cbor-x",
+        "engines": {
+          "node": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 2.9463749999995343,
+              "mean": 3.0798856123073852,
+              "p99": 4.345667000001413,
+              "samples": 325
+            },
+            "hitGzipMs": {
+              "median": 1.192750000001979,
+              "mean": 1.2614718297604008,
+              "p99": 2.5488749999931315,
+              "samples": 793
+            },
+            "hitIdentityMs": {
+              "median": 1.1675839999952586,
+              "mean": 1.2456123947693907,
+              "p99": 2.5773750000080327,
+              "samples": 803
+            }
+          },
+          "bun": {
+            "storedAs": "compressed",
+            "content": null,
+            "sentAsIs": false,
+            "missMs": {
+              "median": 1.4592499999998836,
+              "mean": 1.473486861561466,
+              "p99": 2.77675000000454,
+              "samples": 679
+            },
+            "hitGzipMs": {
+              "median": 0.6305419999989681,
+              "mean": 0.6466844667098184,
+              "p99": 0.9636660000105621,
+              "samples": 1547
+            },
+            "hitIdentityMs": {
+              "median": 0.6378330000006827,
+              "mean": 0.6551952809430354,
+              "p99": 0.986957999994047,
+              "samples": 1527
+            }
+          }
+        }
+      }
+    ]
+  },
   "summary": {
     "bunVsNode": {
       "overall": {
-        "miss": 1.650858459254227,
-        "hit": 1.5921135636480601,
-        "memory": 0.6931241292425097
+        "miss": 1.615498142784287,
+        "hit": 1.5985567735317792,
+        "memory": 0.6580649650064448
       },
       "scenarios": [
         {
           "scenario": "small",
           "bunVsNode": {
-            "miss": 1.5885536615104123,
-            "hit": 1.5077682243064392,
-            "memory": 0.7570515600796871
+            "miss": 1.5706734558196025,
+            "hit": 1.5940448615968372,
+            "memory": 0.7503102674429949
           }
         },
         {
           "scenario": "medium",
           "bunVsNode": {
-            "miss": 1.7018363610739666,
-            "hit": 1.7445811783405007,
-            "memory": 0.6889150416814334
+            "miss": 1.558520819190332,
+            "hit": 1.5952736399101264,
+            "memory": 0.6249573092217324
           }
         },
         {
           "scenario": "large",
           "bunVsNode": {
-            "miss": 1.6704161743073458,
-            "hit": 1.5783282621740897,
-            "memory": 0.5886881794276546
+            "miss": 1.6253516322488648,
+            "hit": 1.6307784084782813,
+            "memory": 0.6121864525500381
           }
         },
         {
           "scenario": "large-extended",
           "bunVsNode": {
-            "miss": 1.6432031879172602,
-            "hit": 1.5367308950941228,
-            "memory": 0.7671526388174884
+            "miss": 1.73689431826031,
+            "hit": 1.5687182795556127,
+            "memory": 0.640415298693706
           }
         }
-      ]
+      ],
+      "hono": {
+        "miss": 1.833721144014897,
+        "hit": 2.60356978368506
+      }
     }
   }
 }

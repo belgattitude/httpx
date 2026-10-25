@@ -24,19 +24,20 @@ Bun 1.4.4 vs Node.js 26.12.0 (geometric mean of the median times of all serializ
 
 | Scenario | Cache miss | Cache hit | Memory per entry |
 | --- | --: | --: | --: |
-| Small payload | **1.59× faster** | **1.51× faster** | 1.32× more |
-| Medium payload | **1.70× faster** | **1.74× faster** | 1.45× more |
-| Large payload | **1.67× faster** | **1.58× faster** | 1.70× more |
-| Large payload with extended types | **1.64× faster** | **1.54× faster** | 1.30× more |
-| **Overall** | **1.65× faster** | **1.59× faster** | 1.44× more |
+| Small payload | **1.57× faster** | **1.59× faster** | 1.33× more |
+| Medium payload | **1.56× faster** | **1.60× faster** | 1.60× more |
+| Large payload | **1.63× faster** | **1.63× faster** | 1.63× more |
+| Large payload with extended types | **1.74× faster** | **1.57× faster** | 1.56× more |
+| Hono, medium payload (requests) | **1.83× faster** | **2.60× faster** | - |
+| **Overall** (cache) | **1.62× faster** | **1.60× faster** | 1.52× more |
 
 Best serializer per scenario (Node.js, excluding "No compression"):
 
 | Scenario | ⚡ Fastest miss | 🚀 Fastest hit | 🪶 Smallest memory |
 | --- | --- | --- | --- |
 | Small payload | json + gzip | all similar | devalue + gzip |
-| Medium payload | json + gzip | json + gzip | cbor-x + gzip |
-| Large payload | json + gzip | superjson + gzip | cbor-x + gzip |
+| Medium payload | json + gzip | superjson + gzip | cbor-x + gzip |
+| Large payload | json + gzip | cbor-x + gzip | cbor-x + gzip |
 | Large payload with extended types | cbor-x + gzip | cbor-x + gzip | cbor-x + gzip |
 
 ## Method
@@ -58,43 +59,63 @@ Array of small records, under the compression minimum size (stored as-is): 20 re
 
 | Serializer | Stored as | Compressed size | Miss Node.js | Miss Bun | Hit Node.js | Hit Bun | Memory Node.js | Memory Bun |
 | --- | --- | --: | --: | --: | --: | --: | --: | --: |
-| No compression | native | - | 875 ns | 625 ns | 250 ns | 208 ns | 3.8 kB | 3.2 kB |
-| json + gzip | native | - | ⚡ **4.7 µs** | ⚡ **2.1 µs** | 🚀 **333 ns** | 🚀 **209 ns** | 4.6 kB | 5.4 kB |
-| superjson + gzip | native | - | 32.4 µs | 28.4 µs | 334 ns | 🚀 **209 ns** | 4 kB | 5.4 kB |
-| devalue + gzip | native | - | 19.0 µs | 10.2 µs | 🚀 **333 ns** | 🚀 **209 ns** | 🪶 **2 kB** | 5.4 kB |
-| cbor-x + gzip | native | - | 6.7 µs | 4.3 µs | 334 ns | 🚀 **209 ns** | 4.6 kB | 🪶 **5.3 kB** |
+| No compression | native | - | 583 ns | 416 ns | 167 ns | 125 ns | 3.8 kB | 3.2 kB |
+| json + gzip | native | - | ⚡ **3.0 µs** | ⚡ **1.4 µs** | 209 ns | 🚀 **125 ns** | 4.6 kB | 5.4 kB |
+| superjson + gzip | native | - | 20.4 µs | 18.2 µs | 🚀 **208 ns** | 🚀 **125 ns** | 4 kB | 5.4 kB |
+| devalue + gzip | native | - | 12.1 µs | 6.4 µs | 🚀 **208 ns** | 🚀 **125 ns** | 🪶 **2 kB** | 🪶 **5.4 kB** |
+| cbor-x + gzip | native | - | 4.3 µs | 2.8 µs | 🚀 **208 ns** | 🚀 **125 ns** | 4.6 kB | 5.4 kB |
 
 ### 2. Medium payload
 
-Array of records, compressed with the default options: 1,000 records, 88 kB as JSON.
+Array of records, compressed with the default options: 3,400 records, 299.2 kB as JSON.
 
 | Serializer | Stored as | Compressed size | Miss Node.js | Miss Bun | Hit Node.js | Hit Bun | Memory Node.js | Memory Bun |
 | --- | --- | --: | --: | --: | --: | --: | --: | --: |
-| No compression | native | - | 916 ns | 625 ns | 292 ns | 208 ns | 169 kB | 136.2 kB |
-| json + gzip | compressed | 8.3 kB | ⚡ **559.2 µs** | ⚡ **224.9 µs** | 🚀 **326.8 µs** | 🚀 **179.5 µs** | 9.6 kB | 13 kB |
-| superjson + gzip | compressed | 8.3 kB | 1.75 ms | 1.65 ms | 333.6 µs | 182.9 µs | 9.1 kB | 🪶 **12.9 kB** |
-| devalue + gzip | compressed | 19.6 kB | 1.58 ms | 1.00 ms | 660.9 µs | 340.1 µs | 20.5 kB | 41.5 kB |
-| cbor-x + gzip | compressed | 🪶 **6.7 kB** | 725.8 µs | 311.4 µs | 342.2 µs | 191.9 µs | 🪶 **8 kB** | 16.6 kB |
+| No compression | native | - | 584 ns | 417 ns | 167 ns | 125 ns | 575.8 kB | 486.7 kB |
+| json + gzip | compressed | 27.8 kB | ⚡ **1.17 ms** | ⚡ **573.5 µs** | 639.0 µs | 400.4 µs | 29.3 kB | 57 kB |
+| superjson + gzip | compressed | 27.8 kB | 3.93 ms | 3.85 ms | 🚀 **638.2 µs** | 🚀 **391.7 µs** | 28.7 kB | 56.6 kB |
+| devalue + gzip | compressed | 66.8 kB | 3.65 ms | 2.69 ms | 1.33 ms | 739.9 µs | 67.6 kB | 98.8 kB |
+| cbor-x + gzip | compressed | 🪶 **22.9 kB** | 1.57 ms | 674.9 µs | 677.9 µs | 410.2 µs | 🪶 **24.7 kB** | 🪶 **54.9 kB** |
 
 ### 3. Large payload
 
-Array of records, compressed with the default options: 11,000 records, 974 kB as JSON.
+Array of records, compressed with the default options: 44,000 records, 3.9 MB as JSON.
 
 | Serializer | Stored as | Compressed size | Miss Node.js | Miss Bun | Hit Node.js | Hit Bun | Memory Node.js | Memory Bun |
 | --- | --- | --: | --: | --: | --: | --: | --: | --: |
-| No compression | native | - | 917 ns | 625 ns | 292 ns | 208 ns | 1.9 MB | 1.5 MB |
-| json + gzip | compressed | 90.3 kB | ⚡ **5.94 ms** | ⚡ **2.74 ms** | 3.08 ms | 1.98 ms | 91.1 kB | 181.9 kB |
-| superjson + gzip | compressed | 90.3 kB | 21.8 ms | 18.4 ms | 🚀 **3.08 ms** | 🚀 **1.97 ms** | 91.2 kB | 181.9 kB |
-| devalue + gzip | compressed | 213.5 kB | 21.5 ms | 15.3 ms | 6.82 ms | 3.95 ms | 214.3 kB | 421.9 kB |
-| cbor-x + gzip | compressed | 🪶 **74.4 kB** | 7.89 ms | 3.22 ms | 3.36 ms | 2.02 ms | 🪶 **77.4 kB** | 🪶 **175.7 kB** |
+| No compression | native | - | 625 ns | 417 ns | 208 ns | 125 ns | 8.4 MB | 6.4 MB |
+| json + gzip | compressed | 360.1 kB | ⚡ **15.2 ms** | ⚡ **7.45 ms** | 8.76 ms | 5.68 ms | 361 kB | 🪶 **0 B** |
+| superjson + gzip | compressed | 360.1 kB | 59.3 ms | 50.2 ms | 8.47 ms | 5.72 ms | 360.9 kB | 721.5 kB |
+| devalue + gzip | compressed | 848.6 kB | 66.5 ms | 49.6 ms | 22.3 ms | 11.0 ms | 849.3 kB | 1.7 MB |
+| cbor-x + gzip | compressed | 🪶 **297.3 kB** | 19.8 ms | 8.45 ms | 🚀 **8.16 ms** | 🚀 **5.48 ms** | 🪶 **302.1 kB** | 702.3 kB |
 
 ### 4. Large payload with extended types
 
-Same as large, with Date, BigInt, undefined and NaN values (json is not supported): 11,000 records, 1.7 MB as JSON.
+Same as large, with Date, BigInt, undefined and NaN values (json is not supported): 44,000 records, 6.9 MB as JSON.
 
 | Serializer | Stored as | Compressed size | Miss Node.js | Miss Bun | Hit Node.js | Hit Bun | Memory Node.js | Memory Bun |
 | --- | --- | --: | --: | --: | --: | --: | --: | --: |
-| No compression | native | - | 917 ns | 625 ns | 292 ns | 208 ns | 3.9 MB | 2.8 MB |
-| superjson + gzip | compressed | 321.9 kB | 139 ms | 74.8 ms | 52.6 ms | 35.4 ms | 322.7 kB | 616.1 kB |
-| devalue + gzip | compressed | 359.4 kB | 44.9 ms | 27.9 ms | 18.4 ms | 10.8 ms | 360.2 kB | 359.4 kB |
-| cbor-x + gzip | compressed | 🪶 **147.1 kB** | ⚡ **13.3 ms** | ⚡ **7.98 ms** | 🚀 **4.79 ms** | 🚀 **3.06 ms** | 🪶 **150.5 kB** | 🪶 **318.2 kB** |
+| No compression | native | - | 791 ns | 417 ns | 167 ns | 125 ns | 16.1 MB | 11.3 MB |
+| superjson + gzip | compressed | 1.2 MB | 408 ms | 230 ms | 154 ms | 106 ms | 1.2 MB | 2.4 MB |
+| devalue + gzip | compressed | 1.4 MB | 139 ms | 89.8 ms | 49.0 ms | 26.8 ms | 1.4 MB | 2.9 MB |
+| cbor-x + gzip | compressed | 🪶 **588.7 kB** | ⚡ **36.7 ms** | ⚡ **20.9 ms** | 🚀 **13.6 ms** | 🚀 **8.00 ms** | 🪶 **593.7 kB** | 🪶 **1.2 MB** |
+
+## Hono (medium payload)
+
+`createHonoXCache` with a JSON response (`JsonSerializer`) and an `XMemCache` instance compressing with different serializers, 299.2 kB as JSON, response body read by the client. Compressed entries are sent as-is (`Content-Encoding: gzip`) when their bytes are JSON: `JsonSerializer`, or superjson with JSON detection (`detectJson`, default) when the data has no extended types. Otherwise they are decompressed, deserialized and serialized to JSON on each request.
+
+| Setup | Hit sent as-is | Miss Node.js | Miss Bun | Hit gzip Node.js | Hit gzip Bun | Hit identity Node.js | Hit identity Bun |
+| --- | --- | --: | --: | --: | --: | --: | --: |
+| No cache (c.json) | - | 615.4 µs | 188.9 µs | 602.9 µs | 191.0 µs | 604.7 µs | 189.6 µs |
+| json + gzip | ✅ yes | ⚡ **1.23 ms** | ⚡ **593.0 µs** | 8.1 µs | 🚀 **1.6 µs** | 414.3 µs | 189.5 µs |
+| superjson + gzip | ✅ yes | 3.93 ms | 3.35 ms | 🚀 **7.8 µs** | 1.7 µs | 🚀 **408.3 µs** | 🚀 **187.0 µs** |
+| superjson + gzip (detectJson: false) | ❌ no | 5.12 ms | 3.96 ms | 1.15 ms | 604.1 µs | 1.16 ms | 600.3 µs |
+| cbor-x + gzip | ❌ no | 2.95 ms | 1.46 ms | 1.19 ms | 630.5 µs | 1.17 ms | 637.8 µs |
+
+- **No cache (c.json)**: Hono c.json(payload) on each request, baseline (the payload is already in memory, a real handler also pays the data fetching).
+- **json + gzip**: Compressed JSON, sent as-is.
+- **superjson + gzip**: Plain data detected and stored as JSON (detectJson), sent as-is.
+- **superjson + gzip (detectJson: false)**: Stored in the superjson format: decompressed, deserialized and serialized to JSON.
+- **cbor-x + gzip**: Stored as CBOR: decompressed, deserialized and serialized to JSON.
+
+"Hit gzip": client accepting gzip (`Accept-Encoding: gzip`), "Hit identity": client not accepting it (the compressed bytes are decompressed). "No cache" is the baseline (same time for miss and hits), not a candidate for the icons.

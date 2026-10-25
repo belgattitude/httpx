@@ -45,26 +45,26 @@ export const scenarios: Scenario[] = [
     id: "medium",
     title: "Medium payload",
     description: "Array of records, compressed with the default options",
-    rows: 1000,
+    rows: 3400,
     extendedTypes: false,
-    memoryEntries: 100,
+    memoryEntries: 40,
   }),
   createScenario({
     id: "large",
     title: "Large payload",
     description: "Array of records, compressed with the default options",
-    rows: 11_000,
+    rows: 44_000,
     extendedTypes: false,
-    memoryEntries: 20,
+    memoryEntries: 10,
   }),
   createScenario({
     id: "large-extended",
     title: "Large payload with extended types",
     description:
       "Same as large, with Date, BigInt, undefined and NaN values (json is not supported)",
-    rows: 11_000,
+    rows: 44_000,
     extendedTypes: true,
-    memoryEntries: 20,
+    memoryEntries: 10,
   }),
 ];
 
@@ -77,8 +77,10 @@ export type CacheConfig = {
 };
 
 const gzip = (
-  serializer: ICacheSerializer | ICacheBinarySerializer
-): CacheCompress => new CacheCompress({ algorithm: "gzip", serializer });
+  serializer: ICacheSerializer | ICacheBinarySerializer,
+  options?: { detectJson?: boolean }
+): CacheCompress =>
+  new CacheCompress({ algorithm: "gzip", serializer, ...options });
 
 export const configs: CacheConfig[] = [
   {
@@ -109,6 +111,59 @@ export const configs: CacheConfig[] = [
     id: "cbor-x",
     label: "cbor-x + gzip",
     nativeTypesOnly: false,
+    createCompressor: () => gzip(new CborxSerializer()),
+  },
+];
+
+/** Scenario used for the hono comparison */
+export const honoScenarioId = "medium";
+
+export type HonoConfig = {
+  id: string;
+  label: string;
+  description: string;
+  /** undefined: no cache, c.json(payload) on each request */
+  createCompressor: (() => CacheCompress) | undefined;
+};
+
+/**
+ * createHonoXCache with a JSON response (JsonSerializer) and an XMemCache
+ * instance compressing with different serializers.
+ */
+export const honoConfigs: HonoConfig[] = [
+  {
+    id: "none",
+    label: "No cache (c.json)",
+    description:
+      "Hono c.json(payload) on each request, baseline (the payload is already in memory, a real handler also pays the data fetching)",
+    createCompressor: undefined,
+  },
+  {
+    id: "json",
+    label: "json + gzip",
+    description: "Compressed JSON, sent as-is",
+    createCompressor: () => gzip(new JsonSerializer()),
+  },
+  {
+    id: "superjson",
+    label: "superjson + gzip",
+    description:
+      "Plain data detected and stored as JSON (detectJson), sent as-is",
+    createCompressor: () => gzip(new SuperjsonSerializer()),
+  },
+  {
+    id: "superjson-no-detect",
+    label: "superjson + gzip (detectJson: false)",
+    description:
+      "Stored in the superjson format: decompressed, deserialized and serialized to JSON",
+    createCompressor: () =>
+      gzip(new SuperjsonSerializer(), { detectJson: false }),
+  },
+  {
+    id: "cbor-x",
+    label: "cbor-x + gzip",
+    description:
+      "Stored as CBOR: decompressed, deserialized and serialized to JSON",
     createCompressor: () => gzip(new CborxSerializer()),
   },
 ];
