@@ -50,8 +50,8 @@ describe("XMemCache dedupe", () => {
         cached: false,
         deduped: true,
         generatedKey: first?.meta.generatedKey,
-        // shared execution: same duration
-        duration: first?.meta.duration,
+        // shared execution: same timings
+        timings: first?.meta.timings,
       });
     }
     // subsequent calls are cache hits

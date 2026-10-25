@@ -73,7 +73,8 @@ const { data, meta } = await xMemCache.runAsync({
 });
 
 // meta.cached: true when served from the cache
-// meta.duration: time taken by the function in ms (on a hit: when the entry was created)
+// meta.timings: { fn: 152.37, serialize: 3.12, compress: 8.4 } (ms, see Statistics)
+// meta.readTimings: { decompress: 1.05, deserialize: 2.3 } (compressed cache hits)
 // meta.generatedKey: '{"key":["/api/data",{"id":1}],"ns":"other"}'
 ```
 
@@ -275,7 +276,7 @@ const { data } = await xMemCache.runAsync({
 
 ## Statistics
 
-`getStats()` returns statistics about the cached entries, and `getEntryInfo()` the info of a single entry. Expired entries are ignored and the lru order is not affected.
+`getStats()` returns statistics about the cached entries and the totals of the instance, and `getEntryInfo()` the info of a single entry. Expired entries are ignored and the lru order is not affected.
 
 ```typescript
 const stats = xMemCache.getStats();
@@ -292,7 +293,8 @@ const stats = xMemCache.getStats();
 //       size: 90333,
 //       compression: { algorithm: "gzip", encoding: "binary", serializer: "superjson", originalSize: 974025, compressedSize: 90333, ratio: 10.78 },
 //       createdAt: 1792411200000,
-//       duration: 152.37,    // time taken by the function in milliseconds
+//       timings: { fn: 152.37, serialize: 3.12, compress: 8.4 },
+//       usage: { hits: 42, deduped: 3, avgReadTime: 1.12, savedTime: 6798.09 },
 //       expiresIn: 118500,   // remaining ttl in milliseconds
 //     },
 //     {
@@ -300,15 +302,52 @@ const stats = xMemCache.getStats();
 //       format: "native",
 //       skippedReason: "minimum_byte_saving_not_met",
 //       createdAt: 1792411123000,
-//       duration: 12.5,
+//       timings: { fn: 12.5, serialize: 0.08 },
+//       usage: { hits: 10, deduped: 0, avgReadTime: 0, savedTime: 124.92 },
 //       expiresIn: 42000,
 //     },
 //     // ...
 //   ],
+//   totals: {                // since the instance creation (or resetStats)
+//     hits: 1250,
+//     misses: 80,
+//     deduped: 12,
+//     bypassed: 5,
+//     savedTime: 184320.12,  // estimated time saved in milliseconds
+//   },
 // }
 
 const info = xMemCache.getEntryInfo({ key: ["/api/data", params] });
 // same shape as an entry above, or undefined when not cached
+```
+
+`timings` holds the time spent creating the entry on the cache miss, in milliseconds. It's also returned by `runAsync` in `meta.timings` (on a cache hit: the timings of the execution that created the entry, ie: the time saved).
+
+| Timing | Description |
+| --- | --- |
+| `fn` | Time taken by the cached function. |
+| `serialize` | Serialization time. Absent when not serialized (no compressor, strings, trivial values). |
+| `compress` | Compression time. Absent when compression wasn't attempted, present when skipped afterwards (ie: ratio not met). |
+
+On a cache hit of a compressed entry, `runAsync` also returns the time spent reading the entry for this call in `meta.readTimings` (`{ decompress, deserialize }`, `deserialize` being absent for strings). It's not set for native entries (nothing to read) and cache misses.
+
+### Usage and savings
+
+Each entry keeps its `usage` since its creation: `hits`, `deduped` calls (joined the execution that created it), `avgReadTime` (decompress + deserialize, 0 for native entries) and the estimated `savedTime` in milliseconds:
+
+```
+savedTime = (hits + deduped) × timings.fn − total read time − (timings.serialize + timings.compress)
+```
+
+The usage is tied to the entry: it's dropped when the entry expires and starts over when it's replaced (ie: `forceRevalidate`), always measured against the timings of the current entry. A negative `savedTime` means the cache costs more than it saves for that key (ie: a fast function with a large payload to compress).
+
+`totals` sums all the calls of the instance (`runAsync` and `runAsyncEntry`) and is kept when entries expire or the cache is cleared. Use `resetStats()` to reset it.
+
+```typescript
+const { totals } = xMemCache.getStats();
+const hitRatio = totals.hits / (totals.hits + totals.misses + totals.deduped);
+
+xMemCache.resetStats(); // ie: after a deployment warmup
 ```
 
 > [!NOTE]

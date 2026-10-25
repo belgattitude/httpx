@@ -32,6 +32,29 @@ export type CacheCompressSuccessMeta = {
 };
 
 /**
+ * Time spent by the compressor (milliseconds).
+ */
+export type CacheCompressTimings = {
+  /** Serialization time, absent when not serialized (ie: strings) */
+  serialize?: number;
+  /**
+   * Compression time, absent when compression wasn't attempted. Present
+   * when compression was skipped after compressing (ie: ratio not met).
+   */
+  compress?: number;
+};
+
+/**
+ * Time spent by the compressor reading compressed data (milliseconds).
+ */
+export type CacheDecompressTimings = {
+  /** Decompression time */
+  decompress?: number;
+  /** Deserialization time, absent when not deserialized (ie: strings) */
+  deserialize?: number;
+};
+
+/**
  * Reasons why compression was skipped.
  */
 export type CacheCompressSkippedReason =
@@ -47,7 +70,7 @@ export type CacheCompressSkippedReason =
  * - "skipped": data is returned as-is (ie: too small to be worth it).
  * - "failure": data is returned as-is.
  */
-export type CacheCompressResult<T = unknown> =
+export type CacheCompressResult<T = unknown> = (
   | {
       status: "success";
       data: string | Uint8Array;
@@ -66,7 +89,11 @@ export type CacheCompressResult<T = unknown> =
         reason: CacheCompressSkippedReason;
       };
       data: T;
-    };
+    }
+) & {
+  /** Time spent serializing and compressing, when measured */
+  timings?: CacheCompressTimings;
+};
 
 /**
  * Compressor interface used by XMemCache (ie: CacheCompress).
@@ -74,8 +101,14 @@ export type CacheCompressResult<T = unknown> =
 export interface ICacheCompressor {
   /** Serialize and compress the data */
   compress: <T>(data: T) => Promise<CacheCompressResult>;
-  /** Decompress and deserialize the data */
-  decompress: <T = unknown>(data: CacheCompressResult) => Promise<T>;
+  /**
+   * Decompress and deserialize the data. When provided, timings is filled
+   * with the time spent (optional for custom compressors).
+   */
+  decompress: <T = unknown>(
+    data: CacheCompressResult,
+    timings?: CacheDecompressTimings
+  ) => Promise<T>;
   /** Identifier of the compressor, used in the generated cache keys */
   getIdentifier: () => string;
   /**

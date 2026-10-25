@@ -1,7 +1,8 @@
-import { TimeLruCache } from "@httpx/lru";
+import { type SupportedCacheValues, TimeLruCache } from "@httpx/lru";
 import { expect, onTestFinished, vi } from "vitest";
 
 import { CacheCompress } from "../compress/cache-compress";
+import type { ICacheCompressor } from "../compress/types";
 import { JsonSerializer } from "../serializer/json-serializer";
 import { XMemCache } from "../x-mem-cache";
 
@@ -36,6 +37,7 @@ describe("XMemCache stats", () => {
       compressedSize: 0,
       originalSize: 0,
       entries: [],
+      totals: { hits: 0, misses: 0, deduped: 0, bypassed: 0, savedTime: 0 },
     });
   });
 
@@ -74,7 +76,17 @@ describe("XMemCache stats", () => {
         size: meta1.compressedSize,
         compression: meta1,
         createdAt: expect.any(Number),
-        duration: expect.any(Number),
+        timings: {
+          fn: expect.any(Number),
+          serialize: expect.any(Number),
+          compress: expect.any(Number),
+        },
+        usage: {
+          hits: 0,
+          deduped: 0,
+          avgReadTime: 0,
+          savedTime: expect.any(Number),
+        },
         expiresIn: expect.any(Number),
       },
       {
@@ -83,7 +95,17 @@ describe("XMemCache stats", () => {
         size: meta2.compressedSize,
         compression: meta2,
         createdAt: expect.any(Number),
-        duration: expect.any(Number),
+        timings: {
+          fn: expect.any(Number),
+          serialize: expect.any(Number),
+          compress: expect.any(Number),
+        },
+        usage: {
+          hits: 0,
+          deduped: 0,
+          avgReadTime: 0,
+          savedTime: expect.any(Number),
+        },
         expiresIn: expect.any(Number),
       },
       {
@@ -91,7 +113,13 @@ describe("XMemCache stats", () => {
         format: "native",
         skippedReason: "minimum_byte_saving_not_met",
         createdAt: expect.any(Number),
-        duration: expect.any(Number),
+        timings: { fn: expect.any(Number), serialize: expect.any(Number) },
+        usage: {
+          hits: 0,
+          deduped: 0,
+          avgReadTime: 0,
+          savedTime: expect.any(Number),
+        },
         expiresIn: expect.any(Number),
       },
     ]);
@@ -178,7 +206,17 @@ describe("XMemCache stats", () => {
       size: meta.compression?.compressedSize,
       compression: meta.compression,
       createdAt: expect.any(Number),
-      duration: expect.any(Number),
+      timings: {
+        fn: expect.any(Number),
+        serialize: expect.any(Number),
+        compress: expect.any(Number),
+      },
+      usage: {
+        hits: 0,
+        deduped: 0,
+        avgReadTime: 0,
+        savedTime: expect.any(Number),
+      },
       expiresIn: expect.any(Number),
     });
     expect(
@@ -211,12 +249,26 @@ describe("XMemCache stats", () => {
     }
   });
 
-  it("should return the time taken by the function", async () => {
+  it("should return the timings of the entry creation", async () => {
     vi.useFakeTimers({ toFake: ["performance"] });
     onTestFinished(() => {
       vi.useRealTimers();
     });
-    const { cache } = createCache();
+    const serializer = new JsonSerializer();
+    const { serialize } = serializer;
+    serializer.serialize = (data) => {
+      vi.advanceTimersByTime(5);
+      return serialize(data);
+    };
+    const cache = new XMemCache({
+      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      compressor: new CacheCompress({
+        algorithm: "gzip",
+        serializer,
+        minimumByteSaving: 1024,
+        minimumStringLength: 0,
+      }),
+    });
     const miss = await cache.runAsync({
       key: ["/slow"],
       fn: () => {
@@ -224,21 +276,169 @@ describe("XMemCache stats", () => {
         return Promise.resolve(bigPayload);
       },
     });
-    expect(miss.meta.duration).toBe(120);
+    expect(miss.meta.compression).toBeDefined();
+    expect(miss.meta.timings).toStrictEqual({
+      fn: 120,
+      serialize: 5,
+      compress: expect.any(Number),
+    });
+    // serialized, but too small to be compressed
     await cache.runAsync({
-      key: ["/fast"],
+      key: ["/small"],
       fn: () => Promise.resolve(smallPayload),
     });
-    // cache hits return the duration of the execution that created the entry
+    // strings are not serialized
+    await cache.runAsync({
+      key: ["/string"],
+      fn: () => Promise.resolve("a".repeat(5000)),
+    });
+    // cache hits return the timings of the execution that created the entry
     const hit = await cache.runAsync({
       key: ["/slow"],
       fn: () => Promise.resolve(bigPayload),
     });
-    expect(hit.meta).toMatchObject({ cached: true, duration: 120 });
-    expect(cache.getEntryInfo({ key: ["/slow"] })?.duration).toBe(120);
-    expect(cache.getStats().entries.map((e) => e.duration)).toStrictEqual([
-      0, 120,
+    expect(hit.meta).toMatchObject({
+      cached: true,
+      timings: miss.meta.timings,
+    });
+    expect(cache.getEntryInfo({ key: ["/slow"] })?.timings).toStrictEqual(
+      miss.meta.timings
+    );
+    expect(cache.getStats().entries.map((e) => e.timings)).toStrictEqual([
+      { fn: 0, serialize: 5 },
+      { fn: 0, compress: expect.any(Number) },
+      miss.meta.timings,
     ]);
+  });
+
+  it("should return the read timings on compressed cache hits", async () => {
+    vi.useFakeTimers({ toFake: ["performance"] });
+    onTestFinished(() => {
+      vi.useRealTimers();
+    });
+    const serializer = new JsonSerializer();
+    const { deserialize } = serializer;
+    serializer.deserialize = (data) => {
+      vi.advanceTimersByTime(3);
+      return deserialize(data);
+    };
+    const cache = new XMemCache({
+      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      compressor: new CacheCompress({
+        algorithm: "gzip",
+        serializer,
+        minimumByteSaving: 1024,
+        minimumStringLength: 0,
+      }),
+    });
+    const run = (key: string, data: SupportedCacheValues) =>
+      cache.runAsync({ key: [key], fn: () => Promise.resolve(data) });
+
+    const miss = await run("/big", bigPayload);
+    expect(miss.meta.readTimings).toBeUndefined();
+    const hit = await run("/big", bigPayload);
+    expect(hit.meta.cached).toBe(true);
+    expect(hit.data).toStrictEqual(bigPayload);
+    expect(hit.meta.readTimings).toStrictEqual({
+      decompress: expect.any(Number),
+      deserialize: 3,
+    });
+    // creation timings are unchanged
+    expect(hit.meta.timings).toStrictEqual(miss.meta.timings);
+
+    // strings are not deserialized
+    await run("/string", "a".repeat(5000));
+    const stringHit = await run("/string", "a".repeat(5000));
+    expect(stringHit.meta.compression?.serializer).toBe("none");
+    expect(stringHit.meta.readTimings).toStrictEqual({
+      decompress: expect.any(Number),
+    });
+
+    // nothing to read for native entries
+    await run("/small", smallPayload);
+    const nativeHit = await run("/small", smallPayload);
+    expect(nativeHit.meta.cached).toBe(true);
+    expect(nativeHit.meta.readTimings).toBeUndefined();
+  });
+
+  it("should round the timings reported by custom compressors", async () => {
+    const compressor: ICacheCompressor = {
+      getIdentifier: () => "custom",
+      compress: (data) =>
+        Promise.resolve({
+          status: "skipped",
+          meta: { reason: "minimum_byte_saving_not_met" },
+          data,
+          timings: { serialize: 1.23456, compress: 0.004 },
+        }),
+      decompress: (result) => Promise.resolve(result.data as never),
+    };
+    const cache = new XMemCache({
+      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      compressor,
+    });
+    const { meta } = await cache.runAsync({
+      key: ["/custom"],
+      fn: () => Promise.resolve(smallPayload),
+    });
+    expect(meta.timings).toStrictEqual({
+      fn: expect.any(Number),
+      serialize: 1.23,
+      compress: 0,
+    });
+    expect(String(meta.timings?.fn)).toMatch(/^\d+(\.\d{1,2})?$/);
+  });
+
+  it("should round the read timings reported by custom compressors", async () => {
+    const compressor: ICacheCompressor = {
+      getIdentifier: () => "custom",
+      compress: () =>
+        Promise.resolve({
+          status: "success",
+          meta: {
+            algorithm: "gzip",
+            encoding: "base64",
+            serializer: "custom",
+            originalSize: 10,
+            compressedSize: 5,
+            ratio: 2,
+          },
+          data: "compressed",
+        }),
+      decompress: (_result, timings) => {
+        if (timings !== undefined) {
+          timings.decompress = 1.23456;
+          timings.deserialize = 0.004;
+        }
+        return Promise.resolve(smallPayload as never);
+      },
+    };
+    const cache = new XMemCache({
+      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      compressor,
+    });
+    const run = () =>
+      cache.runAsync({
+        key: ["/custom"],
+        fn: () => Promise.resolve(smallPayload),
+      });
+    await run();
+    const { meta } = await run();
+    expect(meta.readTimings).toStrictEqual({
+      decompress: 1.23,
+      deserialize: 0,
+    });
+  });
+
+  it("should only return the function timing without compressor", async () => {
+    const cache = new XMemCache({
+      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+    });
+    const { meta } = await cache.runAsync({
+      key: ["/native"],
+      fn: () => Promise.resolve(bigPayload),
+    });
+    expect(meta.timings).toStrictEqual({ fn: expect.any(Number) });
   });
 
   it("should return native entries without compressor", async () => {
@@ -252,7 +452,13 @@ describe("XMemCache stats", () => {
       key: meta.generatedKey,
       format: "native",
       createdAt: expect.any(Number),
-      duration: expect.any(Number),
+      timings: { fn: expect.any(Number) },
+      usage: {
+        hits: 0,
+        deduped: 0,
+        avgReadTime: 0,
+        savedTime: expect.any(Number),
+      },
       expiresIn: expect.any(Number),
     });
     expect(cache.getStats()).toMatchObject({

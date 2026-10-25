@@ -150,6 +150,62 @@ describe.each([
       expect(result.status).toBe("success");
     });
 
+    it("should return the serialization and compression timings", async () => {
+      const cacheGzip = new CacheCompress({
+        serializer,
+        algorithm,
+        minimumStringLength: 0,
+        minimumByteSaving: 0,
+      });
+      const result = await cacheGzip.compress(
+        generateArrayOfRecords(100, extendedTypeSupport)
+      );
+      expect(result.status).toBe("success");
+      expect(result.timings).toStrictEqual({
+        serialize: expect.any(Number),
+        compress: expect.any(Number),
+      });
+      // compression skipped after compressing: the time was still spent
+      const skipped = await new CacheCompress({
+        serializer,
+        algorithm,
+        minimumStringLength: 0,
+        minimumByteSaving: 0,
+        minimumRatio: 1000,
+      }).compress(generateArrayOfRecords(100, extendedTypeSupport));
+      expect(skipped.meta).toStrictEqual({ reason: "minimum_ratio_not_met" });
+      expect(skipped.timings).toStrictEqual({
+        serialize: expect.any(Number),
+        compress: expect.any(Number),
+      });
+    });
+
+    it("should return the decompression and deserialization timings", async () => {
+      const cacheGzip = new CacheCompress({
+        serializer,
+        algorithm,
+        minimumStringLength: 0,
+        minimumByteSaving: 0,
+      });
+      const data = generateArrayOfRecords(100, extendedTypeSupport);
+      const compressed = await cacheGzip.compress(data);
+      const timings = {};
+      await expect(
+        cacheGzip.decompress(compressed, timings)
+      ).resolves.toStrictEqual(data);
+      expect(timings).toStrictEqual({
+        decompress: expect.any(Number),
+        deserialize: expect.any(Number),
+      });
+      // strings are not deserialized
+      const str = "Hello 🦆".repeat(500);
+      const stringTimings = {};
+      await expect(
+        cacheGzip.decompress(await cacheGzip.compress(str), stringTimings)
+      ).resolves.toBe(str);
+      expect(stringTimings).toStrictEqual({ decompress: expect.any(Number) });
+    });
+
     describe("strings and numbers should never be serialized", () => {
       afterEach(() => {
         vi.restoreAllMocks();
@@ -174,6 +230,9 @@ describe.each([
             serializer: "none",
             originalSize: str.length,
           });
+          expect(result.timings).toStrictEqual({
+            compress: expect.any(Number),
+          });
           expect(
             cacheGzip.isCompatible(result.meta as CacheCompressSuccessMeta)
           ).toBe(true);
@@ -193,6 +252,7 @@ describe.each([
         const cacheGzip = new CacheCompress({ serializer, algorithm });
         const result = await cacheGzip.compress(val);
         expect(result.status).toBe("skipped");
+        expect(result.timings).toBeUndefined();
         await expect(cacheGzip.decompress(result)).resolves.toBe(val);
         expect(serializeSpy).not.toHaveBeenCalled();
       });
@@ -270,6 +330,7 @@ describe.each([
           status: "skipped",
           meta: { reason: "minimum_string_length_not_met" },
           data,
+          timings: { serialize: expect.any(Number) },
         });
         expect(compressionSpy).not.toHaveBeenCalled();
       });

@@ -7,13 +7,17 @@ import {
 } from "./cache-key";
 import type {
   CacheCompressSuccessMeta,
+  CacheDecompressTimings,
   ICacheCompressor,
 } from "./compress/types";
+import { elapsedSince, now, roundMs } from "./timing";
 import {
   createCompressedEntry,
   createNativeEntry,
   isXMemCacheEntry,
   type XMemCacheEntry,
+  type XMemCacheEntryUsage,
+  type XMemCacheTimings,
 } from "./x-mem-cache-entry";
 
 /**
@@ -181,11 +185,16 @@ type Result<TResult> = {
     /** Set when the returned data was stored compressed */
     compression?: CacheCompressSuccessMeta;
     /**
-     * Time taken by the function to produce the data (milliseconds),
-     * compression excluded. On a cache hit, the duration of the execution
-     * that created the entry.
+     * Time spent creating the entry on the cache miss (function,
+     * serialization, compression). On a cache hit, the timings of the
+     * execution that created the entry.
      */
-    duration?: number;
+    timings?: XMemCacheTimings;
+    /**
+     * Set on cache hits of compressed entries: time spent decompressing and
+     * deserializing the data for this call (milliseconds).
+     */
+    readTimings?: CacheDecompressTimings;
   };
 };
 
@@ -208,12 +217,6 @@ type Inflight<TResult> = {
   /** Number of calls waiting for the execution */
   waiters: number;
 };
-
-/**
- * High resolution time in milliseconds (Date.now() fallback).
- */
-const now = (): number =>
-  typeof performance === "undefined" ? Date.now() : performance.now();
 
 /**
  * Return a promise rejecting with the signal reason as soon as it aborts,
@@ -266,12 +269,51 @@ export type XMemCacheEntryInfo = {
   /** Creation time of the entry (epoch milliseconds) */
   createdAt: number;
   /**
-   * Time taken by the function to produce the data (milliseconds),
-   * compression excluded.
+   * Time spent creating the entry (function, serialization, compression),
+   * undefined for entries created by older versions (shared lru).
    */
-  duration?: number;
+  timings?: XMemCacheTimings;
+  /**
+   * Usage of the entry since its creation, undefined for entries created by
+   * older versions (shared lru).
+   */
+  usage?: {
+    /** Number of cache hits served by the entry */
+    hits: number;
+    /** Number of concurrent calls that joined the creation execution */
+    deduped: number;
+    /** Average time spent reading the entry on hits (0 for native entries) */
+    avgReadTime: number;
+    /**
+     * Estimated time saved in milliseconds: function time of hits and
+     * deduped calls, minus the read time of hits and the time spent
+     * serializing / compressing the entry. Can be negative.
+     */
+    savedTime: number;
+  };
   /** Remaining time to live in milliseconds */
   expiresIn?: number;
+};
+
+/**
+ * Totals of the XMemCache instance since its creation (or resetStats), kept
+ * when entries expire or are cleared.
+ */
+export type XMemCacheTotals = {
+  /** Calls served from the cache */
+  hits: number;
+  /** Calls that executed the function (cache enabled) */
+  misses: number;
+  /** Calls that joined the in-flight execution of a concurrent call */
+  deduped: number;
+  /** Calls that bypassed the cache (disabled globally or for the call) */
+  bypassed: number;
+  /**
+   * Estimated time saved by the cache in milliseconds: function time of
+   * hits and deduped calls, minus the read time of hits and the time spent
+   * serializing / compressing on misses. Can be negative.
+   */
+  savedTime: number;
 };
 
 /**
@@ -290,6 +332,39 @@ export type XMemCacheStats = {
   originalSize: number;
   /** Entries info, least recently used first */
   entries: XMemCacheEntryInfo[];
+  /** Totals since the creation of the instance (or resetStats) */
+  totals: XMemCacheTotals;
+};
+
+/**
+ * Time spent serializing and compressing an entry on the miss.
+ */
+const getStoreTime = (timings: XMemCacheTimings): number =>
+  (timings.serialize ?? 0) + (timings.compress ?? 0);
+
+/**
+ * Convert the usage counters of an entry into its public info.
+ */
+const toUsageInfo = (
+  usage: XMemCacheEntryUsage,
+  timings: XMemCacheTimings
+): NonNullable<XMemCacheEntryInfo["usage"]> => {
+  const { hits, deduped, readTime } = usage;
+  return {
+    hits,
+    deduped,
+    avgReadTime: hits > 0 ? roundMs(readTime / hits) : 0,
+    savedTime: roundMs(
+      (hits + deduped) * timings.fn - readTime - getStoreTime(timings)
+    ),
+  };
+};
+
+/**
+ * Create zeroed totals.
+ */
+const createTotals = (): XMemCacheTotals => {
+  return { hits: 0, misses: 0, deduped: 0, bypassed: 0, savedTime: 0 };
 };
 
 /**
@@ -302,8 +377,11 @@ const toEntryInfo = (
 ): XMemCacheEntryInfo => {
   const ttl = {
     createdAt: value.createdAt,
-    // entries created by older versions (shared lru) have no duration
-    ...(typeof value.duration === "number" ? { duration: value.duration } : {}),
+    // entries created by older versions (shared lru) have no timings
+    ...(typeof value.timings === "object" ? { timings: value.timings } : {}),
+    ...(typeof value.usage === "object" && typeof value.timings === "object"
+      ? { usage: toUsageInfo(value.usage, value.timings) }
+      : {}),
     ...(expiresIn === undefined ? {} : { expiresIn }),
   };
   if (value.format === "compressed") {
@@ -347,6 +425,7 @@ export class XMemCache {
   readonly #enabled: boolean;
   readonly #compressionEnabled: boolean;
   readonly #dedupe: boolean;
+  #totals: XMemCacheTotals = createTotals();
   /**
    * In-flight executions by generated key (dedupe).
    */
@@ -426,15 +505,21 @@ export class XMemCache {
       const entry = this.#getReadable<TResult>(generatedKey);
       if (entry !== undefined) {
         if (entry.format === "native") {
+          this.#trackHit(entry, 0);
           return {
             data: entry.data,
             meta: this.#createMeta(true, false, false, generatedKey, entry),
           };
         }
-        return {
-          data: await this.readEntry(entry),
-          meta: this.#createMeta(true, false, false, generatedKey, entry),
-        };
+        const readTimings: CacheDecompressTimings = {};
+        const data = await this.readEntry<TResult>(entry, readTimings);
+        const meta = this.#createMeta(true, false, false, generatedKey, entry);
+        const { decompress, deserialize } = readTimings;
+        if (decompress !== undefined || deserialize !== undefined) {
+          meta.readTimings = readTimings;
+        }
+        this.#trackHit(entry, (decompress ?? 0) + (deserialize ?? 0));
+        return { data, meta };
       }
     }
     const { entry, data, deduped } = await this.#fetchOrJoin(
@@ -442,6 +527,7 @@ export class XMemCache {
       generatedKey,
       enabled
     );
+    this.#trackMiss(entry, enabled, deduped);
     return {
       // on a miss, the function result is returned (not decompressed)
       data,
@@ -451,13 +537,15 @@ export class XMemCache {
 
   /**
    * Return the data of an entry (ie: from runAsyncEntry), decompressed and
-   * deserialized when compressed.
+   * deserialized when compressed. When provided, timings is filled with the
+   * time spent decompressing and deserializing (milliseconds).
    *
    * @throws TypeError if the entry is compressed and can't be decompressed
    * by the compressor of this instance.
    */
   readEntry = async <TResult>(
-    entry: XMemCacheEntry<TResult>
+    entry: XMemCacheEntry<TResult>,
+    timings?: CacheDecompressTimings
   ): Promise<TResult> => {
     if (entry.format === "native") {
       return entry.data;
@@ -465,11 +553,22 @@ export class XMemCache {
     if (this.#compressor === undefined) {
       throw new TypeError("Cannot read a compressed entry without compressor");
     }
-    return await this.#compressor.decompress<TResult>({
-      status: "success",
-      data: entry.data,
-      meta: entry.meta,
-    });
+    const data = await this.#compressor.decompress<TResult>(
+      {
+        status: "success",
+        data: entry.data,
+        meta: entry.meta,
+      },
+      timings
+    );
+    // rounded, as custom compressors may report more decimals
+    if (timings?.decompress !== undefined) {
+      timings.decompress = roundMs(timings.decompress);
+    }
+    if (timings?.deserialize !== undefined) {
+      timings.deserialize = roundMs(timings.deserialize);
+    }
+    return data;
   };
 
   /**
@@ -516,6 +615,10 @@ export class XMemCache {
         generatedKey,
         enabled
       ));
+      this.#trackMiss(entry, enabled, deduped);
+    } else {
+      // the entry is returned as-is: nothing to read
+      this.#trackHit(entry, 0);
     }
     const result: XMemCacheRunAsyncEntryResult<TResult> = {
       entry,
@@ -529,6 +632,43 @@ export class XMemCache {
       result.expiresIn = expiresIn;
     }
     return result;
+  };
+
+  /**
+   * Update the usage of an entry and the totals on a cache hit.
+   */
+  readonly #trackHit = (entry: XMemCacheEntry, readTime: number): void => {
+    const totals = this.#totals;
+    totals.hits++;
+    // entries created by older versions (shared lru) have no usage
+    if (typeof entry.usage !== "object" || typeof entry.timings !== "object") {
+      return;
+    }
+    entry.usage.hits++;
+    entry.usage.readTime += readTime;
+    totals.savedTime += entry.timings.fn - readTime;
+  };
+
+  /**
+   * Update the usage of an entry and the totals when the function was
+   * executed (or joined with dedupe).
+   */
+  readonly #trackMiss = (
+    entry: XMemCacheEntry,
+    enabled: boolean,
+    deduped: boolean
+  ): void => {
+    const totals = this.#totals;
+    if (!enabled) {
+      totals.bypassed++;
+    } else if (deduped) {
+      totals.deduped++;
+      entry.usage.deduped++;
+      totals.savedTime += entry.timings.fn;
+    } else {
+      totals.misses++;
+      totals.savedTime -= getStoreTime(entry.timings);
+    }
   };
 
   /**
@@ -659,25 +799,33 @@ export class XMemCache {
     const data = await (signal === undefined
       ? fn({ key })
       : fn({ key, signal }));
-    const duration = Math.round((now() - start) * 100) / 100;
+    const timings: XMemCacheTimings = { fn: elapsedSince(start) };
     if (!enabled) {
-      return { entry: createNativeEntry(data, duration), data };
+      return { entry: createNativeEntry(data, timings), data };
     }
     let entry: XMemCacheEntry<TResult>;
     if (this.#compressor !== undefined && !compressionEnabled) {
-      entry = createNativeEntry(data, duration, "compression_disabled");
+      entry = createNativeEntry(data, timings, "compression_disabled");
     } else if (
       this.#compressor !== undefined &&
       data !== null &&
       data !== undefined
     ) {
       const compressed = await this.#compressor.compress(data);
+      // rounded, as custom compressors may report more decimals
+      const { serialize, compress } = compressed.timings ?? {};
+      if (serialize !== undefined) {
+        timings.serialize = roundMs(serialize);
+      }
+      if (compress !== undefined) {
+        timings.compress = roundMs(compress);
+      }
       entry =
         compressed.status === "success"
-          ? createCompressedEntry(compressed.data, compressed.meta, duration)
-          : createNativeEntry(data, duration, compressed.meta.reason);
+          ? createCompressedEntry(compressed.data, compressed.meta, timings)
+          : createNativeEntry(data, timings, compressed.meta.reason);
     } else {
-      entry = createNativeEntry(data, duration);
+      entry = createNativeEntry(data, timings);
     }
     // A replacement entry must be more recent than the one it replaces (ie:
     // forceRevalidate in the same millisecond), so that createdAt based
@@ -716,9 +864,9 @@ export class XMemCache {
     if (entry.format === "compressed") {
       meta.compression = entry.meta;
     }
-    // entries created by older versions (shared lru) have no duration
-    if (typeof entry.duration === "number") {
-      meta.duration = entry.duration;
+    // entries created by older versions (shared lru) have no timings
+    if (typeof entry.timings === "object") {
+      meta.timings = entry.timings;
     }
     return meta;
   };
@@ -757,7 +905,8 @@ export class XMemCache {
 
   /**
    * Return statistics about the entries stored in the lru (total items,
-   * compressed sizes...) and info for each entry.
+   * compressed sizes...), info for each entry (timings, usage...) and the
+   * totals of the instance (hits, misses, saved time...).
    * Expired entries and values not created by XMemCache (shared lru) are
    * ignored, the lru order is not affected.
    *
@@ -777,6 +926,10 @@ export class XMemCache {
       compressedSize: 0,
       originalSize: 0,
       entries: [],
+      totals: {
+        ...this.#totals,
+        savedTime: roundMs(this.#totals.savedTime),
+      },
     };
     for (const [key] of this.#lru) {
       // peek skips expired entries
@@ -814,7 +967,16 @@ export class XMemCache {
   };
 
   /**
-   * Clear the cache and return the number of items removed.
+   * Clear the cache and return the number of items removed. The totals
+   * returned by getStats are kept (see resetStats).
    */
   clear = (): number => this.#lru.clear();
+
+  /**
+   * Reset the totals returned by getStats (hits, misses, saved time...).
+   * The usage of the entries is kept, it's reset when they're replaced.
+   */
+  resetStats = (): void => {
+    this.#totals = createTotals();
+  };
 }
