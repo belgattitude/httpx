@@ -328,6 +328,13 @@ export default defineConfig({
 
 The browserslist log comes from the `hooks` of `tsdownBrowserConfig`: setting your own `hooks` replaces it.
 
+`@httpx/dx/tsdown` re-exports `tsdown` and `browserslistToEsbuild` (from `browserslist-to-esbuild`), so packages don't need to depend on them:
+
+```ts
+// tsdown.config.ts
+import { browserslistToEsbuild, defineConfig } from "@httpx/dx/tsdown";
+```
+
 ## es-check
 
 `escheckDefaultConfig` checks the esm files of `dist` (`./dist/**/*.{js,mjs}`) only use es2022 syntax.

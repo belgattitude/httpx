@@ -1,4 +1,4 @@
-import { defineConfig } from "tsdown";
+import { defineConfig } from "@httpx/dx/tsdown";
 
 export default defineConfig((_options) => {
   return {
