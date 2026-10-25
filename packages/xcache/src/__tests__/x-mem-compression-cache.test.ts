@@ -176,5 +176,30 @@ describe.each([["gzip", "deflate"]])("XMemCache compression", () => {
       expect(read.meta.cached).toBe(false);
       expect(read.data).toStrictEqual(payload);
     });
+
+    it("should compress strings without calling the serializer", async () => {
+      const serializer = new DevalueSerializer();
+      const serializeSpy = vi.spyOn(serializer, "serialize");
+      const deserializeSpy = vi.spyOn(serializer, "deserialize");
+      const cache = new XMemCache({
+        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+        compressor: new CacheCompress({
+          algorithm: "gzip",
+          serializer,
+          minimumStringLength: 0,
+          minimumByteSaving: 0,
+        }),
+      });
+      const html = "<li>Hello world &à</li>".repeat(1000);
+      const run = () =>
+        cache.runAsync({ key: ["/api/html"], fn: () => Promise.resolve(html) });
+      const miss = await run();
+      expect(miss.meta.compression?.serializer).toBe("none");
+      const hit = await run();
+      expect(hit.meta.cached).toBe(true);
+      expect(hit.data).toBe(html);
+      expect(serializeSpy).not.toHaveBeenCalled();
+      expect(deserializeSpy).not.toHaveBeenCalled();
+    });
   });
 });

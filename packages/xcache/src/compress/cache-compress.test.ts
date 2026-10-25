@@ -143,11 +143,59 @@ describe.each([
         algorithm,
         serializer,
         minimumStringLength: 1,
-        minimumRatio: 0.1,
+        minimumRatio: 0.01,
         minimumByteSaving: 0,
       });
       const result = await cacheGzip.compress("ab");
       expect(result.status).toBe("success");
+    });
+
+    describe("strings and numbers should never be serialized", () => {
+      afterEach(() => {
+        vi.restoreAllMocks();
+      });
+
+      it.each(["base64", "binary"] satisfies CacheCompressEncoding[])(
+        'should compress strings as-is with "%s" encoding',
+        async (encoding) => {
+          const serializeSpy = vi.spyOn(serializer, "serialize");
+          const deserializeSpy = vi.spyOn(serializer, "deserialize");
+          const cacheGzip = new CacheCompress({
+            serializer,
+            algorithm,
+            encoding,
+            minimumStringLength: 0,
+            minimumByteSaving: 0,
+          });
+          const str = '<p class="text">Hello 🦆</p>'.repeat(500);
+          const result = await cacheGzip.compress(str);
+          expect(result.status).toBe("success");
+          expect(result.meta).toMatchObject({
+            serializer: "none",
+            originalSize: str.length,
+          });
+          expect(
+            cacheGzip.isCompatible(result.meta as CacheCompressSuccessMeta)
+          ).toBe(true);
+          await expect(cacheGzip.decompress(result)).resolves.toBe(str);
+          expect(serializeSpy).not.toHaveBeenCalled();
+          expect(deserializeSpy).not.toHaveBeenCalled();
+        }
+      );
+
+      it.each([
+        ["short string", "abc"],
+        ["integer", 10],
+        ["float", 3.14],
+        ["NaN", Number.NaN],
+      ])("should not serialize %s values", async (_label, val) => {
+        const serializeSpy = vi.spyOn(serializer, "serialize");
+        const cacheGzip = new CacheCompress({ serializer, algorithm });
+        const result = await cacheGzip.compress(val);
+        expect(result.status).toBe("skipped");
+        await expect(cacheGzip.decompress(result)).resolves.toBe(val);
+        expect(serializeSpy).not.toHaveBeenCalled();
+      });
     });
 
     it.each([

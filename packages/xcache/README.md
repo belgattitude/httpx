@@ -73,6 +73,7 @@ const { data, meta } = await xMemCache.runAsync({
 });
 
 // meta.cached: true when served from the cache
+// meta.duration: time taken by the function in ms (on a hit: when the entry was created)
 // meta.generatedKey: '{"key":["/api/data",{"id":1}],"ns":"other"}'
 ```
 
@@ -169,7 +170,7 @@ const { data, meta } = await xMemCache.runAsync({
 // {
 //   algorithm: "gzip",        // "gzip" | "deflate"
 //   encoding: "binary",       // "binary" | "base64" | "base64_urlsafe"
-//   serializer: "superjson",  // serializer identifier
+//   serializer: "superjson",  // serializer identifier ("none" for strings, compressed as-is)
 //   originalSize: 974025,     // serialized string length
 //   compressedSize: 90333,    // compressed length
 //   ratio: 10.78,
@@ -291,6 +292,7 @@ const stats = xMemCache.getStats();
 //       size: 90333,
 //       compression: { algorithm: "gzip", encoding: "binary", serializer: "superjson", originalSize: 974025, compressedSize: 90333, ratio: 10.78 },
 //       createdAt: 1792411200000,
+//       duration: 152.37,    // time taken by the function in milliseconds
 //       expiresIn: 118500,   // remaining ttl in milliseconds
 //     },
 //     {
@@ -298,6 +300,7 @@ const stats = xMemCache.getStats();
 //       format: "native",
 //       skippedReason: "minimum_byte_saving_not_met",
 //       createdAt: 1792411123000,
+//       duration: 12.5,
 //       expiresIn: 42000,
 //     },
 //     // ...

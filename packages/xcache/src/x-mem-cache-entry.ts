@@ -20,6 +20,11 @@ export type XMemCacheEntry<T = unknown> = {
   [xMemCacheEntryBrand]: true;
   /** Creation time (epoch milliseconds) */
   createdAt: number;
+  /**
+   * Time taken by the function to produce the data (milliseconds),
+   * compression excluded.
+   */
+  duration: number;
 } & (
   | {
       format: "compressed";
@@ -42,14 +47,17 @@ export type XMemCacheEntry<T = unknown> = {
  *
  * @param data - compressed data
  * @param meta - compression meta returned by the compressor
+ * @param duration - time taken by the function (milliseconds)
  */
 export const createCompressedEntry = <T = unknown>(
   data: string | Uint8Array,
-  meta: CacheCompressSuccessMeta
+  meta: CacheCompressSuccessMeta,
+  duration: number
 ): XMemCacheEntry<T> => {
   return {
     [xMemCacheEntryBrand]: true,
     createdAt: Date.now(),
+    duration,
     format: "compressed",
     data,
     meta,
@@ -60,15 +68,18 @@ export const createCompressedEntry = <T = unknown>(
  * Create a branded native (uncompressed) entry to store in the lru.
  *
  * @param data - the data to cache as-is
+ * @param duration - time taken by the function (milliseconds)
  * @param skippedReason - why compression was skipped, if a compressor is set
  */
 export const createNativeEntry = <T>(
   data: T,
+  duration: number,
   skippedReason?: string
 ): XMemCacheEntry<T> => {
   return {
     [xMemCacheEntryBrand]: true,
     createdAt: Date.now(),
+    duration,
     format: "native",
     data,
     ...(skippedReason === undefined ? {} : { meta: { reason: skippedReason } }),

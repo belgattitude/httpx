@@ -58,6 +58,12 @@ export type CacheCompressOptions = {
 
 const textDecoder = new TextDecoder();
 
+/**
+ * Serializer identifier stored in the meta of strings compressed as-is
+ * (strings are never serialized).
+ */
+const noSerializerId = "none";
+
 const defaultOptions: Required<
   Pick<
     CacheCompressOptions,
@@ -134,16 +140,19 @@ export class CacheCompress implements ICacheCompressor {
 
   /**
    * Whether previously compressed data (from its meta) can be decompressed
-   * with the current options: same algorithm, encoding and serializer.
+   * with the current options: same algorithm, encoding and serializer (or
+   * no serializer for strings).
    */
   isCompatible = (meta: CacheCompressSuccessMeta): boolean =>
     meta.algorithm === this.#algorithm &&
     meta.encoding === this.#options.encoding &&
-    meta.serializer === this.#serializerId;
+    (meta.serializer === this.#serializerId ||
+      meta.serializer === noSerializerId);
 
   /**
-   * Serialize and compress the data. Compression is skipped (data returned
-   * as-is) for trivial values, when the data or its serialized form is
+   * Serialize and compress the data. Strings are compressed as-is, without
+   * serializer (meta.serializer: "none"). Compression is skipped (data
+   * returned as-is) for trivial values (ie: numbers), when the data or its serialized form is
    * shorter than minimumStringLength (or minimumByteSaving, as the saving
    * can't exceed it), or when the minimum ratio or byte saving are not met.
    */
@@ -159,18 +168,11 @@ export class CacheCompress implements ICacheCompressor {
         data,
       };
     }
-    if (typeof data === "string" && data.length < minimumStringLength) {
-      return {
-        status: "skipped",
-        meta: {
-          reason: "minimum_string_length_not_met",
-        },
-        data,
-      };
-    }
 
     const { encoding } = this.#options;
-    const serialized = this.#serializer.serialize(data);
+    const isString = typeof data === "string";
+    // strings don't need to be serialized
+    const serialized = isString ? data : this.#serializer.serialize(data);
     // Don't even try to compress small payloads
     if (serialized.length < minimumStringLength) {
       return {
@@ -227,7 +229,7 @@ export class CacheCompress implements ICacheCompressor {
       meta: {
         algorithm: this.#algorithm,
         encoding,
-        serializer: this.#serializerId,
+        serializer: isString ? noSerializerId : this.#serializerId,
         compressedSize: compressed.length,
         originalSize: serialized.length,
         ratio,
@@ -261,6 +263,8 @@ export class CacheCompress implements ICacheCompressor {
                 : "base64",
           })
         : textDecoder.decode(await this.#gunzip.fromUint8Array(data.data));
-    return this.#serializer.deserialize<T>(serialized);
+    return data.meta.serializer === noSerializerId
+      ? (serialized as T)
+      : this.#serializer.deserialize<T>(serialized);
   };
 }

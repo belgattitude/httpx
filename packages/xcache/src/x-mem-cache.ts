@@ -180,6 +180,12 @@ type Result<TResult> = {
     compressorId?: string;
     /** Set when the returned data was stored compressed */
     compression?: CacheCompressSuccessMeta;
+    /**
+     * Time taken by the function to produce the data (milliseconds),
+     * compression excluded. On a cache hit, the duration of the execution
+     * that created the entry.
+     */
+    duration?: number;
   };
 };
 
@@ -202,6 +208,12 @@ type Inflight<TResult> = {
   /** Number of calls waiting for the execution */
   waiters: number;
 };
+
+/**
+ * High resolution time in milliseconds (Date.now() fallback).
+ */
+const now = (): number =>
+  typeof performance === "undefined" ? Date.now() : performance.now();
 
 /**
  * Return a promise rejecting with the signal reason as soon as it aborts,
@@ -253,6 +265,11 @@ export type XMemCacheEntryInfo = {
   skippedReason?: string;
   /** Creation time of the entry (epoch milliseconds) */
   createdAt: number;
+  /**
+   * Time taken by the function to produce the data (milliseconds),
+   * compression excluded.
+   */
+  duration?: number;
   /** Remaining time to live in milliseconds */
   expiresIn?: number;
 };
@@ -285,6 +302,8 @@ const toEntryInfo = (
 ): XMemCacheEntryInfo => {
   const ttl = {
     createdAt: value.createdAt,
+    // entries created by older versions (shared lru) have no duration
+    ...(typeof value.duration === "number" ? { duration: value.duration } : {}),
     ...(expiresIn === undefined ? {} : { expiresIn }),
   };
   if (value.format === "compressed") {
@@ -409,12 +428,12 @@ export class XMemCache {
         if (entry.format === "native") {
           return {
             data: entry.data,
-            meta: this.#createMeta(true, false, false, generatedKey, undefined),
+            meta: this.#createMeta(true, false, false, generatedKey, entry),
           };
         }
         return {
           data: await this.readEntry(entry),
-          meta: this.#createMeta(true, false, false, generatedKey, entry.meta),
+          meta: this.#createMeta(true, false, false, generatedKey, entry),
         };
       }
     }
@@ -426,13 +445,7 @@ export class XMemCache {
     return {
       // on a miss, the function result is returned (not decompressed)
       data,
-      meta: this.#createMeta(
-        false,
-        !enabled,
-        deduped,
-        generatedKey,
-        entry.format === "compressed" ? entry.meta : undefined
-      ),
+      meta: this.#createMeta(false, !enabled, deduped, generatedKey, entry),
     };
   };
 
@@ -642,15 +655,17 @@ export class XMemCache {
     const { fn, key, ttl } = params;
     const compressionEnabled =
       params.compressionEnabled ?? this.#compressionEnabled;
+    const start = now();
     const data = await (signal === undefined
       ? fn({ key })
       : fn({ key, signal }));
+    const duration = Math.round((now() - start) * 100) / 100;
     if (!enabled) {
-      return { entry: createNativeEntry(data), data };
+      return { entry: createNativeEntry(data, duration), data };
     }
     let entry: XMemCacheEntry<TResult>;
     if (this.#compressor !== undefined && !compressionEnabled) {
-      entry = createNativeEntry(data, "compression_disabled");
+      entry = createNativeEntry(data, duration, "compression_disabled");
     } else if (
       this.#compressor !== undefined &&
       data !== null &&
@@ -659,10 +674,10 @@ export class XMemCache {
       const compressed = await this.#compressor.compress(data);
       entry =
         compressed.status === "success"
-          ? createCompressedEntry(compressed.data, compressed.meta)
-          : createNativeEntry(data, compressed.meta.reason);
+          ? createCompressedEntry(compressed.data, compressed.meta, duration)
+          : createNativeEntry(data, duration, compressed.meta.reason);
     } else {
-      entry = createNativeEntry(data);
+      entry = createNativeEntry(data, duration);
     }
     // A replacement entry must be more recent than the one it replaces (ie:
     // forceRevalidate in the same millisecond), so that createdAt based
@@ -686,7 +701,7 @@ export class XMemCache {
     bypassed: boolean,
     deduped: boolean,
     generatedKey: CacheStringKey,
-    compression: CacheCompressSuccessMeta | undefined
+    entry: XMemCacheEntry
   ): Result<unknown>["meta"] => {
     const meta: Result<unknown>["meta"] = { cached, generatedKey };
     if (bypassed) {
@@ -698,8 +713,12 @@ export class XMemCache {
     if (this.#compressorId !== undefined) {
       meta.compressorId = this.#compressorId;
     }
-    if (compression !== undefined) {
-      meta.compression = compression;
+    if (entry.format === "compressed") {
+      meta.compression = entry.meta;
+    }
+    // entries created by older versions (shared lru) have no duration
+    if (typeof entry.duration === "number") {
+      meta.duration = entry.duration;
     }
     return meta;
   };

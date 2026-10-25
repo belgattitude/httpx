@@ -74,6 +74,7 @@ describe("XMemCache stats", () => {
         size: meta1.compressedSize,
         compression: meta1,
         createdAt: expect.any(Number),
+        duration: expect.any(Number),
         expiresIn: expect.any(Number),
       },
       {
@@ -82,6 +83,7 @@ describe("XMemCache stats", () => {
         size: meta2.compressedSize,
         compression: meta2,
         createdAt: expect.any(Number),
+        duration: expect.any(Number),
         expiresIn: expect.any(Number),
       },
       {
@@ -89,6 +91,7 @@ describe("XMemCache stats", () => {
         format: "native",
         skippedReason: "minimum_byte_saving_not_met",
         createdAt: expect.any(Number),
+        duration: expect.any(Number),
         expiresIn: expect.any(Number),
       },
     ]);
@@ -175,6 +178,7 @@ describe("XMemCache stats", () => {
       size: meta.compression?.compressedSize,
       compression: meta.compression,
       createdAt: expect.any(Number),
+      duration: expect.any(Number),
       expiresIn: expect.any(Number),
     });
     expect(
@@ -207,6 +211,36 @@ describe("XMemCache stats", () => {
     }
   });
 
+  it("should return the time taken by the function", async () => {
+    vi.useFakeTimers({ toFake: ["performance"] });
+    onTestFinished(() => {
+      vi.useRealTimers();
+    });
+    const { cache } = createCache();
+    const miss = await cache.runAsync({
+      key: ["/slow"],
+      fn: () => {
+        vi.advanceTimersByTime(120);
+        return Promise.resolve(bigPayload);
+      },
+    });
+    expect(miss.meta.duration).toBe(120);
+    await cache.runAsync({
+      key: ["/fast"],
+      fn: () => Promise.resolve(smallPayload),
+    });
+    // cache hits return the duration of the execution that created the entry
+    const hit = await cache.runAsync({
+      key: ["/slow"],
+      fn: () => Promise.resolve(bigPayload),
+    });
+    expect(hit.meta).toMatchObject({ cached: true, duration: 120 });
+    expect(cache.getEntryInfo({ key: ["/slow"] })?.duration).toBe(120);
+    expect(cache.getStats().entries.map((e) => e.duration)).toStrictEqual([
+      0, 120,
+    ]);
+  });
+
   it("should return native entries without compressor", async () => {
     const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 });
     const cache = new XMemCache({ lru });
@@ -218,6 +252,7 @@ describe("XMemCache stats", () => {
       key: meta.generatedKey,
       format: "native",
       createdAt: expect.any(Number),
+      duration: expect.any(Number),
       expiresIn: expect.any(Number),
     });
     expect(cache.getStats()).toMatchObject({
