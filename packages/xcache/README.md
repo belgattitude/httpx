@@ -314,12 +314,14 @@ const stats = xMemCache.getStats();
 //   compressedItems: 2,
 //   compressedSize: 180666,  // total size of the compressed entries
 //   originalSize: 1948050,   // same entries, serialized size before compression
+//   nativeOriginalSize: 1520, // native entries with a known original size
 //   entries: [               // least recently used first
 //     {
 //       key: '{"compressorId":"cache-compress:superjson","key":["/api/data",{"name":"cool"}],"ns":"default"}',
 //       namespace: "default",
 //       format: "compressed",
 //       size: 90333,
+//       originalSize: 974025, // size before compression
 //       compression: { algorithm: "gzip", encoding: "binary", serializer: "superjson", originalSize: 974025, compressedSize: 90333, ratio: 10.78 },
 //       createdAt: 1792411200000,
 //       timings: { fn: 152.37, serialize: 3.12, compress: 8.4 },
@@ -330,6 +332,7 @@ const stats = xMemCache.getStats();
 //       key: '{"compressorId":"cache-compress:superjson","key":["/api/small"],"ns":"default"}',
 //       namespace: "default",
 //       format: "native",
+//       originalSize: 1520,  // serialized size, when computed
 //       skippedReason: "minimum_byte_saving_not_met",
 //       createdAt: 1792411123000,
 //       timings: { fn: 12.5, serialize: 0.08 },
@@ -381,7 +384,47 @@ xMemCache.resetStats(); // ie: after a deployment warmup
 ```
 
 > [!NOTE]
-> Native (uncompressed) entries are live objects, their size can't be measured and is not included in the totals. If the lru is shared, entries of other `XMemCache` instances are included.
+> Native (uncompressed) entries are live objects: their `originalSize` is only set when it could be computed (serialized before compression was skipped, strings and `Uint8Array`), and only those are included in `nativeOriginalSize`. If the lru is shared, entries of other `XMemCache` instances are included.
+
+### Clearing expired entries
+
+Expired entries are never served, but they're only removed from the lru when accessed or evicted. `clearExpired()` removes them (values not created by `XMemCache` are kept) and returns the number of removed entries. `clear()` removes all the entries.
+
+```typescript
+const removed = xMemCache.clearExpired();
+
+// ie: periodically release the memory of expired entries
+setInterval(() => xMemCache.clearExpired(), 60_000).unref();
+```
+
+### Configuration
+
+`getConfig()` returns the configuration of the instance, including the compressor options when set.
+
+```typescript
+xMemCache.getConfig();
+// {
+//   namespace: "default",
+//   ttl: 120000,              // lru defaultTTL
+//   maxSize: 50,              // lru maxSize
+//   enabled: true,
+//   compressionEnabled: true, // false when disabled or without compressor
+//   dedupe: true,
+//   compressor: {             // undefined without compressor
+//     id: "cache-compress:superjson",
+//     algorithm: "gzip",
+//     encoding: "binary",     // "binary" | "base64" | "base64_urlsafe"
+//     serializer: "superjson",
+//     binarySerializer: false,
+//     jsonDetection: true,
+//     minimumRatio: 1.3,
+//     minimumStringLength: 16384,
+//     minimumByteSaving: 32768,
+//   },
+// }
+```
+
+Custom compressors can implement the optional `getConfig()` method, otherwise only their `id` is returned.
 
 ### Sharing the lru
 

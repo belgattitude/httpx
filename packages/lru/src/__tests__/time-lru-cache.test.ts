@@ -117,6 +117,34 @@ describe("TimeLruCache", () => {
       lru.has("key1");
       expect(fn).toHaveBeenCalledExactlyOnceWith("key1", "value1");
     });
+
+    it.each(["get", "has"] as const)(
+      "should remove expired items accessed with %s()",
+      (method) => {
+        const fn = vi.fn<(key: string, value: unknown) => void>();
+        const lru = new TimeLruCache({
+          maxSize: 2,
+          defaultTTL: HUNDRED_MILLIS,
+          onEviction: (key, value) => {
+            fn(key, value);
+          },
+        });
+        lru.set("key1", "value1", HUNDRED_MILLIS);
+        lru.set("key2", "value2", 4 * HUNDRED_MILLIS);
+        vi.setSystemTime(Date.now() + HUNDRED_MILLIS + SIXTY_MILLIS);
+        lru[method]("key1");
+        expect(lru.size).toBe(1);
+        expect([...lru]).toStrictEqual([["key2", "value2"]]);
+        expect(lru.delete("key1")).toBe(false);
+        // evicted once
+        lru[method]("key1");
+        expect(fn).toHaveBeenCalledExactlyOnceWith("key1", "value1");
+        // the key can be set again
+        lru.set("key1", "value1bis");
+        expect(lru.get("key1")).toBe("value1bis");
+        expect(lru.size).toBe(2);
+      }
+    );
   });
   describe("getOrSet", () => {
     it("should get existing item if not expired", () => {

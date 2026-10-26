@@ -50,6 +50,14 @@ describe.each([
 ][])(
   "CacheCompress tests with %s serializer",
   (serializer, algorithm, extendedTypeSupport) => {
+    // length of the serialized data, as computed by CacheCompress (plain
+    // JSON when detected)
+    const getSerializedLength = (data: unknown): number =>
+      (serializer instanceof SuperjsonSerializer
+        ? serializer.serializeWithJsonDetection(data).serialized
+        : serializer.serialize(data)
+      ).length;
+
     it.each([
       [undefined, "uint8array"],
       ["binary", "uint8array"],
@@ -179,7 +187,10 @@ describe.each([
         minimumByteSaving: 0,
         minimumRatio: 1000,
       }).compress(generateArrayOfRecords(100, extendedTypeSupport));
-      expect(skipped.meta).toStrictEqual({ reason: "minimum_ratio_not_met" });
+      expect(skipped.meta).toStrictEqual({
+        reason: "minimum_ratio_not_met",
+        originalSize: expect.any(Number),
+      });
       expect(skipped.timings).toStrictEqual({
         serialize: expect.any(Number),
         compress: expect.any(Number),
@@ -365,7 +376,10 @@ describe.each([
         const result = await cacheGzip.compress(data);
         expect(result).toStrictEqual({
           status: "skipped",
-          meta: { reason: "minimum_string_length_not_met" },
+          meta: {
+            reason: "minimum_string_length_not_met",
+            originalSize: getSerializedLength(data),
+          },
           data,
           timings: { serialize: expect.any(Number) },
         });
@@ -384,6 +398,7 @@ describe.each([
         const result = await cacheGzip.compress(data);
         expect(result.meta).toStrictEqual({
           reason: "minimum_byte_saving_not_met",
+          originalSize: getSerializedLength(data),
         });
         expect(compressionSpy).not.toHaveBeenCalled();
       });

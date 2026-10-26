@@ -5,7 +5,7 @@ const config = [
     name: "import { XMemCache } (ESM)",
     path: ["dist/index.js"],
     import: "{ XMemCache }",
-    limit: "2680B",
+    limit: "2920B",
   },
   {
     name: "import { TimeLruCache } (ESM)",
@@ -17,7 +17,7 @@ const config = [
     name: "import { createHonoXCache } (ESM)",
     path: ["dist/hono/index.js"],
     import: "{ createHonoXCache }",
-    limit: "6040B",
+    limit: "6310B",
   },
   {
     name: "import { SuperjsonSerializer } (ESM)",

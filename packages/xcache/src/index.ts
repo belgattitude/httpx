@@ -3,6 +3,7 @@ export type {
   CacheCompressAlgorithm,
   CacheCompressContent,
   CacheCompressEncoding,
+  CacheCompressorConfig,
   CacheCompressResult,
   CacheCompressSuccessMeta,
   CacheCompressTimings,
@@ -23,6 +24,7 @@ export type {
   XCacheRunAsyncParams,
 } from "./x-cache.types";
 export type {
+  XMemCacheConfig,
   XMemCacheEntryInfo,
   XMemCacheOptions,
   XMemCacheRunAsyncEntryResult,
