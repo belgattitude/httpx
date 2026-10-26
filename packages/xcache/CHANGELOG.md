@@ -1,5 +1,104 @@
 # @httpx/xcache
 
+## 0.12.0
+
+### Minor Changes
+
+- [#2868](https://github.com/belgattitude/httpx/pull/2868) [`7a456f9`](https://github.com/belgattitude/httpx/commit/7a456f98b560ca2ec27663392abdeb8daa4847bd) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `CborxSerializer`, a binary serializer based on [cbor-x](https://github.com/kriszyp/cbor-x) (optional peer dependency).
+  
+  ```typescript
+  import { CacheCompress } from "@httpx/xcache";
+  import { CborxSerializer } from "@httpx/xcache/cbor-x";
+  
+  const compressor = new CacheCompress({
+    serializer: new CborxSerializer(),
+    algorithm: "gzip",
+  });
+  ```
+  
+  It supports extended types (Date, BigInt, Map, Set, undefined, NaN, typed arrays, shared and cyclic references) and is the fastest and smallest serializer with them. Defaults: `useRecords: true` (only readable by cbor-x) and `structuredClone: true`, other cbor-x options can be passed to the constructor.
+  
+  - New `ICacheBinarySerializer` interface (`binary: true`, `serialize` returns a `Uint8Array`), supported by `CacheCompress` (not as the `createHonoXCache` response serializer).
+  - `ICacheSerializer` gets an optional `binary?: false` discriminant.
+
+- [#2870](https://github.com/belgattitude/httpx/pull/2870) [`73bc155`](https://github.com/belgattitude/httpx/commit/73bc155442d24cb61ef99c6545181314b5d683dc) Thanks [@belgattitude](https://github.com/belgattitude)! - The namespace of the cache key is available in the `runAsync` meta (`meta.namespace`), the `runAsyncEntry` result (`namespace`, and `entry.namespace`) and the entry info returned by `getEntryInfo` and `getStats` (`namespace`).
+  
+  ```typescript
+  const cache = new XMemCache({ lru, namespace: "shop" });
+  const { meta } = await cache.runAsync({ key: ["/api/products"], fn });
+  // meta.namespace: "shop"
+  // meta.generatedKey: '{"key":["/api/products"],"ns":"shop"}'
+  
+  cache.getStats().entries; // [{ key: '{"key":["/api/products"],"ns":"shop"}', namespace: "shop", ... }]
+  ```
+  
+  It's undefined for an empty namespace (not part of the generated key either), and for entries created by older versions in a shared lru. As `getStats()` lists the entries of every `XMemCache` instance sharing the lru, the namespace tells which instance created them.
+
+- [#2868](https://github.com/belgattitude/httpx/pull/2868) [`7a456f9`](https://github.com/belgattitude/httpx/commit/7a456f98b560ca2ec27663392abdeb8daa4847bd) Thanks [@belgattitude](https://github.com/belgattitude)! - Breaking: serializers requiring an optional peer dependency moved to their own entry.
+  
+  The root entry imported `superjson` and `devalue`, so importing `@httpx/xcache` failed (ie: node, `ERR_MODULE_NOT_FOUND`) when one of these optional peer dependencies wasn't installed. The root entry now has no peer dependency import.
+  
+  ```typescript
+  // Before
+  import { SuperjsonSerializer, DevalueSerializer } from "@httpx/xcache";
+  // After
+  import { SuperjsonSerializer } from "@httpx/xcache/superjson";
+  import { DevalueSerializer } from "@httpx/xcache/devalue";
+  ```
+  
+  `JsonSerializer` and the interfaces (`ICacheSerializer`, `ICacheBinarySerializer`...) are still exported by `@httpx/xcache`.
+
+- [#2868](https://github.com/belgattitude/httpx/pull/2868) [`7a456f9`](https://github.com/belgattitude/httpx/commit/7a456f98b560ca2ec27663392abdeb8daa4847bd) Thanks [@belgattitude](https://github.com/belgattitude)! - JSON detection with superjson: plain data is stored as JSON and read with `JSON.parse`.
+  
+  `CacheCompress` has a new `detectJson` option (default `true`): with `SuperjsonSerializer`, data without extended types is stored as plain JSON (`meta.content: "json"`) and read with `JSON.parse`. The detection has no extra cost (superjson only adds a meta when it encountered extended types). `DevalueSerializer` doesn't support it (its output is never plain JSON).
+  
+  - `ICacheSerializer` gets an optional `serializeWithJsonDetection`, implemented by `SuperjsonSerializer`.
+  - `ICacheCompressor` gets an optional `supportsJsonDetection()`.
+  - `createHonoXCache` sends plain JSON entries as-is (`Content-Encoding`) to json responses, ie: an `XMemCache` instance with a superjson compressor. The caches it creates don't detect JSON, the compressed bytes always match the response serializer.
+
+- [#2864](https://github.com/belgattitude/httpx/pull/2864) [`a33908f`](https://github.com/belgattitude/httpx/commit/a33908fad68e10e19457323a0452892ce75833c6) Thanks [@belgattitude](https://github.com/belgattitude)! - Timings, usage and savings statistics, strings compressed without serializer.
+  
+  #### Timings
+  
+  The time spent creating cache entries (cache miss) is stored in `timings`, returned in the `runAsync` meta (on a cache hit: the timings of the execution that created the entry) and by `getStats()` / `getEntryInfo()`. On cache hits of compressed entries, `meta.readTimings` returns the time spent reading the entry for this call.
+  
+  ```typescript
+  const { meta } = await xMemCache.runAsync({ key: ["/api/data"], fn });
+  // meta.timings (milliseconds, max 2 decimals)
+  // {
+  //   fn: 152.37,      // time taken by the cached function
+  //   serialize: 3.12, // absent when not serialized (no compressor, strings...)
+  //   compress: 8.4,   // absent when compression wasn't attempted
+  // }
+  
+  // compressed cache hits (deserialize is absent for strings)
+  // meta.readTimings: { decompress: 1.05, deserialize: 2.3 }
+  ```
+  
+  `CacheCompress.compress()` returns the serialization and compression times in `timings`, and `CacheCompress.decompress(data, timings?)` fills the provided object with the decompression and deserialization times (both optional for custom `ICacheCompressor`). `XMemCache.readEntry(entry, timings?)` accepts the same object.
+  
+  #### Usage and savings
+  
+  ```typescript
+  const { entries, totals } = xMemCache.getStats();
+  // entries[0].timings: { fn: 152.37, serialize: 3.12, compress: 8.4 }
+  // entries[0].usage (since the entry creation, dropped when it expires)
+  // { hits: 42, deduped: 3, avgReadTime: 1.12, savedTime: 6798.09 }
+  
+  // totals (since the instance creation, kept when entries expire or on clear)
+  // { hits: 1250, misses: 80, deduped: 12, bypassed: 5, savedTime: 184320.12 }
+  
+  xMemCache.resetStats(); // reset the totals
+  ```
+  
+  `savedTime` (milliseconds) is the function time of hits and deduped calls, minus the read time of hits (decompress + deserialize) and the time spent serializing / compressing on misses. It can be negative when caching a key costs more than it saves.
+  
+  #### Strings and numbers are never serialized
+  
+  `CacheCompress` never calls the serializer for strings and numbers: numbers are never compressed (trivial values), strings are compressed as-is (`meta.content: "string"`) and returned without deserialization. Compressed strings are smaller and faster to read (ie: no JSON quoting/escaping).
+  
+  Note for `createHonoXCache`: compressed string results (`content: "string"`) are decompressed and serialized for the response, the compressed bytes are only sent as-is (`Content-Encoding`) for data compressed with the response serializer.
+
 ## 0.11.0
 
 ### Minor Changes
