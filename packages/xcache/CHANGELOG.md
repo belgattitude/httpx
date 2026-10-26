@@ -41,10 +41,9 @@
   ```typescript
   // Before
   import { SuperjsonSerializer, DevalueSerializer } from "@httpx/xcache";
-  import { CborxSerializer } from "@httpx/xcache/cbor-x";
-  import { DevalueSerializer } from "@httpx/xcache/devalue";
   // After
   import { SuperjsonSerializer } from "@httpx/xcache/superjson";
+  import { DevalueSerializer } from "@httpx/xcache/devalue";
   ```
   
   `JsonSerializer` and the interfaces (`ICacheSerializer`, `ICacheBinarySerializer`...) are still exported by `@httpx/xcache`.
