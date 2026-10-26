@@ -1,5 +1,11 @@
 # @httpx/lru
 
+## 0.16.1
+
+### Patch Changes
+
+- [#2872](https://github.com/belgattitude/httpx/pull/2872) [`88e60da`](https://github.com/belgattitude/httpx/commit/88e60dae8f439c8c14cd5b45a0a35be2b5742c24) Thanks [@belgattitude](https://github.com/belgattitude)! - Fix `TimeLruCache` keeping expired items in memory when accessed with `get()` or `has()`: they were unlinked from the lru list but not deleted, so their memory wasn't released, `size` still counted them and `onEviction` was called again on each access.
+
 ## 0.16.0
 
 ### Minor Changes
