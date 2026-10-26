@@ -322,8 +322,8 @@ importers:
         specifier: 15.4.9
         version: 15.4.9(@types/mdast@4.0.4)(@types/mdx@2.0.14)(@types/react@19.3.0)(fumadocs-core@16.17.7)(next@16.4.3)(react@19.3.1)(rolldown@1.2.15)(supports-color@10.2.2)(vite@8.3.5)
       fumadocs-ui:
-        specifier: npm:@fumadocs/base-ui@16.17.7
-        version: '@fumadocs/base-ui@16.17.7(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.7)(next@16.4.3)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(tailwindcss@4.3.3)'
+        specifier: npm:@fumadocs/base-ui@16.17.8
+        version: '@fumadocs/base-ui@16.17.8(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.7)(next@16.4.3)(react-dom@19.3.1)(react@19.3.1)(tailwindcss@4.3.3)'
       next:
         specifier: 16.4.3
         version: 16.4.3(@babel/core@7.29.7)(@types/node@26.6.5)(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
@@ -2440,8 +2440,8 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@fumadocs/base-ui@16.17.7':
-    resolution: {integrity: sha512-t9Am0mxPrGuAG9BeC/ACLhNbBtxXbc+JIbTTzr7j5apnCFRQSDxGaZT9/+BRWG6DqltnsccGqGB1x3kPz7WaYw==}
+  '@fumadocs/base-ui@16.17.8':
+    resolution: {integrity: sha512-/x7BF7xn5ssI6N8jbqvPe722rCJv0iHW5o2I2dxqyqzgSWM2tROJ+iB9kbYlqNQP6Z6ZkKjbdbHdWE3UsbCwRw==}
     peerDependencies:
       '@types/fumadocs-core': '*'
       '@types/mdx': '*'
@@ -2449,7 +2449,7 @@ packages:
       '@types/react': '*'
       '@types/react-dom': '*'
       '@types/takumi-js': '*'
-      fumadocs-core: 16.17.7
+      fumadocs-core: 16.17.8
       next: 16.x.x
       react: ^19.2.0
       react-dom: ^19.2.0
@@ -4828,11 +4828,6 @@ packages:
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
-
-  cn@0.4.0:
-    resolution: {integrity: sha512-qOAeUhPwPzBxx6jaeQdo646XIKliKHc2j1ZF7Ngb1o0pJZKH5gq8FkA0aVdUdPFUDXNXyUCXpCtoJISo6dhizg==}
-    engines: {node: '>=20'}
-    hasBin: true
 
   cn@0.5.0:
     resolution: {integrity: sha512-JGEixZEpfFXm1P5uXwvEobOFLlHwIWi5v4tjd1ZwfiYmcEilkuD2l+054rvJcYCR1B+uVThHeUbgmNz1FwuxuA==}
@@ -9021,15 +9016,14 @@ snapshots:
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
 
-  '@fumadocs/base-ui@16.17.7(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.7)(next@16.4.3)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(tailwindcss@4.3.3)':
+  '@fumadocs/base-ui@16.17.8(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.7)(next@16.4.3)(react-dom@19.3.1)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@base-ui/react': 1.9.0(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
       '@fuma-translate/react': 1.0.2(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
       '@fumadocs/tailwind': 0.1.4(tailwindcss@4.3.3)
       class-variance-authority: 0.7.1
-      cn: 0.4.0
+      cn: 0.5.0
       fumadocs-core: 16.17.7(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.5)(@types/mdast@4.0.4)(@types/react-dom@19.3.0)(@types/react@19.3.0)(lucide-react@1.61.0)(next@16.4.3)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(zod@4.6.7)
-      hast-util-to-jsx-runtime: 2.3.6(supports-color@10.2.2)
       lucide-react: 1.61.0(@types/react@19.3.0)(react@19.3.1)
       motion: 14.6.0(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
       next-themes: 0.4.6(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
@@ -9049,7 +9043,6 @@ snapshots:
       - '@types/date-fns__tz'
       - '@types/tailwindcss'
       - date-fns
-      - supports-color
       - tailwindcss
 
   '@fumadocs/tailwind@0.1.4(tailwindcss@4.3.3)':
@@ -10982,8 +10975,6 @@ snapshots:
       wrap-ansi: 7.0.0
 
   clsx@2.1.1: {}
-
-  cn@0.4.0: {}
 
   cn@0.5.0: {}
 
