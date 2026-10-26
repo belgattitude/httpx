@@ -74,8 +74,11 @@ export type XMemCacheEntry<T = unknown> = {
       format: "native";
       /** The cached data, stored as-is */
       data: T;
-      /** When a compressor is set, the reason compression was skipped */
-      meta?: { reason?: string | undefined };
+      /**
+       * When a compressor is set, the reason compression was skipped. The
+       * original size (serialized length, string length...) when computed.
+       */
+      meta?: { reason?: string | undefined; originalSize?: number };
     }
 );
 
@@ -108,21 +111,29 @@ export const createCompressedEntry = <T = unknown>(
  * @param data - the data to cache as-is
  * @param timings - time spent creating the entry
  * @param skippedReason - why compression was skipped, if a compressor is set
+ * @param originalSize - size of the data (ie: serialized length), if known
  */
 export const createNativeEntry = <T>(
   data: T,
   timings: XMemCacheTimings,
-  skippedReason?: string
+  skippedReason?: string,
+  originalSize?: number
 ): XMemCacheEntry<T> => {
-  return {
+  const entry: XMemCacheEntry<T> = {
     [xMemCacheEntryBrand]: true,
     createdAt: Date.now(),
     timings,
     usage: { hits: 0, deduped: 0, readTime: 0 },
     format: "native",
     data,
-    ...(skippedReason === undefined ? {} : { meta: { reason: skippedReason } }),
   };
+  if (skippedReason !== undefined || originalSize !== undefined) {
+    entry.meta = {
+      ...(skippedReason === undefined ? {} : { reason: skippedReason }),
+      ...(originalSize === undefined ? {} : { originalSize }),
+    };
+  }
+  return entry;
 };
 
 /**

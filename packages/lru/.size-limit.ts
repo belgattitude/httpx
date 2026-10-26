@@ -23,7 +23,7 @@ const config = [
     name: "import { getOrCreateTimeLruCache } (ESM)",
     path: ["dist/index.js"],
     import: "{ getOrCreateTimeLruCache }",
-    limit: "790B",
+    limit: "800B",
   },
 ] satisfies SizeLimitConfig;
 

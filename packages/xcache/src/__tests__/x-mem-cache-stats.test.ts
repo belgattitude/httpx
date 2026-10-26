@@ -36,6 +36,7 @@ describe("XMemCache stats", () => {
       compressedItems: 0,
       compressedSize: 0,
       originalSize: 0,
+      nativeOriginalSize: 0,
       entries: [],
       totals: { hits: 0, misses: 0, deduped: 0, bypassed: 0, savedTime: 0 },
     });
@@ -68,6 +69,7 @@ describe("XMemCache stats", () => {
     );
     expect(stats.originalSize).toBe(meta1.originalSize + meta2.originalSize);
     expect(stats.originalSize).toBeGreaterThan(stats.compressedSize);
+    expect(stats.nativeOriginalSize).toBe(JSON.stringify(smallPayload).length);
 
     expect(stats.entries).toStrictEqual([
       {
@@ -75,6 +77,7 @@ describe("XMemCache stats", () => {
         namespace: "default",
         format: "compressed",
         size: meta1.compressedSize,
+        originalSize: meta1.originalSize,
         compression: meta1,
         createdAt: expect.any(Number),
         timings: {
@@ -95,6 +98,7 @@ describe("XMemCache stats", () => {
         namespace: "default",
         format: "compressed",
         size: meta2.compressedSize,
+        originalSize: meta2.originalSize,
         compression: meta2,
         createdAt: expect.any(Number),
         timings: {
@@ -114,6 +118,7 @@ describe("XMemCache stats", () => {
         key: small.meta.generatedKey,
         namespace: "default",
         format: "native",
+        originalSize: JSON.stringify(smallPayload).length,
         skippedReason: "minimum_byte_saving_not_met",
         createdAt: expect.any(Number),
         timings: { fn: expect.any(Number), serialize: expect.any(Number) },
@@ -208,6 +213,7 @@ describe("XMemCache stats", () => {
       namespace: "default",
       format: "compressed",
       size: meta.compression?.compressedSize,
+      originalSize: meta.compression?.originalSize,
       compression: meta.compression,
       createdAt: expect.any(Number),
       timings: {
@@ -469,6 +475,81 @@ describe("XMemCache stats", () => {
     expect(cache.getStats()).toMatchObject({
       items: 1,
       nativeItems: 1,
+    });
+  });
+
+  describe("original size of native entries", () => {
+    it("should be computed for strings and bytes without compressor", async () => {
+      const cache = new XMemCache({
+        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      });
+      await cache.runAsync({
+        key: ["/string"],
+        fn: () => Promise.resolve("hello"),
+      });
+      await cache.runAsync({
+        key: ["/bytes"],
+        fn: () => Promise.resolve(new Uint8Array(12)),
+      });
+      // live objects can't be measured
+      await cache.runAsync({
+        key: ["/object"],
+        fn: () => Promise.resolve(smallPayload),
+      });
+      expect(cache.getEntryInfo({ key: ["/string"] })?.originalSize).toBe(5);
+      expect(cache.getEntryInfo({ key: ["/bytes"] })?.originalSize).toBe(12);
+      expect(cache.getEntryInfo({ key: ["/object"] })).not.toHaveProperty(
+        "originalSize"
+      );
+      expect(cache.getStats()).toMatchObject({
+        nativeItems: 3,
+        nativeOriginalSize: 17,
+        originalSize: 0,
+      });
+    });
+
+    it("should be computed when compression is disabled", async () => {
+      const cache = new XMemCache({
+        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+        compressionEnabled: false,
+        compressor: new CacheCompress({
+          algorithm: "gzip",
+          serializer: new JsonSerializer(),
+        }),
+      });
+      await cache.runAsync({
+        key: ["/string"],
+        fn: () => Promise.resolve("hello"),
+      });
+      expect(cache.getEntryInfo({ key: ["/string"] })).toMatchObject({
+        format: "native",
+        originalSize: 5,
+        skippedReason: "compression_disabled",
+      });
+    });
+
+    it("should be the serialized length when compression is skipped", async () => {
+      const { cache } = createCache();
+      await cache.runAsync({
+        key: ["/small"],
+        fn: () => Promise.resolve(smallPayload),
+      });
+      // not serialized
+      await cache.runAsync({
+        key: ["/trivial"],
+        fn: () => Promise.resolve(42),
+      });
+      expect(cache.getEntryInfo({ key: ["/small"] })).toMatchObject({
+        format: "native",
+        originalSize: JSON.stringify(smallPayload).length,
+        skippedReason: "minimum_byte_saving_not_met",
+      });
+      expect(cache.getEntryInfo({ key: ["/trivial"] })).toStrictEqual(
+        expect.not.objectContaining({ originalSize: expect.anything() })
+      );
+      expect(cache.getStats().nativeOriginalSize).toBe(
+        JSON.stringify(smallPayload).length
+      );
     });
   });
 });

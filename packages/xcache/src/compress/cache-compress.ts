@@ -14,6 +14,7 @@ import type {
   CacheCompressResult,
   CacheCompressSkippedReason,
   CacheCompressSuccessMeta,
+  CacheCompressorConfig,
   CacheCompressTimings,
   CacheDecompressTimings,
   ICacheCompressor,
@@ -100,11 +101,12 @@ const defaultOptions: Required<
 const skipped = <T>(
   data: T,
   reason: CacheCompressSkippedReason,
-  timings: CacheCompressTimings
+  timings: CacheCompressTimings,
+  originalSize: number
 ): CacheCompressResult => {
   const result: CacheCompressResult = {
     status: "skipped",
-    meta: { reason },
+    meta: { reason, originalSize },
     data,
   };
   if (timings.serialize !== undefined || timings.compress !== undefined) {
@@ -196,6 +198,25 @@ export class CacheCompress implements ICacheCompressor {
     this.#serializer.serializeWithJsonDetection !== undefined;
 
   /**
+   * Configuration of the compressor (algorithm, encoding, serializer and
+   * thresholds).
+   */
+  getConfig = (): CacheCompressorConfig => {
+    const { encoding, minimumRatio, minimumStringLength, minimumByteSaving } =
+      this.#options;
+    return {
+      algorithm: this.#algorithm,
+      encoding,
+      serializer: this.#serializerId,
+      binarySerializer: this.#serializer.binary === true,
+      jsonDetection: this.supportsJsonDetection(),
+      minimumRatio,
+      minimumStringLength,
+      minimumByteSaving,
+    };
+  };
+
+  /**
    * Serialize and compress the data. Strings are compressed as-is, without
    * serializer (meta.content: "string"), plain JSON is stored as JSON when
    * detected (meta.content: "json", see detectJson). Compression is skipped (data
@@ -244,11 +265,21 @@ export class CacheCompress implements ICacheCompressor {
     }
     // Don't even try to compress small payloads
     if (serialized.length < minimumStringLength) {
-      return skipped(data, "minimum_string_length_not_met", timings);
+      return skipped(
+        data,
+        "minimum_string_length_not_met",
+        timings,
+        serialized.length
+      );
     }
     // The byte saving can't exceed the serialized length
     if (serialized.length < minimumByteSaving) {
-      return skipped(data, "minimum_byte_saving_not_met", timings);
+      return skipped(
+        data,
+        "minimum_byte_saving_not_met",
+        timings,
+        serialized.length
+      );
     }
     // Compress the serialized string first, then optionally encode the bytes
     const start = now();
@@ -260,7 +291,12 @@ export class CacheCompress implements ICacheCompressor {
     if (
       Math.max(serialized.length - compressed.length, 0) < minimumByteSaving
     ) {
-      return skipped(data, "minimum_byte_saving_not_met", timings);
+      return skipped(
+        data,
+        "minimum_byte_saving_not_met",
+        timings,
+        serialized.length
+      );
     }
     const ratio =
       compressed.length > 0
@@ -268,7 +304,7 @@ export class CacheCompress implements ICacheCompressor {
         : 0;
 
     if (ratio < minimumRatio) {
-      return skipped(data, "minimum_ratio_not_met", timings);
+      return skipped(data, "minimum_ratio_not_met", timings, serialized.length);
     }
 
     const meta: CacheCompressSuccessMeta = {

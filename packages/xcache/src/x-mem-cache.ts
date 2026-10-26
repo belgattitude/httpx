@@ -6,6 +6,7 @@ import {
   genCacheKeyString,
 } from "./cache-key";
 import type {
+  CacheCompressorConfig,
   CacheCompressSuccessMeta,
   CacheDecompressTimings,
   ICacheCompressor,
@@ -271,6 +272,13 @@ export type XMemCacheEntryInfo = {
    * of live objects can't be measured.
    */
   size?: number;
+  /**
+   * Size of the data before compression: serialized length (bytes for
+   * binary serializers) or string length. Set for compressed entries, and
+   * for native entries when it could be computed (ie: compression skipped
+   * after serialization, strings, Uint8Array).
+   */
+  originalSize?: number;
   /** Compression meta, for compressed entries */
   compression?: CacheCompressSuccessMeta;
   /** Why compression was skipped (when a compressor is set) */
@@ -339,10 +347,50 @@ export type XMemCacheStats = {
   compressedSize: number;
   /** Total size of the compressed entries before compression (serialized) */
   originalSize: number;
+  /**
+   * Total original size of the native entries having one (see
+   * XMemCacheEntryInfo.originalSize). Entries without measurable size (ie:
+   * live objects stored without serialization) are not included.
+   */
+  nativeOriginalSize: number;
   /** Entries info, least recently used first */
   entries: XMemCacheEntryInfo[];
   /** Totals since the creation of the instance (or resetStats) */
   totals: XMemCacheTotals;
+};
+
+/**
+ * XMemCache configuration, returned by getConfig.
+ */
+export type XMemCacheConfig = {
+  /** Default namespace */
+  namespace: string;
+  /** Default time to live in milliseconds (lru defaultTTL) */
+  ttl: number;
+  /** Maximum number of entries (lru maxSize) */
+  maxSize: number;
+  /** Whether the cache is globally enabled */
+  enabled: boolean;
+  /** Whether compression is globally enabled (false without compressor) */
+  compressionEnabled: boolean;
+  /** Whether concurrent calls are deduplicated */
+  dedupe: boolean;
+  /**
+   * The compressor, when set: its identifier and its configuration when
+   * the compressor provides it (ie: CacheCompress).
+   */
+  compressor?: { id: string } & Partial<CacheCompressorConfig>;
+};
+
+/**
+ * Size of the data when it can be computed without serializing (strings
+ * and bytes).
+ */
+const getNativeSize = (data: unknown): number | undefined => {
+  if (typeof data === "string") {
+    return data.length;
+  }
+  return data instanceof Uint8Array ? data.byteLength : undefined;
 };
 
 /**
@@ -401,14 +449,16 @@ const toEntryInfo = (
       key,
       format: "compressed",
       size: value.meta.compressedSize,
+      originalSize: value.meta.originalSize,
       compression: value.meta,
       ...ttl,
     };
   }
-  const reason = value.meta?.reason;
+  const { reason, originalSize } = value.meta ?? {};
   return {
     key,
     format: "native",
+    ...(originalSize === undefined ? {} : { originalSize }),
     ...(reason === undefined ? {} : { skippedReason: reason }),
     ...ttl,
   };
@@ -843,7 +893,12 @@ export class XMemCache {
     if (!enabled) {
       entry = createNativeEntry(data, timings);
     } else if (this.#compressor !== undefined && !compressionEnabled) {
-      entry = createNativeEntry(data, timings, "compression_disabled");
+      entry = createNativeEntry(
+        data,
+        timings,
+        "compression_disabled",
+        getNativeSize(data)
+      );
     } else if (
       this.#compressor !== undefined &&
       data !== null &&
@@ -858,12 +913,26 @@ export class XMemCache {
       if (compress !== undefined) {
         timings.compress = roundMs(compress);
       }
-      entry =
-        compressed.status === "success"
-          ? createCompressedEntry(compressed.data, compressed.meta, timings)
-          : createNativeEntry(data, timings, compressed.meta.reason);
+      if (compressed.status === "success") {
+        entry = createCompressedEntry(
+          compressed.data,
+          compressed.meta,
+          timings
+        );
+      } else {
+        const originalSize =
+          compressed.status === "skipped"
+            ? compressed.meta.originalSize
+            : undefined;
+        entry = createNativeEntry(
+          data,
+          timings,
+          compressed.meta.reason,
+          originalSize ?? getNativeSize(data)
+        );
+      }
     } else {
-      entry = createNativeEntry(data, timings);
+      entry = createNativeEntry(data, timings, undefined, getNativeSize(data));
     }
     const namespace = params.namespace ?? this.#defaultNs;
     if (namespace !== "") {
@@ -975,6 +1044,7 @@ export class XMemCache {
       compressedItems: 0,
       compressedSize: 0,
       originalSize: 0,
+      nativeOriginalSize: 0,
       entries: [],
       totals: {
         ...this.#totals,
@@ -994,6 +1064,7 @@ export class XMemCache {
         stats.originalSize += value.meta.originalSize;
       } else {
         stats.nativeItems++;
+        stats.nativeOriginalSize += value.meta?.originalSize ?? 0;
       }
       stats.entries.push(
         toEntryInfo(key as CacheStringKey, value, this.#lru.expiresIn(key))
@@ -1017,10 +1088,60 @@ export class XMemCache {
   };
 
   /**
+   * Return the configuration of the instance: default namespace and ttl,
+   * enabled toggles and the compressor configuration (algorithm, encoding,
+   * serializer...) when set.
+   *
+   * @example
+   * ```typescript
+   * const { ttl, compressor } = xMemCache.getConfig();
+   * // compressor: { id: 'cache-compress:superjson', algorithm: 'gzip', encoding: 'binary', serializer: 'superjson', ... }
+   * ```
+   */
+  getConfig = (): XMemCacheConfig => {
+    const { defaultTTL, maxSize } = this.#lru.params;
+    const config: XMemCacheConfig = {
+      namespace: this.#defaultNs,
+      ttl: defaultTTL,
+      maxSize,
+      enabled: this.#enabled,
+      compressionEnabled: this.compressionEnabled,
+      dedupe: this.#dedupe,
+    };
+    if (this.#compressor !== undefined) {
+      config.compressor = {
+        id: this.#compressorId ?? this.#compressor.getIdentifier(),
+        ...this.#compressor.getConfig?.(),
+      };
+    }
+    return config;
+  };
+
+  /**
    * Clear the cache and return the number of items removed. The totals
    * returned by getStats are kept (see resetStats).
    */
   clear = (): number => this.#lru.clear();
+
+  /**
+   * Remove the expired entries and return the number of items removed.
+   * Expired entries are never served, but they're only removed from the lru
+   * when accessed or evicted: use it to release their memory (ie: on an
+   * interval). Values not created by XMemCache (shared lru) are kept.
+   */
+  clearExpired = (): number => {
+    const expiredKeys: string[] = [];
+    for (const [key, value] of this.#lru) {
+      // expiresIn is undefined for expired entries
+      if (isXMemCacheEntry(value) && this.#lru.expiresIn(key) === undefined) {
+        expiredKeys.push(key);
+      }
+    }
+    for (const key of expiredKeys) {
+      this.#lru.delete(key);
+    }
+    return expiredKeys.length;
+  };
 
   /**
    * Reset the totals returned by getStats (hits, misses, saved time...).

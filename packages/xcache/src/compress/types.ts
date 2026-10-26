@@ -97,12 +97,40 @@ export type CacheCompressResult<T = unknown> = (
       status: "skipped";
       meta: {
         reason: CacheCompressSkippedReason;
+        /**
+         * Length of the serialized string (bytes for binary serializers),
+         * when computed before compression was skipped (absent for trivial
+         * values).
+         */
+        originalSize?: number;
       };
       data: T;
     }
 ) & {
   /** Time spent serializing and compressing, when measured */
   timings?: CacheCompressTimings;
+};
+
+/**
+ * Configuration of a compressor, returned by ICacheCompressor.getConfig.
+ */
+export type CacheCompressorConfig = {
+  /** Compression algorithm */
+  algorithm: CacheCompressAlgorithm;
+  /** How the compressed bytes are stored ("binary": Uint8Array) */
+  encoding: CacheCompressEncoding;
+  /** Identifier of the serializer (ie: "json", "superjson", "cbor-x") */
+  serializer: string;
+  /** Whether the serializer is binary (serializes into bytes) */
+  binarySerializer: boolean;
+  /** Whether plain JSON data is detected and stored as JSON */
+  jsonDetection: boolean;
+  /** Minimum compression ratio */
+  minimumRatio: number;
+  /** Minimum length to activate compression */
+  minimumStringLength: number;
+  /** Minimum byte saving */
+  minimumByteSaving: number;
 };
 
 /**
@@ -133,4 +161,9 @@ export interface ICacheCompressor {
    * supporting it (SuperjsonSerializer).
    */
   supportsJsonDetection?: () => boolean;
+  /**
+   * Configuration of the compressor (algorithm, encoding, serializer...),
+   * returned by XMemCache.getConfig.
+   */
+  getConfig?: () => CacheCompressorConfig;
 }

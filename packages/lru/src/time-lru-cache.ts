@@ -118,6 +118,7 @@ export class TimeLruCache<
         this.#onEviction(key, value.value);
       }
       this.#removeNode(value.node);
+      this.#cache.delete(key);
       return false;
     }
 
@@ -162,6 +163,7 @@ export class TimeLruCache<
         this.#onEviction(key, data.value);
       }
       this.#removeNode(data.node);
+      this.#cache.delete(key);
       return undefined;
     }
 
