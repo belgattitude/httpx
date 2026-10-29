@@ -444,15 +444,6 @@ const createTotals = (): XMemCacheTotals => {
 };
 
 /**
- * Measurable size of a stored entry: compressed size, or the original size
- * of native entries when known.
- */
-const getMeasuredSize = (value: XMemCacheEntry): number =>
-  value.format === "compressed"
-    ? value.meta.compressedSize
-    : (value.meta?.originalSize ?? 0);
-
-/**
  * Convert a stored entry into its public info.
  */
 const toEntryInfo = (
@@ -1100,7 +1091,10 @@ export class XMemCache {
       );
     }
     stats.compressionSavings = stats.originalSize - stats.compressedSize;
-    this.#trackPeakSize(stats.compressedSize + stats.nativeOriginalSize);
+    this.#totals.peakSize = Math.max(
+      this.#totals.peakSize,
+      stats.compressedSize + stats.nativeOriginalSize
+    );
     stats.totals.peakSize = this.#totals.peakSize;
     return stats;
   };
@@ -1165,33 +1159,18 @@ export class XMemCache {
    * interval). Values not created by XMemCache (shared lru) are kept.
    */
   clearExpired = (): number => {
+    this.#samplePeakSize();
     const expiredKeys: string[] = [];
-    let size = 0;
     for (const [key, value] of this.#lru) {
-      if (!isXMemCacheEntry(value)) {
-        continue;
-      }
       // expiresIn is undefined for expired entries
-      if (this.#lru.expiresIn(key) === undefined) {
+      if (isXMemCacheEntry(value) && this.#lru.expiresIn(key) === undefined) {
         expiredKeys.push(key);
-      } else {
-        size += getMeasuredSize(value);
       }
     }
-    this.#trackPeakSize(size);
     for (const key of expiredKeys) {
       this.#lru.delete(key);
     }
     return expiredKeys.length;
-  };
-
-  /**
-   * Keep the highest measured size in the totals.
-   */
-  readonly #trackPeakSize = (size: number): void => {
-    if (size > this.#totals.peakSize) {
-      this.#totals.peakSize = size;
-    }
   };
 
   /**
@@ -1203,10 +1182,13 @@ export class XMemCache {
       // peek skips expired entries
       const value = this.#lru.peek(key);
       if (isXMemCacheEntry(value)) {
-        size += getMeasuredSize(value);
+        size +=
+          value.format === "compressed"
+            ? value.meta.compressedSize
+            : (value.meta?.originalSize ?? 0);
       }
     }
-    this.#trackPeakSize(size);
+    this.#totals.peakSize = Math.max(this.#totals.peakSize, size);
   };
 
   /**
