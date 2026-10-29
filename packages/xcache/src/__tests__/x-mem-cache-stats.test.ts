@@ -37,8 +37,16 @@ describe("XMemCache stats", () => {
       compressedSize: 0,
       originalSize: 0,
       nativeOriginalSize: 0,
+      compressionSavings: 0,
       entries: [],
-      totals: { hits: 0, misses: 0, deduped: 0, bypassed: 0, savedTime: 0 },
+      totals: {
+        hits: 0,
+        misses: 0,
+        deduped: 0,
+        bypassed: 0,
+        savedTime: 0,
+        peakSize: 0,
+      },
     });
   });
 
@@ -70,6 +78,12 @@ describe("XMemCache stats", () => {
     expect(stats.originalSize).toBe(meta1.originalSize + meta2.originalSize);
     expect(stats.originalSize).toBeGreaterThan(stats.compressedSize);
     expect(stats.nativeOriginalSize).toBe(JSON.stringify(smallPayload).length);
+    expect(stats.compressionSavings).toBe(
+      stats.originalSize - stats.compressedSize
+    );
+    expect(stats.totals.peakSize).toBe(
+      stats.compressedSize + stats.nativeOriginalSize
+    );
 
     expect(stats.entries).toStrictEqual([
       {
@@ -550,6 +564,53 @@ describe("XMemCache stats", () => {
       expect(cache.getStats().nativeOriginalSize).toBe(
         JSON.stringify(smallPayload).length
       );
+    });
+  });
+
+  describe("peak size", () => {
+    it("should keep the highest size encountered", async () => {
+      const { cache } = createCache();
+      await cache.runAsync({
+        key: ["/big"],
+        fn: () => Promise.resolve(bigPayload),
+      });
+      const { compressedSize } = cache.getStats();
+      expect(compressedSize).toBeGreaterThan(0);
+      cache.clear();
+      expect(cache.getStats()).toMatchObject({
+        compressedSize: 0,
+        totals: { peakSize: compressedSize },
+      });
+      cache.resetStats();
+      expect(cache.getStats().totals.peakSize).toBe(0);
+    });
+
+    it("should be sampled before clear and clearExpired", async () => {
+      vi.useFakeTimers({ toFake: ["performance", "Date"] });
+      onTestFinished(() => {
+        vi.useRealTimers();
+      });
+      const { cache } = createCache();
+      await cache.runAsync({
+        key: ["/text"],
+        fn: () => Promise.resolve("hello"),
+      });
+      cache.clear();
+      expect(cache.getStats().totals.peakSize).toBe(5);
+
+      await cache.runAsync({
+        key: ["/expiring"],
+        fn: () => Promise.resolve("hello world"),
+        ttl: 1000,
+      });
+      await cache.runAsync({
+        key: ["/kept"],
+        fn: () => Promise.resolve("hello world!"),
+      });
+      vi.advanceTimersByTime(2000);
+      // the expired entry is not counted
+      expect(cache.clearExpired()).toBe(1);
+      expect(cache.getStats().totals.peakSize).toBe(12);
     });
   });
 });
