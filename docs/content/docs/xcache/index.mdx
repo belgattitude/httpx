@@ -293,6 +293,8 @@ const info = xMemCache.getEntryInfo({ key: ["/api/data", params] });
 
 Native (uncompressed) entries are live objects: their `originalSize` is only set when it could be computed (serialized before compression was skipped, strings and `Uint8Array`), and only those are included in `nativeOriginalSize`. If the lru is shared, entries of other `XMemCache` instances are included.
 
+`compressionSavings` and `totals.peakSize` are estimates: sizes are lengths, string chars for string serializers and base64 encoding, bytes for binary ones (non-ASCII chars take more than one byte). They're the same lengths used for the compression `ratio`.
+
 </Callout>
 
 ### Clearing expired entries

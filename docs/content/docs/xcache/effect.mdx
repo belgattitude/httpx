@@ -1,0 +1,62 @@
+---
+title: "Effect"
+description: "Use @httpx/xcache as an Effect v3 service."
+---
+
+XMemCache can be provided as an [Effect](https://effect.website) v3 service, and called with `Effect.tryPromise`. No extra dependency is needed.
+
+```typescript
+import { TimeLruCache, XMemCache } from "@httpx/xcache";
+import { Context, Data, Effect, Layer, ManagedRuntime } from "effect";
+
+class XCache extends Context.Tag("XCache")<XCache, XMemCache>() {
+  static readonly Live = Layer.sync(
+    XCache,
+    () =>
+      new XMemCache({
+        lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+      })
+  );
+}
+
+class ProductError extends Data.TaggedError("ProductError")<{
+  cause: unknown;
+}> {}
+
+// Any effect without requirements (ie: an http request)
+const fetchProduct = (id: string) =>
+  Effect.tryPromise({
+    try: (signal) =>
+      fetch(`https://example.com/api/products/${id}`, { signal }).then(
+        (res) => res.json() as Promise<{ id: string; name: string }>
+      ),
+    catch: (cause) => new ProductError({ cause }),
+  });
+
+const getProduct = (id: string) =>
+  Effect.gen(function* () {
+    const xcache = yield* XCache;
+    const { data } = yield* Effect.tryPromise({
+      try: (signal) =>
+        xcache.runAsync({
+          key: ["/api/products", { id }],
+          fn: ({ signal }) => Effect.runPromise(fetchProduct(id), { signal }),
+          // 👇 interrupting the fiber aborts the call
+          signal,
+          ttl: 30_000, // optional
+        }),
+      catch: (cause) => new ProductError({ cause }),
+    });
+    return data;
+  });
+
+// One cache for the app: the layer is built once by the runtime
+const runtime = ManagedRuntime.make(XCache.Live);
+
+const product = await runtime.runPromise(getProduct("1"));
+```
+
+- **One instance**: build the layer once (ie: `ManagedRuntime`, or provide it at the app entry point). Providing `XCache.Live` on each call would create a new, empty cache every time.
+- **Errors are not cached**: a failed effect rejects the call, and the next call runs it again. The original error is available in `cause`.
+- **Interruption**: the `signal` given by `Effect.tryPromise` aborts the call when the fiber is interrupted (ie: `Effect.timeout`), and the result of an aborted execution is never stored.
+- **Requirements**: `Effect.runPromise` needs an effect without requirements. For an effect using services, get the current runtime with `Effect.runtime<R>()` and use `Runtime.runPromise(runtime)(effect, { signal })` instead.

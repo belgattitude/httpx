@@ -20,6 +20,7 @@ $ pnpm add @httpx/xcache
 - 🐘&nbsp; [Deduplication](#deduplication) of concurrent calls (cache stampede protection).
 - 🛑&nbsp; [Abort signal](#abort-signal) support (AbortController, timeouts, client disconnects).
 - 🔥&nbsp; [Hono](#hono) helper: compressed responses sent as-is, ETag, Cache-Control.
+- 🧩&nbsp; [Effect](#effect) v3 service example.
 - 📐&nbsp; Lightweight (starts at [~1.7kB](#bundle-size)).
 - 🛡️&nbsp; Tested on [node 22-26, bun, browser and cloudflare workers](#compatibility).
 - 🗝️&nbsp; Available in ESM.
@@ -380,6 +381,9 @@ The usage is tied to the entry: it's dropped when the entry expires and starts o
 
 `totals.peakSize` is the highest measured size of the entries (`compressedSize + nativeOriginalSize`) encountered. It's sampled when calling `getStats()`, `clear()` and `clearExpired()`, so peaks between those calls are not seen (ie: call `clearExpired()` on an interval).
 
+> [!NOTE]
+> `compressionSavings` and `peakSize` are estimates: sizes are lengths, string chars for string serializers and base64 encoding, bytes for binary ones (non-ASCII chars take more than one byte). They're the same lengths used for the compression `ratio`.
+
 ```typescript
 const { totals } = xMemCache.getStats();
 const hitRatio = totals.hits / (totals.hits + totals.misses + totals.deduped);
@@ -658,6 +662,66 @@ app.onError((err, c) => {
 > ```
 
 To use compressed entries in other contexts, `XMemCache.runAsyncEntry()` returns the stored entry as-is (`{ entry, cached, bypassed, generatedKey, namespace, expiresIn }`), with `entry.format` being `"compressed"` (`entry.data` is the compressed `Uint8Array`, `entry.meta` the compression meta) or `"native"`. Use `xMemCache.readEntry(entry)` to get the decompressed data.
+
+## Effect
+
+XMemCache can be provided as an [Effect](https://effect.website) v3 service, and called with `Effect.tryPromise`. No extra dependency is needed.
+
+```typescript
+import { TimeLruCache, XMemCache } from "@httpx/xcache";
+import { Context, Data, Effect, Layer, ManagedRuntime } from "effect";
+
+class XCache extends Context.Tag("XCache")<XCache, XMemCache>() {
+  static readonly Live = Layer.sync(
+    XCache,
+    () =>
+      new XMemCache({
+        lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+      })
+  );
+}
+
+class ProductError extends Data.TaggedError("ProductError")<{
+  cause: unknown;
+}> {}
+
+// Any effect without requirements (ie: an http request)
+const fetchProduct = (id: string) =>
+  Effect.tryPromise({
+    try: (signal) =>
+      fetch(`https://example.com/api/products/${id}`, { signal }).then(
+        (res) => res.json() as Promise<{ id: string; name: string }>
+      ),
+    catch: (cause) => new ProductError({ cause }),
+  });
+
+const getProduct = (id: string) =>
+  Effect.gen(function* () {
+    const xcache = yield* XCache;
+    const { data } = yield* Effect.tryPromise({
+      try: (signal) =>
+        xcache.runAsync({
+          key: ["/api/products", { id }],
+          fn: ({ signal }) => Effect.runPromise(fetchProduct(id), { signal }),
+          // 👇 interrupting the fiber aborts the call
+          signal,
+          ttl: 30_000, // optional
+        }),
+      catch: (cause) => new ProductError({ cause }),
+    });
+    return data;
+  });
+
+// One cache for the app: the layer is built once by the runtime
+const runtime = ManagedRuntime.make(XCache.Live);
+
+const product = await runtime.runPromise(getProduct("1"));
+```
+
+- **One instance**: build the layer once (ie: `ManagedRuntime`, or provide it at the app entry point). Providing `XCache.Live` on each call would create a new, empty cache every time.
+- **Errors are not cached**: a failed effect rejects the call, and the next call runs it again. The original error is available in `cause`.
+- **Interruption**: the `signal` given by `Effect.tryPromise` aborts the call when the fiber is interrupted (ie: `Effect.timeout`), and the result of an aborted execution is never stored (see [abort signal](#abort-signal)).
+- **Requirements**: `Effect.runPromise` needs an effect without requirements. For an effect using services, get the current runtime with `Effect.runtime<R>()` and use `Runtime.runPromise(runtime)(effect, { signal })` instead.
 
 ## Choosing a serializer
 

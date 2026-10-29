@@ -335,6 +335,8 @@ export type XMemCacheTotals = {
    * Highest measured size of the entries (compressedSize +
    * nativeOriginalSize) encountered. Sampled when calling getStats, clear
    * and clearExpired: peaks between those calls are not seen.
+   * An estimate: it sums lengths that can be string chars or bytes (see
+   * XMemCacheStats.compressionSavings).
    */
   peakSize: number;
 };
@@ -363,6 +365,9 @@ export type XMemCacheStats = {
    * Size saved by compression (originalSize - compressedSize). Can be
    * negative with a custom compressor storing entries bigger than the
    * original.
+   * An estimate: sizes are lengths, string chars for string serializers
+   * and base64 encoding, bytes for binary ones (non-ASCII chars take
+   * more than one byte), the same lengths used for the compression ratio.
    */
   compressionSavings: number;
   /** Entries info, least recently used first */
