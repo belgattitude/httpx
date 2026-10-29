@@ -315,6 +315,7 @@ const stats = xMemCache.getStats();
 //   compressedSize: 180666,  // total size of the compressed entries
 //   originalSize: 1948050,   // same entries, serialized size before compression
 //   nativeOriginalSize: 1520, // native entries with a known original size
+//   compressionSavings: 1767384, // originalSize - compressedSize
 //   entries: [               // least recently used first
 //     {
 //       key: '{"compressorId":"cache-compress:superjson","key":["/api/data",{"name":"cool"}],"ns":"default"}',
@@ -347,6 +348,7 @@ const stats = xMemCache.getStats();
 //     deduped: 12,
 //     bypassed: 5,
 //     savedTime: 184320.12,  // estimated time saved in milliseconds
+//     peakSize: 245010,      // highest compressedSize + nativeOriginalSize seen
 //   },
 // }
 
@@ -375,6 +377,8 @@ savedTime = (hits + deduped) × timings.fn − total read time − (timings.seri
 The usage is tied to the entry: it's dropped when the entry expires and starts over when it's replaced (ie: `forceRevalidate`), always measured against the timings of the current entry. A negative `savedTime` means the cache costs more than it saves for that key (ie: a fast function with a large payload to compress).
 
 `totals` sums all the calls of the instance (`runAsync` and `runAsyncEntry`) and is kept when entries expire or the cache is cleared. Use `resetStats()` to reset it.
+
+`totals.peakSize` is the highest measured size of the entries (`compressedSize + nativeOriginalSize`) encountered. It's sampled when calling `getStats()`, `clear()` and `clearExpired()`, so peaks between those calls are not seen (ie: call `clearExpired()` on an interval).
 
 ```typescript
 const { totals } = xMemCache.getStats();

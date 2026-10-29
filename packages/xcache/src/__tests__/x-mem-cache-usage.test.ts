@@ -87,6 +87,7 @@ describe("XMemCache usage", () => {
       deduped: 0,
       bypassed: 0,
       savedTime: 189,
+      peakSize: cache.getStats().compressedSize,
     });
   });
 
@@ -126,6 +127,7 @@ describe("XMemCache usage", () => {
       deduped: 2,
       bypassed: 0,
       savedTime: 200,
+      peakSize: 0,
     });
   });
 
@@ -154,6 +156,7 @@ describe("XMemCache usage", () => {
       deduped: 0,
       bypassed: 1,
       savedTime: 0,
+      peakSize: 0,
     });
   });
 
@@ -198,6 +201,7 @@ describe("XMemCache usage", () => {
       deduped: 0,
       bypassed: 0,
       savedTime: 0,
+      peakSize: 0,
     });
   });
 

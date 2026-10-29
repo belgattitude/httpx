@@ -331,6 +331,12 @@ export type XMemCacheTotals = {
    * serializing / compressing on misses. Can be negative.
    */
   savedTime: number;
+  /**
+   * Highest measured size of the entries (compressedSize +
+   * nativeOriginalSize) encountered. Sampled when calling getStats, clear
+   * and clearExpired: peaks between those calls are not seen.
+   */
+  peakSize: number;
 };
 
 /**
@@ -353,6 +359,12 @@ export type XMemCacheStats = {
    * live objects stored without serialization) are not included.
    */
   nativeOriginalSize: number;
+  /**
+   * Size saved by compression (originalSize - compressedSize). Can be
+   * negative with a custom compressor storing entries bigger than the
+   * original.
+   */
+  compressionSavings: number;
   /** Entries info, least recently used first */
   entries: XMemCacheEntryInfo[];
   /** Totals since the creation of the instance (or resetStats) */
@@ -421,8 +433,24 @@ const toUsageInfo = (
  * Create zeroed totals.
  */
 const createTotals = (): XMemCacheTotals => {
-  return { hits: 0, misses: 0, deduped: 0, bypassed: 0, savedTime: 0 };
+  return {
+    hits: 0,
+    misses: 0,
+    deduped: 0,
+    bypassed: 0,
+    savedTime: 0,
+    peakSize: 0,
+  };
 };
+
+/**
+ * Measurable size of a stored entry: compressed size, or the original size
+ * of native entries when known.
+ */
+const getMeasuredSize = (value: XMemCacheEntry): number =>
+  value.format === "compressed"
+    ? value.meta.compressedSize
+    : (value.meta?.originalSize ?? 0);
 
 /**
  * Convert a stored entry into its public info.
@@ -1045,6 +1073,7 @@ export class XMemCache {
       compressedSize: 0,
       originalSize: 0,
       nativeOriginalSize: 0,
+      compressionSavings: 0,
       entries: [],
       totals: {
         ...this.#totals,
@@ -1070,6 +1099,9 @@ export class XMemCache {
         toEntryInfo(key as CacheStringKey, value, this.#lru.expiresIn(key))
       );
     }
+    stats.compressionSavings = stats.originalSize - stats.compressedSize;
+    this.#trackPeakSize(stats.compressedSize + stats.nativeOriginalSize);
+    stats.totals.peakSize = this.#totals.peakSize;
     return stats;
   };
 
@@ -1121,7 +1153,10 @@ export class XMemCache {
    * Clear the cache and return the number of items removed. The totals
    * returned by getStats are kept (see resetStats).
    */
-  clear = (): number => this.#lru.clear();
+  clear = (): number => {
+    this.#samplePeakSize();
+    return this.#lru.clear();
+  };
 
   /**
    * Remove the expired entries and return the number of items removed.
@@ -1131,12 +1166,19 @@ export class XMemCache {
    */
   clearExpired = (): number => {
     const expiredKeys: string[] = [];
+    let size = 0;
     for (const [key, value] of this.#lru) {
+      if (!isXMemCacheEntry(value)) {
+        continue;
+      }
       // expiresIn is undefined for expired entries
-      if (isXMemCacheEntry(value) && this.#lru.expiresIn(key) === undefined) {
+      if (this.#lru.expiresIn(key) === undefined) {
         expiredKeys.push(key);
+      } else {
+        size += getMeasuredSize(value);
       }
     }
+    this.#trackPeakSize(size);
     for (const key of expiredKeys) {
       this.#lru.delete(key);
     }
@@ -1144,7 +1186,32 @@ export class XMemCache {
   };
 
   /**
-   * Reset the totals returned by getStats (hits, misses, saved time...).
+   * Keep the highest measured size in the totals.
+   */
+  readonly #trackPeakSize = (size: number): void => {
+    if (size > this.#totals.peakSize) {
+      this.#totals.peakSize = size;
+    }
+  };
+
+  /**
+   * Update the peak size with the measured size of the non-expired entries.
+   */
+  readonly #samplePeakSize = (): void => {
+    let size = 0;
+    for (const [key] of this.#lru) {
+      // peek skips expired entries
+      const value = this.#lru.peek(key);
+      if (isXMemCacheEntry(value)) {
+        size += getMeasuredSize(value);
+      }
+    }
+    this.#trackPeakSize(size);
+  };
+
+  /**
+   * Reset the totals returned by getStats (hits, misses, saved time, peak
+   * size...).
    * The usage of the entries is kept, it's reset when they're replaced.
    */
   resetStats = (): void => {
