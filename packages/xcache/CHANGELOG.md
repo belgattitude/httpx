@@ -1,5 +1,21 @@
 # @httpx/xcache
 
+## 0.14.0
+
+### Minor Changes
+
+- [#2882](https://github.com/belgattitude/httpx/pull/2882) [`93db209`](https://github.com/belgattitude/httpx/commit/93db209ae548733bd30fefdd027824cf1282ddfe) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `compressionSavings` and `totals.peakSize` to `XMemCache.getStats()`.
+  
+  - `compressionSavings`: size saved by compression for the current entries (`originalSize - compressedSize`).
+  - `totals.peakSize`: highest measured size of the entries (`compressedSize + nativeOriginalSize`) encountered since the instance creation (or `resetStats()`). It's sampled when calling `getStats()`, `clear()` and `clearExpired()`.
+  
+  Both are estimates based on lengths (string chars or bytes, as for the compression `ratio`).
+  
+  ```typescript
+  const { compressionSavings, totals } = xMemCache.getStats();
+  console.log(compressionSavings, totals.peakSize);
+  ```
+
 ## 0.13.0
 
 ### Minor Changes
