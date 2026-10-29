@@ -1766,8 +1766,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
       ultracite:
-        specifier: 8.0.2
-        version: 8.0.2(eslint@10.13.0)(oxfmt@0.74.0)(oxlint@1.89.0)
+        specifier: 8.1.0
+        version: 8.1.0(eslint@10.13.0)(oxfmt@0.74.0)(oxlint@1.89.0)
       vite:
         specifier: 8.3.5
         version: 8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
@@ -7809,12 +7809,12 @@ packages:
     resolution: {integrity: sha512-8iAasVS4wUx0gPLjH8Xtz2PeDzTSiy8QiLGu2DT3X5GU+egFEQhpnbtkehbAwjvDcxIERmCYcysiODFmE3Ud0Q==}
     engines: {node: '>=18'}
 
-  ultracite@8.0.2:
-    resolution: {integrity: sha512-fXAMds8JnXvwizV4Ee3PFQNIu9zPvZtd2/+X6gh6ZWSvuzpiLkSWeUlsZvXIWRync+oLHgyKAje5cPgpeb61jw==}
-    engines: {node: '>=22.18.0'}
+  ultracite@8.1.0:
+    resolution: {integrity: sha512-YX14p9HzKjOZFi2N4zug+zM3757BZcRpxn8vnGKgO+0Vh3mnU9G1hZAgvSD9d1HAUyV1KSaCUAB8BfbqVXEnmQ==}
+    engines: {node: ^22.22.2 || >=24.15.0}
     hasBin: true
     peerDependencies:
-      '@biomejs/biome': ^2.5.0
+      '@biomejs/biome': ^2.6.2
       '@types/biomejs__biome': '*'
       '@types/eslint': '*'
       '@types/oxfmt': '*'
@@ -14049,7 +14049,7 @@ snapshots:
 
   uint8array-extras@1.6.0: {}
 
-  ultracite@8.0.2(eslint@10.13.0)(oxfmt@0.74.0)(oxlint@1.89.0):
+  ultracite@8.1.0(eslint@10.13.0)(oxfmt@0.74.0)(oxlint@1.89.0):
     dependencies:
       '@clack/prompts': 1.8.1
       cli-truncate: 6.1.1
