@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [24]
+        node-version: [26]
     env:
       PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
     steps:
