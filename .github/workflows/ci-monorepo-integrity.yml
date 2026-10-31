@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [24]
+        node-version: [26]
     env:
       PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN: "false"
     steps:
@@ -34,9 +34,3 @@ jobs:
 
       - name: 👬🏽 Check for duplicates
         run: pnpm dedupe --check
-
-      #- name: 🛟 Check monorepo dependency graph
-      #  run: pnpm doctor
-
-      #- name: 🦺 Syncpack checks - packages - lint-semver-ranges
-      #  run: pnpm syncpack:check
