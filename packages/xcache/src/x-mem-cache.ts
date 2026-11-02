@@ -226,7 +226,7 @@ type Result<TResult> = {
      * serialization, compression). On a cache hit, the timings of the
      * execution that created the entry.
      */
-    timings?: XMemCacheTimings;
+    timings: XMemCacheTimings;
     /**
      * Set on cache hits of compressed entries: time spent decompressing and
      * deserializing the data for this call (milliseconds).
@@ -255,13 +255,20 @@ type Inflight<TResult> = {
   waiters: number;
   /** Tags of the execution (a function when known after the execution) */
   tags: XMemCacheRunAsyncParams<SupportedCacheValues, CacheKeyTuple>["tags"];
+  /** Store tracking of the execution */
+  pending: PendingStore;
 };
 
 /**
  * Tags invalidated while a function is executing: its result is not stored
- * when it has one of them.
+ * when it has one of them, or when the execution was detached (a newer
+ * execution may have stored a more recent result).
  */
-type PendingStore = { invalidated: Set<string> };
+type PendingStore = { invalidated: Set<string>; detached: boolean };
+
+const createPendingStore = (): PendingStore => {
+  return { invalidated: new Set(), detached: false };
+};
 
 /**
  * Remove duplicates and empty strings from the tags, undefined when none.
@@ -314,10 +321,7 @@ const raceAbort = async <T>(
 export type XMemCacheEntryInfo = {
   /** Generated cache key, as returned by runAsync in meta.generatedKey */
   key: CacheStringKey;
-  /**
-   * Namespace of the cache key, undefined for an empty namespace or entries
-   * created by older versions.
-   */
+  /** Namespace of the cache key, undefined for an empty namespace */
   namespace?: string;
   /** "compressed" or "native" (stored as-is) */
   format: "native" | "compressed";
@@ -342,16 +346,10 @@ export type XMemCacheEntryInfo = {
   skippedReason?: string;
   /** Creation time of the entry (epoch milliseconds) */
   createdAt: number;
-  /**
-   * Time spent creating the entry (function, serialization, compression),
-   * undefined for entries created by older versions.
-   */
-  timings?: XMemCacheTimings;
-  /**
-   * Usage of the entry since its creation, undefined for entries created by
-   * older versions.
-   */
-  usage?: {
+  /** Time spent creating the entry (function, serialization, compression) */
+  timings: XMemCacheTimings;
+  /** Usage of the entry since its creation */
+  usage: {
     /** Number of cache hits served by the entry */
     hits: number;
     /** Number of concurrent calls that joined the creation execution */
@@ -522,11 +520,8 @@ const toEntryInfo = (
       : {}),
     ...(value.tags === undefined ? {} : { tags: value.tags }),
     createdAt: value.createdAt,
-    // entries created by older versions have no timings
-    ...(typeof value.timings === "object" ? { timings: value.timings } : {}),
-    ...(typeof value.usage === "object" && typeof value.timings === "object"
-      ? { usage: toUsageInfo(value.usage, value.timings) }
-      : {}),
+    timings: value.timings,
+    usage: toUsageInfo(value.usage, value.timings),
     ...(expiresIn === undefined ? {} : { expiresIn }),
   };
   if (value.format === "compressed") {
@@ -554,7 +549,7 @@ const toEntryInfo = (
  *
  * @example
  * ```typescript
- * import { XMemCache, TimeLruCache } from '@httpx/xcache';
+ * import { XMemCache } from '@httpx/xcache';
  *
  * const xMemCache = new XMemCache({
  *   lru: { maxSize: 50, defaultTTL: 5000 },
@@ -841,10 +836,6 @@ export class XMemCache {
   readonly #trackHit = (entry: XMemCacheEntry, readTime: number): void => {
     const totals = this.#totals;
     totals.hits++;
-    // entries created by older versions have no usage
-    if (typeof entry.usage !== "object" || typeof entry.timings !== "object") {
-      return;
-    }
     entry.usage.hits++;
     entry.usage.readTime += readTime;
     totals.savedTime += entry.timings.fn - readTime;
@@ -890,17 +881,14 @@ export class XMemCache {
     });
 
   /**
-   * Return the cached entry if it exists and can be read by this instance
-   * (created by XMemCache, compatible compressor), otherwise undefined.
+   * Return the cached entry if it exists (created by XMemCache), otherwise
+   * undefined.
    */
   readonly #getReadable = <TResult>(
     generatedKey: CacheStringKey
   ): XMemCacheEntry<TResult> | undefined => {
     const existing = this.#lru.get(generatedKey);
-    // ignore values not created by XMemCache
-    return isXMemCacheEntry<TResult>(existing) && this.#canRead(existing)
-      ? existing
-      : undefined;
+    return isXMemCacheEntry<TResult>(existing) ? existing : undefined;
   };
 
   /**
@@ -942,7 +930,8 @@ export class XMemCache {
           params,
           generatedKey,
           enabled,
-          controller?.signal
+          controller?.signal,
+          inflight.pending
         );
       } finally {
         // a forced revalidation may have replaced it in the meantime
@@ -957,6 +946,7 @@ export class XMemCache {
       controller,
       waiters: 0,
       tags: params.tags,
+      pending: createPendingStore(),
     } as Inflight<TResult>;
     inflight.promise = fetchAndRemove(inflight);
     this.#inflight.set(generatedKey, inflight);
@@ -996,13 +986,13 @@ export class XMemCache {
     params: XMemCacheRunAsyncParams<TResult, TKey>,
     generatedKey: CacheStringKey,
     enabled: boolean,
-    signal: AbortSignal | undefined
+    signal: AbortSignal | undefined,
+    pending: PendingStore = createPendingStore()
   ): Promise<FetchResult<TResult>> => {
     if (!enabled) {
       return await this.#fetch(params, generatedKey, enabled, signal);
     }
     // tracks the tags invalidated during the execution
-    const pending: PendingStore = { invalidated: new Set() };
     this.#pendingStores.add(pending);
     try {
       return await this.#fetch(params, generatedKey, enabled, signal, pending);
@@ -1088,12 +1078,14 @@ export class XMemCache {
     if (!enabled) {
       return { entry, data };
     }
-    // a tag was invalidated during the execution: the result may be stale
+    // a tag was invalidated during the execution (the result may be stale),
+    // or the execution was detached: a newer one may have stored its result
     if (
-      tags !== undefined &&
       pending !== undefined &&
-      pending.invalidated.size > 0 &&
-      tags.some((tag) => pending.invalidated.has(tag))
+      (pending.detached ||
+        (tags !== undefined &&
+          pending.invalidated.size > 0 &&
+          tags.some((tag) => pending.invalidated.has(tag))))
     ) {
       return { entry, data };
     }
@@ -1173,14 +1165,16 @@ export class XMemCache {
         pending.invalidated.add(tag);
       }
     }
-    // new calls must not join an execution whose result won't be stored
-    // (tags as a function are only known after the execution)
+    // detach the executions that may be stale: new calls won't join them,
+    // and they won't store their result (tags as a function are only known
+    // after the execution)
     for (const [key, inflight] of this.#inflight) {
       const inflightTags = inflight.tags;
       if (
         typeof inflightTags === "function" ||
         inflightTags?.some((tag) => list.includes(tag)) === true
       ) {
+        inflight.pending.detached = true;
         this.#inflight.delete(key);
       }
     }
@@ -1209,7 +1203,11 @@ export class XMemCache {
     entry: XMemCacheEntry,
     namespace: string
   ): Result<unknown>["meta"] => {
-    const meta: Result<unknown>["meta"] = { cached, generatedKey };
+    const meta: Result<unknown>["meta"] = {
+      cached,
+      generatedKey,
+      timings: entry.timings,
+    };
     if (namespace !== "") {
       meta.namespace = namespace;
     }
@@ -1227,10 +1225,6 @@ export class XMemCache {
     }
     if (entry.format === "compressed") {
       meta.compression = entry.meta;
-    }
-    // entries created by older versions have no timings
-    if (typeof entry.timings === "object") {
-      meta.timings = entry.timings;
     }
     return meta;
   };
@@ -1321,20 +1315,6 @@ export class XMemCache {
     );
     stats.totals.peakSize = this.#totals.peakSize;
     return stats;
-  };
-
-  /**
-   * A compressed entry can only be read by a compressor with the same
-   * options (algorithm, encoding, serializer), otherwise it's a cache miss.
-   */
-  readonly #canRead = (entry: XMemCacheEntry): boolean => {
-    if (entry.format !== "compressed") {
-      return true;
-    }
-    if (this.#compressor === undefined) {
-      return false;
-    }
-    return this.#compressor.isCompatible?.(entry.meta) ?? true;
   };
 
   /**

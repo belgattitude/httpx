@@ -281,10 +281,17 @@ describe("XMemCache tags", () => {
       cache.invalidateTags("unrelated");
       const second = createDeferredFn({ id: 2 });
       const call2 = cache.runAsync({ key: ["/a"], fn: second.fn, tags });
-      first.release();
+      // the newer execution completes first
       second.release();
-      await Promise.all([call1, call2]);
+      await call2;
+      first.release();
+      const r1 = await call1;
+      expect(r1.data).toStrictEqual({ id: 1 });
       expect(second.fn).toHaveBeenCalledOnce();
+      // the detached (older) execution doesn't overwrite the newer result
+      const hit = await cache.runAsync({ key: ["/a"], fn: first.fn, tags });
+      expect(hit.meta.cached).toBe(true);
+      expect(hit.data).toStrictEqual({ id: 2 });
     });
 
     it("should keep joining executions without matching tags", async () => {

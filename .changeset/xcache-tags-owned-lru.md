@@ -16,6 +16,8 @@ Add tags support (`runAsync({ tags })` and `invalidateTags()`), the lru is now c
   });
 ```
 
+Also removed: the `TimeLruCache` re-export (import it from `@httpx/lru`), and the optional `isCompatible` method of `ICacheCompressor` (no longer used by XMemCache, `CacheCompress.isCompatible` is kept). `timings` and `usage` are now always set in `meta.timings` and in the `getEntryInfo()` / `getStats()` entries.
+
 Tags:
 
 ```typescript

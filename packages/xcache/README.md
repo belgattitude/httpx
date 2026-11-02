@@ -200,8 +200,6 @@ const { data, meta } = await xMemCache.runAsync({
 // }
 ```
 
-On a cache hit, the meta is checked against the current compressor options. An existing entry created with a different algorithm, encoding or serializer is never decoded with the wrong settings, it's treated as a cache miss: the function is executed again and the entry is replaced.
-
 ### JSON detection
 
 With `SuperjsonSerializer`, data without extended types (no `Date`, `Map`, `undefined`, shared references...) is stored as plain JSON (`meta.content: "json"`) and read with `JSON.parse`. The detection has no extra cost: superjson only adds a meta when it encountered extended types. Plain JSON is slightly smaller (no superjson envelope) and can be sent as-is by [createHonoXCache](#hono) to json responses.
@@ -318,7 +316,7 @@ xMemCache.invalidateTags(["users", "orgs"]);
 ```
 
 - Invalidation is immediate: the entries are removed from the lru (memory is released), the next calls execute the function again.
-- A function executing while one of its tags is invalidated returns its result, but doesn't store it (it may be stale). With [deduplication](#deduplication), calls made after the invalidation don't join that execution. When `tags` is a function, the tags are only known after the execution: any invalidation detaches it.
+- A function executing while one of its tags is invalidated returns its result, but doesn't store it (it may be stale). With [deduplication](#deduplication), calls made after the invalidation don't join that execution. When `tags` is a function, the tags are only known after the execution: any invalidation detaches it (its result is not stored).
 - The tags of an entry are returned in `meta.tags`, `getEntryInfo().tags` and `getStats().entries[].tags`, the number of removed entries in `getStats().totals.invalidated`.
 - Tags are not namespaced: `invalidateTags("users")` removes the entries of all namespaces. Prefix them if needed (ie: `admin:users`).
 - Like the cache, tags are local to the `XMemCache` instance (and process): use a pub/sub to invalidate across processes.
@@ -932,8 +930,8 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                         | Size (compressed) |
 | ------------------------------------------------------ | ----------------: |
-| `import { XMemCache } from '@httpx/xcache`             |          ~ 3.98kB |
-| `import { createHonoXCache } from '@httpx/xcache/hono` |          ~ 7.37kB |
+| `import { XMemCache } from '@httpx/xcache`             |          ~ 3.95kB |
+| `import { createHonoXCache } from '@httpx/xcache/hono` |          ~ 7.34kB |
 
 ## Compatibility
 

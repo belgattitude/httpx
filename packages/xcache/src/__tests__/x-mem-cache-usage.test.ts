@@ -9,7 +9,6 @@ const bigPayload = {
     return { id: i, name: `Item ${i}` };
   }),
 };
-const smallPayload = { id: 1 };
 
 /**
  * Fake timers: the function takes 100ms, serialization 5ms and
@@ -206,21 +205,5 @@ describe("XMemCache usage", () => {
       savedTime: 0,
       peakSize: 0,
     });
-  });
-
-  it("should handle entries without usage (older versions)", async () => {
-    const { cache, fn } = setup({ compressor: false });
-    // the stored entry is returned as-is
-    const { entry: stored } = await cache.runAsyncEntry({
-      key: ["/old"],
-      fn: () => Promise.resolve(smallPayload),
-    });
-    const entry = stored as unknown as Record<string, unknown>;
-    delete entry.usage;
-    delete entry.timings;
-    const hit = await cache.runAsync({ key: ["/old"], fn });
-    expect(hit.meta.cached).toBe(true);
-    expect(cache.getEntryInfo({ key: ["/old"] })?.usage).toBeUndefined();
-    expect(cache.getStats().totals).toMatchObject({ hits: 1, misses: 1 });
   });
 });

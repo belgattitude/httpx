@@ -40,4 +40,3 @@ export type {
   XMemCacheEntryUsage,
   XMemCacheTimings,
 } from "./x-mem-cache-entry";
-export { TimeLruCache } from "@httpx/lru";
