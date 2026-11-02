@@ -1,5 +1,16 @@
 # @httpx/jwt-verify
 
+## 0.4.3
+
+### Patch Changes
+
+- [#2888](https://github.com/belgattitude/httpx/pull/2888) [`e817184`](https://github.com/belgattitude/httpx/commit/e817184ff2d55342ab7be0bb76f31f9d5082cca6) Thanks [@belgattitude](https://github.com/belgattitude)! - Update dependencies to latest
+  
+  | Package           | From      | To        |
+  | ----------------- | --------- | --------- |
+  | `@azure/identity` | `4.14.0`  | `4.14.1`  |
+  | `jose`            | `^6.2.13` | `^6.2.14` |
+
 ## 0.4.2
 
 ### Patch Changes
