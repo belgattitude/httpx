@@ -1,4 +1,8 @@
-import type { ITimeLruCache, SupportedCacheValues } from "@httpx/lru";
+import {
+  type ITimeLruCache,
+  type SupportedCacheValues,
+  TimeLruCache,
+} from "@httpx/lru";
 
 import {
   type CacheKeyTuple,
@@ -22,15 +26,35 @@ import {
 } from "./x-mem-cache-entry";
 
 /**
+ * Options of the lru created by XMemCache to store its entries.
+ */
+export type XMemCacheLruOptions = {
+  /** Maximum number of entries, the least recently used are evicted first */
+  maxSize: number;
+  /** Default time to live of the entries in milliseconds */
+  defaultTTL: number;
+  /**
+   * Called when an entry is evicted by the lru: capacity reached (least
+   * recently used entry) or expired entry found when accessed. Not called
+   * for entries removed by clear, clearExpired or invalidateTags.
+   */
+  onEviction?: (key: CacheStringKey, entry: XMemCacheEntry) => void;
+};
+
+/**
  * XMemCache constructor options.
  */
 export type XMemCacheOptions = {
   /**
-   * The lru used to store the cache entries (ie: TimeLruCache from @httpx/lru).
-   * It can be shared with other code, values not created by XMemCache are
-   * ignored.
+   * Options of the lru storing the cache entries (created and owned by the
+   * instance).
+   *
+   * @example
+   * ```typescript
+   * lru: { maxSize: 500, defaultTTL: 60_000 }
+   * ```
    */
-  lru: ITimeLruCache;
+  lru: XMemCacheLruOptions;
   /**
    * The default namespace is used to prefix the cache key,
    * allowing for separation of cache entries. If not provided,
@@ -98,6 +122,12 @@ export type XMemCacheRunAsyncParams<
   namespace?: string;
   /** Time to live in milliseconds, defaults to the lru defaultTTL */
   ttl?: number;
+  /**
+   * Tags of the entry, to remove it with invalidateTags (ie: ["users",
+   * "user:1"]). A function receives the result of fn, ie:
+   * `(user) => [\`org:${user.orgId}\`]`. Empty strings are ignored.
+   */
+  tags?: readonly string[] | ((data: TResult) => readonly string[]);
   /** force a revalidation even if a cache entry exists */
   forceRevalidate?: boolean;
   /**
@@ -187,6 +217,8 @@ type Result<TResult> = {
     namespace?: string;
     /** Identifier of the compressor, when set */
     compressorId?: string;
+    /** Tags of the entry, when set */
+    tags?: readonly string[];
     /** Set when the returned data was stored compressed */
     compression?: CacheCompressSuccessMeta;
     /**
@@ -194,7 +226,7 @@ type Result<TResult> = {
      * serialization, compression). On a cache hit, the timings of the
      * execution that created the entry.
      */
-    timings?: XMemCacheTimings;
+    timings: XMemCacheTimings;
     /**
      * Set on cache hits of compressed entries: time spent decompressing and
      * deserializing the data for this call (milliseconds).
@@ -221,6 +253,29 @@ type Inflight<TResult> = {
   controller: AbortController | undefined;
   /** Number of calls waiting for the execution */
   waiters: number;
+  /** Tags of the execution (a function when known after the execution) */
+  tags: XMemCacheRunAsyncParams<SupportedCacheValues, CacheKeyTuple>["tags"];
+};
+
+/**
+ * Tags invalidated while a function is executing: its result is not stored
+ * when it has one of them.
+ */
+type PendingStore = { invalidated: Set<string> };
+
+/**
+ * Remove duplicates and empty strings from the tags, undefined when none.
+ */
+const normalizeTags = (
+  tags: readonly string[] | undefined
+): readonly string[] | undefined => {
+  if (tags === undefined || tags.length === 0) {
+    return undefined;
+  }
+  const unique = [...new Set(tags)].filter(
+    (tag) => typeof tag === "string" && tag !== ""
+  );
+  return unique.length === 0 ? undefined : unique;
 };
 
 /**
@@ -259,10 +314,7 @@ const raceAbort = async <T>(
 export type XMemCacheEntryInfo = {
   /** Generated cache key, as returned by runAsync in meta.generatedKey */
   key: CacheStringKey;
-  /**
-   * Namespace of the cache key, undefined for an empty namespace or entries
-   * created by older versions (shared lru).
-   */
+  /** Namespace of the cache key, undefined for an empty namespace */
   namespace?: string;
   /** "compressed" or "native" (stored as-is) */
   format: "native" | "compressed";
@@ -281,20 +333,16 @@ export type XMemCacheEntryInfo = {
   originalSize?: number;
   /** Compression meta, for compressed entries */
   compression?: CacheCompressSuccessMeta;
+  /** Tags of the entry, when set */
+  tags?: readonly string[];
   /** Why compression was skipped (when a compressor is set) */
   skippedReason?: string;
   /** Creation time of the entry (epoch milliseconds) */
   createdAt: number;
-  /**
-   * Time spent creating the entry (function, serialization, compression),
-   * undefined for entries created by older versions (shared lru).
-   */
-  timings?: XMemCacheTimings;
-  /**
-   * Usage of the entry since its creation, undefined for entries created by
-   * older versions (shared lru).
-   */
-  usage?: {
+  /** Time spent creating the entry (function, serialization, compression) */
+  timings: XMemCacheTimings;
+  /** Usage of the entry since its creation */
+  usage: {
     /** Number of cache hits served by the entry */
     hits: number;
     /** Number of concurrent calls that joined the creation execution */
@@ -313,6 +361,16 @@ export type XMemCacheEntryInfo = {
 };
 
 /**
+ * Info about a tag, returned by getTags.
+ */
+export type XMemCacheTagInfo = {
+  /** The tag, as provided to runAsync */
+  tag: string;
+  /** Number of (non-expired) entries having the tag */
+  items: number;
+};
+
+/**
  * Totals of the XMemCache instance since its creation (or resetStats), kept
  * when entries expire or are cleared.
  */
@@ -325,6 +383,8 @@ export type XMemCacheTotals = {
   deduped: number;
   /** Calls that bypassed the cache (disabled globally or for the call) */
   bypassed: number;
+  /** Entries removed by invalidateTags */
+  invalidated: number;
   /**
    * Estimated time saved by the cache in milliseconds: function time of
    * hits and deduped calls, minus the read time of hits and the time spent
@@ -443,6 +503,7 @@ const createTotals = (): XMemCacheTotals => {
     misses: 0,
     deduped: 0,
     bypassed: 0,
+    invalidated: 0,
     savedTime: 0,
     peakSize: 0,
   };
@@ -460,12 +521,10 @@ const toEntryInfo = (
     ...(typeof value.namespace === "string"
       ? { namespace: value.namespace }
       : {}),
+    ...(value.tags === undefined ? {} : { tags: value.tags }),
     createdAt: value.createdAt,
-    // entries created by older versions (shared lru) have no timings
-    ...(typeof value.timings === "object" ? { timings: value.timings } : {}),
-    ...(typeof value.usage === "object" && typeof value.timings === "object"
-      ? { usage: toUsageInfo(value.usage, value.timings) }
-      : {}),
+    timings: value.timings,
+    usage: toUsageInfo(value.usage, value.timings),
     ...(expiresIn === undefined ? {} : { expiresIn }),
   };
   if (value.format === "compressed") {
@@ -493,15 +552,33 @@ const toEntryInfo = (
  *
  * @example
  * ```typescript
- * import { XMemCache, TimeLruCache } from '@httpx/xcache';
+ * import { XMemCache } from '@httpx/xcache';
  *
  * const xMemCache = new XMemCache({
- *   lru: new TimeLruCache({ maxSize: 50, defaultTTL: 5000 }),
+ *   lru: { maxSize: 50, defaultTTL: 5000 },
  * });
  * ```
  */
 export class XMemCache {
   readonly #lru: ITimeLruCache;
+  /**
+   * Keys of the tagged entries by tag, and tags by key (kept in sync with
+   * the lru: evictions, replacements, deletions).
+   */
+  readonly #keysByTag = new Map<string, Set<CacheStringKey>>();
+  readonly #tagsByKey = new Map<CacheStringKey, readonly string[]>();
+  /**
+   * Executions storing their result, to skip the ones having a tag
+   * invalidated in the meantime.
+   */
+  readonly #pendingStores = new Set<PendingStore>();
+  /**
+   * Start order of the executions: a result is not stored over an entry
+   * created by an execution started after it (ie: forceRevalidate, or an
+   * execution detached by invalidateTags).
+   */
+  #executionSeq = 0;
+  readonly #entrySeq = new WeakMap<XMemCacheEntry, number>();
   /**
    * Default namespace for the cache key.
    */
@@ -529,7 +606,17 @@ export class XMemCache {
       compressionEnabled = true,
       dedupe = true,
     } = options;
-    this.#lru = lru;
+    const { maxSize, defaultTTL, onEviction } = lru;
+    this.#lru = new TimeLruCache({
+      maxSize,
+      defaultTTL,
+      onEviction: (key, value) => {
+        this.#setKeyTags(key as CacheStringKey, undefined);
+        if (onEviction !== undefined && isXMemCacheEntry(value)) {
+          onEviction(key as CacheStringKey, value);
+        }
+      },
+    });
     this.#defaultNs = namespace;
     this.#compressor = compressor;
     this.#compressorId = compressor?.getIdentifier() ?? undefined;
@@ -553,13 +640,20 @@ export class XMemCache {
   }
 
   /**
+   * Number of entries stored in the lru, including expired entries not
+   * removed yet (see clearExpired).
+   */
+  get size(): number {
+    return this.#lru.size;
+  }
+
+  /**
    * Execute the provided async function if it's not in the cache, otherwise
    * return the cached value.
    *
    * @example
    * ```typescript
-   * const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 5000 });
-   * const xMemCache = new XMemCache({ lru });
+   * const xMemCache = new XMemCache({ lru: { maxSize: 50, defaultTTL: 5000 } });
    *
    * const asyncDataFetcher = async (params: { id: number }) => {
    *   return { id: params.id, data: `Data for ${params.id}` };
@@ -752,10 +846,6 @@ export class XMemCache {
   readonly #trackHit = (entry: XMemCacheEntry, readTime: number): void => {
     const totals = this.#totals;
     totals.hits++;
-    // entries created by older versions (shared lru) have no usage
-    if (typeof entry.usage !== "object" || typeof entry.timings !== "object") {
-      return;
-    }
     entry.usage.hits++;
     entry.usage.readTime += readTime;
     totals.savedTime += entry.timings.fn - readTime;
@@ -801,17 +891,14 @@ export class XMemCache {
     });
 
   /**
-   * Return the cached entry if it exists and can be read by this instance
-   * (created by XMemCache, compatible compressor), otherwise undefined.
+   * Return the cached entry if it exists (created by XMemCache), otherwise
+   * undefined.
    */
   readonly #getReadable = <TResult>(
     generatedKey: CacheStringKey
   ): XMemCacheEntry<TResult> | undefined => {
     const existing = this.#lru.get(generatedKey);
-    // ignore values not created by XMemCache (ie: shared lru)
-    return isXMemCacheEntry<TResult>(existing) && this.#canRead(existing)
-      ? existing
-      : undefined;
+    return isXMemCacheEntry<TResult>(existing) ? existing : undefined;
   };
 
   /**
@@ -864,7 +951,11 @@ export class XMemCache {
     };
     // Rejections are always handled: Promise.race in raceAbort keeps its
     // handlers even when all the callers have been aborted.
-    const inflight = { controller, waiters: 0 } as Inflight<TResult>;
+    const inflight = {
+      controller,
+      waiters: 0,
+      tags: params.tags,
+    } as Inflight<TResult>;
     inflight.promise = fetchAndRemove(inflight);
     this.#inflight.set(generatedKey, inflight);
     const result = await this.#wait(inflight, generatedKey, signal);
@@ -905,14 +996,41 @@ export class XMemCache {
     enabled: boolean,
     signal: AbortSignal | undefined
   ): Promise<FetchResult<TResult>> => {
+    if (!enabled) {
+      return await this.#fetch(params, generatedKey, enabled, signal);
+    }
+    // tracks the tags invalidated during the execution
+    const pending: PendingStore = { invalidated: new Set() };
+    this.#pendingStores.add(pending);
+    try {
+      return await this.#fetch(params, generatedKey, enabled, signal, pending);
+    } finally {
+      this.#pendingStores.delete(pending);
+    }
+  };
+
+  readonly #fetch = async <
+    TResult extends SupportedCacheValues,
+    TKey extends CacheKeyTuple,
+  >(
+    params: XMemCacheRunAsyncParams<TResult, TKey>,
+    generatedKey: CacheStringKey,
+    enabled: boolean,
+    signal: AbortSignal | undefined,
+    pending?: PendingStore
+  ): Promise<FetchResult<TResult>> => {
     const { fn, key, ttl } = params;
     const compressionEnabled =
       params.compressionEnabled ?? this.#compressionEnabled;
+    const seq = ++this.#executionSeq;
     const start = now();
     const data = await (signal === undefined
       ? fn({ key })
       : fn({ key, signal }));
     const timings: XMemCacheTimings = { fn: elapsedSince(start) };
+    const tags = normalizeTags(
+      typeof params.tags === "function" ? params.tags(data) : params.tags
+    );
     let entry: XMemCacheEntry<TResult>;
     if (!enabled) {
       entry = createNativeEntry(data, timings);
@@ -962,22 +1080,128 @@ export class XMemCache {
     if (namespace !== "") {
       entry.namespace = namespace;
     }
+    if (tags !== undefined) {
+      entry.tags = tags;
+    }
     // bypassed: the entry is not stored
     if (!enabled) {
       return { entry, data };
     }
-    // A replacement entry must be more recent than the one it replaces (ie:
-    // forceRevalidate in the same millisecond), so that createdAt based
-    // validators (ie: ETag) change when the content may have changed.
+    // a tag was invalidated during the execution: the result may be stale
+    if (
+      tags !== undefined &&
+      pending !== undefined &&
+      pending.invalidated.size > 0 &&
+      tags.some((tag) => pending.invalidated.has(tag))
+    ) {
+      return { entry, data };
+    }
     const previous = this.#lru.peek(generatedKey);
-    if (isXMemCacheEntry(previous) && entry.createdAt <= previous.createdAt) {
-      entry.createdAt = previous.createdAt + 1;
+    if (isXMemCacheEntry(previous)) {
+      // created by an execution started after this one: more recent
+      if ((this.#entrySeq.get(previous) ?? 0) > seq) {
+        return { entry, data };
+      }
+      // A replacement entry must be more recent than the one it replaces
+      // (ie: forceRevalidate in the same millisecond), so that createdAt
+      // based validators (ie: ETag) change when the content may have changed.
+      if (entry.createdAt <= previous.createdAt) {
+        entry.createdAt = previous.createdAt + 1;
+      }
     }
     // ie: a function returning a fallback value when aborted
     if (signal?.aborted !== true) {
       this.#lru.set(generatedKey, entry, ttl);
+      this.#entrySeq.set(entry, seq);
+      this.#setKeyTags(generatedKey, tags);
     }
     return { entry, data };
+  };
+
+  /**
+   * Update the tag index of a key: removes its previous tags and adds the
+   * new ones (none when undefined).
+   */
+  readonly #setKeyTags = (
+    key: CacheStringKey,
+    tags: readonly string[] | undefined
+  ): void => {
+    const previous = this.#tagsByKey.get(key);
+    if (previous === undefined && tags === undefined) {
+      return;
+    }
+    if (previous !== undefined) {
+      for (const tag of previous) {
+        const keys = this.#keysByTag.get(tag);
+        keys?.delete(key);
+        if (keys?.size === 0) {
+          this.#keysByTag.delete(tag);
+        }
+      }
+      this.#tagsByKey.delete(key);
+    }
+    if (tags !== undefined) {
+      this.#tagsByKey.set(key, tags);
+      for (const tag of tags) {
+        let keys = this.#keysByTag.get(tag);
+        if (keys === undefined) {
+          keys = new Set();
+          this.#keysByTag.set(tag, keys);
+        }
+        keys.add(key);
+      }
+    }
+  };
+
+  /**
+   * Remove the entries having at least one of the tags and return the
+   * number of entries removed. Functions executing for those tags
+   * won't store their result, and new calls won't join them (dedupe).
+   *
+   * @example
+   * ```typescript
+   * await xMemCache.runAsync({
+   *   key: ['/api/user', { id: 1 }],
+   *   fn: () => getUser(1),
+   *   tags: ['users', 'user:1'],
+   * });
+   * xMemCache.invalidateTags('user:1'); // 1
+   * xMemCache.invalidateTags(['users', 'orgs']);
+   * ```
+   */
+  invalidateTags = (tags: string | readonly string[]): number => {
+    const list = normalizeTags(typeof tags === "string" ? [tags] : tags);
+    if (list === undefined) {
+      return 0;
+    }
+    for (const pending of this.#pendingStores) {
+      for (const tag of list) {
+        pending.invalidated.add(tag);
+      }
+    }
+    // new calls must not join an execution that may be stale (tags as a
+    // function are only known after the execution)
+    for (const [key, inflight] of this.#inflight) {
+      const inflightTags = inflight.tags;
+      if (
+        typeof inflightTags === "function" ||
+        inflightTags?.some((tag) => list.includes(tag)) === true
+      ) {
+        this.#inflight.delete(key);
+      }
+    }
+    const keys = new Set<CacheStringKey>();
+    for (const tag of list) {
+      for (const key of this.#keysByTag.get(tag) ?? []) {
+        keys.add(key);
+      }
+    }
+    for (const key of keys) {
+      this.#lru.delete(key);
+      this.#setKeyTags(key, undefined);
+    }
+    this.#totals.invalidated += keys.size;
+    return keys.size;
   };
 
   /**
@@ -991,7 +1215,11 @@ export class XMemCache {
     entry: XMemCacheEntry,
     namespace: string
   ): Result<unknown>["meta"] => {
-    const meta: Result<unknown>["meta"] = { cached, generatedKey };
+    const meta: Result<unknown>["meta"] = {
+      cached,
+      generatedKey,
+      timings: entry.timings,
+    };
     if (namespace !== "") {
       meta.namespace = namespace;
     }
@@ -1004,12 +1232,11 @@ export class XMemCache {
     if (this.#compressorId !== undefined) {
       meta.compressorId = this.#compressorId;
     }
+    if (entry.tags !== undefined) {
+      meta.tags = entry.tags;
+    }
     if (entry.format === "compressed") {
       meta.compression = entry.meta;
-    }
-    // entries created by older versions (shared lru) have no timings
-    if (typeof entry.timings === "object") {
-      meta.timings = entry.timings;
     }
     return meta;
   };
@@ -1050,11 +1277,9 @@ export class XMemCache {
    * Return statistics about the entries stored in the lru (total items,
    * compressed sizes...), info for each entry (timings, usage...) and the
    * totals of the instance (hits, misses, saved time...).
-   * Expired entries and values not created by XMemCache (shared lru) are
-   * ignored, the lru order is not affected.
+   * Expired entries are ignored, the lru order is not affected.
    *
    * Note that native (uncompressed) entries have no measurable size.
-   * If the lru is shared, entries of other XMemCache instances are included.
    *
    * @example
    * ```typescript
@@ -1076,12 +1301,7 @@ export class XMemCache {
         savedTime: roundMs(this.#totals.savedTime),
       },
     };
-    for (const [key] of this.#lru) {
-      // peek skips expired entries
-      const value = this.#lru.peek(key);
-      if (!isXMemCacheEntry(value)) {
-        continue;
-      }
+    for (const [key, value] of this.#iterate()) {
       stats.items++;
       if (value.format === "compressed") {
         stats.compressedItems++;
@@ -1091,9 +1311,7 @@ export class XMemCache {
         stats.nativeItems++;
         stats.nativeOriginalSize += value.meta?.originalSize ?? 0;
       }
-      stats.entries.push(
-        toEntryInfo(key as CacheStringKey, value, this.#lru.expiresIn(key))
-      );
+      stats.entries.push(toEntryInfo(key, value, this.#lru.expiresIn(key)));
     }
     stats.compressionSavings = stats.originalSize - stats.compressedSize;
     this.#totals.peakSize = Math.max(
@@ -1102,20 +1320,6 @@ export class XMemCache {
     );
     stats.totals.peakSize = this.#totals.peakSize;
     return stats;
-  };
-
-  /**
-   * A compressed entry can only be read by a compressor with the same
-   * options (algorithm, encoding, serializer), otherwise it's a cache miss.
-   */
-  readonly #canRead = (entry: XMemCacheEntry): boolean => {
-    if (entry.format !== "compressed") {
-      return true;
-    }
-    if (this.#compressor === undefined) {
-      return false;
-    }
-    return this.#compressor.isCompatible?.(entry.meta) ?? true;
   };
 
   /**
@@ -1154,6 +1358,8 @@ export class XMemCache {
    */
   clear = (): number => {
     this.#samplePeakSize();
+    this.#keysByTag.clear();
+    this.#tagsByKey.clear();
     return this.#lru.clear();
   };
 
@@ -1161,7 +1367,7 @@ export class XMemCache {
    * Remove the expired entries and return the number of items removed.
    * Expired entries are never served, but they're only removed from the lru
    * when accessed or evicted: use it to release their memory (ie: on an
-   * interval). Values not created by XMemCache (shared lru) are kept.
+   * interval).
    */
   clearExpired = (): number => {
     this.#samplePeakSize();
@@ -1174,6 +1380,7 @@ export class XMemCache {
     }
     for (const key of expiredKeys) {
       this.#lru.delete(key);
+      this.#setKeyTags(key as CacheStringKey, undefined);
     }
     return expiredKeys.length;
   };
@@ -1183,17 +1390,75 @@ export class XMemCache {
    */
   readonly #samplePeakSize = (): void => {
     let size = 0;
+    for (const [, value] of this.#iterate()) {
+      size +=
+        value.format === "compressed"
+          ? value.meta.compressedSize
+          : (value.meta?.originalSize ?? 0);
+    }
+    this.#totals.peakSize = Math.max(this.#totals.peakSize, size);
+  };
+
+  /**
+   * Iterate over the non-expired entries, least recently used first, without
+   * changing the lru order. Entries are returned as stored: use readEntry to
+   * get the data of compressed entries.
+   *
+   * @example
+   * ```typescript
+   * for (const [key, entry] of xMemCache.entries()) {
+   *   console.log(key, entry.format, entry.tags);
+   *   const data = await xMemCache.readEntry(entry);
+   * }
+   * ```
+   */
+  entries = (): IterableIterator<[CacheStringKey, XMemCacheEntry]> =>
+    this.#iterate();
+
+  /**
+   * Same as entries(): `for (const [key, entry] of xMemCache)` or
+   * `[...xMemCache]`.
+   */
+  [Symbol.iterator](): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
+    return this.#iterate();
+  }
+
+  *#iterate(): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
     for (const [key] of this.#lru) {
       // peek skips expired entries
       const value = this.#lru.peek(key);
       if (isXMemCacheEntry(value)) {
-        size +=
-          value.format === "compressed"
-            ? value.meta.compressedSize
-            : (value.meta?.originalSize ?? 0);
+        yield [key as CacheStringKey, value];
       }
     }
-    this.#totals.peakSize = Math.max(this.#totals.peakSize, size);
+  }
+
+  /**
+   * Return the tags of the (non-expired) entries with their number of
+   * entries, sorted by tag.
+   *
+   * @example
+   * ```typescript
+   * xMemCache.getTags();
+   * // [{ tag: 'user:1', items: 1 }, { tag: 'users', items: 3 }]
+   * ```
+   */
+  getTags = (): XMemCacheTagInfo[] => {
+    const tags: XMemCacheTagInfo[] = [];
+    for (const [tag, keys] of this.#keysByTag) {
+      let items = 0;
+      for (const key of keys) {
+        // expired entries are only removed when accessed or evicted
+        if (this.#lru.expiresIn(key) !== undefined) {
+          items++;
+        }
+      }
+      if (items > 0) {
+        tags.push({ tag, items });
+      }
+    }
+    // tags are unique
+    return tags.toSorted((a, b) => (a.tag < b.tag ? -1 : 1));
   };
 
   /**

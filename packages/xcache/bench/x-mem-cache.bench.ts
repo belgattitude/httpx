@@ -38,13 +38,14 @@ const defaultParams = {
 
 describe(`XMemCache benchmarks with ${payloadSize}`, () => {
   const algorithm = "deflate";
+  // baseline: the lru alone
   const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 });
   const xMemCache = new XMemCache({
-    lru,
+    lru: { maxSize: 50, defaultTTL: 600_000 },
   });
 
   const cacheJsonGzip = new XMemCache({
-    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 }),
+    lru: { maxSize: 50, defaultTTL: 600_000 },
     compressor: new CacheCompress({
       algorithm,
       serializer: new JsonSerializer(),
@@ -52,7 +53,7 @@ describe(`XMemCache benchmarks with ${payloadSize}`, () => {
   });
 
   const cacheSuperjsonGzip = new XMemCache({
-    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 }),
+    lru: { maxSize: 50, defaultTTL: 600_000 },
     compressor: new CacheCompress({
       algorithm,
       serializer: new SuperjsonSerializer(),
@@ -60,7 +61,7 @@ describe(`XMemCache benchmarks with ${payloadSize}`, () => {
   });
 
   const cacheDevalueGzip = new XMemCache({
-    lru: new TimeLruCache({ maxSize: 50, defaultTTL: 600_000 }),
+    lru: { maxSize: 50, defaultTTL: 600_000 },
     compressor: new CacheCompress({
       algorithm,
       serializer: new DevalueSerializer(),

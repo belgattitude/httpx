@@ -1,5 +1,4 @@
 import { Decompressor } from "@httpx/compress";
-import { TimeLruCache } from "@httpx/lru";
 import { Hono } from "hono";
 import { compress } from "hono/compress";
 import { expect, vi } from "vitest";
@@ -18,7 +17,7 @@ const payload = {
 const smallPayload = { id: 1 };
 
 const createApp = (options: Omit<HonoXCacheLruOptions, "lru"> = {}) => {
-  const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+  const lru = { maxSize: 50, defaultTTL: 60_000 };
   const xcache = createHonoXCache({ lru, debugHeaders: true, ...options });
   const fetchData = vi.fn<() => Promise<typeof payload>>(() =>
     Promise.resolve(payload)
@@ -215,7 +214,7 @@ describe("createHonoXCache", () => {
   });
 
   it("should bypass the cache per call", async () => {
-    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+    const lru = { maxSize: 50, defaultTTL: 60_000 };
     const xcache = createHonoXCache({ lru, debugHeaders: true });
     const app = new Hono();
     app.get("/data", (c) =>
@@ -262,7 +261,7 @@ describe("createHonoXCache", () => {
   });
 
   it("should not dedupe concurrent requests disabling it per call", async () => {
-    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+    const lru = { maxSize: 50, defaultTTL: 60_000 };
     const xcache = createHonoXCache({ lru, debugHeaders: true });
     const fetchData = vi.fn<() => Promise<typeof payload>>(() =>
       Promise.resolve(payload)
@@ -283,7 +282,7 @@ describe("createHonoXCache", () => {
     const createAbortApp = (
       getSignal: (c: { req: { raw: Request } }) => AbortSignal
     ) => {
-      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+      const lru = { maxSize: 50, defaultTTL: 60_000 };
       const xcache = createHonoXCache({ lru, debugHeaders: true });
       const fetchData = vi.fn<
         (params: {
@@ -311,11 +310,13 @@ describe("createHonoXCache", () => {
           signal: getSignal(c),
         })
       );
-      return { app, lru, fetchData };
+      return { app, xcache, fetchData };
     };
 
     it("should return 499 when the client disconnects", async () => {
-      const { app, lru, fetchData } = createAbortApp((c) => c.req.raw.signal);
+      const { app, xcache, fetchData } = createAbortApp(
+        (c) => c.req.raw.signal
+      );
       const ac = new AbortController();
       const res = app.request("/data", { signal: ac.signal });
       ac.abort();
@@ -323,7 +324,7 @@ describe("createHonoXCache", () => {
       expect(response.status).toBe(499);
       await expect(response.text()).resolves.toBe("");
       expect(fetchData.mock.calls[0]?.[0].signal?.aborted).toBe(true);
-      expect(lru.size).toBe(0);
+      expect(xcache.cache.size).toBe(0);
     });
 
     it("should not call the function when already disconnected", async () => {
@@ -334,15 +335,17 @@ describe("createHonoXCache", () => {
     });
 
     it("should serve the data when not aborted", async () => {
-      const { app, lru } = createAbortApp((c) => c.req.raw.signal);
+      const { app, xcache } = createAbortApp((c) => c.req.raw.signal);
       const res = await app.request("/data");
       expect(res.status).toBe(200);
       await expect(res.json()).resolves.toStrictEqual(payload);
-      expect(lru.size).toBe(1);
+      expect(xcache.cache.size).toBe(1);
     });
 
     it("should keep the execution while another client waits", async () => {
-      const { app, lru, fetchData } = createAbortApp((c) => c.req.raw.signal);
+      const { app, xcache, fetchData } = createAbortApp(
+        (c) => c.req.raw.signal
+      );
       const ac = new AbortController();
       const disconnected = app.request("/data", { signal: ac.signal });
       const connected = app.request("/data");
@@ -353,7 +356,7 @@ describe("createHonoXCache", () => {
       expect(res.status).toBe(200);
       expect(res.headers.get("X-XCache")).toBe("DEDUPED");
       expect(fetchData).toHaveBeenCalledOnce();
-      expect(lru.size).toBe(1);
+      expect(xcache.cache.size).toBe(1);
     });
 
     it("should propagate a timeout when the client is still connected", async () => {
@@ -396,7 +399,7 @@ describe("createHonoXCache", () => {
       vi.useFakeTimers({ toFake: ["Date"] });
       vi.setSystemTime(0);
       try {
-        const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+        const lru = { maxSize: 50, defaultTTL: 60_000 };
         const xcache = createHonoXCache({
           lru,
           cacheControl: { maxAge: "ttl", staleWhileRevalidate: 30 },
@@ -442,7 +445,7 @@ describe("createHonoXCache", () => {
     });
 
     it("should allow per call override and give precedence to headers", async () => {
-      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+      const lru = { maxSize: 50, defaultTTL: 60_000 };
       const xcache = createHonoXCache({
         lru,
         cacheControl: "public, max-age=60",
@@ -492,7 +495,7 @@ describe("createHonoXCache", () => {
       override readonly name = "NotFoundError";
       readonly statusCode = 404;
     }
-    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+    const lru = { maxSize: 50, defaultTTL: 60_000 };
     const xcache = createHonoXCache({ lru, debugHeaders: true });
     const fetchProduct = vi.fn<(id: string) => Promise<{ id: string }>>((id) =>
       id === "1"
@@ -526,11 +529,11 @@ describe("createHonoXCache", () => {
 
     const ok = await app.request("/products/1");
     expect(ok.status).toBe(200);
-    expect(lru.size).toBe(1);
+    expect(xcache.cache.size).toBe(1);
   });
 
   it("should preserve the caller-provided Vary header", async () => {
-    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+    const lru = { maxSize: 50, defaultTTL: 60_000 };
     const xcache = createHonoXCache({ lru });
     const app = new Hono();
     app.get("/data", (c) =>
@@ -548,7 +551,7 @@ describe("createHonoXCache", () => {
     vi.useFakeTimers({ toFake: ["Date"] });
     vi.setSystemTime(1000);
     try {
-      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+      const lru = { maxSize: 50, defaultTTL: 60_000 };
       const xcache = createHonoXCache({ lru });
       let version = 0;
       const app = new Hono();
@@ -582,7 +585,7 @@ describe("createHonoXCache", () => {
   it.runIf(canSetAcceptEncoding)(
     "should not be compressed twice by hono compress middleware",
     async () => {
-      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+      const lru = { maxSize: 50, defaultTTL: 60_000 };
       const xcache = createHonoXCache({ lru });
       const app = new Hono();
       app.use(compress());
@@ -606,7 +609,7 @@ describe("createHonoXCache", () => {
       rows: payload.rows,
     };
     const serializer = new SuperjsonSerializer();
-    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+    const lru = { maxSize: 50, defaultTTL: 60_000 };
     const xcache = createHonoXCache({
       lru,
       serializer,
@@ -626,7 +629,7 @@ describe("createHonoXCache", () => {
     "should send plain data as-is with other serializers (no json detection)",
     async () => {
       const serializer = new SuperjsonSerializer();
-      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 });
+      const lru = { maxSize: 50, defaultTTL: 60_000 };
       const xcache = createHonoXCache({ lru, serializer });
       const app = new Hono();
       app.get("/sj", (c) =>
@@ -654,7 +657,7 @@ describe("createHonoXCache", () => {
       encoding: "binary" | "base64"
     ) =>
       new XMemCache({
-        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+        lru: { maxSize: 50, defaultTTL: 60_000 },
         compressor: new CacheCompress({
           algorithm: "gzip",
           serializer,
@@ -785,7 +788,7 @@ describe("createHonoXCache", () => {
 
     it("should use the instance enabled option", async () => {
       const cache = new XMemCache({
-        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+        lru: { maxSize: 50, defaultTTL: 60_000 },
         enabled: false,
       });
       const xcache = createHonoXCache({ cache, debugHeaders: true });

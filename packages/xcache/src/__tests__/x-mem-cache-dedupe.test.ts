@@ -1,4 +1,3 @@
-import { TimeLruCache } from "@httpx/lru";
 import { expect, vi } from "vitest";
 
 import { CacheCompress } from "../compress/cache-compress";
@@ -25,14 +24,14 @@ const createDeferredFn = () => {
 };
 
 const createCache = (options: Omit<XMemCacheOptions, "lru"> = {}) => {
-  const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 });
+  const lru = { maxSize: 50, defaultTTL: 10_000 };
   const cache = new XMemCache({ lru, ...options });
-  return { cache, lru };
+  return { cache };
 };
 
 describe("XMemCache dedupe", () => {
   it("should execute the function once for concurrent calls", async () => {
-    const { cache, lru } = createCache();
+    const { cache } = createCache();
     const { fn, resolve } = createDeferredFn();
     const calls = Array.from({ length: 5 }, () =>
       cache.runAsync({ key: ["/data"], fn })
@@ -40,7 +39,7 @@ describe("XMemCache dedupe", () => {
     resolve();
     const results = await Promise.all(calls);
     expect(fn).toHaveBeenCalledOnce();
-    expect(lru.size).toBe(1);
+    expect(cache.size).toBe(1);
     const [first, ...others] = results;
     expect(first?.meta.cached).toBe(false);
     expect(first?.meta.deduped).toBeUndefined();
@@ -98,7 +97,7 @@ describe("XMemCache dedupe", () => {
   });
 
   it("should reject all the callers and retry on the next call", async () => {
-    const { cache, lru } = createCache();
+    const { cache } = createCache();
     const { fn, reject } = createDeferredFn();
     const calls = [
       cache.runAsync({ key: ["/data"], fn }),
@@ -112,7 +111,7 @@ describe("XMemCache dedupe", () => {
       { status: "rejected", reason: error },
     ]);
     expect(fn).toHaveBeenCalledOnce();
-    expect(lru.size).toBe(0);
+    expect(cache.size).toBe(0);
     const { meta } = await cache.runAsync({
       key: ["/data"],
       fn: () => Promise.resolve(payload),
@@ -163,7 +162,7 @@ describe("XMemCache dedupe", () => {
   });
 
   it("should never dedupe bypassed calls", async () => {
-    const { cache, lru } = createCache({ enabled: false });
+    const { cache } = createCache({ enabled: false });
     const fn = vi.fn<() => Promise<typeof payload>>(() =>
       Promise.resolve(payload)
     );
@@ -172,7 +171,7 @@ describe("XMemCache dedupe", () => {
       cache.runAsync({ key: ["/data"], fn }),
     ]);
     expect(fn).toHaveBeenCalledTimes(2);
-    expect(lru.size).toBe(0);
+    expect(cache.size).toBe(0);
     for (const { meta } of results) {
       expect(meta.bypassed).toBe(true);
       expect(meta.deduped).toBeUndefined();
@@ -202,6 +201,53 @@ describe("XMemCache dedupe", () => {
     expect(b.meta.deduped).toBeUndefined();
     expect(c.data).toBe(freshPayload);
     expect(c.meta.deduped).toBe(true);
+  });
+
+  it.each([true, false])(
+    "should not let an older execution overwrite a newer result (dedupe: %s)",
+    async (dedupe) => {
+      const { cache } = createCache({ dedupe });
+      const stale = createDeferredFn();
+      const fresh = createDeferredFn();
+      const first = cache.runAsync({ key: ["/data"], fn: stale.fn });
+      const forced = cache.runAsync({
+        key: ["/data"],
+        fn: fresh.fn,
+        forceRevalidate: true,
+      });
+      const freshPayload = { rows: [] };
+      // the newer execution completes first
+      fresh.resolve(freshPayload);
+      await forced;
+      stale.resolve();
+      const { data, meta } = await first;
+      // the caller still gets the result of its execution
+      expect(data).toBe(payload);
+      expect(meta.cached).toBe(false);
+      const hit = await cache.runAsync({ key: ["/data"], fn: stale.fn });
+      expect(hit.meta.cached).toBe(true);
+      expect(hit.data).toBe(freshPayload);
+    }
+  );
+
+  it("should store an older execution completing first", async () => {
+    const { cache } = createCache();
+    const stale = createDeferredFn();
+    const fresh = createDeferredFn();
+    const first = cache.runAsync({ key: ["/data"], fn: stale.fn });
+    const forced = cache.runAsync({
+      key: ["/data"],
+      fn: fresh.fn,
+      forceRevalidate: true,
+    });
+    stale.resolve();
+    await first;
+    expect(cache.getEntryInfo({ key: ["/data"] })).toBeDefined();
+    const freshPayload = { rows: [] };
+    fresh.resolve(freshPayload);
+    await forced;
+    const hit = await cache.runAsync({ key: ["/data"], fn: stale.fn });
+    expect(hit.data).toBe(freshPayload);
   });
 
   it("should keep the replacing execution when the replaced one settles", async () => {

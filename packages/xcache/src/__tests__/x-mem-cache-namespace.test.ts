@@ -1,14 +1,12 @@
-import { TimeLruCache } from "@httpx/lru";
-
-import { CacheCompress } from "../compress/cache-compress";
-import { JsonSerializer } from "../serializer/json-serializer";
 import { XMemCache } from "../x-mem-cache";
 
 const payload = { id: 1 };
 const fn = () => Promise.resolve(payload);
 
 describe("XMemCache namespace", () => {
-  const createLru = () => new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 });
+  const createLru = () => {
+    return { maxSize: 50, defaultTTL: 10_000 };
+  };
 
   it("should return the default namespace in the meta and entry info", async () => {
     const cache = new XMemCache({ lru: createLru() });
@@ -45,25 +43,13 @@ describe("XMemCache namespace", () => {
     expect(cache.getEntryInfo({ key: ["/a"] })).not.toHaveProperty("namespace");
   });
 
-  it("should list the namespace of each entry in the stats (shared lru)", async () => {
-    const lru = createLru();
-    const shop = new XMemCache({
-      lru,
-      namespace: "shop",
-      compressor: new CacheCompress({
-        algorithm: "gzip",
-        serializer: new JsonSerializer(),
-      }),
-    });
-    const admin = new XMemCache({ lru, namespace: "admin" });
-    await shop.runAsync({ key: ["/a"], fn });
-    await admin.runAsync({ key: ["/a"], fn });
-    // the stats list every xcache entry of the lru: the namespace tells
-    // which instance created them
-    const namespaces = (cache: XMemCache) =>
-      cache.getStats().entries.map(({ namespace }) => namespace);
-    expect(namespaces(admin)).toStrictEqual(["shop", "admin"]);
-    expect(namespaces(shop)).toStrictEqual(["shop", "admin"]);
+  it("should list the namespace of each entry in the stats", async () => {
+    const cache = new XMemCache({ lru: createLru(), namespace: "shop" });
+    await cache.runAsync({ key: ["/a"], fn });
+    await cache.runAsync({ key: ["/a"], fn, namespace: "admin" });
+    expect(
+      cache.getStats().entries.map(({ namespace }) => namespace)
+    ).toStrictEqual(["shop", "admin"]);
   });
 
   it("should return the namespace with runAsyncEntry", async () => {

@@ -1,4 +1,3 @@
-import { TimeLruCache } from "@httpx/lru";
 import { expect, onTestFinished, vi } from "vitest";
 
 import { CacheCompress } from "../compress/cache-compress";
@@ -10,7 +9,6 @@ const bigPayload = {
     return { id: i, name: `Item ${i}` };
   }),
 };
-const smallPayload = { id: 1 };
 
 /**
  * Fake timers: the function takes 100ms, serialization 5ms and
@@ -31,7 +29,7 @@ const setup = (options: { compressor: boolean }) => {
     vi.advanceTimersByTime(3);
     return deserialize(data);
   };
-  const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 });
+  const lru = { maxSize: 50, defaultTTL: 10_000 };
   const cache = new XMemCache({
     lru,
     ...(options.compressor
@@ -86,6 +84,7 @@ describe("XMemCache usage", () => {
       misses: 1,
       deduped: 0,
       bypassed: 0,
+      invalidated: 0,
       savedTime: 189,
       peakSize: cache.getStats().compressedSize,
     });
@@ -126,6 +125,7 @@ describe("XMemCache usage", () => {
       misses: 1,
       deduped: 2,
       bypassed: 0,
+      invalidated: 0,
       savedTime: 200,
       peakSize: 0,
     });
@@ -155,6 +155,7 @@ describe("XMemCache usage", () => {
       misses: 0,
       deduped: 0,
       bypassed: 1,
+      invalidated: 0,
       savedTime: 0,
       peakSize: 0,
     });
@@ -200,23 +201,9 @@ describe("XMemCache usage", () => {
       misses: 0,
       deduped: 0,
       bypassed: 0,
+      invalidated: 0,
       savedTime: 0,
       peakSize: 0,
     });
-  });
-
-  it("should handle entries without usage (older versions, shared lru)", async () => {
-    const { cache, lru, fn } = setup({ compressor: false });
-    const { meta } = await cache.runAsync({
-      key: ["/old"],
-      fn: () => Promise.resolve(smallPayload),
-    });
-    const entry = lru.peek(meta.generatedKey) as Record<string, unknown>;
-    delete entry.usage;
-    delete entry.timings;
-    const hit = await cache.runAsync({ key: ["/old"], fn });
-    expect(hit.meta.cached).toBe(true);
-    expect(cache.getEntryInfo({ key: ["/old"] })?.usage).toBeUndefined();
-    expect(cache.getStats().totals).toMatchObject({ hits: 1, misses: 1 });
   });
 });

@@ -150,12 +150,6 @@ export interface ICacheCompressor {
   /** Identifier of the compressor, used in the generated cache keys */
   getIdentifier: () => string;
   /**
-   * Whether a previously compressed entry can be decompressed with the
-   * current options (algorithm, encoding, serializer). Incompatible entries
-   * are considered as cache misses by XMemCache.
-   */
-  isCompatible?: (meta: CacheCompressSuccessMeta) => boolean;
-  /**
    * Whether plain JSON data is detected and stored as JSON (meta.content:
    * "json"), ie: CacheCompress with the detectJson option and a serializer
    * supporting it (SuperjsonSerializer).

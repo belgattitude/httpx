@@ -1,4 +1,3 @@
-import { TimeLruCache } from "@httpx/lru";
 import { Encoder } from "cbor-x";
 
 import { CacheCompress } from "../compress/cache-compress";
@@ -121,7 +120,7 @@ describe("CborxSerializer", () => {
 
   it("should work with XMemCache", async () => {
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 10, defaultTTL: 60_000 }),
+      lru: { maxSize: 10, defaultTTL: 60_000 },
       compressor: new CacheCompress({
         algorithm: "gzip",
         serializer: new CborxSerializer(),

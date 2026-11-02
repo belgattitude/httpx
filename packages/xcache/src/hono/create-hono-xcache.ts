@@ -1,6 +1,6 @@
 import { Decompressor } from "@httpx/compress";
 import { Base64 } from "@httpx/encode";
-import type { ITimeLruCache, SupportedCacheValues } from "@httpx/lru";
+import type { SupportedCacheValues } from "@httpx/lru";
 import type { Context } from "hono";
 import type { UnofficialStatusCode } from "hono/utils/http-status";
 
@@ -15,6 +15,7 @@ import type { ICacheSerializer } from "../serializer/types";
 import {
   XMemCache,
   type XMemCacheEntryInfo,
+  type XMemCacheLruOptions,
   type XMemCacheRunAsyncParams,
 } from "../x-mem-cache";
 import {
@@ -83,8 +84,8 @@ type HonoXCacheBaseOptions = {
  * createHonoXCache options creating a dedicated XMemCache instance.
  */
 export type HonoXCacheLruOptions = HonoXCacheBaseOptions & {
-  /** The lru used to store the cache entries */
-  lru: ITimeLruCache;
+  /** Options of the lru storing the cache entries (ie: { maxSize: 500, defaultTTL: 60_000 }) */
+  lru: XMemCacheLruOptions;
   /** Not available with lru, use HonoXCacheInstanceOptions */
   cache?: never;
   /**
@@ -256,11 +257,10 @@ const createXMemCache = (
  * @example
  * ```typescript
  * import { Hono } from 'hono';
- * import { TimeLruCache } from '@httpx/xcache';
  * import { createHonoXCache } from '@httpx/xcache/hono';
  *
  * const xcache = createHonoXCache({
- *   lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+ *   lru: { maxSize: 500, defaultTTL: 60_000 },
  * });
  * // or with an existing XMemCache instance
  * // const xcache = createHonoXCache({ cache: xMemCache });

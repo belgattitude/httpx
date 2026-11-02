@@ -1,4 +1,3 @@
-import { TimeLruCache } from "@httpx/lru";
 import { expect, expectTypeOf } from "vitest";
 
 import { createCacheFn } from "./create-cache-fn";
@@ -11,10 +10,10 @@ describe("createCacheFn", () => {
 
   it("should cache", async () => {
     const withCache = createCacheFn({
-      lru: new TimeLruCache({
+      lru: {
         maxSize: 100,
         defaultTTL: 10,
-      }),
+      },
       namespace: "test",
     });
 

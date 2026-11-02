@@ -1,4 +1,3 @@
-import { TimeLruCache } from "@httpx/lru";
 import { expect, vi } from "vitest";
 
 import { CacheCompress } from "../compress/cache-compress";
@@ -47,9 +46,9 @@ const createAbortableFn = () =>
   );
 
 const createCache = (options: Omit<XMemCacheOptions, "lru"> = {}) => {
-  const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 });
+  const lru = { maxSize: 50, defaultTTL: 10_000 };
   const cache = new XMemCache({ lru, ...options });
-  return { cache, lru };
+  return { cache };
 };
 
 const isAbortError = (error: unknown) =>
@@ -114,7 +113,7 @@ describe("XMemCache abort signal", () => {
     { name: "with dedupe", dedupe: true },
   ])("$name", ({ dedupe }) => {
     it("should reject as soon as aborted, even if the function ignores the signal", async () => {
-      const { cache, lru } = createCache({ dedupe });
+      const { cache } = createCache({ dedupe });
       const { fn, resolve } = createDeferredFn();
       const ac = new AbortController();
       const call = cache.runAsync({ key: ["/data"], fn, signal: ac.signal });
@@ -124,11 +123,11 @@ describe("XMemCache abort signal", () => {
       resolve();
       await vi.waitFor(() => expect(fn).toHaveBeenCalledOnce());
       await Promise.resolve();
-      expect(lru.size).toBe(0);
+      expect(cache.size).toBe(0);
     });
 
     it("should abort the function signal", async () => {
-      const { cache, lru } = createCache({ dedupe });
+      const { cache } = createCache({ dedupe });
       const fn = createAbortableFn();
       const ac = new AbortController();
       const call = cache.runAsync({ key: ["/data"], fn, signal: ac.signal });
@@ -138,11 +137,11 @@ describe("XMemCache abort signal", () => {
       const fnSignal = fn.mock.calls[0]?.[0].signal;
       expect(fnSignal?.aborted).toBe(true);
       expect(fnSignal?.reason).toBe(reason);
-      expect(lru.size).toBe(0);
+      expect(cache.size).toBe(0);
     });
 
     it("should not store a fallback value returned after an abort", async () => {
-      const { cache, lru } = createCache({ dedupe });
+      const { cache } = createCache({ dedupe });
       const fallback = { rows: [] };
       const fn = vi.fn<(params: FnParams) => Promise<typeof payload>>(
         ({ signal }) =>
@@ -158,7 +157,7 @@ describe("XMemCache abort signal", () => {
       ac.abort();
       await expect(call).rejects.toSatisfy(isAbortError);
       await Promise.resolve();
-      expect(lru.size).toBe(0);
+      expect(cache.size).toBe(0);
       const next = vi.fn<() => Promise<typeof payload>>(() =>
         Promise.resolve(payload)
       );
@@ -169,7 +168,7 @@ describe("XMemCache abort signal", () => {
     });
 
     it("should not abort when the function settles first", async () => {
-      const { cache, lru } = createCache({ dedupe });
+      const { cache } = createCache({ dedupe });
       const fn = vi.fn<(params: FnParams) => Promise<typeof payload>>(() =>
         Promise.resolve(payload)
       );
@@ -181,7 +180,7 @@ describe("XMemCache abort signal", () => {
       });
       ac.abort();
       expect(data).toBe(payload);
-      expect(lru.size).toBe(1);
+      expect(cache.size).toBe(1);
     });
 
     it("should propagate function errors", async () => {
@@ -221,7 +220,7 @@ describe("XMemCache abort signal", () => {
 
   describe("with dedupe", () => {
     it("should only reject the aborted caller", async () => {
-      const { cache, lru } = createCache();
+      const { cache } = createCache();
       const fn = vi.fn<(params: FnParams) => Promise<typeof payload>>(
         async ({ signal }) => {
           await Promise.resolve();
@@ -240,11 +239,11 @@ describe("XMemCache abort signal", () => {
       expect(meta.deduped).toBe(true);
       expect(fn).toHaveBeenCalledOnce();
       expect(fn.mock.calls[0]?.[0].signal?.aborted).toBe(false);
-      expect(lru.size).toBe(1);
+      expect(cache.size).toBe(1);
     });
 
     it("should abort the execution when all the callers are aborted", async () => {
-      const { cache, lru } = createCache();
+      const { cache } = createCache();
       const fn = createAbortableFn();
       const ac1 = new AbortController();
       const ac2 = new AbortController();
@@ -259,7 +258,7 @@ describe("XMemCache abort signal", () => {
       expect(fnSignal?.reason).toBe(reason);
       await expect(first).rejects.toSatisfy(isAbortError);
       await expect(second).rejects.toBe(reason);
-      expect(lru.size).toBe(0);
+      expect(cache.size).toBe(0);
     });
 
     it("should start a new execution after an aborted one", async () => {
@@ -303,7 +302,7 @@ describe("XMemCache abort signal", () => {
     });
 
     it("should not abort an execution started without signal", async () => {
-      const { cache, lru } = createCache();
+      const { cache } = createCache();
       const { fn, resolve } = createDeferredFn();
       const first = cache.runAsync({ key: ["/data"], fn });
       const ac = new AbortController();
@@ -313,7 +312,7 @@ describe("XMemCache abort signal", () => {
       expect(fn.mock.calls[0]?.[0].signal).toBeUndefined();
       resolve();
       await expect(first).resolves.toMatchObject({ data: payload });
-      expect(lru.size).toBe(1);
+      expect(cache.size).toBe(1);
     });
 
     it("should handle a rejection of an execution without callers", async () => {
@@ -329,7 +328,7 @@ describe("XMemCache abort signal", () => {
     });
 
     it("should abort with compression", async () => {
-      const { cache, lru } = createCache({
+      const { cache } = createCache({
         compressor: new CacheCompress({
           algorithm: "gzip",
           serializer: new JsonSerializer(),
@@ -346,7 +345,7 @@ describe("XMemCache abort signal", () => {
       });
       ac.abort();
       await expect(call).rejects.toSatisfy(isAbortError);
-      expect(lru.size).toBe(0);
+      expect(cache.size).toBe(0);
     });
   });
 

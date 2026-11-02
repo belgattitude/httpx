@@ -10,7 +10,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import { setTimeout as sleep } from "node:timers/promises";
 
-import { TimeLruCache, XMemCache } from "@httpx/xcache";
+import { XMemCache } from "@httpx/xcache";
 import { createHonoXCache } from "@httpx/xcache/hono";
 import { Hono } from "hono";
 
@@ -137,7 +137,7 @@ const measure = async (fn: () => Promise<unknown>): Promise<TimingResult> => {
 const createCache = (config: CacheConfig, maxSize: number): XMemCache => {
   const compressor = config.createCompressor();
   return new XMemCache({
-    lru: new TimeLruCache({ maxSize, defaultTTL: 3_600_000 }),
+    lru: { maxSize, defaultTTL: 3_600_000 },
     ...(compressor === undefined ? {} : { compressor }),
   });
 };
@@ -243,7 +243,7 @@ const runHonoCase = async (
   } else {
     const honoXCache = createHonoXCache({
       cache: new XMemCache({
-        lru: new TimeLruCache({ maxSize: 20, defaultTTL: 3_600_000 }),
+        lru: { maxSize: 20, defaultTTL: 3_600_000 },
         compressor: config.createCompressor(),
       }),
     });

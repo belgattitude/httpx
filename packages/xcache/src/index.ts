@@ -26,10 +26,12 @@ export type {
 export type {
   XMemCacheConfig,
   XMemCacheEntryInfo,
+  XMemCacheLruOptions,
   XMemCacheOptions,
   XMemCacheRunAsyncEntryResult,
   XMemCacheRunAsyncParams,
   XMemCacheStats,
+  XMemCacheTagInfo,
   XMemCacheTotals,
 } from "./x-mem-cache";
 export { XMemCache } from "./x-mem-cache";
@@ -39,4 +41,3 @@ export type {
   XMemCacheEntryUsage,
   XMemCacheTimings,
 } from "./x-mem-cache-entry";
-export { TimeLruCache } from "@httpx/lru";
