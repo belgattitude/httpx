@@ -255,20 +255,13 @@ type Inflight<TResult> = {
   waiters: number;
   /** Tags of the execution (a function when known after the execution) */
   tags: XMemCacheRunAsyncParams<SupportedCacheValues, CacheKeyTuple>["tags"];
-  /** Store tracking of the execution */
-  pending: PendingStore;
 };
 
 /**
  * Tags invalidated while a function is executing: its result is not stored
- * when it has one of them, or when the execution was detached (a newer
- * execution may have stored a more recent result).
+ * when it has one of them.
  */
-type PendingStore = { invalidated: Set<string>; detached: boolean };
-
-const createPendingStore = (): PendingStore => {
-  return { invalidated: new Set(), detached: false };
-};
+type PendingStore = { invalidated: Set<string> };
 
 /**
  * Remove duplicates and empty strings from the tags, undefined when none.
@@ -569,6 +562,13 @@ export class XMemCache {
    * invalidated in the meantime.
    */
   readonly #pendingStores = new Set<PendingStore>();
+  /**
+   * Start order of the executions: a result is not stored over an entry
+   * created by an execution started after it (ie: forceRevalidate, or an
+   * execution detached by invalidateTags).
+   */
+  #executionSeq = 0;
+  readonly #entrySeq = new WeakMap<XMemCacheEntry, number>();
   /**
    * Default namespace for the cache key.
    */
@@ -930,8 +930,7 @@ export class XMemCache {
           params,
           generatedKey,
           enabled,
-          controller?.signal,
-          inflight.pending
+          controller?.signal
         );
       } finally {
         // a forced revalidation may have replaced it in the meantime
@@ -946,7 +945,6 @@ export class XMemCache {
       controller,
       waiters: 0,
       tags: params.tags,
-      pending: createPendingStore(),
     } as Inflight<TResult>;
     inflight.promise = fetchAndRemove(inflight);
     this.#inflight.set(generatedKey, inflight);
@@ -986,13 +984,13 @@ export class XMemCache {
     params: XMemCacheRunAsyncParams<TResult, TKey>,
     generatedKey: CacheStringKey,
     enabled: boolean,
-    signal: AbortSignal | undefined,
-    pending: PendingStore = createPendingStore()
+    signal: AbortSignal | undefined
   ): Promise<FetchResult<TResult>> => {
     if (!enabled) {
       return await this.#fetch(params, generatedKey, enabled, signal);
     }
     // tracks the tags invalidated during the execution
+    const pending: PendingStore = { invalidated: new Set() };
     this.#pendingStores.add(pending);
     try {
       return await this.#fetch(params, generatedKey, enabled, signal, pending);
@@ -1014,6 +1012,7 @@ export class XMemCache {
     const { fn, key, ttl } = params;
     const compressionEnabled =
       params.compressionEnabled ?? this.#compressionEnabled;
+    const seq = ++this.#executionSeq;
     const start = now();
     const data = await (signal === undefined
       ? fn({ key })
@@ -1078,27 +1077,32 @@ export class XMemCache {
     if (!enabled) {
       return { entry, data };
     }
-    // a tag was invalidated during the execution (the result may be stale),
-    // or the execution was detached: a newer one may have stored its result
+    // a tag was invalidated during the execution: the result may be stale
     if (
+      tags !== undefined &&
       pending !== undefined &&
-      (pending.detached ||
-        (tags !== undefined &&
-          pending.invalidated.size > 0 &&
-          tags.some((tag) => pending.invalidated.has(tag))))
+      pending.invalidated.size > 0 &&
+      tags.some((tag) => pending.invalidated.has(tag))
     ) {
       return { entry, data };
     }
-    // A replacement entry must be more recent than the one it replaces (ie:
-    // forceRevalidate in the same millisecond), so that createdAt based
-    // validators (ie: ETag) change when the content may have changed.
     const previous = this.#lru.peek(generatedKey);
-    if (isXMemCacheEntry(previous) && entry.createdAt <= previous.createdAt) {
-      entry.createdAt = previous.createdAt + 1;
+    if (isXMemCacheEntry(previous)) {
+      // created by an execution started after this one: more recent
+      if ((this.#entrySeq.get(previous) ?? 0) > seq) {
+        return { entry, data };
+      }
+      // A replacement entry must be more recent than the one it replaces
+      // (ie: forceRevalidate in the same millisecond), so that createdAt
+      // based validators (ie: ETag) change when the content may have changed.
+      if (entry.createdAt <= previous.createdAt) {
+        entry.createdAt = previous.createdAt + 1;
+      }
     }
     // ie: a function returning a fallback value when aborted
     if (signal?.aborted !== true) {
       this.#lru.set(generatedKey, entry, ttl);
+      this.#entrySeq.set(entry, seq);
       this.#setKeyTags(generatedKey, tags);
     }
     return { entry, data };
@@ -1165,16 +1169,14 @@ export class XMemCache {
         pending.invalidated.add(tag);
       }
     }
-    // detach the executions that may be stale: new calls won't join them,
-    // and they won't store their result (tags as a function are only known
-    // after the execution)
+    // new calls must not join an execution that may be stale (tags as a
+    // function are only known after the execution)
     for (const [key, inflight] of this.#inflight) {
       const inflightTags = inflight.tags;
       if (
         typeof inflightTags === "function" ||
         inflightTags?.some((tag) => list.includes(tag)) === true
       ) {
-        inflight.pending.detached = true;
         this.#inflight.delete(key);
       }
     }

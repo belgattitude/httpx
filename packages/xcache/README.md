@@ -284,7 +284,7 @@ await xMemCache.runAsync({ key: ["/api/data"], fn, dedupe: false });
 ```
 
 - Errors are not cached: all the waiting callers get the same error, and the next call executes the function again.
-- Calls with `forceRevalidate: true` never wait for an in-flight execution (it may have started before the data changed), but the following calls wait for theirs.
+- Calls with `forceRevalidate: true` never wait for an in-flight execution (it may have started before the data changed), but the following calls wait for theirs. A result never replaces an entry created by an execution started after it: an older execution completing last returns its data to its callers, but keeps the newer entry.
 - Bypassed calls (`enabled: false`) are never deduplicated.
 - The first caller's `ttl` (and `fn`) is used, and all the callers get the same data reference (as with cache hits).
 - Deduplication is done per `XMemCache` instance.
@@ -316,7 +316,7 @@ xMemCache.invalidateTags(["users", "orgs"]);
 ```
 
 - Invalidation is immediate: the entries are removed from the lru (memory is released), the next calls execute the function again.
-- A function executing while one of its tags is invalidated returns its result, but doesn't store it (it may be stale). With [deduplication](#deduplication), calls made after the invalidation don't join that execution. When `tags` is a function, the tags are only known after the execution: any invalidation detaches it (its result is not stored).
+- A function executing while one of its tags is invalidated returns its result, but doesn't store it (it may be stale). With [deduplication](#deduplication), calls made after the invalidation don't join that execution. When `tags` is a function, the tags are only known after the execution: any invalidation detaches it.
 - The tags of an entry are returned in `meta.tags`, `getEntryInfo().tags` and `getStats().entries[].tags`, the number of removed entries in `getStats().totals.invalidated`.
 - Tags are not namespaced: `invalidateTags("users")` removes the entries of all namespaces. Prefix them if needed (ie: `admin:users`).
 - Like the cache, tags are local to the `XMemCache` instance (and process): use a pub/sub to invalidate across processes.
