@@ -174,7 +174,7 @@ overrides:
   '@xmldom/xmldom@>=0.9.0-beta.1 <=0.9.11': 0.9.12
   esbuild: ^0.28.2
   follow-redirects@>=1.16.0 <=1.16.1: 1.16.2
-  glob@>=9.0.0 <=14.0.1: 14.0.2
+  glob@>=9.0.0 <=14.0.1: 14.0.3
   katex@>=0.11.0 <0.18.2: 0.19.0
   minimatch@<11.0.1: 11.0.3
   undici@>=7.0.0 <7.30.1: 8.12.3
@@ -5690,8 +5690,8 @@ packages:
     resolution: {integrity: sha512-8h5hu4L1Ynh+jAYrqniMpmt0ifWG7udtE+OfTzlNYrVM9FdfO1oiJo7azXN9iA3GCdl//C+DAQUMfRwx92++6g==}
     engines: {node: '>=10.13.0'}
 
-  glob@14.0.2:
-    resolution: {integrity: sha512-8vK6J+qkimVLVoONblljCGapg7/FpBGJ8Kg/xbkQW7bO00M/AmSIZtLx8oym87EDSErfwRamPyABfTKY30CjDg==}
+  glob@14.0.3:
+    resolution: {integrity: sha512-kYbiKS6CoRCWsAnH34+cSXCkwckXqnoilh3mnIwqquEGQAT9037qWf2i8NIJ7XMTqEGRobitTmUp6TZAOkG/Pg==}
     engines: {node: 18 || 20 || >=22}
 
   globby@11.1.0:
@@ -6564,6 +6564,10 @@ packages:
   miniflare@5.20261101.0-beta:
     resolution: {integrity: sha512-AQjiGlJBEnvtW8/yOXucrfiMNJKySHcVgTL6iZFci5fYgKSxFEapYKsMfxPs0PwwXbGxugBIeeFo8H0MOTjVuA==}
     engines: {node: '>=22.0.0'}
+
+  minimatch@11.0.3:
+    resolution: {integrity: sha512-3LfW3370hDVmJ1pJENbjnjoMXvbN30Nr9/8hOUup7MTaX6S9u7jHO8XZTAkySQLq5hYnoCqxcXKPHc0olSDqcA==}
+    engines: {node: 18 || 20 || >=22}
 
   minimatch@11.0.3:
     resolution: {integrity: sha512-3LfW3370hDVmJ1pJENbjnjoMXvbN30Nr9/8hOUup7MTaX6S9u7jHO8XZTAkySQLq5hYnoCqxcXKPHc0olSDqcA==}
@@ -11702,7 +11706,7 @@ snapshots:
     dependencies:
       is-glob: 4.0.3
 
-  glob@14.0.2:
+  glob@14.0.3:
     dependencies:
       minimatch: 11.0.3
       minipass: 7.1.3
@@ -12837,6 +12841,11 @@ snapshots:
       '@isaacs/nonrecursive-glob-match': 1.0.3
       brace-expansion: 5.0.12
 
+  minimatch@11.0.3:
+    dependencies:
+      '@isaacs/nonrecursive-glob-match': 1.0.3
+      brace-expansion: 5.0.12
+
   minimizer-webpack-plugin@5.13.1(@swc/core@1.16.20)(@types/webpack@5.28.5)(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.32)(sharp@0.35.5)(webpack@5.112.2):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
@@ -13525,7 +13534,7 @@ snapshots:
 
   rimraf@6.1.3:
     dependencies:
-      glob: 14.0.2
+      glob: 14.0.3
       package-json-from-dist: 1.0.1
 
   robust-predicates@3.0.3: {}
