@@ -1,4 +1,3 @@
-import { TimeLruCache } from "@httpx/lru";
 import { expect, vi } from "vitest";
 
 import { CacheCompress } from "../compress/cache-compress";
@@ -12,11 +11,10 @@ const payload = {
 };
 
 const createCache = (
-  options: Omit<XMemCacheOptions, "lru" | "compressor"> = {},
-  lru = new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 })
+  options: Omit<XMemCacheOptions, "lru" | "compressor"> = {}
 ) => {
   const cache = new XMemCache({
-    lru,
+    lru: { maxSize: 50, defaultTTL: 10_000 },
     compressor: new CacheCompress({
       algorithm: "gzip",
       serializer: new JsonSerializer(),
@@ -28,7 +26,7 @@ const createCache = (
   const fn = vi.fn<() => Promise<typeof payload>>(() =>
     Promise.resolve(payload)
   );
-  return { cache, lru, fn };
+  return { cache, fn };
 };
 
 describe("XMemCache enable / disable", () => {
@@ -40,7 +38,7 @@ describe("XMemCache enable / disable", () => {
     });
 
     it("should bypass the cache when disabled globally", async () => {
-      const { cache, lru, fn } = createCache({ enabled: false });
+      const { cache, fn } = createCache({ enabled: false });
       expect(cache.enabled).toBe(false);
       for (let i = 0; i < 2; i++) {
         const { data, meta } = await cache.runAsync({ key: ["/data"], fn });
@@ -50,11 +48,11 @@ describe("XMemCache enable / disable", () => {
         expect(meta.compression).toBeUndefined();
       }
       expect(fn).toHaveBeenCalledTimes(2);
-      expect(lru.size).toBe(0);
+      expect(cache.size).toBe(0);
     });
 
     it("should bypass the cache for a single call", async () => {
-      const { cache, lru, fn } = createCache();
+      const { cache, fn } = createCache();
       await cache.runAsync({ key: ["/data"], fn });
       const { meta } = await cache.runAsync({
         key: ["/data"],
@@ -64,7 +62,7 @@ describe("XMemCache enable / disable", () => {
       expect(meta.bypassed).toBe(true);
       expect(fn).toHaveBeenCalledTimes(2);
       // the existing entry is left untouched
-      expect(lru.size).toBe(1);
+      expect(cache.size).toBe(1);
       const { meta: hitMeta } = await cache.runAsync({ key: ["/data"], fn });
       expect(hitMeta.cached).toBe(true);
       expect(hitMeta.bypassed).toBeUndefined();
@@ -72,7 +70,7 @@ describe("XMemCache enable / disable", () => {
     });
 
     it("should enable the cache for a single call when disabled globally", async () => {
-      const { cache, lru, fn } = createCache({ enabled: false });
+      const { cache, fn } = createCache({ enabled: false });
       await cache.runAsync({ key: ["/data"], fn, enabled: true });
       const { meta } = await cache.runAsync({
         key: ["/data"],
@@ -81,7 +79,7 @@ describe("XMemCache enable / disable", () => {
       });
       expect(meta.cached).toBe(true);
       expect(fn).toHaveBeenCalledOnce();
-      expect(lru.size).toBe(1);
+      expect(cache.size).toBe(1);
     });
 
     it("should return expiresIn in runAsyncEntry", async () => {
@@ -153,11 +151,13 @@ describe("XMemCache enable / disable", () => {
     });
 
     it("should still read compressed entries when compression is disabled", async () => {
-      const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 });
-      const { cache: writer, fn } = createCache({}, lru);
-      const { cache: reader } = createCache({ compressionEnabled: false }, lru);
-      await writer.runAsync({ key: ["/data"], fn });
-      const { data, meta } = await reader.runAsync({ key: ["/data"], fn });
+      const { cache, fn } = createCache();
+      await cache.runAsync({ key: ["/data"], fn });
+      const { data, meta } = await cache.runAsync({
+        key: ["/data"],
+        fn,
+        compressionEnabled: false,
+      });
       expect(meta.cached).toBe(true);
       expect(meta.compression).toBeDefined();
       expect(data).toStrictEqual(payload);
@@ -166,7 +166,7 @@ describe("XMemCache enable / disable", () => {
 
     it("should report compression disabled without compressor", () => {
       const cache = new XMemCache({
-        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+        lru: { maxSize: 50, defaultTTL: 10_000 },
       });
       expect(cache.compressionEnabled).toBe(false);
     });
@@ -174,14 +174,14 @@ describe("XMemCache enable / disable", () => {
 
   describe("errors", () => {
     it("should not cache errors", async () => {
-      const { cache, lru } = createCache();
+      const { cache } = createCache();
       const failing = vi.fn<() => Promise<typeof payload>>(() =>
         Promise.reject(new Error("Upstream error"))
       );
       await expect(
         cache.runAsync({ key: ["/data"], fn: failing })
       ).rejects.toThrow("Upstream error");
-      expect(lru.size).toBe(0);
+      expect(cache.size).toBe(0);
       // the next call retries
       await expect(
         cache.runAsync({ key: ["/data"], fn: failing })
@@ -228,7 +228,7 @@ describe("XMemCache enable / disable", () => {
       const { cache, fn } = createCache();
       const { entry } = await cache.runAsyncEntry({ key: ["/c"], fn });
       const noCompressor = new XMemCache({
-        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+        lru: { maxSize: 50, defaultTTL: 10_000 },
       });
       await expect(noCompressor.readEntry(entry)).rejects.toThrow(TypeError);
     });
@@ -236,7 +236,7 @@ describe("XMemCache enable / disable", () => {
 
   describe("origin", () => {
     it("should separate entries by origin", async () => {
-      const { cache, lru, fn } = createCache();
+      const { cache, fn } = createCache();
       const a = await cache.runAsync({ key: ["/data"], fn });
       const b = await cache.runAsync({ key: ["/data"], fn, origin: "other" });
       expect(b.meta.cached).toBe(false);
@@ -244,7 +244,7 @@ describe("XMemCache enable / disable", () => {
         '{"compressorId":"cache-compress:json","key":["/data"],"ns":"default","origin":"other"}'
       );
       expect(a.meta.generatedKey).not.toBe(b.meta.generatedKey);
-      expect(lru.size).toBe(2);
+      expect(cache.size).toBe(2);
       expect(cache.getEntryInfo({ key: ["/data"], origin: "other" })?.key).toBe(
         b.meta.generatedKey
       );

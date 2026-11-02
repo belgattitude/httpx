@@ -1,4 +1,3 @@
-import { TimeLruCache } from "@httpx/lru";
 import { expect, expectTypeOf } from "vitest";
 
 import { XMemCache } from "../x-mem-cache";
@@ -13,10 +12,10 @@ describe("XMemCache", () => {
     });
 
   describe("XMemCache.runAsync", () => {
-    const lru = new TimeLruCache({
+    const lru = {
       maxSize: 50,
       defaultTTL: 50_000,
-    });
+    };
 
     const xMemCache = new XMemCache({ lru });
 
@@ -43,22 +42,22 @@ describe("XMemCache", () => {
       expect(firstRunMeta.generatedKey).toBe(
         '{"key":["/api/test",{"name":"test"}],"ns":"default"}'
       );
-      expect(lru.size).toBe(1);
+      expect(xMemCache.size).toBe(1);
 
       const { data: secondRunData } = await runCached({ name: "test" });
       expect(secondRunData).toStrictEqual({ message: "Hello test" });
-      expect(lru.size).toBe(1);
+      expect(xMemCache.size).toBe(1);
 
       expect(fn).toHaveBeenCalledExactlyOnceWith();
-      const removed = lru.clear();
+      const removed = xMemCache.clear();
       expect(removed).toBe(1); // One item should be removed from the cache
     });
   });
   describe("XMemCache.runAsync(forceRevalidate)", () => {
-    const lru = new TimeLruCache({
+    const lru = {
       maxSize: 50,
       defaultTTL: 50_000,
-    });
+    };
 
     const xMemCache = new XMemCache({ lru });
 
@@ -87,16 +86,16 @@ describe("XMemCache", () => {
       expect(firstRunMeta.generatedKey).toBe(
         '{"key":["/api/test",{"name":"test"}],"ns":"default"}'
       );
-      expect(lru.size).toBe(1);
+      expect(xMemCache.size).toBe(1);
 
       const { data: secondRunData } = await runCachedWithForceRevalidate({
         name: "test",
       });
       expect(secondRunData).toStrictEqual({ message: "Hello test" });
-      expect(lru.size).toBe(1);
+      expect(xMemCache.size).toBe(1);
 
       expect(fn).toHaveBeenCalledTimes(2);
-      const removed = lru.clear();
+      const removed = xMemCache.clear();
       expect(removed).toBe(1); // One item should be removed from the cache
     });
   });

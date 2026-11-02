@@ -1,4 +1,3 @@
-import { TimeLruCache } from "@httpx/lru";
 import { expect, onTestFinished, vi } from "vitest";
 
 import { CacheCompress } from "../compress/cache-compress";
@@ -11,7 +10,7 @@ import { XMemCache } from "../x-mem-cache";
 describe("XMemCache config", () => {
   it("should return the config without compressor", () => {
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      lru: { maxSize: 50, defaultTTL: 10_000 },
     });
     expect(cache.getConfig()).toStrictEqual({
       namespace: "default",
@@ -25,7 +24,7 @@ describe("XMemCache config", () => {
 
   it("should return the config with options and compressor", () => {
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 10, defaultTTL: 5000 }),
+      lru: { maxSize: 10, defaultTTL: 5000 },
       namespace: "shop",
       enabled: false,
       dedupe: false,
@@ -58,7 +57,7 @@ describe("XMemCache config", () => {
 
   it("should report binary serializers and disabled compression", () => {
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 10, defaultTTL: 5000 }),
+      lru: { maxSize: 10, defaultTTL: 5000 },
       compressionEnabled: false,
       compressor: new CacheCompress({
         algorithm: "gzip",
@@ -85,7 +84,7 @@ describe("XMemCache config", () => {
       getIdentifier: () => "custom",
     };
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 10, defaultTTL: 5000 }),
+      lru: { maxSize: 10, defaultTTL: 5000 },
       compressor,
     });
     expect(cache.getConfig().compressor).toStrictEqual({ id: "custom" });
@@ -99,9 +98,8 @@ describe("XMemCache clearExpired", () => {
     onTestFinished(() => {
       vi.useRealTimers();
     });
-    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 });
     const cache = new XMemCache({
-      lru,
+      lru: { maxSize: 50, defaultTTL: 10_000 },
       compressor: new CacheCompress({
         algorithm: "gzip",
         serializer: new JsonSerializer(),
@@ -111,15 +109,13 @@ describe("XMemCache clearExpired", () => {
     await cache.runAsync({ key: ["/expired", 1], fn, ttl: 1 });
     await cache.runAsync({ key: ["/expired", 2], fn, ttl: 1 });
     await cache.runAsync({ key: ["/alive"], fn });
-    // values not created by XMemCache are kept, even expired
-    lru.set("not-xmem", "raw value", 1);
     vi.setSystemTime(5);
+    expect(cache.size).toBe(3);
 
     expect(cache.clearExpired()).toBe(2);
-    expect(lru.size).toBe(2);
-    expect([...lru].map(([key]) => key)).toStrictEqual([
+    expect(cache.size).toBe(1);
+    expect(cache.getStats().entries.map(({ key }) => key)).toStrictEqual([
       '{"compressorId":"cache-compress:json","key":["/alive"],"ns":"default"}',
-      "not-xmem",
     ]);
     expect(cache.getStats().items).toBe(1);
     expect(cache.clearExpired()).toBe(0);
@@ -127,7 +123,7 @@ describe("XMemCache clearExpired", () => {
 
   it("should return 0 on an empty cache", () => {
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 10, defaultTTL: 5000 }),
+      lru: { maxSize: 10, defaultTTL: 5000 },
     });
     expect(cache.clearExpired()).toBe(0);
   });

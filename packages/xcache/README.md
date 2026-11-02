@@ -18,10 +18,11 @@ $ pnpm add @httpx/xcache
 - 🗜️&nbsp; Optional [compression](#with-compression) (gzip/deflate) with json, superjson, devalue or cbor-x serializers.
 - 📊&nbsp; [Statistics](#statistics), [enable / disable](#enable--disable) globally or per call.
 - 🐘&nbsp; [Deduplication](#deduplication) of concurrent calls (cache stampede protection).
+- 🏷️&nbsp; [Tags](#tags) to invalidate related entries at once.
 - 🛑&nbsp; [Abort signal](#abort-signal) support (AbortController, timeouts, client disconnects).
 - 🔥&nbsp; [Hono](#hono) helper: compressed responses sent as-is, ETag, Cache-Control.
 - 🧩&nbsp; [Effect](#effect) v3 service example.
-- 📐&nbsp; Lightweight (starts at [~1.7kB](#bundle-size)).
+- 📐&nbsp; Lightweight (starts at [~4kB](#bundle-size), lru included).
 - 🛡️&nbsp; Tested on [node 22-26, bun, browser and cloudflare workers](#compatibility).
 - 🗝️&nbsp; Available in ESM.
 
@@ -32,10 +33,14 @@ $ pnpm add @httpx/xcache
 ## Simple usage
 
 ```typescript
-import { XMemCache, TimeLruCache } from "@httpx/xcache";
+import { XMemCache } from "@httpx/xcache";
 
 const xMemCache = new XMemCache({
-  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+  // The lru is created and owned by the instance:
+  // maxSize: maximum number of entries (least recently used evicted first)
+  // defaultTTL: default time to live in milliseconds
+  // onEviction: optional (key, entry) => void, called on lru evictions
+  lru: { maxSize: 50, defaultTTL: 60_000 },
   namespace: "default",
 });
 
@@ -66,6 +71,8 @@ const { data, meta } = await xMemCache.runAsync({
   ttl: 30_000,
   // Optional: override the default namespace
   namespace: "other",
+  // Optional: tags to remove related entries with invalidateTags (see "Tags")
+  tags: ["data", `data:${params.id}`],
   // Optional: execute the function and refresh the entry even if cached
   forceRevalidate: false,
   // Optional: see "Enable / disable"
@@ -83,10 +90,10 @@ const { data, meta } = await xMemCache.runAsync({
 Or with `createCacheFn` to get a bound `runAsync` function:
 
 ```typescript
-import { createCacheFn, TimeLruCache } from "@httpx/xcache";
+import { createCacheFn } from "@httpx/xcache";
 
 const cacheFn = createCacheFn({
-  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 60_000 }),
+  lru: { maxSize: 50, defaultTTL: 60_000 },
 });
 
 const { data } = await cacheFn({
@@ -110,12 +117,12 @@ You can use compression to reduce the size of the cached data. The library suppo
 > A serializer is only needed with compression. Without a compressor, `XMemCache` keeps the values as-is in the LRU (no serialization cost, all types supported, same instance returned on each hit). See [choosing a serializer](#choosing-a-serializer) for the memory gains.
 
 ```typescript
-import { XMemCache, TimeLruCache, CacheCompress } from "@httpx/xcache";
+import { XMemCache, CacheCompress } from "@httpx/xcache";
 // serializers with a peer dependency have their own entry
 import { SuperjsonSerializer } from "@httpx/xcache/superjson";
 
 const xMemCache = new XMemCache({
-  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+  lru: { maxSize: 50, defaultTTL: 120_000 },
 
   compressor: new CacheCompress({
     // To enable compression the data needs to be serialized
@@ -193,7 +200,7 @@ const { data, meta } = await xMemCache.runAsync({
 // }
 ```
 
-On a cache hit, the meta is checked against the current compressor options. An existing entry created with a different algorithm, encoding or serializer (ie: a shared lru or changed options) is never decoded with the wrong settings, it's treated as a cache miss: the function is executed again and the entry is replaced.
+On a cache hit, the meta is checked against the current compressor options. An existing entry created with a different algorithm, encoding or serializer is never decoded with the wrong settings, it's treated as a cache miss: the function is executed again and the entry is replaced.
 
 ### JSON detection
 
@@ -220,7 +227,7 @@ The cache and the compression can be enabled or disabled globally, and overridde
 
 ```typescript
 const xMemCache = new XMemCache({
-  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+  lru: { maxSize: 50, defaultTTL: 120_000 },
   compressor: new CacheCompress({
     algorithm: "gzip",
     serializer: new SuperjsonSerializer(),
@@ -255,7 +262,7 @@ On a cache miss, concurrent calls having the same key share the in-flight functi
 
 ```typescript
 const xMemCache = new XMemCache({
-  lru: new TimeLruCache({ maxSize: 50, defaultTTL: 120_000 }),
+  lru: { maxSize: 50, defaultTTL: 120_000 },
   // 👇 Global, enabled by default
   dedupe: true,
 });
@@ -282,7 +289,39 @@ await xMemCache.runAsync({ key: ["/api/data"], fn, dedupe: false });
 - Calls with `forceRevalidate: true` never wait for an in-flight execution (it may have started before the data changed), but the following calls wait for theirs.
 - Bypassed calls (`enabled: false`) are never deduplicated.
 - The first caller's `ttl` (and `fn`) is used, and all the callers get the same data reference (as with cache hits).
-- Deduplication is done per `XMemCache` instance, not per lru.
+- Deduplication is done per `XMemCache` instance.
+
+## Tags
+
+Entries can be tagged, and removed by tag with `invalidateTags()`. It's useful when a mutation affects several cached keys (ie: a user and the lists containing it):
+
+```typescript
+const getUser = (id: number) =>
+  xMemCache.runAsync({
+    key: ["/api/user", { id }],
+    fn: () => fetchUser(id),
+    tags: ["users", `user:${id}`],
+  });
+
+const listUsers = (page: number) =>
+  xMemCache.runAsync({
+    key: ["/api/users", { page }],
+    fn: () => fetchUsers(page),
+    // tags can also be computed from the result
+    tags: (users) => ["users", ...users.map((u) => `user:${u.id}`)],
+  });
+
+// after updating user 1: removes its entry and the pages containing it
+const removed = xMemCache.invalidateTags("user:1"); // number of removed entries
+// several tags: entries having at least one of them
+xMemCache.invalidateTags(["users", "orgs"]);
+```
+
+- Invalidation is immediate: the entries are removed from the lru (memory is released), the next calls execute the function again.
+- A function executing while one of its tags is invalidated returns its result, but doesn't store it (it may be stale). With [deduplication](#deduplication), calls made after the invalidation don't join that execution. When `tags` is a function, the tags are only known after the execution: any invalidation detaches it.
+- The tags of an entry are returned in `meta.tags`, `getEntryInfo().tags` and `getStats().entries[].tags`, the number of removed entries in `getStats().totals.invalidated`.
+- Tags are not namespaced: `invalidateTags("users")` removes the entries of all namespaces. Prefix them if needed (ie: `admin:users`).
+- Like the cache, tags are local to the `XMemCache` instance (and process): use a pub/sub to invalidate across processes.
 
 ## Abort signal
 
@@ -348,6 +387,7 @@ const stats = xMemCache.getStats();
 //     misses: 80,
 //     deduped: 12,
 //     bypassed: 5,
+//     invalidated: 3,        // entries removed by invalidateTags
 //     savedTime: 184320.12,  // estimated time saved in milliseconds
 //     peakSize: 245010,      // highest compressedSize + nativeOriginalSize seen
 //   },
@@ -392,11 +432,11 @@ xMemCache.resetStats(); // ie: after a deployment warmup
 ```
 
 > [!NOTE]
-> Native (uncompressed) entries are live objects: their `originalSize` is only set when it could be computed (serialized before compression was skipped, strings and `Uint8Array`), and only those are included in `nativeOriginalSize`. If the lru is shared, entries of other `XMemCache` instances are included.
+> Native (uncompressed) entries are live objects: their `originalSize` is only set when it could be computed (serialized before compression was skipped, strings and `Uint8Array`), and only those are included in `nativeOriginalSize`.
 
 ### Clearing expired entries
 
-Expired entries are never served, but they're only removed from the lru when accessed or evicted. `clearExpired()` removes them (values not created by `XMemCache` are kept) and returns the number of removed entries. `clear()` removes all the entries.
+Expired entries are never served, but they're only removed from the lru when accessed or evicted. `clearExpired()` removes them and returns the number of removed entries. `clear()` removes all the entries.
 
 ```typescript
 const removed = xMemCache.clearExpired();
@@ -434,32 +474,17 @@ xMemCache.getConfig();
 
 Custom compressors can implement the optional `getConfig()` method, otherwise only their `id` is returned.
 
-### Sharing the lru
-
-Every value stored by `XMemCache` is branded, so the lru can safely be shared with other code: values not created by `XMemCache` (even if they look alike) are ignored by `getStats()` / `getEntryInfo()` and treated as a cache miss by `runAsync()`. `getStats()` lists the entries of every `XMemCache` instance sharing the lru: use a namespace per instance to tell them apart (`entries[].namespace`). The `isXMemCacheEntry` typeguard is exported:
-
-```typescript
-import { isXMemCacheEntry } from "@httpx/xcache";
-
-for (const [key, value] of lru) {
-  if (isXMemCacheEntry(value)) {
-    console.log(key, value.format); // "native" | "compressed"
-  }
-}
-```
-
 ## Hono
 
 `@httpx/xcache/hono` provides a helper to cache [hono](https://hono.dev) route responses (`hono` is an optional peer dependency).
 
 ```typescript
-import { TimeLruCache } from "@httpx/xcache";
 import { createHonoXCache } from "@httpx/xcache/hono";
 import { Hono } from "hono";
 
 // One instance per app (JsonSerializer + gzip by default)
 const xcache = createHonoXCache({
-  lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+  lru: { maxSize: 500, defaultTTL: 60_000 },
 });
 
 const app = new Hono();
@@ -486,9 +511,9 @@ Options:
 
 ```typescript
 createHonoXCache({
-  // A dedicated XMemCache is created with this lru (or use an existing
-  // instance, see "With an existing XMemCache instance")
-  lru,
+  // A dedicated XMemCache is created with these lru options (or use an
+  // existing instance, see "With an existing XMemCache instance")
+  lru: { maxSize: 500, defaultTTL: 60_000 },
   namespace: "default",
   // The serialized string is the response body
   serializer: new JsonSerializer(),
@@ -523,7 +548,7 @@ Instead of an `lru`, an existing `XMemCache` instance can be provided. Its lru, 
 
 ```typescript
 const xMemCache = new XMemCache({
-  lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+  lru: { maxSize: 500, defaultTTL: 60_000 },
   compressor: new CacheCompress({
     algorithm: "gzip",
     serializer: new JsonSerializer(),
@@ -564,7 +589,7 @@ By default no `Cache-Control` header is sent: a server memory cache shouldn't ma
 
 ```typescript
 const xcache = createHonoXCache({
-  lru,
+  lru: { maxSize: 500, defaultTTL: 60_000 },
   // 👇 max-age = remaining ttl of the server cache entry, so clients
   //    never keep the response longer than the server does
   cacheControl: { maxAge: "ttl", scope: "private", staleWhileRevalidate: 30 },
@@ -668,7 +693,7 @@ To use compressed entries in other contexts, `XMemCache.runAsyncEntry()` returns
 XMemCache can be provided as an [Effect](https://effect.website) v3 service, and called with `Effect.tryPromise`. No extra dependency is needed.
 
 ```typescript
-import { TimeLruCache, XMemCache } from "@httpx/xcache";
+import { XMemCache } from "@httpx/xcache";
 import { Context, Data, Effect, Layer, ManagedRuntime } from "effect";
 
 class XCache extends Context.Tag("XCache")<XCache, XMemCache>() {
@@ -676,7 +701,7 @@ class XCache extends Context.Tag("XCache")<XCache, XMemCache>() {
     XCache,
     () =>
       new XMemCache({
-        lru: new TimeLruCache({ maxSize: 500, defaultTTL: 60_000 }),
+        lru: { maxSize: 500, defaultTTL: 60_000 },
       })
   );
 }
@@ -907,8 +932,8 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                         | Size (compressed) |
 | ------------------------------------------------------ | ----------------: |
-| `import { XMemCache } from '@httpx/xcache`             |          ~ 1.79kB |
-| `import { createHonoXCache } from '@httpx/xcache/hono` |          ~ 4.86kB |
+| `import { XMemCache } from '@httpx/xcache`             |          ~ 3.98kB |
+| `import { createHonoXCache } from '@httpx/xcache/hono` |          ~ 7.37kB |
 
 ## Compatibility
 

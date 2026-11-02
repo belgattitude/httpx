@@ -1,4 +1,4 @@
-import { type SupportedCacheValues, TimeLruCache } from "@httpx/lru";
+import type { SupportedCacheValues } from "@httpx/lru";
 import { expect, onTestFinished, vi } from "vitest";
 
 import { CacheCompress } from "../compress/cache-compress";
@@ -15,7 +15,7 @@ const smallPayload = { id: 1 };
 
 describe("XMemCache stats", () => {
   const createCache = () => {
-    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 });
+    const lru = { maxSize: 50, defaultTTL: 10_000 };
     const cache = new XMemCache({
       lru,
       compressor: new CacheCompress({
@@ -44,6 +44,7 @@ describe("XMemCache stats", () => {
         misses: 0,
         deduped: 0,
         bypassed: 0,
+        invalidated: 0,
         savedTime: 0,
         peakSize: 0,
       },
@@ -148,7 +149,7 @@ describe("XMemCache stats", () => {
   });
 
   it("should not change the lru order", async () => {
-    const { cache, lru } = createCache();
+    const { cache } = createCache();
     await cache.runAsync({
       key: ["/a"],
       fn: () => Promise.resolve(smallPayload),
@@ -157,19 +158,19 @@ describe("XMemCache stats", () => {
       key: ["/b"],
       fn: () => Promise.resolve(smallPayload),
     });
-    const before = [...lru].map(([k]) => k);
-    cache.getStats();
+    const keys = () => cache.getStats().entries.map(({ key }) => key);
+    const before = keys();
     cache.getEntryInfo({ key: ["/a"] });
-    expect([...lru].map(([k]) => k)).toStrictEqual(before);
+    expect(keys()).toStrictEqual(before);
   });
 
-  it("should ignore expired entries and non XMemCache values", async () => {
+  it("should ignore expired entries", async () => {
     vi.useFakeTimers({ toFake: ["Date"] });
     vi.setSystemTime(0);
     onTestFinished(() => {
       vi.useRealTimers();
     });
-    const { cache, lru } = createCache();
+    const { cache } = createCache();
     await cache.runAsync({
       key: ["/expired"],
       fn: () => Promise.resolve(smallPayload),
@@ -179,7 +180,6 @@ describe("XMemCache stats", () => {
       key: ["/alive"],
       fn: () => Promise.resolve(smallPayload),
     });
-    lru.set("not-xmem", "raw value");
     vi.setSystemTime(5);
     const stats = cache.getStats();
     expect(stats.items).toBe(1);
@@ -187,33 +187,6 @@ describe("XMemCache stats", () => {
       '{"compressorId":"cache-compress:json","key":["/alive"],"ns":"default"}',
     ]);
     expect(cache.getEntryInfo({ key: ["/expired"] })).toBeUndefined();
-  });
-
-  it("should ignore values from other users of a shared lru", async () => {
-    const { cache, lru } = createCache();
-    const { meta } = await cache.runAsync({
-      key: ["/xcache"],
-      fn: () => Promise.resolve(smallPayload),
-    });
-    // values looking like xcache entries, but not created by XMemCache
-    const lookalike = { format: "native", data: { id: "not-xcache" } };
-    lru.set("other-lib", lookalike);
-    lru.set("other-lib-raw", { id: 1 });
-    const stats = cache.getStats();
-    expect(stats.items).toBe(1);
-    expect(stats.entries.map((e) => e.key)).toStrictEqual([meta.generatedKey]);
-
-    // a foreign value stored under an xcache key is a cache miss
-    const otherKey = cache.getEntryInfo({ key: ["/xcache"] })?.key;
-    expect(otherKey).toBe(meta.generatedKey);
-    lru.set(meta.generatedKey, lookalike);
-    expect(cache.getEntryInfo({ key: ["/xcache"] })).toBeUndefined();
-    const { data, meta: rerunMeta } = await cache.runAsync({
-      key: ["/xcache"],
-      fn: () => Promise.resolve(smallPayload),
-    });
-    expect(rerunMeta.cached).toBe(false);
-    expect(data).toStrictEqual(smallPayload);
   });
 
   it("should return entry info", async () => {
@@ -285,7 +258,7 @@ describe("XMemCache stats", () => {
       return serialize(data);
     };
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      lru: { maxSize: 50, defaultTTL: 10_000 },
       compressor: new CacheCompress({
         algorithm: "gzip",
         serializer,
@@ -347,7 +320,7 @@ describe("XMemCache stats", () => {
       return deserialize(data);
     };
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      lru: { maxSize: 50, defaultTTL: 10_000 },
       compressor: new CacheCompress({
         algorithm: "gzip",
         serializer,
@@ -398,7 +371,7 @@ describe("XMemCache stats", () => {
       decompress: (result) => Promise.resolve(result.data as never),
     };
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      lru: { maxSize: 50, defaultTTL: 10_000 },
       compressor,
     });
     const { meta } = await cache.runAsync({
@@ -438,7 +411,7 @@ describe("XMemCache stats", () => {
       },
     };
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      lru: { maxSize: 50, defaultTTL: 10_000 },
       compressor,
     });
     const run = () =>
@@ -456,7 +429,7 @@ describe("XMemCache stats", () => {
 
   it("should only return the function timing without compressor", async () => {
     const cache = new XMemCache({
-      lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+      lru: { maxSize: 50, defaultTTL: 10_000 },
     });
     const { meta } = await cache.runAsync({
       key: ["/native"],
@@ -466,7 +439,7 @@ describe("XMemCache stats", () => {
   });
 
   it("should return native entries without compressor", async () => {
-    const lru = new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 });
+    const lru = { maxSize: 50, defaultTTL: 10_000 };
     const cache = new XMemCache({ lru });
     const { meta } = await cache.runAsync({
       key: ["/native"],
@@ -495,7 +468,7 @@ describe("XMemCache stats", () => {
   describe("original size of native entries", () => {
     it("should be computed for strings and bytes without compressor", async () => {
       const cache = new XMemCache({
-        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+        lru: { maxSize: 50, defaultTTL: 10_000 },
       });
       await cache.runAsync({
         key: ["/string"],
@@ -524,7 +497,7 @@ describe("XMemCache stats", () => {
 
     it("should be computed when compression is disabled", async () => {
       const cache = new XMemCache({
-        lru: new TimeLruCache({ maxSize: 50, defaultTTL: 10_000 }),
+        lru: { maxSize: 50, defaultTTL: 10_000 },
         compressionEnabled: false,
         compressor: new CacheCompress({
           algorithm: "gzip",

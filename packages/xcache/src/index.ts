@@ -26,6 +26,7 @@ export type {
 export type {
   XMemCacheConfig,
   XMemCacheEntryInfo,
+  XMemCacheLruOptions,
   XMemCacheOptions,
   XMemCacheRunAsyncEntryResult,
   XMemCacheRunAsyncParams,

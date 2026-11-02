@@ -5,7 +5,7 @@ import { XMemCache, type XMemCacheOptions } from "./x-mem-cache";
  *
  * @example
  * ```typescript
- * const runAsync = createCacheFn({ lru: new TimeLruCache({ maxSize: 50, defaultTTL: 5000 }) });
+ * const runAsync = createCacheFn({ lru: { maxSize: 50, defaultTTL: 5000 } });
  * const { data } = await runAsync({ key: ['/api/data'], fn: () => fetchData() });
  * ```
  */

@@ -59,9 +59,11 @@ export type XMemCacheEntry<T = unknown> = {
   usage: XMemCacheEntryUsage;
   /**
    * Namespace of the cache key, undefined for an empty namespace or entries
-   * created by older versions (shared lru).
+   * created by older versions.
    */
   namespace?: string;
+  /** Tags of the entry (see runAsync `tags` and invalidateTags) */
+  tags?: readonly string[];
 } & (
   | {
       format: "compressed";
