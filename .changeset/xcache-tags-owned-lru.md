@@ -32,5 +32,5 @@ xMemCache.invalidateTags("user:1"); // returns the number of removed entries
 
 - Invalidated entries are removed immediately, and functions executing while one of their tags is invalidated don't store their (possibly stale) result.
 - Tags are returned in `meta.tags`, `getEntryInfo()` and `getStats()` entries, `getStats().totals.invalidated` counts the removed entries.
-- New `size` getter, and `onEviction` lru option.
+- New `size` getter, `entries()` iterator, also iterable with `for...of` (replaces iterating over the lru), `getTags()` and the `onEviction` lru option.
 - Fix: a result is no longer stored over an entry created by an execution started after it (ie: a slow execution completing after a `forceRevalidate` one).

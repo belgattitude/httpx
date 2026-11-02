@@ -1,5 +1,5 @@
 import type { SupportedCacheValues } from "@httpx/lru";
-import { expect, onTestFinished, vi } from "vitest";
+import { assert, expect, onTestFinished, vi } from "vitest";
 
 import { CacheCompress } from "../compress/cache-compress";
 import type { ICacheCompressor } from "../compress/types";
@@ -187,6 +187,33 @@ describe("XMemCache stats", () => {
       '{"compressorId":"cache-compress:json","key":["/alive"],"ns":"default"}',
     ]);
     expect(cache.getEntryInfo({ key: ["/expired"] })).toBeUndefined();
+  });
+
+  it("should iterate over the entries without changing the lru order", async () => {
+    const { cache } = createCache();
+    const a = await cache.runAsync({
+      key: ["/a"],
+      fn: () => Promise.resolve(bigPayload),
+    });
+    await cache.runAsync({
+      key: ["/b"],
+      fn: () => Promise.resolve(smallPayload),
+    });
+    const entries = [...cache.entries()];
+    expect(entries.map(([key]) => key)).toStrictEqual(
+      cache.getStats().entries.map(({ key }) => key)
+    );
+    const [key, entry] = entries[0] ?? [];
+    expect(key).toBe(a.meta.generatedKey);
+    assert(entry !== undefined);
+    expect(entry.format).toBe("compressed");
+    await expect(cache.readEntry(entry)).resolves.toStrictEqual(bigPayload);
+    // not touched: still the least recently used
+    expect([...cache.entries()][0]?.[0]).toBe(a.meta.generatedKey);
+    // the instance is iterable, same as entries()
+    expect([...cache]).toStrictEqual(entries);
+    const { entries: detached } = cache;
+    expect([...detached()]).toStrictEqual(entries);
   });
 
   it("should return entry info", async () => {

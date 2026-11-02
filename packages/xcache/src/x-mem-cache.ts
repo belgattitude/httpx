@@ -361,6 +361,16 @@ export type XMemCacheEntryInfo = {
 };
 
 /**
+ * Info about a tag, returned by getTags.
+ */
+export type XMemCacheTagInfo = {
+  /** The tag, as provided to runAsync */
+  tag: string;
+  /** Number of (non-expired) entries having the tag */
+  items: number;
+};
+
+/**
  * Totals of the XMemCache instance since its creation (or resetStats), kept
  * when entries expire or are cleared.
  */
@@ -1291,12 +1301,7 @@ export class XMemCache {
         savedTime: roundMs(this.#totals.savedTime),
       },
     };
-    for (const [key] of this.#lru) {
-      // peek skips expired entries
-      const value = this.#lru.peek(key);
-      if (!isXMemCacheEntry(value)) {
-        continue;
-      }
+    for (const [key, value] of this.#iterate()) {
       stats.items++;
       if (value.format === "compressed") {
         stats.compressedItems++;
@@ -1306,9 +1311,7 @@ export class XMemCache {
         stats.nativeItems++;
         stats.nativeOriginalSize += value.meta?.originalSize ?? 0;
       }
-      stats.entries.push(
-        toEntryInfo(key as CacheStringKey, value, this.#lru.expiresIn(key))
-      );
+      stats.entries.push(toEntryInfo(key, value, this.#lru.expiresIn(key)));
     }
     stats.compressionSavings = stats.originalSize - stats.compressedSize;
     this.#totals.peakSize = Math.max(
@@ -1387,17 +1390,75 @@ export class XMemCache {
    */
   readonly #samplePeakSize = (): void => {
     let size = 0;
+    for (const [, value] of this.#iterate()) {
+      size +=
+        value.format === "compressed"
+          ? value.meta.compressedSize
+          : (value.meta?.originalSize ?? 0);
+    }
+    this.#totals.peakSize = Math.max(this.#totals.peakSize, size);
+  };
+
+  /**
+   * Iterate over the non-expired entries, least recently used first, without
+   * changing the lru order. Entries are returned as stored: use readEntry to
+   * get the data of compressed entries.
+   *
+   * @example
+   * ```typescript
+   * for (const [key, entry] of xMemCache.entries()) {
+   *   console.log(key, entry.format, entry.tags);
+   *   const data = await xMemCache.readEntry(entry);
+   * }
+   * ```
+   */
+  entries = (): IterableIterator<[CacheStringKey, XMemCacheEntry]> =>
+    this.#iterate();
+
+  /**
+   * Same as entries(): `for (const [key, entry] of xMemCache)` or
+   * `[...xMemCache]`.
+   */
+  [Symbol.iterator](): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
+    return this.#iterate();
+  }
+
+  *#iterate(): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
     for (const [key] of this.#lru) {
       // peek skips expired entries
       const value = this.#lru.peek(key);
       if (isXMemCacheEntry(value)) {
-        size +=
-          value.format === "compressed"
-            ? value.meta.compressedSize
-            : (value.meta?.originalSize ?? 0);
+        yield [key as CacheStringKey, value];
       }
     }
-    this.#totals.peakSize = Math.max(this.#totals.peakSize, size);
+  }
+
+  /**
+   * Return the tags of the (non-expired) entries with their number of
+   * entries, sorted by tag.
+   *
+   * @example
+   * ```typescript
+   * xMemCache.getTags();
+   * // [{ tag: 'user:1', items: 1 }, { tag: 'users', items: 3 }]
+   * ```
+   */
+  getTags = (): XMemCacheTagInfo[] => {
+    const tags: XMemCacheTagInfo[] = [];
+    for (const [tag, keys] of this.#keysByTag) {
+      let items = 0;
+      for (const key of keys) {
+        // expired entries are only removed when accessed or evicted
+        if (this.#lru.expiresIn(key) !== undefined) {
+          items++;
+        }
+      }
+      if (items > 0) {
+        tags.push({ tag, items });
+      }
+    }
+    // tags are unique
+    return tags.toSorted((a, b) => (a.tag < b.tag ? -1 : 1));
   };
 
   /**

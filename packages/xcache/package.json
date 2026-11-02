@@ -58,7 +58,7 @@
     "bench-watch": "dx-bench --watch",
     "build": "pnpm run clean && dx-build",
     "build-release": "pnpm run build",
-    "check-dist": "es-check es2022 './dist/**/*.js' --not './dist/*.map.js' --module",
+    "check-dist": "es-check es2023 './dist/**/*.js' --not './dist/*.map.js' --module",
     "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-xcache --dir ./coverage",

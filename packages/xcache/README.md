@@ -317,7 +317,14 @@ xMemCache.invalidateTags(["users", "orgs"]);
 
 - Invalidation is immediate: the entries are removed from the lru (memory is released), the next calls execute the function again.
 - A function executing while one of its tags is invalidated returns its result, but doesn't store it (it may be stale). With [deduplication](#deduplication), calls made after the invalidation don't join that execution. When `tags` is a function, the tags are only known after the execution: any invalidation detaches it.
-- The tags of an entry are returned in `meta.tags`, `getEntryInfo().tags` and `getStats().entries[].tags`, the number of removed entries in `getStats().totals.invalidated`.
+- The tags of an entry are returned in `meta.tags` (on misses and hits), `getEntryInfo().tags`, `getStats().entries[].tags` and `entries()`, the number of removed entries in `getStats().totals.invalidated`.
+- `getTags()` returns the tags in use, with their number of (non-expired) entries:
+
+```typescript
+xMemCache.getTags();
+// [{ tag: "user:1", items: 2 }, { tag: "users", items: 5 }]
+```
+
 - Tags are not namespaced: `invalidateTags("users")` removes the entries of all namespaces. Prefix them if needed (ie: `admin:users`).
 - Like the cache, tags are local to the `XMemCache` instance (and process): use a pub/sub to invalidate across processes.
 
@@ -431,6 +438,17 @@ xMemCache.resetStats(); // ie: after a deployment warmup
 
 > [!NOTE]
 > Native (uncompressed) entries are live objects: their `originalSize` is only set when it could be computed (serialized before compression was skipped, strings and `Uint8Array`), and only those are included in `nativeOriginalSize`.
+
+### Iterating over the entries
+
+`entries()` (or the instance itself, like a `Map`: `for (const [key, entry] of xMemCache)`) iterates over the non-expired entries (least recently used first) without changing the lru order. Entries are returned as stored, use `readEntry()` to get the data of compressed entries:
+
+```typescript
+for (const [key, entry] of xMemCache.entries()) {
+  // entry: { format, data, meta, tags, namespace, createdAt, timings, usage }
+  const data = await xMemCache.readEntry(entry);
+}
+```
 
 ### Clearing expired entries
 
@@ -930,8 +948,8 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm)                                         | Size (compressed) |
 | ------------------------------------------------------ | ----------------: |
-| `import { XMemCache } from '@httpx/xcache`             |          ~ 3.95kB |
-| `import { createHonoXCache } from '@httpx/xcache/hono` |          ~ 7.34kB |
+| `import { XMemCache } from '@httpx/xcache`             |          ~ 4.05kB |
+| `import { createHonoXCache } from '@httpx/xcache/hono` |          ~ 7.43kB |
 
 ## Compatibility
 

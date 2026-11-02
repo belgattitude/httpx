@@ -73,6 +73,57 @@ describe("XMemCache tags", () => {
     expect(fn).toHaveBeenCalledOnce();
   });
 
+  it("should return the tags in the meta, entries and stats", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(0);
+    onTestFinished(() => {
+      vi.useRealTimers();
+    });
+    const cache = createCache();
+    const fn = () => getUser(1);
+    const miss = await cache.runAsync({
+      key: ["/a"],
+      fn,
+      tags: ["users", "a"],
+    });
+    const hit = await cache.runAsync({ key: ["/a"], fn, tags: ["ignored"] });
+    // the tags of the stored entry (set on the miss)
+    expect(miss.meta.tags).toStrictEqual(["users", "a"]);
+    expect(hit.meta.cached).toBe(true);
+    expect(hit.meta.tags).toStrictEqual(["users", "a"]);
+    const entryHit = await cache.runAsyncEntry({ key: ["/a"], fn });
+    expect(entryHit.entry.tags).toStrictEqual(["users", "a"]);
+
+    await cache.runAsync({ key: ["/b"], fn, tags: ["users"] });
+    await cache.runAsync({ key: ["/c"], fn });
+    await cache.runAsync({ key: ["/expired"], fn, tags: ["old"], ttl: 1 });
+    vi.setSystemTime(5);
+
+    expect(
+      cache.getStats().entries.map(({ key, tags }) => [key, tags])
+    ).toStrictEqual([
+      [miss.meta.generatedKey, ["users", "a"]],
+      ['{"key":["/b"],"ns":"default"}', ["users"]],
+      ['{"key":["/c"],"ns":"default"}', undefined],
+    ]);
+    expect(
+      [...cache.entries()].map(([key, entry]) => [key, entry.tags])
+    ).toStrictEqual([
+      [miss.meta.generatedKey, ["users", "a"]],
+      ['{"key":["/b"],"ns":"default"}', ["users"]],
+      ['{"key":["/c"],"ns":"default"}', undefined],
+    ]);
+    // expired entries are not counted
+    expect(cache.getTags()).toStrictEqual([
+      { tag: "a", items: 1 },
+      { tag: "users", items: 2 },
+    ]);
+    cache.invalidateTags("a");
+    expect(cache.getTags()).toStrictEqual([{ tag: "users", items: 1 }]);
+    cache.clear();
+    expect(cache.getTags()).toStrictEqual([]);
+  });
+
   it("should ignore unknown, empty and duplicated tags", async () => {
     const cache = createCache();
     const { meta } = await cache.runAsync({

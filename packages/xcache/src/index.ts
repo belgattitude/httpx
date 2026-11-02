@@ -31,6 +31,7 @@ export type {
   XMemCacheRunAsyncEntryResult,
   XMemCacheRunAsyncParams,
   XMemCacheStats,
+  XMemCacheTagInfo,
   XMemCacheTotals,
 } from "./x-mem-cache";
 export { XMemCache } from "./x-mem-cache";
