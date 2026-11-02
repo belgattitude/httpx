@@ -1104,8 +1104,8 @@ importers:
         specifier: 0.18.5
         version: 0.18.5
       '@azure/identity':
-        specifier: 4.14.0
-        version: 4.14.0(supports-color@10.2.2)
+        specifier: 4.14.1
+        version: 4.14.1(supports-color@10.2.2)
       '@dotenvx/dotenvx':
         specifier: 2.38.2
         version: 2.38.2
@@ -1842,8 +1842,8 @@ packages:
     resolution: {integrity: sha512-PK3ghA3KEYOMZszCuSarNxCU31m7nwJwUyVVnwskoaEU6zmPciPWdQivbnteYuSRhMUk2Be/EXHSyDWUvIEQzw==}
     engines: {node: '>=22.0.0'}
 
-  '@azure/identity@4.14.0':
-    resolution: {integrity: sha512-2JJLOJTAv68WTe2Cy4iu+LNUZ1FjbfjGiSCSi6Ppf5ggl5ZUDMxVFlNwZds6ZtlAKre/hU34lQQJ0RMjJiQ3Dg==}
+  '@azure/identity@4.14.1':
+    resolution: {integrity: sha512-TekPj22jqXCmHS+KEZlNx8giN7Y1gU0hxqXLGeZRqaV/f3VigVcAJd3JdPiHIIDCbNF4+5bHoXYmfEONCA4LAg==}
     engines: {node: '>=22.0.0'}
 
   '@azure/logger@1.4.0':
@@ -8449,7 +8449,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@azure/identity@4.14.0(supports-color@10.2.2)':
+  '@azure/identity@4.14.1(supports-color@10.2.2)':
     dependencies:
       '@azure/abort-controller': 2.2.0
       '@azure/core-auth': 1.11.0(supports-color@10.2.2)
