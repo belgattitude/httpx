@@ -212,8 +212,8 @@ importers:
         specifier: 9.0.4
         version: 9.0.4
       pkg-pr-new:
-        specifier: 0.0.92
-        version: 0.0.92
+        specifier: 0.0.93
+        version: 0.0.93
       playwright:
         specifier: 1.64.1
         version: 1.64.1
@@ -318,8 +318,8 @@ importers:
   docs:
     dependencies:
       cn:
-        specifier: 0.5.0
-        version: 0.5.0
+        specifier: 0.5.1
+        version: 0.5.1
       fumadocs-core:
         specifier: 16.17.9
         version: 16.17.9(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.5)(@types/mdast@4.0.4)(@types/react-dom@19.3.0)(@types/react@19.3.0)(lucide-react@1.61.0)(next@16.4.3)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(zod@4.6.7)
@@ -383,10 +383,10 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: 2.1.5
-        version: 2.1.5(hono@4.13.14)
+        version: 2.1.5(hono@4.13.16)
       '@hono/vercel':
         specifier: 1.0.1
-        version: 1.0.1(hono@4.13.14)
+        version: 1.0.1(hono@4.13.16)
       '@httpx/assert':
         specifier: workspace:^
         version: link:../../packages/assert
@@ -424,8 +424,8 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       hono:
-        specifier: 4.13.14
-        version: 4.13.14
+        specifier: 4.13.16
+        version: 4.13.16
       ky:
         specifier: 2.2.0
         version: 2.2.0
@@ -1091,8 +1091,8 @@ importers:
         specifier: workspace:^
         version: link:../plain-object
       jose:
-        specifier: ^6.2.13
-        version: 6.2.13
+        specifier: ^6.2.14
+        version: 6.2.14
       ky:
         specifier: ^2.2.0
         version: 2.2.0
@@ -1101,8 +1101,8 @@ importers:
         specifier: 0.18.5
         version: 0.18.5
       '@azure/identity':
-        specifier: 4.14.0
-        version: 4.14.0(supports-color@10.2.2)
+        specifier: 4.14.1
+        version: 4.14.1(supports-color@10.2.2)
       '@dotenvx/dotenvx':
         specifier: 2.38.2
         version: 2.38.2
@@ -1472,8 +1472,8 @@ importers:
         specifier: 14.3.0
         version: 14.3.0(@swc/core@1.16.20)(@types/webpack@5.28.5)(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.32)(sharp@0.35.5)(size-limit@14.3.0)
       '@tanstack/query-core':
-        specifier: 5.105.0
-        version: 5.105.0
+        specifier: 5.105.1
+        version: 5.105.1
       browserslist:
         specifier: 4.29.5
         version: 4.29.5
@@ -1651,8 +1651,8 @@ importers:
         specifier: 0.8.3
         version: 0.8.3
       hono:
-        specifier: 4.13.14
-        version: 4.13.14
+        specifier: 4.13.16
+        version: 4.13.16
       npm-run-all2:
         specifier: 9.0.4
         version: 9.0.4
@@ -1705,8 +1705,8 @@ importers:
         specifier: 14.3.0
         version: 14.3.0(size-limit@14.3.0)
       '@tanstack/eslint-plugin-query':
-        specifier: 5.105.0
-        version: 5.105.0(eslint@10.13.0)(supports-color@10.2.2)(typescript@7.0.2)
+        specifier: 5.105.1
+        version: 5.105.1(eslint@10.13.0)(supports-color@10.2.2)(typescript@7.0.2)
       '@testing-library/dom':
         specifier: 10.4.2
         version: 10.4.2
@@ -1735,8 +1735,8 @@ importers:
         specifier: 10.13.0
         version: 10.13.0(jiti@2.7.0)(supports-color@10.2.2)
       eslint-plugin-security:
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 4.2.1
+        version: 4.2.1
       happy-dom:
         specifier: 21.0.4
         version: 21.0.4
@@ -1839,8 +1839,8 @@ packages:
     resolution: {integrity: sha512-PK3ghA3KEYOMZszCuSarNxCU31m7nwJwUyVVnwskoaEU6zmPciPWdQivbnteYuSRhMUk2Be/EXHSyDWUvIEQzw==}
     engines: {node: '>=22.0.0'}
 
-  '@azure/identity@4.14.0':
-    resolution: {integrity: sha512-2JJLOJTAv68WTe2Cy4iu+LNUZ1FjbfjGiSCSi6Ppf5ggl5ZUDMxVFlNwZds6ZtlAKre/hU34lQQJ0RMjJiQ3Dg==}
+  '@azure/identity@4.14.1':
+    resolution: {integrity: sha512-TekPj22jqXCmHS+KEZlNx8giN7Y1gU0hxqXLGeZRqaV/f3VigVcAJd3JdPiHIIDCbNF4+5bHoXYmfEONCA4LAg==}
     engines: {node: '>=22.0.0'}
 
   '@azure/logger@1.4.0':
@@ -3923,8 +3923,8 @@ packages:
       vue:
         optional: true
 
-  '@tanstack/eslint-plugin-query@5.105.0':
-    resolution: {integrity: sha512-iQKYdI84CyLNpGCVVX2ZyAvyPSwYRhhhdHa03YS1TC+2EsqybohE/CjvQlJO1IE9JTTM0Sd0Tuv1n/n65OR9BQ==}
+  '@tanstack/eslint-plugin-query@5.105.1':
+    resolution: {integrity: sha512-OYQij0g3XVBHQE4Zyw1Jd8q+aKmd+FmsfAcUQ9vUiLJh46/A9zwZD8COLJ6CTWWygNjud7/wr3XaB6Hi6chn3Q==}
     peerDependencies:
       '@types/eslint': '*'
       '@types/typescript': '*'
@@ -3938,8 +3938,8 @@ packages:
       typescript:
         optional: true
 
-  '@tanstack/query-core@5.105.0':
-    resolution: {integrity: sha512-C4nyjsOfHOb7lYXSgelqsnwnUHfwps5OS1kqokrJJYDHbePh5dSNU8UNL+bxVyEVs+vH24ApFPXbVzlezSCLkQ==}
+  '@tanstack/query-core@5.105.1':
+    resolution: {integrity: sha512-jhmpC+7KCpkTTJKe9sIvGJJUwKZA1pxv5CjNv9WLabYgKL+wvPX09umUZWx6WKBNyDsdZgf9xftYmSOwhBTKqw==}
 
   '@testing-library/dom@10.4.2':
     resolution: {integrity: sha512-6JedQnjTUgafUAAZlEqvf5WnpNfbacUqoaD7TaLuPjMfdzyeDBiRGkGqosFibKroL11T9bhbckvxFeGaO2sfnw==}
@@ -4837,8 +4837,8 @@ packages:
     resolution: {integrity: sha512-Dz3sUlQSdboB+VsJe0UU+J7fPU5dKIQV6H8xCo3WoJfxVVDYBxQVA70TQK6Br8yxDcdrv5vGjqonYdILKXtKxQ==}
     engines: {node: '>=6'}
 
-  cn@0.5.0:
-    resolution: {integrity: sha512-7Gd92o254ML+psmOFXf4+B4i2NqUM2X/8Zdo9lzOeYc4XaIbNRwXU5ojM/mm16duwgJqxi417RECRVFzY42HQg==}
+  cn@0.5.1:
+    resolution: {integrity: sha512-/NBQWfM1VrnNi26SulDxvb3Jn8N87PV2/OvA9VELm2k0NSuJJkY6T55zcxL42CcsYac9GHnpThpJtqRXtoBOzg==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -5248,8 +5248,8 @@ packages:
     resolution: {integrity: sha512-1bmRo7TQf1ZNQ+hQw51pN6fRx+1lZPdzgkEEFznHhTyU0MkFM7R2HtTPzqr/3FHednPOEYS81IUVzNSSMFRYuw==}
     engines: {node: '>=12'}
 
-  eslint-plugin-security@4.2.0:
-    resolution: {integrity: sha512-j54ati27N+VIK40i+DSpVrjX8fJ6UkHsPTwQLZQrUlBCzGTF0XrKeMUzvNcvsx3jRJ3jvlIvLsy0PAdOG6OobA==}
+  eslint-plugin-security@4.2.1:
+    resolution: {integrity: sha512-44BL3UDVvnIMamz2QgVMu7xcmrJplAheP/qSF3gwzu0GjfOxlmjJMqpZyXE4JCNuccMEyVbNRdtr/NzthRczqw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   eslint-scope@9.1.2:
@@ -5769,8 +5769,8 @@ packages:
   highlight.js@10.7.3:
     resolution: {integrity: sha512-i9Q3D5/O5uno3xOUAMkER8IX0YYPZFc8Ue/3HHvUPNRV8WXWdVIPimTdIuUG91IQTj/RatDYhWUALGf6jwdYIQ==}
 
-  hono@4.13.14:
-    resolution: {integrity: sha512-tIyjo6iOfK8JWk5JtyiR2i4xr5T9tYz+pIMthzt0zm1BX0DfdDPYeC3nPgYnshUrK3dNT/C16tgrbf2tbQUwFw==}
+  hono@4.13.16:
+    resolution: {integrity: sha512-nQpaB98bEkn1Mx4c2bb/ugMPC0WdE+E49YuxNiltTsxLbevC9WcF18a8hzYZjoiTkD6Xb/J2p/7Wkq1EVOs/Dw==}
     engines: {node: '>=16.9.0'}
 
   hookable@6.1.2:
@@ -5951,8 +5951,8 @@ packages:
     resolution: {integrity: sha512-L+wLTo0OJJq26A29fJeYCmKhDe8YhIwDqSF24A9nz4NJdC0YnlM3dC/iyQS/iSE3GBWcMpMXBGJQFiwZdxonaw==}
     engines: {node: ^10.12.0 || ^12.20.0 || ^14.13.0 || >=15.0.0}
 
-  jose@6.2.13:
-    resolution: {integrity: sha512-qr0gmPptfcIWwdtysdQmeXWjg+gfMcs9mCM+rnMAZWwT4sMeJEJQfg4YG6qLEVwnddLIVhrv5EHETtAH48R4hA==}
+  jose@6.2.14:
+    resolution: {integrity: sha512-4nOG1Gv2tNx8biFQbFLoAwGVY4/YC/Ja29oGBAnqJJhlrTj0SlzmIe68luJufcr6L47utC5Ao1bah3RwKnwheg==}
 
   js-base64@3.9.5:
     resolution: {integrity: sha512-729t6eH+gNMCjbNqGYjoLiPnK2Dx1kxp74wq3oIyXabbo/FYvOE9Tp/1erjJEAMgM5gmNK3eqX0zRXyMoZVeCg==}
@@ -6997,8 +6997,8 @@ packages:
     resolution: {integrity: sha512-SN/lDCv75VLcU6WAgr4Ehp/jkKZZOvjwjZILWCB6Mr8XMxBbnzFLp/YAFs/DxU9AYaSfWE8pfy/uDfKq8Xokzw==}
     engines: {node: '>=8'}
 
-  pkg-pr-new@0.0.92:
-    resolution: {integrity: sha512-2lWp0UISK7J1Xj9B8RCZrZfFzcApC0yFOqwIpVjBJ/akA6vmAcyl2vrBB5T6MmpxsItgcX1/gDPfuyVJ7OsMgQ==}
+  pkg-pr-new@0.0.93:
+    resolution: {integrity: sha512-/ZHMmnEW5oOVMYfw4Cu2Z1etFCoLNOf9OCsv8bH/n3l8UaXxERR5ualXC0UBF6KbT8Fd4sHGMRXmHfOLsQGKZA==}
     hasBin: true
 
   pkg-types@1.3.1:
@@ -8401,7 +8401,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@azure/identity@4.14.0(supports-color@10.2.2)':
+  '@azure/identity@4.14.1(supports-color@10.2.2)':
     dependencies:
       '@azure/abort-controller': 2.2.0
       '@azure/core-auth': 1.11.0(supports-color@10.2.2)
@@ -8990,7 +8990,7 @@ snapshots:
       '@fuma-translate/react': 1.0.2(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
       '@fumadocs/tailwind': 0.1.4(tailwindcss@4.3.3)
       class-variance-authority: 0.7.1
-      cn: 0.5.0
+      cn: 0.5.1
       fumadocs-core: 16.17.9(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.5)(@types/mdast@4.0.4)(@types/react-dom@19.3.0)(@types/react@19.3.0)(lucide-react@1.61.0)(next@16.4.3)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(zod@4.6.7)
       lucide-react: 1.61.0(@types/react@19.3.0)(react@19.3.1)
       motion: 14.6.0(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
@@ -9027,13 +9027,13 @@ snapshots:
       '@shikijs/types': 3.23.0
       '@shikijs/vscode-textmate': 10.1.0
 
-  '@hono/node-server@2.1.5(hono@4.13.14)':
+  '@hono/node-server@2.1.5(hono@4.13.16)':
     dependencies:
-      hono: 4.13.14
+      hono: 4.13.16
 
-  '@hono/vercel@1.0.1(hono@4.13.14)':
+  '@hono/vercel@1.0.1(hono@4.13.16)':
     dependencies:
-      hono: 4.13.14
+      hono: 4.13.16
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -10140,7 +10140,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/d3-selection'
 
-  '@tanstack/eslint-plugin-query@5.105.0(eslint@10.13.0)(supports-color@10.2.2)(typescript@7.0.2)':
+  '@tanstack/eslint-plugin-query@5.105.1(eslint@10.13.0)(supports-color@10.2.2)(typescript@7.0.2)':
     dependencies:
       '@typescript-eslint/utils': 8.72.0(eslint@10.13.0)(supports-color@10.2.2)(typescript@7.0.2)
       eslint: 10.13.0(jiti@2.7.0)(supports-color@10.2.2)
@@ -10150,7 +10150,7 @@ snapshots:
       - '@types/picomatch'
       - supports-color
 
-  '@tanstack/query-core@5.105.0': {}
+  '@tanstack/query-core@5.105.1': {}
 
   '@testing-library/dom@10.4.2':
     dependencies:
@@ -10946,7 +10946,7 @@ snapshots:
 
   clsx@2.1.1: {}
 
-  cn@0.5.0: {}
+  cn@0.5.1: {}
 
   collapse-white-space@2.1.0: {}
 
@@ -11315,7 +11315,7 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
-  eslint-plugin-security@4.2.0:
+  eslint-plugin-security@4.2.1:
     dependencies:
       safe-regex: 2.1.1
 
@@ -11874,7 +11874,7 @@ snapshots:
 
   highlight.js@10.7.3: {}
 
-  hono@4.13.14: {}
+  hono@4.13.16: {}
 
   hookable@6.1.2: {}
 
@@ -12011,7 +12011,7 @@ snapshots:
     dependencies:
       '@discoveryjs/natural-compare': 1.1.0
 
-  jose@6.2.13: {}
+  jose@6.2.14: {}
 
   js-base64@3.9.5: {}
 
@@ -13239,7 +13239,7 @@ snapshots:
     dependencies:
       find-up: 4.1.0
 
-  pkg-pr-new@0.0.92: {}
+  pkg-pr-new@0.0.93: {}
 
   pkg-types@1.3.1:
     dependencies:
