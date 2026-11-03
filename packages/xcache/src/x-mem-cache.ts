@@ -363,9 +363,9 @@ export type XMemCacheEntryInfo = {
     savedTime: number;
   };
   /** Remaining time to live in milliseconds */
-  expiresIn?: number;
+  expiresIn: number;
   /** Expiry time of the entry (epoch milliseconds) */
-  expiresAt?: number;
+  expiresAt: number;
 };
 
 /**
@@ -532,9 +532,8 @@ const omitUndefined = <T extends object>(obj: T): T =>
 const toEntryInfo = (
   key: CacheStringKey,
   value: XMemCacheEntry,
-  expiresAt: number | undefined
+  expiresAt: number
 ): XMemCacheEntryInfo => {
-  const remaining = (expiresAt ?? -1) - Date.now();
   const ttl = {
     ...(typeof value.namespace === "string"
       ? { namespace: value.namespace }
@@ -543,8 +542,9 @@ const toEntryInfo = (
     createdAt: value.createdAt,
     timings: value.timings,
     usage: toUsageInfo(value.usage, value.timings),
-    ...(remaining < 0 ? {} : { expiresIn: remaining }),
-    ...(expiresAt === undefined ? {} : { expiresAt }),
+    // 0 if it expired since it was read
+    expiresIn: Math.max(0, expiresAt - Date.now()),
+    expiresAt,
   };
   if (value.format === "compressed") {
     return {
@@ -1334,7 +1334,7 @@ export class XMemCache {
     });
     const value = this.#lru.peek(cacheKey);
     return isXMemCacheEntry(value)
-      ? toEntryInfo(cacheKey, value, this.#lru.expiresAt(cacheKey))
+      ? toEntryInfo(cacheKey, value, this.#lru.expiresAt(cacheKey) ?? 0)
       : undefined;
   };
 
@@ -1376,7 +1376,9 @@ export class XMemCache {
         stats.nativeItems++;
         stats.nativeOriginalSize += value.meta?.originalSize ?? 0;
       }
-      stats.entries.push(toEntryInfo(key, value, this.#lru.expiresAt(key)));
+      stats.entries.push(
+        toEntryInfo(key, value, this.#lru.expiresAt(key) ?? 0)
+      );
     }
     stats.compressionSavings = stats.originalSize - stats.compressedSize;
     this.#totals.peakSize = Math.max(
