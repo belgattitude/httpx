@@ -518,6 +518,15 @@ const createTotals = (): XMemCacheTotals => {
 };
 
 /**
+ * Copy of an object without its undefined values (json serializable), ie:
+ * meta or config reported by custom compressors.
+ */
+const omitUndefined = <T extends object>(obj: T): T =>
+  Object.fromEntries(
+    Object.entries(obj).filter(([, v]) => v !== undefined)
+  ) as T;
+
+/**
  * Convert a stored entry into its public info.
  */
 const toEntryInfo = (
@@ -543,7 +552,7 @@ const toEntryInfo = (
       format: "compressed",
       size: value.meta.compressedSize,
       originalSize: value.meta.originalSize,
-      compression: value.meta,
+      compression: omitUndefined(value.meta),
       ...ttl,
     };
   }
@@ -1400,10 +1409,10 @@ export class XMemCache {
       dedupe: this.#dedupe,
     };
     if (this.#compressor !== undefined) {
-      config.compressor = {
+      config.compressor = omitUndefined({
         id: this.#compressorId ?? this.#compressor.getIdentifier(),
         ...this.#compressor.getConfig?.(),
-      };
+      });
     }
     return config;
   };
