@@ -209,6 +209,9 @@ export class TimeLruCache<
    * Return the remaining time to live of an item in milliseconds, or
    * undefined if the item doesn't exist or has expired. Doesn't mark the
    * item as recently used nor evict expired items.
+   *
+   * @deprecated Use expiresAt, which also returns the expiry time of expired
+   * items not evicted yet.
    */
   expiresIn(key: TKey): Milliseconds | undefined {
     const val = this.#cache.get(key);
@@ -217,6 +220,15 @@ export class TimeLruCache<
     }
     const remaining = val.expiry - Date.now();
     return remaining < 0 ? undefined : remaining;
+  }
+
+  /**
+   * Return the expiry time of an item (epoch milliseconds), or undefined if
+   * the item doesn't exist. Returned for expired items not evicted yet.
+   * Doesn't mark the item as recently used nor evict expired items.
+   */
+  expiresAt(key: TKey): EpochTimeInMilliseconds | undefined {
+    return this.#cache.get(key)?.expiry;
   }
 
   delete(key: TKey): boolean {

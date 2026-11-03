@@ -111,6 +111,9 @@ lru.has("key1"); // 👈 false (item is present but expired - 👋 onEviction wi
 
 ### TimeLruCache.expiresIn()
 
+> [!WARNING]
+> Deprecated, use [`expiresAt()`](#timelrucacheexpiresat) instead (see [UPGRADE.md](https://github.com/belgattitude/httpx/blob/main/packages/lru/UPGRADE.md)).
+
 Returns the remaining time to live of an entry in milliseconds, or `undefined` if the entry doesn't exist or has expired. Like `peek()`, it doesn't mark the entry as recently used and doesn't evict expired entries.
 
 ```typescript
@@ -126,6 +129,25 @@ lru.expiresIn("unknown"); // 👈 undefined (item does not exist)
 // 🕛 wait 1 second, time for the item to expire
 
 lru.expiresIn("key1"); // 👈 undefined (item is present but expired)
+```
+
+### TimeLruCache.expiresAt()
+
+Returns the expiry time of an entry (epoch milliseconds), or `undefined` if the entry doesn't exist. Unlike `expiresIn()`, it's also returned for expired entries that are still present (ie: to know when an entry expired). It doesn't mark the entry as recently used and doesn't evict expired entries.
+
+```typescript
+import { TimeLruCache } from "@httpx/lru";
+
+const lru = new TimeLruCache({ maxSize: 10, defaultTTL: 1000 });
+
+lru.set("key1", "value1", 500);
+
+lru.expiresAt("key1"); // 👈 Date.now() + 500
+lru.expiresAt("unknown"); // 👈 undefined (item does not exist)
+
+// 🕛 wait 1 second, time for the item to expire
+
+lru.expiresAt("key1"); // 👈 still the expiry time (item is present but expired)
 ```
 
 ## LruCache
@@ -349,6 +371,10 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | `import { getOrCreateTimeLruCache } from '@httpx/lru` |        ~ 785B |
 
 > For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
+
+## Upgrade
+
+> Refer to the [UPGRADE.md](https://github.com/belgattitude/httpx/blob/main/packages/lru/UPGRADE.md) for detailed information.
 
 ## Compatibility
 

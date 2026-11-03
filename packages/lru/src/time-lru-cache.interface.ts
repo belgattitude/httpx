@@ -1,6 +1,7 @@
 import type { ILruCache } from "./lru-cache.interface";
 import type {
   BaseCacheKeyTypes,
+  EpochTimeInMilliseconds,
   LruCacheHasOptions,
   Milliseconds,
   SupportedCacheValues,
@@ -200,8 +201,31 @@ export interface ITimeLruCache<
    * lru.expiresIn('key1'); // 👈 ~500
    * lru.expiresIn('unknown'); // 👈 undefined
    * ```
+   *
+   * @deprecated Use expiresAt, which also returns the expiry time of expired
+   * items not evicted yet: `(lru.expiresAt(key) ?? 0) - Date.now()`.
    */
   expiresIn: (key: TKey) => Milliseconds | undefined;
+
+  /**
+   * Return the expiry time of an item (epoch milliseconds), or undefined if
+   * the item doesn't exist. Unlike expiresIn, it's also returned for expired
+   * items that are still present (not evicted yet).
+   *
+   * Like peek, it doesn't mark the item as recently used nor evict
+   * expired items.
+   *
+   * @example
+   * ```typescript
+   * import { TimeLruCache } from '@httpx/lru';
+   *
+   * const lru = new TimeLruCache({ maxSize: 10, defaultTTL: 1000 });
+   * lru.set('key1', 'value1', 500);
+   * lru.expiresAt('key1'); // 👈 Date.now() + 500
+   * lru.expiresAt('unknown'); // 👈 undefined
+   * ```
+   */
+  expiresAt: (key: TKey) => EpochTimeInMilliseconds | undefined;
 
   /**
    * Delete an item from the cache and return a boolean indicating

@@ -73,7 +73,14 @@ export class NullTimeLruCache<
   /**
    * Always undefined (nothing is cached).
    */
+  /**
+   * @deprecated Use expiresAt.
+   */
   expiresIn(_key: TKey): undefined {
+    return undefined;
+  }
+
+  expiresAt(_key: TKey): undefined {
     return undefined;
   }
 
