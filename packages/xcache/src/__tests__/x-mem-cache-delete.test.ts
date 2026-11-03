@@ -34,7 +34,7 @@ describe("XMemCache delete", () => {
     expect(cache.delete({ key: ["/user", 1] })).toBe(0);
     expect(cache.delete({ key: ["/unknown"] })).toBe(0);
 
-    const fn = vi.fn(() => Promise.resolve(1));
+    const fn = vi.fn<() => Promise<number>>(() => Promise.resolve(1));
     const rerun = await cache.runAsync({ key: ["/user", 1], fn });
     expect(rerun.meta.cached).toBe(false);
     expect(fn).toHaveBeenCalledOnce();
@@ -60,6 +60,45 @@ describe("XMemCache delete", () => {
     expect(cache.size).toBe(1);
     expect(cache.getEntryInfo({ key: ["/other"] })).toBeDefined();
     expect(cache.delete([])).toBe(0);
+  });
+
+  it("should remove entries by generated key", async () => {
+    const cache = createCache();
+    const fn = () => Promise.resolve(1);
+    const { meta } = await cache.runAsync({ key: ["/a"], fn });
+    const b = await cache.runAsync({ key: ["/b"], namespace: "other", fn });
+    await cache.runAsync({ key: ["/c"], fn, tags: ["c"] });
+    await cache.runAsync({ key: ["/d"], fn });
+
+    expect(cache.delete(meta.generatedKey)).toBe(1);
+    expect(cache.getEntryInfo({ key: ["/a"] })).toBeUndefined();
+    expect(cache.delete(meta.generatedKey)).toBe(0);
+
+    // keys from entries(), mixed with key params
+    const [cKey] =
+      [...cache.entries()].find(([, e]) => e.tags !== undefined) ?? [];
+    expect(cKey).toBeDefined();
+    expect(cache.delete([b.meta.generatedKey, cKey!, { key: ["/d"] }])).toBe(3);
+    expect(cache.size).toBe(0);
+    expect(cache.getTags()).toStrictEqual([]);
+  });
+
+  it("should not store the result of an execution deleted by generated key", async () => {
+    const cache = createCache();
+    const fn = () => Promise.resolve(1);
+    const { meta } = await cache.runAsync({ key: ["/a"], fn });
+    const { fn: slowFn, release } = createDeferredFn(2);
+    const call = cache.runAsync({
+      key: ["/a"],
+      fn: slowFn,
+      forceRevalidate: true,
+    });
+    expect(cache.delete(meta.generatedKey)).toBe(1);
+    release();
+    const result = await call;
+    expect(result.data).toBe(2);
+    expect(result.meta.cached).toBe(false);
+    expect(cache.size).toBe(0);
   });
 
   it("should use the namespace and origin", async () => {
@@ -145,8 +184,8 @@ describe("XMemCache delete", () => {
     cache.delete([{ key: ["/a"] }]);
     a.release();
     b.release();
-    expect((await callA).data).toBe(1);
-    await callB;
+    const [resultA] = await Promise.all([callA, callB]);
+    expect(resultA.data).toBe(1);
     expect(cache.size).toBe(1);
     expect(cache.getEntryInfo({ key: ["/b"] })).toBeDefined();
   });

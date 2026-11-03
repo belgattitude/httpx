@@ -1,3 +1,4 @@
+export type { CacheKeyTuple, CacheStringKey } from "./cache-key";
 export { CacheCompress } from "./compress/cache-compress";
 export type {
   CacheCompressAlgorithm,

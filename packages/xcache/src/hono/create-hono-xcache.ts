@@ -4,7 +4,7 @@ import type { SupportedCacheValues } from "@httpx/lru";
 import type { Context } from "hono";
 import type { UnofficialStatusCode } from "hono/utils/http-status";
 
-import type { CacheKeyTuple } from "../cache-key";
+import type { CacheKeyTuple, CacheStringKey } from "../cache-key";
 import {
   CacheCompress,
   type CacheCompressOptions,
@@ -202,10 +202,14 @@ export type HonoXCache = {
   }) => XMemCacheEntryInfo | undefined;
   /**
    * Remove entries created by the hono helper (same as XMemCache.delete,
-   * with the hono origin).
+   * with the hono origin added to the key params). Generated keys are used
+   * as-is.
    */
   delete: (
-    params: HonoXCacheDeleteParams | readonly HonoXCacheDeleteParams[]
+    params:
+      | HonoXCacheDeleteParams
+      | CacheStringKey
+      | readonly (HonoXCacheDeleteParams | CacheStringKey)[]
   ) => number;
   /**
    * Return a cached response for the async function result.
@@ -406,13 +410,16 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
   const getEntryInfo: HonoXCache["getEntryInfo"] = (params) =>
     cache.getEntryInfo({ ...params, origin: honoXCacheOrigin });
 
-  const deleteEntry: HonoXCache["delete"] = (params) =>
-    cache.delete(
-      (Array.isArray(params)
-        ? (params as readonly HonoXCacheDeleteParams[])
-        : [params as HonoXCacheDeleteParams]
-      ).map((p) => ({ ...p, origin: honoXCacheOrigin }))
+  const deleteEntry: HonoXCache["delete"] = (params) => {
+    const list = Array.isArray(params)
+      ? (params as readonly (HonoXCacheDeleteParams | CacheStringKey)[])
+      : [params as HonoXCacheDeleteParams | CacheStringKey];
+    return cache.delete(
+      list.map((p) =>
+        typeof p === "string" ? p : { ...p, origin: honoXCacheOrigin }
+      )
     );
+  };
 
   return { cache, json, getEntryInfo, delete: deleteEntry };
 };

@@ -344,10 +344,17 @@ xMemCache.delete([
   { key: ["/api/user", { id: 1 }] },
   { key: ["/api/user", { id: 2 }], namespace: "admin" },
 ]);
+// generated keys (meta.generatedKey, entries(), getStats().entries[].key, onEviction)
+const { meta } = await xMemCache.runAsync({
+  key: ["/api/user", { id: 3 }],
+  fn,
+});
+xMemCache.delete(meta.generatedKey);
+xMemCache.delete([meta.generatedKey, { key: ["/api/user", { id: 4 }] }]);
 ```
 
 - Like `invalidateTags()`, a function executing for a deleted key returns its result but doesn't store it, and with [deduplication](#deduplication), calls made after the deletion don't join that execution.
-- The hono helper exposes `xcache.delete()` for the entries it created (hono origin).
+- The hono helper exposes `xcache.delete()` for the entries it created: the hono origin is added to key params, generated keys are used as-is.
 
 ## Abort signal
 

@@ -696,6 +696,9 @@ describe("createHonoXCache", () => {
       expect(xcache.delete([{ key: ["/data"] }])).toBe(1);
       expect(xcache.getEntryInfo({ key: ["/data"] })).toBeUndefined();
       expect(cache.getEntryInfo({ key: ["/data"] })).toBeDefined();
+      // generated keys are used as-is (not given the hono origin)
+      expect(xcache.delete(meta.generatedKey)).toBe(1);
+      expect(cache.size).toBe(0);
     });
 
     it.runIf(canSetAcceptEncoding)(

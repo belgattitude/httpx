@@ -1235,6 +1235,10 @@ export class XMemCache {
    * entries removed. Functions executing for those keys won't store their
    * result, and new calls won't join them (dedupe).
    *
+   * Entries are identified by their key params (key tuple, namespace and
+   * origin, as provided to runAsync) or by their generated key (ie:
+   * meta.generatedKey, entries(), getStats().entries[].key).
+   *
    * @example
    * ```typescript
    * await xMemCache.runAsync({ key: ['/api/user', { id: 1 }], fn: () => getUser(1) });
@@ -1243,25 +1247,33 @@ export class XMemCache {
    *   { key: ['/api/user', { id: 1 }] },
    *   { key: ['/api/user', { id: 2 }], namespace: 'admin' },
    * ]);
+   * // generated keys
+   * const { meta } = await xMemCache.runAsync({ key: ['/api/user', { id: 3 }], fn });
+   * xMemCache.delete(meta.generatedKey);
    * ```
    *
    * @throws TypeError if a key is not a valid stable key.
    */
   delete = (
-    params: XMemCacheDeleteParams | readonly XMemCacheDeleteParams[]
+    params:
+      | XMemCacheDeleteParams
+      | CacheStringKey
+      | readonly (XMemCacheDeleteParams | CacheStringKey)[]
   ): number => {
     const list = Array.isArray(params)
-      ? (params as readonly XMemCacheDeleteParams[])
-      : [params as XMemCacheDeleteParams];
+      ? (params as readonly (XMemCacheDeleteParams | CacheStringKey)[])
+      : [params as XMemCacheDeleteParams | CacheStringKey];
     const cacheKeys = new Set<CacheStringKey>();
-    for (const { key, namespace, origin } of list) {
+    for (const item of list) {
       cacheKeys.add(
-        genCacheKeyString({
-          key,
-          namespace: namespace ?? this.#defaultNs,
-          compressorId: this.#compressorId,
-          origin,
-        })
+        typeof item === "string"
+          ? item
+          : genCacheKeyString({
+              key: item.key,
+              namespace: item.namespace ?? this.#defaultNs,
+              compressorId: this.#compressorId,
+              origin: item.origin,
+            })
       );
     }
     for (const pending of this.#pendingStores) {
