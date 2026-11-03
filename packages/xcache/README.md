@@ -394,6 +394,7 @@ const stats = xMemCache.getStats();
 //       timings: { fn: 152.37, serialize: 3.12, compress: 8.4 },
 //       usage: { hits: 42, deduped: 3, avgReadTime: 1.12, savedTime: 6798.09 },
 //       expiresIn: 118500,   // remaining ttl in milliseconds
+//       expiresAt: 1792411320000, // expiry time (epoch milliseconds)
 //     },
 //     {
 //       key: '{"compressorId":"cache-compress:superjson","key":["/api/small"],"ns":"default"}',
@@ -405,6 +406,7 @@ const stats = xMemCache.getStats();
 //       timings: { fn: 12.5, serialize: 0.08 },
 //       usage: { hits: 10, deduped: 0, avgReadTime: 0, savedTime: 124.92 },
 //       expiresIn: 42000,
+//       expiresAt: 1792411243000,
 //     },
 //     // ...
 //   ],
@@ -462,7 +464,7 @@ xMemCache.resetStats(); // ie: after a deployment warmup
 
 ### Iterating over the entries
 
-`entries()` (or the instance itself, like a `Map`: `for (const [key, entry] of xMemCache)`) iterates over the non-expired entries (least recently used first) without changing the lru order. Entries are returned as stored, use `readEntry()` to get the data of compressed entries:
+`entries()` iterates over the non-expired entries (least recently used first) without changing the lru order. Entries are returned as stored, use `readEntry()` to get the data of compressed entries:
 
 ```typescript
 for (const [key, entry] of xMemCache.entries()) {
@@ -480,6 +482,17 @@ const removed = xMemCache.clearExpired();
 
 // ie: periodically release the memory of expired entries
 setInterval(() => xMemCache.clearExpired(), 60_000).unref();
+```
+
+`expiredEntries()` iterates over the expired entries not removed yet (least recently used first), without removing them or changing the lru order. Like `entries()`, entries are returned as stored:
+
+```typescript
+for (const [key, entry] of xMemCache.expiredEntries()) {
+  // expiresAt: expiry time (epoch milliseconds), also for expired entries
+  console.log(key, entry.format, entry.createdAt, xMemCache.expiresAt(key));
+}
+// number of expired entries
+const expiredCount = xMemCache.size - xMemCache.getStats().items;
 ```
 
 ### Configuration

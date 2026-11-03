@@ -107,6 +107,7 @@ describe("XMemCache stats", () => {
           savedTime: expect.any(Number),
         },
         expiresIn: expect.any(Number),
+        expiresAt: expect.any(Number),
       },
       {
         key: big2.meta.generatedKey,
@@ -128,6 +129,7 @@ describe("XMemCache stats", () => {
           savedTime: expect.any(Number),
         },
         expiresIn: expect.any(Number),
+        expiresAt: expect.any(Number),
       },
       {
         key: small.meta.generatedKey,
@@ -144,6 +146,7 @@ describe("XMemCache stats", () => {
           savedTime: expect.any(Number),
         },
         expiresIn: expect.any(Number),
+        expiresAt: expect.any(Number),
       },
     ]);
   });
@@ -210,10 +213,64 @@ describe("XMemCache stats", () => {
     await expect(cache.readEntry(entry)).resolves.toStrictEqual(bigPayload);
     // not touched: still the least recently used
     expect([...cache.entries()][0]?.[0]).toBe(a.meta.generatedKey);
-    // the instance is iterable, same as entries()
-    expect([...cache]).toStrictEqual(entries);
     const { entries: detached } = cache;
     expect([...detached()]).toStrictEqual(entries);
+  });
+
+  it("should iterate over the expired entries without removing them", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(0);
+    onTestFinished(() => {
+      vi.useRealTimers();
+    });
+    const { cache } = createCache();
+    const a = await cache.runAsync({
+      key: ["/a"],
+      fn: () => Promise.resolve(smallPayload),
+      ttl: 10,
+      tags: ["a"],
+    });
+    const b = await cache.runAsync({
+      key: ["/b"],
+      fn: () => Promise.resolve(bigPayload),
+      ttl: 20,
+    });
+    const c = await cache.runAsync({
+      key: ["/c"],
+      fn: () => Promise.resolve(smallPayload),
+    });
+    expect([...cache.expiredEntries()]).toStrictEqual([]);
+
+    vi.setSystemTime(15);
+    const expired = [...cache.expiredEntries()];
+    expect(expired.map(([key]) => key)).toStrictEqual([a.meta.generatedKey]);
+    expect(expired[0]?.[1].tags).toStrictEqual(["a"]);
+    // expiry time of expired entries
+    expect(cache.expiresAt(a.meta.generatedKey)).toBe(10);
+    expect(cache.expiresAt(c.meta.generatedKey)).toBe(10_000);
+
+    vi.setSystemTime(25);
+    // least recently used first, the non-expired entries are excluded
+    expect([...cache.expiredEntries()].map(([key]) => key)).toStrictEqual([
+      a.meta.generatedKey,
+      b.meta.generatedKey,
+    ]);
+    expect([...cache.entries()].map(([key]) => key)).toStrictEqual([
+      c.meta.generatedKey,
+    ]);
+    // compressed expired entries can still be read
+    const [, bEntry] = [...cache.expiredEntries()][1] ?? [];
+    assert(bEntry !== undefined);
+    await expect(cache.readEntry(bEntry)).resolves.toStrictEqual(bigPayload);
+    // not removed by the iteration
+    expect(cache.size).toBe(3);
+    expect(cache.size - cache.getStats().items).toBe(2);
+
+    expect(cache.clearExpired()).toBe(2);
+    expect(cache.expiresAt(a.meta.generatedKey)).toBeUndefined();
+    expect([...cache.expiredEntries()]).toStrictEqual([]);
+    expect(cache.getTags()).toStrictEqual([]);
+    expect(cache.size).toBe(1);
   });
 
   it("should return entry info", async () => {
@@ -242,6 +299,7 @@ describe("XMemCache stats", () => {
         savedTime: expect.any(Number),
       },
       expiresIn: expect.any(Number),
+      expiresAt: expect.any(Number),
     });
     expect(
       cache.getEntryInfo({ key: ["/big"], namespace: "other" })
@@ -268,6 +326,13 @@ describe("XMemCache stats", () => {
       expect(cache.getStats().entries.map((e) => e.expiresIn)).toStrictEqual([
         4000, 9000,
       ]);
+      const info = cache.getEntryInfo({ key: ["/ttl"] });
+      expect(info?.expiresAt).toBe(5000);
+      expect(cache.getStats().entries.map((e) => e.expiresAt)).toStrictEqual([
+        5000, 10_000,
+      ]);
+      assert(info !== undefined);
+      expect(cache.expiresAt(info.key)).toBe(5000);
     } finally {
       vi.useRealTimers();
     }
@@ -485,6 +550,7 @@ describe("XMemCache stats", () => {
         savedTime: expect.any(Number),
       },
       expiresIn: expect.any(Number),
+      expiresAt: expect.any(Number),
     });
     expect(cache.getStats()).toMatchObject({
       items: 1,

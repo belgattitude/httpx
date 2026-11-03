@@ -14,6 +14,47 @@ describe("TimeLruCache", () => {
     vi.useRealTimers();
   });
 
+  describe("expiresAt", () => {
+    it("should return the expiry time, also for expired items", () => {
+      const fn = vi.fn<(key: string, value: unknown) => void>();
+      const lru = new TimeLruCache({
+        maxSize: 2,
+        defaultTTL: HUNDRED_MILLIS,
+        onEviction: fn,
+      });
+      vi.setSystemTime(1000);
+      lru.set("key1", "value1");
+      lru.set("key2", "value2", 4 * HUNDRED_MILLIS);
+      expect(lru.expiresAt("key1")).toBe(1000 + HUNDRED_MILLIS);
+      expect(lru.expiresAt("key2")).toBe(1000 + 4 * HUNDRED_MILLIS);
+      expect(lru.expiresAt("unknown")).toBeUndefined();
+      // expired: still returned, not evicted
+      vi.setSystemTime(1000 + HUNDRED_MILLIS + 1);
+      expect(lru.peek("key1")).toBeUndefined();
+      expect(lru.expiresAt("key1")).toBe(1000 + HUNDRED_MILLIS);
+      expect(lru.size).toBe(2);
+      expect(fn).not.toHaveBeenCalled();
+      // updated when set again
+      lru.set("key1", "value1", SIXTY_MILLIS);
+      expect(lru.expiresAt("key1")).toBe(Date.now() + SIXTY_MILLIS);
+      lru.delete("key1");
+      expect(lru.expiresAt("key1")).toBeUndefined();
+    });
+
+    it("should not mark the item as recently used", () => {
+      const lru = new TimeLruCache({
+        maxSize: 2,
+        defaultTTL: HUNDRED_MILLIS,
+      });
+      lru.set("key1", "value1");
+      lru.set("key2", "value2");
+      lru.expiresAt("key1");
+      lru.set("key3", "value3");
+      expect(lru.has("key1")).toBe(false);
+    });
+  });
+
+  /* oxlint-disable typescript/no-deprecated -- tests the deprecated expiresIn */
   describe("expiresIn", () => {
     it("should return the remaining ttl", () => {
       const lru = new TimeLruCache({
@@ -66,6 +107,7 @@ describe("TimeLruCache", () => {
       expect(lru.expiresIn("key1")).toBe(2 * HUNDRED_MILLIS);
     });
   });
+  /* oxlint-enable typescript/no-deprecated */
 
   describe("eviction", () => {
     it("should evict items based on ttl", () => {

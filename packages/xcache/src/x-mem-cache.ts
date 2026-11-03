@@ -363,7 +363,9 @@ export type XMemCacheEntryInfo = {
     savedTime: number;
   };
   /** Remaining time to live in milliseconds */
-  expiresIn?: number;
+  expiresIn: number;
+  /** Expiry time of the entry (epoch milliseconds) */
+  expiresAt: number;
 };
 
 /**
@@ -516,12 +518,21 @@ const createTotals = (): XMemCacheTotals => {
 };
 
 /**
+ * Copy of an object without its undefined values (json serializable), ie:
+ * meta or config reported by custom compressors.
+ */
+const omitUndefined = <T extends object>(obj: T): T =>
+  Object.fromEntries(
+    Object.entries(obj).filter(([, v]) => v !== undefined)
+  ) as T;
+
+/**
  * Convert a stored entry into its public info.
  */
 const toEntryInfo = (
   key: CacheStringKey,
   value: XMemCacheEntry,
-  expiresIn: number | undefined
+  expiresAt: number
 ): XMemCacheEntryInfo => {
   const ttl = {
     ...(typeof value.namespace === "string"
@@ -531,7 +542,9 @@ const toEntryInfo = (
     createdAt: value.createdAt,
     timings: value.timings,
     usage: toUsageInfo(value.usage, value.timings),
-    ...(expiresIn === undefined ? {} : { expiresIn }),
+    // 0 if it expired since it was read
+    expiresIn: Math.max(0, expiresAt - Date.now()),
+    expiresAt,
   };
   if (value.format === "compressed") {
     return {
@@ -539,7 +552,7 @@ const toEntryInfo = (
       format: "compressed",
       size: value.meta.compressedSize,
       originalSize: value.meta.originalSize,
-      compression: value.meta,
+      compression: omitUndefined(value.meta),
       ...ttl,
     };
   }
@@ -839,7 +852,7 @@ export class XMemCache {
     if (namespace !== "") {
       result.namespace = namespace;
     }
-    const expiresIn = enabled ? this.#lru.expiresIn(generatedKey) : undefined;
+    const expiresIn = enabled ? this.#expiresIn(generatedKey) : undefined;
     if (expiresIn !== undefined) {
       result.expiresIn = expiresIn;
     }
@@ -1246,7 +1259,7 @@ export class XMemCache {
     for (const cacheKey of cacheKeys) {
       // new calls must not join an execution that may be stale
       this.#inflight.delete(cacheKey);
-      // peek skips (and removes) expired entries
+      // peek skips expired entries
       if (isXMemCacheEntry(this.#lru.peek(cacheKey))) {
         removed++;
       }
@@ -1321,7 +1334,7 @@ export class XMemCache {
     });
     const value = this.#lru.peek(cacheKey);
     return isXMemCacheEntry(value)
-      ? toEntryInfo(cacheKey, value, this.#lru.expiresIn(cacheKey))
+      ? toEntryInfo(cacheKey, value, this.#lru.expiresAt(cacheKey) ?? 0)
       : undefined;
   };
 
@@ -1363,7 +1376,9 @@ export class XMemCache {
         stats.nativeItems++;
         stats.nativeOriginalSize += value.meta?.originalSize ?? 0;
       }
-      stats.entries.push(toEntryInfo(key, value, this.#lru.expiresIn(key)));
+      stats.entries.push(
+        toEntryInfo(key, value, this.#lru.expiresAt(key) ?? 0)
+      );
     }
     stats.compressionSavings = stats.originalSize - stats.compressedSize;
     this.#totals.peakSize = Math.max(
@@ -1396,10 +1411,10 @@ export class XMemCache {
       dedupe: this.#dedupe,
     };
     if (this.#compressor !== undefined) {
-      config.compressor = {
+      config.compressor = omitUndefined({
         id: this.#compressorId ?? this.#compressor.getIdentifier(),
         ...this.#compressor.getConfig?.(),
-      };
+      });
     }
     return config;
   };
@@ -1423,16 +1438,11 @@ export class XMemCache {
    */
   clearExpired = (): number => {
     this.#samplePeakSize();
-    const expiredKeys: string[] = [];
-    for (const [key, value] of this.#lru) {
-      // expiresIn is undefined for expired entries
-      if (isXMemCacheEntry(value) && this.#lru.expiresIn(key) === undefined) {
-        expiredKeys.push(key);
-      }
-    }
+    // collected first: deleting while iterating the lru would skip entries
+    const expiredKeys = [...this.#iterate(true)].map(([key]) => key);
     for (const key of expiredKeys) {
       this.#lru.delete(key);
-      this.#setKeyTags(key as CacheStringKey, undefined);
+      this.#setKeyTags(key, undefined);
     }
     return expiredKeys.length;
   };
@@ -1468,18 +1478,61 @@ export class XMemCache {
     this.#iterate();
 
   /**
-   * Same as entries(): `for (const [key, entry] of xMemCache)` or
-   * `[...xMemCache]`.
+   * Iterate over the expired entries not removed yet, least recently used
+   * first. Expired entries are never served: they stay in the lru until
+   * accessed, evicted or removed by clearExpired. Iterating doesn't remove
+   * them nor change the lru order.
+   *
+   * @example
+   * ```typescript
+   * for (const [key, entry] of xMemCache.expiredEntries()) {
+   *   console.log(key, entry.format, entry.createdAt);
+   * }
+   * xMemCache.clearExpired();
+   * ```
    */
-  [Symbol.iterator](): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
-    return this.#iterate();
-  }
+  expiredEntries = (): IterableIterator<[CacheStringKey, XMemCacheEntry]> =>
+    this.#iterate(true);
 
-  *#iterate(): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
-    for (const [key] of this.#lru) {
-      // peek skips expired entries
-      const value = this.#lru.peek(key);
-      if (isXMemCacheEntry(value)) {
+  /**
+   * Return the expiry time (epoch milliseconds) of an entry by generated
+   * key, or undefined if it doesn't exist. Also returned for expired entries
+   * not removed yet (see expiredEntries), to know when they expired.
+   * Doesn't change the lru order.
+   *
+   * @example
+   * ```typescript
+   * for (const [key] of xMemCache.expiredEntries()) {
+   *   const expiredAt = xMemCache.expiresAt(key);
+   * }
+   * ```
+   */
+  expiresAt = (key: CacheStringKey): number | undefined =>
+    this.#lru.expiresAt(key);
+
+  /**
+   * Remaining time to live of an entry in milliseconds, undefined when
+   * missing or expired (same expiry rule as the lru).
+   */
+  readonly #expiresIn = (key: string): number | undefined => {
+    // -1: missing entries are handled as expired
+    const remaining = (this.#lru.expiresAt(key) ?? -1) - Date.now();
+    return remaining < 0 ? undefined : remaining;
+  };
+
+  /**
+   * Iterate over the non-expired entries, or the expired ones.
+   *
+   * @yields The `[key, entry]` pairs, least recently used first
+   */
+  *#iterate(
+    expired = false
+  ): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
+    for (const [key, value] of this.#lru) {
+      if (
+        isXMemCacheEntry(value) &&
+        (this.#expiresIn(key) === undefined) === expired
+      ) {
         yield [key as CacheStringKey, value];
       }
     }
@@ -1501,7 +1554,7 @@ export class XMemCache {
       let items = 0;
       for (const key of keys) {
         // expired entries are only removed when accessed or evicted
-        if (this.#lru.expiresIn(key) !== undefined) {
+        if (this.#expiresIn(key) !== undefined) {
           items++;
         }
       }
