@@ -177,6 +177,16 @@ export type HonoXCacheRespondParams<
 /**
  * Hono helper returned by createHonoXCache.
  */
+/**
+ * Entry to remove with HonoXCache.delete.
+ */
+export type HonoXCacheDeleteParams = {
+  /** Cache key, as provided to json() */
+  key: CacheKeyTuple;
+  /** Namespace, if overridden in json() */
+  namespace?: string;
+};
+
 export type HonoXCache = {
   /** The underlying XMemCache instance */
   cache: XMemCache;
@@ -190,6 +200,13 @@ export type HonoXCache = {
     /** Namespace, if overridden in json() */
     namespace?: string;
   }) => XMemCacheEntryInfo | undefined;
+  /**
+   * Remove entries created by the hono helper (same as XMemCache.delete,
+   * with the hono origin).
+   */
+  delete: (
+    params: HonoXCacheDeleteParams | readonly HonoXCacheDeleteParams[]
+  ) => number;
   /**
    * Return a cached response for the async function result.
    *
@@ -389,5 +406,13 @@ export const createHonoXCache = (options: HonoXCacheOptions): HonoXCache => {
   const getEntryInfo: HonoXCache["getEntryInfo"] = (params) =>
     cache.getEntryInfo({ ...params, origin: honoXCacheOrigin });
 
-  return { cache, json, getEntryInfo };
+  const deleteEntry: HonoXCache["delete"] = (params) =>
+    cache.delete(
+      (Array.isArray(params)
+        ? (params as readonly HonoXCacheDeleteParams[])
+        : [params as HonoXCacheDeleteParams]
+      ).map((p) => ({ ...p, origin: honoXCacheOrigin }))
+    );
+
+  return { cache, json, getEntryInfo, delete: deleteEntry };
 };

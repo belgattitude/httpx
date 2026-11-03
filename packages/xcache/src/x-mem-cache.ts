@@ -36,7 +36,7 @@ export type XMemCacheLruOptions = {
   /**
    * Called when an entry is evicted by the lru: capacity reached (least
    * recently used entry) or expired entry found when accessed. Not called
-   * for entries removed by clear, clearExpired or invalidateTags.
+   * for entries removed by clear, clearExpired, invalidateTags or delete.
    */
   onEviction?: (key: CacheStringKey, entry: XMemCacheEntry) => void;
 };
@@ -261,7 +261,13 @@ type Inflight<TResult> = {
  * Tags invalidated while a function is executing: its result is not stored
  * when it has one of them.
  */
-type PendingStore = { invalidated: Set<string> };
+type PendingStore = {
+  key: CacheStringKey;
+  /** Tags invalidated during the execution */
+  invalidated: Set<string>;
+  /** Whether the key was deleted during the execution */
+  deleted: boolean;
+};
 
 /**
  * Remove duplicates and empty strings from the tags, undefined when none.
@@ -306,6 +312,18 @@ const raceAbort = async <T>(
   } finally {
     signal.removeEventListener("abort", listener);
   }
+};
+
+/**
+ * Entry to remove with XMemCache.delete.
+ */
+export type XMemCacheDeleteParams = {
+  /** Cache key, as provided to runAsync */
+  key: CacheKeyTuple;
+  /** Namespace, if overridden in runAsync */
+  namespace?: string;
+  /** Origin used when the entry was created (ie: "hono") */
+  origin?: string;
 };
 
 /**
@@ -1000,7 +1018,11 @@ export class XMemCache {
       return await this.#fetch(params, generatedKey, enabled, signal);
     }
     // tracks the tags invalidated during the execution
-    const pending: PendingStore = { invalidated: new Set() };
+    const pending: PendingStore = {
+      key: generatedKey,
+      invalidated: new Set(),
+      deleted: false,
+    };
     this.#pendingStores.add(pending);
     try {
       return await this.#fetch(params, generatedKey, enabled, signal, pending);
@@ -1085,6 +1107,10 @@ export class XMemCache {
     }
     // bypassed: the entry is not stored
     if (!enabled) {
+      return { entry, data };
+    }
+    // the key was deleted during the execution: the result may be stale
+    if (pending?.deleted === true) {
       return { entry, data };
     }
     // a tag was invalidated during the execution: the result may be stale
@@ -1202,6 +1228,59 @@ export class XMemCache {
     }
     this.#totals.invalidated += keys.size;
     return keys.size;
+  };
+
+  /**
+   * Remove cache entries by key and return the number of (non-expired)
+   * entries removed. Functions executing for those keys won't store their
+   * result, and new calls won't join them (dedupe).
+   *
+   * @example
+   * ```typescript
+   * await xMemCache.runAsync({ key: ['/api/user', { id: 1 }], fn: () => getUser(1) });
+   * xMemCache.delete({ key: ['/api/user', { id: 1 }] }); // 1
+   * xMemCache.delete([
+   *   { key: ['/api/user', { id: 1 }] },
+   *   { key: ['/api/user', { id: 2 }], namespace: 'admin' },
+   * ]);
+   * ```
+   *
+   * @throws TypeError if a key is not a valid stable key.
+   */
+  delete = (
+    params: XMemCacheDeleteParams | readonly XMemCacheDeleteParams[]
+  ): number => {
+    const list = Array.isArray(params)
+      ? (params as readonly XMemCacheDeleteParams[])
+      : [params as XMemCacheDeleteParams];
+    const cacheKeys = new Set<CacheStringKey>();
+    for (const { key, namespace, origin } of list) {
+      cacheKeys.add(
+        genCacheKeyString({
+          key,
+          namespace: namespace ?? this.#defaultNs,
+          compressorId: this.#compressorId,
+          origin,
+        })
+      );
+    }
+    for (const pending of this.#pendingStores) {
+      if (cacheKeys.has(pending.key)) {
+        pending.deleted = true;
+      }
+    }
+    let removed = 0;
+    for (const cacheKey of cacheKeys) {
+      // new calls must not join an execution that may be stale
+      this.#inflight.delete(cacheKey);
+      // peek skips (and removes) expired entries
+      if (isXMemCacheEntry(this.#lru.peek(cacheKey))) {
+        removed++;
+      }
+      this.#lru.delete(cacheKey);
+      this.#setKeyTags(cacheKey, undefined);
+    }
+    return removed;
   };
 
   /**

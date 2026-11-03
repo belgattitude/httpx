@@ -1,5 +1,6 @@
 export type {
   HonoXCache,
+  HonoXCacheDeleteParams,
   HonoXCacheInstanceOptions,
   HonoXCacheLruOptions,
   HonoXCacheOptions,
