@@ -328,6 +328,27 @@ xMemCache.getTags();
 - Tags are not namespaced: `invalidateTags("users")` removes the entries of all namespaces. Prefix them if needed (ie: `admin:users`).
 - Like the cache, tags are local to the `XMemCache` instance (and process): use a pub/sub to invalidate across processes.
 
+## Delete entries
+
+`delete()` removes entries by generated key, and returns the number of (non-expired) entries removed. Generated keys are returned in `meta.generatedKey`, `getEntryInfo().key`, `getStats().entries[].key`, `entries()` and `onEviction`:
+
+```typescript
+const { meta } = await xMemCache.runAsync({
+  key: ["/api/user", { id: 1 }],
+  fn: () => fetchUser(1),
+});
+
+xMemCache.delete(meta.generatedKey); // 1
+// several entries
+xMemCache.delete([key1, key2]);
+// entries created by the hono helper (the generated key includes the origin)
+const info = xcache.getEntryInfo({ key: ["/api/products", { id: "1" }] });
+if (info) xcache.cache.delete(info.key);
+```
+
+- Like `invalidateTags()`, a function executing for a deleted key returns its result but doesn't store it, and with [deduplication](#deduplication), calls made after the deletion don't join that execution.
+- To remove related entries without tracking their keys, see [tags](#tags).
+
 ## Abort signal
 
 Pass a `signal` to abort a call (ie: `AbortController`, `AbortSignal.timeout()`). The function receives it to cancel its own work (ie: `fetch`).
