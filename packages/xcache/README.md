@@ -39,9 +39,14 @@ const xMemCache = new XMemCache({
   // The lru is created and owned by the instance:
   // maxSize: maximum number of entries (least recently used evicted first)
   // defaultTTL: default time to live in milliseconds
+  // maxTTL: optional, caps defaultTTL and any runAsync ttl (see "Max TTL")
   // onEviction: optional (key, entry) => void, called on lru evictions
   lru: { maxSize: 50, defaultTTL: 60_000 },
   namespace: "default",
+  // Optional: false to bypass the cache globally, the function is always
+  // executed (default: true, see "Enable / disable"). To keep creating the
+  // entries while caching very briefly, use lru.maxTTL instead (see "Max TTL")
+  enabled: process.env.XCACHE_ENABLED !== "false",
 });
 
 const fetchSmth = async (params: { id: number }) => {
@@ -495,6 +500,25 @@ for (const [key, entry] of xMemCache.expiredEntries()) {
 const expiredCount = xMemCache.size - xMemCache.getStats().items;
 ```
 
+### Max TTL
+
+`lru.maxTTL` caps the time to live of all the entries: `defaultTTL` and any `ttl` given to `runAsync()` (shorter ones are kept). Entries are still created as usual (function, serializer, compressor, dedupe, tags), they just expire sooner. Useful in development: unlike `enabled: false`, the whole cache pipeline keeps running while the cache stays very short lived.
+
+```typescript
+const xMemCache = new XMemCache({
+  lru: {
+    maxSize: 500,
+    defaultTTL: 60_000,
+    maxTTL: process.env.NODE_ENV === "development" ? 50 : undefined,
+  },
+});
+
+// stored for 50ms in development, 10 minutes otherwise
+await xMemCache.runAsync({ key: ["/api/data"], fn, ttl: 600_000 });
+```
+
+`expiresIn` / `expiresAt` (stats, entry info) and the hono `cacheControl: { maxAge: "ttl" }` header reflect the capped ttl.
+
 ### Configuration
 
 `getConfig()` returns the configuration of the instance, including the compressor options when set.
@@ -504,6 +528,7 @@ xMemCache.getConfig();
 // {
 //   namespace: "default",
 //   ttl: 120000,              // lru defaultTTL
+//   maxTTL: 50,               // lru maxTTL, when set
 //   maxSize: 50,              // lru maxSize
 //   enabled: true,
 //   compressionEnabled: true, // false when disabled or without compressor
