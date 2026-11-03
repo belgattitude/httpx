@@ -1,5 +1,11 @@
 # @httpx/xcache
 
+## 0.16.0
+
+### Minor Changes
+
+- [#2898](https://github.com/belgattitude/httpx/pull/2898) [`92aa8c6`](https://github.com/belgattitude/httpx/commit/92aa8c62823cfd94b2bc9e1d1a7d6cce4f7e2afe) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `XMemCache.delete()` to remove one or several entries by generated key (ie: `meta.generatedKey`).
+
 ## 0.15.0
 
 ### Minor Changes
