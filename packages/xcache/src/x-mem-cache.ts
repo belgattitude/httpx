@@ -1246,7 +1246,7 @@ export class XMemCache {
     for (const cacheKey of cacheKeys) {
       // new calls must not join an execution that may be stale
       this.#inflight.delete(cacheKey);
-      // peek skips (and removes) expired entries
+      // peek skips expired entries
       if (isXMemCacheEntry(this.#lru.peek(cacheKey))) {
         removed++;
       }
@@ -1423,16 +1423,11 @@ export class XMemCache {
    */
   clearExpired = (): number => {
     this.#samplePeakSize();
-    const expiredKeys: string[] = [];
-    for (const [key, value] of this.#lru) {
-      // expiresIn is undefined for expired entries
-      if (isXMemCacheEntry(value) && this.#lru.expiresIn(key) === undefined) {
-        expiredKeys.push(key);
-      }
-    }
+    // collected first: deleting while iterating the lru would skip entries
+    const expiredKeys = [...this.#iterate(true)].map(([key]) => key);
     for (const key of expiredKeys) {
       this.#lru.delete(key);
-      this.#setKeyTags(key as CacheStringKey, undefined);
+      this.#setKeyTags(key, undefined);
     }
     return expiredKeys.length;
   };
@@ -1468,18 +1463,36 @@ export class XMemCache {
     this.#iterate();
 
   /**
-   * Same as entries(): `for (const [key, entry] of xMemCache)` or
-   * `[...xMemCache]`.
+   * Iterate over the expired entries not removed yet, least recently used
+   * first. Expired entries are never served: they stay in the lru until
+   * accessed, evicted or removed by clearExpired. Iterating doesn't remove
+   * them nor change the lru order.
+   *
+   * @example
+   * ```typescript
+   * for (const [key, entry] of xMemCache.expiredEntries()) {
+   *   console.log(key, entry.format, entry.createdAt);
+   * }
+   * xMemCache.clearExpired();
+   * ```
    */
-  [Symbol.iterator](): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
-    return this.#iterate();
-  }
+  expiredEntries = (): IterableIterator<[CacheStringKey, XMemCacheEntry]> =>
+    this.#iterate(true);
 
-  *#iterate(): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
-    for (const [key] of this.#lru) {
-      // peek skips expired entries
-      const value = this.#lru.peek(key);
-      if (isXMemCacheEntry(value)) {
+  /**
+   * Iterate over the non-expired entries, or the expired ones.
+   *
+   * @yields The `[key, entry]` pairs, least recently used first
+   */
+  *#iterate(
+    expired = false
+  ): IterableIterator<[CacheStringKey, XMemCacheEntry]> {
+    for (const [key, value] of this.#lru) {
+      // expiresIn is undefined for expired entries
+      if (
+        isXMemCacheEntry(value) &&
+        (this.#lru.expiresIn(key) === undefined) === expired
+      ) {
         yield [key as CacheStringKey, value];
       }
     }

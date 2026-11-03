@@ -462,7 +462,7 @@ xMemCache.resetStats(); // ie: after a deployment warmup
 
 ### Iterating over the entries
 
-`entries()` (or the instance itself, like a `Map`: `for (const [key, entry] of xMemCache)`) iterates over the non-expired entries (least recently used first) without changing the lru order. Entries are returned as stored, use `readEntry()` to get the data of compressed entries:
+`entries()` iterates over the non-expired entries (least recently used first) without changing the lru order. Entries are returned as stored, use `readEntry()` to get the data of compressed entries:
 
 ```typescript
 for (const [key, entry] of xMemCache.entries()) {
@@ -480,6 +480,16 @@ const removed = xMemCache.clearExpired();
 
 // ie: periodically release the memory of expired entries
 setInterval(() => xMemCache.clearExpired(), 60_000).unref();
+```
+
+`expiredEntries()` iterates over the expired entries not removed yet (least recently used first), without removing them or changing the lru order. Like `entries()`, entries are returned as stored:
+
+```typescript
+for (const [key, entry] of xMemCache.expiredEntries()) {
+  console.log(key, entry.format, entry.createdAt, entry.tags);
+}
+// number of expired entries
+const expiredCount = xMemCache.size - xMemCache.getStats().items;
 ```
 
 ### Configuration
