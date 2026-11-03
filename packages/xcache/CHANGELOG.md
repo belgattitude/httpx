@@ -1,5 +1,25 @@
 # @httpx/xcache
 
+## 0.17.0
+
+### Minor Changes
+
+- [#2900](https://github.com/belgattitude/httpx/pull/2900) [`e0d02c4`](https://github.com/belgattitude/httpx/commit/e0d02c480f436187c9be5202ba2fc8738b7987cd) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `XMemCache.expiredEntries()` to iterate over the expired entries not removed yet.
+  
+  Breaking: `XMemCache` is no longer iterable, use `entries()` instead of `for (const [key, entry] of xMemCache)` or `[...xMemCache]`.
+
+- [#2900](https://github.com/belgattitude/httpx/pull/2900) [`e0d02c4`](https://github.com/belgattitude/httpx/commit/e0d02c480f436187c9be5202ba2fc8738b7987cd) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `expiresAt` (epoch milliseconds) to the entry info (`getEntryInfo()`, `getStats().entries`, where `expiresIn` and `expiresAt` are now always set) and `XMemCache.expiresAt(generatedKey)`, which also returns the expiry time of expired entries not removed yet (see `expiredEntries()`).
+
+### Patch Changes
+
+- [#2900](https://github.com/belgattitude/httpx/pull/2900) [`e0d02c4`](https://github.com/belgattitude/httpx/commit/e0d02c480f436187c9be5202ba2fc8738b7987cd) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `TimeLruCache.expiresAt()` to get the expiry time of an entry (epoch milliseconds), also for expired entries not evicted yet.
+  
+  `TimeLruCache.expiresIn()` is deprecated, use `expiresAt()` instead (see UPGRADE.md). XMemCache now uses `expiresAt()` internally.
+
+- [#2900](https://github.com/belgattitude/httpx/pull/2900) [`e0d02c4`](https://github.com/belgattitude/httpx/commit/e0d02c480f436187c9be5202ba2fc8738b7987cd) Thanks [@belgattitude](https://github.com/belgattitude)! - `getStats()`, `getEntryInfo()` and `getConfig()` omit undefined values reported by custom compressors (meta and config), so they're always JSON serializable.
+- Updated dependencies [[`e0d02c4`](https://github.com/belgattitude/httpx/commit/e0d02c480f436187c9be5202ba2fc8738b7987cd)]:
+  - @httpx/lru@0.17.0
+
 ## 0.16.0
 
 ### Minor Changes
