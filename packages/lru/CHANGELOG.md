@@ -1,5 +1,13 @@
 # @httpx/lru
 
+## 0.17.0
+
+### Minor Changes
+
+- [#2900](https://github.com/belgattitude/httpx/pull/2900) [`e0d02c4`](https://github.com/belgattitude/httpx/commit/e0d02c480f436187c9be5202ba2fc8738b7987cd) Thanks [@belgattitude](https://github.com/belgattitude)! - Add `TimeLruCache.expiresAt()` to get the expiry time of an entry (epoch milliseconds), also for expired entries not evicted yet.
+  
+  `TimeLruCache.expiresIn()` is deprecated, use `expiresAt()` instead (see UPGRADE.md). XMemCache now uses `expiresAt()` internally.
+
 ## 0.16.1
 
 ### Patch Changes
