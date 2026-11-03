@@ -315,18 +315,6 @@ const raceAbort = async <T>(
 };
 
 /**
- * Entry to remove with XMemCache.delete.
- */
-export type XMemCacheDeleteParams = {
-  /** Cache key, as provided to runAsync */
-  key: CacheKeyTuple;
-  /** Namespace, if overridden in runAsync */
-  namespace?: string;
-  /** Origin used when the entry was created (ie: "hono") */
-  origin?: string;
-};
-
-/**
  * Info about a cache entry, returned by getEntryInfo and getStats.
  */
 export type XMemCacheEntryInfo = {
@@ -1231,51 +1219,24 @@ export class XMemCache {
   };
 
   /**
-   * Remove cache entries by key and return the number of (non-expired)
-   * entries removed. Functions executing for those keys won't store their
-   * result, and new calls won't join them (dedupe).
+   * Remove cache entries by generated key and return the number of
+   * (non-expired) entries removed. Functions executing for those keys won't
+   * store their result, and new calls won't join them (dedupe).
    *
-   * Entries are identified by their key params (key tuple, namespace and
-   * origin, as provided to runAsync) or by their generated key (ie:
-   * meta.generatedKey, entries(), getStats().entries[].key).
+   * Generated keys are returned in meta.generatedKey, entries(),
+   * getStats().entries[].key, getEntryInfo().key and onEviction.
    *
    * @example
    * ```typescript
-   * await xMemCache.runAsync({ key: ['/api/user', { id: 1 }], fn: () => getUser(1) });
-   * xMemCache.delete({ key: ['/api/user', { id: 1 }] }); // 1
-   * xMemCache.delete([
-   *   { key: ['/api/user', { id: 1 }] },
-   *   { key: ['/api/user', { id: 2 }], namespace: 'admin' },
-   * ]);
-   * // generated keys
-   * const { meta } = await xMemCache.runAsync({ key: ['/api/user', { id: 3 }], fn });
-   * xMemCache.delete(meta.generatedKey);
+   * const { meta } = await xMemCache.runAsync({ key: ['/api/user', { id: 1 }], fn });
+   * xMemCache.delete(meta.generatedKey); // 1
+   * xMemCache.delete([key1, key2]);
    * ```
-   *
-   * @throws TypeError if a key is not a valid stable key.
    */
-  delete = (
-    params:
-      | XMemCacheDeleteParams
-      | CacheStringKey
-      | readonly (XMemCacheDeleteParams | CacheStringKey)[]
-  ): number => {
-    const list = Array.isArray(params)
-      ? (params as readonly (XMemCacheDeleteParams | CacheStringKey)[])
-      : [params as XMemCacheDeleteParams | CacheStringKey];
-    const cacheKeys = new Set<CacheStringKey>();
-    for (const item of list) {
-      cacheKeys.add(
-        typeof item === "string"
-          ? item
-          : genCacheKeyString({
-              key: item.key,
-              namespace: item.namespace ?? this.#defaultNs,
-              compressorId: this.#compressorId,
-              origin: item.origin,
-            })
-      );
-    }
+  delete = (keys: CacheStringKey | readonly CacheStringKey[]): number => {
+    const cacheKeys = new Set<CacheStringKey>(
+      typeof keys === "string" ? [keys] : keys
+    );
     for (const pending of this.#pendingStores) {
       if (cacheKeys.has(pending.key)) {
         pending.deleted = true;

@@ -692,13 +692,12 @@ describe("createHonoXCache", () => {
       expect(cache.getEntryInfo({ key: ["/data"] })?.key).toBe(
         meta.generatedKey
       );
-      // delete only removes the hono entry
-      expect(xcache.delete([{ key: ["/data"] }])).toBe(1);
+      // the generated key of the hono entry includes its origin
+      const honoKey = xcache.getEntryInfo({ key: ["/data"] })?.key;
+      expect(honoKey).toBeDefined();
+      expect(cache.delete(honoKey!)).toBe(1);
       expect(xcache.getEntryInfo({ key: ["/data"] })).toBeUndefined();
       expect(cache.getEntryInfo({ key: ["/data"] })).toBeDefined();
-      // generated keys are used as-is (not given the hono origin)
-      expect(xcache.delete(meta.generatedKey)).toBe(1);
-      expect(cache.size).toBe(0);
     });
 
     it.runIf(canSetAcceptEncoding)(

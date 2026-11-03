@@ -26,7 +26,6 @@ export type {
 } from "./x-cache.types";
 export type {
   XMemCacheConfig,
-  XMemCacheDeleteParams,
   XMemCacheEntryInfo,
   XMemCacheLruOptions,
   XMemCacheOptions,

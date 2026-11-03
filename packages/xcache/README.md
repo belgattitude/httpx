@@ -330,31 +330,24 @@ xMemCache.getTags();
 
 ## Delete entries
 
-`delete()` removes entries by key (same params as `getEntryInfo()`) and returns the number of (non-expired) entries removed:
+`delete()` removes entries by generated key, and returns the number of (non-expired) entries removed. Generated keys are returned in `meta.generatedKey`, `getEntryInfo().key`, `getStats().entries[].key`, `entries()` and `onEviction`:
 
 ```typescript
-await xMemCache.runAsync({
+const { meta } = await xMemCache.runAsync({
   key: ["/api/user", { id: 1 }],
   fn: () => fetchUser(1),
 });
 
-xMemCache.delete({ key: ["/api/user", { id: 1 }] }); // 1
-// several entries, with their namespace / origin if overridden in runAsync()
-xMemCache.delete([
-  { key: ["/api/user", { id: 1 }] },
-  { key: ["/api/user", { id: 2 }], namespace: "admin" },
-]);
-// generated keys (meta.generatedKey, entries(), getStats().entries[].key, onEviction)
-const { meta } = await xMemCache.runAsync({
-  key: ["/api/user", { id: 3 }],
-  fn,
-});
-xMemCache.delete(meta.generatedKey);
-xMemCache.delete([meta.generatedKey, { key: ["/api/user", { id: 4 }] }]);
+xMemCache.delete(meta.generatedKey); // 1
+// several entries
+xMemCache.delete([key1, key2]);
+// entries created by the hono helper (the generated key includes the origin)
+const info = xcache.getEntryInfo({ key: ["/api/products", { id: "1" }] });
+if (info) xcache.cache.delete(info.key);
 ```
 
 - Like `invalidateTags()`, a function executing for a deleted key returns its result but doesn't store it, and with [deduplication](#deduplication), calls made after the deletion don't join that execution.
-- The hono helper exposes `xcache.delete()` for the entries it created: the hono origin is added to key params, generated keys are used as-is.
+- To remove related entries without tracking their keys, see [tags](#tags).
 
 ## Abort signal
 
