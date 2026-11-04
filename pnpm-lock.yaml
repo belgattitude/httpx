@@ -272,8 +272,8 @@ importers:
         specifier: 1.64.1
         version: 1.64.1
       tinybench:
-        specifier: 6.2.2
-        version: 6.2.2
+        specifier: 6.2.3
+        version: 6.2.3
       type-fest:
         specifier: 5.10.0
         version: 5.10.0
@@ -639,8 +639,8 @@ importers:
         specifier: 14.3.0
         version: 14.3.0
       tinybench:
-        specifier: 6.2.2
-        version: 6.2.2
+        specifier: 6.2.3
+        version: 6.2.3
       type-fest:
         specifier: 5.10.0
         version: 5.10.0
@@ -1697,7 +1697,7 @@ importers:
         version: 0.18.5
       '@codspeed/vitest-plugin':
         specifier: 6.1.0
-        version: 6.1.0(debug@4.4.3)(supports-color@10.2.2)(tinybench@6.2.2)(vite@8.3.5)(vitest@5.1.0)
+        version: 6.1.0(debug@4.4.3)(supports-color@10.2.2)(tinybench@6.2.3)(vite@8.3.5)(vitest@5.1.0)
       '@size-limit/esbuild':
         specifier: 14.3.0
         version: 14.3.0(size-limit@14.3.0)
@@ -7616,8 +7616,8 @@ packages:
     resolution: {integrity: sha512-pVqWRXkgyAu4xnxym9f4qqqnQuIRH8IfsS3hoWKBUBAzbdHUbTg7TbhHAqxUCH0MYDBB6YNN3QkEstmh5j2Mtg==}
     engines: {node: '>=20'}
 
-  tinybench@6.2.2:
-    resolution: {integrity: sha512-mKD8W4qaAQ+19XNPDRamkZ/g0Y+vV5PaKwRj0cOk+mBpcCnT1JzGCi1kC1d8HE56DLMy+r2+TbNXWZefqGiEAw==}
+  tinybench@6.2.3:
+    resolution: {integrity: sha512-66tkebtlqfXg4uR6iSAqpCJYwRYrPj2WIDDsFKR9l7YKKiI41AVpP6yOFLUKcKmL+QnjSN1CB79XWpXQPg3uew==}
     engines: {node: '>=20.0.0'}
 
   tinydate@1.3.0:
@@ -8821,10 +8821,10 @@ snapshots:
       - debug
       - supports-color
 
-  '@codspeed/vitest-plugin@6.1.0(debug@4.4.3)(supports-color@10.2.2)(tinybench@6.2.2)(vite@8.3.5)(vitest@5.1.0)':
+  '@codspeed/vitest-plugin@6.1.0(debug@4.4.3)(supports-color@10.2.2)(tinybench@6.2.3)(vite@8.3.5)(vitest@5.1.0)':
     dependencies:
       '@codspeed/core': 6.1.0(debug@4.4.3)(supports-color@10.2.2)
-      tinybench: 6.2.2
+      tinybench: 6.2.3
       vite: 8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
       vitest: 5.1.0(@edge-runtime/vm@5.0.0)(@types/node@26.6.6)(@vitest/browser-playwright@5.1.0)(@vitest/coverage-v8@5.1.0)(@vitest/ui@5.1.0)(happy-dom@21.0.4)(vite@8.3.5)
     transitivePeerDependencies:
@@ -13870,7 +13870,7 @@ snapshots:
     dependencies:
       real-require: 1.0.0
 
-  tinybench@6.2.2: {}
+  tinybench@6.2.3: {}
 
   tinydate@1.3.0: {}
 
@@ -14223,7 +14223,7 @@ snapshots:
       obug: 3.0.0
       picomatch: 4.0.7
       std-env: 4.3.0
-      tinybench: 6.2.2
+      tinybench: 6.2.3
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
       vite: 8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
