@@ -176,7 +176,7 @@ overrides:
   follow-redirects@>=1.16.0 <=1.16.1: 1.16.2
   glob@>=9.0.0 <=14.0.1: 14.0.3
   katex@>=0.11.0 <0.18.2: 0.19.1
-  minimatch@<11.0.1: 11.0.3
+  minimatch@<11.0.1: 11.0.4
   undici@>=7.0.0 <7.30.1: 8.12.3
   zod@<4.6.7: 4.6.7
 
@@ -6659,10 +6659,6 @@ packages:
     resolution: {integrity: sha512-S1vc8y4cw2kPyAZtJHw0jEzCWdzL6Blb8nA+bh7t6+v6hi+QkBc6IlnLIYPmw6vmS00QZOuXsV3c8i+J26gIYA==}
     engines: {node: '>=22.0.0'}
 
-  minimatch@11.0.3:
-    resolution: {integrity: sha512-3LfW3370hDVmJ1pJENbjnjoMXvbN30Nr9/8hOUup7MTaX6S9u7jHO8XZTAkySQLq5hYnoCqxcXKPHc0olSDqcA==}
-    engines: {node: 18 || 20 || >=22}
-
   minimatch@11.0.4:
     resolution: {integrity: sha512-FV4iT1GcDmxjAQweu5URyHxWjytljZe564vQ548AeCBY7f4XfnFu3mX3GMUqklB/L5FxtfVvah5Sek+V7rOVgQ==}
     engines: {node: 20 || >=22}
@@ -9075,7 +9071,7 @@ snapshots:
     dependencies:
       '@eslint/object-schema': 3.0.5
       debug: 4.4.3(supports-color@10.2.2)
-      minimatch: 11.0.3
+      minimatch: 11.0.4
     transitivePeerDependencies:
       - supports-color
 
@@ -10564,7 +10560,7 @@ snapshots:
       '@typescript-eslint/types': 8.72.1
       '@typescript-eslint/visitor-keys': 8.72.1
       debug: 4.4.3(supports-color@10.2.2)
-      minimatch: 11.0.3
+      minimatch: 11.0.4
       semver: 7.8.6
       tinyglobby: 0.2.17
       ts-api-utils: 2.5.0(typescript@7.0.2)
@@ -11586,7 +11582,7 @@ snapshots:
       imurmurhash: 0.1.4
       is-glob: 4.0.3
       json-stable-stringify-without-jsonify: 1.0.1
-      minimatch: 11.0.3
+      minimatch: 11.0.4
       natural-compare: 1.4.0
       optionator: 0.9.4
     optionalDependencies:
@@ -13008,11 +13004,6 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  minimatch@11.0.3:
-    dependencies:
-      '@isaacs/nonrecursive-glob-match': 1.0.3
-      brace-expansion: 5.0.12
-
   minimatch@11.0.4:
     dependencies:
       '@isaacs/nonrecursive-glob-match': 1.0.3
@@ -14156,7 +14147,7 @@ snapshots:
       '@gerrit0/mini-shiki': 3.23.0
       lunr: 2.3.9
       markdown-it: 14.3.3
-      minimatch: 11.0.3
+      minimatch: 11.0.4
       typescript: 7.0.2
       yaml: 2.9.1
 
