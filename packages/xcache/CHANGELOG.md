@@ -1,5 +1,16 @@
 # @httpx/xcache
 
+## 0.18.0
+
+### Minor Changes
+
+- [#2902](https://github.com/belgattitude/httpx/pull/2902) [`299eff1`](https://github.com/belgattitude/httpx/commit/299eff171833d5e7cc2caa2f1bd88e3251eb875d) Thanks [@belgattitude](https://github.com/belgattitude)! - Add the `lru.maxTTL` option to cap the time to live of all the entries (`defaultTTL` and `runAsync({ ttl })`), ie: a very short cache in development while still creating the entries (serializer, compressor). Returned by `getConfig()`.
+
+### Patch Changes
+
+- Updated dependencies [[`299eff1`](https://github.com/belgattitude/httpx/commit/299eff171833d5e7cc2caa2f1bd88e3251eb875d), [`0d7f260`](https://github.com/belgattitude/httpx/commit/0d7f2604474774f76cb4d175c21f326365497b2c)]:
+  - @httpx/lru@0.18.0
+
 ## 0.17.0
 
 ### Minor Changes

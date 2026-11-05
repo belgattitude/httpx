@@ -1,5 +1,13 @@
 # @httpx/lru
 
+## 0.18.0
+
+### Minor Changes
+
+- [#2902](https://github.com/belgattitude/httpx/pull/2902) [`299eff1`](https://github.com/belgattitude/httpx/commit/299eff171833d5e7cc2caa2f1bd88e3251eb875d) Thanks [@belgattitude](https://github.com/belgattitude)! - Add the `maxTTL` param to `TimeLruCache` to cap the `defaultTTL` and the ttl given to `set()` / `getOrSet()`. Returned in `params` when set.
+
+- [#2910](https://github.com/belgattitude/httpx/pull/2910) [`0d7f260`](https://github.com/belgattitude/httpx/commit/0d7f2604474774f76cb4d175c21f326365497b2c) Thanks [@belgattitude](https://github.com/belgattitude)! - Breaking: ESM only, the CJS build is removed and the minimum Node version is now 22.12 (`require(esm)` still works on Node >= 22.12).
+
 ## 0.17.0
 
 ### Minor Changes
