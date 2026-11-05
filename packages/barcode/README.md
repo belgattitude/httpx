@@ -246,7 +246,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | --- | --- | --- |
 | Node | ✅ | CI for 22.x, 24.x & 26.x. |
 | Browser | ✅ | Tested with latest chrome (vitest/playwright) |
-| Browserslist | ✅ | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/barcode/.browserslistrc) |
+| Browserslist | ✅ | [defaults, > 0.28%, last 2 versions, Firefox ESR, not dead, not ios <= 15](https://github.com/belgattitude/httpx/blob/main/packages/barcode/.browserslistrc) |
 | Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |
 | Deno | ✅ | Tested with latest lts |
 | Cloudflare | ✅ | Ensured with @cloudflare/vitest-plugin (see [wrangler.toml](https://github.com/belgattitude/httpx/blob/main/devtools/vitest/wrangler.toml) |
@@ -262,7 +262,7 @@ Contributions are welcome. Have a look to the [CONTRIBUTING](https://github.com/
 
 ## Sponsors
 
-If my OSS work brightens your day, let's take it to new heights together! [Sponsor](<[sponsorship](https://github.com/sponsors/belgattitude)>), [coffee](<(https://ko-fi.com/belgattitude)>), or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
+If my OSS work brightens your day, let's take it to new heights together! [Sponsor](https://github.com/sponsors/belgattitude), [coffee](https://ko-fi.com/belgattitude), or star – any gesture of support fuels my passion to improve. Thanks for being awesome! 🙏❤️
 
 ### Special thanks to
 
