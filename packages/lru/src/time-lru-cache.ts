@@ -23,6 +23,18 @@ export type TimeLruCacheParams<
    * Default time to live for each entry in milliseconds
    */
   defaultTTL: Milliseconds;
+  /**
+   * Optional maximum time to live in milliseconds: caps the defaultTTL and
+   * the ttl given to set / getOrSet (shorter ones are kept), ie: a very
+   * short lived cache in development.
+   */
+  maxTTL?: Milliseconds | undefined;
+};
+
+const assertPositiveInteger = (value: number, name: string): void => {
+  if (!Number.isSafeInteger(value) || value < 1) {
+    throw new TypeError(`Invalid ${name}`);
+  }
 };
 
 /**
@@ -36,6 +48,7 @@ export class TimeLruCache<
   readonly #touchOnHas: boolean;
 
   readonly #ttl: Milliseconds;
+  readonly #maxTTL: Milliseconds | undefined;
 
   readonly #onEviction?: ((key: TKey, value: TValue) => void) | undefined;
 
@@ -68,18 +81,24 @@ export class TimeLruCache<
    * ```
    */
   constructor(params: TimeLruCacheParams<TValue, TKey>) {
-    const { maxSize, touchOnHas = false, onEviction, defaultTTL } = params;
-    if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
-      throw new TypeError("Invalid maxSize");
-    }
-    if (!Number.isSafeInteger(defaultTTL) || defaultTTL < 1) {
-      throw new TypeError("Invalid ttl");
+    const {
+      maxSize,
+      touchOnHas = false,
+      onEviction,
+      defaultTTL,
+      maxTTL,
+    } = params;
+    assertPositiveInteger(maxSize, "maxSize");
+    assertPositiveInteger(defaultTTL, "ttl");
+    if (maxTTL !== undefined) {
+      assertPositiveInteger(maxTTL, "maxTTL");
     }
 
     this.#touchOnHas = touchOnHas;
     this.#onEviction = onEviction;
     this.#maxSize = maxSize;
     this.#ttl = defaultTTL;
+    this.#maxTTL = maxTTL;
     this.#cache = new Map();
   }
 
@@ -90,6 +109,7 @@ export class TimeLruCache<
     return {
       maxSize: this.#maxSize,
       defaultTTL: this.#ttl,
+      ...(this.#maxTTL === undefined ? {} : { maxTTL: this.#maxTTL }),
     };
   }
 
@@ -132,7 +152,7 @@ export class TimeLruCache<
     const existing = this.#cache.get(key);
     if (existing !== undefined) {
       existing.value = value;
-      existing.expiry = Date.now() + (ttl ?? this.#ttl);
+      existing.expiry = this.#getExpiry(ttl);
       this.#moveToHead(existing.node);
       return false;
     }
@@ -140,7 +160,7 @@ export class TimeLruCache<
     const newNode = new DoublyLinkedNode(key);
     const data: TimeLruCacheEntry<TValue, TKey> = {
       value,
-      expiry: Date.now() + (ttl ?? this.#ttl),
+      expiry: this.#getExpiry(ttl),
       node: newNode,
     };
 
@@ -151,6 +171,14 @@ export class TimeLruCache<
       this.#removeTail();
     }
     return true;
+  }
+
+  /**
+   * Expiry time of an entry set now with the ttl (or the defaultTTL),
+   * capped by maxTTL.
+   */
+  #getExpiry(ttl: Milliseconds | undefined): EpochTimeInMilliseconds {
+    return Date.now() + Math.min(ttl ?? this.#ttl, this.#maxTTL ?? Infinity);
   }
 
   get(key: TKey): TValue | undefined {

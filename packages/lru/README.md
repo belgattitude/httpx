@@ -37,6 +37,23 @@ TimeLruCache allows to work with expiry time (TTL). Time-to-live are expressed i
 | `getOrSet(key, valueOrFn, options?): TValue` | Return the entry if exists otherwise save a new entry (value or callback) |
 | `clear(): number` | Clear the cache and return the actual number of deleted entries |
 
+### TimeLruCache maxTTL
+
+The optional `maxTTL` param caps the `defaultTTL` and any `ttl` given to `set()` or `getOrSet()` (shorter ones are kept). Ie: keep the cache running but very short lived in development.
+
+```typescript
+import { TimeLruCache } from "@httpx/lru";
+
+const lru = new TimeLruCache({
+  maxSize: 1000,
+  defaultTTL: 60_000,
+  maxTTL: process.env.NODE_ENV === "development" ? 50 : undefined,
+});
+
+lru.set("key1", "value1", 600_000); // 👈 expires after 50ms in development
+lru.params; // 👈 { maxSize: 1000, defaultTTL: 60000, maxTTL: 50 }
+```
+
 ### TimeLruCache.getOrSet()
 
 Get an item from the cache, if the item doesn't exist or has expired it will create a new entry with the provided value or function and returns it.

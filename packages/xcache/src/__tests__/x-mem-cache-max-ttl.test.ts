@@ -79,6 +79,10 @@ describe("XMemCache lru maxTTL", () => {
     expect(cache.getConfig()).not.toHaveProperty("maxTTL");
   });
 
+  it("should throw on an invalid maxTTL", () => {
+    expect(() => createCache({ maxTTL: 0 })).toThrow("Invalid maxTTL");
+  });
+
   it("should return maxTTL in the config", () => {
     const { ttl, maxTTL } = createCache().getConfig();
     expect({ ttl, maxTTL }).toStrictEqual({ ttl: 60_000, maxTTL: 50 });

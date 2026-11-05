@@ -14,6 +14,50 @@ describe("TimeLruCache", () => {
     vi.useRealTimers();
   });
 
+  describe("maxTTL", () => {
+    it("should cap the defaultTTL and the ttl given to set / getOrSet", () => {
+      const lru = new TimeLruCache({
+        maxSize: 10,
+        defaultTTL: 4 * HUNDRED_MILLIS,
+        maxTTL: HUNDRED_MILLIS,
+      });
+      lru.set("default", "v");
+      lru.set("longer", "v", 10 * HUNDRED_MILLIS);
+      // shorter ttls are kept
+      lru.set("shorter", "v", SIXTY_MILLIS);
+      lru.getOrSet("getOrSet", "v", { ttl: 10 * HUNDRED_MILLIS });
+      expect(lru.expiresAt("default")).toBe(HUNDRED_MILLIS);
+      expect(lru.expiresAt("longer")).toBe(HUNDRED_MILLIS);
+      expect(lru.expiresAt("shorter")).toBe(SIXTY_MILLIS);
+      expect(lru.expiresAt("getOrSet")).toBe(HUNDRED_MILLIS);
+      // capped when updated too
+      lru.set("shorter", "v2", 10 * HUNDRED_MILLIS);
+      expect(lru.expiresAt("shorter")).toBe(HUNDRED_MILLIS);
+      vi.setSystemTime(HUNDRED_MILLIS + 1);
+      expect(lru.has("longer")).toBe(false);
+      expect(lru.get("getOrSet")).toBeUndefined();
+    });
+
+    it("should be returned in params when set", () => {
+      expect(
+        new TimeLruCache({ maxSize: 2, defaultTTL: 1000, maxTTL: 50 }).params
+      ).toStrictEqual({ maxSize: 2, defaultTTL: 1000, maxTTL: 50 });
+      expect(
+        new TimeLruCache({ maxSize: 2, defaultTTL: 1000, maxTTL: undefined })
+          .params
+      ).toStrictEqual({ maxSize: 2, defaultTTL: 1000 });
+    });
+
+    it.each([0, -1, 1.5, Number.NaN, Number.POSITIVE_INFINITY])(
+      "should throw on invalid maxTTL (%s)",
+      (maxTTL) => {
+        expect(
+          () => new TimeLruCache({ maxSize: 2, defaultTTL: 1000, maxTTL })
+        ).toThrow("Invalid maxTTL");
+      }
+    );
+  });
+
   describe("expiresAt", () => {
     it("should return the expiry time, also for expired items", () => {
       const fn = vi.fn<(key: string, value: unknown) => void>();

@@ -37,7 +37,8 @@ export type XMemCacheLruOptions = {
    * Maximum time to live of the entries in milliseconds: caps defaultTTL
    * and the ttl given to runAsync. Entries are still created as usual
    * (function, serializer, compressor), they just expire sooner (ie: a
-   * very short cache in development).
+   * very short cache in development). A positive integer, passed to the
+   * lru (TimeLruCache maxTTL).
    *
    * @example
    * ```typescript
@@ -624,7 +625,6 @@ export class XMemCache {
   readonly #enabled: boolean;
   readonly #compressionEnabled: boolean;
   readonly #dedupe: boolean;
-  readonly #maxTTL: number | undefined;
   #totals: XMemCacheTotals = createTotals();
   /**
    * In-flight executions by generated key (dedupe).
@@ -647,6 +647,7 @@ export class XMemCache {
     this.#lru = new TimeLruCache({
       maxSize,
       defaultTTL,
+      maxTTL,
       onEviction: (key, value) => {
         this.#setKeyTags(key as CacheStringKey, undefined);
         if (onEviction !== undefined && isXMemCacheEntry(value)) {
@@ -660,7 +661,6 @@ export class XMemCache {
     this.#enabled = enabled;
     this.#compressionEnabled = compressionEnabled;
     this.#dedupe = dedupe;
-    this.#maxTTL = maxTTL;
   }
 
   /**
@@ -1157,14 +1157,8 @@ export class XMemCache {
     }
     // ie: a function returning a fallback value when aborted
     if (signal?.aborted !== true) {
-      const maxTTL = this.#maxTTL;
-      this.#lru.set(
-        generatedKey,
-        entry,
-        maxTTL === undefined
-          ? ttl
-          : Math.min(ttl ?? this.#lru.params.defaultTTL, maxTTL)
-      );
+      // capped by the lru maxTTL
+      this.#lru.set(generatedKey, entry, ttl);
       this.#entrySeq.set(entry, seq);
       this.#setKeyTags(generatedKey, tags);
     }
@@ -1427,11 +1421,11 @@ export class XMemCache {
    * ```
    */
   getConfig = (): XMemCacheConfig => {
-    const { defaultTTL, maxSize } = this.#lru.params;
+    const { defaultTTL, maxTTL, maxSize } = this.#lru.params;
     const config: XMemCacheConfig = {
       namespace: this.#defaultNs,
       ttl: defaultTTL,
-      ...(this.#maxTTL === undefined ? {} : { maxTTL: this.#maxTTL }),
+      ...(maxTTL === undefined ? {} : { maxTTL }),
       maxSize,
       enabled: this.#enabled,
       compressionEnabled: this.compressionEnabled,
