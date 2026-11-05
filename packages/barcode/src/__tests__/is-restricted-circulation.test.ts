@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { isEan13, isUpcA } from "../barcode-guards";
+import { getBarcodeSeeds } from "../../bench/bench-seeds";
+import { isEan8, isEan13, isGtin14, isUpcA } from "../barcode-guards";
+import { detectBarcodeType } from "../detect-barcode-type";
+import { isGtin } from "../is-gtin";
 import { isRestrictedCirculation } from "../is-restricted-circulation";
 import { normalizeGtin } from "../normalize-gtin";
 
@@ -52,10 +55,45 @@ describe("isRestrictedCirculation", () => {
     expect(isRestrictedCirculation(value)).toBe(false);
   });
 
-  it("should be an opt-in check: RCN-13 and UPC-A remain valid GTINs", () => {
-    expect(isEan13("2123456789010")).toBe(true);
-    expect(isUpcA("212345678992")).toBe(true);
-    expect(normalizeGtin("2123456789010")).toBe("02123456789010");
+  it("should be refused by the other functions unless acceptRestricted", () => {
+    const accept = { acceptRestricted: true };
+    expect(isEan13("2123456789010")).toBe(false);
+    expect(isEan13("2123456789010", accept)).toBe(true);
+    expect(isUpcA("212345678992")).toBe(false);
+    expect(isUpcA("212345678992", accept)).toBe(true);
+    expect(normalizeGtin("2123456789010")).toBeNull();
+    expect(normalizeGtin("2123456789010", accept)).toBe("02123456789010");
+  });
+
+  it("should agree with the guards on every generated code", () => {
+    const codes = [
+      ...getBarcodeSeeds(5000),
+      // make sure every range is covered
+      "2123456789010",
+      "0212345678909",
+      "0412345678903",
+      "212345678992",
+      "412345678996",
+      "21234569",
+      "01234565",
+      "02123456789010",
+      "12123456789017",
+      "00000021234569",
+      "0000021234569",
+      "000021234569",
+    ];
+    let restricted = 0;
+    for (const code of codes) {
+      const isRcn = isRestrictedCirculation(code);
+      restricted += isRcn ? 1 : 0;
+      const acceptedOnlyWithOption =
+        !isGtin(code) && isGtin(code, { acceptRestricted: true });
+      expect([code, acceptedOnlyWithOption]).toStrictEqual([code, isRcn]);
+      const guards = [isEan8, isUpcA, isEan13, isGtin14];
+      expect(guards.some((guard) => guard(code))).toBe(isGtin(code));
+      expect(detectBarcodeType(code) !== null).toBe(isGtin(code));
+    }
+    expect(restricted).toBeGreaterThan(100);
   });
 
   it("should apply minLength like normalizeGtin", () => {

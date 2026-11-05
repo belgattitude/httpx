@@ -21,5 +21,6 @@ export type {
   Gtin14,
   GtinByLength,
   GtinLength,
+  GtinValidationOptions,
   UpcA,
 } from "./types";

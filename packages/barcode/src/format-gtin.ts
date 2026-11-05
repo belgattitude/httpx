@@ -1,9 +1,10 @@
 import { isGtin } from "./is-gtin";
-import type { GtinByLength, GtinLength } from "./types";
+import type { GtinByLength, GtinLength, GtinValidationOptions } from "./types";
 
 /**
  * Format a valid GTIN (8, 12, 13 or 14 digits) to another length, by adding
  * or removing leading zeros. Returns `null` when the input isn't a valid GTIN
+ * (restricted circulation numbers are refused unless `acceptRestricted` is set)
  * or when it can't be represented in the requested length (removing a
  * non-zero digit).
  *
@@ -21,9 +22,10 @@ import type { GtinByLength, GtinLength } from "./types";
  */
 export const formatGtin = <TLength extends GtinLength>(
   gtin: string,
-  length: TLength
+  length: TLength,
+  options?: GtinValidationOptions
 ): GtinByLength[TLength] | null => {
-  if (!isGtin(gtin)) {
+  if (!isGtin(gtin, options)) {
     return null;
   }
   const extra = gtin.length - length;

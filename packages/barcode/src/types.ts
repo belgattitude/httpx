@@ -29,3 +29,17 @@ export type GtinByLength = {
   13: Ean13;
   14: Gtin14;
 };
+
+/** Validation options shared by the guards, assertions and detection */
+export type GtinValidationOptions = {
+  /**
+   * Accept GS1 Restricted Circulation Numbers (RCN), see
+   * `isRestrictedCirculation`: EAN-8 starting with 0 or 2, EAN-13 starting
+   * with 02, 04 or 20-29, UPC-A starting with 2 or 4 (and GTIN-14 containing
+   * them). Those codes are only meaningful within a company or a geographic
+   * region (ie: in-store labels, variable measure items with an embedded
+   * weight or price).
+   * @default false
+   */
+  acceptRestricted?: boolean;
+};

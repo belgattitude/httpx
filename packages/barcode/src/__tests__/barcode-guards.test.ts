@@ -11,12 +11,14 @@ const valid = {
   gtin14: ["10012345678902", "00012345678905"],
 } as const;
 
+const restricted = {
+  ean13: ["2123456789010", "0212345678909", "0412345678903", "0000021234569"],
+  ean8: ["01234565", "21234569"],
+  upca: ["212345678992", "412345678996", "000021234569"],
+  gtin14: ["02123456789010", "12123456789017", "00000021234569"],
+} as const;
+
 const invalid = [
-  "01234565", // ean8 starting with 0 (restricted circulation)
-  "21234569", // ean8 starting with 2 (restricted circulation)
-  "000021234569", // same, padded as upca
-  "0000021234569", // same, padded as ean13
-  "00000021234569", // same, padded as gtin14
   "4006381333932", // ean13, wrong check digit
   "96385075", // ean8, wrong check digit
   "036000291453", // upca, wrong check digit
@@ -52,7 +54,33 @@ describe("barcode guards", () => {
     });
   });
 
+  describe.each(Object.entries(guards))(
+    "%s guard with restricted circulation numbers",
+    (type, guard) => {
+      it.each(
+        Object.entries(restricted).flatMap(([t, codes]) =>
+          codes.map((c) => [t, c] as const)
+        )
+      )("should refuse by default, accept with option (%s: %s)", (t, code) => {
+        expect(guard(code)).toBe(false);
+        expect(guard(code, { acceptRestricted: false })).toBe(false);
+        expect(guard(code, { acceptRestricted: true })).toBe(t === type);
+      });
+
+      it.each(invalid)(
+        "should still return false for %s with acceptRestricted",
+        (v) => {
+          expect(guard(v, { acceptRestricted: true })).toBe(false);
+        }
+      );
+    }
+  );
+
   it("isGtin should accept every type and reject invalid values", () => {
+    for (const code of Object.values(restricted).flat()) {
+      expect(isGtin(code)).toBe(false);
+      expect(isGtin(code, { acceptRestricted: true })).toBe(true);
+    }
     for (const code of Object.values(valid).flat()) {
       expect(isGtin(code)).toBe(true);
     }
