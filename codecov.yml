@@ -63,6 +63,14 @@ flag_management:
           target: 50%
           threshold: 1%
 
+    - name: httpx-barcode-unit
+      paths:
+        - packages/barcode
+      statuses:
+        - type: project
+          target: 90%
+          threshold: 1%
+
 ignore:
   - "docs/**/*"
   - "examples/**/*"
