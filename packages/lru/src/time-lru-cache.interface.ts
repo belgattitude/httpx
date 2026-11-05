@@ -17,6 +17,8 @@ export interface ITimeLruCache<
   readonly params: {
     maxSize: number;
     defaultTTL: Milliseconds;
+    /** Maximum time to live, when set (caps defaultTTL and set ttl) */
+    maxTTL?: Milliseconds;
   };
 
   /**

@@ -34,6 +34,19 @@ export type XMemCacheLruOptions = {
   /** Default time to live of the entries in milliseconds */
   defaultTTL: number;
   /**
+   * Maximum time to live of the entries in milliseconds: caps defaultTTL
+   * and the ttl given to runAsync. Entries are still created as usual
+   * (function, serializer, compressor), they just expire sooner (ie: a
+   * very short cache in development). A positive integer, passed to the
+   * lru (TimeLruCache maxTTL).
+   *
+   * @example
+   * ```typescript
+   * lru: { maxSize: 500, defaultTTL: 60_000, maxTTL: isDev ? 50 : undefined }
+   * ```
+   */
+  maxTTL?: number | undefined;
+  /**
    * Called when an entry is evicted by the lru: capacity reached (least
    * recently used entry) or expired entry found when accessed. Not called
    * for entries removed by clear, clearExpired, invalidateTags or delete.
@@ -120,7 +133,10 @@ export type XMemCacheRunAsyncParams<
   fn: (params: { key: TKey; signal?: AbortSignal }) => Promise<TResult>;
   /** Override the default namespace */
   namespace?: string;
-  /** Time to live in milliseconds, defaults to the lru defaultTTL */
+  /**
+   * Time to live in milliseconds, defaults to the lru defaultTTL (capped by
+   * the lru maxTTL)
+   */
   ttl?: number;
   /**
    * Tags of the entry, to remove it with invalidateTags (ie: ["users",
@@ -452,6 +468,8 @@ export type XMemCacheConfig = {
   namespace: string;
   /** Default time to live in milliseconds (lru defaultTTL) */
   ttl: number;
+  /** Maximum time to live in milliseconds (lru maxTTL), when set */
+  maxTTL?: number;
   /** Maximum number of entries (lru maxSize) */
   maxSize: number;
   /** Whether the cache is globally enabled */
@@ -625,10 +643,11 @@ export class XMemCache {
       compressionEnabled = true,
       dedupe = true,
     } = options;
-    const { maxSize, defaultTTL, onEviction } = lru;
+    const { maxSize, defaultTTL, maxTTL, onEviction } = lru;
     this.#lru = new TimeLruCache({
       maxSize,
       defaultTTL,
+      maxTTL,
       onEviction: (key, value) => {
         this.#setKeyTags(key as CacheStringKey, undefined);
         if (onEviction !== undefined && isXMemCacheEntry(value)) {
@@ -1138,6 +1157,7 @@ export class XMemCache {
     }
     // ie: a function returning a fallback value when aborted
     if (signal?.aborted !== true) {
+      // capped by the lru maxTTL
       this.#lru.set(generatedKey, entry, ttl);
       this.#entrySeq.set(entry, seq);
       this.#setKeyTags(generatedKey, tags);
@@ -1401,10 +1421,11 @@ export class XMemCache {
    * ```
    */
   getConfig = (): XMemCacheConfig => {
-    const { defaultTTL, maxSize } = this.#lru.params;
+    const { defaultTTL, maxTTL, maxSize } = this.#lru.params;
     const config: XMemCacheConfig = {
       namespace: this.#defaultNs,
       ttl: defaultTTL,
+      ...(maxTTL === undefined ? {} : { maxTTL }),
       maxSize,
       enabled: this.#enabled,
       compressionEnabled: this.compressionEnabled,
