@@ -327,8 +327,8 @@ importers:
         specifier: 15.4.10
         version: 15.4.10(@types/mdast@4.0.4)(@types/mdx@2.0.14)(@types/react@19.3.0)(fumadocs-core@16.17.9)(next@16.4.4)(react@19.3.1)(rolldown@1.2.16)(supports-color@10.2.2)(vite@8.3.5)
       fumadocs-ui:
-        specifier: npm:@fumadocs/base-ui@16.17.9
-        version: '@fumadocs/base-ui@16.17.9(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.9)(next@16.4.4)(react-dom@19.3.1)(react@19.3.1)(tailwindcss@4.3.3)'
+        specifier: npm:@fumadocs/base-ui@16.17.10
+        version: '@fumadocs/base-ui@16.17.10(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.9)(next@16.4.4)(react-dom@19.3.1)(react@19.3.1)(tailwindcss@4.3.3)'
       next:
         specifier: 16.4.4
         version: 16.4.4(@babel/core@7.29.7)(@types/node@26.6.6)(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
@@ -2448,8 +2448,8 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@fumadocs/base-ui@16.17.9':
-    resolution: {integrity: sha512-PISSLsafa/0udCfm/ZvcFyJppPjI6UJ+MQXbIq6S0vvkY0CyNYvDKbps3zk7M8F90LkV2aDj73Z9w0O2nBN5Zw==}
+  '@fumadocs/base-ui@16.17.10':
+    resolution: {integrity: sha512-fUsDveYoa1hNmzAjDXTl2+obM8gPyT7zBbHlzA899oXuLysohZI2l6P5xgObITFvnPvg0MwOHVZyznoelblj8w==}
     peerDependencies:
       '@types/fumadocs-core': '*'
       '@types/mdx': '*'
@@ -2457,7 +2457,7 @@ packages:
       '@types/react': '*'
       '@types/react-dom': '*'
       '@types/takumi-js': '*'
-      fumadocs-core: 16.17.9
+      fumadocs-core: 16.17.10
       next: 16.x.x
       react: ^19.2.0
       react-dom: ^19.2.0
@@ -2480,8 +2480,8 @@ packages:
       takumi-js:
         optional: true
 
-  '@fumadocs/tailwind@0.1.4':
-    resolution: {integrity: sha512-1uFGC9DnrAHwB3iGWAoUuhBIVnON3loSqpxj01yXBvVNjri0oLKJ9gNFgAOuQq8KcgezlUNQahPPJp+uGwD5tg==}
+  '@fumadocs/tailwind@0.1.5':
+    resolution: {integrity: sha512-7q4Y4qsMKeQAAaHUv1Cz0bjADiEJkvm4yTaCoRrPPcwDA/ILS2/1r7RAoY8g/+TyS5fqQelx9l9w9M1CoINXig==}
     peerDependencies:
       '@types/tailwindcss': '*'
       tailwindcss: ^4.0.0
@@ -9011,11 +9011,11 @@ snapshots:
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
 
-  '@fumadocs/base-ui@16.17.9(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.9)(next@16.4.4)(react-dom@19.3.1)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@fumadocs/base-ui@16.17.10(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.17.9)(next@16.4.4)(react-dom@19.3.1)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@base-ui/react': 1.9.0(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
       '@fuma-translate/react': 1.0.2(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)
-      '@fumadocs/tailwind': 0.1.4(tailwindcss@4.3.3)
+      '@fumadocs/tailwind': 0.1.5(tailwindcss@4.3.3)
       class-variance-authority: 0.7.1
       cn: 0.5.1
       fumadocs-core: 16.17.9(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.5)(@types/mdast@4.0.4)(@types/react-dom@19.3.0)(@types/react@19.3.0)(lucide-react@1.66.0)(next@16.4.4)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(zod@4.6.7)
@@ -9042,7 +9042,7 @@ snapshots:
       - remix
       - tailwindcss
 
-  '@fumadocs/tailwind@0.1.4(tailwindcss@4.3.3)':
+  '@fumadocs/tailwind@0.1.5(tailwindcss@4.3.3)':
     optionalDependencies:
       tailwindcss: 4.3.3
 
