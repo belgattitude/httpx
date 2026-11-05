@@ -21,24 +21,17 @@
   },
   "files": [
     "dist",
-    "UPGRADE.md"
+    "README.md",
+    "UPGRADE.md",
+    "CHANGELOG.md"
   ],
   "type": "module",
   "sideEffects": false,
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
       "httpx-monorepo-source": "./src/index.ts",
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -50,8 +43,8 @@
     "bench-watch": "dx-bench --watch",
     "build": "pnpm run clean && dx-build",
     "build-release": "pnpm run build",
-    "check-dist": "es-check --config=.escheckrc.json",
-    "check-pub": "attw --pack && publint",
+    "check-dist": "es-check es2022 './dist/**/*.js' --not './dist/*.map.js' --module",
+    "check-pub": "attw --pack --profile esm-only && publint",
     "check-size": "size-limit",
     "ci-coverage-upload": "../../.github/scripts/download/codecov -F httpx-lru-unit --dir ./coverage",
     "clean": "rimraf --glob ./dist ./build ./coverage './tsconfig*.tsbuildinfo'",
@@ -96,6 +89,6 @@
     "vitest": "5.1.0"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.12.0"
   }
 }

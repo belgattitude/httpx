@@ -13,12 +13,6 @@ const config = [
     import: "{ MIntl }",
     limit: "825B",
   },
-  {
-    name: "Everything (CJS)",
-    import: "*",
-    path: ["dist/index.cjs"],
-    limit: "1745B",
-  },
 ] satisfies SizeLimitConfig;
 
 export default config;

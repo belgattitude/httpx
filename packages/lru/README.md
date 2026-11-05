@@ -1,6 +1,6 @@
 # @httpx/lru
 
-[![npm](https://img.shields.io/npm/v/@httpx/lru?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/lru) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/lru/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-lru-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Flru) [![bundles](https://img.shields.io/static/v1?label=&message=cjs|esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/lru/.size-limit.cjs) [![node](https://img.shields.io/static/v1?label=Node&message=20%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browsers&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![downloads](https://img.shields.io/npm/dm/@httpx/lru?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/lru) [![license](https://img.shields.io/npm/l/@httpx/lru?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/@httpx/lru?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/lru) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/lru/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-lru-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Flru) [![bundles](https://img.shields.io/static/v1?label=&message=esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/lru/.size-limit.ts) [![node](https://img.shields.io/static/v1?label=Node&message=22%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browsers&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![downloads](https://img.shields.io/npm/dm/@httpx/lru?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/lru) [![license](https://img.shields.io/npm/l/@httpx/lru?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
 LRU cache optimized for performance and low memory usage. 2x-4x times faster on `get()` than [quick-lru](https://github.com/sindresorhus/quick-lru) without [memory overhead](https://github.com/sindresorhus/quick-lru?tab=readme-ov-file#trade-offs) and 6 times smaller than [lru-cache](https://github.com/isaacs/node-lru-cache). TimeLru is less than 700b. Lru less than 600b.
 
@@ -19,8 +19,8 @@ $ pnpm add @httpx/lru
 - 🦆&nbsp; Expose `getOrSet()` method to simplify cache usage patterns.
 - ✨&nbsp; Provides convenience [helpers](#helpers) to preserve single instance across your app.
 - 📐&nbsp; Lightweight (starts at [~600B](#bundle-size))
-- 🛡️&nbsp; Tested on [node 20-26, browser, bun, cloudflare, deno and runtime/edge](#compatibility).
-- 🗝️&nbsp; Available in ESM and CJS formats.
+- 🛡️&nbsp; Tested on [node 22-26, browser, bun, cloudflare, deno and runtime/edge](#compatibility).
+- 🗝️&nbsp; Available in ESM.
 
 ## Documentation
 
@@ -387,8 +387,6 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 | `import { getOrCreateLruCache } from '@httpx/lru`     |        ~ 695B |
 | `import { getOrCreateTimeLruCache } from '@httpx/lru` |        ~ 785B |
 
-> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/lru@latest).
-
 ## Upgrade
 
 > Refer to the [UPGRADE.md](https://github.com/belgattitude/httpx/blob/main/packages/lru/UPGRADE.md) for detailed information.
@@ -397,7 +395,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Level | CI | Description |
 | --- | --- | --- |
-| Node | ✅ | CI for 20.x, 22.x, 24.x & 26.x. |
+| Node | ✅ | CI for 22.x, 24.x & 26.x. |
 | Browser | ✅ | Tested with latest chrome (vitest/playwright) |
 | Browserslist | ✅ | [defaults, > 0.26%, last 2 versions, Firefox ESR, not dead](https://github.com/belgattitude/httpx/blob/main/packages/lru/.browserslistrc) |
 | Bun | ✅ | Tested with latest (at time of writing >= 1.3.3) |

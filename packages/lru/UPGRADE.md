@@ -1,5 +1,11 @@
 ## Upgrade
 
+### Breaking changes in v0.18
+
+#### ESM only and Node >= 22.12
+
+The CJS build has been removed and the minimum Node version is now 22.12. Node 22.12+ can still `require("@httpx/lru")` from CommonJS thanks to [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require).
+
 ### Deprecations in v0.17
 
 #### TimeLruCache.expiresIn()
