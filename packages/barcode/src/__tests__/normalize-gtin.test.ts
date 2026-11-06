@@ -37,7 +37,8 @@ describe("normalizeGtin", () => {
     [Number.NaN, "NaN"],
     [Number.POSITIVE_INFINITY, "Infinity"],
     ["400638133393a", "non digit"],
-    [" 4006381333931", "leading space (no trimming)"],
+    ["4006 381333931", "inner space"],
+    ["   ", "whitespace only"],
     ["4006-381333931", "separator"],
     ["", "empty string"],
     [null, "null"],
@@ -119,6 +120,30 @@ describe("normalizeGtin", () => {
         );
       }
     );
+  });
+
+  describe("trim option", () => {
+    it.each([
+      " 4006381333931",
+      "4006381333931 ",
+      "\t4006381333931\r\n",
+      "\u00A04006381333931\u00A0",
+      "\uFEFF4006381333931",
+    ])("should trim %j by default", (value) => {
+      expect(normalizeGtin(value)).toBe("04006381333931");
+    });
+
+    it("should refuse whitespace with trim: false", () => {
+      expect(normalizeGtin(" 4006381333931", { trim: false })).toBeNull();
+      expect(() =>
+        assertNormalizedGtin("4006381333931\n", undefined, { trim: false })
+      ).toThrow(TypeError);
+    });
+
+    it("should apply minLength to the trimmed string", () => {
+      expect(normalizeGtin("  96385074  ", { minLength: 12 })).toBeNull();
+      expect(assertNormalizedGtin(" 96385074 ")).toBe("00000096385074");
+    });
   });
 
   it("should return a Gtin14", () => {

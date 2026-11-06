@@ -1,7 +1,20 @@
 import { hasValidGtinCheckDigit } from "./gtin-check-digit";
-import { toGtinDigits } from "./gtin-digits";
+import { getMinLength, readGtinDigits } from "./gtin-digits";
 import { isRestrictedGtinDigits } from "./gtin-validate";
 import type { NormalizeGtinOptions } from "./normalize-gtin";
+
+export type IsRestrictedCirculationOptions = Omit<
+  NormalizeGtinOptions,
+  "trim"
+> & {
+  /**
+   * Remove leading and trailing whitespace of strings. Off by default: like
+   * the type guards, it returns a boolean, not the trimmed value (a string
+   * with whitespace would be reported as a restricted GTIN and kept as is).
+   * @default false
+   */
+  trim?: boolean;
+};
 
 /**
  * Check if a GTIN is a GS1 Restricted Circulation Number (RCN): a code only
@@ -20,9 +33,10 @@ import type { NormalizeGtinOptions } from "./normalize-gtin";
  *    an EAN-13).
  *  - GTIN-14 containing one of the above (digits after the indicator).
  *
- * Accepts the same values as `normalizeGtin` (string, number or bigint,
- * leading zeros can be lost, `acceptRestricted` is ignored) and returns `false` for anything that isn't a
- * GTIN with a valid check digit.
+ * Accepts the same values and options as `normalizeGtin` (string, number or
+ * bigint, leading zeros can be lost, `acceptRestricted` is ignored), except
+ * `trim` that is off by default (opt-in with `trim: true`), and returns `false` for anything that isn't
+ * a GTIN with a valid check digit.
  *
  * @example
  * ```typescript
@@ -32,17 +46,23 @@ import type { NormalizeGtinOptions } from "./normalize-gtin";
  * isRestrictedCirculation(212345678992); // 👈 true (number)
  * isRestrictedCirculation("4006381333931"); // 👈 false
  * isRestrictedCirculation("2123456789011"); // 👈 false (invalid check digit)
+ * isRestrictedCirculation(" 2123456789010"); // 👈 false (not trimmed)
+ * isRestrictedCirculation(" 2123456789010", { trim: true }); // 👈 true
  * ```
  *
  * @throws RangeError when minLength is not an integer between 1 and 14
  */
 export const isRestrictedCirculation = (
   value: unknown,
-  options?: NormalizeGtinOptions
+  options?: IsRestrictedCirculationOptions
 ): boolean => {
-  const digits = toGtinDigits(value, options);
+  const digits = readGtinDigits(
+    value,
+    getMinLength(options),
+    options?.trim === true
+  );
   return (
-    digits !== null &&
+    typeof digits === "string" &&
     hasValidGtinCheckDigit(digits) &&
     isRestrictedGtinDigits(digits)
   );

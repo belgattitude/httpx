@@ -50,6 +50,13 @@ describe("formatGtin", () => {
     );
   });
 
+  it("should trim by default", () => {
+    expect(formatGtin(" 036000291452\n", 14)).toBe("00036000291452");
+    expect(formatGtin("\t00036000291452 ", 12)).toBe("036000291452");
+    expect(formatGtin(" 036000291452", 14, { trim: false })).toBeNull();
+    expect(formatGtin("0360 00291452", 14)).toBeNull();
+  });
+
   it("should round-trip with normalizeGtin", () => {
     const normalized = normalizeGtin(36_000_291_452);
     expect(normalized).not.toBeNull();

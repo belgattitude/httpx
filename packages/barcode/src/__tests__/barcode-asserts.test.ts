@@ -43,6 +43,11 @@ describe.each(cases)("$fn.name", ({ fn, valid, label }) => {
     }
   );
 
+  it("should never trim (the narrowed value would keep its whitespace)", () => {
+    expect(() => fn(` ${valid}`)).toThrow(TypeError);
+    expect(() => fn(`${valid}\n`)).toThrow(TypeError);
+  });
+
   it("should throw a TypeError with a custom message", () => {
     expect(() => fn("123", "Invalid barcode")).toThrow(
       new TypeError("Invalid barcode")

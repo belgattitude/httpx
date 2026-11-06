@@ -9,7 +9,7 @@ export type MsgOrErrorFactory = string | ((v: unknown) => Error);
  * Describe a value without leaking its content (type and length only).
  * @internal
  */
-const describeValue = (v: unknown): string => {
+export const describeValue = (v: unknown): string => {
   if (v === null) {
     return "null";
   }

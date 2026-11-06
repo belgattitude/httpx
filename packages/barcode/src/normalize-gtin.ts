@@ -2,21 +2,22 @@ import type { MsgOrErrorFactory } from "./assert-utils";
 import { throwAssertError } from "./assert-utils";
 import { toGtinDigits } from "./gtin-digits";
 import { isValidGtinDigits } from "./gtin-validate";
-import type { Gtin14, GtinValidationOptions } from "./types";
+import type { Gtin14, GtinTrimOptions, GtinValidationOptions } from "./types";
 
-export type NormalizeGtinOptions = GtinValidationOptions & {
-  /**
-   * Minimum number of digits of the input, as given (leading zeros included
-   * for strings). Integer between 1 and 14.
-   *
-   * Unless `acceptRestricted` is set, values with less than 8 significant
-   * digits are rejected (they would be an EAN-8 starting with 0, reserved for
-   * restricted circulation), so this option is mostly useful to raise the
-   * minimum, ie: `12` to refuse EAN-8 inputs.
-   * @default 8
-   */
-  minLength?: number;
-};
+export type NormalizeGtinOptions = GtinValidationOptions &
+  GtinTrimOptions & {
+    /**
+     * Minimum number of digits of the input, as given (leading zeros included
+     * for strings). Integer between 1 and 14.
+     *
+     * Unless `acceptRestricted` is set, values with less than 8 significant
+     * digits are rejected (they would be an EAN-8 starting with 0, reserved for
+     * restricted circulation), so this option is mostly useful to raise the
+     * minimum, ie: `12` to refuse EAN-8 inputs.
+     * @default 8
+     */
+    minLength?: number;
+  };
 
 /**
  * Normalize a GTIN (string, number or bigint) to its canonical 14 digits
@@ -31,7 +32,8 @@ export type NormalizeGtinOptions = GtinValidationOptions & {
  * "000021234569" is a restricted EAN-8).
  *
  * Accepted values:
- *  - strings of digits only (no trimming, no separators).
+ *  - strings of digits only (no separators), leading and trailing whitespace
+ *    is trimmed unless `trim: false`.
  *  - non-negative safe integers.
  *  - non-negative bigints.
  *
@@ -41,6 +43,8 @@ export type NormalizeGtinOptions = GtinValidationOptions & {
  * normalizeGtin("036000291452"); // 👈 "00036000291452" (UPC-A)
  * normalizeGtin("0036000291452"); // 👈 "00036000291452" (same product as EAN-13)
  * normalizeGtin(4006381333931n); // 👈 "04006381333931"
+ * normalizeGtin(" 4006381333931\n"); // 👈 "04006381333931" (trimmed)
+ * normalizeGtin(" 4006381333931", { trim: false }); // 👈 null
  * normalizeGtin(4006380000000); // 👈 null (invalid check digit)
  * normalizeGtin(96385074, { minLength: 12 }); // 👈 null (EAN-8 refused)
  * normalizeGtin(21234569); // 👈 null (EAN-8 starting with 2: restricted circulation)

@@ -16,6 +16,12 @@ export type Ean8 = string & WeakOpaqueContainer<"Ean8">;
 export type UpcA = string & WeakOpaqueContainer<"UpcA">;
 /** GTIN-14: 14 digits with a valid check digit */
 export type Gtin14 = string & WeakOpaqueContainer<"Gtin14">;
+/**
+ * UPC-E: 8 digits, zero-suppressed form of a UPC-A (number system 0 or 1, 6
+ * digits, check digit of the expanded UPC-A). Not a GTIN by itself, see
+ * `expandUpcE`.
+ */
+export type UpcE = string & WeakOpaqueContainer<"UpcE">;
 /** Any valid GTIN (GTIN-8, GTIN-12, GTIN-13 or GTIN-14) */
 export type Gtin = Ean13 | Ean8 | UpcA | Gtin14;
 
@@ -42,4 +48,31 @@ export type GtinValidationOptions = {
    * @default false
    */
   acceptRestricted?: boolean;
+};
+
+/** Trim option of the functions returning a value (not the type guards) */
+export type GtinTrimOptions = {
+  /**
+   * Remove leading and trailing whitespace of strings (spaces, tabs, line
+   * breaks, non-breaking spaces, BOM: `String.prototype.trim`), ie: values
+   * from CSV or spreadsheets. Lengths (ie: `minLength`) apply to the trimmed
+   * string. Type guards, assertions and `detectBarcodeType` never trim
+   * (they validate the value as is, it can't be narrowed to a trimmed one),
+   * `isRestrictedCirculation` only with `trim: true`.
+   * @default true
+   */
+  trim?: boolean;
+};
+
+/** UPC-E option of `parseGtin` (and `createGtinParser`) */
+export type UpcEOptions = {
+  /**
+   * Read 8 digit strings as UPC-E (zero-suppressed UPC-A) instead of EAN-8.
+   * Both have 8 digits and can't be told apart from their digits: only set it
+   * when the source is known to be UPC-E (ie: the scanner symbology). Numbers
+   * and bigints are never read as UPC-E (leading zero lost), pass a string.
+   * `minLength` counts a UPC-E as its expanded UPC-A (12 digits).
+   * @default false
+   */
+  upce?: boolean;
 };
