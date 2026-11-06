@@ -56,20 +56,22 @@ export type GtinTrimOptions = {
    * Remove leading and trailing whitespace of strings (spaces, tabs, line
    * breaks, non-breaking spaces, BOM: `String.prototype.trim`), ie: values
    * from CSV or spreadsheets. Lengths (ie: `minLength`) apply to the trimmed
-   * string. Type guards and assertions never trim (they can't narrow to a
-   * trimmed value).
+   * string. Type guards, assertions and `detectBarcodeType` never trim
+   * (they validate the value as is, it can't be narrowed to a trimmed one),
+   * `isRestrictedCirculation` only with `trim: true`.
    * @default true
    */
   trim?: boolean;
 };
 
-/** UPC-E option of `parseGtin` and `detectBarcodeType` */
+/** UPC-E option of `parseGtin` (and `createGtinParser`) */
 export type UpcEOptions = {
   /**
    * Read 8 digit strings as UPC-E (zero-suppressed UPC-A) instead of EAN-8.
    * Both have 8 digits and can't be told apart from their digits: only set it
    * when the source is known to be UPC-E (ie: the scanner symbology). Numbers
    * and bigints are never read as UPC-E (leading zero lost), pass a string.
+   * `minLength` counts a UPC-E as its expanded UPC-A (12 digits).
    * @default false
    */
   upce?: boolean;

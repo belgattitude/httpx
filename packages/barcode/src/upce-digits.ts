@@ -1,7 +1,18 @@
 /**
+ * Whether a 12 digit UPC-A starts with `0000`: its GTIN-14 form has 6 leading
+ * zeros, it's an EAN-8 (GS1-8 range), not a UPC-A.
+ *
+ * @internal
+ */
+export const isUpcAInGtin8Range = (upca: string): boolean =>
+  upca.startsWith("0000");
+
+/**
  * Expand a UPC-E (8 chars) to its UPC-A (12 chars, check digit kept as is).
- * Returns `null` when the number system isn't 0 or 1. Digits and check digit
- * are NOT validated (see isValidGtinDigits on the result).
+ * Returns `null` when the number system isn't 0 or 1, or when the UPC-A would
+ * start with `0000`: the GTIN-8 range (same GTIN-14 as an EAN-8, ie:
+ * "000010000007" is the EAN-8 "10000007"), no UPC-A is issued there. Digits
+ * and check digit are NOT validated (see isValidGtinDigits on the result).
  *
  * Expansion, from the last data digit (d6) of `S d1 d2 d3 d4 d5 d6 C`:
  *  - 0, 1, 2: `S d1 d2 d6 0000 d3 d4 d5 C`
@@ -28,5 +39,6 @@ export const expandUpcEDigits = (upce: string): string | null => {
   } else {
     body = `${d.slice(0, 5)}0000${last}`;
   }
-  return `${system}${body}${upce.charAt(7)}`;
+  const upca = `${system}${body}${upce.charAt(7)}`;
+  return isUpcAInGtin8Range(upca) ? null : upca;
 };

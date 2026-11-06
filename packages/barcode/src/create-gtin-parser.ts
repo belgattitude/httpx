@@ -1,5 +1,5 @@
 import type { BarcodeType } from "./detect-barcode-type";
-import { toGtinDigits } from "./gtin-digits";
+import { getMinLength } from "./gtin-digits";
 import type {
   GtinCategory,
   ParsedGtin,
@@ -148,7 +148,7 @@ export const createGtinParser = <
     }
   }
   // validates minLength (throws a RangeError) at creation
-  toGtinDigits(null, parseOptions);
+  getMinLength(parseOptions);
   Object.freeze(parseOptions);
   const resolved: GtinParserOptions = Object.freeze(
     errorFactory === undefined

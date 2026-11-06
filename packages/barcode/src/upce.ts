@@ -7,14 +7,14 @@ import type {
   UpcA,
   UpcE,
 } from "./types";
-import { expandUpcEDigits } from "./upce-digits";
+import { expandUpcEDigits, isUpcAInGtin8Range } from "./upce-digits";
 
 /**
  * Expand a UPC-E (8 digits, zero-suppressed) to its UPC-A (12 digits).
  * Returns `null` when the value isn't a valid UPC-E: not 8 digits, number
  * system other than 0 or 1, invalid check digit (computed on the UPC-A) or
- * restricted circulation number (unless `acceptRestricted`). Leading and
- * trailing whitespace is trimmed unless `trim: false`.
+ * expanding to the GTIN-8 range (UPC-A starting with `0000`, the same GTIN as
+ * an EAN-8). Leading and trailing whitespace is trimmed unless `trim: false`.
  *
  * @example
  * ```typescript
@@ -42,8 +42,10 @@ export const expandUpcE = (
 /**
  * Compress a GTIN to its UPC-E (8 digits, zero-suppressed) when possible.
  * Accepts a UPC-A or its EAN-13 / GTIN-14 forms (leading zeros). Returns
- * `null` when the value isn't a valid GTIN, has no UPC-A form, its number
- * system isn't 0 or 1 or it doesn't have the zeros UPC-E can suppress.
+ * `null` when the value isn't a valid GTIN, has no UPC-A form (an EAN-13, a
+ * GTIN-14 with an indicator, or an EAN-8: its UPC-A form starting with `0000`
+ * is the GTIN-8 range), its number system isn't 0 or 1 or it doesn't have the
+ * zeros UPC-E can suppress.
  * Leading and trailing whitespace is trimmed unless `trim: false`.
  *
  * @example
@@ -51,6 +53,7 @@ export const expandUpcE = (
  * compressUpcA("042100005264"); // 👈 "04252614" (UpcE)
  * compressUpcA("00042100005264"); // 👈 "04252614" (GTIN-14 form)
  * compressUpcA("036000291452"); // 👈 null (no suppressible zeros)
+ * compressUpcA("10000007"); // 👈 null (EAN-8, no UPC-A form)
  * ```
  */
 export const compressUpcA = (
@@ -58,7 +61,11 @@ export const compressUpcA = (
   options?: GtinValidationOptions & GtinTrimOptions
 ): UpcE | null => {
   const upca = formatGtin(gtin, 12, options);
-  if (upca === null || !(upca.startsWith("0") || upca.startsWith("1"))) {
+  if (
+    upca === null ||
+    !(upca.startsWith("0") || upca.startsWith("1")) ||
+    isUpcAInGtin8Range(upca)
+  ) {
     return null;
   }
   // manufacturer (5 digits) and product (5 digits) codes

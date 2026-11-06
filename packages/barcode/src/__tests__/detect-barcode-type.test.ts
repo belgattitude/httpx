@@ -52,28 +52,14 @@ describe("detectBarcodeType", () => {
     }
   );
 
-  describe("trim option", () => {
-    it.each([
-      " 4006381333931",
-      "4006381333931 ",
-      "\t4006381333931\r\n",
-      "\u00A04006381333931",
-      "\uFEFF4006381333931",
-    ])("should trim %j by default", (code) => {
-      expect(detectBarcodeType(code)).toBe("ean13");
-    });
-
-    it.each([" 4006381333931", "4006381333931 ", "4006381333931\n"])(
-      "should refuse %j with trim: false",
-      (code) => {
-        expect(detectBarcodeType(code, { trim: false })).toBeNull();
-      }
-    );
-
-    it("should not trim inner whitespace", () => {
-      expect(detectBarcodeType("4006 381333931")).toBeNull();
-      expect(detectBarcodeType("   ")).toBeNull();
-    });
+  it.each([
+    " 4006381333931",
+    "4006381333931 ",
+    "\t4006381333931\r\n",
+    "4006 381333931",
+    "   ",
+  ])("should never trim %j (validates the value as is)", (code) => {
+    expect(detectBarcodeType(code)).toBeNull();
   });
 
   it("should return null for non strings", () => {

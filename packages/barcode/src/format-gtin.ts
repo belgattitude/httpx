@@ -1,4 +1,4 @@
-import { trimGtinString } from "./gtin-digits";
+import { toLength, trimGtinString } from "./gtin-digits";
 import { isGtin } from "./is-gtin";
 import type {
   GtinByLength,
@@ -40,14 +40,11 @@ export const formatGtin = <TLength extends GtinLength>(
   if (!isGtin(value, options)) {
     return null;
   }
-  const extra = value.length - length;
-  if (extra <= 0) {
-    return value.padStart(length, "0") as GtinByLength[TLength];
-  }
-  for (let i = 0; i < extra; i++) {
+  // only leading zeros can be removed
+  for (let i = 0; i < value.length - length; i++) {
     if (value[i] !== "0") {
       return null;
     }
   }
-  return value.slice(extra) as GtinByLength[TLength];
+  return toLength<GtinByLength[TLength]>(value, length);
 };

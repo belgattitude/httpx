@@ -6,24 +6,15 @@ import { getBarcode } from "./get-barcode";
 
 const { detectBarcodeType } = await getBarcode();
 const codes = getBarcodeSeeds(1000);
-const noTrim = { trim: false } as const;
 
 describe(`detectBarcodeType() - ${codes.length} mixed codes`, () => {
   test(`detectBarcodeType() - ${codes.length} mixed codes`, async ({
     bench,
   }) => {
-    await bench.compare(
-      bench("@httpx/barcode - detectBarcodeType(v)", () => {
-        for (const code of codes) {
-          detectBarcodeType(code);
-        }
-      }),
-      bench("@httpx/barcode - detectBarcodeType(v, { trim: false })", () => {
-        for (const code of codes) {
-          detectBarcodeType(code, noTrim);
-        }
-      }),
-      benchOptions
-    );
+    await bench("@httpx/barcode - detectBarcodeType", () => {
+      for (const code of codes) {
+        detectBarcodeType(code);
+      }
+    }).run(benchOptions);
   });
 });

@@ -104,6 +104,10 @@ describe("parseGtin", () => {
     ["123456789012345", "invalid_length"],
     [100_123_456_789_028, "invalid_length"],
     ["40063813339a12", "invalid_format"],
+    // non digit strings of an unsupported length: format, not length
+    ["N/A", "invalid_format"],
+    ["abcdefghijklmnopq", "invalid_format"],
+    ["4006-381-333-931", "invalid_format"],
     ["4006381333932", "invalid_check_digit"],
     [4_006_380_000_000, "invalid_check_digit"],
     ["2123456789010", "restricted"],

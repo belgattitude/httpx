@@ -88,12 +88,11 @@ const lenientParser = gtinParser.extend({ acceptRestricted: true });
 
 #### trim option
 
-**Behavior change**: `normalizeGtin`, `assertNormalizedGtin`, `isRestrictedCirculation`, `detectBarcodeType` and `formatGtin` now trim leading and trailing whitespace of strings by default (`String.prototype.trim`, ie: values from CSV or spreadsheets). Pass `{ trim: false }` to keep the previous behavior:
+**Behavior change**: `normalizeGtin`, `assertNormalizedGtin` and `formatGtin` now trim leading and trailing whitespace of strings by default (`String.prototype.trim`, ie: values from CSV or spreadsheets). Pass `{ trim: false }` to keep the previous behavior:
 
 ```typescript
 normalizeGtin(" 4006381333931\n"); // 👈 "04006381333931" (was null)
 normalizeGtin(" 4006381333931", { trim: false }); // 👈 null
-detectBarcodeType(" 4006381333931"); // 👈 "ean13" (was null)
 ```
 
-Typeguards and assertions (`isGtin`, `isEan13`, `assertEan13`...) never trim: they narrow the value as is, a string with whitespace can't be typed as `Ean13`. Use `parseGtin` for untrusted input.
+Typeguards, assertions (`isGtin`, `isEan13`, `assertEan13`...) and `detectBarcodeType` never trim: they validate the value as is, a string with whitespace can't be typed as `Ean13`. `isRestrictedCirculation` only trims with `{ trim: true }` (it returns a boolean, not the value). Use `parseGtin` for untrusted input.

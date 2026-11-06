@@ -80,8 +80,8 @@ parseGtin(null); // 👈 { success: false, reason: "invalid_type" }
 | Reason | Description |
 | --- | --- |
 | `invalid_type` | Not a string, number or bigint (or not listed in `inputTypes`) |
-| `invalid_format` | Non digit character (whitespace too with `trim: false`), UPC-E number system other than 0 or 1 (with `upce`), negative, unsafe or non integer number, negative bigint |
-| `invalid_length` | Less than `minLength` (default 8) or more than 14 digits |
+| `invalid_format` | Non digit character (whitespace too with `trim: false`), UPC-E number system other than 0 or 1 or expanding to the GTIN-8 range (with `upce`), negative, unsafe or non integer number, negative bigint |
+| `invalid_length` | Less than `minLength` (default 8) or more than 14 digits (a UPC-E counts as its 12 digit UPC-A) |
 | `invalid_check_digit` | The GS1 mod-10 check digit doesn't match |
 | `restricted` | [Restricted circulation number](#restricted-circulation-numbers), unless `acceptRestricted` |
 | `invalid_barcode_type` | Valid GTIN but its `type` isn't listed in `types` |
@@ -195,7 +195,7 @@ const lenientParser = gtinParser.extend({ acceptRestricted: true });
 
 ### detectBarcodeType
 
-Detect the type of a barcode string: `ean8`, `upca`, `ean13` or `gtin14`, based on its length (no leading zeros handling, see [parseGtin](#parsegtin)). Returns `null` when the length isn't supported, the code contains anything other than digits, the check digit is invalid or it's a [restricted circulation number](#restricted-circulation-numbers) (unless `{ acceptRestricted: true }`). Leading and trailing whitespace is trimmed unless `{ trim: false }`.
+Detect the type of a barcode string: `ean8`, `upca`, `ean13` or `gtin14`, based on its length (no leading zeros handling, see [parseGtin](#parsegtin)). Returns `null` when the length isn't supported, the code contains anything other than digits, the check digit is invalid or it's a [restricted circulation number](#restricted-circulation-numbers) (unless `{ acceptRestricted: true }`). Like the typeguards, it validates the value as is (never trimmed): use [parseGtin](#parsegtin) for untrusted input.
 
 ```typescript
 import { detectBarcodeType, type BarcodeType } from "@httpx/barcode";
@@ -205,8 +205,7 @@ detectBarcodeType("036000291452"); // 👈 "upca"
 detectBarcodeType("4006381333931"); // 👈 "ean13"
 detectBarcodeType("10012345678902"); // 👈 "gtin14"
 detectBarcodeType("4006381333932"); // 👈 null (invalid check digit)
-detectBarcodeType(" 4006381333931\n"); // 👈 "ean13" (trimmed)
-detectBarcodeType(" 4006381333931", { trim: false }); // 👈 null
+detectBarcodeType(" 4006381333931"); // 👈 null (never trimmed)
 detectBarcodeType("2123456789010"); // 👈 null (restricted circulation)
 detectBarcodeType("2123456789010", { acceptRestricted: true }); // 👈 "ean13"
 ```
@@ -310,12 +309,13 @@ expandUpcE("04252614"); // 👈 "042100005264" (UpcA)
 compressUpcA("042100005264"); // 👈 "04252614" (UpcE)
 compressUpcA("00042100005264"); // 👈 "04252614" (any GTIN form of the UPC-A)
 compressUpcA("036000291452"); // 👈 null (no suppressible zeros)
+compressUpcA("10000007"); // 👈 null (EAN-8, no UPC-A form)
 
 parseGtin("04252614", { upce: true });
 // 👈 { success: true, value: "042100005264", type: "upca", gtin: "00042100005264", inputType: "upce", ... }
 ```
 
-`expandUpcE` and `compressUpcA` return `null` for invalid values, accept `acceptRestricted` and trim strings unless `{ trim: false }`. Numbers are never read as UPC-E (the number system digit would be lost), pass a string.
+`expandUpcE` and `compressUpcA` return `null` for invalid values, accept `acceptRestricted` and trim strings unless `{ trim: false }`. A UPC-A starting with `0000` is in the GTIN-8 range (the same GTIN as an EAN-8, ie: `000010000007` is the EAN-8 `10000007`): it has no UPC-E, and a UPC-E expanding to it is refused. With `parseGtin`, `minLength` counts a UPC-E as its 12 digit UPC-A. Numbers are never read as UPC-E (the number system digit would be lost), pass a string.
 
 ### isRestrictedCirculation
 
@@ -328,12 +328,13 @@ isRestrictedCirculation("2123456789010"); // 👈 true (EAN-13 starting with 2)
 isRestrictedCirculation("0412345678903"); // 👈 true (EAN-13 starting with 04)
 isRestrictedCirculation("212345678992"); // 👈 true (UPC-A starting with 2)
 isRestrictedCirculation(212345678909); // 👈 true ("0212345678909", leading zero lost)
-isRestrictedCirculation(" 2123456789010\n"); // 👈 true (trimmed)
+isRestrictedCirculation(" 2123456789010"); // 👈 false (not trimmed by default)
+isRestrictedCirculation(" 2123456789010", { trim: true }); // 👈 true
 isRestrictedCirculation("4006381333931"); // 👈 false
 isRestrictedCirculation("2123456789011"); // 👈 false (invalid check digit)
 ```
 
-It accepts the same values and options as [normalizeGtin](#normalizegtin) (string, number or bigint, `minLength`, `trim`, `acceptRestricted` is ignored) and returns `false` for anything that isn't a GTIN with a valid check digit.
+It accepts the same values and options as [normalizeGtin](#normalizegtin) (string, number or bigint, `minLength`, `acceptRestricted` is ignored), except `trim` that is off by default as it returns a boolean, not the value (opt-in with `{ trim: true }`) and returns `false` for anything that isn't a GTIN with a valid check digit.
 
 ### Restricted circulation numbers
 
@@ -430,22 +431,23 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm) | Size (brotli) |
 | --- | --: |
-| `import { detectBarcodeType } from '@httpx/barcode'` | ~ 415B |
+| `import { parseGtin } from '@httpx/barcode'` | ~ 1.35KB |
+| `import { parseGtinOrThrow } from '@httpx/barcode'` | ~ 1.48KB |
+| `import { createGtinParser } from '@httpx/barcode'` | ~ 1.62KB |
+| `import { detectBarcodeType } from '@httpx/barcode'` | ~ 385B |
 | `import { isGtin } from '@httpx/barcode'` | ~ 340B |
-| `import { normalizeGtin } from '@httpx/barcode'` | ~ 530B |
-| `import { formatGtin } from '@httpx/barcode'` | ~ 450B |
-| `import { isRestrictedCirculation } from '@httpx/barcode'` | ~ 490B |
-| `import { assertNormalizedGtin } from '@httpx/barcode'` | ~ 650B |
-| `import { parseGtin } from '@httpx/barcode'` | ~ 1.25KB |
-| `import { parseGtinOrThrow } from '@httpx/barcode'` | ~ 1.4KB |
-| `import { createGtinParser } from '@httpx/barcode'` | ~ 1.55KB |
-| `import { isUpcE } from '@httpx/barcode'` | ~ 450B |
-| `import { expandUpcE } from '@httpx/barcode'` | ~ 485B |
-| `import { compressUpcA } from '@httpx/barcode'` | ~ 600B |  |
 | `import { isEan13 } from '@httpx/barcode'` | ~ 325B |
-| `import { isEan8, isEan13, isGtin14, isUpcA } from '@httpx/barcode'` | ~ 350B |
-| `import { assertEan13 } from '@httpx/barcode'` | ~ 460B |
-| `import { assertEan8, assertEan13, assertGtin, assertGtin14, assertUpcA } from '@httpx/barcode'` | ~ 560B |
+| `import { isEan8, isEan13, isGtin14, isUpcA } from '@httpx/barcode'` | ~ 345B |
+| `import { assertEan13 } from '@httpx/barcode'` | ~ 455B |
+| `import { assertEan8, assertEan13, assertGtin, assertGtin14, assertUpcA } from '@httpx/barcode'` | ~ 565B |
+| `import { isUpcE } from '@httpx/barcode'` | ~ 475B |
+| `import { assertUpcE } from '@httpx/barcode'` | ~ 620B |
+| `import { expandUpcE } from '@httpx/barcode'` | ~ 510B |
+| `import { compressUpcA } from '@httpx/barcode'` | ~ 630B |
+| `import { formatGtin } from '@httpx/barcode'` | ~ 455B |
+| `import { isRestrictedCirculation } from '@httpx/barcode'` | ~ 505B |
+| `import { normalizeGtin } from '@httpx/barcode'` | ~ 560B |
+| `import { assertNormalizedGtin } from '@httpx/barcode'` | ~ 680B |
 
 ## Compatibility
 

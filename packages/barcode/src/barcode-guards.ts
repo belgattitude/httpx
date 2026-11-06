@@ -77,9 +77,9 @@ export const isGtin14 = (
 
 /**
  * Check if a value is a valid UPC-E (8 digits, zero-suppressed UPC-A): number
- * system 0 or 1 and valid check digit, both computed on the expanded UPC-A
- * (see `expandUpcE`). Restricted circulation numbers (of the UPC-A) are
- * refused unless `acceptRestricted` is set.
+ * system 0 or 1 and valid check digit, computed on the expanded UPC-A (see
+ * `expandUpcE`). UPC-E expanding to the GTIN-8 range (UPC-A starting with
+ * `0000`, the same GTIN as an EAN-8) are refused.
  *
  * An 8 digit value can be both a valid UPC-E and a valid EAN-8: only the
  * source (ie: the scanner symbology) tells which one it is.

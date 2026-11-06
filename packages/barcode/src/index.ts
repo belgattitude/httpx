@@ -20,6 +20,7 @@ export type { BarcodeFormat, BarcodeType } from "./detect-barcode-type";
 export { detectBarcodeType } from "./detect-barcode-type";
 export { formatGtin } from "./format-gtin";
 export { isGtin } from "./is-gtin";
+export type { IsRestrictedCirculationOptions } from "./is-restricted-circulation";
 export { isRestrictedCirculation } from "./is-restricted-circulation";
 export type { NormalizeGtinOptions } from "./normalize-gtin";
 export { assertNormalizedGtin, normalizeGtin } from "./normalize-gtin";

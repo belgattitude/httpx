@@ -42,6 +42,9 @@ const referenceExpand = (system: string, data: string): string => {
   return `${payload}${checkDigit(payload)}`;
 };
 
+/** UPC-A in the GTIN-8 range (same GTIN-14 as an EAN-8) */
+const inGtin8Range = (upca: string): boolean => upca.startsWith("0000");
+
 /** Seeded UPC-E samples, every last digit included */
 const samples = (() => {
   let seed = 7;
@@ -69,15 +72,19 @@ describe("expandUpcE", () => {
 
   it("should expand like the reference GS1 table", () => {
     for (const { upce, upca } of samples) {
-      // restricted ones (UPC-A starting with 0000, GTIN-8 range) included
-      expect(expandUpcE(upce, { acceptRestricted: true })).toBe(upca);
+      // UPC-A starting with 0000 (GTIN-8 range) refused, restricted or not
+      expect(expandUpcE(upce, { acceptRestricted: true })).toBe(
+        inGtin8Range(upca) ? null : upca
+      );
     }
+    expect(samples.some(({ upca }) => inGtin8Range(upca))).toBe(true);
   });
 
   it("should agree with isUpcA on the expanded value", () => {
     for (const { upce, upca } of samples) {
-      expect(isUpcE(upce)).toBe(isUpcA(upca));
-      expect(expandUpcE(upce)).toBe(isUpcA(upca) ? upca : null);
+      const expected = isUpcA(upca) && !inGtin8Range(upca);
+      expect(isUpcE(upce)).toBe(expected);
+      expect(expandUpcE(upce)).toBe(expected ? upca : null);
     }
   });
 
@@ -120,11 +127,19 @@ describe("compressUpcA", () => {
   });
 
   it("should round-trip with expandUpcE", () => {
-    for (const { upca } of samples) {
+    for (const { upca } of samples.filter((v) => !inGtin8Range(v.upca))) {
       const upce = compressUpcA(upca, { acceptRestricted: true });
       // every expanded UPC-E can be compressed back (canonical form)
       expect(upce).not.toBeNull();
       expect(expandUpcE(upce ?? "", { acceptRestricted: true })).toBe(upca);
+    }
+  });
+
+  it("should not compress the GTIN-8 range (EAN-8, no UPC-A form)", () => {
+    const gtin8Range = samples.filter((v) => inGtin8Range(v.upca));
+    expect(gtin8Range.length).toBeGreaterThan(0);
+    for (const { upca } of gtin8Range) {
+      expect(compressUpcA(upca, { acceptRestricted: true })).toBeNull();
     }
   });
 
@@ -144,6 +159,8 @@ describe("compressUpcA", () => {
     ["10012345678902", "GTIN-14 with indicator"],
     ["042100005265", "invalid check digit"],
     ["012345000045", "product 00004 (needs 5-9)"],
+    ["10000007", "EAN-8 (GTIN-8 range, no UPC-A form)"],
+    ["000010000007", "UPC-A form of the EAN-8 10000007"],
   ])("should return null for %s (%s)", (gtin) => {
     expect(compressUpcA(gtin)).toBeNull();
   });
@@ -166,13 +183,16 @@ describe("isUpcE / assertUpcE", () => {
     expect(isUpcE(" 04252614")).toBe(false);
   });
 
-  it("should refuse restricted UPC-A unless acceptRestricted", () => {
-    // UPC-A "0000000001.." is in the GTIN-8 range (EAN-8 starting with 0)
-    const upce = "00001233";
+  it("should refuse the GTIN-8 range (UPC-A starting with 0000)", () => {
+    // restricted: EAN-8 "00000123" (starting with 0)
     expect(referenceExpand("0", "000123")).toBe("000000000123");
-    expect(expandUpcE(upce, { acceptRestricted: true })).toBe("000000000123");
-    expect(isUpcE(upce)).toBe(false);
-    expect(isUpcE(upce, { acceptRestricted: true })).toBe(true);
+    // not restricted: EAN-8 "10000007"
+    expect(referenceExpand("0", "000104")).toBe("000010000007");
+    for (const upce of ["00001233", "00001047"]) {
+      expect(isUpcE(upce)).toBe(false);
+      expect(isUpcE(upce, { acceptRestricted: true })).toBe(false);
+      expect(expandUpcE(upce, { acceptRestricted: true })).toBeNull();
+    }
   });
 
   it("should throw a TypeError", () => {
@@ -214,6 +234,8 @@ describe("parseGtin with upce", () => {
     ["04252615", "invalid_check_digit"],
     ["24252614", "invalid_format"],
     ["0425a614", "invalid_format"],
+    // GTIN-8 range: would be the EAN-8 "10000007", not a UPC-A
+    ["00001047", "invalid_format"],
   ])("should refuse %s (%s)", (value, reason) => {
     expect(parseGtin(value, { upce: true })).toStrictEqual({
       success: false,
@@ -239,6 +261,30 @@ describe("parseGtin with upce", () => {
       success: false,
       reason: "invalid_barcode_type",
     });
+  });
+
+  it("should count a UPC-E as its UPC-A for minLength", () => {
+    expect(parseGtin("04252614", { upce: true, minLength: 12 })).toMatchObject({
+      success: true,
+      value: "042100005264",
+      inputType: "upce",
+    });
+    expect(parseGtin("04252614", { upce: true, minLength: 13 })).toStrictEqual({
+      success: false,
+      reason: "invalid_length",
+    });
+    // other lengths still checked as given (7 digits: not a UPC-E, less
+    // than 8 significant digits so restricted)
+    expect(parseGtin("0425261", { upce: true, minLength: 7 })).toStrictEqual({
+      success: false,
+      reason: "restricted",
+    });
+    expect(parseGtin("123456789", { upce: true, minLength: 12 })).toStrictEqual(
+      { success: false, reason: "invalid_length" }
+    );
+    expect(parseGtin("abcdefghi", { upce: true, minLength: 12 })).toStrictEqual(
+      { success: false, reason: "invalid_format" }
+    );
   });
 
   it("should leave other lengths unchanged", () => {

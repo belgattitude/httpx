@@ -1,8 +1,21 @@
 /* oxlint-disable unicorn/prefer-code-point -- charCodeAt always returns a number for in-range indexes (ASCII digits) */
 import { describeValue } from "./assert-utils";
 import type { BarcodeFormat, BarcodeType } from "./detect-barcode-type";
+import {
+  barcodeTypeLengths,
+  getBarcodeTypeByLength,
+} from "./detect-barcode-type";
 import { hasValidGtinCheckDigit } from "./gtin-check-digit";
-import { toGtinDigits } from "./gtin-digits";
+import type { GtinDigitsFailure } from "./gtin-digits";
+import {
+  DIGITS_INVALID_FORMAT,
+  DIGITS_INVALID_LENGTH,
+  getMinLength,
+  isDigitsOnly,
+  readGtinDigits,
+  toLength,
+  trimGtinString,
+} from "./gtin-digits";
 import { isRestrictedGtinDigits } from "./gtin-validate";
 import type { NormalizeGtinOptions } from "./normalize-gtin";
 import type { Ean8, Ean13, Gtin14, UpcA, UpcEOptions } from "./types";
@@ -62,10 +75,10 @@ export type ParseGtinOptions = NormalizeGtinOptions &
  *  - `invalid_type`: not a string, number or bigint (or not in `inputTypes`).
  *  - `invalid_format`: a string with a non digit character (whitespace
  *    included when `trim` is false), a UPC-E with a number system other than
- *    0 or 1 (with `upce`), a negative,
+ *    0 or 1 or expanding to the GTIN-8 range (with `upce`), a negative,
  *    unsafe or non integer number, a negative bigint.
  *  - `invalid_length`: less than `minLength` (default 8) or more than 14
- *    digits.
+ *    digits (a UPC-E counts as its expanded UPC-A: 12 digits).
  *  - `invalid_check_digit`: the GS1 mod-10 check digit doesn't match.
  *  - `restricted`: restricted circulation number (unless `acceptRestricted`).
  *  - `invalid_barcode_type`: valid GTIN but its type isn't in `types`.
@@ -169,50 +182,14 @@ const failures = {
   invalid_category: failure("invalid_category"),
 } satisfies Record<ParseGtinErrorReason, ParseGtinFailure>;
 
-/** Type as given, from the length of a string input */
-const getInputType = (length: number): BarcodeType | null => {
-  switch (length) {
-    case 13: {
-      return "ean13";
-    }
-    case 12: {
-      return "upca";
-    }
-    case 8: {
-      return "ean8";
-    }
-    case 14: {
-      return "gtin14";
-    }
-    default: {
-      return null;
-    }
+/** Reason of a readGtinDigits failure (a function: tree-shakable) */
+const getDigitsFailure = (code: GtinDigitsFailure): ParseGtinFailure => {
+  if (code === DIGITS_INVALID_LENGTH) {
+    return failures.invalid_length;
   }
-};
-
-/** Reason toGtinDigits returned null (invalid path only) */
-const getDigitsFailure = (value: unknown): ParseGtinFailure => {
-  if (typeof value === "number") {
-    return Number.isSafeInteger(value) && value >= 0
-      ? failures.invalid_length
-      : failures.invalid_format;
-  }
-  if (typeof value === "bigint") {
-    return value < 0n ? failures.invalid_format : failures.invalid_length;
-  }
-  return typeof value === "string"
-    ? failures.invalid_length
+  return code === DIGITS_INVALID_FORMAT
+    ? failures.invalid_format
     : failures.invalid_type;
-};
-
-const isDigitsOnly = (code: string): boolean => {
-  for (let i = 0; i < code.length; i++) {
-    const c = code.charCodeAt(i);
-    if (c < ZERO || c > ZERO + 9) {
-      return false;
-    }
-  }
-  return true;
 };
 
 /**
@@ -273,36 +250,12 @@ const getGtinCategory = (digits: string): GtinCategory => {
   return prefix >= "81" && prefix < "85" ? "coupon" : "trade_item";
 };
 
-/** Length of the value for a barcode type */
-const getValueLength = (type: BarcodeType): number => {
-  if (type === "ean13") {
-    return 13;
-  }
-  if (type === "upca") {
-    return 12;
-  }
-  return type === "ean8" ? 8 : 14;
-};
-
-/**
- * Digits to the given length: as is when already there (no allocation),
- * left-padded or without their extra leading zeros (the type being the
- * shortest length, only zeros are dropped)
- */
-const toLength = <T extends string>(digits: string, length: number): T => {
-  const extra = digits.length - length;
-  if (extra === 0) {
-    return digits as T;
-  }
-  return (extra > 0 ? digits.slice(extra) : digits.padStart(length, "0")) as T;
-};
-
 /**
  * Parse a GTIN (string, number or bigint, leading zeros possibly lost)
  * without throwing. On success, returns the barcode `value` in the length of
  * its `type` (leading zeros restored), its canonical GTIN-14 form (`gtin`,
- * like `normalizeGtin`), input type, indicator digit and category
- * circulation flag. Otherwise the `reason` it was refused.
+ * like `normalizeGtin`), input type, indicator digit and category. Otherwise
+ * the `reason` it was refused.
  *
  * Reasons are checked in this order: `invalid_type`, `invalid_format` /
  * `invalid_length`, `invalid_check_digit`, `restricted`,
@@ -334,7 +287,8 @@ const toLength = <T extends string>(digits: string, length: number): T => {
  * @param value - GTIN as a string (digits only, see `trim`), a non-negative
  *   safe integer or a non-negative bigint
  * @param options.minLength - minimum number of digits of the input, as given
- *   (leading zeros of strings included), between 1 and 14. Default `8`.
+ *   (leading zeros of strings included, a UPC-E counts as its 12 digit
+ *   UPC-A), between 1 and 14. Default `8`.
  * @param options.acceptRestricted - accept restricted circulation numbers
  *   (with `category: "restricted"`). Default `false`.
  * @param options.types - accepted barcode types, matched on `type`. Default
@@ -353,28 +307,50 @@ export const parseGtin = (
   value: unknown,
   options?: ParseGtinOptions
 ): ParseGtinResult => {
+  // validated first (throws a RangeError) whatever the value
+  const minLength = getMinLength(options);
   const inputTypes = options?.inputTypes;
   if (
     inputTypes !== undefined &&
     !inputTypes.includes(typeof value as GtinInputType)
   ) {
-    // validates minLength (throws a RangeError) like for any other value
-    toGtinDigits(null, options);
     return failures.invalid_type;
   }
-  let digits = toGtinDigits(value, options);
-  if (digits === null) {
-    return getDigitsFailure(value);
+  const isString = typeof value === "string";
+  const upce = isString && options?.upce === true;
+  // with upce, an 8 digit string is a UPC-E: its length is the one of the
+  // expanded UPC-A, minLength is checked after the expansion
+  const trim = options?.trim !== false;
+  const read = readGtinDigits(
+    value,
+    upce ? Math.min(minLength, 8) : minLength,
+    trim
+  );
+  if (typeof read !== "string") {
+    // a non digit string is a format failure, whatever its length
+    return isString && !isDigitsOnly(trim ? trimGtinString(value) : value)
+      ? failures.invalid_format
+      : getDigitsFailure(read);
   }
-  let inputType: BarcodeFormat | null =
-    typeof value === "string" ? getInputType(digits.length) : null;
-  if (inputType === "ean8" && options?.upce === true) {
-    // validated as the expanded UPC-A (check digit, restricted ranges)
-    digits = expandUpcEDigits(digits);
-    if (digits === null) {
-      return failures.invalid_format;
+  let digits = read;
+  let inputType: BarcodeFormat | null = isString
+    ? getBarcodeTypeByLength(digits.length)
+    : null;
+  if (upce) {
+    if (inputType === "ean8") {
+      // validated as the expanded UPC-A (check digit, restricted ranges)
+      const upca = expandUpcEDigits(digits);
+      if (upca === null) {
+        return failures.invalid_format;
+      }
+      digits = upca;
+      inputType = "upce";
     }
-    inputType = "upce";
+    if (digits.length < minLength) {
+      return isDigitsOnly(digits)
+        ? failures.invalid_length
+        : failures.invalid_format;
+    }
   }
   if (!hasValidGtinCheckDigit(digits)) {
     return isDigitsOnly(digits)
@@ -398,7 +374,7 @@ export const parseGtin = (
   }
   return {
     success: true,
-    value: toLength(digits, getValueLength(type)),
+    value: toLength(digits, barcodeTypeLengths[type]),
     type,
     gtin: toLength(digits, 14),
     inputType,
