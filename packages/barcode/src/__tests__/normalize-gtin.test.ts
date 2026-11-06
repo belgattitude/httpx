@@ -66,10 +66,29 @@ describe("normalizeGtin", () => {
       expect(normalizeGtin("73513537")).toBe("00000073513537");
     });
 
-    it("should not refuse longer codes starting with 0 or 2", () => {
-      // UPC-A starting with 0, EAN-13 starting with 2 (not an EAN-8)
+    it("should not refuse longer codes starting with 0", () => {
+      // UPC-A starting with 0 (not an EAN-8)
       expect(normalizeGtin("036000291452")).toBe("00036000291452");
-      expect(normalizeGtin("2000000000008")).toBe("02000000000008");
+    });
+
+    it("should accept them with acceptRestricted", () => {
+      const accept = { acceptRestricted: true };
+      expect(normalizeGtin("21234569", accept)).toBe("00000021234569");
+      expect(normalizeGtin(1_234_565, { ...accept, minLength: 7 })).toBe(
+        "00000001234565"
+      );
+    });
+  });
+
+  describe("restricted circulation EAN-13 / UPC-A", () => {
+    it.each([
+      ["2000000000008", "02000000000008"],
+      ["0412345678903", "00412345678903"],
+      [212_345_678_992, "00212345678992"],
+      [212_345_678_909, "00212345678909"],
+    ])("should refuse %s unless acceptRestricted", (value, expected) => {
+      expect(normalizeGtin(value)).toBeNull();
+      expect(normalizeGtin(value, { acceptRestricted: true })).toBe(expected);
     });
   });
 
@@ -151,5 +170,11 @@ describe("assertNormalizedGtin", () => {
     expect(() =>
       assertNormalizedGtin(96_385_074, undefined, { minLength: 0 })
     ).toThrow(RangeError);
+    expect(() => assertNormalizedGtin("2123456789010")).toThrow(TypeError);
+    expect(
+      assertNormalizedGtin("2123456789010", undefined, {
+        acceptRestricted: true,
+      })
+    ).toBe("02123456789010");
   });
 });

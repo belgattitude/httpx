@@ -2,7 +2,14 @@ import type { MsgOrErrorFactory } from "./assert-utils";
 import { throwAssertError } from "./assert-utils";
 import { isEan8, isEan13, isGtin14, isUpcA } from "./barcode-guards";
 import { isGtin } from "./is-gtin";
-import type { Ean8, Ean13, Gtin, Gtin14, UpcA } from "./types";
+import type {
+  Ean8,
+  Ean13,
+  Gtin,
+  Gtin14,
+  GtinValidationOptions,
+  UpcA,
+} from "./types";
 
 /**
  * Assert a value is a valid EAN-13 (13 digits, valid check digit).
@@ -12,14 +19,16 @@ import type { Ean8, Ean13, Gtin, Gtin14, UpcA } from "./types";
  * assertEan13(v); // 👈 throws TypeError('Value is expected to be an EAN-13, got: string(length:12)')
  * assertEan13(v, "Invalid ean"); // 👈 throws TypeError('Invalid ean')
  * assertEan13(v, () => new HttpBadRequest("Invalid ean")); // 👈 throws HttpBadRequest
+ * assertEan13(v, undefined, { acceptRestricted: true }); // 👈 accept restricted circulation numbers
  * ```
  * @throws TypeError (or the error returned by the factory)
  */
 export function assertEan13(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory,
+  options?: GtinValidationOptions
 ): asserts v is Ean13 {
-  if (!isEan13(v)) {
+  if (!isEan13(v, options)) {
     throwAssertError(v, "an EAN-13", msgOrErrorFactory);
   }
 }
@@ -30,9 +39,10 @@ export function assertEan13(
  */
 export function assertEan8(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory,
+  options?: GtinValidationOptions
 ): asserts v is Ean8 {
-  if (!isEan8(v)) {
+  if (!isEan8(v, options)) {
     throwAssertError(v, "an EAN-8", msgOrErrorFactory);
   }
 }
@@ -43,9 +53,10 @@ export function assertEan8(
  */
 export function assertUpcA(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory,
+  options?: GtinValidationOptions
 ): asserts v is UpcA {
-  if (!isUpcA(v)) {
+  if (!isUpcA(v, options)) {
     throwAssertError(v, "a UPC-A", msgOrErrorFactory);
   }
 }
@@ -56,9 +67,10 @@ export function assertUpcA(
  */
 export function assertGtin14(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory,
+  options?: GtinValidationOptions
 ): asserts v is Gtin14 {
-  if (!isGtin14(v)) {
+  if (!isGtin14(v, options)) {
     throwAssertError(v, "a GTIN-14", msgOrErrorFactory);
   }
 }
@@ -70,9 +82,10 @@ export function assertGtin14(
  */
 export function assertGtin(
   v: unknown,
-  msgOrErrorFactory?: MsgOrErrorFactory
+  msgOrErrorFactory?: MsgOrErrorFactory,
+  options?: GtinValidationOptions
 ): asserts v is Gtin {
-  if (!isGtin(v)) {
+  if (!isGtin(v, options)) {
     throwAssertError(v, "a GTIN", msgOrErrorFactory);
   }
 }

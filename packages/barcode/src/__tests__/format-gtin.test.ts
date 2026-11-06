@@ -40,6 +40,16 @@ describe("formatGtin", () => {
     }
   );
 
+  it("should format restricted circulation numbers with acceptRestricted", () => {
+    expect(formatGtin("2123456789010", 14)).toBeNull();
+    expect(formatGtin("2123456789010", 14, { acceptRestricted: true })).toBe(
+      "02123456789010"
+    );
+    expect(formatGtin("00000021234569", 8, { acceptRestricted: true })).toBe(
+      "21234569"
+    );
+  });
+
   it("should round-trip with normalizeGtin", () => {
     const normalized = normalizeGtin(36_000_291_452);
     expect(normalized).not.toBeNull();

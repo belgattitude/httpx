@@ -37,6 +37,23 @@ describe("detectBarcodeType", () => {
     expect(detectBarcodeType(code)).toBeNull();
   });
 
+  it.each([
+    ["2123456789010", "ean13"],
+    ["0412345678903", "ean13"],
+    ["212345678992", "upca"],
+    ["21234569", "ean8"],
+    ["01234565", "ean8"],
+    ["12123456789017", "gtin14"],
+  ] as const)(
+    "should detect restricted %s as %s only with acceptRestricted",
+    (code, expected) => {
+      expect(detectBarcodeType(code)).toBeNull();
+      expect(detectBarcodeType(code, { acceptRestricted: true })).toBe(
+        expected
+      );
+    }
+  );
+
   it("should return a typed result", () => {
     expectTypeOf(
       detectBarcodeType("96385074")

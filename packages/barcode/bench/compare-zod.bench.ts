@@ -11,7 +11,7 @@ const codes = getBarcodeSeeds(1000);
 
 /**
  * Zod has no GTIN validator: equivalent schema as a user would write it
- * (digits and length regexp, check digit and restricted EAN-8 refinement).
+ * (digits and length regexp, check digit and restricted circulation refinement).
  */
 const hasValidCheckDigit = (code: string): boolean => {
   let sum = 0;
@@ -21,20 +21,28 @@ const hasValidCheckDigit = (code: string): boolean => {
   return (10 - (sum % 10)) % 10 === Number(code.at(-1));
 };
 
-const isRestrictedEan8 = (code: string): boolean =>
-  /^000000[02]/.test(code.padStart(14, "0"));
+/** GS1 restricted circulation numbers, on the GTIN-14 form */
+const isRestricted = (code: string): boolean => {
+  const gtin14 = code.padStart(14, "0");
+  return gtin14.startsWith("000000")
+    ? /^000000[02]/.test(gtin14)
+    : /^.(?:2|02|04)/.test(gtin14);
+};
 
 const zodGtinSchema = z
   .string()
   .regex(/^(?:\d{8}|\d{12,14})$/)
-  .refine((code) => hasValidCheckDigit(code) && !isRestrictedEan8(code));
+  .refine((code) => hasValidCheckDigit(code) && !isRestricted(code));
 
 // strict: throws if zod can't compile the schema (instead of silently
 // returning the runtime parser)
 const zodCompiledGtinSchema = z.compile(zodGtinSchema, { strict: true });
 
 /** Zod schema delegating the validation to @httpx/barcode (zod overhead only) */
-const zodIsGtinSchema = z.compile(z.string().refine(isGtin), { strict: true });
+const zodIsGtinSchema = z.compile(
+  z.string().refine((v) => isGtin(v)),
+  { strict: true }
+);
 
 const validCodes = codes.filter((code) => isGtin(code));
 
@@ -73,7 +81,7 @@ describe.each(scenarios)("Compare with zod - $name", ({ name, values }) => {
           zodCompiledGtinSchema.safeParse(value);
         }
       }),
-      bench(`zod@${devDependencies.zod} - z.compile(z.string().refine(isGtin))`, () => {
+      bench(`zod@${devDependencies.zod} - z.compile(z.string().refine((v) => isGtin(v)))`, () => {
         for (const value of values) {
           zodIsGtinSchema.safeParse(value);
         }

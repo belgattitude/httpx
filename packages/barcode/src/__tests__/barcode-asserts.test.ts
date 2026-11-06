@@ -55,6 +55,20 @@ describe.each(cases)("$fn.name", ({ fn, valid, label }) => {
     ).toThrow(HttpBadRequestError);
   });
 
+  it("should forward the acceptRestricted option", () => {
+    // EAN-8 / UPC-A / EAN-13 / GTIN-14 restricted circulation numbers
+    const rcnByFn: Record<string, string> = {
+      assertEan13: "2123456789010",
+      assertEan8: "21234569",
+      assertUpcA: "212345678992",
+      assertGtin14: "02123456789010",
+      assertGtin: "2123456789010",
+    };
+    const rcn = rcnByFn[fn.name];
+    expect(() => fn(rcn)).toThrow(TypeError);
+    expect(() => fn(rcn, undefined, { acceptRestricted: true })).not.toThrow();
+  });
+
   it("should pass the value to the factory", () => {
     expect(() =>
       fn(12, (v) => new HttpBadRequestError(`Bad barcode (${typeof v})`))

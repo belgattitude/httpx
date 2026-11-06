@@ -1,33 +1,69 @@
+/* oxlint-disable unicorn/prefer-code-point -- hot path: charCodeAt always returns a number for in-range indexes (no surrogate handling needed for ASCII digits) and is measurably faster */
 import { hasValidGtinCheckDigit } from "./gtin-check-digit";
+import type { GtinValidationOptions } from "./types";
+
+// char codes
+const ZERO = 48;
+const TWO = 50;
+const FOUR = 52;
 
 /**
- * Whether a digits-only code is (or contains, once left-padded) an EAN-8
- * (GTIN-8) starting with 0 or 2. Those prefixes are reserved by GS1 for
- * restricted circulation numbers (RCN-8), only meaningful within a company.
+ * Whether a digits-only code (1 to 14 digits) is a GS1 Restricted Circulation
+ * Number (RCN). The check digit isn't verified.
  *
- * Checked on the GTIN-14 form (right-aligned): the 8 last digits form an
- * EAN-8 when all the digits before them are zeros. This keeps every function
- * consistent, ie: "01234565" (EAN-8), "000001234565" (UPC-A) and the number
- * 1234565 all share the same GTIN-14 "00000001234565".
+ * Checked on the GTIN-14 form (right-aligned, missing leading digits are
+ * zeros) without padding. This keeps every function consistent, ie:
+ * "01234565" (EAN-8), "000001234565" (UPC-A) and the number 1234565 all share
+ * the same GTIN-14 "00000001234565".
+ *
+ * Ranges:
+ *  - GTIN-8 form (6 leading zeros) starting with 0 or 2.
+ *  - otherwise, GS1 Prefix of the GTIN-13 (after the GTIN-14 indicator)
+ *    starting with 2, 02 or 04.
  *
  * @internal
  */
-export const isRestrictedGtin8 = (code: string): boolean => {
-  const ean8Start = code.length - 8;
-  for (let i = 0; i < ean8Start; i++) {
-    if (code[i] !== "0") {
+export const isRestrictedGtinDigits = (code: string): boolean => {
+  // index of code[0] in the GTIN-14 form
+  const offset = 14 - code.length;
+  if (offset > 6) {
+    // less than 8 significant digits: GTIN-8 starting with 0
+    return true;
+  }
+  // most common first: GS1 Prefix of the GTIN-13 (GTIN-14 index 1 and 2)
+  const p1 = offset > 1 ? ZERO : code.charCodeAt(1 - offset);
+  if (p1 !== ZERO) {
+    return p1 === TWO;
+  }
+  const p2 = offset > 2 ? ZERO : code.charCodeAt(2 - offset);
+  if (p2 !== ZERO) {
+    return p2 === TWO || p2 === FOUR;
+  }
+  // GTIN-8 form if the 6 first digits of the GTIN-14 are zeros (index 1 and
+  // 2 already are)
+  if (offset === 0 && code.charCodeAt(0) !== ZERO) {
+    return false;
+  }
+  for (let k = Math.max(offset, 3); k < 6; k++) {
+    if (code.charCodeAt(k - offset) !== ZERO) {
       return false;
     }
   }
-  const first = code[ean8Start];
-  return first === "0" || first === "2";
+  const first = code.charCodeAt(6 - offset);
+  return first === ZERO || first === TWO;
 };
 
 /**
- * Digits only, valid check digit and not a restricted circulation EAN-8.
- * The length is not checked (expected >= 8).
+ * Digits only, valid check digit and, unless accepted, not a restricted
+ * circulation number. The length is not checked (expected 2 to 14).
  *
  * @internal
  */
-export const isValidGtinDigits = (code: string): boolean =>
-  hasValidGtinCheckDigit(code) && !isRestrictedGtin8(code);
+export const isValidGtinDigits = (
+  code: string,
+  options?: GtinValidationOptions
+): boolean =>
+  // restricted check first: cheaper (2-3 chars on most codes) than the
+  // check digit loop
+  (options?.acceptRestricted === true || !isRestrictedGtinDigits(code)) &&
+  hasValidGtinCheckDigit(code);

@@ -1,13 +1,13 @@
 import type { NormalizeGtinOptions } from "./normalize-gtin";
 
 /**
- * Convert a string, number or bigint to a 14 chars string, left-padded with
- * zeros. Digits are NOT validated (see isValidGtinDigits).
+ * Convert a string, number or bigint to its digits (between minLength and 14
+ * chars, not padded). Digits are NOT validated (see isValidGtinDigits).
  *
  * @internal
  * @throws RangeError when minLength is not an integer between 1 and 14
  */
-export const padToGtin14 = (
+export const toGtinDigits = (
   value: unknown,
   options?: NormalizeGtinOptions
 ): string | null => {
@@ -33,8 +33,5 @@ export const padToGtin14 = (
   } else {
     return null;
   }
-  if (digits.length < minLength || digits.length > 14) {
-    return null;
-  }
-  return digits.padStart(14, "0");
+  return digits.length < minLength || digits.length > 14 ? null : digits;
 };
