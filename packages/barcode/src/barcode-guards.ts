@@ -1,5 +1,13 @@
 import { isValidGtinDigits } from "./gtin-validate";
-import type { Ean8, Ean13, Gtin14, GtinValidationOptions, UpcA } from "./types";
+import type {
+  Ean8,
+  Ean13,
+  Gtin14,
+  GtinValidationOptions,
+  UpcA,
+  UpcE,
+} from "./types";
+import { expandUpcEDigits } from "./upce-digits";
 
 /**
  * Check if a value is a valid EAN-13 (13 digits, valid check digit). Restricted
@@ -66,3 +74,30 @@ export const isGtin14 = (
   options?: GtinValidationOptions
 ): v is Gtin14 =>
   typeof v === "string" && v.length === 14 && isValidGtinDigits(v, options);
+
+/**
+ * Check if a value is a valid UPC-E (8 digits, zero-suppressed UPC-A): number
+ * system 0 or 1 and valid check digit, both computed on the expanded UPC-A
+ * (see `expandUpcE`). Restricted circulation numbers (of the UPC-A) are
+ * refused unless `acceptRestricted` is set.
+ *
+ * An 8 digit value can be both a valid UPC-E and a valid EAN-8: only the
+ * source (ie: the scanner symbology) tells which one it is.
+ *
+ * @example
+ * ```typescript
+ * isUpcE("04252614"); // 👈 true (UPC-A "042100005264")
+ * isUpcE("04252615"); // 👈 false (invalid check digit)
+ * isUpcE("24252614"); // 👈 false (number system must be 0 or 1)
+ * ```
+ */
+export const isUpcE = (
+  v: unknown,
+  options?: GtinValidationOptions
+): v is UpcE => {
+  if (typeof v !== "string") {
+    return false;
+  }
+  const upca = expandUpcEDigits(v);
+  return upca !== null && isValidGtinDigits(upca, options);
+};

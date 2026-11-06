@@ -89,6 +89,16 @@ describe("barcode guards", () => {
     }
   });
 
+  it("should never trim (the narrowed value would keep its whitespace)", () => {
+    for (const guard of [isEan13, isGtin]) {
+      expect(guard(" 4006381333931")).toBe(false);
+      expect(guard("4006381333931\n")).toBe(false);
+    }
+    expect(isEan8(" 96385074")).toBe(false);
+    expect(isUpcA("036000291452 ")).toBe(false);
+    expect(isGtin14("\t10012345678902")).toBe(false);
+  });
+
   it("should narrow unknown values to branded types", () => {
     const v: unknown = "4006381333931";
     if (isEan13(v)) {

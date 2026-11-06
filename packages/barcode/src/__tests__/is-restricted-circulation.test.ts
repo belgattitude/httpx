@@ -96,6 +96,13 @@ describe("isRestrictedCirculation", () => {
     expect(restricted).toBeGreaterThan(100);
   });
 
+  it("should trim like normalizeGtin", () => {
+    expect(isRestrictedCirculation(" 2123456789010\n")).toBe(true);
+    expect(isRestrictedCirculation(" 2123456789010", { trim: false })).toBe(
+      false
+    );
+  });
+
   it("should apply minLength like normalizeGtin", () => {
     // "01234565" with its leading zero lost
     expect(isRestrictedCirculation(1_234_565)).toBe(false);

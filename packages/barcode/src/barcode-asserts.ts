@@ -1,6 +1,6 @@
 import type { MsgOrErrorFactory } from "./assert-utils";
 import { throwAssertError } from "./assert-utils";
-import { isEan8, isEan13, isGtin14, isUpcA } from "./barcode-guards";
+import { isEan8, isEan13, isGtin14, isUpcA, isUpcE } from "./barcode-guards";
 import { isGtin } from "./is-gtin";
 import type {
   Ean8,
@@ -9,6 +9,7 @@ import type {
   Gtin14,
   GtinValidationOptions,
   UpcA,
+  UpcE,
 } from "./types";
 
 /**
@@ -58,6 +59,21 @@ export function assertUpcA(
 ): asserts v is UpcA {
   if (!isUpcA(v, options)) {
     throwAssertError(v, "a UPC-A", msgOrErrorFactory);
+  }
+}
+
+/**
+ * Assert a value is a valid UPC-E (8 digits, number system 0 or 1, valid
+ * check digit of the expanded UPC-A).
+ * @throws TypeError (or the error returned by the factory)
+ */
+export function assertUpcE(
+  v: unknown,
+  msgOrErrorFactory?: MsgOrErrorFactory,
+  options?: GtinValidationOptions
+): asserts v is UpcE {
+  if (!isUpcE(v, options)) {
+    throwAssertError(v, "a UPC-E", msgOrErrorFactory);
   }
 }
 

@@ -29,8 +29,6 @@ describe("detectBarcodeType", () => {
     ["123456789", "unsupported length (9)"],
     ["123456789012345", "unsupported length (15)"],
     ["400638133393a", "non digit character"],
-    [" 4006381333931", "leading space"],
-    ["4006381333931 ", "trailing space"],
     ["400-6381333931", "dash"],
     ["", "empty string"],
   ])("should return null for %s (%s)", (code) => {
@@ -53,6 +51,36 @@ describe("detectBarcodeType", () => {
       );
     }
   );
+
+  describe("trim option", () => {
+    it.each([
+      " 4006381333931",
+      "4006381333931 ",
+      "\t4006381333931\r\n",
+      "\u00A04006381333931",
+      "\uFEFF4006381333931",
+    ])("should trim %j by default", (code) => {
+      expect(detectBarcodeType(code)).toBe("ean13");
+    });
+
+    it.each([" 4006381333931", "4006381333931 ", "4006381333931\n"])(
+      "should refuse %j with trim: false",
+      (code) => {
+        expect(detectBarcodeType(code, { trim: false })).toBeNull();
+      }
+    );
+
+    it("should not trim inner whitespace", () => {
+      expect(detectBarcodeType("4006 381333931")).toBeNull();
+      expect(detectBarcodeType("   ")).toBeNull();
+    });
+  });
+
+  it("should return null for non strings", () => {
+    expect(
+      detectBarcodeType(4_006_381_333_931 as unknown as string)
+    ).toBeNull();
+  });
 
   it("should return a typed result", () => {
     expectTypeOf(

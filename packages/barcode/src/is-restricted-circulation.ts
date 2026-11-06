@@ -20,9 +20,10 @@ import type { NormalizeGtinOptions } from "./normalize-gtin";
  *    an EAN-13).
  *  - GTIN-14 containing one of the above (digits after the indicator).
  *
- * Accepts the same values as `normalizeGtin` (string, number or bigint,
- * leading zeros can be lost, `acceptRestricted` is ignored) and returns `false` for anything that isn't a
- * GTIN with a valid check digit.
+ * Accepts the same values and options as `normalizeGtin` (string, number or
+ * bigint, leading zeros can be lost, strings trimmed unless `trim: false`,
+ * `acceptRestricted` is ignored) and returns `false` for anything that isn't
+ * a GTIN with a valid check digit.
  *
  * @example
  * ```typescript
