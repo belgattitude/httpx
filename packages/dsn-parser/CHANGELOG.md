@@ -1,5 +1,15 @@
 # @httpx/dsn-parser
 
+## 1.11.0
+
+### Minor Changes
+
+- [#2917](https://github.com/belgattitude/httpx/pull/2917) [`1dec031`](https://github.com/belgattitude/httpx/commit/1dec031acaaf805c46dfc9f7eb9c3861207bc699) Thanks [@belgattitude](https://github.com/belgattitude)! - ESM only (drop CJS build).
+  
+  CommonJS code can still load the package with `require()` on Node 20.19+ / 22.12+ ([require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require)), bun and bundlers.
+  
+  Minimum node version raised to `>=20.19.0` (first 20.x release with unflagged `require(esm)`).
+
 ## 1.10.1
 
 ### Patch Changes
