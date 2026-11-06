@@ -13,12 +13,6 @@ const config = [
     import: "{ parseDsn }",
     limit: "810B",
   },
-  {
-    name: "Everything (CJS)",
-    import: "*",
-    path: ["dist/index.cjs"],
-    limit: "1460B",
-  },
 ] satisfies SizeLimitConfig;
 
 export default config;

@@ -443,7 +443,7 @@ assertHttpValidMethod(value);
 
 Code and bundler have been tuned to target a minimal compressed footprint for the browser.
 
-ESM individual imports are tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/assert/.size-limit.cjs).
+ESM individual imports are tracked by a [size-limit configuration](https://github.com/belgattitude/httpx/blob/main/packages/assert/.size-limit.ts).
 
 | Scenario                               | Size (compressed) |
 | -------------------------------------- | ----------------: |
@@ -451,8 +451,6 @@ ESM individual imports are tracked by a [size-limit configuration](https://githu
 | Import `isUuid`                        |            ~ 175b |
 | Import `isEan13`                       |            ~ 117b |
 | All typeguards, assertions and helpers |           ~ 1700b |
-
-> For CJS usage (not recommended) track the size on [bundlephobia](https://bundlephobia.com/package/@httpx/assert@latest).
 
 ## Compatibility
 

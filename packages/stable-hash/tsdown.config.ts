@@ -16,11 +16,6 @@ export default defineConfig((_options) => {
         unbundle: false,
         sourcemap: true,
       },
-      cjs: {
-        target: ["node20", ...browserslistToEsbuild()],
-        unbundle: false,
-        sourcemap: false,
-      },
     },
   };
 });

@@ -19,12 +19,6 @@ const config = [
     import: "{ assertPlainObject, isPlainObject }",
     limit: "143B",
   },
-  {
-    name: "Require isPlainObject from CJS",
-    import: "{ isPlainObject }",
-    path: ["dist/index.cjs"],
-    limit: "158KB",
-  },
 ] satisfies SizeLimitConfig;
 
 export default config;
