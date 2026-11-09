@@ -1753,8 +1753,8 @@ importers:
         specifier: 0.18.5
         version: 0.18.5
       '@codspeed/vitest-plugin':
-        specifier: 6.1.0
-        version: 6.1.0(debug@4.4.3)(supports-color@10.2.2)(tinybench@6.2.3)(vite@8.3.6)(vitest@5.1.0)
+        specifier: 6.1.1
+        version: 6.1.1(debug@4.4.3)(supports-color@10.2.2)(tinybench@6.2.3)(vite@8.3.6)(vitest@5.1.0)
       '@size-limit/esbuild':
         specifier: 14.3.0
         version: 14.3.0(size-limit@14.3.0)
@@ -2214,11 +2214,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@codspeed/core@6.1.0':
-    resolution: {integrity: sha512-4qZ9gAzDypORwJ16230nxcp2LYHC18CrRBCkHK0LRASF5cMNx24y5AcDQV9CzjVRxMog6ypwHt44ps3C1cdcGg==}
+  '@codspeed/core@6.1.1':
+    resolution: {integrity: sha512-dht/FGxn6ImB/SsslFwxzufwdiP+9jwqW3O+eReez05sgG6o8TBy5rTYYXyQDR577swqCu/4rYwNq0MJHdp37w==}
 
-  '@codspeed/vitest-plugin@6.1.0':
-    resolution: {integrity: sha512-2Miq8sQOKhOOKhXdQkfUuAgUPJPACLvaCcfU6wSKFOFpG56rjfEzLyZQQmZigSvgOMVX9L3rUiFuQACTSoKlZw==}
+  '@codspeed/vitest-plugin@6.1.1':
+    resolution: {integrity: sha512-akGiARJWE68O0j7FK2XZ/OdBr6n/osd74Sul6wsjf/vw4yhrAHoULqD2M+PcwufUjd7nS7YM3ByDgqOHy2Ue7A==}
     peerDependencies:
       '@types/tinybench': '*'
       '@types/vite': '*'
@@ -8959,7 +8959,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20261104.1':
     optional: true
 
-  '@codspeed/core@6.1.0(debug@4.4.3)(supports-color@10.2.2)':
+  '@codspeed/core@6.1.1(debug@4.4.3)(supports-color@10.2.2)':
     dependencies:
       axios: 1.21.0(debug@4.4.3)(supports-color@10.2.2)
       form-data: 4.0.6
@@ -8969,9 +8969,9 @@ snapshots:
       - debug
       - supports-color
 
-  '@codspeed/vitest-plugin@6.1.0(debug@4.4.3)(supports-color@10.2.2)(tinybench@6.2.3)(vite@8.3.6)(vitest@5.1.0)':
+  '@codspeed/vitest-plugin@6.1.1(debug@4.4.3)(supports-color@10.2.2)(tinybench@6.2.3)(vite@8.3.6)(vitest@5.1.0)':
     dependencies:
-      '@codspeed/core': 6.1.0(debug@4.4.3)(supports-color@10.2.2)
+      '@codspeed/core': 6.1.1(debug@4.4.3)(supports-color@10.2.2)
       tinybench: 6.2.3
       vite: 8.3.6(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
       vitest: 5.1.0(@edge-runtime/vm@5.0.0)(@types/node@26.6.6)(@vitest/browser-playwright@5.1.0)(@vitest/coverage-v8@5.1.0)(@vitest/ui@5.1.0)(happy-dom@21.0.4)(vite@8.3.6)
