@@ -1188,8 +1188,8 @@ importers:
         specifier: 9.8.1
         version: 9.8.1
       nock:
-        specifier: 15.0.5
-        version: 15.0.5(supports-color@10.2.2)
+        specifier: 15.0.6
+        version: 15.0.6(supports-color@10.2.2)
       npm-run-all2:
         specifier: 9.0.4
         version: 9.0.4
@@ -2821,8 +2821,8 @@ packages:
   '@mdx-js/mdx@3.1.1':
     resolution: {integrity: sha512-ilHX2ySBWM0umueceRbYyY4vT+QPg6Z3nnDp4XIgMuvQZ2m5Q7BLZfXvGFvPoMy6Ivkwqw8G53OL5z0o12rylQ==}
 
-  '@mswjs/interceptors@0.44.0':
-    resolution: {integrity: sha512-2b7Y5kWKHM+b2q42rwHeZ5pwRbHPeSmoR3PNyzNTps/VUcXfTKx505e0anifv1zYl3mUPLuzdOJXN1F3KV7Pew==}
+  '@mswjs/interceptors@0.45.11':
+    resolution: {integrity: sha512-ravTun93TJjEDpDKR+vtpE/QqCMYCEuHxLsMtedhREU7HYhNDv+1p4Cu6ea4EeejcUDOdfjI2xhH/jRcvYe9jQ==}
     engines: {node: '>=22'}
 
   '@napi-rs/wasm-runtime@1.2.6':
@@ -6894,8 +6894,8 @@ packages:
   no-case@3.0.4:
     resolution: {integrity: sha512-dOYudws8TE9OON0fGeU/+LtK1WRhrUe06+HX6BuYZp99fzK1m2GLC3O631lcW9f5hDOWNle6Kt71LqWdpa9JNA==}
 
-  nock@15.0.5:
-    resolution: {integrity: sha512-GklSTId6eqmAHp839Kuqy5KxS9z8tdms8Tm6F86U7l9a7yxbxnn7hu08oPDtcoDh+5F9F7H4Ua+KUAyjfVdPRw==}
+  nock@15.0.6:
+    resolution: {integrity: sha512-oKGh+2c/v225j5i5UrPSHCprECwc4lfTmOtFmwM3xNgKlqDH5D87t7B+z8vLqOD2jTcZ/IunIE5etYm7iZet6A==}
     engines: {node: '>=22.20.0'}
 
   node-emoji@2.2.0:
@@ -9445,7 +9445,7 @@ snapshots:
       - '@types/acorn'
       - supports-color
 
-  '@mswjs/interceptors@0.44.0(supports-color@10.2.2)':
+  '@mswjs/interceptors@0.45.11(supports-color@10.2.2)':
     dependencies:
       '@open-draft/until': 3.0.1
       '@types/debug': 4.1.13
@@ -13169,9 +13169,9 @@ snapshots:
       lower-case: 2.0.2
       tslib: 2.9.1
 
-  nock@15.0.5(supports-color@10.2.2):
+  nock@15.0.6(supports-color@10.2.2):
     dependencies:
-      '@mswjs/interceptors': 0.44.0(supports-color@10.2.2)
+      '@mswjs/interceptors': 0.45.11(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
