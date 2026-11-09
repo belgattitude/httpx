@@ -1,6 +1,6 @@
 import { expectTypeOf } from "vitest";
 
-import { MIntl } from "../index";
+import { createMIntl, getOrCreateMIntl, MIntl } from "../index";
 
 describe("MIntl tests", () => {
   describe("Intl methods", () => {
@@ -69,6 +69,20 @@ describe("MIntl tests", () => {
       expectTypeOf(segmenter).toEqualTypeOf<Intl.Segmenter>();
     });
 
+    it("Intl.DisplayNames", () => {
+      const regionNames = MIntl.DisplayNames("en", { type: "region" });
+      expect(regionNames.of("BE")).toBe("Belgium");
+      expect(MIntl.DisplayNames("en", { type: "region" })).toBe(regionNames);
+      expectTypeOf(regionNames).toEqualTypeOf<Intl.DisplayNames>();
+    });
+
+    it.skipIf(Intl.DurationFormat === undefined)("Intl.DurationFormat", () => {
+      const formatter = MIntl.DurationFormat("en", { style: "short" });
+      expect(formatter.format({ hours: 1, minutes: 46 })).toBe("1 hr, 46 min");
+      expect(MIntl.DurationFormat("en", { style: "short" })).toBe(formatter);
+      expectTypeOf(formatter).toEqualTypeOf<Intl.DurationFormat>();
+    });
+
     it("Intl.RelativeTimeFormat", () => {
       const rtf = MIntl.RelativeTimeFormat("es", { numeric: "auto" });
       expect(rtf.format(2, "day")).toBe("pasado mañana");
@@ -89,6 +103,70 @@ describe("MIntl tests", () => {
       expect(MIntl.cache.stats()).toStrictEqual({ cachedInstances: 3 });
       MIntl.cache.clear();
       expect(MIntl.cache.stats()).toStrictEqual({ cachedInstances: 0 });
+    });
+  });
+
+  describe("Instance creation", () => {
+    it("creates an independent instance with custom LRU defaults", () => {
+      MIntl.cache.clear();
+      const intl = createMIntl({ lru: { maxSize: 1 } });
+
+      intl.NumberFormat("en");
+      intl.NumberFormat("fr");
+
+      expect(intl.cache.stats()).toStrictEqual({ cachedInstances: 1 });
+      expect(MIntl.cache.stats()).toStrictEqual({ cachedInstances: 0 });
+    });
+
+    it("returns a named global instance and keeps its first options", () => {
+      const name = "m-intl-test-singleton";
+      globalThis.__httpx_memo_intl_instances?.delete(name);
+
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const first = getOrCreateMIntl(name, { lru: { maxSize: 1 } });
+      const second = getOrCreateMIntl(name, { lru: { maxSize: 10 } });
+
+      expect(second).toBe(first);
+      expect(warn).toHaveBeenCalledOnce();
+      expect(warn.mock.calls[0]?.[0]).toContain(
+        `getOrCreateMIntl("${name}") already exists`
+      );
+      warn.mockRestore();
+      first.NumberFormat("en");
+      first.NumberFormat("fr");
+      expect(first.cache.stats()).toStrictEqual({ cachedInstances: 1 });
+    });
+
+    it("does not warn when options are omitted or identical", () => {
+      const name = "m-intl-test-no-warn";
+      globalThis.__httpx_memo_intl_instances?.delete(name);
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      const first = getOrCreateMIntl(name, { lru: { maxSize: 5 } });
+      expect(getOrCreateMIntl(name)).toBe(first);
+      expect(getOrCreateMIntl(name, { lru: { maxSize: 5 } })).toBe(first);
+
+      expect(warn).not.toHaveBeenCalled();
+      warn.mockRestore();
+    });
+
+    it("does not warn in production", () => {
+      const name = "m-intl-test-prod";
+      globalThis.__httpx_memo_intl_instances?.delete(name);
+      vi.stubEnv("NODE_ENV", "production");
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+      getOrCreateMIntl(name, { lru: { maxSize: 1 } });
+      getOrCreateMIntl(name, { lru: { maxSize: 10 } });
+
+      expect(warn).not.toHaveBeenCalled();
+      warn.mockRestore();
+      vi.unstubAllEnvs();
+    });
+
+    it("uses the global default instance for MIntl", () => {
+      expect(getOrCreateMIntl()).toBe(MIntl);
+      expect(getOrCreateMIntl("default")).toBe(MIntl);
     });
   });
 });
