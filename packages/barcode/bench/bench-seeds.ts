@@ -11,6 +11,50 @@ const computeCheckDigit = (payload: string): number => {
  * ean13, then upca, ean8 and gtin14. ~20% are invalid (wrong check digit,
  * unsupported length or non digit character).
  */
+/**
+ * Deterministic (seeded) list of 8 digit codes, as scanned from small
+ * packages: half valid EAN-8 (not restricted), half valid UPC-E (number
+ * system 0, the common one, every zero-suppression pattern). ~10% have a
+ * wrong check digit.
+ */
+export const getEightDigitSeeds = (count = 1000): string[] => {
+  let seed = 3;
+  const random = () => (seed = (seed * 16_807) % 2_147_483_647) / 2_147_483_647;
+  const digit = () => String(Math.floor(random() * 10));
+  return Array.from({ length: count }, (_, n) => {
+    // first digit 1-9: not restricted (EAN-8), not the GTIN-8 range (UPC-E)
+    let data = String(1 + Math.floor(random() * 9));
+    for (let i = 0; i < 5; i++) {
+      data += digit();
+    }
+    let payload: string;
+    let checkDigit: number;
+    if (n % 2 === 0) {
+      payload = `${data}${digit()}`;
+      if (payload.startsWith("2")) {
+        payload = `3${payload.slice(1)}`;
+      }
+      checkDigit = computeCheckDigit(payload);
+    } else {
+      // check digit of the expanded UPC-A (GS1 zero-suppression table)
+      const last = data.charAt(5);
+      let body: string;
+      if (last <= "2") {
+        body = `${data.slice(0, 2)}${last}0000${data.slice(2, 5)}`;
+      } else if (last === "3") {
+        body = `${data.slice(0, 3)}00000${data.slice(3, 5)}`;
+      } else if (last === "4") {
+        body = `${data.slice(0, 4)}00000${data.charAt(4)}`;
+      } else {
+        body = `${data.slice(0, 5)}0000${last}`;
+      }
+      payload = `0${data}`;
+      checkDigit = computeCheckDigit(`0${body}`);
+    }
+    return `${payload}${random() < 0.1 ? (checkDigit + 1) % 10 : checkDigit}`;
+  });
+};
+
 export const getBarcodeSeeds = (count = 1000): string[] => {
   let seed = 1;
   const random = () => (seed = (seed * 16_807) % 2_147_483_647) / 2_147_483_647;
