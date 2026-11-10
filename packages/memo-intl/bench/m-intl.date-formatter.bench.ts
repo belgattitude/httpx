@@ -1,10 +1,11 @@
 import { describe, test } from "vitest";
 
-import { MIntl } from "../src";
+import { createMIntl } from "../src";
 import { benchConfig } from "./bench.config";
 
+const intl = createMIntl();
 const nbRows = benchConfig.samples;
-describe(`MIntl DateFormatter benchmarks (${nbRows} instances)`, () => {
+describe(`createMIntl DateFormatter benchmarks (${nbRows} instances)`, () => {
   const dates = Array.from({ length: nbRows }).map((_v, idx) => {
     return {
       date: 10_000 + idx,
@@ -13,9 +14,9 @@ describe(`MIntl DateFormatter benchmarks (${nbRows} instances)`, () => {
 
   test("memoized vs not memoized", async ({ bench }) => {
     await bench.compare(
-      bench("With memoization `MIntl.DateFormatter()`", () => {
+      bench("With memoization `intl.DateFormatter()`", () => {
         for (const row of dates) {
-          const formatter = MIntl.DateTimeFormat("fr-FR", {
+          const formatter = intl.DateTimeFormat("fr-FR", {
             dateStyle: "full",
             timeStyle: "full",
             timeZone: "UTC",

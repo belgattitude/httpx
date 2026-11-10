@@ -1,6 +1,6 @@
 # @httpx/memo-intl
 
-Speeds up Intl operations up to 50x. LRU-based memoizer for [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat),[Intl.DateFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) and other Intl constructors. Less than 1kb.
+Speeds up Intl operations up to 50x (bun) and 40x (node). LRU-based memoizer for [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat),[Intl.DateFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat) and other Intl constructors. About 1kb.
 
 [![npm](https://img.shields.io/npm/v/@httpx/memo-intl?style=for-the-badge&label=Npm&labelColor=444&color=informational)](https://www.npmjs.com/package/@httpx/memo-intl) [![changelog](https://img.shields.io/static/v1?label=&message=changelog&logo=github&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/CHANGELOG.md) [![codecov](https://img.shields.io/codecov/c/github/belgattitude/httpx?logo=codecov&label=Unit&flag=httpx-memo-intl-unit&style=for-the-badge&labelColor=444)](https://app.codecov.io/gh/belgattitude/httpx/tree/main/packages%2Fmemo-intl) [![bundles](https://img.shields.io/static/v1?label=&message=esm@treeshake&logo=webpack&style=for-the-badge&labelColor=444&color=informational)](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/.size-limit.ts) [![node](https://img.shields.io/static/v1?label=Node&message=22%2b&logo=node.js&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![browserslist](https://img.shields.io/static/v1?label=Browser&message=%3E96%25&logo=googlechrome&style=for-the-badge&labelColor=444&color=informational)](#compatibility) [![downloads](https://img.shields.io/npm/dm/@httpx/memo-intl?style=for-the-badge&labelColor=444)](https://www.npmjs.com/package/@httpx/memo-intl) [![license](https://img.shields.io/npm/l/@httpx/memo-intl?style=for-the-badge&labelColor=444)](https://github.com/belgattitude/httpx/blob/main/LICENSE)
 
@@ -15,8 +15,8 @@ $ pnpm add @httpx/memo-intl
 ## Features
 
 - 👉&nbsp; Don't re-create the same Intl instance for the same options (memoized).
-- 👉&nbsp; Keep the [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) api untouched. Just replace `new Intl.NumberFormat` by `MIntl.NumberFormat`...
-- 👉&nbsp; Up to 40x faster than non-memoized Intl constructors.
+- 👉&nbsp; Keep the [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) api untouched. Just replace `new Intl.NumberFormat` by `intl.NumberFormat`...
+- 👉&nbsp; Up to 50x faster on bun and 40x on node than non-memoized Intl constructors.
 - 👉&nbsp; Decrease memory usage, unwanted memory leaks and garbage collection pressure.
 - 👉&nbsp; Max out 50 cache instances by default with [@httpx/lru](https://github.com/belgattitude/httpx/tree/main/packages/lru#readme).
 - 👉&nbsp; Lightweight. [Node, bun, browser and edge support](#compatibility).
@@ -25,23 +25,34 @@ $ pnpm add @httpx/memo-intl
 
 👉 [Official website](https://belgattitude.github.io/httpx/memo-intl) or [Github Readme](https://github.com/belgattitude/httpx/tree/main/packages/memo-intl#readme)
 
+Upgrading from `MIntl`? See the [UPGRADE](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/UPGRADE.md) guide.
+
 ## Usage
+
+Create a memoized instance once (ie: at module level) and reuse it across your app.
+
+```typescript
+import { createMIntl } from "@httpx/memo-intl";
+
+// Options are optional, the LRU cache defaults to 50 entries
+export const intl = createMIntl({ lru: { maxSize: 50 } });
+```
 
 ### NumberFormat
 
 [MDN: Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 
 ```typescript
-import { MIntl } from "@httpx/memo-intl";
-
-// Notice: `new Intl.NumberFormat` vs `MIntl.NumberFormat`
-const formattedPrice = MIntl.NumberFormat("fr-FR", {
-  style: "currency",
-  currency: "EUR",
-  notation: "compact",
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-}).format(row.price);
+// Notice: `new Intl.NumberFormat` vs `intl.NumberFormat`
+const formattedPrice = intl
+  .NumberFormat("fr-FR", {
+    style: "currency",
+    currency: "EUR",
+    notation: "compact",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+  .format(row.price);
 ```
 
 ### DateTimeFormat
@@ -49,10 +60,8 @@ const formattedPrice = MIntl.NumberFormat("fr-FR", {
 [MDN: Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
 
 ```typescript
-import { MIntl } from "@httpx/memo-intl";
-
-// Notice: `new Intl.DateTimeFormat` vs `MIntl.DateTimeFormat
-const formatter = MIntl.DateTimeFormat("fr-FR", {
+// Notice: `new Intl.DateTimeFormat` vs `intl.DateTimeFormat`
+const formatter = intl.DateTimeFormat("fr-FR", {
   dateStyle: "full",
   timeStyle: "full",
   timeZone: "UTC",
@@ -69,9 +78,7 @@ expectTypeOf(formatter).toEqualTypeOf<Intl.DateTimeFormat>();
 [MDN: Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
 
 ```typescript
-import { MIntl } from "@httpx/memo-intl";
-
-const locale = MIntl.Locale("fr-FR", { caseFirst: "lower" });
+const locale = intl.Locale("fr-FR", { caseFirst: "lower" });
 console.log(locale.language); // "fr"
 ```
 
@@ -80,9 +87,7 @@ console.log(locale.language); // "fr"
 [MDN: Intl.Collator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator)
 
 ```typescript
-import { MIntl } from "@httpx/memo-intl";
-
-const collator = MIntl.Collator("de", { sensitivity: "base" });
+const collator = intl.Collator("de", { sensitivity: "base" });
 console.log(["Z", "a", "z", "ä"].sort(collator.compare));
 ```
 
@@ -91,9 +96,7 @@ console.log(["Z", "a", "z", "ä"].sort(collator.compare));
 [MDN: Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat)
 
 ```typescript
-import { MIntl } from "@httpx/memo-intl";
-
-const rtf = MIntl.RelativeTimeFormat("en", { style: "short" });
+const rtf = intl.RelativeTimeFormat("en", { style: "short" });
 console.log(rtf.format(3, "month")); // e.g. "in 3 mos."
 ```
 
@@ -102,9 +105,7 @@ console.log(rtf.format(3, "month")); // e.g. "in 3 mos."
 [MDN: Intl.ListFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat)
 
 ```typescript
-import { MIntl } from "@httpx/memo-intl";
-
-const listFormatter = MIntl.ListFormat("en", {
+const listFormatter = intl.ListFormat("en", {
   style: "long",
   type: "conjunction",
 });
@@ -116,9 +117,7 @@ console.log(listFormatter.format(["Red", "Green", "Blue"]));
 [MDN: Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules)
 
 ```typescript
-import { MIntl } from "@httpx/memo-intl";
-
-const pr = MIntl.PluralRules("en-US", { type: "cardinal" });
+const pr = intl.PluralRules("en-US", { type: "cardinal" });
 console.log(pr.select(1)); // "one"
 ```
 
@@ -127,11 +126,29 @@ console.log(pr.select(1)); // "one"
 [MDN: Intl.Segmenter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter)
 
 ```typescript
-import { MIntl } from "@httpx/memo-intl";
-
-const segmenter = MIntl.Segmenter("fr", { granularity: "word" });
+const segmenter = intl.Segmenter("fr", { granularity: "word" });
 const result = segmenter.segment("Bonjour le monde");
 console.log([...result].map(({ segment }) => segment));
+```
+
+### DisplayNames
+
+[MDN: Intl.DisplayNames](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames)
+
+```typescript
+const regionNames = intl.DisplayNames("en", { type: "region" });
+console.log(regionNames.of("BE")); // "Belgium"
+```
+
+### DurationFormat
+
+[MDN: Intl.DurationFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DurationFormat)
+
+> Requires a runtime supporting `Intl.DurationFormat` (Node 23+, Bun, Chrome 129+, Firefox 136+, Safari 16.4+).
+
+```typescript
+const formatter = intl.DurationFormat("en", { style: "short" });
+console.log(formatter.format({ hours: 1, minutes: 46 })); // "1 hr, 46 min"
 ```
 
 ### Cache
@@ -140,11 +157,69 @@ You can clear the cache or check the cache stats.
 
 ```typescript
 // Clear the cache
-MIntl.cache.clear();
+intl.cache.clear();
 
 // Check cache stats
-console.log(MIntl.cache.stats());
+console.log(intl.cache.stats());
 ```
+
+### Memory usage
+
+Cached instances stay in memory until they're evicted from the LRU cache. Most of their memory is native ICU data held outside the JS heap, so it shows up in the process RSS, not in heap snapshots.
+
+Approximate RSS per cached instance, measured with 5000 instances on macOS arm64:
+
+| Constructor        | Node 26.13 | Bun 1.4.4 |
+| ------------------ | ---------: | --------: |
+| Locale             |    ~0.5 KB |   ~0.5 KB |
+| NumberFormat       |      ~1 KB |     ~1 KB |
+| Collator           |    ~1.5 KB |   ~1.5 KB |
+| PluralRules        |      ~4 KB |     ~5 KB |
+| RelativeTimeFormat |      ~8 KB |   ~8.5 KB |
+| DateTimeFormat     |     ~30 KB |    ~13 KB |
+
+With the default `maxSize` of 50, the worst case (50 different `DateTimeFormat` options) holds about 1.5 MB. Size the cache for the number of distinct locale/options combinations you actually use: a larger cache that is never filled costs nothing, but every distinct entry stays allocated until evicted.
+
+### Custom and shared instances
+
+Each `createMIntl()` call returns an independent instance with its own LRU cache.
+
+`MIntl` is the default `globalThis`-shared instance. `getOrCreateMIntl` returns that instance when called without arguments. To create additional shared instances, pass a stable name; the first call for a name sets its LRU options, and a later call with different options logs a warning (except when `NODE_ENV` is `production`). The default LRU size is 50.
+
+```typescript
+import { getOrCreateMIntl } from "@httpx/memo-intl";
+
+const defaultIntl = getOrCreateMIntl();
+const intl = getOrCreateMIntl("my-app", { lru: { maxSize: 200 } });
+```
+
+### Usage in libraries
+
+If you publish a library (ie: a UI kit or a date utility) that depends on `@httpx/memo-intl`, don't use `MIntl` or `getOrCreateMIntl()` without a name. Those return the `"default"` instance stored on `globalThis`, which is also the one the app uses. Your formatters would share its LRU slots and evict the app's entries (and the reverse), and a `cache.clear()` on either side would empty both.
+
+Create a private instance instead, sized for the formatters your library actually needs:
+
+```typescript
+// my-lib/src/intl.ts
+import { createMIntl } from "@httpx/memo-intl";
+
+export const intl = createMIntl({ lru: { maxSize: 10 } });
+```
+
+If your library is split into several packages or bundles that should share one cache, use `getOrCreateMIntl` with a name scoped to your package, and pass the same options everywhere:
+
+```typescript
+import { getOrCreateMIntl } from "@httpx/memo-intl";
+
+export const intl = getOrCreateMIntl("@my-scope/my-lib", {
+  lru: { maxSize: 10 },
+});
+```
+
+Other recommendations:
+
+- Never call `cache.clear()` on an instance you don't own.
+- Keep `maxSize` small: each cached entry stays in memory until evicted, up to ~30 KB for a `DateTimeFormat` (see [Memory usage](#memory-usage)).
 
 ## Benchmarks
 
@@ -154,44 +229,20 @@ Performance is monitored with [codspeed.io](https://codspeed.io/belgattitude/htt
 
 See [bench](https://github.com/belgattitude/httpx/blob/main/packages/memo-intl/bench) for details.
 
-```
- RUN  v4.1.0 /home/sebastien/github/httpx/packages/memo-intl
+Each sample formats 1000 rows and asks for a formatter on every row. `hz` is the number of samples per second (higher is better).
 
+| Constructor | Runtime | `intl.X()` (hz) | `new Intl.X()` (hz) | Speedup |
+| --- | --- | --: | --: | --: |
+| DateTimeFormat | Node 26.13 | 836 | 30.9 | **27x** |
+| DateTimeFormat | Bun 1.4.4 | 572 | 12.4 | **46x** |
+| NumberFormat | Node 26.13 | 2,101 | 55.3 | **38x** |
+| NumberFormat | Bun 1.4.4 | 2,224 | 41.9 | **53x** |
+| RelativeTimeFormat | Node 26.13 | 2,466 | 135 | **18x** |
+| RelativeTimeFormat | Bun 1.4.4 | 2,665 | 125 | **21x** |
+| Locale | Node 26.13 | 8,404 | 362 | **23x** |
+| Locale | Bun 1.4.4 | 15,252 | 1,303 | **12x** |
 
- ✓ bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks (1000 instances) 1985ms
-     name                                                hz     min     max    mean     p75     p99    p995    p999     rme  samples
-   · With memoization `MIntl.DateFormatter()`        400.46  2.0947  6.8366  2.4972  2.7550  3.8448  4.8877  6.8366  ±2.92%      201
-   · Without memoization `new Intl.DateFormatter()`  7.9472  122.46  128.16  125.83  128.15  128.16  128.16  128.16  ±3.56%        4
-
- ✓ bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks (1000 instances) 1351ms
-     name                                                   hz      min      max     mean      p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.NumberFormatter()`         662.47   1.2588   3.3460   1.5095   1.6116   2.7973   3.1873   3.3460  ±2.44%      332
-   · Without memoization `new Intl.NumberFormatter()`  29.7328  30.5401  40.3873  33.6329  34.5215  40.3873  40.3873  40.3873  ±4.93%       15
-
- ✓ bench/m-intl.relative-time-format.bench.ts > MIntl RelativeTimeFormat benchmarks (1000 instances) 1274ms
-     name                                                      hz      min      max     mean      p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.RelativeTimeFormat()`         815.39   1.0436   3.6512   1.2264   1.2974   2.3457   2.3843   3.6512  ±2.26%      408
-   · Without memoization `new Intl.RelativeTimeFormat()`  39.4420  23.4202  28.6828  25.3537  25.8205  28.6828  28.6828  28.6828  ±2.66%       20
-
- ✓ bench/m-intl.locale.bench.ts > MIntl Locale benchmarks (1000 instances) 1244ms
-     name                                           hz     min      max    mean     p75      p99     p995     p999     rme  samples
-   · With memoization `MIntl.Locale()`        2,935.58  0.2828   4.9438  0.3406  0.3235   0.8030   0.9692   2.1852  ±2.47%     1468
-   · Without memoization `new Intl.Locale()`    150.35  5.0975  24.2801  6.6514  6.7613  24.2801  24.2801  24.2801  ±8.06%       78
-
- BENCH  Summary
-
-  With memoization `MIntl.DateFormatter()` - bench/m-intl.date-formatter.bench.ts > MIntl DateFormatter benchmarks (1000 instances)
-    50.39x faster than Without memoization `new Intl.DateFormatter()`
-
-  With memoization `MIntl.Locale()` - bench/m-intl.locale.bench.ts > MIntl Locale benchmarks (1000 instances)
-    19.53x faster than Without memoization `new Intl.Locale()`
-
-  With memoization `MIntl.NumberFormatter()` - bench/m-intl.number-formatter.bench.ts > MIntl NumberFormatter benchmarks (1000 instances)
-    22.28x faster than Without memoization `new Intl.NumberFormatter()`
-
-  With memoization `MIntl.RelativeTimeFormat()` - bench/m-intl.relative-time-format.bench.ts > MIntl RelativeTimeFormat benchmarks (1000 instances)
-    20.67x faster than Without memoization `new Intl.RelativeTimeFormat()`
-```
+> Measured with `pnpm bench` and `pnpm bench-bun` (vitest 5.1) on macOS (Apple silicon). Results vary by machine.
 
 ## Bundle size
 
@@ -199,7 +250,7 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario                                  | Size with deps (compressed) |
 | ----------------------------------------- | --------------------------: |
-| `import { MIntl } from '@httpx/memo-intl' |                      ~ 813B |
+| `import { MIntl } from '@httpx/memo-intl' |                    ~ 1.02kB |
 
 > Note that per-se the library weights less than 300 bytes, the size limit accounts for the @httpx/lru dependency.
 

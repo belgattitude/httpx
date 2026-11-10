@@ -1,10 +1,11 @@
 import { describe, test } from "vitest";
 
-import { MIntl } from "../src";
+import { createMIntl } from "../src";
 import { benchConfig } from "./bench.config";
 
+const intl = createMIntl();
 const nbRows = benchConfig.samples;
-describe(`MIntl Locale benchmarks (${nbRows} instances)`, () => {
+describe(`createMIntl Locale benchmarks (${nbRows} instances)`, () => {
   const arr = Array.from({ length: nbRows }).map((_v, idx) => {
     return {
       idx,
@@ -13,9 +14,9 @@ describe(`MIntl Locale benchmarks (${nbRows} instances)`, () => {
 
   test("memoized vs not memoized", async ({ bench }) => {
     await bench.compare(
-      bench("With memoization `MIntl.Locale()`", () => {
+      bench("With memoization `intl.Locale()`", () => {
         for (const _row of arr) {
-          const locale = MIntl.Locale("fr-FR", {
+          const locale = intl.Locale("fr-FR", {
             caseFirst: "lower",
           });
           const _language = locale.language;

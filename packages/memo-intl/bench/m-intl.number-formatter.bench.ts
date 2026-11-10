@@ -1,10 +1,11 @@
 import { describe, test } from "vitest";
 
-import { MIntl } from "../src";
+import { createMIntl } from "../src";
 import { benchConfig } from "./bench.config";
 
+const intl = createMIntl();
 const nbRows = benchConfig.samples;
-describe(`MIntl NumberFormatter benchmarks (${nbRows} instances)`, () => {
+describe(`createMIntl NumberFormatter benchmarks (${nbRows} instances)`, () => {
   const arrayMapperScenario = Array.from({ length: nbRows }).map((_v, idx) => {
     return {
       productId: idx,
@@ -16,14 +17,16 @@ describe(`MIntl NumberFormatter benchmarks (${nbRows} instances)`, () => {
 
   test("memoized vs not memoized", async ({ bench }) => {
     await bench.compare(
-      bench("With memoization `MIntl.NumberFormatter()`", () => {
+      bench("With memoization `intl.NumberFormatter()`", () => {
         for (const row of arrayMapperScenario) {
-          MIntl.NumberFormat(row.locale, {
-            style: "currency",
-            currency: row.currency,
-            notation: "compact",
-            minimumFractionDigits: 2,
-          }).format(row.price);
+          intl
+            .NumberFormat(row.locale, {
+              style: "currency",
+              currency: row.currency,
+              notation: "compact",
+              minimumFractionDigits: 2,
+            })
+            .format(row.price);
         }
       }),
       bench("Without memoization `new Intl.NumberFormatter()`", () => {
