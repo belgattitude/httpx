@@ -3,10 +3,7 @@ import { getMinLength, readGtinDigits } from "./gtin-digits";
 import { isRestrictedGtinDigits } from "./gtin-validate";
 import type { NormalizeGtinOptions } from "./normalize-gtin";
 
-export type IsRestrictedCirculationOptions = Omit<
-  NormalizeGtinOptions,
-  "trim"
-> & {
+export type IsInStoreGtinOptions = Omit<NormalizeGtinOptions, "trim"> & {
   /**
    * Remove leading and trailing whitespace of strings. Off by default: like
    * the type guards, it returns a boolean, not the trimmed value (a string
@@ -17,13 +14,14 @@ export type IsRestrictedCirculationOptions = Omit<
 };
 
 /**
- * Check if a GTIN is a GS1 Restricted Circulation Number (RCN): a code only
+ * Check if a GTIN is an in-store code, a GS1 Restricted Circulation Number
+ * (RCN, the `in_store` category of `parseGtin`): a code only
  * meaningful within a company or a geographic region (ie: in-store labels,
  * variable measure items with an embedded weight or price), not a globally
  * unique trade item identifier.
  *
- * The other functions refuse RCNs by default (see the `acceptRestricted`
- * option), this one tells them apart from invalid codes.
+ * The other functions accept RCNs as valid GTINs (`parseGtin` reports them
+ * with the `in_store` category), this one tells them apart.
  *
  * Ranges (GS1 Prefix, on the GTIN-13 / GTIN-14 form):
  *  - EAN-8 starting with 0 or 2 (RCN-8).
@@ -34,27 +32,27 @@ export type IsRestrictedCirculationOptions = Omit<
  *  - GTIN-14 containing one of the above (digits after the indicator).
  *
  * Accepts the same values and options as `normalizeGtin` (string, number or
- * bigint, leading zeros can be lost, `acceptRestricted` is ignored), except
+ * bigint, leading zeros can be lost), except
  * `trim` that is off by default (opt-in with `trim: true`), and returns `false` for anything that isn't
  * a GTIN with a valid check digit.
  *
  * @example
  * ```typescript
- * isRestrictedCirculation("2123456789010"); // 👈 true (EAN-13 starting with 2)
- * isRestrictedCirculation("212345678992"); // 👈 true (UPC-A starting with 2)
- * isRestrictedCirculation("21234569"); // 👈 true (EAN-8 starting with 2)
- * isRestrictedCirculation(212345678992); // 👈 true (number)
- * isRestrictedCirculation("4006381333931"); // 👈 false
- * isRestrictedCirculation("2123456789011"); // 👈 false (invalid check digit)
- * isRestrictedCirculation(" 2123456789010"); // 👈 false (not trimmed)
- * isRestrictedCirculation(" 2123456789010", { trim: true }); // 👈 true
+ * isInStoreGtin("2123456789010"); // 👈 true (EAN-13 starting with 2)
+ * isInStoreGtin("212345678992"); // 👈 true (UPC-A starting with 2)
+ * isInStoreGtin("21234569"); // 👈 true (EAN-8 starting with 2)
+ * isInStoreGtin(212345678992); // 👈 true (number)
+ * isInStoreGtin("4006381333931"); // 👈 false
+ * isInStoreGtin("2123456789011"); // 👈 false (invalid check digit)
+ * isInStoreGtin(" 2123456789010"); // 👈 false (not trimmed)
+ * isInStoreGtin(" 2123456789010", { trim: true }); // 👈 true
  * ```
  *
  * @throws RangeError when minLength is not an integer between 1 and 14
  */
-export const isRestrictedCirculation = (
+export const isInStoreGtin = (
   value: unknown,
-  options?: IsRestrictedCirculationOptions
+  options?: IsInStoreGtinOptions
 ): boolean => {
   const digits = readGtinDigits(
     value,

@@ -1,7 +1,7 @@
 {
   "name": "@httpx/barcode",
   "version": "0.3.0",
-  "description": "Barcode type detection and GTIN validation",
+  "description": "Barcode parsing, type detection and GTIN validation (EAN-13, EAN-8, UPC-A, UPC-E, GTIN-14)",
   "keywords": [
     "barcode",
     "ean",
@@ -9,7 +9,9 @@
     "ean8",
     "gtin",
     "gtin14",
-    "upc"
+    "upc",
+    "upca",
+    "upce"
   ],
   "homepage": "https://belgattitude.github.io/httpx/barcode",
   "license": "MIT",
@@ -25,7 +27,8 @@
   "files": [
     "dist",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "UPGRADE.md"
   ],
   "type": "module",
   "sideEffects": false,
@@ -84,7 +87,7 @@
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.14.1",
     "typescript": "7.0.2",
-    "vite": "8.3.6",
+    "vite": "8.3.7",
     "vitest": "5.1.0",
     "zod": "4.6.7"
   },

@@ -1,17 +1,11 @@
 import { toLength, trimGtinString } from "./gtin-digits";
 import { isGtin } from "./is-gtin";
-import type {
-  GtinByLength,
-  GtinLength,
-  GtinTrimOptions,
-  GtinValidationOptions,
-} from "./types";
+import type { GtinByLength, GtinLength, GtinTrimOptions } from "./types";
 
 /**
  * Format a valid GTIN (8, 12, 13 or 14 digits) to another length, by adding
  * or removing leading zeros. Returns `null` when the input isn't a valid GTIN
- * (restricted circulation numbers are refused unless `acceptRestricted` is set)
- * or when it can't be represented in the requested length (removing a
+ * (restricted circulation numbers, in-store codes, are valid GTINs) or when it can't be represented in the requested length (removing a
  * non-zero digit).
  *
  * Typical use: display or print a GTIN stored in its normalized form (see
@@ -31,13 +25,13 @@ import type {
 export const formatGtin = <TLength extends GtinLength>(
   gtin: string,
   length: TLength,
-  options?: GtinValidationOptions & GtinTrimOptions
+  options?: GtinTrimOptions
 ): GtinByLength[TLength] | null => {
   const value =
     typeof gtin === "string" && options?.trim !== false
       ? trimGtinString(gtin)
       : gtin;
-  if (!isGtin(value, options)) {
+  if (!isGtin(value)) {
     return null;
   }
   // only leading zeros can be removed

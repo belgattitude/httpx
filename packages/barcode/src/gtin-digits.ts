@@ -65,7 +65,7 @@ export type GtinDigitsFailure =
  * Convert a string (trimmed when `trim`), number or bigint to its digits
  * (between minLength and 14 chars, not padded), or the reason it can't be.
  * Strings are not scanned: their digits are NOT validated (see
- * isValidGtinDigits), and an out of range one is a length failure even with
+ * hasValidGtinCheckDigit), and an out of range one is a length failure even with
  * non digit chars (kept out of this hot path, see parseGtin).
  *
  * @internal
@@ -104,7 +104,7 @@ export const readGtinDigits = (
 /**
  * Convert a string (trimmed unless `trim: false`), number or bigint to its
  * digits (between minLength and 14 chars, not padded). Digits are NOT
- * validated (see isValidGtinDigits).
+ * validated (see hasValidGtinCheckDigit).
  *
  * @internal
  * @throws RangeError when minLength is not an integer between 1 and 14

@@ -1,6 +1,4 @@
 /* oxlint-disable unicorn/prefer-code-point -- hot path: charCodeAt always returns a number for in-range indexes (no surrogate handling needed for ASCII digits) and is measurably faster */
-import { hasValidGtinCheckDigit } from "./gtin-check-digit";
-import type { GtinValidationOptions } from "./types";
 
 // char codes
 const ZERO = 48;
@@ -52,18 +50,3 @@ export const isRestrictedGtinDigits = (code: string): boolean => {
   const first = code.charCodeAt(6 - offset);
   return first === ZERO || first === TWO;
 };
-
-/**
- * Digits only, valid check digit and, unless accepted, not a restricted
- * circulation number. The length is not checked (expected 2 to 14).
- *
- * @internal
- */
-export const isValidGtinDigits = (
-  code: string,
-  options?: GtinValidationOptions
-): boolean =>
-  // restricted check first: cheaper (2-3 chars on most codes) than the
-  // check digit loop
-  (options?.acceptRestricted === true || !isRestrictedGtinDigits(code)) &&
-  hasValidGtinCheckDigit(code);

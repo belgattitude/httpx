@@ -19,7 +19,7 @@ import {
 import { isRestrictedGtinDigits } from "./gtin-validate";
 import type { NormalizeGtinOptions } from "./normalize-gtin";
 import type { Ean8, Ean13, Gtin14, UpcA, UpcEOptions } from "./types";
-import { expandUpcEDigits } from "./upce-digits";
+import { expandUpcEDigits, isUpcECandidate } from "./upce-digits";
 
 /** JavaScript types a GTIN can be given as */
 export type GtinInputType = "string" | "number" | "bigint";
@@ -34,8 +34,10 @@ export type GtinInputType = "string" | "number" | "bigint";
  *  - `coupon`: `981`-`984`, `99` and `05` (UPC-A number system 5, legacy
  *    coupons, reserved by GS1).
  *  - `refund_receipt`: `980`.
- *  - `restricted`: restricted circulation number (only with
- *    `acceptRestricted`), see `isRestrictedCirculation`.
+ *  - `in_store`: GS1 restricted circulation number, a code only meaningful
+ *    within a company or a geographic region (ie: in-store labels, variable
+ *    measure items with an embedded weight or price), not a globally unique
+ *    product identifier. See `isInStoreGtin` for the ranges.
  */
 export type GtinCategory =
   | "trade_item"
@@ -44,7 +46,7 @@ export type GtinCategory =
   | "issn"
   | "coupon"
   | "refund_receipt"
-  | "restricted";
+  | "in_store";
 
 export type ParseGtinOptions = NormalizeGtinOptions &
   UpcEOptions & {
@@ -56,15 +58,26 @@ export type ParseGtinOptions = NormalizeGtinOptions &
      */
     types?: readonly BarcodeType[];
     /**
+     * Accepted formats as given, matched on the `format` of the result
+     * (from the length of a string input, `"upce"` when read as a UPC-E), ie:
+     * `["ean13", "upce"]` refuses a 12 digit UPC-A but accepts its 13 digit
+     * form. Values whose format can't be known (numbers, bigints and strings
+     * of other lengths: `format` would be `null`) are refused. Listing
+     * `"upce"` reads UPC-E like `upce: "prefer-ean8"`, unless `upce` is set (`true`,
+     * or `false`: 8 digits are then only read as EAN-8).
+     * @default all formats, unknown ones included
+     */
+    formats?: readonly BarcodeFormat[];
+    /**
      * Accepted JavaScript types of the value, ie: `["string"]` to refuse
      * numbers and bigints (leading zeros possibly lost).
      * @default ["string", "number", "bigint"]
      */
     inputTypes?: readonly GtinInputType[];
     /**
-     * Accepted categories, ie: `["trade_item"]` to refuse books, coupons and
-     * refund receipts. Restricted circulation numbers also require
-     * `acceptRestricted`.
+     * Accepted categories, ie: `["trade_item"]` to refuse books, coupons,
+     * refund receipts and in-store codes (restricted circulation numbers,
+     * accepted by default with the `in_store` category).
      * @default all categories
      */
     categories?: readonly GtinCategory[];
@@ -75,13 +88,15 @@ export type ParseGtinOptions = NormalizeGtinOptions &
  *  - `invalid_type`: not a string, number or bigint (or not in `inputTypes`).
  *  - `invalid_format`: a string with a non digit character (whitespace
  *    included when `trim` is false), a UPC-E with a number system other than
- *    0 or 1 or expanding to the GTIN-8 range (with `upce`), a negative,
+ *    0 or 1 or expanding to the GTIN-8 range (with `upce: true`), a negative,
  *    unsafe or non integer number, a negative bigint.
  *  - `invalid_length`: less than `minLength` (default 8) or more than 14
  *    digits (a UPC-E counts as its expanded UPC-A: 12 digits).
  *  - `invalid_check_digit`: the GS1 mod-10 check digit doesn't match.
- *  - `restricted`: restricted circulation number (unless `acceptRestricted`).
  *  - `invalid_barcode_type`: valid GTIN but its type isn't in `types`.
+ *  - `format_not_accepted`: valid GTIN but its format as given
+ *    (`format`) isn't in `formats` or can't be known (number, bigint,
+ *    string of another length).
  *  - `invalid_category`: valid GTIN but its category isn't in `categories`.
  */
 export type ParseGtinErrorReason =
@@ -89,8 +104,8 @@ export type ParseGtinErrorReason =
   | "invalid_format"
   | "invalid_length"
   | "invalid_check_digit"
-  | "restricted"
   | "invalid_barcode_type"
+  | "format_not_accepted"
   | "invalid_category";
 
 /** Branded value type for each barcode type */
@@ -103,11 +118,13 @@ type ValueByType = {
 
 /**
  * Successful parse, `value` is typed according to `type`. The type parameters
- * narrow the possible types and categories (see `createGtinParser`).
+ * narrow the possible types, categories and input formats (see
+ * `createGtinParser`).
  */
 export type ParsedGtin<
   TType extends BarcodeType = BarcodeType,
   TCategory extends GtinCategory = GtinCategory,
+  TFormat extends BarcodeFormat | null = BarcodeFormat | null,
 > = {
   [T in TType]: {
     readonly success: true;
@@ -131,17 +148,17 @@ export type ParsedGtin<
     readonly gtin: Gtin14;
     /**
      * Format as given, from the length of a string input (8, 12, 13 or 14),
-     * `"upce"` for a UPC-E (with the `upce` option). `null` for numbers,
-     * bigints and strings of other lengths (leading zeros lost, can't be
-     * known).
+     * `"upce"` when read as a UPC-E (see the `upce` option).
+     * `null` for numbers, bigints and strings of other lengths (leading zeros
+     * lost, can't be known).
      */
-    readonly inputType: BarcodeFormat | null;
+    readonly format: TFormat;
     /** GTIN-14 indicator digit (packaging level), 0 for trade items */
     readonly indicator: number;
     /**
      * GS1 classification from the prefix: `trade_item`, `isbn`, `ismn`,
-     * `issn`, `coupon`, `refund_receipt` or `restricted` (only possible with
-     * `acceptRestricted`)
+     * `issn`, `coupon`, `refund_receipt` or `in_store` (restricted
+     * circulation number)
      */
     readonly category: TCategory;
   };
@@ -155,7 +172,8 @@ export type ParseGtinFailure = {
 export type ParseGtinResult<
   TType extends BarcodeType = BarcodeType,
   TCategory extends GtinCategory = GtinCategory,
-> = ParsedGtin<TType, TCategory> | ParseGtinFailure;
+  TFormat extends BarcodeFormat | null = BarcodeFormat | null,
+> = ParsedGtin<TType, TCategory, TFormat> | ParseGtinFailure;
 
 /**
  * Custom message (thrown as a TypeError) or factory returning the error to
@@ -177,8 +195,8 @@ const failures = {
   invalid_format: failure("invalid_format"),
   invalid_length: failure("invalid_length"),
   invalid_check_digit: failure("invalid_check_digit"),
-  restricted: failure("restricted"),
   invalid_barcode_type: failure("invalid_barcode_type"),
+  format_not_accepted: failure("format_not_accepted"),
   invalid_category: failure("invalid_category"),
 } satisfies Record<ParseGtinErrorReason, ParseGtinFailure>;
 
@@ -258,30 +276,34 @@ const getGtinCategory = (digits: string): GtinCategory => {
  * the `reason` it was refused.
  *
  * Reasons are checked in this order: `invalid_type`, `invalid_format` /
- * `invalid_length`, `invalid_check_digit`, `restricted`,
- * `invalid_barcode_type` and `invalid_category`. Failures are shared frozen objects (no allocation on
- * the invalid path).
+ * `invalid_length`, `invalid_check_digit`,
+ * `invalid_barcode_type`, `format_not_accepted` and `invalid_category`.
+ * Failures are shared frozen objects (no allocation on the invalid path).
  *
- * Perf notes (see bench/parse-gtin.bench.ts): on valid codes, ~30-35%
- * slower than `normalizeGtin` on node and bun (result object, `value` and
- * trimming, ~5% that `trim: false` saves). Prefer
+ * Perf notes (see bench/parse-gtin.bench.ts): on valid codes, ~45-50%
+ * slower than `normalizeGtin` on node (result object, `value`, type and
+ * category). Prefer
  * `normalizeGtin` when only the canonical form is needed.
  *
  * @example
  * ```typescript
  * parseGtin(36000291452);
- * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", inputType: null, indicator: 0, category: "trade_item" }
+ * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", format: null, indicator: 0, category: "trade_item" }
  * parseGtin("0036000291452");
- * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", inputType: "ean13", ... }
+ * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", format: "ean13", ... }
  * parseGtin(4006380000000); // 👈 { success: false, reason: "invalid_check_digit" }
  * parseGtin("96385074", { types: ["ean13", "upca"] }); // 👈 { success: false, reason: "invalid_barcode_type" }
+ * parseGtin("036000291452", { formats: ["ean13"] }); // 👈 { success: false, reason: "format_not_accepted" }
  * parseGtin(36000291452, { inputTypes: ["string"] }); // 👈 { success: false, reason: "invalid_type" }
  * parseGtin(" 4006381333931\n"); // 👈 { success: true, value: "4006381333931", type: "ean13", ... } (trimmed)
  * parseGtin(" 4006381333931", { trim: false }); // 👈 { success: false, reason: "invalid_format" }
  * parseGtin("9781861972712"); // 👈 { success: true, value: "9781861972712", type: "ean13", ..., category: "isbn" }
  * parseGtin("9781861972712", { categories: ["trade_item"] }); // 👈 { success: false, reason: "invalid_category" }
  * parseGtin("04252614", { upce: true });
- * // 👈 { success: true, value: "042100005264", type: "upca", gtin: "00042100005264", inputType: "upce", ... }
+ * // 👈 { success: true, value: "042100005264", type: "upca", gtin: "00042100005264", format: "upce", ... }
+ * parseGtin("04252614", { upce: "prefer-ean8" }); // 👈 same (starts with 0, valid UPC-E, can't be an EAN-8)
+ * parseGtin("01234565", { upce: "prefer-ean8" }); // 👈 { success: true, value: "01234565", type: "ean8", format: "ean8", ..., category: "in_store" } (also an in-store EAN-8, kept)
+ * parseGtin("01234565", { upce: "prefer-upce" }); // 👈 { success: true, value: "012345000065", type: "upca", format: "upce", ... }
  * ```
  *
  * @param value - GTIN as a string (digits only, see `trim`), a non-negative
@@ -289,8 +311,6 @@ const getGtinCategory = (digits: string): GtinCategory => {
  * @param options.minLength - minimum number of digits of the input, as given
  *   (leading zeros of strings included, a UPC-E counts as its 12 digit
  *   UPC-A), between 1 and 14. Default `8`.
- * @param options.acceptRestricted - accept restricted circulation numbers
- *   (with `category: "restricted"`). Default `false`.
  * @param options.types - accepted barcode types, matched on `type`. Default
  *   all: `["ean8", "upca", "ean13", "gtin14"]`.
  * @param options.inputTypes - accepted JavaScript types of the value. Default
@@ -298,9 +318,15 @@ const getGtinCategory = (digits: string): GtinCategory => {
  * @param options.trim - remove leading and trailing whitespace of strings.
  *   Default `true`.
  * @param options.upce - read 8 digit strings as UPC-E (expanded to their
- *   UPC-A) instead of EAN-8. Default `false`.
+ *   UPC-A) instead of EAN-8: `true` always, `"prefer-ean8"` (safest) and
+ *   `"prefer-upce"` when they start with `0` and are a valid UPC-E, they
+ *   differ on the ones that are also a restricted EAN-8. Default `false`
+ *   (`"prefer-ean8"` when `formats` lists `"upce"`).
+ * @param options.formats - accepted formats as given, matched on
+ *   `format` (`ean8`, `upca`, `ean13`, `gtin14`, `upce`), unknown formats
+ *   (numbers, bigints, other lengths) refused. Default all, unknown included.
  * @param options.categories - accepted categories (`trade_item`, `isbn`,
- *   `ismn`, `issn`, `coupon`, `refund_receipt`, `restricted`). Default all.
+ *   `ismn`, `issn`, `coupon`, `refund_receipt`, `in_store`). Default all.
  * @throws RangeError when minLength is not an integer between 1 and 14
  */
 export const parseGtin = (
@@ -317,9 +343,18 @@ export const parseGtin = (
     return failures.invalid_type;
   }
   const isString = typeof value === "string";
-  const upce = isString && options?.upce === true;
-  // with upce, an 8 digit string is a UPC-E: its length is the one of the
-  // expanded UPC-A, minLength is checked after the expansion
+  const formats = options?.formats;
+  // accepting the "upce" format reads UPC-E (safest mode), unless `upce` is
+  // set
+  const upceOption = isString
+    ? (options?.upce ?? (formats?.includes("upce") === true && "prefer-ean8"))
+    : false;
+  const upce =
+    upceOption === true ||
+    upceOption === "prefer-ean8" ||
+    upceOption === "prefer-upce";
+  // with upce, an 8 digit string can be a UPC-E: its length is the one of
+  // the expanded UPC-A, minLength is checked after the expansion
   const trim = options?.trim !== false;
   const read = readGtinDigits(
     value,
@@ -333,18 +368,25 @@ export const parseGtin = (
       : getDigitsFailure(read);
   }
   let digits = read;
-  let inputType: BarcodeFormat | null = isString
+  let format: BarcodeFormat | null = isString
     ? getBarcodeTypeByLength(digits.length)
     : null;
   if (upce) {
-    if (inputType === "ean8") {
+    if (
+      format === "ean8" &&
+      (upceOption === true || isUpcECandidate(digits, upceOption))
+    ) {
       // validated as the expanded UPC-A (check digit, restricted ranges)
       const upca = expandUpcEDigits(digits);
       if (upca === null) {
-        return failures.invalid_format;
+        if (upceOption === true) {
+          return failures.invalid_format;
+        }
+      } else if (upceOption === true || hasValidGtinCheckDigit(upca)) {
+        // detected: only a valid UPC-E, an EAN-8 (and its failure) otherwise
+        digits = upca;
+        format = "upce";
       }
-      digits = upca;
-      inputType = "upce";
     }
     if (digits.length < minLength) {
       return isDigitsOnly(digits)
@@ -357,15 +399,17 @@ export const parseGtin = (
       ? failures.invalid_check_digit
       : failures.invalid_format;
   }
-  const restricted = isRestrictedGtinDigits(digits);
-  if (restricted && options?.acceptRestricted !== true) {
-    return failures.restricted;
-  }
   const type = getGtinType(digits);
   if (options?.types !== undefined && !options.types.includes(type)) {
     return failures.invalid_barcode_type;
   }
-  const category = restricted ? "restricted" : getGtinCategory(digits);
+  if (formats !== undefined && (format === null || !formats.includes(format))) {
+    return failures.format_not_accepted;
+  }
+  // restricted circulation numbers are accepted, as in-store codes
+  const category = isRestrictedGtinDigits(digits)
+    ? "in_store"
+    : getGtinCategory(digits);
   if (
     options?.categories !== undefined &&
     !options.categories.includes(category)
@@ -377,7 +421,7 @@ export const parseGtin = (
     value: toLength(digits, barcodeTypeLengths[type]),
     type,
     gtin: toLength(digits, 14),
-    inputType,
+    format,
     indicator: type === "gtin14" ? digits.charCodeAt(0) - ZERO : 0,
     category,
   } as ParsedGtin;
@@ -409,8 +453,6 @@ export const parseGtin = (
  *   the value type (never its content).
  * @param options.minLength - minimum number of digits of the input, as given
  *   (leading zeros of strings included), between 1 and 14. Default `8`.
- * @param options.acceptRestricted - accept restricted circulation numbers
- *   (with `category: "restricted"`). Default `false`.
  * @param options.types - accepted barcode types, matched on `type`. Default
  *   all: `["ean8", "upca", "ean13", "gtin14"]`.
  * @param options.inputTypes - accepted JavaScript types of the value. Default
@@ -418,9 +460,14 @@ export const parseGtin = (
  * @param options.trim - remove leading and trailing whitespace of strings.
  *   Default `true`.
  * @param options.upce - read 8 digit strings as UPC-E (expanded to their
- *   UPC-A) instead of EAN-8. Default `false`.
+ *   UPC-A) instead of EAN-8: `true` always, `"prefer-ean8"` (safest) and
+ *   `"prefer-upce"` when they start with `0` and are a valid UPC-E, they
+ *   differ on the ones that are also a restricted EAN-8. Default `false`
+ *   (`"prefer-ean8"` when `formats` lists `"upce"`).
+ * @param options.formats - accepted formats as given, matched on
+ *   `format`, unknown formats refused. Default all, unknown included.
  * @param options.categories - accepted categories (`trade_item`, `isbn`,
- *   `ismn`, `issn`, `coupon`, `refund_receipt`, `restricted`). Default all.
+ *   `ismn`, `issn`, `coupon`, `refund_receipt`, `in_store`). Default all.
  *
  * @throws TypeError (or the error returned by the factory) when invalid
  * @throws RangeError when minLength is not an integer between 1 and 14

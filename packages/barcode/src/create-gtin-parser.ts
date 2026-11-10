@@ -1,4 +1,4 @@
-import type { BarcodeType } from "./detect-barcode-type";
+import type { BarcodeFormat, BarcodeType } from "./detect-barcode-type";
 import { getMinLength } from "./gtin-digits";
 import type {
   GtinCategory,
@@ -28,29 +28,34 @@ export type GtinParserTypes<TOptions> = "types" extends keyof TOptions
   : BarcodeType;
 
 /**
- * Categories a parser can return, from its `categories` option, without
- * `restricted` unless `acceptRestricted` can be true
+ * Input formats a parser can return, from its `formats` option (never `null`
+ * when given: unknown formats are refused)
  */
-export type GtinParserCategories<TOptions> = (
-  "categories" extends keyof TOptions
-    ? Extract<
-        NonNullable<TOptions["categories" & keyof TOptions]>,
+export type GtinParserFormats<TOptions> = "formats" extends keyof TOptions
+  ? undefined extends TOptions["formats" & keyof TOptions]
+    ? BarcodeFormat | null
+    : Extract<
+        TOptions["formats" & keyof TOptions],
+        readonly unknown[]
+      >[number] &
+        BarcodeFormat
+  : BarcodeFormat | null;
+
+/** Categories a parser can return, from its `categories` option */
+export type GtinParserCategories<TOptions> = "categories" extends keyof TOptions
+  ? undefined extends TOptions["categories" & keyof TOptions]
+    ? GtinCategory
+    : Extract<
+        TOptions["categories" & keyof TOptions],
         readonly unknown[]
       >[number] &
         GtinCategory
-    : GtinCategory
-) extends infer TCategory extends GtinCategory
-  ? "acceptRestricted" extends keyof TOptions
-    ? true extends TOptions["acceptRestricted" & keyof TOptions]
-      ? TCategory
-      : Exclude<TCategory, "restricted">
-    : Exclude<TCategory, "restricted">
-  : never;
+  : GtinCategory;
 
 /** Options narrowing the result types, inferred from the given options */
 export type GtinParserNarrowingOptions = Pick<
   ParseGtinOptions,
-  "types" | "categories" | "acceptRestricted"
+  "types" | "formats" | "categories"
 >;
 
 /**
@@ -66,7 +71,7 @@ type GtinParserOtherOptions = Omit<
 type MergeOptions<TBase, TOverrides> = Omit<TBase, keyof TOverrides> &
   TOverrides;
 
-const arrayOptions = ["types", "categories", "inputTypes"] as const;
+const arrayOptions = ["types", "formats", "categories", "inputTypes"] as const;
 
 export type GtinParser<
   TOptions extends GtinParserNarrowingOptions = GtinParserNarrowingOptions,
@@ -81,7 +86,8 @@ export type GtinParser<
     value: unknown
   ) => ParseGtinResult<
     GtinParserTypes<TOptions>,
-    GtinParserCategories<TOptions>
+    GtinParserCategories<TOptions>,
+    GtinParserFormats<TOptions>
   >;
   /**
    * Parse a GTIN with the parser options or throw (the `errorFactory` error,
@@ -91,7 +97,11 @@ export type GtinParser<
    */
   readonly parseOrThrow: (
     value: unknown
-  ) => ParsedGtin<GtinParserTypes<TOptions>, GtinParserCategories<TOptions>>;
+  ) => ParsedGtin<
+    GtinParserTypes<TOptions>,
+    GtinParserCategories<TOptions>,
+    GtinParserFormats<TOptions>
+  >;
   /**
    * Create a new parser with these options merged over the current ones (the
    * current parser is unchanged).
@@ -109,7 +119,7 @@ export type GtinParser<
  * Create a GTIN parser with default options, reused by `parse` and
  * `parseOrThrow`. Options are copied and validated once (a bad `minLength`
  * throws at creation), and the result types are narrowed from `types`,
- * `categories` and `acceptRestricted` (when given as literals).
+ * `formats` and `categories` (when given as literals).
  *
  * `parse` and `parseOrThrow` take a single argument and don't depend on
  * `this`: safe to pass as callbacks (`codes.map(parser.parse)`).
@@ -128,7 +138,9 @@ export type GtinParser<
  * }
  * const { gtin } = gtinParser.parseOrThrow(input); // 👈 throws HttpBadRequest
  * const results = codes.map(gtinParser.parse);
- * const lenientParser = gtinParser.extend({ acceptRestricted: true });
+ * const withInStoreParser = gtinParser.extend({
+ *   categories: ["trade_item", "in_store"],
+ * });
  * ```
  *
  * @throws RangeError when minLength is not an integer between 1 and 14

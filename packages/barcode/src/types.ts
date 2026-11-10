@@ -36,20 +36,6 @@ export type GtinByLength = {
   14: Gtin14;
 };
 
-/** Validation options shared by the guards, assertions and detection */
-export type GtinValidationOptions = {
-  /**
-   * Accept GS1 Restricted Circulation Numbers (RCN), see
-   * `isRestrictedCirculation`: EAN-8 starting with 0 or 2, EAN-13 starting
-   * with 02, 04 or 20-29, UPC-A starting with 2 or 4 (and GTIN-14 containing
-   * them). Those codes are only meaningful within a company or a geographic
-   * region (ie: in-store labels, variable measure items with an embedded
-   * weight or price).
-   * @default false
-   */
-  acceptRestricted?: boolean;
-};
-
 /** Trim option of the functions returning a value (not the type guards) */
 export type GtinTrimOptions = {
   /**
@@ -58,21 +44,48 @@ export type GtinTrimOptions = {
    * from CSV or spreadsheets. Lengths (ie: `minLength`) apply to the trimmed
    * string. Type guards, assertions and `detectBarcodeType` never trim
    * (they validate the value as is, it can't be narrowed to a trimmed one),
-   * `isRestrictedCirculation` only with `trim: true`.
+   * `isInStoreGtin` only with `trim: true`.
    * @default true
    */
   trim?: boolean;
 };
 
-/** UPC-E option of `parseGtin` (and `createGtinParser`) */
+/**
+ * How 8 digit strings starting with `0` that are both a valid UPC-E and a
+ * (restricted) EAN-8 with a valid check digit are read, see the `upce` option
+ */
+export type UpcEDetectionMode = "prefer-ean8" | "prefer-upce";
+
+/**
+ * UPC-E option of `parseGtin` (and `createGtinParser`) and
+ * `detectBarcodeType`
+ */
 export type UpcEOptions = {
   /**
-   * Read 8 digit strings as UPC-E (zero-suppressed UPC-A) instead of EAN-8.
-   * Both have 8 digits and can't be told apart from their digits: only set it
-   * when the source is known to be UPC-E (ie: the scanner symbology). Numbers
-   * and bigints are never read as UPC-E (leading zero lost), pass a string.
-   * `minLength` counts a UPC-E as its expanded UPC-A (12 digits).
-   * @default false
+   * How 8 digit strings are read:
+   *  - `false`: as EAN-8.
+   *  - `true`: as UPC-E (zero-suppressed UPC-A). Set it when the source is
+   *    known to be UPC-E (ie: the scanner symbology).
+   *  - `"prefer-ean8"` and `"prefer-upce"`: detected. As UPC-E when it
+   *    starts with `0` (the UPC-E number system of the GS1 General
+   *    Specifications) and is a valid UPC-E, as EAN-8 otherwise. An EAN-8
+   *    starting with `0` is restricted circulation (ie: an in-store code): a
+   *    regular EAN-8 is never read as UPC-E. But the same 8 digits can be
+   *    both a valid UPC-E and a restricted EAN-8 with a valid check digit
+   *    (more than half of the UPC-E), the modes differ on those:
+   *      - `"prefer-ean8"` (safest): kept as EAN-8 (`parseGtin` category
+   *        `in_store`). An in-store code is never expanded to a UPC-A, but
+   *        only the UPC-E that can't be an EAN-8 are detected.
+   *      - `"prefer-upce"`: read as UPC-E, every UPC-E is detected but an
+   *        in-store EAN-8 starting with `0` can be expanded to the UPC-A of
+   *        another product. Only when the source has no in-store codes.
+   *    UPC-E with the number system `1` (ie: `10000168`, a scanner
+   *    extension) are only read with `true`.
+   *
+   * Numbers and bigints are never read as UPC-E (leading zero lost), pass a
+   * string. `minLength` counts a UPC-E as its expanded UPC-A (12 digits).
+   * @default false (`"prefer-ean8"` with `parseGtin` when `formats` lists
+   *   `"upce"`)
    */
-  upce?: boolean;
+  upce?: boolean | UpcEDetectionMode;
 };

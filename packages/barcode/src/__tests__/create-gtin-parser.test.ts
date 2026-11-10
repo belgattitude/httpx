@@ -2,7 +2,7 @@ import { describe, expect, expectTypeOf, it } from "vitest";
 
 import type { GtinParserOptions } from "../create-gtin-parser";
 import { createGtinParser } from "../create-gtin-parser";
-import type { BarcodeType } from "../detect-barcode-type";
+import type { BarcodeFormat, BarcodeType } from "../detect-barcode-type";
 import type {
   GtinCategory,
   ParsedGtin,
@@ -128,15 +128,19 @@ describe("createGtinParser", () => {
         types: ["ean13"],
         errorFactory: "Invalid barcode",
       });
-      const lenient = parser.extend({ acceptRestricted: true });
+      const lenient = parser.extend({ categories: ["in_store"] });
       expect(lenient.parse("2123456789010")).toMatchObject({
         success: true,
-        category: "restricted",
+        category: "in_store",
+      });
+      expect(lenient.parse("4006381333931")).toStrictEqual({
+        success: false,
+        reason: "invalid_category",
       });
       expect(lenient.parse("96385074").success).toBe(false);
       expect(() => lenient.parseOrThrow("x")).toThrow("Invalid barcode");
       // the original parser is unchanged
-      expect(parser.parse("2123456789010").success).toBe(false);
+      expect(parser.parse("4006381333931").success).toBe(true);
     });
 
     it("should type inline errorFactory callbacks", () => {
@@ -163,9 +167,9 @@ describe("createGtinParser", () => {
 
   describe("types", () => {
     it("should not narrow the types without options", () => {
-      expectTypeOf(createGtinParser().parse).returns.toEqualTypeOf<
-        ParseGtinResult<BarcodeType, Exclude<GtinCategory, "restricted">>
-      >();
+      expectTypeOf(
+        createGtinParser().parse
+      ).returns.toEqualTypeOf<ParseGtinResult>();
     });
 
     it("should narrow value, type and category from the options", () => {
@@ -183,15 +187,45 @@ describe("createGtinParser", () => {
       >().toEqualTypeOf<UpcA>();
     });
 
-    it("should include restricted only with acceptRestricted", () => {
-      const accept = createGtinParser({ acceptRestricted: true });
+    it("should narrow format from formats", () => {
       expectTypeOf<
-        Parsed<typeof accept>["category"]
-      >().toEqualTypeOf<GtinCategory>();
-      const refuse = createGtinParser({ acceptRestricted: false });
-      expectTypeOf<Parsed<typeof refuse>["category"]>().toEqualTypeOf<
-        Exclude<GtinCategory, "restricted">
+        Parsed<ReturnType<typeof createGtinParser>>["format"]
+      >().toEqualTypeOf<BarcodeFormat | null>();
+      const parser = createGtinParser({
+        upce: "prefer-upce",
+        formats: ["ean13", "upce"],
+      });
+      expectTypeOf<Parsed<typeof parser>["format"]>().toEqualTypeOf<
+        "ean13" | "upce"
       >();
+      expect(parser.parse("04252614")).toMatchObject({ format: "upce" });
+      expect(parser.parse("042100005264")).toStrictEqual({
+        success: false,
+        reason: "format_not_accepted",
+      });
+      const extended = parser.extend({ formats: ["upca"] });
+      expectTypeOf<Parsed<typeof extended>["format"]>().toEqualTypeOf<"upca">();
+      expect(extended.parse("042100005264")).toMatchObject({ success: true });
+      // non literal options: can't be narrowed
+      const options: GtinParserOptions = { formats: ["ean13"] };
+      expectTypeOf<
+        Parsed<ReturnType<typeof createGtinParser<typeof options>>>["format"]
+      >().toEqualTypeOf<BarcodeFormat | null>();
+    });
+
+    it("should include in_store unless categories excludes it", () => {
+      const all = createGtinParser({ types: ["ean13"] });
+      expectTypeOf<
+        Parsed<typeof all>["category"]
+      >().toEqualTypeOf<GtinCategory>();
+      const products = createGtinParser({ categories: ["trade_item", "isbn"] });
+      expectTypeOf<Parsed<typeof products>["category"]>().toEqualTypeOf<
+        "trade_item" | "isbn"
+      >();
+      expect(products.parse("2123456789010")).toStrictEqual({
+        success: false,
+        reason: "invalid_category",
+      });
       // non literal options: can't be narrowed
       const options: GtinParserOptions = { errorFactory: "Invalid" };
       const wide = createGtinParser(options);
@@ -203,12 +237,12 @@ describe("createGtinParser", () => {
     it("should narrow extended parsers from the merged options", () => {
       const parser = createGtinParser({ types: ["ean13"] }).extend({
         types: ["ean8"],
-        acceptRestricted: true,
+        categories: ["trade_item", "in_store"],
       });
       expectTypeOf<Parsed<typeof parser>["type"]>().toEqualTypeOf<"ean8">();
-      expectTypeOf<
-        Parsed<typeof parser>["category"]
-      >().toEqualTypeOf<GtinCategory>();
+      expectTypeOf<Parsed<typeof parser>["category"]>().toEqualTypeOf<
+        "trade_item" | "in_store"
+      >();
     });
 
     it("should keep the default ParsedGtin unchanged", () => {

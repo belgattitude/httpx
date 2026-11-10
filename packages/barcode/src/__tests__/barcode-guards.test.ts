@@ -2,6 +2,7 @@ import { describe, expect, expectTypeOf, it } from "vitest";
 
 import { isEan8, isEan13, isGtin14, isUpcA } from "../barcode-guards";
 import { isGtin } from "../is-gtin";
+import { isInStoreGtin } from "../is-in-store-gtin";
 import type { Ean8, Ean13, Gtin, Gtin14, UpcA } from "../types";
 
 const valid = {
@@ -61,25 +62,28 @@ describe("barcode guards", () => {
         Object.entries(restricted).flatMap(([t, codes]) =>
           codes.map((c) => [t, c] as const)
         )
-      )("should refuse by default, accept with option (%s: %s)", (t, code) => {
-        expect(guard(code)).toBe(false);
-        expect(guard(code, { acceptRestricted: false })).toBe(false);
-        expect(guard(code, { acceptRestricted: true })).toBe(t === type);
+      )("should accept them like any code of its type (%s: %s)", (t, code) => {
+        expect(isInStoreGtin(code)).toBe(true);
+        expect(guard(code)).toBe(t === type);
+        // not an option anymore: ignored
+        const withOptions = guard as (v: unknown, options: object) => boolean;
+        expect(withOptions(code, { acceptRestricted: false })).toBe(t === type);
       });
-
-      it.each(invalid)(
-        "should still return false for %s with acceptRestricted",
-        (v) => {
-          expect(guard(v, { acceptRestricted: true })).toBe(false);
-        }
-      );
     }
   );
 
+  it("should be safe to pass to array methods (single argument)", () => {
+    const codes = ["4006381333931", "96385074", "2123456789010", "x"];
+    expect(codes.filter(isEan13)).toStrictEqual([
+      "4006381333931",
+      "2123456789010",
+    ]);
+    expect(codes.filter(isGtin)).toHaveLength(3);
+  });
+
   it("isGtin should accept every type and reject invalid values", () => {
     for (const code of Object.values(restricted).flat()) {
-      expect(isGtin(code)).toBe(false);
-      expect(isGtin(code, { acceptRestricted: true })).toBe(true);
+      expect(isGtin(code)).toBe(true);
     }
     for (const code of Object.values(valid).flat()) {
       expect(isGtin(code)).toBe(true);

@@ -1,13 +1,11 @@
 import { formatGtin } from "./format-gtin";
 import { trimGtinString } from "./gtin-digits";
-import { isValidGtinDigits } from "./gtin-validate";
-import type {
-  GtinTrimOptions,
-  GtinValidationOptions,
-  UpcA,
-  UpcE,
-} from "./types";
-import { expandUpcEDigits, isUpcAInGtin8Range } from "./upce-digits";
+import type { GtinTrimOptions, UpcA, UpcE } from "./types";
+import {
+  expandUpcEDigits,
+  isUpcAInGtin8Range,
+  isValidUpcEDigits,
+} from "./upce-digits";
 
 /**
  * Expand a UPC-E (8 digits, zero-suppressed) to its UPC-A (12 digits).
@@ -26,17 +24,14 @@ import { expandUpcEDigits, isUpcAInGtin8Range } from "./upce-digits";
  */
 export const expandUpcE = (
   upce: string,
-  options?: GtinValidationOptions & GtinTrimOptions
+  options?: GtinTrimOptions
 ): UpcA | null => {
   if (typeof upce !== "string") {
     return null;
   }
-  const upca = expandUpcEDigits(
-    options?.trim === false ? upce : trimGtinString(upce)
-  );
-  return upca !== null && isValidGtinDigits(upca, options)
-    ? (upca as UpcA)
-    : null;
+  const digits = options?.trim === false ? upce : trimGtinString(upce);
+  // validated first: nothing is allocated for an invalid value
+  return isValidUpcEDigits(digits) ? (expandUpcEDigits(digits) as UpcA) : null;
 };
 
 /**
@@ -58,7 +53,7 @@ export const expandUpcE = (
  */
 export const compressUpcA = (
   gtin: string,
-  options?: GtinValidationOptions & GtinTrimOptions
+  options?: GtinTrimOptions
 ): UpcE | null => {
   const upca = formatGtin(gtin, 12, options);
   if (

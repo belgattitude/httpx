@@ -7,6 +7,7 @@ import {
   assertUpcA,
   assertGtin,
 } from "../barcode-asserts";
+import { isInStoreGtin } from "../is-in-store-gtin";
 import type { Ean8, Ean13, Gtin, Gtin14, UpcA } from "../types";
 
 class HttpBadRequestError extends Error {
@@ -60,7 +61,7 @@ describe.each(cases)("$fn.name", ({ fn, valid, label }) => {
     ).toThrow(HttpBadRequestError);
   });
 
-  it("should forward the acceptRestricted option", () => {
+  it("should accept restricted circulation numbers (in-store codes)", () => {
     // EAN-8 / UPC-A / EAN-13 / GTIN-14 restricted circulation numbers
     const rcnByFn: Record<string, string> = {
       assertEan13: "2123456789010",
@@ -70,8 +71,8 @@ describe.each(cases)("$fn.name", ({ fn, valid, label }) => {
       assertGtin: "2123456789010",
     };
     const rcn = rcnByFn[fn.name];
-    expect(() => fn(rcn)).toThrow(TypeError);
-    expect(() => fn(rcn, undefined, { acceptRestricted: true })).not.toThrow();
+    expect(isInStoreGtin(rcn)).toBe(true);
+    expect(() => fn(rcn)).not.toThrow();
   });
 
   it("should pass the value to the factory", () => {
