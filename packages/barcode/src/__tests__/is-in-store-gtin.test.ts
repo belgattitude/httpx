@@ -4,10 +4,11 @@ import { getBarcodeSeeds } from "../../bench/bench-seeds";
 import { isEan8, isEan13, isGtin14, isUpcA } from "../barcode-guards";
 import { detectBarcodeType } from "../detect-barcode-type";
 import { isGtin } from "../is-gtin";
-import { isRestrictedCirculation } from "../is-restricted-circulation";
+import { isInStoreGtin } from "../is-in-store-gtin";
 import { normalizeGtin } from "../normalize-gtin";
+import { parseGtin } from "../parse-gtin";
 
-describe("isRestrictedCirculation", () => {
+describe("isInStoreGtin", () => {
   it.each([
     // EAN-13 GS1 Prefix 20-29 (geographic region)
     ["2123456789010", "ean13 starting with 21"],
@@ -31,7 +32,7 @@ describe("isRestrictedCirculation", () => {
     [21_234_569, "ean8 as number"],
     [2_123_456_789_010n, "bigint"],
   ])("should return true for %s (%s)", (value, _reason) => {
-    expect(isRestrictedCirculation(value)).toBe(true);
+    expect(isInStoreGtin(value)).toBe(true);
   });
 
   it.each([
@@ -52,17 +53,14 @@ describe("isRestrictedCirculation", () => {
     [null, "null"],
     [{}, "object"],
   ])("should return false for %s (%s)", (value, _reason) => {
-    expect(isRestrictedCirculation(value)).toBe(false);
+    expect(isInStoreGtin(value)).toBe(false);
   });
 
-  it("should be refused by the other functions unless acceptRestricted", () => {
-    const accept = { acceptRestricted: true };
-    expect(isEan13("2123456789010")).toBe(false);
-    expect(isEan13("2123456789010", accept)).toBe(true);
-    expect(isUpcA("212345678992")).toBe(false);
-    expect(isUpcA("212345678992", accept)).toBe(true);
-    expect(normalizeGtin("2123456789010")).toBeNull();
-    expect(normalizeGtin("2123456789010", accept)).toBe("02123456789010");
+  it("should be valid GTINs for the other functions", () => {
+    expect(isEan13("2123456789010")).toBe(true);
+    expect(isUpcA("212345678992")).toBe(true);
+    expect(normalizeGtin("2123456789010")).toBe("02123456789010");
+    expect(parseGtin("2123456789010")).toMatchObject({ category: "in_store" });
   });
 
   it("should agree with the guards on every generated code", () => {
@@ -84,11 +82,15 @@ describe("isRestrictedCirculation", () => {
     ];
     let restricted = 0;
     for (const code of codes) {
-      const isRcn = isRestrictedCirculation(code);
+      const isRcn = isInStoreGtin(code);
       restricted += isRcn ? 1 : 0;
-      const acceptedOnlyWithOption =
-        !isGtin(code) && isGtin(code, { acceptRestricted: true });
-      expect([code, acceptedOnlyWithOption]).toStrictEqual([code, isRcn]);
+      // the in_store category of parseGtin, only for valid codes
+      const parsed = parseGtin(code);
+      expect([
+        code,
+        parsed.success && parsed.category === "in_store",
+      ]).toStrictEqual([code, isRcn]);
+      expect(!isRcn || normalizeGtin(code) !== null).toBe(true);
       const guards = [isEan8, isUpcA, isEan13, isGtin14];
       expect(guards.some((guard) => guard(code))).toBe(isGtin(code));
       expect(detectBarcodeType(code) !== null).toBe(isGtin(code));
@@ -97,21 +99,17 @@ describe("isRestrictedCirculation", () => {
   });
 
   it("should only trim with trim: true", () => {
-    expect(isRestrictedCirculation(" 2123456789010\n")).toBe(false);
-    expect(isRestrictedCirculation(" 2123456789010", { trim: false })).toBe(
-      false
-    );
-    expect(isRestrictedCirculation(" 2123456789010\n", { trim: true })).toBe(
-      true
-    );
+    expect(isInStoreGtin(" 2123456789010\n")).toBe(false);
+    expect(isInStoreGtin(" 2123456789010", { trim: false })).toBe(false);
+    expect(isInStoreGtin(" 2123456789010\n", { trim: true })).toBe(true);
   });
 
   it("should apply minLength like normalizeGtin", () => {
     // "01234565" with its leading zero lost
-    expect(isRestrictedCirculation(1_234_565)).toBe(false);
-    expect(isRestrictedCirculation(1_234_565, { minLength: 7 })).toBe(true);
-    expect(isRestrictedCirculation(21_234_569, { minLength: 12 })).toBe(false);
-    expect(() => isRestrictedCirculation("21234569", { minLength: 0 })).toThrow(
+    expect(isInStoreGtin(1_234_565)).toBe(false);
+    expect(isInStoreGtin(1_234_565, { minLength: 7 })).toBe(true);
+    expect(isInStoreGtin(21_234_569, { minLength: 12 })).toBe(false);
+    expect(() => isInStoreGtin("21234569", { minLength: 0 })).toThrow(
       RangeError
     );
   });

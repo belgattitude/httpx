@@ -1,6 +1,8 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 
 import { type BarcodeType, detectBarcodeType } from "../detect-barcode-type";
+import { isInStoreGtin } from "../is-in-store-gtin";
+import { parseGtin } from "../parse-gtin";
 
 describe("detectBarcodeType", () => {
   it.each([
@@ -19,9 +21,6 @@ describe("detectBarcodeType", () => {
 
   it.each([
     ["96385075", "ean8 with wrong check digit"],
-    ["01234565", "ean8 starting with 0 (restricted circulation)"],
-    ["21234569", "ean8 starting with 2 (restricted circulation)"],
-    ["000021234569", "restricted ean8 padded as upca"],
     ["036000291453", "upca with wrong check digit"],
     ["4006381333932", "ean13 with wrong check digit"],
     ["10012345678903", "gtin14 with wrong check digit"],
@@ -41,16 +40,25 @@ describe("detectBarcodeType", () => {
     ["212345678992", "upca"],
     ["21234569", "ean8"],
     ["01234565", "ean8"],
+    ["000021234569", "upca"],
     ["12123456789017", "gtin14"],
   ] as const)(
-    "should detect restricted %s as %s only with acceptRestricted",
+    "should detect the in-store code %s as %s (restricted circulation)",
     (code, expected) => {
-      expect(detectBarcodeType(code)).toBeNull();
-      expect(detectBarcodeType(code, { acceptRestricted: true })).toBe(
-        expected
-      );
+      expect(isInStoreGtin(code)).toBe(true);
+      expect(detectBarcodeType(code)).toBe(expected);
+      // like parseGtin (format as given)
+      expect(parseGtin(code)).toMatchObject({
+        format: expected,
+        category: "in_store",
+      });
     }
   );
+
+  it("should ignore acceptRestricted (not an option anymore)", () => {
+    const options = { acceptRestricted: false } as object;
+    expect(detectBarcodeType("2123456789010", options)).toBe("ean13");
+  });
 
   it.each([
     " 4006381333931",

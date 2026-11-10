@@ -1,8 +1,13 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 
 import { assertUpcE } from "../barcode-asserts";
-import { isUpcA, isUpcE } from "../barcode-guards";
-import { detectBarcodeType } from "../detect-barcode-type";
+import { isEan8, isUpcA, isUpcE } from "../barcode-guards";
+import { createGtinParser } from "../create-gtin-parser";
+import {
+  type BarcodeFormat,
+  type BarcodeType,
+  detectBarcodeType,
+} from "../detect-barcode-type";
 import { parseGtin } from "../parse-gtin";
 import type { UpcA, UpcE } from "../types";
 import { compressUpcA, expandUpcE } from "../upce";
@@ -72,10 +77,8 @@ describe("expandUpcE", () => {
 
   it("should expand like the reference GS1 table", () => {
     for (const { upce, upca } of samples) {
-      // UPC-A starting with 0000 (GTIN-8 range) refused, restricted or not
-      expect(expandUpcE(upce, { acceptRestricted: true })).toBe(
-        inGtin8Range(upca) ? null : upca
-      );
+      // UPC-A starting with 0000 (GTIN-8 range) refused
+      expect(expandUpcE(upce)).toBe(inGtin8Range(upca) ? null : upca);
     }
     expect(samples.some(({ upca }) => inGtin8Range(upca))).toBe(true);
   });
@@ -128,10 +131,10 @@ describe("compressUpcA", () => {
 
   it("should round-trip with expandUpcE", () => {
     for (const { upca } of samples.filter((v) => !inGtin8Range(v.upca))) {
-      const upce = compressUpcA(upca, { acceptRestricted: true });
+      const upce = compressUpcA(upca);
       // every expanded UPC-E can be compressed back (canonical form)
       expect(upce).not.toBeNull();
-      expect(expandUpcE(upce ?? "", { acceptRestricted: true })).toBe(upca);
+      expect(expandUpcE(upce ?? "")).toBe(upca);
     }
   });
 
@@ -139,7 +142,7 @@ describe("compressUpcA", () => {
     const gtin8Range = samples.filter((v) => inGtin8Range(v.upca));
     expect(gtin8Range.length).toBeGreaterThan(0);
     for (const { upca } of gtin8Range) {
-      expect(compressUpcA(upca, { acceptRestricted: true })).toBeNull();
+      expect(compressUpcA(upca)).toBeNull();
     }
   });
 
@@ -190,8 +193,7 @@ describe("isUpcE / assertUpcE", () => {
     expect(referenceExpand("0", "000104")).toBe("000010000007");
     for (const upce of ["00001233", "00001047"]) {
       expect(isUpcE(upce)).toBe(false);
-      expect(isUpcE(upce, { acceptRestricted: true })).toBe(false);
-      expect(expandUpcE(upce, { acceptRestricted: true })).toBeNull();
+      expect(expandUpcE(upce)).toBeNull();
     }
   });
 
@@ -210,24 +212,26 @@ describe("parseGtin with upce", () => {
       value: "042100005264",
       type: "upca",
       gtin: "00042100005264",
-      inputType: "upce",
+      format: "upce",
       indicator: 0,
       category: "trade_item",
     });
     expect(parseGtin(" 01234565\n", { upce: true })).toMatchObject({
       success: true,
       value: "012345000065",
-      inputType: "upce",
+      format: "upce",
     });
   });
 
   it("should read them as EAN-8 by default", () => {
-    // "01234565" as EAN-8: starts with 0, restricted circulation
-    expect(parseGtin("01234565")).toStrictEqual({
-      success: false,
-      reason: "restricted",
+    // "01234565" as EAN-8: starts with 0, restricted circulation (in-store)
+    expect(parseGtin("01234565")).toMatchObject({
+      success: true,
+      value: "01234565",
+      format: "ean8",
+      category: "in_store",
     });
-    expect(parseGtin("96385074")).toMatchObject({ inputType: "ean8" });
+    expect(parseGtin("96385074")).toMatchObject({ format: "ean8" });
   });
 
   it.each([
@@ -246,7 +250,7 @@ describe("parseGtin with upce", () => {
   it("should not read numbers as UPC-E", () => {
     // 8 digit number: EAN-8, a UPC-E starts with 0 or 1 (lost as a number)
     expect(parseGtin(96_385_074, { upce: true })).toMatchObject({
-      inputType: null,
+      format: null,
       type: "ean8",
     });
   });
@@ -267,17 +271,19 @@ describe("parseGtin with upce", () => {
     expect(parseGtin("04252614", { upce: true, minLength: 12 })).toMatchObject({
       success: true,
       value: "042100005264",
-      inputType: "upce",
+      format: "upce",
     });
     expect(parseGtin("04252614", { upce: true, minLength: 13 })).toStrictEqual({
       success: false,
       reason: "invalid_length",
     });
     // other lengths still checked as given (7 digits: not a UPC-E, less
-    // than 8 significant digits so restricted)
-    expect(parseGtin("0425261", { upce: true, minLength: 7 })).toStrictEqual({
-      success: false,
-      reason: "restricted",
+    // than 8 significant digits so an in-store EAN-8)
+    expect(parseGtin("0425261", { upce: true, minLength: 7 })).toMatchObject({
+      success: true,
+      value: "00425261",
+      format: null,
+      category: "in_store",
     });
     expect(parseGtin("123456789", { upce: true, minLength: 12 })).toStrictEqual(
       { success: false, reason: "invalid_length" }
@@ -290,7 +296,7 @@ describe("parseGtin with upce", () => {
   it("should leave other lengths unchanged", () => {
     expect(parseGtin("4006381333931", { upce: true })).toMatchObject({
       value: "4006381333931",
-      inputType: "ean13",
+      format: "ean13",
     });
   });
 });
@@ -306,7 +312,279 @@ describe("detectBarcodeType", () => {
       type: "upca",
       value: "100001000068",
     });
-    // only valid as UPC-E (EAN-8 starting with 0: restricted)
+    // only valid as UPC-E (invalid EAN-8 check digit)
     expect(detectBarcodeType("04252614")).toBeNull();
+  });
+});
+
+describe("upce: prefer-upce", () => {
+  it.each([
+    ["04252614", "upce", "042100005264", "UPC-E only (restricted EAN-8)"],
+    ["01234565", "upce", "012345000065", "both, EAN-8 restricted"],
+    ["10000168", "ean8", "10000168", "both, number system 1"],
+    ["96385074", "ean8", "96385074", "EAN-8 only"],
+  ] as const)("should read %s as %s (%s)", (code, format, value, _label) => {
+    expect(parseGtin(code, { upce: "prefer-upce" })).toMatchObject({
+      success: true,
+      value,
+      format,
+    });
+    expect(detectBarcodeType(code, { upce: "prefer-upce" })).toBe(format);
+  });
+
+  it.each([
+    ["04252615", "invalid_check_digit", "invalid as both"],
+    ["00001047", "invalid_check_digit", "UPC-E in the GTIN-8 range"],
+    ["10000016", "invalid_check_digit", "UPC-E only, number system 1"],
+  ])("should read %s as EAN-8 and refuse it (%s, %s)", (code, reason) => {
+    expect(parseGtin(code, { upce: "prefer-upce" })).toStrictEqual({
+      success: false,
+      reason,
+    });
+    expect(parseGtin(code, { upce: "prefer-upce" })).toStrictEqual(
+      parseGtin(code)
+    );
+    expect(detectBarcodeType(code, { upce: "prefer-upce" })).toBeNull();
+  });
+
+  it.each([
+    ["01000016", "in-store EAN-8, invalid UPC-E"],
+    ["24252614", "in-store EAN-8, number system 2"],
+  ])("should read %s as an in-store EAN-8 (%s)", (code) => {
+    expect(parseGtin(code, { upce: "prefer-upce" })).toMatchObject({
+      success: true,
+      value: code,
+      format: "ean8",
+      category: "in_store",
+    });
+    expect(parseGtin(code, { upce: "prefer-upce" })).toStrictEqual(
+      parseGtin(code)
+    );
+    expect(detectBarcodeType(code, { upce: "prefer-upce" })).toBe("ean8");
+  });
+
+  it("should prefer a valid UPC-E over an in-store EAN-8", () => {
+    expect(parseGtin("01234565", { upce: "prefer-upce" })).toMatchObject({
+      value: "012345000065",
+      format: "upce",
+      category: "trade_item",
+    });
+    // invalid UPC-E: stays an EAN-8, in-store
+    expect(parseGtin("01000016", { upce: "prefer-upce" })).toMatchObject({
+      value: "01000016",
+      format: "ean8",
+      category: "in_store",
+    });
+    expect(detectBarcodeType("01000016", { upce: "prefer-upce" })).toBe("ean8");
+  });
+
+  it("should agree with isEan8 and isUpcE", () => {
+    let seed = 11;
+    const random = () =>
+      (seed = (seed * 16_807) % 2_147_483_647) / 2_147_483_647;
+    const codes = [
+      ...samples.map((v) => v.upce),
+      ...Array.from({ length: 4000 }, () =>
+        String(Math.floor(random() * 2e7)).padStart(8, "0")
+      ),
+    ];
+    /**
+     * Reference: UPC-E when valid with the number system 0, EAN-8 otherwise
+     * (value of the result), in-store EAN-8 (restricted circulation)
+     * included.
+     */
+    const reference = (
+      code: string
+    ): ["ean8" | "upce", string | null] | [null, null] => {
+      if (code.startsWith("0") && isUpcE(code)) {
+        return ["upce", expandUpcE(code)];
+      }
+      return isEan8(code) ? ["ean8", code] : [null, null];
+    };
+    const counts = { upce: 0, ean8: 0, null: 0 };
+    for (const code of codes) {
+      const [format, value] = reference(code);
+      counts[format ?? "null"]++;
+      expect(detectBarcodeType(code, { upce: "prefer-upce" })).toBe(format);
+      const parsed = parseGtin(code, { upce: "prefer-upce" });
+      expect(
+        parsed.success ? [parsed.format, parsed.value] : null
+      ).toStrictEqual(format === null ? null : [format, value]);
+    }
+    // every outcome covered
+    expect(Object.values(counts).every((n) => n > 0)).toBe(true);
+  });
+
+  it("should only detect the number system 0", () => {
+    const valid = samples.filter((v) => isUpcE(v.upce));
+    const system1 = valid.filter((v) => v.upce.startsWith("1"));
+    expect(system1.length).toBeGreaterThan(100);
+    expect(valid.length - system1.length).toBeGreaterThan(100);
+    for (const { upce, upca } of valid) {
+      const expected = upce.startsWith("0") ? "upce" : null;
+      // number system 1: an EAN-8 (when valid as one), read with upce: true
+      expect(detectBarcodeType(upce, { upce: "prefer-upce" })).toBe(
+        expected ?? (isEan8(upce) ? "ean8" : null)
+      );
+      expect(detectBarcodeType(upce, { upce: true })).toBe("upce");
+      expect(parseGtin(upce, { upce: true })).toMatchObject({ value: upca });
+    }
+    // ending with 5 to 9: zeros inserted in pairs, same check digit as the
+    // EAN-8 reading (why the number system 1 can't be detected)
+    const ending5to9 = system1.filter(({ upce }) => upce.charAt(6) >= "5");
+    expect(ending5to9.length).toBeGreaterThan(100);
+    expect(ending5to9.every(({ upce }) => isEan8(upce))).toBe(true);
+  });
+
+  it("should not read numbers as UPC-E", () => {
+    expect(parseGtin(10_000_016, { upce: "prefer-upce" })).toStrictEqual({
+      success: false,
+      reason: "invalid_check_digit",
+    });
+  });
+
+  it("should count a UPC-E as its UPC-A for minLength", () => {
+    expect(
+      parseGtin("04252614", { upce: "prefer-upce", minLength: 12 })
+    ).toMatchObject({ success: true, format: "upce" });
+    expect(
+      parseGtin("96385074", { upce: "prefer-upce", minLength: 12 })
+    ).toStrictEqual({ success: false, reason: "invalid_length" });
+  });
+
+  it("should match types on the UPC-A", () => {
+    expect(
+      parseGtin("04252614", { upce: "prefer-upce", types: ["ean8"] })
+    ).toStrictEqual({ success: false, reason: "invalid_barcode_type" });
+  });
+
+  it("should be accepted by createGtinParser", () => {
+    const parser = createGtinParser({ upce: "prefer-upce", types: ["upca"] });
+    expect(parser.parse("04252614")).toMatchObject({
+      value: "042100005264",
+      format: "upce",
+    });
+  });
+});
+
+describe("upce: prefer-ean8", () => {
+  const options = { upce: "prefer-ean8" } as const;
+
+  it("should read a UPC-E that can't be an EAN-8", () => {
+    // EAN-8 check digit invalid
+    expect(isEan8("04252614")).toBe(false);
+    expect(parseGtin("04252614", options)).toMatchObject({
+      success: true,
+      value: "042100005264",
+      format: "upce",
+    });
+    expect(detectBarcodeType("04252614", options)).toBe("upce");
+  });
+
+  it("should keep a code that is also a restricted EAN-8", () => {
+    // valid as both: UPC-A "012345000065" or the in-store EAN-8 "01234565"
+    expect(isUpcE("01234565")).toBe(true);
+    expect(isEan8("01234565")).toBe(true);
+    expect(parseGtin("01234565", options)).toMatchObject({
+      success: true,
+      value: "01234565",
+      format: "ean8",
+      category: "in_store",
+    });
+    expect(detectBarcodeType("01234565", options)).toBe("ean8");
+    expect(detectBarcodeType("01234565", { upce: "prefer-upce" })).toBe("upce");
+    // prefer-upce expands it
+    expect(parseGtin("01234565", { upce: "prefer-upce" })).toMatchObject({
+      value: "012345000065",
+      format: "upce",
+    });
+  });
+
+  it.each([
+    ["96385074", "ean8"],
+    ["10000168", "ean8"],
+    ["10000016", null],
+    ["04252615", null],
+    ["24252614", "ean8"],
+  ] as const)("should read %s like without upce (%s)", (code, format) => {
+    expect(parseGtin(code, options)).toStrictEqual(parseGtin(code));
+    expect(detectBarcodeType(code, options)).toBe(format);
+    expect(detectBarcodeType(code)).toBe(format);
+  });
+
+  it("should never expand a code with a valid EAN-8 check digit", () => {
+    const counts = { upce: 0, kept: 0 };
+    // number system 0 (the number system 1 is never detected)
+    const system0 = samples.filter(
+      (v) => v.upce.startsWith("0") && isUpcE(v.upce)
+    );
+    for (const { upce, upca } of system0) {
+      // also an in-store EAN-8 with a valid check digit: kept
+      const expected = !isEan8(upce);
+      counts[expected ? "upce" : "kept"]++;
+      expect(detectBarcodeType(upce, options) === "upce").toBe(expected);
+      const parsed = parseGtin(upce, options);
+      expect(parsed).toMatchObject(
+        expected
+          ? { value: upca, format: "upce" }
+          : { value: upce, format: "ean8" }
+      );
+      // subset of prefer-upce
+      expect(
+        !expected || detectBarcodeType(upce, { upce: "prefer-upce" }) === "upce"
+      ).toBe(true);
+    }
+    expect(counts.upce).toBeGreaterThan(100);
+    expect(counts.kept).toBeGreaterThan(100);
+  });
+
+  it("should be the mode of formats listing upce", () => {
+    for (const code of ["04252614", "01234565", "96385074", "10000168"]) {
+      expect(parseGtin(code, { formats: ["upce", "ean8"] })).toStrictEqual(
+        parseGtin(code, { ...options, formats: ["upce", "ean8"] })
+      );
+    }
+    // kept as an in-store EAN-8: not a listed format
+    expect(parseGtin("01234565", { formats: ["upce"] })).toStrictEqual({
+      success: false,
+      reason: "format_not_accepted",
+    });
+    expect(parseGtin("01234565", { formats: ["upce", "ean8"] })).toMatchObject({
+      format: "ean8",
+      category: "in_store",
+    });
+  });
+});
+
+describe("detectBarcodeType with upce", () => {
+  it("should detect valid UPC-E as upce with upce: true", () => {
+    expect(detectBarcodeType("04252614", { upce: true })).toBe("upce");
+    expect(detectBarcodeType("10000168", { upce: true })).toBe("upce");
+    expect(detectBarcodeType("96385074", { upce: true })).toBeNull();
+    expect(detectBarcodeType("04252615", { upce: true })).toBeNull();
+    expect(detectBarcodeType("00001047", { upce: true })).toBeNull();
+    expect(detectBarcodeType(" 4252614", { upce: true })).toBeNull();
+  });
+
+  it("should leave other lengths unchanged", () => {
+    for (const upce of [true, "prefer-upce", "prefer-ean8"] as const) {
+      expect(detectBarcodeType("4006381333931", { upce })).toBe("ean13");
+      expect(detectBarcodeType("042100005264", { upce })).toBe("upca");
+    }
+  });
+
+  it("should only type upce with the upce option", () => {
+    expectTypeOf(
+      detectBarcodeType("04252614")
+    ).toEqualTypeOf<BarcodeType | null>();
+    expectTypeOf(
+      detectBarcodeType("04252614", { upce: false })
+    ).toEqualTypeOf<BarcodeType | null>();
+    expectTypeOf(
+      detectBarcodeType("04252614", { upce: "prefer-upce" })
+    ).toEqualTypeOf<BarcodeFormat | null>();
+    expectTypeOf(
+      detectBarcodeType("04252614", { upce: true })
+    ).toEqualTypeOf<BarcodeFormat | null>();
   });
 });

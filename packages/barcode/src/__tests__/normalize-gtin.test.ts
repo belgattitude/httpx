@@ -1,5 +1,6 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 
+import { isInStoreGtin } from "../is-in-store-gtin";
 import { assertNormalizedGtin, normalizeGtin } from "../normalize-gtin";
 import type { Gtin14 } from "../types";
 
@@ -48,54 +49,39 @@ describe("normalizeGtin", () => {
     expect(normalizeGtin(value)).toBeNull();
   });
 
-  describe("restricted circulation EAN-8 (starting with 0 or 2)", () => {
+  describe("restricted circulation numbers (in-store codes)", () => {
     it.each([
-      ["01234565", "EAN-8 starting with 0"],
-      ["21234569", "EAN-8 starting with 2"],
-      [1_234_565, "01234565 with its leading zero lost"],
-      [21_234_569, "number"],
-      [21_234_569n, "bigint"],
-      ["000021234569", "padded as UPC-A"],
-      ["0000021234569", "padded as EAN-13"],
-      ["00000021234569", "padded as GTIN-14"],
-    ])("should return null for %s (%s)", (value, _reason) => {
-      expect(normalizeGtin(value)).toBeNull();
+      ["01234565", "00000001234565", "EAN-8 starting with 0"],
+      ["21234569", "00000021234569", "EAN-8 starting with 2"],
+      [21_234_569, "00000021234569", "number"],
+      [21_234_569n, "00000021234569", "bigint"],
+      ["000021234569", "00000021234569", "padded as UPC-A"],
+      ["0000021234569", "00000021234569", "padded as EAN-13"],
+      ["00000021234569", "00000021234569", "padded as GTIN-14"],
+      ["2000000000008", "02000000000008", "EAN-13 starting with 2"],
+      ["0412345678903", "00412345678903", "EAN-13 starting with 04"],
+      [212_345_678_992, "00212345678992", "UPC-A starting with 2"],
+      [212_345_678_909, "00212345678909", "EAN-13 starting with 02"],
+    ])("should normalize %s to %s (%s)", (value, expected, _reason) => {
+      expect(isInStoreGtin(value)).toBe(true);
+      expect(normalizeGtin(value)).toBe(expected);
     });
 
-    it("should still accept other EAN-8", () => {
-      expect(normalizeGtin("96385074")).toBe("00000096385074");
-      expect(normalizeGtin("73513537")).toBe("00000073513537");
-    });
-
-    it("should not refuse longer codes starting with 0", () => {
-      // UPC-A starting with 0 (not an EAN-8)
-      expect(normalizeGtin("036000291452")).toBe("00036000291452");
-    });
-
-    it("should accept them with acceptRestricted", () => {
-      const accept = { acceptRestricted: true };
-      expect(normalizeGtin("21234569", accept)).toBe("00000021234569");
-      expect(normalizeGtin(1_234_565, { ...accept, minLength: 7 })).toBe(
-        "00000001234565"
-      );
-    });
-  });
-
-  describe("restricted circulation EAN-13 / UPC-A", () => {
-    it.each([
-      ["2000000000008", "02000000000008"],
-      ["0412345678903", "00412345678903"],
-      [212_345_678_992, "00212345678992"],
-      [212_345_678_909, "00212345678909"],
-    ])("should refuse %s unless acceptRestricted", (value, expected) => {
-      expect(normalizeGtin(value)).toBeNull();
-      expect(normalizeGtin(value, { acceptRestricted: true })).toBe(expected);
+    it("should ignore acceptRestricted (not an option anymore)", () => {
+      const options = { acceptRestricted: false } as object;
+      expect(normalizeGtin("21234569", options)).toBe("00000021234569");
     });
   });
 
   describe("minLength option", () => {
-    it("should never accept less than 8 significant digits", () => {
-      expect(normalizeGtin(1_234_565, { minLength: 1 })).toBeNull();
+    it("should refuse less than 8 digits unless lowered", () => {
+      // "01234565" (in-store EAN-8) with its leading zero lost
+      expect(normalizeGtin(1_234_565)).toBeNull();
+      expect(normalizeGtin("1234565")).toBeNull();
+      expect(normalizeGtin(1_234_565, { minLength: 7 })).toBe("00000001234565");
+      expect(normalizeGtin(1_234_565, { minLength: 1 })).toBe("00000001234565");
+      // the check digit still applies
+      expect(normalizeGtin(1_234_566, { minLength: 1 })).toBeNull();
     });
 
     it("should reject shorter values when minLength is raised", () => {
@@ -164,7 +150,7 @@ describe("assertNormalizedGtin", () => {
   it.each([
     [4_006_380_000_000, "number"],
     ["4006381333932", "string(length:13)"],
-    ["21234569", "string(length:8)"],
+    ["21234568", "string(length:8)"],
     [null, "null"],
     [{}, "object"],
   ])("should throw a TypeError for %s", (value, typeInfo) => {
@@ -195,11 +181,6 @@ describe("assertNormalizedGtin", () => {
     expect(() =>
       assertNormalizedGtin(96_385_074, undefined, { minLength: 0 })
     ).toThrow(RangeError);
-    expect(() => assertNormalizedGtin("2123456789010")).toThrow(TypeError);
-    expect(
-      assertNormalizedGtin("2123456789010", undefined, {
-        acceptRestricted: true,
-      })
-    ).toBe("02123456789010");
+    expect(assertNormalizedGtin("2123456789010")).toBe("02123456789010");
   });
 });

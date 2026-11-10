@@ -31,8 +31,6 @@ describe("formatGtin", () => {
     ["36000291452", 12, "unsupported input length (11)"],
     ["400638133393a", 13, "non digit"],
     ["", 13, "empty"],
-    ["00000021234569", 8, "restricted circulation ean8"],
-    ["21234569", 14, "restricted circulation ean8"],
   ] as const)(
     "should return null for %s to %s (%s)",
     (gtin, length, _reason) => {
@@ -40,14 +38,13 @@ describe("formatGtin", () => {
     }
   );
 
-  it("should format restricted circulation numbers with acceptRestricted", () => {
-    expect(formatGtin("2123456789010", 14)).toBeNull();
-    expect(formatGtin("2123456789010", 14, { acceptRestricted: true })).toBe(
-      "02123456789010"
-    );
-    expect(formatGtin("00000021234569", 8, { acceptRestricted: true })).toBe(
-      "21234569"
-    );
+  it("should format restricted circulation numbers (in-store codes)", () => {
+    expect(formatGtin("2123456789010", 14)).toBe("02123456789010");
+    expect(formatGtin("00000021234569", 8)).toBe("21234569");
+    expect(formatGtin("21234569", 14)).toBe("00000021234569");
+    // not an option anymore: ignored
+    const options = { acceptRestricted: false } as object;
+    expect(formatGtin("2123456789010", 14, options)).toBe("02123456789010");
   });
 
   it("should trim by default", () => {
