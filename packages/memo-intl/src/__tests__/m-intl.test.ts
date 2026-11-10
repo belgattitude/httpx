@@ -153,15 +153,25 @@ describe("MIntl tests", () => {
     it("does not warn in production", () => {
       const name = "m-intl-test-prod";
       globalThis.__httpx_memo_intl_instances?.delete(name);
-      vi.stubEnv("NODE_ENV", "production");
+      // Browsers have no `globalThis.process`: vi.stubEnv alone wouldn't be
+      // visible to the runtime check, so provide a minimal one there.
+      if ((globalThis as { process?: unknown }).process === undefined) {
+        vi.stubGlobal("process", { env: { NODE_ENV: "production" } });
+      } else {
+        vi.stubEnv("NODE_ENV", "production");
+      }
       const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-      getOrCreateMIntl(name, { lru: { maxSize: 1 } });
-      getOrCreateMIntl(name, { lru: { maxSize: 10 } });
+      try {
+        getOrCreateMIntl(name, { lru: { maxSize: 1 } });
+        getOrCreateMIntl(name, { lru: { maxSize: 10 } });
 
-      expect(warn).not.toHaveBeenCalled();
-      warn.mockRestore();
-      vi.unstubAllEnvs();
+        expect(warn).not.toHaveBeenCalled();
+      } finally {
+        warn.mockRestore();
+        vi.unstubAllEnvs();
+        vi.unstubAllGlobals();
+      }
     });
 
     it("uses the global default instance for MIntl", () => {
