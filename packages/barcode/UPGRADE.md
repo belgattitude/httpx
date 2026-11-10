@@ -83,7 +83,8 @@ const gtin = normalizeGtin(v); // 👈 null for an in-store code
 if (isGtin(v) && !isInStoreGtin(v)) {
   /* a product */
 }
-const gtin = isInStoreGtin(v) ? null : normalizeGtin(v);
+// trim like normalizeGtin does (isInStoreGtin doesn't by default)
+const gtin = isInStoreGtin(v, { trim: true }) ? null : normalizeGtin(v);
 ```
 
 > `isInStoreGtin` accepts the same values as `normalizeGtin` (string, number or bigint) but doesn't trim by default: pass `{ trim: true }` when the value is trimmed by `normalizeGtin` or `formatGtin`.
