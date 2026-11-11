@@ -182,7 +182,7 @@ overrides:
   '@azure/msal-node@>=5.0.0-beta.0 <7.1.0': 7.2.1
   '@xmldom/xmldom@>=0.9.0-beta.1 <=0.9.11': 0.9.12
   esbuild: ^0.28.2
-  follow-redirects@>=1.16.0 <=1.16.1: 1.16.2
+  follow-redirects@>=1.16.0 <=1.16.1: 1.16.3
   glob@>=9.0.0 <=14.0.1: 14.0.4
   katex@>=0.11.0 <0.18.2: 0.19.1
   minimatch@<11.0.1: 11.0.5
@@ -5650,8 +5650,8 @@ packages:
   flatted@3.4.4:
     resolution: {integrity: sha512-d5VFo7ddhKKeQ+gdqy4YhgpKJ3A3fiJIbVvkIyW3NWUeHPHyvTKIKPBN3JtoaWTyS4cJ69cqknDf1bbp7w/lww==}
 
-  follow-redirects@1.16.2:
-    resolution: {integrity: sha512-SyVqDBU6ZMxsurvH+SVtR+aAKvlCpRChGlpR81b+8wK24/qsfQUknHO2T4vlTiCtLd7LxtqfzAG9OzauFuxGag==}
+  follow-redirects@1.16.3:
+    resolution: {integrity: sha512-u/og6BLFGIIKlsi4LvWUKr1IcXMokIIFXHHBMnTwnudTEF7I1n8RP1QkfL3LOc5+1YC9RBUKp3jWoKfPztY/sQ==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -11102,7 +11102,7 @@ snapshots:
 
   axios@1.21.0(debug@4.4.3)(supports-color@10.2.2):
     dependencies:
-      follow-redirects: 1.16.2(debug@4.4.3)
+      follow-redirects: 1.16.3(debug@4.4.3)
       form-data: 4.0.6
       https-proxy-agent: 5.0.1(supports-color@10.2.2)
       proxy-from-env: 2.1.0
@@ -11871,7 +11871,7 @@ snapshots:
 
   flatted@3.4.4: {}
 
-  follow-redirects@1.16.2(debug@4.4.3):
+  follow-redirects@1.16.3(debug@4.4.3):
     optionalDependencies:
       debug: 4.4.3(supports-color@10.2.2)
 
