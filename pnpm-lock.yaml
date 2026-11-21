@@ -370,8 +370,8 @@ importers:
         specifier: 19.3.0
         version: 19.3.0(@types/react@19.3.0)
       postcss:
-        specifier: 8.5.32
-        version: 8.5.32
+        specifier: 8.5.33
+        version: 8.5.33
       rimraf:
         specifier: 6.1.4
         version: 6.1.4
@@ -4489,6 +4489,7 @@ packages:
   '@typespec/ts-http-runtime@0.3.10':
     resolution: {integrity: sha512-nCoiRmHy3TnnT/BJXvONeQf8Fx/sLsU/jnoB0Qx6lfP0bqr48RVW/xTAHC/kFN72zg9/optAE+OqPGeMu7t12Q==}
     engines: {node: '>=22.0.0'}
+    deprecated: A newer version 0.3.11 has been published.
 
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-ClEAL85RStR3v8gia6Rv9z5IrFiMwf//NKXBoz5gQcOHR/0WR5FU2zZq2H/SFWAMYzi464MjiqxCNmLQeS+Nlw==}
@@ -7208,6 +7209,10 @@ packages:
 
   postcss@8.5.32:
     resolution: {integrity: sha512-xESvnfBreluGmiXVXOXv61tkicItYlNrj7McZe6dZs0cLmSmdIYOMjSx2QgqVQkXgSnF13sGBQFKu8F4lu+ILg==}
+    engines: {node: ^10 || ^12 || >=14}
+
+  postcss@8.5.33:
+    resolution: {integrity: sha512-3anexiE9Lscew8hgEywBsgi/rtQ7WmE+HjWVtrm4ttvFti4NzkW88ZdydCfgAIpLUFzwKGPrOUx5w6s+ptf7IA==}
     engines: {node: ^10 || ^12 || >=14}
 
   powershell-utils@0.2.1:
@@ -10418,7 +10423,7 @@ snapshots:
       '@alloc/quick-lru': 5.3.0
       '@tailwindcss/node': 4.3.5
       '@tailwindcss/oxide': 4.3.5
-      postcss: 8.5.32
+      postcss: 8.5.33
       tailwindcss: 4.3.5
 
   '@tanstack/charts@1.5.0(@types/react-dom@19.3.0)(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)':
@@ -13560,6 +13565,12 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
+  postcss@8.5.33:
+    dependencies:
+      nanoid: 3.3.20
+      picocolors: 1.1.1
+      source-map-js: 1.2.2
+
   powershell-utils@0.2.1: {}
 
   prelude-ls@1.2.1: {}
@@ -14486,7 +14497,7 @@ snapshots:
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
-      postcss: 8.5.32
+      postcss: 8.5.33
       rolldown: 1.2.18
       tinyglobby: 0.2.17
     optionalDependencies:
