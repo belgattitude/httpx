@@ -1772,7 +1772,7 @@ importers:
         version: 14.3.0(size-limit@14.3.0)
       '@tanstack/eslint-plugin-query':
         specifier: 5.107.1
-        version: 5.107.1(eslint@10.14.0)(supports-color@10.2.2)(typescript@7.0.2)
+        version: 5.107.1(eslint@10.15.0)(supports-color@10.2.2)(typescript@7.0.2)
       '@testing-library/dom':
         specifier: 10.4.2
         version: 10.4.2
@@ -1798,8 +1798,8 @@ importers:
         specifier: 9.8.1
         version: 9.8.1
       eslint:
-        specifier: 10.14.0
-        version: 10.14.0(jiti@2.7.0)(supports-color@10.2.2)
+        specifier: 10.15.0
+        version: 10.15.0(jiti@2.7.0)(supports-color@10.2.2)
       eslint-plugin-security:
         specifier: 4.2.1
         version: 4.2.1
@@ -1838,7 +1838,7 @@ importers:
         version: 7.0.2
       ultracite:
         specifier: 8.1.1
-        version: 8.1.1(eslint@10.14.0)(oxfmt@0.78.0)(oxlint@1.93.0)
+        version: 8.1.1(eslint@10.15.0)(oxfmt@0.78.0)(oxlint@1.93.0)
       vite:
         specifier: 8.3.7
         version: 8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
@@ -2468,8 +2468,8 @@ packages:
     resolution: {integrity: sha512-lmP+9mibnAln/0aTW2ht6e/IIgMNblmujZLEa0NiRad1q8LLjIQYB8z0MfFk4DpFkXKE0A5e4cqRI3abKYm61g==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
 
-  '@eslint/config-array@0.23.5':
-    resolution: {integrity: sha512-0waFLtAXoFkhHMvJ+kzS1YvdJkRiVyEVH8grVfdY5btKJHO+h2SpOPpULldSUVUsJSLIg72tYjgGlAmWzQsELA==}
+  '@eslint/config-array@0.23.6':
+    resolution: {integrity: sha512-QOOHsdpSJ2FU3+PqdLmVCp3O18E8eRxPbFaZkX5H9j9ZaY7Q7WaDCe3anA5a3Fc0ClcjBGAw1sAdaoOiyR1O0g==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   '@eslint/config-helpers@0.7.0':
@@ -4489,6 +4489,7 @@ packages:
   '@typespec/ts-http-runtime@0.3.10':
     resolution: {integrity: sha512-nCoiRmHy3TnnT/BJXvONeQf8Fx/sLsU/jnoB0Qx6lfP0bqr48RVW/xTAHC/kFN72zg9/optAE+OqPGeMu7t12Q==}
     engines: {node: '>=22.0.0'}
+    deprecated: A newer version 0.3.11 has been published.
 
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-ClEAL85RStR3v8gia6Rv9z5IrFiMwf//NKXBoz5gQcOHR/0WR5FU2zZq2H/SFWAMYzi464MjiqxCNmLQeS+Nlw==}
@@ -5492,8 +5493,8 @@ packages:
     resolution: {integrity: sha512-S84Nns7n+UUtXyespSquOh0QOyBIS0kwPQTfs5aHN1l0x3/dR6524mlDgGB2T/IImw86YPLD/Wa3rC4yDwOnUA==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  eslint@10.14.0:
-    resolution: {integrity: sha512-CLc7n+uVbgjVSlxq1aH1bd6wcbRRqmu+MjuyJvb5TCl/GXIvFDns1aUFXpT2T7vEgbVshMLMrneJo5gPbSXG7Q==}
+  eslint@10.15.0:
+    resolution: {integrity: sha512-2vuR3ilRz2K1dY3byY/nShxR9rjoHbUYYUVrB4xrUQmJq9H+3x0aMYlpSpfylNAM0BUaRcovzzxYak1RPNW7jQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     hasBin: true
     peerDependencies:
@@ -9170,14 +9171,14 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@eslint-community/eslint-utils@4.10.1(eslint@10.14.0)':
+  '@eslint-community/eslint-utils@4.10.1(eslint@10.15.0)':
     dependencies:
-      eslint: 10.14.0(jiti@2.7.0)(supports-color@10.2.2)
+      eslint: 10.15.0(jiti@2.7.0)(supports-color@10.2.2)
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.12.2': {}
 
-  '@eslint/config-array@0.23.5(supports-color@10.2.2)':
+  '@eslint/config-array@0.23.6(supports-color@10.2.2)':
     dependencies:
       '@eslint/object-schema': 3.0.5
       debug: 4.4.3(supports-color@10.2.2)
@@ -10450,10 +10451,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/d3-selection'
 
-  '@tanstack/eslint-plugin-query@5.107.1(eslint@10.14.0)(supports-color@10.2.2)(typescript@7.0.2)':
+  '@tanstack/eslint-plugin-query@5.107.1(eslint@10.15.0)(supports-color@10.2.2)(typescript@7.0.2)':
     dependencies:
-      '@typescript-eslint/utils': 8.72.2(eslint@10.14.0)(supports-color@10.2.2)(typescript@7.0.2)
-      eslint: 10.14.0(jiti@2.7.0)(supports-color@10.2.2)
+      '@typescript-eslint/utils': 8.72.2(eslint@10.15.0)(supports-color@10.2.2)(typescript@7.0.2)
+      eslint: 10.15.0(jiti@2.7.0)(supports-color@10.2.2)
     optionalDependencies:
       typescript: 7.0.2
     transitivePeerDependencies:
@@ -10679,13 +10680,13 @@ snapshots:
       - '@types/picomatch'
       - supports-color
 
-  '@typescript-eslint/utils@8.72.2(eslint@10.14.0)(supports-color@10.2.2)(typescript@7.0.2)':
+  '@typescript-eslint/utils@8.72.2(eslint@10.15.0)(supports-color@10.2.2)(typescript@7.0.2)':
     dependencies:
-      '@eslint-community/eslint-utils': 4.10.1(eslint@10.14.0)
+      '@eslint-community/eslint-utils': 4.10.1(eslint@10.15.0)
       '@typescript-eslint/scope-manager': 8.72.2
       '@typescript-eslint/types': 8.72.2
       '@typescript-eslint/typescript-estree': 8.72.2(supports-color@10.2.2)(typescript@7.0.2)
-      eslint: 10.14.0(jiti@2.7.0)(supports-color@10.2.2)
+      eslint: 10.15.0(jiti@2.7.0)(supports-color@10.2.2)
       typescript: 7.0.2
     transitivePeerDependencies:
       - '@types/picomatch'
@@ -11665,11 +11666,11 @@ snapshots:
 
   eslint-visitor-keys@5.0.1: {}
 
-  eslint@10.14.0(jiti@2.7.0)(supports-color@10.2.2):
+  eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2):
     dependencies:
-      '@eslint-community/eslint-utils': 4.10.1(eslint@10.14.0)
+      '@eslint-community/eslint-utils': 4.10.1(eslint@10.15.0)
       '@eslint-community/regexpp': 4.12.2
-      '@eslint/config-array': 0.23.5(supports-color@10.2.2)
+      '@eslint/config-array': 0.23.6(supports-color@10.2.2)
       '@eslint/config-helpers': 0.7.0
       '@eslint/core': 1.2.1
       '@eslint/plugin-kit': 0.7.3
@@ -14308,7 +14309,7 @@ snapshots:
 
   uint8array-extras@1.6.0: {}
 
-  ultracite@8.1.1(eslint@10.14.0)(oxfmt@0.78.0)(oxlint@1.93.0):
+  ultracite@8.1.1(eslint@10.15.0)(oxfmt@0.78.0)(oxlint@1.93.0):
     dependencies:
       '@clack/prompts': 1.8.1
       cli-truncate: 6.2.0
@@ -14330,7 +14331,7 @@ snapshots:
       yaml: 2.9.1
       zod: 4.6.7
     optionalDependencies:
-      eslint: 10.14.0(jiti@2.7.0)(supports-color@10.2.2)
+      eslint: 10.15.0(jiti@2.7.0)(supports-color@10.2.2)
       oxfmt: 0.78.0
       oxlint: 1.93.0(oxlint-tsgolint@7.0.2006)
 
