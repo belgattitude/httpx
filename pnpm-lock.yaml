@@ -1816,8 +1816,8 @@ importers:
         specifier: 1.0.1
         version: 1.0.1
       oxlint-plugin-react-doctor:
-        specifier: 0.9.22
-        version: 0.9.22
+        specifier: 0.9.23
+        version: 0.9.23
       oxlint-tailwindcss:
         specifier: 1.17.1
         version: 1.17.1
@@ -4489,6 +4489,7 @@ packages:
   '@typespec/ts-http-runtime@0.3.10':
     resolution: {integrity: sha512-nCoiRmHy3TnnT/BJXvONeQf8Fx/sLsU/jnoB0Qx6lfP0bqr48RVW/xTAHC/kFN72zg9/optAE+OqPGeMu7t12Q==}
     engines: {node: '>=22.0.0'}
+    deprecated: A newer version 0.3.11 has been published.
 
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-ClEAL85RStR3v8gia6Rv9z5IrFiMwf//NKXBoz5gQcOHR/0WR5FU2zZq2H/SFWAMYzi464MjiqxCNmLQeS+Nlw==}
@@ -7038,8 +7039,8 @@ packages:
     resolution: {integrity: sha512-gX5WOIn9lqO7qRjHKCafUjNHkSOEwFKSwwkVCJZrfFFqFVcRDTfKJWIxBj7u8r8f0OvJGvv/XqEiOev16pQLcA==}
     engines: {node: '>=20'}
 
-  oxlint-plugin-react-doctor@0.9.22:
-    resolution: {integrity: sha512-3tV4DExFsdvN0kojlF52buL/sZYVuHMqshecrjGuDOIHQ777v9C/sS7Xy2L091i3PpCAPqUY7gg77zd6LWGv9w==}
+  oxlint-plugin-react-doctor@0.9.23:
+    resolution: {integrity: sha512-W63jnzLuXEMA8y4v2n+QIu6LHjcNYEMampbQsDj/n7zuNvm3m71NOOzamI5obRql0shZ+19d//fiuCgQpMYbgQ==}
     engines: {node: ^20.19.0 || >=22.13.0}
 
   oxlint-tailwindcss@1.17.1:
@@ -13378,7 +13379,7 @@ snapshots:
     dependencies:
       '@oxlint/plugins': 1.93.0
 
-  oxlint-plugin-react-doctor@0.9.22:
+  oxlint-plugin-react-doctor@0.9.23:
     dependencies:
       '@shaderfrog/glsl-parser': 7.0.1
       '@typescript-eslint/types': 8.72.2
