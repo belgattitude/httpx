@@ -1811,7 +1811,7 @@ importers:
         version: 0.78.0
       oxlint:
         specifier: 1.93.0
-        version: 1.93.0(oxlint-tsgolint@7.0.2006)
+        version: 1.93.0(oxlint-tsgolint@7.0.2007)
       oxlint-plugin-import-zod:
         specifier: 1.0.1
         version: 1.0.1
@@ -1822,8 +1822,8 @@ importers:
         specifier: 1.17.1
         version: 1.17.1
       oxlint-tsgolint:
-        specifier: 7.0.2006
-        version: 7.0.2006
+        specifier: 7.0.2007
+        version: 7.0.2007
       publint:
         specifier: 0.3.25
         version: 0.3.25
@@ -3171,33 +3171,33 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@oxlint-tsgolint/darwin-arm64@7.0.2006':
-    resolution: {integrity: sha512-WPz+pb//av65/08C05X1L5AhPBcHYq6OCuCv8HM+HkBLDnDAc37KeLXLfMr/bjruTW6tmmmSmJSp2/r9TNoRxw==}
+  '@oxlint-tsgolint/darwin-arm64@7.0.2007':
+    resolution: {integrity: sha512-ck8ge7Cz6oKEyS5pajl3hBpOw7zPzZT6mFfxVUU5IlINZm4001Ob8TC+2RebmZth+zwjkGDecXeenbR/jBOxvA==}
     cpu: [arm64]
     os: [darwin]
 
-  '@oxlint-tsgolint/darwin-x64@7.0.2006':
-    resolution: {integrity: sha512-DQokmZeoB9PHaRKJbGRJvISZHwhnhcgOGVN0aWE9Zh4xrRdDBoo0HhUAo0XuAwPq1U1Mk3a0Xq1WHRr3DQmdmQ==}
+  '@oxlint-tsgolint/darwin-x64@7.0.2007':
+    resolution: {integrity: sha512-uZ6JPlv6olAkd86mBULzWTgSD25Lfcf2r/RFgG0/wa2BZ0Bj/0kgTmTRsULsQ97nZXQoegswW5xtXPN6OxJVYg==}
     cpu: [x64]
     os: [darwin]
 
-  '@oxlint-tsgolint/linux-arm64@7.0.2006':
-    resolution: {integrity: sha512-KdFh1bQVPoOP/rnQyHu7X2pCqAJLM7LQmPodZEblHKjl1F1/HlFheqCY2joOWNYDbfkMI8NXW+yJNkSr/iifjw==}
+  '@oxlint-tsgolint/linux-arm64@7.0.2007':
+    resolution: {integrity: sha512-iHCHHqOhJwgCLhwp5Jz67HxK/EMv1ZXk44vmHjEjiU8KlBxyfOzUn8AQmR11xm54WXsSNBFa5+5hc9GHoPVzpw==}
     cpu: [arm64]
     os: [linux]
 
-  '@oxlint-tsgolint/linux-x64@7.0.2006':
-    resolution: {integrity: sha512-DhuJudPjxz6TTucrYv5210EcSAP1+Jp6oBCb2QVn+WgZRRCSEyqyphnW6sc4BigBM+EFpFtRGrI+CDAiVYGtQA==}
+  '@oxlint-tsgolint/linux-x64@7.0.2007':
+    resolution: {integrity: sha512-fJ2GF8a/pn3sPjwjan1U4jzesqBDUa1sE3MdzGrm3XqL2YTg+PHk2EqGawGANyPOgFfroPobPXDXrxxqrWydeg==}
     cpu: [x64]
     os: [linux]
 
-  '@oxlint-tsgolint/win32-arm64@7.0.2006':
-    resolution: {integrity: sha512-37o5tOGqpYex0LGCfAwQYqGOXPU5vWvFJ3DeDmYAo1YdHHUAnJlw40KWUgPS2kq/xppNaBPH7gkXNT3Uru+3MA==}
+  '@oxlint-tsgolint/win32-arm64@7.0.2007':
+    resolution: {integrity: sha512-d7QF+irW5M63SnwwwtRqh6fYV1yTt9U8W7+iWdoByuYyfKwAftbrB9wzHGBemYss4ImUhm4zq81gKBtw6n5cxQ==}
     cpu: [arm64]
     os: [win32]
 
-  '@oxlint-tsgolint/win32-x64@7.0.2006':
-    resolution: {integrity: sha512-DQPXuQOH1YItdWHYb0dWQnxqO7qranWydYYBthwjiwoEk5pn47v/q30WU7NVihsfMcCU13fcjaUTfb7GVVyRXg==}
+  '@oxlint-tsgolint/win32-x64@7.0.2007':
+    resolution: {integrity: sha512-iVsSONt9KsK0onphuvQGRDzFb5/5+vCPjaODXEulIvL0fWhK7n43DHrBJycDio2A0MFcDFKxdUUzpGwz5pjWeA==}
     cpu: [x64]
     os: [win32]
 
@@ -4489,6 +4489,7 @@ packages:
   '@typespec/ts-http-runtime@0.3.10':
     resolution: {integrity: sha512-nCoiRmHy3TnnT/BJXvONeQf8Fx/sLsU/jnoB0Qx6lfP0bqr48RVW/xTAHC/kFN72zg9/optAE+OqPGeMu7t12Q==}
     engines: {node: '>=22.0.0'}
+    deprecated: A newer version 0.3.11 has been published.
 
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-ClEAL85RStR3v8gia6Rv9z5IrFiMwf//NKXBoz5gQcOHR/0WR5FU2zZq2H/SFWAMYzi464MjiqxCNmLQeS+Nlw==}
@@ -7046,8 +7047,8 @@ packages:
     resolution: {integrity: sha512-Dqr77RKRBUa905laB2KCthWbWK/QyFiMeAgzLBKR6XjbS0x/xLowmax+1Tp4yR714IZgXC+Jj9GVYbKwVwaxcw==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  oxlint-tsgolint@7.0.2006:
-    resolution: {integrity: sha512-qy1Egn56enXT8EgO2d0t+O7orcLMLvrZhJThKIaNb2tjL06ix9trOlA4bcITgLbGsshj5+u614YC7Se/dgCmDw==}
+  oxlint-tsgolint@7.0.2007:
+    resolution: {integrity: sha512-Q62qaPkz26tPTZFy/MK0XRueit+tsyKJ57G/kkXGJ7ywIE+eONvXrkZ1bePb4eW/K9+jMCzvM+cq2k0wkvawbg==}
     hasBin: true
 
   oxlint@1.93.0:
@@ -9676,22 +9677,22 @@ snapshots:
   '@oxfmt/binding-win32-x64-msvc@0.78.0':
     optional: true
 
-  '@oxlint-tsgolint/darwin-arm64@7.0.2006':
+  '@oxlint-tsgolint/darwin-arm64@7.0.2007':
     optional: true
 
-  '@oxlint-tsgolint/darwin-x64@7.0.2006':
+  '@oxlint-tsgolint/darwin-x64@7.0.2007':
     optional: true
 
-  '@oxlint-tsgolint/linux-arm64@7.0.2006':
+  '@oxlint-tsgolint/linux-arm64@7.0.2007':
     optional: true
 
-  '@oxlint-tsgolint/linux-x64@7.0.2006':
+  '@oxlint-tsgolint/linux-x64@7.0.2007':
     optional: true
 
-  '@oxlint-tsgolint/win32-arm64@7.0.2006':
+  '@oxlint-tsgolint/win32-arm64@7.0.2007':
     optional: true
 
-  '@oxlint-tsgolint/win32-x64@7.0.2006':
+  '@oxlint-tsgolint/win32-x64@7.0.2007':
     optional: true
 
   '@oxlint/binding-android-arm-eabi@1.93.0':
@@ -13392,16 +13393,16 @@ snapshots:
       '@tailwindcss/node': 4.3.5
       tailwindcss: 4.3.5
 
-  oxlint-tsgolint@7.0.2006:
+  oxlint-tsgolint@7.0.2007:
     optionalDependencies:
-      '@oxlint-tsgolint/darwin-arm64': 7.0.2006
-      '@oxlint-tsgolint/darwin-x64': 7.0.2006
-      '@oxlint-tsgolint/linux-arm64': 7.0.2006
-      '@oxlint-tsgolint/linux-x64': 7.0.2006
-      '@oxlint-tsgolint/win32-arm64': 7.0.2006
-      '@oxlint-tsgolint/win32-x64': 7.0.2006
+      '@oxlint-tsgolint/darwin-arm64': 7.0.2007
+      '@oxlint-tsgolint/darwin-x64': 7.0.2007
+      '@oxlint-tsgolint/linux-arm64': 7.0.2007
+      '@oxlint-tsgolint/linux-x64': 7.0.2007
+      '@oxlint-tsgolint/win32-arm64': 7.0.2007
+      '@oxlint-tsgolint/win32-x64': 7.0.2007
 
-  oxlint@1.93.0(oxlint-tsgolint@7.0.2006):
+  oxlint@1.93.0(oxlint-tsgolint@7.0.2007):
     optionalDependencies:
       '@oxlint/binding-android-arm-eabi': 1.93.0
       '@oxlint/binding-android-arm64': 1.93.0
@@ -13422,7 +13423,7 @@ snapshots:
       '@oxlint/binding-win32-arm64-msvc': 1.93.0
       '@oxlint/binding-win32-ia32-msvc': 1.93.0
       '@oxlint/binding-win32-x64-msvc': 1.93.0
-      oxlint-tsgolint: 7.0.2006
+      oxlint-tsgolint: 7.0.2007
 
   p-limit@2.3.0:
     dependencies:
@@ -14332,7 +14333,7 @@ snapshots:
     optionalDependencies:
       eslint: 10.14.0(jiti@2.7.0)(supports-color@10.2.2)
       oxfmt: 0.78.0
-      oxlint: 1.93.0(oxlint-tsgolint@7.0.2006)
+      oxlint: 1.93.0(oxlint-tsgolint@7.0.2007)
 
   unconfig-core@7.5.0:
     dependencies:
