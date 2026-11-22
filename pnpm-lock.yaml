@@ -1837,8 +1837,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
       ultracite:
-        specifier: 8.1.1
-        version: 8.1.1(eslint@10.14.0)(oxfmt@0.78.0)(oxlint@1.93.0)
+        specifier: 8.3.1
+        version: 8.3.1(eslint@10.14.0)(oxfmt@0.78.0)(oxlint@1.93.0)
       vite:
         specifier: 8.3.7
         version: 8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
@@ -4489,6 +4489,7 @@ packages:
   '@typespec/ts-http-runtime@0.3.10':
     resolution: {integrity: sha512-nCoiRmHy3TnnT/BJXvONeQf8Fx/sLsU/jnoB0Qx6lfP0bqr48RVW/xTAHC/kFN72zg9/optAE+OqPGeMu7t12Q==}
     engines: {node: '>=22.0.0'}
+    deprecated: A newer version 0.3.11 has been published.
 
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-ClEAL85RStR3v8gia6Rv9z5IrFiMwf//NKXBoz5gQcOHR/0WR5FU2zZq2H/SFWAMYzi464MjiqxCNmLQeS+Nlw==}
@@ -7980,12 +7981,12 @@ packages:
     resolution: {integrity: sha512-RimJD8qVpWJz9iDr8ngo4QAse5nrcu7EocDw7z/niQLatwk/tQmjZslaC6lgAC6hMSuk0+ShAw1YeuRwarnk/w==}
     engines: {node: '>=18'}
 
-  ultracite@8.1.1:
-    resolution: {integrity: sha512-LEyD6C7v3iZlKzTM+ZL16Rf5uRACi0E7j5TgobIejd2daxocT308EBcOglzcjfypbSKRmX4JoAXub0Z7Z4bWBA==}
+  ultracite@8.3.1:
+    resolution: {integrity: sha512-2k55jc4rXkcUiN/CypXQjsWfWqYcL/4JcfyA+XPw26hKPYLF1q1VJZ1kHW6RxqWe9xCISoh1FIt0EPvy9rZ1yQ==}
     engines: {node: ^22.22.2 || >=24.15.0}
     hasBin: true
     peerDependencies:
-      '@biomejs/biome': ^2.6.2
+      '@biomejs/biome': ^2.6.7
       '@types/biomejs__biome': '*'
       '@types/eslint': '*'
       '@types/oxfmt': '*'
@@ -7994,9 +7995,9 @@ packages:
       '@types/stylelint': '*'
       eslint: ^10.9.0
       oxfmt: '>=0.71.0 <1'
-      oxlint: ^1.90.0
+      oxlint: ^1.94.0
       prettier: ^3.5.3
-      stylelint: ^17.0.0
+      stylelint: ^18.0.0
     peerDependenciesMeta:
       '@biomejs/biome':
         optional: true
@@ -14308,7 +14309,7 @@ snapshots:
 
   uint8array-extras@1.6.0: {}
 
-  ultracite@8.1.1(eslint@10.14.0)(oxfmt@0.78.0)(oxlint@1.93.0):
+  ultracite@8.3.1(eslint@10.14.0)(oxfmt@0.78.0)(oxlint@1.93.0):
     dependencies:
       '@clack/prompts': 1.8.1
       cli-truncate: 6.2.0
