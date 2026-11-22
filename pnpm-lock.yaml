@@ -333,8 +333,8 @@ importers:
         specifier: 16.18.2
         version: 16.18.2(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.5)(@types/mdast@4.0.4)(@types/react-dom@19.3.0)(@types/react@19.3.0)(lucide-react@1.70.0)(next@16.4.6)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(zod@4.6.7)
       fumadocs-mdx:
-        specifier: 15.5.1
-        version: 15.5.1(@types/mdast@4.0.4)(@types/mdx@2.0.14)(@types/react@19.3.0)(fumadocs-core@16.18.2)(next@16.4.6)(react@19.3.1)(rolldown@1.3.2)(supports-color@10.2.2)(vite@8.3.7)
+        specifier: 15.6.4
+        version: 15.6.4(@types/mdast@4.0.4)(@types/mdx@2.0.14)(@types/react@19.3.0)(fumadocs-core@16.18.2)(next@16.4.6)(react@19.3.1)(rolldown@1.3.2)(supports-color@10.2.2)(vite@8.3.7)
       fumadocs-ui:
         specifier: npm:@fumadocs/base-ui@16.18.2
         version: '@fumadocs/base-ui@16.18.2(@types/mdx@2.0.14)(@types/react-dom@19.3.0)(@types/react@19.3.0)(fumadocs-core@16.18.2)(next@16.4.6)(react-dom@19.3.1)(react@19.3.1)(tailwindcss@4.3.5)'
@@ -4489,6 +4489,7 @@ packages:
   '@typespec/ts-http-runtime@0.3.10':
     resolution: {integrity: sha512-nCoiRmHy3TnnT/BJXvONeQf8Fx/sLsU/jnoB0Qx6lfP0bqr48RVW/xTAHC/kFN72zg9/optAE+OqPGeMu7t12Q==}
     engines: {node: '>=22.0.0'}
+    deprecated: A newer version 0.3.11 has been published.
 
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-ClEAL85RStR3v8gia6Rv9z5IrFiMwf//NKXBoz5gQcOHR/0WR5FU2zZq2H/SFWAMYzi464MjiqxCNmLQeS+Nlw==}
@@ -5811,8 +5812,8 @@ packages:
       zod:
         optional: true
 
-  fumadocs-mdx@15.5.1:
-    resolution: {integrity: sha512-qvt6wuycom+Lkc9NdJtar69bgtwunhqa7QT8zJh2I9dK/2SD5VuxY4dWlH8BSWpKSvw7J1fR/TpEVHdexSAwbQ==}
+  fumadocs-mdx@15.6.4:
+    resolution: {integrity: sha512-chjfzUF+cnmP8DbxZQVg/tESefWtO/0gd4MLEfZruQW1DMHedHUuWlJa/81QughslwLUT12kVNUtDPmscn584A==}
     hasBin: true
     peerDependencies:
       '@fumadocs/satteri': 0.x.x
@@ -5828,12 +5829,12 @@ packages:
       '@types/vite': '*'
       '@types/vitejs__plugin-rsc': '*'
       '@vitejs/plugin-rsc': ^0.5.34
-      fumadocs-core: ^16.17.11
+      fumadocs-core: ^16.18.3
       mdast-util-directive: '*'
       next: ^15.3.0 || ^16.0.0
       react: ^19.2.0
       rolldown: '*'
-      satteri: ^0.10.5
+      satteri: ^0.11.7
       vite: 7.x.x || 8.x.x
     peerDependenciesMeta:
       '@fumadocs/satteri':
@@ -8501,14 +8502,17 @@ packages:
   yuku-analyzer@0.19.0:
     resolution: {integrity: sha512-7FQMIaLAZBj0Yz8IlOWCdWx7mYlMOtSIbrrrddTn9wwOQX8+/E094s4Mg2iVRPX9HU+60qwDnGSUflHN0VE1sA==}
     engines: {node: '>=14.18.0'}
+    deprecated: 'Yuku is now one package with one core. Use "yuku" instead: https://yuku.fyi/javascript/. Existing installs keep working but get no more fixes.'
 
   yuku-ast@0.19.0:
     resolution: {integrity: sha512-6fMbXsa5bbQ4vzEHJ784AN8MdxwVhYAOgHDRDrZQgqYOxcVYlrg4dPUK26nBuZF+L1jE6YsRybqFj5wrajTwzw==}
     engines: {node: '>=14.18.0'}
+    deprecated: 'Yuku is now one package with one core. Use "yuku" instead: https://yuku.fyi/javascript/. Existing installs keep working but get no more fixes.'
 
   yuku-core@0.19.0:
     resolution: {integrity: sha512-PUr1yXU+6XAuz23TtfM7gF1yzIZFZ6F9sjKKhYAJOmUtdP46dOSKBbmaw0jddpW/jOTpfVRemFQN4MRlvqC9iA==}
     engines: {node: '>=14.18.0'}
+    deprecated: 'Yuku is now one package with one core. Use "yuku" instead: https://yuku.fyi/javascript/. Existing installs keep working but get no more fixes.'
 
   yuku@0.27.0:
     resolution: {integrity: sha512-Te1KpDXjl1PHMRMpED6jfKgL7VL2C4L3wptdWhzLAI4MS8ihp/74hivp35LN+UEAhqhn37Q6p98s6X4CP5ZTYw==}
@@ -11944,17 +11948,21 @@ snapshots:
       - '@types/picomatch'
       - supports-color
 
-  fumadocs-mdx@15.5.1(@types/mdast@4.0.4)(@types/mdx@2.0.14)(@types/react@19.3.0)(fumadocs-core@16.18.2)(next@16.4.6)(react@19.3.1)(rolldown@1.3.2)(supports-color@10.2.2)(vite@8.3.7):
+  fumadocs-mdx@15.6.4(@types/mdast@4.0.4)(@types/mdx@2.0.14)(@types/react@19.3.0)(fumadocs-core@16.18.2)(next@16.4.6)(react@19.3.1)(rolldown@1.3.2)(supports-color@10.2.2)(vite@8.3.7):
     dependencies:
       '@mdx-js/mdx': 3.1.1(supports-color@10.2.2)
       '@standard-schema/spec': 1.1.0
+      acorn: 8.19.0
+      acorn-jsx: 5.3.2(acorn@8.19.0)
       chokidar: 6.0.0
       esbuild: 0.28.2
       estree-util-value-to-estree: 3.5.0
       fumadocs-core: 16.18.2(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.5)(@types/mdast@4.0.4)(@types/react-dom@19.3.0)(@types/react@19.3.0)(lucide-react@1.70.0)(next@16.4.6)(react-dom@19.3.1)(react@19.3.1)(supports-color@10.2.2)(zod@4.6.7)
       github-slugger: 2.0.0
       magic-string: 1.4.5
+      mdast-util-from-markdown: 2.1.0(supports-color@10.2.2)
       mdast-util-mdx: 3.0.0(supports-color@10.2.2)
+      micromark-extension-mdxjs-esm: 3.0.0
       picocolors: 1.1.1
       picomatch: 4.0.7
       tinyexec: 1.3.1
