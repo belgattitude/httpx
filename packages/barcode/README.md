@@ -42,7 +42,7 @@ Returned values:
 
 ```typescript
 parseGtin("4006381333931");
-// 👈 { success: true, value: "4006381333931", type: "ean13", gtin: "04006381333931", format: "ean13", indicator: 0, category: "trade_item" }
+// 👈 { success: true, value: "4006381333931", type: "ean13", gtin: "04006381333931", format: "ean13", indicator: 0, category: "trade_item", issuer: "GS1 Germany" }
 
 parseGtin(36000291452);
 // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", format: null, indicator: 0, category: "trade_item" }
@@ -77,6 +77,7 @@ parseGtin(null); // 👈 { success: false, reason: "invalid_type" }
 | `format` | Format as given, from the length of a string input (`"upce"` when read as a UPC-E, see the `upce` option). `null` for numbers, bigints and strings of other lengths (leading zeros lost) |
 | `indicator` | GTIN-14 indicator digit (packaging level), `0` for trade items |
 | `category` | GS1 classification from the prefix, see [categories](#categories) |
+| `issuer` | GS1 Member Organisation that issued the GS1 Prefix, ie: `"GS1 France"` for `325...` (or a special allocation: restricted distribution, coupons, ISBN...), `null` when unallocated. Tells who allocated the company prefix, not where the product is made |
 
 | Reason | Description |
 | --- | --- |

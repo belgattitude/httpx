@@ -55,9 +55,38 @@ describe("parseGtin", () => {
         format,
         indicator,
         category: "trade_item",
+        issuer: {
+          "00036000291452": "GS1 US",
+          "04006381333931": "GS1 Germany",
+          "00000096385074": "Global Office - GTIN-8",
+          "10012345678902": "GS1 US",
+        }[gtin],
       });
     }
   );
+
+  describe("issuer", () => {
+    it.each([
+      ["3250390000006", "GS1 France"],
+      ["5412345000013", "GS1 Belgium & Luxembourg"],
+      ["8712345678906", "GS1 Netherlands"],
+      [
+        "2123456789010",
+        "Restricted Circulation Numbers within a geographic region (MO defined)",
+      ],
+      ["9781861972712", "Bookland (ISBN)"],
+    ])("should give the issuer of %s", (value, issuer) => {
+      expect(parseGtinOrThrow(value).issuer).toBe(issuer);
+    });
+
+    it("should read the prefix on the GTIN-13 form of a GTIN-14", () => {
+      expect(parseGtinOrThrow("13250390000003").issuer).toBe("GS1 France");
+    });
+
+    it("should be null for unallocated prefixes", () => {
+      expect(parseGtinOrThrow("1500000000004").issuer).toBeNull();
+    });
+  });
 
   it("should give the value formatGtin gives for the type length", () => {
     const lengths = { ean8: 8, upca: 12, ean13: 13, gtin14: 14 } as const;

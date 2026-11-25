@@ -1,5 +1,6 @@
 /* oxlint-disable unicorn/prefer-code-point -- charCodeAt always returns a number for in-range indexes (ASCII digits) */
 import { describeValue } from "./assert-utils";
+import { getGtinIssuer } from "./data/gs1-issuer";
 import type { BarcodeFormat, BarcodeType } from "./detect-barcode-type";
 import {
   barcodeTypeLengths,
@@ -161,6 +162,13 @@ export type ParsedGtin<
      * circulation number)
      */
     readonly category: TCategory;
+    /**
+     * GS1 Member Organisation that issued the GS1 Prefix, ie: "GS1 France"
+     * for `325...`, or the special allocation (restricted distribution,
+     * coupons, ISBN...). `null` when the prefix isn't allocated. It tells
+     * who allocated the company prefix, not where the product comes from.
+     */
+    readonly issuer: string | null;
   };
 }[TType];
 
@@ -288,7 +296,7 @@ const getGtinCategory = (digits: string): GtinCategory => {
  * @example
  * ```typescript
  * parseGtin(36000291452);
- * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", format: null, indicator: 0, category: "trade_item" }
+ * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", format: null, indicator: 0, category: "trade_item", issuer: "GS1 US" }
  * parseGtin("0036000291452");
  * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", format: "ean13", ... }
  * parseGtin(4006380000000); // 👈 { success: false, reason: "invalid_check_digit" }
@@ -416,14 +424,16 @@ export const parseGtin = (
   ) {
     return failures.invalid_category;
   }
+  const gtin14 = toLength(digits, 14);
   return {
     success: true,
     value: toLength(digits, barcodeTypeLengths[type]),
     type,
-    gtin: toLength(digits, 14),
+    gtin: gtin14,
     format,
     indicator: type === "gtin14" ? digits.charCodeAt(0) - ZERO : 0,
     category,
+    issuer: getGtinIssuer(gtin14, type === "ean8"),
   } as ParsedGtin;
 };
 

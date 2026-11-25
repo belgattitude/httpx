@@ -215,6 +215,7 @@ describe("parseGtin with upce", () => {
       format: "upce",
       indicator: 0,
       category: "trade_item",
+      issuer: "GS1 US",
     });
     expect(parseGtin(" 01234565\n", { upce: true })).toMatchObject({
       success: true,
