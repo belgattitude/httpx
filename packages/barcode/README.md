@@ -77,7 +77,7 @@ parseGtin(null); // 👈 { success: false, reason: "invalid_type" }
 | `format` | Format as given, from the length of a string input (`"upce"` when read as a UPC-E, see the `upce` option). `null` for numbers, bigints and strings of other lengths (leading zeros lost) |
 | `indicator` | GTIN-14 indicator digit (packaging level), `0` for trade items |
 | `category` | GS1 classification from the prefix, see [categories](#categories) |
-| `issuer` | GS1 Member Organisation that issued the GS1 Prefix, ie: `"GS1 France"` for `325...` (or a special allocation: restricted distribution, coupons, ISBN...), `null` when unallocated. Tells who allocated the company prefix, not where the product is made |
+| `issuer` | GS1 Member Organisation that issued the GS1 Prefix, ie: `"GS1 France"` for `325...` (or a special allocation: restricted distribution, coupons, ISBN...), `null` when unallocated. EAN-8 follow the GS1-8 rules (`000`-`099` and `200`-`299`: restricted circulation numbers within a company). Tells who allocated the company prefix, not where the product is made, see [getGtinIssuer](#getgtinissuer) |
 
 | Reason | Description |
 | --- | --- |
@@ -223,10 +223,11 @@ import { getGtinIssuer } from "@httpx/barcode";
 
 getGtinIssuer("3250390000006"); // 👈 "GS1 France"
 getGtinIssuer("5412345000013"); // 👈 "GS1 Belgium & Luxembourg"
+getGtinIssuer("01234565"); // 👈 "Restricted Circulation Numbers within a company" (EAN-8 starting with 0)
 getGtinIssuer("3250390000007"); // 👈 null (invalid check digit)
 ```
 
-> The issuer tells who allocated the company prefix, not where the product is made. The prefix table (about 1.3KB brotli) is part of `parseGtin`, `parseGtinOrThrow` and `createGtinParser`.
+> The issuer tells who allocated the company prefix, not where the product is made. The prefix table (about 1.3KB brotli, from the [GS1 company prefix list](https://www.gs1.org/standards/id-keys/company-prefix)) is part of `parseGtin`, `parseGtinOrThrow` and `createGtinParser`, and adds a small cost to `parseGtin` on valid codes.
 
 ### detectBarcodeType
 
