@@ -79,6 +79,17 @@ describe("parseGtin", () => {
       expect(parseGtinOrThrow(value).issuer).toBe(issuer);
     });
 
+    it("should use the GS1-8 rules for EAN-8", () => {
+      expect(parseGtinOrThrow("01234565").issuer).toBe(
+        "Restricted Circulation Numbers within a company"
+      );
+      expect(parseGtinOrThrow("21234569").issuer).toBe(
+        "Restricted Circulation Numbers within a company"
+      );
+      // an expanded UPC-E stays on the UPC-A path
+      expect(getGtinIssuer("04252614", { upce: true })).toBe("GS1 US");
+    });
+
     it("should read the prefix on the GTIN-13 form of a GTIN-14", () => {
       expect(parseGtinOrThrow("13250390000003").issuer).toBe("GS1 France");
     });

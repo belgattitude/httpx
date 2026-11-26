@@ -65,7 +65,7 @@ const config = [
     name: "import { parseGtin } (ESM)",
     path: ["dist/index.js"],
     import: "{ parseGtin }",
-    limit: "2820B",
+    limit: "2845B",
   },
   {
     name: "import { getGtinIssuer } (ESM)",

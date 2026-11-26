@@ -177,3 +177,13 @@ export const getIssuerByPrefix = (prefix: number): string | null => {
   issuerByPrefix ??= buildIssuerTable();
   return issuerByPrefix[prefix] as string | null;
 };
+
+/**
+ * GS1 issuer of the 3 digit prefix of a GTIN-8 (first digits of the 8 digit
+ * code): `000`-`099` and `200`-`299` are restricted circulation numbers within
+ * a company, the others follow the GS1 Prefix allocations.
+ */
+export const getEan8IssuerByPrefix = (prefix: number): string | null =>
+  prefix < 100 || (prefix >= 200 && prefix < 300)
+    ? "Restricted Circulation Numbers within a company"
+    : getIssuerByPrefix(prefix);

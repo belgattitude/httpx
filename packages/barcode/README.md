@@ -511,10 +511,10 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm) | Size (brotli) |
 | --- | --: |
-| `import { parseGtin } from '@httpx/barcode'` | ~ 2.81KB |
-| `import { parseGtinOrThrow } from '@httpx/barcode'` | ~ 2.92KB |
-| `import { createGtinParser } from '@httpx/barcode'` | ~ 3.08KB |
-| `import { getGtinIssuer } from '@httpx/barcode'` | ~ 2.84KB |
+| `import { parseGtin } from '@httpx/barcode'` | ~ 2.83KB |
+| `import { parseGtinOrThrow } from '@httpx/barcode'` | ~ 2.95KB |
+| `import { createGtinParser } from '@httpx/barcode'` | ~ 3.11KB |
+| `import { getGtinIssuer } from '@httpx/barcode'` | ~ 2.86KB |
 | `import { detectBarcodeType } from '@httpx/barcode'` | ~ 460B |
 | `import { isGtin } from '@httpx/barcode'` | ~ 185B |
 | `import { isEan13 } from '@httpx/barcode'` | ~ 175B |

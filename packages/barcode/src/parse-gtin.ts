@@ -1,6 +1,6 @@
 /* oxlint-disable unicorn/prefer-code-point -- charCodeAt always returns a number for in-range indexes (ASCII digits) */
 import { describeValue } from "./assert-utils";
-import { getIssuerByPrefix } from "./data/gs1-issuer";
+import { getEan8IssuerByPrefix, getIssuerByPrefix } from "./data/gs1-issuer";
 import type { BarcodeFormat, BarcodeType } from "./detect-barcode-type";
 import {
   barcodeTypeLengths,
@@ -445,9 +445,11 @@ export const parseGtin = (
     indicator: type === "gtin14" ? digits.charCodeAt(0) - ZERO : 0,
     category,
     // an EAN-8 has its own prefix (first 3 digits)
-    issuer: getIssuerByPrefix(
-      type === "ean8" ? readPrefix(digits, offset, 6) : prefix
-    ),
+    // an EAN-8 has its own prefix (first 3 digits) and allocation rules
+    issuer:
+      type === "ean8"
+        ? getEan8IssuerByPrefix(readPrefix(digits, offset, 6))
+        : getIssuerByPrefix(prefix),
   } as ParsedGtin;
 };
 
