@@ -158,10 +158,10 @@ const GS1_PREFIX_RANGES: readonly (readonly [number, number, string])[] = [
   [990, 999, "GS1 coupon identification"],
 ];
 
-let issuerByPrefix: (string | undefined)[] | undefined;
+let issuerByPrefix: (string | null)[] | undefined;
 
-const buildIssuerTable = (): (string | undefined)[] => {
-  const table = Array.from<string | undefined>({ length: 1000 });
+const buildIssuerTable = (): (string | null)[] => {
+  const table = Array.from<string | null>({ length: 1000 }).fill(null);
   for (const [from, to, name] of GS1_PREFIX_RANGES) {
     for (let i = from; i <= to; i++) {
       table[i] = name;
@@ -171,14 +171,9 @@ const buildIssuerTable = (): (string | undefined)[] => {
 };
 
 /**
- * GS1 Member Organisation (or special allocation) of a GTIN, from its 3 digit
- * GS1 Prefix. `gtin` is the canonical GTIN-14 form, `type` the GS1 type: an
- * EAN-8 carries its own prefix (first 3 digits of the 8 digit code), others
- * are read on the GTIN-13 form (GTIN-14 digits 2 to 4).
- * `null` when the prefix isn't allocated.
+ * GS1 issuer of a 3 digit GS1 Prefix (0-999), `null` when not allocated.
  */
-export const getGtinIssuer = (gtin: string, isEan8: boolean): string | null => {
+export const getIssuerByPrefix = (prefix: number): string | null => {
   issuerByPrefix ??= buildIssuerTable();
-  const prefix = isEan8 ? gtin.slice(6, 9) : gtin.slice(1, 4);
-  return issuerByPrefix[Number(prefix)] ?? null;
+  return issuerByPrefix[prefix] as string | null;
 };

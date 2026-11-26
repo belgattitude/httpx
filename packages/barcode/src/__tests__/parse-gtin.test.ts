@@ -9,7 +9,7 @@ import type {
   ParseGtinErrorReason,
   ParseGtinResult,
 } from "../parse-gtin";
-import { parseGtin, parseGtinOrThrow } from "../parse-gtin";
+import { getGtinIssuer, parseGtin, parseGtinOrThrow } from "../parse-gtin";
 import type { Ean8, UpcA } from "../types";
 
 /** Append the GS1 mod-10 check digit (reference implementation) */
@@ -81,6 +81,14 @@ describe("parseGtin", () => {
 
     it("should read the prefix on the GTIN-13 form of a GTIN-14", () => {
       expect(parseGtinOrThrow("13250390000003").issuer).toBe("GS1 France");
+    });
+
+    it("should give the issuer with getGtinIssuer", () => {
+      expect(getGtinIssuer("3250390000006")).toBe("GS1 France");
+      expect(getGtinIssuer(3_250_390_000_006)).toBe("GS1 France");
+      expect(getGtinIssuer("3250390000007")).toBeNull();
+      expect(getGtinIssuer(null)).toBeNull();
+      expect(getGtinIssuer("3250390000006", { types: ["ean8"] })).toBeNull();
     });
 
     it("should be null for unallocated prefixes", () => {

@@ -214,6 +214,20 @@ const withInStoreParser = gtinParser.extend({
 
 > Performance: on valid codes `parseGtin` is ~45-50% slower than [normalizeGtin](#normalizegtin) (result object, type and category), on node. Throwing is costly (error and stack trace creation): with ~20% invalid codes, `parseGtinOrThrow` in a try/catch is ~25x slower than `parseGtin` on node (~3x on bun): prefer `parseGtin` when invalid values are expected, ie: bulk imports. See the [benchmark](https://github.com/belgattitude/httpx/blob/main/packages/barcode/bench/parse-gtin.bench.ts).
 
+### getGtinIssuer
+
+Returns the GS1 Member Organisation (or special allocation) that issued the GS1 Prefix of a GTIN, the same as the `issuer` of [parseGtin](#parsegtin). `null` when the value isn't a valid GTIN or its prefix isn't allocated. Accepts the same value and options as `parseGtin`.
+
+```typescript
+import { getGtinIssuer } from "@httpx/barcode";
+
+getGtinIssuer("3250390000006"); // 👈 "GS1 France"
+getGtinIssuer("5412345000013"); // 👈 "GS1 Belgium & Luxembourg"
+getGtinIssuer("3250390000007"); // 👈 null (invalid check digit)
+```
+
+> The issuer tells who allocated the company prefix, not where the product is made. The prefix table (about 1.3KB brotli) is part of `parseGtin`, `parseGtinOrThrow` and `createGtinParser`.
+
 ### detectBarcodeType
 
 Detect the type of a barcode string: `ean8`, `upca`, `ean13` or `gtin14` (or `upce` with the `upce` option), based on its length (no leading zeros handling, see [parseGtin](#parsegtin)). Returns `null` when the length isn't supported, the code contains anything other than digits, or the check digit is invalid. Like [parseGtin](#parsegtin), [restricted circulation numbers](#restricted-circulation-numbers) (in-store codes) are detected: use [isInStoreGtin](#isinstoregtin) to tell them apart. Like the typeguards, it validates the value as is (never trimmed): use [parseGtin](#parsegtin) for untrusted input.
@@ -497,9 +511,10 @@ Bundle size is tracked by a [size-limit configuration](https://github.com/belgat
 
 | Scenario (esm) | Size (brotli) |
 | --- | --: |
-| `import { parseGtin } from '@httpx/barcode'` | ~ 1.46KB |
-| `import { parseGtinOrThrow } from '@httpx/barcode'` | ~ 1.57KB |
-| `import { createGtinParser } from '@httpx/barcode'` | ~ 1.73KB |
+| `import { parseGtin } from '@httpx/barcode'` | ~ 2.81KB |
+| `import { parseGtinOrThrow } from '@httpx/barcode'` | ~ 2.92KB |
+| `import { createGtinParser } from '@httpx/barcode'` | ~ 3.08KB |
+| `import { getGtinIssuer } from '@httpx/barcode'` | ~ 2.84KB |
 | `import { detectBarcodeType } from '@httpx/barcode'` | ~ 460B |
 | `import { isGtin } from '@httpx/barcode'` | ~ 185B |
 | `import { isEan13 } from '@httpx/barcode'` | ~ 175B |
