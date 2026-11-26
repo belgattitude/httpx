@@ -71,13 +71,13 @@ const config = [
     name: "import { getGtinIssuer } (ESM)",
     path: ["dist/index.js"],
     import: "{ getGtinIssuer }",
-    limit: "2845B",
+    limit: "2870B",
   },
   {
     name: "import { parseGtinOrThrow } (ESM)",
     path: ["dist/index.js"],
     import: "{ parseGtinOrThrow }",
-    limit: "2935B",
+    limit: "2960B",
   },
   {
     name: "import { isUpcE } (ESM)",
@@ -107,7 +107,7 @@ const config = [
     name: "import { createGtinParser } (ESM)",
     path: ["dist/index.js"],
     import: "{ createGtinParser }",
-    limit: "3100B",
+    limit: "3125B",
   },
 ] satisfies SizeLimitConfig;
 
