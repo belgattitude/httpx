@@ -189,7 +189,7 @@ settings:
   linkWorkspacePackages: false
 
 overrides:
-  '@azure/msal-node@>=5.0.0-beta.0 <7.1.0': 7.2.2
+  '@azure/msal-node@>=5.0.0-beta.0 <7.1.0': 7.2.3
   '@xmldom/xmldom@>=0.9.0-beta.1 <=0.9.11': 0.9.12
   esbuild: ^0.28.2
   follow-redirects@>=1.16.0 <=1.16.1: 1.16.3
@@ -8472,6 +8472,7 @@ packages:
   yuku-core@0.19.0:
     resolution: {integrity: sha512-PUr1yXU+6XAuz23TtfM7gF1yzIZFZ6F9sjKKhYAJOmUtdP46dOSKBbmaw0jddpW/jOTpfVRemFQN4MRlvqC9iA==}
     engines: {node: '>=14.18.0'}
+    deprecated: 'Yuku is now one package with one core. Use "yuku" instead: https://yuku.fyi/javascript/. Existing installs keep working but get no more fixes.'
 
   yuku@0.27.0:
     resolution: {integrity: sha512-Te1KpDXjl1PHMRMpED6jfKgL7VL2C4L3wptdWhzLAI4MS8ihp/74hivp35LN+UEAhqhn37Q6p98s6X4CP5ZTYw==}
