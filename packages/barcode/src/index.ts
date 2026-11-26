@@ -39,7 +39,7 @@ export type {
   ParseGtinOptions,
   ParseGtinResult,
 } from "./parse-gtin";
-export { parseGtin, parseGtinOrThrow } from "./parse-gtin";
+export { getGtinIssuer, parseGtin, parseGtinOrThrow } from "./parse-gtin";
 export type {
   Ean8,
   Ean13,

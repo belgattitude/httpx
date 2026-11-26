@@ -1,5 +1,6 @@
 /* oxlint-disable unicorn/prefer-code-point -- charCodeAt always returns a number for in-range indexes (ASCII digits) */
 import { describeValue } from "./assert-utils";
+import { getEan8IssuerByPrefix, getIssuerByPrefix } from "./data/gs1-issuer";
 import type { BarcodeFormat, BarcodeType } from "./detect-barcode-type";
 import {
   barcodeTypeLengths,
@@ -161,6 +162,13 @@ export type ParsedGtin<
      * circulation number)
      */
     readonly category: TCategory;
+    /**
+     * GS1 Member Organisation that issued the GS1 Prefix, ie: "GS1 France"
+     * for `325...`, or the special allocation (restricted distribution,
+     * coupons, ISBN...). `null` when the prefix isn't allocated. It tells
+     * who allocated the company prefix, not where the product comes from.
+     */
+    readonly issuer: string | null;
   };
 }[TType];
 
@@ -230,42 +238,52 @@ const getGtinType = (digits: string): BarcodeType => {
 };
 
 /**
- * Category from the GS1 Prefix, on the GTIN-13 form (GTIN-14 index 1 to 4,
- * digits index minus `offset`, missing leading digits are zeros). Only
- * prefixes starting with 0 (`05`) and 9 aren't trade items: other codes exit
- * after one char. Restricted circulation numbers are handled by the caller.
+ * Digit at `index` of the GTIN-14 form, read on the digits as given (`offset`
+ * is the number of missing leading zeros: no padded string to flatten).
  */
-const getGtinCategory = (digits: string): GtinCategory => {
-  const offset = 14 - digits.length;
-  if (offset > 1) {
-    // first digit of the GTIN-13 is a leading zero (UPC-A or EAN-8 form)
-    return offset === 2 && digits.startsWith("5") ? "coupon" : "trade_item";
+const digitAt = (digits: string, offset: number, index: number): number =>
+  index < offset ? 0 : digits.charCodeAt(index - offset) - ZERO;
+
+/**
+ * GS1 Prefix as a number (0-999) from three digits of the GTIN-14 form,
+ * starting at `from`: 1 for the GTIN-13 prefix (after the indicator), 6 for
+ * the one of an EAN-8.
+ */
+const readPrefix = (digits: string, offset: number, from: number): number =>
+  digitAt(digits, offset, from) * 100 +
+  digitAt(digits, offset, from + 1) * 10 +
+  digitAt(digits, offset, from + 2);
+
+/**
+ * Category from the GS1 Prefix (3 digits of the GTIN-13 form, see
+ * `readPrefix`). Only prefixes `050`-`059` (UPC-A number system 5) and `9xx`
+ * aren't trade items. Restricted circulation numbers are handled by the
+ * caller.
+ */
+const getGtinCategory = (
+  prefix: number,
+  digits: string,
+  offset: number
+): GtinCategory => {
+  if (prefix < 900) {
+    return prefix >= 50 && prefix < 60 ? "coupon" : "trade_item";
   }
-  const first = digits.charAt(1 - offset);
-  if (first === "0") {
-    return digits.charAt(2 - offset) === "5" ? "coupon" : "trade_item";
-  }
-  if (first !== "9") {
-    return "trade_item";
-  }
-  // GS1 Prefix after the 9 (rare: books, periodicals, coupons, receipts)
-  const prefix = digits.slice(2 - offset, 5 - offset);
-  if (prefix.startsWith("9")) {
-    return "coupon";
-  }
-  if (prefix.startsWith("77")) {
+  if (prefix === 977) {
     return "issn";
   }
-  if (prefix.startsWith("790")) {
-    return "ismn";
+  if (prefix === 979) {
+    // 9790 is sheet music, the other 979 are books
+    return digitAt(digits, offset, 4) === 0 ? "ismn" : "isbn";
   }
-  if (prefix.startsWith("78") || prefix.startsWith("79")) {
+  if (prefix === 978) {
     return "isbn";
   }
-  if (prefix.startsWith("80")) {
+  if (prefix === 980) {
     return "refund_receipt";
   }
-  return prefix >= "81" && prefix < "85" ? "coupon" : "trade_item";
+  return (prefix > 980 && prefix < 985) || prefix >= 990
+    ? "coupon"
+    : "trade_item";
 };
 
 /**
@@ -288,7 +306,7 @@ const getGtinCategory = (digits: string): GtinCategory => {
  * @example
  * ```typescript
  * parseGtin(36000291452);
- * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", format: null, indicator: 0, category: "trade_item" }
+ * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", format: null, indicator: 0, category: "trade_item", issuer: "GS1 US" }
  * parseGtin("0036000291452");
  * // 👈 { success: true, value: "036000291452", type: "upca", gtin: "00036000291452", format: "ean13", ... }
  * parseGtin(4006380000000); // 👈 { success: false, reason: "invalid_check_digit" }
@@ -407,9 +425,11 @@ export const parseGtin = (
     return failures.format_not_accepted;
   }
   // restricted circulation numbers are accepted, as in-store codes
+  const offset = 14 - digits.length;
+  const prefix = readPrefix(digits, offset, 1);
   const category = isRestrictedGtinDigits(digits)
     ? "in_store"
-    : getGtinCategory(digits);
+    : getGtinCategory(prefix, digits, offset);
   if (
     options?.categories !== undefined &&
     !options.categories.includes(category)
@@ -424,6 +444,12 @@ export const parseGtin = (
     format,
     indicator: type === "gtin14" ? digits.charCodeAt(0) - ZERO : 0,
     category,
+    // an EAN-8 has its own prefix (first 3 digits)
+    // an EAN-8 has its own prefix (first 3 digits) and allocation rules
+    issuer:
+      type === "ean8"
+        ? getEan8IssuerByPrefix(readPrefix(digits, offset, 6))
+        : getIssuerByPrefix(prefix),
   } as ParsedGtin;
 };
 
@@ -488,4 +514,29 @@ export const parseGtinOrThrow = (
     msgOrErrorFactory ??
       `Value is expected to be a GTIN (${result.reason}), got: ${describeValue(value)}`
   );
+};
+
+/**
+ * GS1 Member Organisation (or special allocation) that issued the GS1 Prefix
+ * of a GTIN, ie: "GS1 France" for `325...`. Same as the `issuer` of
+ * `parseGtin`, `null` when the value isn't a valid GTIN or its prefix isn't
+ * allocated. The issuer tells who allocated the company prefix, not where the
+ * product comes from.
+ *
+ * @example
+ * ```typescript
+ * getGtinIssuer("3250390000006"); // 👈 "GS1 France"
+ * getGtinIssuer("2123456789010"); // 👈 "Restricted Circulation Numbers within a geographic region (MO defined)"
+ * getGtinIssuer("4006380000000"); // 👈 null (invalid check digit)
+ * ```
+ *
+ * @param value - same as `parseGtin`
+ * @param options - same as `parseGtin`
+ */
+export const getGtinIssuer = (
+  value: unknown,
+  options?: ParseGtinOptions
+): string | null => {
+  const result = parseGtin(value, options);
+  return result.success ? result.issuer : null;
 };
