@@ -1,5 +1,11 @@
 # @httpx/xcache
 
+## 0.19.0
+
+### Minor Changes
+
+- [#2958](https://github.com/belgattitude/httpx/pull/2958) [`9251f37`](https://github.com/belgattitude/httpx/commit/9251f379a97be7c518e0fb3392a800a4d5cb4484) Thanks [@belgattitude](https://github.com/belgattitude)! - Minimum cbor-x to 1.6.9 and supersjon to 2.2.6
+
 ## 0.18.1
 
 ### Patch Changes
